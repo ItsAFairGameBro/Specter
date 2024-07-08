@@ -93,7 +93,7 @@ function C.RunLink(githubLink,gitType,name)
 	local success, response = pcall(game.HttpGet,game,URL,false)
 
 	if not success then
-		return warn(PrintName.." Error Requesting Script: "..response)
+		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
 	end
 	local scriptName = URL:sub(20)
 	scriptName = scriptName:sub(scriptName:find("/")+1)
