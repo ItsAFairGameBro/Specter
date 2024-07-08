@@ -1,0 +1,272 @@
+local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+
+local RunS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local function getMass(model)
+	assert(model and model:IsA("Model"), "Model argument of getMass must be a model.");
+	
+	return model.PrimaryPart.AssemblyMass;
+end
+return function(C,Settings)
+	return {
+		Category = {
+			Name = "Blatant",
+			Title = "Blatantzz",
+			Image = 10901055597,
+			Layout = 2,
+		},
+		Tab = {
+			{
+				Title = "Fly",
+				Tooltip = "Allows you to fly on enable",
+				Layout = 1,
+				Shortcut = "Fly",Functs={},Instances={},Default=true,Keybind = "Z",
+				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
+				StopAllAnims=function(self)
+					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
+						if not self.AllowedIds[tonumber(v.Animation.AnimationId:gmatch("%d+")())] then
+							v:Stop(1e-1)
+						end
+					end
+				end,
+				Activate = function(self,newValue)
+					if not C.human then return else task.wait(.1) end
+					C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
+					
+					if not newValue then
+						self:StopAllAnims()
+					end
+					
+					if C.char:FindFirstChild("Animate") ~=nil and game.GameId~=372226183 and C.gameName ~= "NavalWarefare" then
+						C.char.Animate.Enabled = not newValue
+					end
+
+					if not newValue then
+						return
+					else
+						task.spawn(self.StopAllAnims,self)
+					end
+
+					local enTbl = self.EnTbl
+
+					local bodyGyro, bodyVel, bodyForce
+					
+					
+					if enTbl.LookDirection then
+						bodyGyro = Instance.new("BodyGyro")
+						bodyGyro.maxTorque = Vector3.new(1, 1, 1)*10^6
+						bodyGyro.P = 10^6
+						bodyGyro.Name = "BasePart"
+						bodyGyro.Parent = C.hrp
+						table.insert(self.Instances,bodyGyro)
+					end
+					if enTbl.Mode == "Physics" then
+						bodyVel = Instance.new("BodyVelocity")
+						bodyVel.maxForce = Vector3.new(1, 1, 1)*10^6
+						bodyVel.P = 10^4
+						bodyVel.Name = "BasePart"
+						bodyVel.Parent = C.hrp
+						table.insert(self.Instances,bodyVel)
+					else
+						bodyForce = Instance.new("BodyForce")
+						bodyForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))						
+						bodyForce.Parent = C.hrp--]]
+						table.insert(self.Instances,bodyForce)
+					end
+
+					local SaveMode = enTbl.Mode
+					--local CharacterMass = getMass(C.char)
+					local function onUpdate(dt)
+						local cf = workspace.CurrentCamera.CFrame
+
+						local charCF = C.char:GetPivot()
+
+						local MoveDirection = C.human.MoveDirection * Vector3.new(1,0,1)
+						if MoveDirection:Dot(MoveDirection) > 0 then
+							MoveDirection = (cf * CFrame.new((CFrame.new(cf.p, cf.p + Vector3.new(cf.lookVector.x, 0, cf.lookVector.z)):VectorToObjectSpace(MoveDirection)))).p - cf.p;
+							MoveDirection = MoveDirection.Unit
+						else
+							MoveDirection = Vector3.zero
+						end
+						local up = 0
+						if enTbl.UseExtraKeybinds then
+							if (UIS:IsKeyDown(Enum.KeyCode.Space)) then
+								up += 1
+							end
+							if (UIS:IsKeyDown(Enum.KeyCode.E)) then
+								up += 1
+							end
+							if (UIS:IsKeyDown(Enum.KeyCode.Q)) then
+								up -= 1
+							end
+						end
+						MoveDirection = (cf.UpVector * up + MoveDirection)
+
+						if (MoveDirection:Dot(MoveDirection) > 0) then
+							MoveDirection = MoveDirection.unit
+						end
+						
+						local newVelocity = (MoveDirection * Vector3.new(enTbl.HorizontalMult,enTbl.VerticalMult,enTbl.HorizontalMult)) * enTbl.Speed 
+							* (enTbl.UseWalkSpeed and (C.human.WalkSpeed/C.Defaults.WalkSpeed) or 1)
+						if bodyGyro then
+							bodyGyro.CFrame = cf
+						else
+							C.hrp.AssemblyAngularVelocity = Vector3.zero
+						end
+						if SaveMode == "Physics" then
+							bodyVel.Velocity = newVelocity
+						elseif SaveMode == "CFrame" then
+							C.char:PivotTo(charCF + dt * newVelocity)
+							C.hrp.AssemblyLinearVelocity = Vector3.zero-- + dt * CharacterMass * workspace.Gravity * Vector3.new(0, 1, 0)
+							--C.hrp.AssemblyAngularVelocity = Vector3.zero
+							--bodyVel.Velocity = Vector3.new(0,newVelocity.Y,0)
+						elseif SaveMode == "Velocity" then
+							C.hrp.AssemblyLinearVelocity = newVelocity-- + dt * workspace.Gravity * Vector3.new(0, 1, 0)--* CharacterMass * workspace.Gravity 
+							--bodyVel.Velocity = newVelocity.Y
+						end
+					end
+
+					table.insert(self.Functs,RunS.PreSimulation:Connect(onUpdate))
+					local function animatorPlayedFunction(animTrack)
+						if not self.AllowedIds[tonumber(animTrack.Animation.AnimationId:gmatch("%d+")())] then
+							animTrack:Stop(1e-1)
+						end
+					end
+					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
+				end,
+				Events = {
+					CharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self.Activate,self,self.EnTbl.En)
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "Speed",
+						Tooltip = "How fast you fly through the air",
+						Layout = 1,Default=50,
+						Min=0,Max=100,Digits=1,
+						Shortcut="Speed",
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Mode",
+						Tooltip = "What kind of movement type",
+						Layout = 2,Default="Velocity",
+						Selections = {"Physics","CFrame","Velocity"},
+						Shortcut="Mode",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Use Walkspeed",
+						Tooltip = "Use Walkspeed in calculation",
+						Layout = 3,Default=false,
+						Shortcut="UseWalkspeed",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Horizontal Multiplier",
+						Tooltip = "How much faster you go horizontally (forward/left/right/back)",
+						Layout = 4,Default=1,
+						Min=0.1,Max=10,Digits=1,
+						Shortcut="HorizontalMult",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Vertical Multiplier",
+						Tooltip = "How much faster you go vertically (up/down)",
+						Layout = 5,Default=1,
+						Min=0.1,Max=10,Digits=1,
+						Shortcut="VerticalMult",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Use E+Q+Space",
+						Tooltip = "Uses the keybinds E, Q, and Space for control keybinds",
+						Layout = 6,Default=true,
+						Shortcut="UseExtraKeybinds",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Face Direction",
+						Tooltip = "Whether or not to face where you're going",
+						Layout = 7,Default=true,
+						Shortcut="LookDirection",
+						Activate = C.ReloadHack,
+					},
+				}
+			},
+			{
+				Title = "Noclip",
+				Tooltip = "Allows your character to walk through walls",
+				Layout = 2,
+				Shortcut = "Noclip",Functs={},Instances={},Default=true,Keybind = "R",
+				Update = function(value)
+					if not C.char then
+						return
+					end
+					for num, part in ipairs(C.char:GetChildren()) do
+						if part:IsA("BasePart") and (part.Name:find("Torso") or part.Name == "HumanoidRootPart") then
+							part.CanCollide = not value
+						end
+					end
+				end,
+				Activate = function(self,newValue)
+					if not C.char then
+						return
+					end
+					self.Update(newValue)
+					if not newValue then
+						return
+					end
+					table.insert(self.Functs,RunS.PreSimulation:Connect(self.Update))
+				end,
+				Events = {
+					CharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self.Activate,self,self.EnTbl.En)
+					end,
+				},
+				Options = {
+					
+				}
+			},
+			{
+				Title = "Teleport",
+				Tooltip = "Teleports your character to where your mouse is",
+				Layout = 3, Type = "NoToggle",
+				Shortcut = "Teleport",Keybind = "T",
+				Activate = function(self,newValue)
+					if not C.char then
+						return
+					end
+
+					local mouseLocation = UIS:GetMouseLocation()
+
+					local screenToWorldRay = workspace.CurrentCamera:ViewportPointToRay(mouseLocation.X, mouseLocation.Y)
+					
+					local options = {
+						ignoreInvisibleWalls = true,
+						ignoreUncollidable = true,
+						ignoreList = {C.char},  -- Example: ignore parts in this list
+						raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
+						distance = 1000,  -- Retry up to 3 times
+						Type = screenToWorldRay.Direction,
+					}
+
+					local hitResult, hitPosition = C.Raycast(screenToWorldRay.Origin,screenToWorldRay.Direction,options)
+					
+
+					if hitPosition then
+						local OrientX,OrientY,OrientZ = C.char:GetPivot():toEulerAnglesXYZ()
+						
+						C.char:PivotTo(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
+					end
+				end,
+				Options = {
+
+				}
+			},
+		}
+	}
+end
