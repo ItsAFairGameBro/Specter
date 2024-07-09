@@ -1316,6 +1316,7 @@ return function(C, Settings)
 		
 		return update
 	end
+	print("one")
 	function C.MakeDraggableTab(TabEx,HasScroll)
 		local PercentageVisible
 		local ScrollTab,HeaderTab
@@ -1353,7 +1354,7 @@ return function(C, Settings)
 		C.AddGlobalConnection(C.GUI:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTabSize))
 		UpdateTabSize()
 	end
-	
+	print("2")
 	-- BEGIN LOAD CORE
 	
 	-- Instances:
@@ -1363,8 +1364,12 @@ return function(C, Settings)
 	else
 		SpecterGUI.Name = C.GenerateGUID()
 	end
+
+	print("3")
 	
 	CreateOtherElements(C, Settings)
+
+	print("4")
 	
 	-- Load tooltip
 
@@ -1509,6 +1514,8 @@ return function(C, Settings)
 			end
 		end)
 	end
+
+	print("5")
 	
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("HackOptions")
@@ -1517,5 +1524,5 @@ return function(C, Settings)
 	C.UI.TabsFrame = TabsFrame
 	
 	C.GUI = SpecterGUI
-	
+	print("6")
 end

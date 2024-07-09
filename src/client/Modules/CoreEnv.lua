@@ -1,5 +1,6 @@
 local CS = game:GetService("CollectionService")
 local HS = game:GetService("HttpService")
+local RunS = game:GetService("RunService")
 return function(C,Settings)
 	function C.API(service,method,tries,...)
 		tries = tries or 3
@@ -154,14 +155,17 @@ return function(C,Settings)
 		if C.isStudio then
 			script.Parent.Parent:Destroy()
 		end
+		print(C.SaveIndex.." Destroy!")
 	end
 	
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
 	if C.getgenv().CreateEvent then
+		print("YIELDING")
 		while #C.getgenv().Instances>0 do
 			C.getgenv().CreateEvent:Fire()
 			C.getgenv().DestroyEvent.Event:Wait()
+			RunS.RenderStepped:Wait()
 		end
 	else
 		C.getgenv().CreateEvent = Instance.new("BindableEvent")

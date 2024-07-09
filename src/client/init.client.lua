@@ -166,7 +166,7 @@ if not C.isStudio then
 	local loaded = 0
 	for num, module in ipairs(ModulesToPreload) do
 		local gitType = "blob"
-		local githubLink = C.BaseUrl .. "/" .. module .. ".lua"
+		local githubLink = C.BaseUrl .. "/%s.lua"
 		local path = module:find("/") and module or ("Modules/"..module)
 		local moduleParams = module:split("/")
 		local informalSplit = module:split("/")
