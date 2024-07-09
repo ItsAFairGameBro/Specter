@@ -49,7 +49,7 @@ C.Defaults = {WalkSpeed = SP.CharacterWalkSpeed, JumpPower = SP.CharacterJumpPow
 C.plr = PS.LocalPlayer
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
 C.PlayerScripts = C.plr:WaitForChild("PlayerScripts")
-C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter-v2"
+C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter/%s/main/src/client"
 C.ProfileName = ""
 if C.getgenv().enHacks then
 	C.enHacks = C.getgenv().enHacks
@@ -141,7 +141,7 @@ function GetModule(moduleName: string)
 		return require(C.StringWait(script,path,nil,"/"))(C, Settings)
 	else
 		local gitType = "blob"
-		local githubLink = C.BaseUrl .. "/%s/main/%s.lua"
+		local githubLink = C.BaseUrl .. "/%s.lua"
 		return C.RunLink(githubLink,gitType,path)(C,Settings)
 	end
 end
