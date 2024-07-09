@@ -69,6 +69,8 @@ local Settings = C.getgenv()._SETTINGS
 if not Settings then
 	Settings = {Deb = {Save = true}}
 	C.getgenv()._SETTINGS = Settings
+else
+	print("Settings Already Found!")
 end
 C.getgenv().C = C
 

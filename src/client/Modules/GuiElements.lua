@@ -181,7 +181,6 @@ Buttons.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Buttons.BorderSizePixel = 0	
 Buttons.Position = UDim2.new(0, 0, 0, 40)	
 Buttons.Size = UDim2.new(1, 0, 0, 0)	
-Buttons.Visible = false	
 	
 CategoryEx.Name = "CategoryEx"	
 CategoryEx:AddTag("RemoveOnDestroy")	
@@ -322,6 +321,7 @@ Settings.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Settings.BorderSizePixel = 0	
 Settings.Position = UDim2.new(0, 0, 0, 40)	
 Settings.Size = UDim2.new(1, 0, 0, 0)	
+Settings.Visible = false	
 	
 SupportedFrame.Name = "SupportedFrame"	
 SupportedFrame.Parent = Settings	

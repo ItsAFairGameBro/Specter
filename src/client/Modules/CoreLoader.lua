@@ -32,14 +32,23 @@ return function(C, _SETTINGS)
 		C.UI.CategoriesFrame:WaitForChild("Buttons"),C.UI.CategoriesFrame:WaitForChild("Settings")
 	local ThisGameTbl = GamesWithModules[game.GameId]
 	local SupportedFrame = SettingsTab:WaitForChild("SupportedFrame")
+	--local success, result = C.API(game:GetService("MarketplaceService"), "GetProductInfo", 3, game.PlaceId)
 	if ThisGameTbl then
 		SupportedFrame:WaitForChild("Description").Text = `The hacks currently support this game`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
 		table.insert(ModulesToRun,ThisGameTbl.ModuleName)
 	else
-		SupportedFrame:WaitForChild("Description").Text = `The hacks currently DO NOT support this game!`
+		SupportedFrame:WaitForChild("Description").Text = `The hacks currently DOES NOT support this game!`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 	end
+	--if success then
+	C.SetImage(SupportedFrame:WaitForChild("Image"),"https://www.roblox.com/Thumbs/Asset.ashx?Width=768&Height=432&AssetID="..game.PlaceId)
+	--end
+
+	C.ButtonClick(HeaderTab:WaitForChild("SettingsButton"),function()
+		ButtonsTab.Visible = not ButtonsTab.Visible
+		SettingsTab.Visible = not SettingsTab.Visible
+	end)
 
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end
