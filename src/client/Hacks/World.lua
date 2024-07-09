@@ -27,6 +27,7 @@ return function(C,Settings)
                     else
                         error("Unknown TCS ChatVersion: "..tostring(TCS.ChatVersion))
                     end
+                    
 				end,
                 Events = {},
 				Options = {

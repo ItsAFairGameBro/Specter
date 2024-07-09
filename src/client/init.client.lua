@@ -57,13 +57,13 @@ end
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
 C.PlayerScripts = C.plr:WaitForChild("PlayerScripts")
 C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter/%s/main/src/client"
-C.ProfileName = ""
 if C.getgenv().enHacks then
 	C.enHacks = C.getgenv().enHacks
 else
 	C.enHacks = {}
 	C.getgenv().enHacks = C.enHacks
 end
+C.getgenv().ProfileName = C.getgenv().ProfileName or ""
 C.hackData = {}
 C.events = {}
 C.keybinds = {}

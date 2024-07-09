@@ -60,7 +60,7 @@ return function(C,Settings)
 		end
 	end
 	function C:SaveProfile()
-		local profileName = C.ProfileName
+		local profileName = C.getgenv().ProfileName
 		if not C.readfile or not C.writefile or profileName == "" then
 			if Settings.Deb.Save then
 				print("Save Stopped, profileName: "..tostring(profileName))
@@ -97,7 +97,7 @@ return function(C,Settings)
 					C.AddNotification(`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
 				end
 				if not C.isStudio then
-					C.ProfileName = "Default"
+					C.getgenv().ProfileName = "Default"
 				end
 				return
 			end
@@ -106,7 +106,7 @@ return function(C,Settings)
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
 		if success then
-			C.ProfileName = profileName
+			C.getgenv().ProfileName = profileName
 			if not C.StartUp then
 				C:ReloadStates()
 			end
@@ -167,16 +167,14 @@ return function(C,Settings)
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
 	if C.getgenv().CreateEvent then
-		print("Waiting Begun")
 		while #C.getgenv().Instances>0 do
 			C.getgenv().CreateEvent:Fire()
 			C.getgenv().DestroyEvent.Event:Wait()
 			RunS.RenderStepped:Wait()
 			if #C.getgenv().Instances>0 then
-				print("Still waiting!")
+				print("Still waiting for instances to be deleted!")
 			end
 		end
-		print("Waiting End")
 	else
 		C.getgenv().CreateEvent = Instance.new("BindableEvent")
 		C.getgenv().DestroyEvent = Instance.new("BindableEvent")

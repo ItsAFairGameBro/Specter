@@ -1524,7 +1524,8 @@ return function(C, Settings)
 		local PercentageVisible
 		local ScrollTab,HeaderTab
 		if HasScroll then
-			ScrollTab = TabEx:WaitForChild("ScrollTab")
+			ScrollTab = TabEx:WaitForChild("ScrollTab",5)
+			if not ScrollTab then return end -- Likely cleared!
 			HeaderTab = TabEx:WaitForChild("HeaderTab")
 			PercentageVisible = Instance.new("NumberValue",ScrollTab)
 			PercentageVisible.Name = "PercentageVisible"
