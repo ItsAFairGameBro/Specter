@@ -97,6 +97,8 @@ function C.RunLink(githubLink,gitType,name)
 
 	if not success then
 		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
+	else
+		print(PrintName.." Found: "..name.."!")
 	end
 	local scriptName = URL:sub(20)
 	scriptName = scriptName:sub(scriptName:find("/")+1)
@@ -160,18 +162,23 @@ function C.LoadModule(moduleName: string)
 	return Mod
 end
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
-
-for num, module in ipairs(ModulesToPreload) do
-	local gitType = "blob"
-	local githubLink = C.BaseUrl .. "/" .. module .. ".lua"
-	local path = module:find("/") and module or ("Modules/"..module)
-	local moduleParams = module:split("/")
-	local informalSplit = module:split("/")
-	local informalName = informalSplit[#informalSplit]
-	task.spawn(function()
-		C.preloadedModule[module] = C.RunLink(githubLink,gitType,path)
-	end)
+if not C.isStudio then
+	local loaded = 0
+	for num, module in ipairs(ModulesToPreload) do
+		local gitType = "blob"
+		local githubLink = C.BaseUrl .. "/" .. module .. ".lua"
+		local path = module:find("/") and module or ("Modules/"..module)
+		local moduleParams = module:split("/")
+		local informalSplit = module:split("/")
+		local informalName = informalSplit[#informalSplit]
+		task.spawn(function()
+			C.preloadedModule[module] = C.RunLink(githubLink,gitType,path)
+			loaded += 1
+		end)
+	end
+	while loaded < #ModulesToPreload do
+		RunS.RenderStepped:Wait()
+	end
 end
-
 
 return C.LoadModule("CoreLoader")
