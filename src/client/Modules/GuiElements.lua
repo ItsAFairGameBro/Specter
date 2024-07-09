@@ -246,7 +246,7 @@ BottomFrame.Parent = Buttons
 BottomFrame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)	
 BottomFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)	
 BottomFrame.BorderSizePixel = 0	
-BottomFrame.LayoutOrder = 50	
+BottomFrame.LayoutOrder = 2000	
 BottomFrame.Size = UDim2.new(1, 0, 0, 40)	
 	
 SaveButton.Name = "SaveButton"	

@@ -96,6 +96,9 @@ return function(C,Settings)
 				if Settings.Deb.Save then
 					C.AddNotification(`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
 				end
+				if not C.isStudio then
+					C.ProfileName = "Default"
+				end
 				return
 			end
 			local decoded = HS:JSONDecode(C.readfile(path))
