@@ -8,7 +8,7 @@ return function(C,Settings)
 			Name = "World",
 			Title = "World",
 			Image = 14503021137,
-			Layout = 3,
+			Layout = 4,
 		},
 		Tab = {
 			{

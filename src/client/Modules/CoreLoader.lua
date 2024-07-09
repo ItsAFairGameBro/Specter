@@ -169,7 +169,7 @@ return function(C, _SETTINGS)
 			end
 			local activatedDeb = 0
 			function hackData:SetValue(value,started)
-				if value == hackData.Enabled then
+				if value == hackData.Enabled or C.Cleared then
 					return--no change, don't bother!
 				end
 				if value and hackData.Type == "NoToggle" then
@@ -193,6 +193,9 @@ return function(C, _SETTINGS)
 				UpdateButtonColor()
 				if not value then
 					hackData:ClearData()
+				end
+				if C.Cleared then
+					return
 				end
 				if hackData.Activate and (not started or hackData.Type ~= "NoToggle") then
 					hackData.Activate(hackData,hackData.Enabled)

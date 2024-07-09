@@ -123,7 +123,8 @@ return function(C,Settings)
 		C.Cleared = true
 
 		-- First, undo the connections
-		--C.ClearFunctTbl(C.functs)
+		C.ClearFunctTbl(C.functs)
+
 		for category, groupedTabData in pairs(C.hackData) do
 			for num, hackTbl in pairs(groupedTabData) do
 				hackTbl:ClearData()
@@ -133,9 +134,7 @@ return function(C,Settings)
 		for actionName, hackTbl in pairs(C.BindedActions) do
 			C.UnbindAction(actionName)
 		end
-
-		C.ClearFunctTbl(C.functs)
-
+		
 		for key, dict in pairs(C.playerfuncts) do
 			C.ClearFunctTbl(dict)
 		end
