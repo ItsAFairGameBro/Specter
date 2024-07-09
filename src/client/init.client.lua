@@ -45,6 +45,7 @@ end
 RegisterFunctions() -- Loads Studio and Hack Compatiblity
 
 C.isStudio = isStudio
+C.plr = PS.LocalPlayer
 C.StartUp = true
 if C.getgenv().Defaults then
 	C.Defaults = C.getgenv().Defaults
@@ -53,7 +54,6 @@ else
 		Username = C.plr.Name,DisplayName = C.plr.DisplayName}
 	C.getgenv().Defaults = C.Defaults
 end
-C.plr = PS.LocalPlayer
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
 C.PlayerScripts = C.plr:WaitForChild("PlayerScripts")
 C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter/%s/main/src/client"
