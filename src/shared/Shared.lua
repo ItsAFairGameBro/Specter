@@ -1,6 +1,12 @@
+--[[
+EXECUTES THIS SCRIPT:
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua"))()
+
+--]]
 --SCRIPT GITHUB LINK:
 local gitType = "blob" -- use 'blob' for more recent updates, or 'raw' for more consistency/loading speed
-local githubLink = "https://github.com/ItsAFairGameBro/Specter/blob/main/Main.lua"--paste your script here
+local githubLink = "https://github.com/ItsAFairGameBro/Specter/blob/main/src/client/init.client.lua"--paste your script here
 
 
 --GLOBAL SETTINGS DATA:
