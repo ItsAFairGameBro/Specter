@@ -36,11 +36,12 @@ return function(C,Settings)
 		end
 	end
 	function C.ReloadHack(hackTbl)
-		local oldEn = hackTbl.Enabled
+		--[[local oldEn = hackTbl.Enabled
 		if oldEn then
 			hackTbl:SetValue(false,true)
 			hackTbl:SetValue(true,true)
-		end
+		end--]]
+		C.DoActivate(hackTbl.Activate,hackTbl,hackTbl.EnTbl.En)
 	end
 	function C.DoActivate(funct,self,...)
 		self:ClearData()
@@ -161,7 +162,6 @@ return function(C,Settings)
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
 	if C.getgenv().CreateEvent then
-		print("YIELDING")
 		while #C.getgenv().Instances>0 do
 			C.getgenv().CreateEvent:Fire()
 			C.getgenv().DestroyEvent.Event:Wait()

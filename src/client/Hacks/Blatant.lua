@@ -20,7 +20,7 @@ return function(C,Settings)
 				Title = "Fly",
 				Tooltip = "Allows you to fly on enable",
 				Layout = 1,
-				Shortcut = "Fly",Functs={},Instances={},Default=true,Keybind = "Z",
+				Shortcut = "Fly",Functs={},Instances={},Default=false,Keybind = "Z",
 				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
@@ -103,7 +103,7 @@ return function(C,Settings)
 						MoveDirection = (cf.UpVector * up + MoveDirection)
 
 						if (MoveDirection:Dot(MoveDirection) > 0) then
-							MoveDirection = MoveDirection.unit
+							MoveDirection = MoveDirection.Unit
 						end
 						
 						local newVelocity = (MoveDirection * Vector3.new(enTbl.HorizontalMult,enTbl.VerticalMult,enTbl.HorizontalMult)) * enTbl.Speed * 5
@@ -201,7 +201,7 @@ return function(C,Settings)
 				Title = "Noclip",
 				Tooltip = "Allows your character to walk through walls",
 				Layout = 2,
-				Shortcut = "Noclip",Functs={},Default=true,Keybind = "R",
+				Shortcut = "Noclip",Functs={},Default=false,Keybind = "R",
 				Update = function(value)
 					if not C.char then
 						return
@@ -292,6 +292,131 @@ return function(C,Settings)
 						Tooltip = "Whether or not you teleport through uncollidible walls (walls that have CanCollide=false)",
 						Layout = 3,Default=true,
 						Shortcut="IgnoreUncollidibleWalls",
+					},
+				}
+			},
+			{
+				Title = "Walkspeed",
+				Tooltip = "Changes your walkspeed to the set value",
+				Layout = 97,
+				Shortcut = "Walkspeed",Functs={},
+				SetProperty = function(self)
+					if C.human then
+						C.human.WalkSpeed = self.EnTbl.En and self.EnTbl.Speed or C.Defaults.WalkSpeed
+					end
+				end,
+				Activate = function(self,newValue)
+					if not C.human then return else task.wait(.1) end
+					if self.EnTbl.Override then
+						table.insert(self.Functs,C.human:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+							self:SetProperty()
+						end))
+					end
+					self:SetProperty(true)
+				end,
+				Events = {
+					CharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self.Activate,self,self.EnTbl.En)
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "Speed",
+						Tooltip = `What value to set the speed to (Default: {C.Defaults.WalkSpeed})`,
+						Layout = 0,Default=30,
+						Min=0,Max=200,Digits=1,
+						Shortcut="Speed",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Force Override",
+						Tooltip = "Prevents speed from being updated to anything else",
+						Layout = 1,Default=true,
+						Shortcut="Override",
+						Activate = C.ReloadHack,
+					},
+				}
+			},
+			{
+				Title = "JumpPower",
+				Tooltip = "How high you jump",
+				Layout = 98,
+				Shortcut = "JumpPower",Functs={},
+				SetProperty = function(self)
+					if C.human then
+						C.human.JumpPower = self.EnTbl.En and self.EnTbl.Jump or C.Defaults.WalkSpeed
+					end
+				end,
+				Activate = function(self,newValue)
+					if not C.human then return else task.wait(.1) end
+					if self.EnTbl.Override then
+						table.insert(self.Functs,C.human:GetPropertyChangedSignal("JumpPower"):Connect(function()
+							self:SetProperty()
+						end))
+					end
+					self:SetProperty(true)
+				end,
+				Events = {
+					CharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self.Activate,self,self.EnTbl.En)
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "JumpPower",
+						Tooltip = `What value to set the jump power to (Default: {C.Defaults.JumpPower})`,
+						Layout = 0,Default=C.Defaults.JumpPower*1.4,
+						Min=0,Max=200,Digits=1,
+						Shortcut="Jump",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Force Override",
+						Tooltip = "Prevents jump from being updated to anything else",
+						Layout = 1,Default=true,
+						Shortcut="Override",
+						Activate = C.ReloadHack,
+					},
+				}
+			},
+			{
+				Title = "Gravity",
+				Tooltip = "What to set the gravity to",
+				Layout = 99,
+				Shortcut = "Gravity",Functs={},
+				SetProperty = function(self)
+					workspace.Gravity = self.EnTbl.En and self.EnTbl.Gravity or C.Defaults.Gravity
+				end,
+				Activate = function(self,newValue)
+					if self.EnTbl.Override then
+						table.insert(self.Functs,workspace:GetPropertyChangedSignal("Gravity"):Connect(function()
+							self:SetProperty()
+						end))
+					end
+					self:SetProperty(true)
+				end,
+				Events = {},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "Gravity",
+						Tooltip = `What value to set the gravity to (Default: {C.Defaults.Gravity})`,
+						Layout = 0,Default=100,
+						Min=0,Max=200,Digits=1,
+						Shortcut="Gravity",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Force Override",
+						Tooltip = "Prevents gravity from being updated to anything else",
+						Layout = 1,Default=true,
+						Shortcut="Override",
+						Activate = C.ReloadHack,
 					},
 				}
 			},
