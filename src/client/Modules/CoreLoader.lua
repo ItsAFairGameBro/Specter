@@ -34,11 +34,11 @@ return function(C, _SETTINGS)
 	local SupportedFrame = SettingsTab:WaitForChild("SupportedFrame")
 	--local success, result = C.API(game:GetService("MarketplaceService"), "GetProductInfo", 3, game.PlaceId)
 	if ThisGameTbl then
-		SupportedFrame:WaitForChild("Description").Text = `The hacks currently support this game`
+		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
 		table.insert(ModulesToRun,ThisGameTbl.ModuleName)
 	else
-		SupportedFrame:WaitForChild("Description").Text = `The hacks currently DOES NOT support this game!`
+		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game!`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 	end
 	--if success then

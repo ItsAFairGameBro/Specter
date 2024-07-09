@@ -65,10 +65,10 @@ C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
 
-local Settings = C.getgenv()._SETTINGS
+local Settings = C.getgenv().SETTINGS
 if not Settings then
 	Settings = {Deb = {Save = true}}
-	C.getgenv()._SETTINGS = Settings
+	C.getgenv().SETTINGS = Settings
 else
 	print("Settings Already Found!")
 end

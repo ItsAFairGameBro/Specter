@@ -150,7 +150,7 @@ return function(C,Settings)
 				else
 					-- Adjust origin slightly to retry
 					origin = hitResult.Position + direction * 0.01
-					distance -= hitPosition.Distance
+					distance -= hitResult.Distance
 				end
 			else
 				didHit = false

@@ -106,7 +106,7 @@ return function(C,Settings)
 							MoveDirection = MoveDirection.unit
 						end
 						
-						local newVelocity = (MoveDirection * Vector3.new(enTbl.HorizontalMult,enTbl.VerticalMult,enTbl.HorizontalMult)) * enTbl.Speed 
+						local newVelocity = (MoveDirection * Vector3.new(enTbl.HorizontalMult,enTbl.VerticalMult,enTbl.HorizontalMult)) * enTbl.Speed * 5
 							* (enTbl.UseWalkSpeed and (C.human.WalkSpeed/C.Defaults.WalkSpeed) or 1)
 						if bodyGyro then
 							bodyGyro.CFrame = cf
@@ -144,8 +144,8 @@ return function(C,Settings)
 						Type = Types.Slider,
 						Title = "Speed",
 						Tooltip = "How fast you fly through the air",
-						Layout = 1,Default=50,
-						Min=0,Max=100,Digits=1,
+						Layout = 1,Default=20,
+						Min=0,Max=200,Digits=1,
 						Shortcut="Speed",
 					},
 					{
@@ -201,13 +201,13 @@ return function(C,Settings)
 				Title = "Noclip",
 				Tooltip = "Allows your character to walk through walls",
 				Layout = 2,
-				Shortcut = "Noclip",Functs={},Instances={},Default=true,Keybind = "R",
+				Shortcut = "Noclip",Functs={},Default=true,Keybind = "R",
 				Update = function(value)
 					if not C.char then
 						return
 					end
 					for num, part in ipairs(C.char:GetChildren()) do
-						if part:IsA("BasePart") and (part.Name:find("Torso") or part.Name == "HumanoidRootPart") then
+						if part:IsA("BasePart") and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
 							part.CanCollide = not value
 						end
 					end
@@ -246,25 +246,53 @@ return function(C,Settings)
 					local screenToWorldRay = workspace.CurrentCamera:ViewportPointToRay(mouseLocation.X, mouseLocation.Y)
 					
 					local options = {
-						ignoreInvisibleWalls = true,
-						ignoreUncollidable = true,
+						ignoreInvisibleWalls = self.EnTbl.IgnoreInvisibleWalls,
+						ignoreUncollidable = self.EnTbl.IgnoreUncollidibleWalls,
 						ignoreList = {C.char},  -- Example: ignore parts in this list
 						raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
-						distance = 1000,  -- Retry up to 3 times
+						distance = self.EnTbl.Distance,  -- Retry up to 3 times
 						Type = screenToWorldRay.Direction,
 					}
 
 					local hitResult, hitPosition = C.Raycast(screenToWorldRay.Origin,screenToWorldRay.Direction,options)
 					
 
-					if hitPosition then
+					if self.EnTbl.AlwaysTeleport or hitResult then
 						local OrientX,OrientY,OrientZ = C.char:GetPivot():toEulerAnglesXYZ()
 						
 						C.char:PivotTo(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
 					end
 				end,
 				Options = {
-
+					{
+						Type = Types.Toggle,
+						Title = "Always Teleport",
+						Tooltip = "Always teleport, even if the ray did not hit anything",
+						Layout = 0,Default=true,
+						Shortcut="AlwaysTeleport",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Distance",
+						Tooltip = "How far the ray is cast. Longer rays cost more performance.",
+						Layout = 1,Default=1000,
+						Min=1,Max=20000,Digits=0,
+						Shortcut="Distance",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Ignore Invisible Walls",
+						Tooltip = "Whether or not you teleport through invisible walls",
+						Layout = 2,Default=true,
+						Shortcut="IgnoreInvisibleWalls",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Ignore Uncollidible Walls",
+						Tooltip = "Whether or not you teleport through uncollidible walls (walls that have CanCollide=false)",
+						Layout = 3,Default=true,
+						Shortcut="IgnoreUncollidibleWalls",
+					},
 				}
 			},
 		}
