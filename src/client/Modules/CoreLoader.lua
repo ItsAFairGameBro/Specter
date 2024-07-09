@@ -130,7 +130,7 @@ return function(C, _SETTINGS)
 			if enTbl.En == nil and hackData.Default ~= nil then
 				enTbl.En = hackData.Default
 			end
-			
+
 			--Options Activation
 			for num, optionData in ipairs(hackData.Options) do
 				optionData.Parent = hackData
@@ -194,7 +194,7 @@ return function(C, _SETTINGS)
 				if not value then
 					hackData:ClearData()
 				end
-				if hackData.Activate then
+				if hackData.Activate and (not started or hackData.Type ~= "NoToggle") then
 					hackData.Activate(hackData,hackData.Enabled)
 				end
 			end

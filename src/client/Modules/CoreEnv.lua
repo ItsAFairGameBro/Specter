@@ -156,17 +156,18 @@ return function(C,Settings)
 		end
 		
 		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
+		RunS.RenderStepped:Wait()
 		C.getgenv().DestroyEvent:Fire()
 		
 		if C.isStudio then
 			script.Parent.Parent:Destroy()
 		end
-		print(C.SaveIndex.." Destroy!")
 	end
 	
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
 	if C.getgenv().CreateEvent then
+		print("Waiting Begun")
 		while #C.getgenv().Instances>0 do
 			C.getgenv().CreateEvent:Fire()
 			C.getgenv().DestroyEvent.Event:Wait()
@@ -175,6 +176,7 @@ return function(C,Settings)
 				print("Still waiting!")
 			end
 		end
+		print("Waiting End")
 	else
 		C.getgenv().CreateEvent = Instance.new("BindableEvent")
 		C.getgenv().DestroyEvent = Instance.new("BindableEvent")

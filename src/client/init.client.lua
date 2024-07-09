@@ -77,8 +77,6 @@ local Settings = C.getgenv().SETTINGS
 if not Settings then
 	Settings = {Deb = {Save = true}}
 	C.getgenv().SETTINGS = Settings
-else
-	print("Settings Already Found!")
 end
 C.getgenv().C = C
 
@@ -105,7 +103,7 @@ function C.RunLink(githubLink,gitType,name)
 	if not success then
 		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
 	else
-		print(PrintName.." Found: "..name.."!")
+		--print(PrintName.." Found: "..name.."!")
 	end
 	local scriptName = URL:sub(20)
 	scriptName = scriptName:sub(scriptName:find("/")+1)
