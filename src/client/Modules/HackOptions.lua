@@ -6,11 +6,12 @@ return function(C,Settings)
 	C.UI.Options = {}
 	C.UI.DisableDrag = false
 	
-	local ToggleTbl,SliderTbl, DropdownTbl, UserListTbl = {}, {}, {}, {}
+	local ToggleTbl,SliderTbl, DropdownTbl, UserListTbl, TextboxTbl = {}, {}, {}, {}, {}
 	C.UI.Options.Toggle = ToggleTbl
 	C.UI.Options.Slider = SliderTbl
 	C.UI.Options.Dropdown = DropdownTbl
 	C.UI.Options.UserList = UserListTbl
+	C.UI.Options.Textbox = TextboxTbl
 		
 	local function DoCombined(tbl,name,parent,options)
 		assert(options.Title,"Title is missing")
@@ -306,6 +307,49 @@ return function(C,Settings)
 		self.Value = newList
 		SetValueCombined(self,firstRun)
 	end
+
+
+	function TextboxTbl.new(parent, options)
+		assert(options.Min,"Min is missing")
+		assert(options.Max,"Max is missing")
+		assert(options.Default,"Default is missing")
+		
+		local self, newFrame, default = DoCombined(TextboxTbl, "Textbox", parent, options)
+
+		self.Min = options.Min
+		self.Max = options.Max
+
+		self.LimitTL = newFrame:WaitForChild("LimitTL")
+		self.SetTB = newFrame:WaitForChild("SetTB")
+
+		self.LimitTL.Text = `{self.Min}-{self.Max}`
+
+		self.SetTB.FocusLost:Connect(function(enterPressed)
+			RunS.RenderStepped:Wait()
+			self:SetValue(self.SetTB.Text, false)
+		end)
+
+		C.ButtonClick(newFrame:WaitForChild("AddButton"),function()
+			self:SetValue(self.SetTB.Text)
+		end)
+
+		self:SetValue(default,true,true)
+
+		return self
+	end
+		
+	function TextboxTbl:SetValue(new,instant,firstRun)
+		if new:len() > self.Max then
+			new = new:sub(1,self.Max)
+		elseif new:len() < self.Min then
+			new = new .. string.rep("E",self.Min - new:len())
+		end
+		self.SetTB.Text = new
+		self.Value = new
+		SetValueCombined(self,firstRun)
+	end
+
+	
 	
 	for identity, tbl in pairs(C.UI.Options) do
 		-- Define the __call metamethod

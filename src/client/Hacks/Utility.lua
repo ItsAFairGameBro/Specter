@@ -1,4 +1,4 @@
-local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")

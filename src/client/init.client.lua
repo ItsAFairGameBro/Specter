@@ -35,6 +35,7 @@ local function RegisterFunctions()
 	C.isfile = not isStudio and isfile
 	C.makefolder = not isStudio and makefolder
 	C.writefile = not isStudio and writefile
+	C.setscriptable = not isStudio and setscriptable
 	--Important In-Game Functions
 	function C.GenerateGUID()
 		return HS:GenerateGUID(false)
