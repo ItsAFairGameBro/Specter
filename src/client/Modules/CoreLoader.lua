@@ -1,7 +1,7 @@
 local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 
-local ModulesToRun = {"Render","Blatant","Utility","Friends"}
+local ModulesToRun = {"Render","Blatant","World","Utility","Friends"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
 }
