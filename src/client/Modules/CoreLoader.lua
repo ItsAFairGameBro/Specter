@@ -1,7 +1,7 @@
 local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 
-local ModulesToRun = {"Render","Blatant","Friends"}
+local ModulesToRun = {"Render","Blatant","Utility","Friends"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
 }
@@ -83,7 +83,7 @@ return function(C, _SETTINGS)
 		TabEx.Parent = C.UI.TabsFrame
 		C.UI.Tabs[category.Name] = TabEx
 		
-		task.delay(1/2,C.MakeDraggableTab,TabEx,true)
+		task.delay(1,C.MakeDraggableTab,TabEx,true)
 		
 		
 		-- Load Individual Hacks
@@ -251,4 +251,6 @@ return function(C, _SETTINGS)
 	if C.SaveIndex == 1 and C.isStudio then
 		C.PlayerGui:WaitForChild("SpecterGUI"):Destroy()
 	end
+	
+	return "Load Successful"
 end

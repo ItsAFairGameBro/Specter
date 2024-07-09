@@ -64,6 +64,7 @@ C.functs = {} -- global connections
 C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
+C.preloadedModule = {}
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then
@@ -142,7 +143,8 @@ function GetModule(moduleName: string)
 	else
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
-		return C.RunLink(githubLink,gitType,path)(C,Settings)
+		local result = C.preloadedModule[moduleName] or C.RunLink(githubLink,gitType,path)
+		return result(C,Settings)
 	end
 end
 
@@ -157,7 +159,19 @@ function C.LoadModule(moduleName: string)
 	C.SaveModules[informalName] = Mod
 	return Mod
 end
+local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
+
+for num, module in ipairs(ModulesToPreload) do
+	local gitType = "blob"
+	local githubLink = C.BaseUrl .. "/" .. module .. ".lua"
+	local path = module:find("/") and module or ("Modules/"..module)
+	local moduleParams = module:split("/")
+	local informalSplit = module:split("/")
+	local informalName = informalSplit[#informalSplit]
+	task.spawn(function()
+		C.preloadedModule[module] = C.RunLink(githubLink,gitType,path)
+	end)
+end
 
 
-
-C.LoadModule("CoreLoader")
+return C.LoadModule("CoreLoader")

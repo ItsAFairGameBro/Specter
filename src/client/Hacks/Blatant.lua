@@ -11,7 +11,7 @@ return function(C,Settings)
 	return {
 		Category = {
 			Name = "Blatant",
-			Title = "Blatantzz",
+			Title = "Blatant",
 			Image = 10901055597,
 			Layout = 2,
 		},
