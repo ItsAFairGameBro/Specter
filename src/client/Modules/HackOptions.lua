@@ -28,7 +28,7 @@ return function(C,Settings)
 		assert(self.CategoryName,`{tbl.Title} doesn't have a category`)
 		assert(self.ParentShortcut,`{tbl.Title} doesn't have a PARENT category for {parent.Name}`)
 		self.EnHackTbl = C.enHacks[self.CategoryName][self.ParentShortcut]
-		assert(self.EnHackTbl,`{options.Title} doesn't have a table or smt`)
+		assert(self.EnHackTbl,`{self.ParentShortcut} doesn't have a table or smt`)
 		local Default 
 		if self.EnHackTbl[self.Shortcut] ~= nil then
 			Default = self.EnHackTbl[self.Shortcut]
