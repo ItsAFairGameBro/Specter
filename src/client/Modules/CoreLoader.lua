@@ -116,11 +116,6 @@ return function(C, _SETTINGS)
 			local ButtonEx = C.Examples.HackButtonEx:Clone()
 			hackData.Button = ButtonEx
 			hackData.Parent = hack
-			--Options Activation
-			for num, optionData in ipairs(hackData.Options) do
-				optionData.Parent = hackData
-				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
-			end
 			--Basic Information
 			local OptionsList = ButtonEx:WaitForChild("OptionsList")
 			local MainText = ButtonEx:WaitForChild("HackText")
@@ -135,7 +130,12 @@ return function(C, _SETTINGS)
 			if enTbl.En == nil and hackData.Default ~= nil then
 				enTbl.En = hackData.Default
 			end
-						
+			
+			--Options Activation
+			for num, optionData in ipairs(hackData.Options) do
+				optionData.Parent = hackData
+				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
+			end			
 			--Expand Button
 			local ViewSettingsVisible = true
 			if #hackData.Options == 0 then
