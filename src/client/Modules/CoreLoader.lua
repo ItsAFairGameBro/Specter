@@ -50,6 +50,29 @@ return function(C, _SETTINGS)
 		SettingsTab.Visible = not SettingsTab.Visible
 	end)
 
+	local SaveButton = ButtonsTab:WaitForChild("BottomFrame"):WaitForChild("SaveButton")
+	local WaitButton = SaveButton:WaitForChild("Wait")
+
+	local SaveDeb = false
+	C.ButtonClick(SaveButton,function()
+		if SaveDeb then return end SaveDeb = true
+		SaveButton.ImageColor3 = Color3.fromRGB(81,81,81)
+		WaitButton.Visible = true
+		WaitButton.Text = "•••"
+		local success = C:SaveProfile()
+		if success then
+			WaitButton.Text = "✅"
+			task.wait(3)
+			WaitButton.Visible = false
+		else
+			WaitButton.Text = "❌"
+		end
+		task.wait(5)
+		WaitButton.Visible = false
+		SaveButton.ImageColor3 = Color3.fromRGB(255,255,255)
+		SaveDeb = false
+	end)
+
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end
 		local hack = C.LoadModule("Hacks/"..name)

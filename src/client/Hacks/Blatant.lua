@@ -346,7 +346,7 @@ return function(C,Settings)
 				Shortcut = "JumpPower",Functs={},
 				SetProperty = function(self)
 					if C.human then
-						C.human.JumpPower = self.EnTbl.En and self.EnTbl.Jump or C.Defaults.WalkSpeed
+						C.human.JumpPower = self.EnTbl.En and self.EnTbl.Jump or C.Defaults.JumpPower
 					end
 				end,
 				Activate = function(self,newValue)
