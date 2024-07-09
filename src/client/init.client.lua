@@ -46,7 +46,13 @@ RegisterFunctions() -- Loads Studio and Hack Compatiblity
 
 C.isStudio = isStudio
 C.StartUp = true
-C.Defaults = {WalkSpeed = SP.CharacterWalkSpeed, JumpPower = SP.CharacterJumpPower, Gravity = workspace.Gravity}
+if C.getgenv().Defaults then
+	C.Defaults = C.getgenv().Defaults
+else
+	C.Defaults = {WalkSpeed = SP.CharacterWalkSpeed, JumpPower = SP.CharacterJumpPower, Gravity = workspace.Gravity,
+		Username = C.plr.Name,DisplayName = C.plr.DisplayName}
+	C.getgenv().Defaults = C.Defaults
+end
 C.plr = PS.LocalPlayer
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
 C.PlayerScripts = C.plr:WaitForChild("PlayerScripts")

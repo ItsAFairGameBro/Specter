@@ -43,7 +43,11 @@ return function(C,Settings)
 					C.setscriptable(C.plr,"DisplayName",false)
 				end,
 				Activate = function(self,newValue)
-					self:Set(self.EnTbl.Username,self.EnTbl.DisplayName)
+					if self.EnTbl.En then
+						self:Set(self.EnTbl.Username,self.EnTbl.DisplayName)
+					else
+						self:Set(C.Defaults.Username,C.Defaults.DisplayName)
+					end
 				end,
                 Events = {},
 				Options = {
