@@ -49,7 +49,7 @@ C.Defaults = {WalkSpeed = SP.CharacterWalkSpeed, JumpPower = SP.CharacterJumpPow
 C.plr = PS.LocalPlayer
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
 C.PlayerScripts = C.plr:WaitForChild("PlayerScripts")
-C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter"
+C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter-v2"
 C.ProfileName = ""
 if C.getgenv().enHacks then
 	C.enHacks = C.getgenv().enHacks
