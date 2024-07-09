@@ -37,7 +37,7 @@ local function RegisterFunctions()
 	C.writefile = not isStudio and writefile
 	--Important In-Game Functions
 	function C.GenerateGUID()
-		return HS:GenerateGUID()
+		return HS:GenerateGUID(false)
 	end
 end
 

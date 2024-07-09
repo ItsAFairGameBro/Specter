@@ -22,6 +22,9 @@ local Image = Instance.new("ImageLabel")
 local Text = Instance.new("TextLabel")	
 local Arrow = Instance.new("TextLabel")	
 local BottomFrame = Instance.new("Frame")	
+local SaveButton = Instance.new("ImageLabel")	
+local Wait = Instance.new("TextLabel")	
+local UICorner_2 = Instance.new("UICorner")	
 local UIListLayout_2 = Instance.new("UIListLayout")	
 local MiscDivider = Instance.new("Frame")	
 local MiscLabel = Instance.new("TextLabel")	
@@ -56,17 +59,17 @@ local UIListLayout_5 = Instance.new("UIListLayout")
 local ToggleEx = Instance.new("Frame")	
 local NameTL = Instance.new("TextLabel")	
 local ToggleSwitchSlider = Instance.new("ImageButton")	
-local UICorner_2 = Instance.new("UICorner")	
-local ToggleCircle = Instance.new("Frame")	
 local UICorner_3 = Instance.new("UICorner")	
+local ToggleCircle = Instance.new("Frame")	
+local UICorner_4 = Instance.new("UICorner")	
 local UIGradient = Instance.new("UIGradient")	
 local UIGradient_2 = Instance.new("UIGradient")	
 local SliderEx = Instance.new("Frame")	
 local NameTL_2 = Instance.new("TextLabel")	
 local SlidingBar = Instance.new("ImageButton")	
-local UICorner_4 = Instance.new("UICorner")	
-local CurrentPosition = Instance.new("Frame")	
 local UICorner_5 = Instance.new("UICorner")	
+local CurrentPosition = Instance.new("Frame")	
+local UICorner_6 = Instance.new("UICorner")	
 local UIGradient_3 = Instance.new("UIGradient")	
 local UIGradient_4 = Instance.new("UIGradient")	
 local Backing = Instance.new("Frame")	
@@ -78,19 +81,19 @@ local RightBound = Instance.new("TextLabel")
 local DropdownEx = Instance.new("Frame")	
 local NameTL_3 = Instance.new("TextLabel")	
 local DropdownButton = Instance.new("TextButton")	
-local UICorner_6 = Instance.new("UICorner")	
+local UICorner_7 = Instance.new("UICorner")	
 local UserListEx = Instance.new("Frame")	
 local NameTL_4 = Instance.new("TextLabel")	
 local AddButton = Instance.new("TextButton")	
-local UICorner_7 = Instance.new("UICorner")	
+local UICorner_8 = Instance.new("UICorner")	
 local MainList = Instance.new("Frame")	
 local UIListLayout_6 = Instance.new("UIListLayout")	
 local OneListEx = Instance.new("Frame")	
 local DeleteButton = Instance.new("TextButton")	
-local UICorner_8 = Instance.new("UICorner")	
+local UICorner_9 = Instance.new("UICorner")	
 local UserTL = Instance.new("TextLabel")	
 local EnterTB = Instance.new("TextBox")	
-local UICorner_9 = Instance.new("UICorner")	
+local UICorner_10 = Instance.new("UICorner")	
 local LimitTL = Instance.new("TextLabel")	
 local HighlightBackground = Instance.new("Frame")	
 local KeybindButton = Instance.new("ImageButton")	
@@ -100,11 +103,11 @@ local KeybindBacking = Instance.new("Frame")
 local UIGradient_5 = Instance.new("UIGradient")	
 local ToolTipHeaderFrame = Instance.new("Frame")	
 local ToolTipText = Instance.new("TextLabel")	
-local UICorner_10 = Instance.new("UICorner")	
+local UICorner_11 = Instance.new("UICorner")	
 local Notifications = Instance.new("Frame")	
 local NotificationEx = Instance.new("Frame")	
 local Timer = Instance.new("Frame")	
-local UICorner_11 = Instance.new("UICorner")	
+local UICorner_12 = Instance.new("UICorner")	
 local NotificationTitle = Instance.new("TextLabel")	
 local NotificationDesc = Instance.new("TextLabel")	
 local UITextSizeConstraint = Instance.new("UITextSizeConstraint")	
@@ -244,7 +247,41 @@ BottomFrame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 BottomFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)	
 BottomFrame.BorderSizePixel = 0	
 BottomFrame.LayoutOrder = 50	
-BottomFrame.Size = UDim2.new(1, 0, 0, 24)	
+BottomFrame.Size = UDim2.new(1, 0, 0, 40)	
+	
+SaveButton.Name = "SaveButton"	
+SaveButton.Parent = BottomFrame	
+SaveButton.Active = true	
+SaveButton.AnchorPoint = Vector2.new(0, 0.5)	
+SaveButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
+SaveButton.BackgroundTransparency = 1.000	
+SaveButton.BorderColor3 = Color3.fromRGB(0, 0, 0)	
+SaveButton.BorderSizePixel = 0	
+SaveButton.Position = UDim2.new(0, 0, 0.5, 0)	
+SaveButton.Size = UDim2.new(0.200000003, 0, 0.899999976, 0)	
+SaveButton.Image = "rbxassetid://14737163568"	
+SaveButton.ScaleType = Enum.ScaleType.Fit	
+	
+Wait.Name = "Wait"	
+Wait.Parent = SaveButton	
+Wait.AnchorPoint = Vector2.new(0.5, 0.5)	
+Wait.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
+Wait.BackgroundTransparency = 1.000	
+Wait.BorderColor3 = Color3.fromRGB(0, 0, 0)	
+Wait.BorderSizePixel = 0	
+Wait.Position = UDim2.new(0.5, 0, 0.5, 0)	
+Wait.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)	
+Wait.Visible = false	
+Wait.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)	
+Wait.Text = "•••"	
+Wait.TextColor3 = Color3.fromRGB(143, 143, 143)	
+Wait.TextScaled = true	
+Wait.TextSize = 40.000	
+Wait.TextStrokeTransparency = 0.000	
+Wait.TextWrapped = true	
+	
+UICorner_2.CornerRadius = UDim.new(2, 0)	
+UICorner_2.Parent = Wait	
 	
 UIListLayout_2.Parent = Buttons	
 UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder	
@@ -651,8 +688,8 @@ ToggleSwitchSlider.Size = UDim2.new(0.25, 0, 0.600000024, 0)
 ToggleSwitchSlider.ZIndex = 2	
 ToggleSwitchSlider.AutoButtonColor = false	
 	
-UICorner_2.CornerRadius = UDim.new(1, 0)	
-UICorner_2.Parent = ToggleSwitchSlider	
+UICorner_3.CornerRadius = UDim.new(1, 0)	
+UICorner_3.Parent = ToggleSwitchSlider	
 	
 ToggleCircle.Name = "ToggleCircle"	
 ToggleCircle.Parent = ToggleSwitchSlider	
@@ -664,8 +701,8 @@ ToggleCircle.Position = UDim2.new(0.603999972, 0, 0.5, 0)
 ToggleCircle.Size = UDim2.new(0.345999986, 0, 0.649999976, 0)	
 ToggleCircle.ZIndex = 3	
 	
-UICorner_3.CornerRadius = UDim.new(0, 100)	
-UICorner_3.Parent = ToggleCircle	
+UICorner_4.CornerRadius = UDim.new(0, 100)	
+UICorner_4.Parent = ToggleCircle	
 	
 UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}	
 UIGradient.Rotation = 90	
@@ -714,8 +751,8 @@ SlidingBar.Size = UDim2.new(0.699999988, 0, 0, 15)
 SlidingBar.ZIndex = 2	
 SlidingBar.AutoButtonColor = false	
 	
-UICorner_4.CornerRadius = UDim.new(1, 0)	
-UICorner_4.Parent = SlidingBar	
+UICorner_5.CornerRadius = UDim.new(1, 0)	
+UICorner_5.Parent = SlidingBar	
 	
 CurrentPosition.Name = "CurrentPosition"	
 CurrentPosition.Parent = SlidingBar	
@@ -727,8 +764,8 @@ CurrentPosition.Position = UDim2.new(0.200000003, 0, 0.5, 0)
 CurrentPosition.Size = UDim2.new(0.100000001, 0, 1, 0)	
 CurrentPosition.ZIndex = 3	
 	
-UICorner_5.CornerRadius = UDim.new(0, 100)	
-UICorner_5.Parent = CurrentPosition	
+UICorner_6.CornerRadius = UDim.new(0, 100)	
+UICorner_6.Parent = CurrentPosition	
 	
 UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}	
 UIGradient_3.Rotation = 90	
@@ -867,7 +904,7 @@ DropdownButton.TextSize = 14.000
 DropdownButton.TextStrokeTransparency = 0.000	
 DropdownButton.TextWrapped = true	
 	
-UICorner_6.Parent = DropdownButton	
+UICorner_7.Parent = DropdownButton	
 	
 UserListEx.Name = "UserListEx"	
 UserListEx:AddTag("RemoveOnDestroy")	
@@ -914,7 +951,7 @@ AddButton.TextSize = 14.000
 AddButton.TextStrokeTransparency = 0.000	
 AddButton.TextWrapped = true	
 	
-UICorner_7.Parent = AddButton	
+UICorner_8.Parent = AddButton	
 	
 MainList.Name = "MainList"	
 MainList.Parent = UserListEx	
@@ -954,7 +991,7 @@ DeleteButton.TextSize = 14.000
 DeleteButton.TextStrokeTransparency = 0.000	
 DeleteButton.TextWrapped = true	
 	
-UICorner_8.Parent = DeleteButton	
+UICorner_9.Parent = DeleteButton	
 	
 UserTL.Name = "UserTL"	
 UserTL.Parent = OneListEx	
@@ -994,7 +1031,7 @@ EnterTB.TextSize = 14.000
 EnterTB.TextStrokeTransparency = 0.000	
 EnterTB.TextWrapped = true	
 	
-UICorner_9.Parent = EnterTB	
+UICorner_10.Parent = EnterTB	
 	
 LimitTL.Name = "LimitTL"	
 LimitTL.Parent = UserListEx	
@@ -1120,8 +1157,8 @@ ToolTipText.TextSize = 22.000
 ToolTipText.TextStrokeTransparency = 0.000	
 ToolTipText.TextWrapped = true	
 	
-UICorner_10.CornerRadius = UDim.new(0.400000006, 0)	
-UICorner_10.Parent = ToolTipHeaderFrame	
+UICorner_11.CornerRadius = UDim.new(0.400000006, 0)	
+UICorner_11.Parent = ToolTipHeaderFrame	
 	
 Notifications.Name = "Notifications"	
 Notifications.Parent = SpecterGUI	
@@ -1156,8 +1193,8 @@ Timer.Position = UDim2.new(0, 0, 1, -15)
 Timer.Size = UDim2.new(1, 0, 0, 3)	
 Timer.ZIndex = 3	
 	
-UICorner_11.CornerRadius = UDim.new(0, 20)	
-UICorner_11.Parent = NotificationEx	
+UICorner_12.CornerRadius = UDim.new(0, 20)	
+UICorner_12.Parent = NotificationEx	
 	
 NotificationTitle.Name = "NotificationTitle"	
 NotificationTitle.Parent = NotificationEx	
