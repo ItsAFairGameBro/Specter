@@ -134,6 +134,8 @@ return function(C,Settings)
 			C.UnbindAction(actionName)
 		end
 
+		C.ClearFunctTbl(C.functs)
+
 		for key, dict in pairs(C.playerfuncts) do
 			C.ClearFunctTbl(dict)
 		end
@@ -169,6 +171,9 @@ return function(C,Settings)
 			C.getgenv().CreateEvent:Fire()
 			C.getgenv().DestroyEvent.Event:Wait()
 			RunS.RenderStepped:Wait()
+			if #C.getgenv().Instances>0 then
+				print("Still waiting!")
+			end
 		end
 	else
 		C.getgenv().CreateEvent = Instance.new("BindableEvent")

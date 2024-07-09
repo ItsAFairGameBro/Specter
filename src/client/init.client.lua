@@ -168,7 +168,7 @@ function C.LoadModule(moduleName: string)
 	C.SaveModules[informalName] = Mod
 	return Mod
 end
-local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
+local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
 if not C.isStudio then
 	local loaded = 0
 	for num, module in ipairs(ModulesToPreload) do

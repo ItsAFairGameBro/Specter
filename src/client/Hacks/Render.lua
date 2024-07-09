@@ -9,9 +9,9 @@ return function(C,Settings)
 			Layout = 1,
 		},
 		Tab = {
-			{
+			--[[{
 				Title = "Nicknamer",
-				Tooltip = "LOCALLY changes your username and displayname",
+				Tooltip = "LOCALLY spoofs your username and displayname",
 				Layout = 1,
 				Shortcut = "Nickname",Functs={},Default=false,
 				Set = function(Username:string, Display: string)
@@ -42,9 +42,20 @@ return function(C,Settings)
 					C.setscriptable(C.plr,"Name",false)
 					C.setscriptable(C.plr,"DisplayName",false)
 				end,
+				DescendantAdded=function(newDescendant)
+					if newDescendant:IsA("TextLabel") then
+						
+					end
+				end,
 				Activate = function(self,newValue)
 					if self.EnTbl.En then
 						self:Set(self.EnTbl.Username,self.EnTbl.DisplayName)
+						table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)
+							self:DescendantAdded(child)
+						end))
+						for num, child in ipairs(C.PlayerGui:GetDescendants()) do
+							self:DescendantAdded(child)
+						end
 					else
 						self:Set(C.Defaults.Username,C.Defaults.DisplayName)
 					end
@@ -66,7 +77,7 @@ return function(C,Settings)
 						Shortcut="DisplayName",
 					}
 				},
-			},
+			},--]]
 			--[[{
 				Title = "AimAssist",
 				Tooltip = "Aims At Enemies",

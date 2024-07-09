@@ -196,7 +196,7 @@ return function(C, _SETTINGS)
 			C.ButtonClick(MainText,function()
 				hackData:SetValue(not hackData.Enabled)
 			end)
-			hackData:SetValue(enTbl.En==true, true)
+			task.spawn(hackData.SetValue,hackData,enTbl.En==true, true)
 			
 			--Keybind
 			local KeybindButton = ButtonEx:WaitForChild("KeybindButton")
