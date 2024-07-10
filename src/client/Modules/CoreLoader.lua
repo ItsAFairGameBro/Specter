@@ -150,6 +150,7 @@ return function(C, _SETTINGS)
 			local OptionsList = ButtonEx:WaitForChild("OptionsList")
 			local MainText = ButtonEx:WaitForChild("HackText")
 			local HackExpand = ButtonEx:WaitForChild("HackExpand")
+			local KeybindButton = ButtonEx:WaitForChild("KeybindButton")
 			ButtonEx.Name = hackData.Title
 			ButtonEx.LayoutOrder = hackData.Layout
 			MainText.Text = hackData.Title
@@ -168,9 +169,10 @@ return function(C, _SETTINGS)
 			end			
 			--Expand Button
 			local ViewSettingsVisible = true
-			if hackData.Options and #hackData.Options == 0 then
+			if not hackData.Options or #hackData.Options == 0 then
 				HackExpand.Visible = false
 				ViewSettingsVisible = false
+				KeybindButton.Position = UDim2.new(1,0,0,KeybindButton.Position.Y.Offset)
 			else
 				local function UpdateViewSettings(Instant)
 					ViewSettingsVisible = not ViewSettingsVisible
@@ -237,7 +239,6 @@ return function(C, _SETTINGS)
 			task.spawn(hackData.SetValue,hackData,enTbl.En==true, true)
 			
 			--Keybind
-			local KeybindButton = ButtonEx:WaitForChild("KeybindButton")
 			local BindedKey = KeybindButton:WaitForChild("BindedKey")
 			function hackData:SetKeybind(key: Enum.KeyCode)
 				if key then
