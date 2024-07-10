@@ -40,12 +40,13 @@ return function(C,Settings)
 				Tooltip = "Simulates the chat key press",
 				Layout = 99,
 				Shortcut = "Chat",Keybind="Slash",
+				Functs={},
 				SlashPressedOld = function(self)
 					local chatBar = C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar")
 
 					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
-					
+
 					table.insert(self.Functs,chatBar:GetPropertyChangedSignal("TextTransparency"):Connect(function()
 						chatBar.TextTransparency = 0
 					end))
