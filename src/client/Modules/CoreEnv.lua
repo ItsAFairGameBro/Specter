@@ -173,7 +173,9 @@ return function(C,Settings)
 
 		for category, groupedTabData in pairs(C.hackData) do
 			for num, hackTbl in pairs(groupedTabData) do
-				hackTbl:ClearData()
+				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
+					hackTbl:ClearData()
+				end
 			end
 		end
 		
