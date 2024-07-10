@@ -71,15 +71,24 @@ return function(C,Settings)
 		end
 		local function internallySaveProfile()
 			local FilePath = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
+			local FilePath2 = ProfileStoragePath .. "/Settings" .. SaveFileExtention
 			-- Create the data as a table
 			local SaveDict = {
-				Hacks = C.enHacks
+				Hacks = table.clone(C.enHacks)
 			}
+			SaveDict.Hacks.Settings = nil
 			-- Encode the data
 			local EncodedSaveDict = HS:JSONEncode(SaveDict)
 			-- Storage Folder Link
 			CreateStoragePath(ProfileStoragePath)
+
+			--Store general settings
+			local EncodedSaveDict2 = HS:JSONEncode({Settings = C.enHacks.Settings})
+			--General Storage Folder Link
+
+			--Save files
 			C.writefile(FilePath,EncodedSaveDict)
+			C.writefile(FilePath2,EncodedSaveDict2)
 		end
 		local success, result = C.API(internallySaveProfile,nil,1)
 		if not success then
@@ -94,6 +103,11 @@ return function(C,Settings)
 		end
 		local function internallyLoadProfile()
 			local path = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
+			local path2 = ProfileStoragePath .. "/Settings" .. SaveFileExtention
+			if C.isfile(path2) then
+				local decoded2 = HS:JSONDecode(C.readfile(path))
+				C.enHacks.Settings = decoded2.Settings
+			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
 					C.AddNotification(`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
@@ -104,7 +118,9 @@ return function(C,Settings)
 				return
 			end
 			local decoded = HS:JSONDecode(C.readfile(path))
-			C.enHacks = decoded.Hacks
+			for key, val in pairs(C.enHacks) do
+				C.enHacks[key] = decoded.Hacks[key]
+			end
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
 		if success then

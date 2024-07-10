@@ -1,7 +1,7 @@
 local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 
-local ModulesToRun = {"Render","Blatant","World","Utility","Friends"}
+local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
 }
@@ -50,7 +50,10 @@ return function(C, _SETTINGS)
 		SettingsTab.Visible = not SettingsTab.Visible
 	end)
 
-	local SaveButton = ButtonsTab:WaitForChild("BottomFrame"):WaitForChild("SaveButton")
+	local SettingsTab = C.UI.CategoriesFrame:WaitForChild("Settings")
+
+	local BottomFrame = ButtonsTab:WaitForChild("BottomFrame")
+	local SaveButton = BottomFrame:WaitForChild("SaveButton")
 	local WaitButton = SaveButton:WaitForChild("Wait")
 
 	local SaveDeb = false
@@ -73,46 +76,66 @@ return function(C, _SETTINGS)
 		SaveDeb = false
 	end)
 
+	local RefreshButton = SettingsTab:WaitForChild("BottomFrame"):WaitForChild("RefreshButton")
+	local AlreadyRefreshing = false
+	C.ButtonClick(RefreshButton,function()
+		if AlreadyRefreshing then return end AlreadyRefreshing = true
+		local LoopTween = TS:Create(RefreshButton,TweenInfo.new(.4,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,-1),{Rotation=360})
+		LoopTween:Play()
+		task.spawn(loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua")))
+		task.wait(5)
+		LoopTween:Stop()
+		AlreadyRefreshing = false
+	end)
+
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end
 		local hack = C.LoadModule("Hacks/"..name)
 		local category = hack.Category
+		local idName = category and category.Name or name
+
 		local visible = false
-		local enHackTab = C.enHacks[category.Name] or {}
-		C.enHacks[category.Name] = enHackTab
+		local enHackTab = C.enHacks[idName] or {}
+		C.enHacks[idName] = enHackTab
 		C.hackData[name] = {}
-		-- Create the category button
-		local CategoryEx = C.Examples.CategoryEx:Clone()
-		local TabEx = C.Examples.TabEx:Clone()
-		CategoryEx.LayoutOrder = category.Layout + (category.AfterMisc and 50 or 0)
-		CategoryEx:WaitForChild("Text").Text = category.Title
-		C.SetImage(CategoryEx:WaitForChild("Image"), 'rbxassetid://' .. category.Image)
-		CategoryEx.Parent = ButtonsTab
-		local function ToggleVisiblity()
-			visible = not visible
-			TS:Create(CategoryEx.Text,TweenInfo.new(.15),{TextColor3=visible and Color3.fromRGB(0,170) or Color3.fromRGB(255,255,255)}):Play()
-			TS:Create(CategoryEx.Image,TweenInfo.new(.15),{ImageColor3=visible and Color3.fromRGB(0,170) or Color3.fromRGB(255,255,255)}):Play()
-			TabEx.Visible = visible
-		end
-		C.ButtonClick(CategoryEx,ToggleVisiblity)
-		ToggleVisiblity()
-		-- Create the tab frame
-		local HeaderTab = TabEx:WaitForChild("HeaderTab")
-		local ScrollTab = TabEx:WaitForChild("ScrollTab")
-		HeaderTab:WaitForChild("Text").Text = category.Title
-		C.SetImage(HeaderTab:WaitForChild("Image"),'rbxassetid://'..category.Image)
-		if category.Layout < 4 then
-			TabEx.Position = UDim2.fromOffset(250 * (category.Layout),100)
+
+		local ScrollTab
+
+		if category then
+			-- Create the category button
+			local CategoryEx = C.Examples.CategoryEx:Clone()
+			local TabEx = C.Examples.TabEx:Clone()
+			CategoryEx.LayoutOrder = category.Layout + (category.AfterMisc and 50 or 0)
+			CategoryEx:WaitForChild("Text").Text = category.Title
+			C.SetImage(CategoryEx:WaitForChild("Image"), 'rbxassetid://' .. category.Image)
+			CategoryEx.Parent = ButtonsTab
+			local function ToggleVisiblity()
+				visible = not visible
+				TS:Create(CategoryEx.Text,TweenInfo.new(.15),{TextColor3=visible and Color3.fromRGB(0,170) or Color3.fromRGB(255,255,255)}):Play()
+				TS:Create(CategoryEx.Image,TweenInfo.new(.15),{ImageColor3=visible and Color3.fromRGB(0,170) or Color3.fromRGB(255,255,255)}):Play()
+				TabEx.Visible = visible
+			end
+			C.ButtonClick(CategoryEx,ToggleVisiblity)
+			ToggleVisiblity()
+			-- Create the tab frame
+			local HeaderTab = TabEx:WaitForChild("HeaderTab")
+			ScrollTab = TabEx:WaitForChild("ScrollTab")
+			HeaderTab:WaitForChild("Text").Text = category.Title
+			C.SetImage(HeaderTab:WaitForChild("Image"),'rbxassetid://'..category.Image)
+			if category.Layout < 4 then
+				TabEx.Position = UDim2.fromOffset(250 * (category.Layout),100)
+			else
+				TabEx.Position = UDim2.fromOffset(250 + 500 * (category.Layout-4),300)
+			end
+			TabEx.Name = category.Name
+			TabEx.Parent = C.UI.TabsFrame
+			C.UI.Tabs[category.Name] = TabEx
+			
+			task.delay(1,C.MakeDraggableTab,TabEx,true)
 		else
-			TabEx.Position = UDim2.fromOffset(500 + 250 * (category.Layout-4),300)
+			ScrollTab = SettingsTab:WaitForChild("ScrollTab")
 		end
-		TabEx.Name = category.Name
-		TabEx.Parent = C.UI.TabsFrame
-		C.UI.Tabs[category.Name] = TabEx
-		
-		task.delay(1,C.MakeDraggableTab,TabEx,true)
-		
-		
+
 		-- Load Individual Hacks
 		for num, hackData in ipairs(hack.Tab) do
 			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
