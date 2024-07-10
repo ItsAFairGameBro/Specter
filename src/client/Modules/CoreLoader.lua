@@ -80,11 +80,14 @@ return function(C, _SETTINGS)
 	local AlreadyRefreshing = false
 	C.ButtonClick(RefreshButton,function()
 		if AlreadyRefreshing then return end AlreadyRefreshing = true
-		local LoopTween = TS:Create(RefreshButton,TweenInfo.new(.4,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,-1),{Rotation=360})
+		local LoopTween = TS:Create(RefreshButton,TweenInfo.new(.8,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,-1),{Rotation=360})
 		LoopTween:Play()
 		task.spawn(loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua")))
 		task.wait(5)
-		LoopTween:Stop()
+		if C.Cleared then
+			return
+		end
+		LoopTween:Cancel()
 		AlreadyRefreshing = false
 	end)
 
