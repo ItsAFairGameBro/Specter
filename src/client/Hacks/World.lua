@@ -101,10 +101,10 @@ return function(C,Settings)
                 },Functs={},
 				Options = {
                     {
-						Type = Types.Slider,
+						Type = Types.Toggle,
 						Title = "Echo",
 						Tooltip = "What is said privately in the chat you repeat (using the chat function)",
-						Layout = 2,Default = true,
+						Layout = 2,Default = false,
 						Shortcut="Echo",
 					}
 				},
