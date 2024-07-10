@@ -226,12 +226,11 @@ return function(C,Settings)
 	
 	function C.SendGeneralMessage(message:string)
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
-			fake = string.gsub(fake, "\n", "\r")
-			C.StringWait(TCS,"TextChannels.RBXGeneral"):SendAsync(real..'\r'..fake)
+			C.StringWait(TCS,"TextChannels.RBXGeneral"):SendAsync(message)
 		elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-			C.StringWait(RS,"DefaultChatSystemChatEvents.SayMessageRequest"):FireServer(real..string.sub((" "):rep(155),#real)..fake,"All")
+			C.StringWait(RS,"DefaultChatSystemChatEvents.SayMessageRequest"):FireServer(message,"All")
 		else
-			error("Unknown TCS ChatVersion For SendGeneralMessage: "..tostring(TCS.ChatVersion))
+			error("Unknown TCS ChatVersion For SendGeneralMessage: "..TCS.ChatVersion.Name)
 		end
 	end
 end
