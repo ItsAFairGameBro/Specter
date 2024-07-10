@@ -211,7 +211,7 @@ return function(C, _SETTINGS)
 			local BindedKey = KeybindButton:WaitForChild("BindedKey")
 			function hackData:SetKeybind(key: Enum.KeyCode)
 				if key then
-					BindedKey.Text = key.Name
+					BindedKey.Text = key.Name:gsub("Slash","/")
 					C.AddKeybind(key,hackData)
 				else
 					BindedKey.Text = ""
