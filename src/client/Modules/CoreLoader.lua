@@ -101,7 +101,11 @@ return function(C, _SETTINGS)
 		local ScrollTab = TabEx:WaitForChild("ScrollTab")
 		HeaderTab:WaitForChild("Text").Text = category.Title
 		C.SetImage(HeaderTab:WaitForChild("Image"),'rbxassetid://'..category.Image)
-		TabEx.Position = UDim2.fromOffset(90 + 250 * (category.Layout),100)
+		if category.Layout < 4 then
+			TabEx.Position = UDim2.fromOffset(250 * (category.Layout),100)
+		else
+			TabEx.Position = UDim2.fromOffset(250 * (category.Layout-4),200)
+		end
 		TabEx.Name = category.Name
 		TabEx.Parent = C.UI.TabsFrame
 		C.UI.Tabs[category.Name] = TabEx
