@@ -20,6 +20,7 @@ return function(C,Settings)
 		end
 		return success, result
 	end
+	local SettingsPath = "SpecterV2/Settings"
 	local ProfileStoragePath = "SpecterV2/Profiles"
 	local SaveFileExtention = ".json"
 	local function CreateStoragePath(path)
@@ -71,7 +72,7 @@ return function(C,Settings)
 		end
 		local function internallySaveProfile()
 			local FilePath = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
-			local FilePath2 = ProfileStoragePath .. "/Settings" .. SaveFileExtention
+			local FilePath2 = SettingsPath .. SaveFileExtention
 			-- Create the data as a table
 			local SaveDict = {
 				Hacks = table.clone(C.enHacks)
@@ -103,10 +104,12 @@ return function(C,Settings)
 		end
 		local function internallyLoadProfile()
 			local path = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
-			local path2 = ProfileStoragePath .. "/Settings" .. SaveFileExtention
+			local path2 = SettingsPath .. SaveFileExtention
 			if C.isfile(path2) then
+				print("File Found!")
 				local decoded2 = HS:JSONDecode(C.readfile(path))
 				C.enHacks.Settings = decoded2.Settings
+				print("Set Settings To",tostring(decoded2.Settings))
 			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
@@ -118,7 +121,8 @@ return function(C,Settings)
 				return
 			end
 			local decoded = HS:JSONDecode(C.readfile(path))
-			for key, val in pairs(C.enHacks) do
+			for key, val in pairs(decoded) do
+				print("Set",key)
 				C.enHacks[key] = decoded.Hacks[key]
 			end
 		end
