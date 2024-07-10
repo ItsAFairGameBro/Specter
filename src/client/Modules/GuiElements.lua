@@ -25,8 +25,6 @@ local BottomFrame = Instance.new("Frame")
 local SaveButton = Instance.new("ImageLabel")	
 local Wait = Instance.new("TextLabel")	
 local UICorner_2 = Instance.new("UICorner")	
-local MenuButton = Instance.new("ImageLabel")	
-local TextLabel = Instance.new("TextLabel")	
 local UIListLayout_2 = Instance.new("UIListLayout")	
 local MiscDivider = Instance.new("Frame")	
 local MiscLabel = Instance.new("TextLabel")	
@@ -97,16 +95,6 @@ local UserTL = Instance.new("TextLabel")
 local EnterTB = Instance.new("TextBox")	
 local UICorner_10 = Instance.new("UICorner")	
 local LimitTL = Instance.new("TextLabel")	
-local TextboxEx = Instance.new("Frame")	
-local NameTL_5 = Instance.new("TextLabel")	
-local SetTB = Instance.new("TextBox")	
-local UICorner_11 = Instance.new("UICorner")	
-local LimitTL_2 = Instance.new("TextLabel")	
-local AddButton_2 = Instance.new("ImageButton")	
-local UICorner_12 = Instance.new("UICorner")	
-local CurTL = Instance.new("TextLabel")	
-local UICorner_13 = Instance.new("UICorner")	
-local DescTL = Instance.new("TextLabel")	
 local HighlightBackground = Instance.new("Frame")	
 local KeybindButton = Instance.new("ImageButton")	
 local BindedKey = Instance.new("TextLabel")	
@@ -115,20 +103,21 @@ local KeybindBacking = Instance.new("Frame")
 local UIGradient_5 = Instance.new("UIGradient")	
 local ToolTipHeaderFrame = Instance.new("Frame")	
 local ToolTipText = Instance.new("TextLabel")	
-local UICorner_14 = Instance.new("UICorner")	
+local UICorner_11 = Instance.new("UICorner")	
 local Notifications = Instance.new("Frame")	
 local NotificationEx = Instance.new("Frame")	
 local Timer = Instance.new("Frame")	
-local UICorner_15 = Instance.new("UICorner")	
+local UICorner_12 = Instance.new("UICorner")	
 local NotificationTitle = Instance.new("TextLabel")	
 local NotificationDesc = Instance.new("TextLabel")	
 local UITextSizeConstraint = Instance.new("UITextSizeConstraint")	
-local HUDBackgroundFade = Instance.new("Frame")	
+local HUDBackgroundFade = Instance.new("TextButton")	
 	
 --Properties:	
 	
 SpecterGUI.Name = "SpecterGUI"	
 	
+SpecterGUI.DisplayOrder = 6969	
 SpecterGUI.ResetOnSpawn = false	
 	
 MainHUD.Name = "MainHUD"	
@@ -294,35 +283,6 @@ Wait.TextWrapped = true
 	
 UICorner_2.CornerRadius = UDim.new(2, 0)	
 UICorner_2.Parent = Wait	
-	
-MenuButton.Name = "MenuButton"	
-MenuButton.Parent = BottomFrame	
-MenuButton.Active = true	
-MenuButton.AnchorPoint = Vector2.new(1, 0.5)	
-MenuButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
-MenuButton.BackgroundTransparency = 1.000	
-MenuButton.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-MenuButton.BorderSizePixel = 0	
-MenuButton.Position = UDim2.new(1, 0, 0.5, 0)	
-MenuButton.Size = UDim2.new(0.200000003, 0, 0.899999976, 0)	
-MenuButton.Image = "rbxassetid://9405921255"	
-MenuButton.ScaleType = Enum.ScaleType.Fit	
-	
-TextLabel.Parent = MenuButton	
-TextLabel.AnchorPoint = Vector2.new(0.5, 1)	
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
-TextLabel.BackgroundTransparency = 1.000	
-TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-TextLabel.BorderSizePixel = 0	
-TextLabel.Position = UDim2.new(0.5, 0, 1, 0)	
-TextLabel.Size = UDim2.new(1, 0, 0.5, 0)	
-TextLabel.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)	
-TextLabel.Text = "TBA"	
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)	
-TextLabel.TextScaled = true	
-TextLabel.TextSize = 14.000	
-TextLabel.TextStrokeTransparency = 0.000	
-TextLabel.TextWrapped = true	
 	
 UIListLayout_2.Parent = Buttons	
 UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder	
@@ -622,7 +582,6 @@ ScrollTab.Size = UDim2.new(1, 0, 0, 300)
 ScrollTab.ZIndex = 0	
 ScrollTab.AutomaticCanvasSize = Enum.AutomaticSize.Y	
 ScrollTab.BottomImage = "rbxassetid://3062505976"	
-ScrollTab.CanvasPosition = Vector2.new(0, 54)	
 ScrollTab.CanvasSize = UDim2.new(0, 0, 0, 0)	
 ScrollTab.MidImage = "rbxassetid://3062506202"	
 ScrollTab.TopImage = "rbxassetid://3062506445"	
@@ -1094,131 +1053,6 @@ LimitTL.TextStrokeTransparency = 0.000
 LimitTL.TextWrapped = true	
 LimitTL.TextXAlignment = Enum.TextXAlignment.Left	
 	
-TextboxEx.Name = "TextboxEx"	
-TextboxEx:AddTag("RemoveOnDestroy")	
-C.Examples.TextboxEx = TextboxEx	
-TextboxEx.AutomaticSize = Enum.AutomaticSize.Y	
-TextboxEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)	
-TextboxEx.BackgroundTransparency = 1.000	
-TextboxEx.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-TextboxEx.BorderSizePixel = 0	
-TextboxEx.Size = UDim2.new(1, 0, 0, 40)	
-	
-NameTL_5.Name = "NameTL"	
-NameTL_5.Parent = TextboxEx	
-NameTL_5.Active = true	
-NameTL_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
-NameTL_5.BackgroundTransparency = 1.000	
-NameTL_5.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-NameTL_5.BorderSizePixel = 0	
-NameTL_5.Position = UDim2.new(0.0500000007, 0, 0, 5)	
-NameTL_5.Size = UDim2.new(0.699999988, 0, 0, 30)	
-NameTL_5.ZIndex = 2	
-NameTL_5.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)	
-NameTL_5.Text = "AimAssist"	
-NameTL_5.TextColor3 = Color3.fromRGB(255, 255, 255)	
-NameTL_5.TextScaled = true	
-NameTL_5.TextSize = 14.000	
-NameTL_5.TextStrokeTransparency = 0.000	
-NameTL_5.TextWrapped = true	
-NameTL_5.TextXAlignment = Enum.TextXAlignment.Left	
-	
-SetTB.Name = "SetTB"	
-SetTB.Parent = TextboxEx	
-SetTB.BackgroundColor3 = Color3.fromRGB(188, 188, 188)	
-SetTB.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-SetTB.BorderSizePixel = 0	
-SetTB.Position = UDim2.new(0.0500000007, 0, 0, 40)	
-SetTB.Selectable = false	
-SetTB.Size = UDim2.new(0.730000019, 0, 0, 30)	
-SetTB.ZIndex = 2	
-SetTB.ClearTextOnFocus = false	
-SetTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)	
-SetTB.PlaceholderText = "Enter name here"	
-SetTB.Text = "suitedforbans10"	
-SetTB.TextColor3 = Color3.fromRGB(255, 255, 255)	
-SetTB.TextScaled = true	
-SetTB.TextSize = 14.000	
-SetTB.TextStrokeTransparency = 0.000	
-SetTB.TextWrapped = true	
-	
-UICorner_11.Parent = SetTB	
-	
-LimitTL_2.Name = "LimitTL"	
-LimitTL_2.Parent = TextboxEx	
-LimitTL_2.Active = true	
-LimitTL_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
-LimitTL_2.BackgroundTransparency = 1.000	
-LimitTL_2.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-LimitTL_2.BorderSizePixel = 0	
-LimitTL_2.Position = UDim2.new(0.789999783, 0, 0, 5)	
-LimitTL_2.Size = UDim2.new(0.177391246, 0, 0, 30)	
-LimitTL_2.ZIndex = 2	
-LimitTL_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)	
-LimitTL_2.Text = "0/50"	
-LimitTL_2.TextColor3 = Color3.fromRGB(255, 255, 255)	
-LimitTL_2.TextScaled = true	
-LimitTL_2.TextSize = 14.000	
-LimitTL_2.TextStrokeTransparency = 0.000	
-LimitTL_2.TextWrapped = true	
-LimitTL_2.TextXAlignment = Enum.TextXAlignment.Left	
-	
-AddButton_2.Name = "AddButton"	
-AddButton_2.Parent = TextboxEx	
-AddButton_2.AnchorPoint = Vector2.new(1, 0)	
-AddButton_2.BackgroundColor3 = Color3.fromRGB(45, 45, 45)	
-AddButton_2.BackgroundTransparency = 1.000	
-AddButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-AddButton_2.BorderSizePixel = 0	
-AddButton_2.Position = UDim2.new(0.970000029, 0, 0, 40)	
-AddButton_2.Size = UDim2.new(0.150000006, 0, 0, 30)	
-AddButton_2.Image = "rbxassetid://14189347195"	
-AddButton_2.ImageColor3 = Color3.fromRGB(255, 255, 0)	
-AddButton_2.ScaleType = Enum.ScaleType.Fit	
-	
-UICorner_12.Parent = AddButton_2	
-	
-CurTL.Name = "CurTL"	
-CurTL.Parent = TextboxEx	
-CurTL.Active = true	
-CurTL.BackgroundColor3 = Color3.fromRGB(188, 188, 188)	
-CurTL.BackgroundTransparency = 0.350	
-CurTL.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-CurTL.BorderSizePixel = 0	
-CurTL.Position = UDim2.new(0.0500000007, 0, 0, 40)	
-CurTL.Size = UDim2.new(0.730000019, 0, 0, 30)	
-CurTL.Visible = false	
-CurTL.ZIndex = 2	
-CurTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)	
-CurTL.Text = "suitedforbans10"	
-CurTL.TextColor3 = Color3.fromRGB(255, 255, 255)	
-CurTL.TextScaled = true	
-CurTL.TextSize = 14.000	
-CurTL.TextStrokeTransparency = 0.100	
-CurTL.TextTransparency = 0.100	
-CurTL.TextWrapped = true	
-	
-UICorner_13.Parent = CurTL	
-	
-DescTL.Name = "DescTL"	
-DescTL.Parent = TextboxEx	
-DescTL.Active = true	
-DescTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)	
-DescTL.BackgroundTransparency = 1.000	
-DescTL.BorderColor3 = Color3.fromRGB(0, 0, 0)	
-DescTL.BorderSizePixel = 0	
-DescTL.Position = UDim2.new(0.0500000007, 0, 0, 72)	
-DescTL.Size = UDim2.new(0.699999988, 0, 0, 18)	
-DescTL.Visible = false	
-DescTL.ZIndex = 2	
-DescTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)	
-DescTL.Text = "Click above to change"	
-DescTL.TextColor3 = Color3.fromRGB(255, 255, 255)	
-DescTL.TextScaled = true	
-DescTL.TextSize = 14.000	
-DescTL.TextStrokeTransparency = 0.000	
-DescTL.TextWrapped = true	
-	
 HighlightBackground.Name = "HighlightBackground"	
 HighlightBackground.Parent = HackButtonEx	
 HighlightBackground.BackgroundColor3 = Color3.fromRGB(0, 255, 60)	
@@ -1324,8 +1158,8 @@ ToolTipText.TextSize = 22.000
 ToolTipText.TextStrokeTransparency = 0.000	
 ToolTipText.TextWrapped = true	
 	
-UICorner_14.CornerRadius = UDim.new(0.400000006, 0)	
-UICorner_14.Parent = ToolTipHeaderFrame	
+UICorner_11.CornerRadius = UDim.new(0.400000006, 0)	
+UICorner_11.Parent = ToolTipHeaderFrame	
 	
 Notifications.Name = "Notifications"	
 Notifications.Parent = SpecterGUI	
@@ -1360,8 +1194,8 @@ Timer.Position = UDim2.new(0, 0, 1, -15)
 Timer.Size = UDim2.new(1, 0, 0, 3)	
 Timer.ZIndex = 3	
 	
-UICorner_15.CornerRadius = UDim.new(0, 20)	
-UICorner_15.Parent = NotificationEx	
+UICorner_12.CornerRadius = UDim.new(0, 20)	
+UICorner_12.Parent = NotificationEx	
 	
 NotificationTitle.Name = "NotificationTitle"	
 NotificationTitle.Parent = NotificationEx	
@@ -1405,6 +1239,7 @@ UITextSizeConstraint.MaxTextSize = 44
 HUDBackgroundFade.Name = "HUDBackgroundFade"	
 HUDBackgroundFade.Parent = SpecterGUI	
 C.UI.HUDBackgroundFade = HUDBackgroundFade	
+HUDBackgroundFade.Active = false	
 HUDBackgroundFade.AnchorPoint = Vector2.new(0.5, 0.5)	
 HUDBackgroundFade.BackgroundColor3 = Color3.fromRGB(6, 6, 6)	
 HUDBackgroundFade.BackgroundTransparency = 1.000	
@@ -1412,8 +1247,10 @@ HUDBackgroundFade.BorderColor3 = Color3.fromRGB(0, 0, 0)
 HUDBackgroundFade.BorderSizePixel = 0	
 HUDBackgroundFade.LayoutOrder = -30	
 HUDBackgroundFade.Position = UDim2.new(0.5, 0, 0.5, 0)	
+HUDBackgroundFade.Selectable = false	
 HUDBackgroundFade.Size = UDim2.new(4, 0, 4, 0)	
-HUDBackgroundFade.ZIndex = -30
+HUDBackgroundFade.ZIndex = -30	
+HUDBackgroundFade.Text = ""
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 
