@@ -168,7 +168,7 @@ return function(C, _SETTINGS)
 			end			
 			--Expand Button
 			local ViewSettingsVisible = true
-			if #hackData.Options == 0 then
+			if hackData.Options and #hackData.Options == 0 then
 				HackExpand.Visible = false
 				ViewSettingsVisible = false
 			else
