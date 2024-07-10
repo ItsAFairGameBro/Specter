@@ -103,6 +103,7 @@ return function(C,Settings)
 			return
 		end
 		local function internallyLoadProfile()
+			C.enHacks = C.enHacks or {}
 			local path = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
 			local path2 = SettingsPath .. SaveFileExtention
 			if C.isfile(path2) then
@@ -125,6 +126,7 @@ return function(C,Settings)
 			local decoded = HS:JSONDecode(rawFile)
 			print("File Length",#rawFile)
 			for key, val in pairs(decoded) do
+				print("Set Key=",key)
 				C.enHacks[key] = decoded.Hacks[key]
 			end
 		end

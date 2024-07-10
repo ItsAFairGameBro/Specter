@@ -10,15 +10,9 @@ return function(C,Settings)
 		Tab = {
 			{
 				Title = "Developer",
-				Tooltip = "This is designed for developers only; it includes tools that are useful for production",
+				Tooltip = "This is designed for developers only; it includes tools that are useful for production (REQUIRES REFRESH)",
 				Layout = 1,
 				Shortcut = "DeveloperMode",
-				Functs={},
-				Activate = function(self,newValue)
-					print("Developer!")
-				end,
-                Events = {},
-				Options = {},
 			},
 		}
 	}
