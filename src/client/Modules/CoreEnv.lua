@@ -106,8 +106,11 @@ return function(C,Settings)
 			local path = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
 			local path2 = SettingsPath .. SaveFileExtention
 			if C.isfile(path2) then
-				local decoded2 = HS:JSONDecode(C.readfile(path2))
+				local rawFile2 = C.readfile(path2)
+				local decoded2 = HS:JSONDecode(rawFile2)
 				C.enHacks.Settings = decoded2.Settings
+				print("Rawfile2",#rawFile2)
+				print("Set SEttings",tostring(decoded2.Settings))
 			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
@@ -118,7 +121,9 @@ return function(C,Settings)
 				end
 				return
 			end
-			local decoded = HS:JSONDecode(C.readfile(path))
+			local rawFile = C.readfile(path)
+			local decoded = HS:JSONDecode(rawFile)
+			print("File Length",#rawFile)
 			for key, val in pairs(decoded) do
 				C.enHacks[key] = decoded.Hacks[key]
 			end
