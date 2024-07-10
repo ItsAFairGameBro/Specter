@@ -1329,6 +1329,7 @@ UITextSizeConstraint.MaxTextSize = 44
 HUDBackgroundFade.Name = "HUDBackgroundFade"	
 HUDBackgroundFade.Parent = SpecterGUI	
 C.UI.HUDBackgroundFade = HUDBackgroundFade	
+HUDBackgroundFade.Active = false	
 HUDBackgroundFade.AnchorPoint = Vector2.new(0.5, 0.5)	
 HUDBackgroundFade.BackgroundColor3 = Color3.fromRGB(6, 6, 6)	
 HUDBackgroundFade.BackgroundTransparency = 1.000	
