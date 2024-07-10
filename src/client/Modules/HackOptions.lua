@@ -329,7 +329,7 @@ return function(C,Settings)
 			self:SetValue(self.SetTB.Text, false)
 		end)
 
-		C.ButtonClick(newFrame:WaitForChild("AddButton"),function()
+		C.ButtonClick(newFrame:WaitForChild("EnterButton"),function()
 			self:SetValue(self.SetTB.Text)
 		end)
 
