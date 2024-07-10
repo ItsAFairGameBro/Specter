@@ -62,6 +62,7 @@ return function(C,Settings)
                     end
                     local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
                     table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg,recipient)
+                        print(msg,recipient)
                         msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
 						local setChannel,moveon,hidden = nil,false,true
 						local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
@@ -93,7 +94,7 @@ return function(C,Settings)
 				end,
                 Events = {
                     OthersPlayerAdded=function(self,theirPlr,firstRun)
-                        if not self.EnTbl.En then return end
+                        if not self.EnTbl.En or firstRun then return end
 						self:AddToChat(theirPlr)
 					end,
                 },Functs={},
