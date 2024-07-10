@@ -45,9 +45,7 @@ return function(C,Settings)
 
 					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
-					if C.AvailableHacks.Utility[3].Funct then
-						C.AvailableHacks.Utility[3].Funct:Disconnect()
-					end
+					
 					table.insert(self.Functs,chatBar:GetPropertyChangedSignal("TextTransparency"):Connect(function()
 						chatBar.TextTransparency = 0
 					end))
