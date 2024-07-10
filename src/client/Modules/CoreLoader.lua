@@ -45,6 +45,11 @@ return function(C, _SETTINGS)
 	C.SetImage(SupportedFrame:WaitForChild("Image"),"https://www.roblox.com/Thumbs/Asset.ashx?Width=768&Height=432&AssetID="..game.PlaceId)
 	--end
 
+	--Add developer settings
+	if (C.enHacks.Settings and C.enHacks.Settings.DeveloperMode.En) or C.isStudio then
+		table.insert(ModulesToRun,"Developer")
+	end
+
 	C.ButtonClick(HeaderTab:WaitForChild("SettingsButton"),function()
 		ButtonsTab.Visible = not ButtonsTab.Visible
 		SettingsTab.Visible = not SettingsTab.Visible
@@ -79,7 +84,7 @@ return function(C, _SETTINGS)
 	local RefreshButton = SettingsTab:WaitForChild("BottomFrame"):WaitForChild("RefreshButton")
 	local AlreadyRefreshing = false
 	C.ButtonClick(RefreshButton,function()
-		if AlreadyRefreshing then return end AlreadyRefreshing = true
+		if AlreadyRefreshing or C.isStudio then return end AlreadyRefreshing = true
 		local LoopTween = TS:Create(RefreshButton,TweenInfo.new(.8,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,-1),{Rotation=360})
 		LoopTween:Play()
 		task.spawn(loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua")))

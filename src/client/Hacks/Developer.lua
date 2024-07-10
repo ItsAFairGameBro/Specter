@@ -17,7 +17,7 @@ return function(C,Settings)
 				Layout = 1,Type="NoToggle",Keybind=Enum.KeyCode.F9.Name,
 				Shortcut = "DevelopersConsole",
 				Activate = function(self,newValue)
-					SG:SetCore("DevelopersConsole", not SG:GetCore("DevelopersConsole"))
+					SG:SetCore("DevConsoleVisible", not SG:GetCore("DevConsoleVisible"))
 				end,
 				Options = {
 					
@@ -26,7 +26,7 @@ return function(C,Settings)
             {
 				Title = "Collisions Groups",
 				Tooltip = "Prints Collisions Groups To Console",
-				Layout = 2,Type="NoToggle",
+				Layout = 3,Type="NoToggle",
 				Shortcut = "CollisionGroups",
 				Activate = function(self,newValue)
                     local CollisionGroups = PhysicsS:GetRegisteredCollisionGroups()
@@ -35,17 +35,17 @@ return function(C,Settings)
                         for num, val2 in pairs(CollisionGroups) do
                             print("\t"..val2.name,PhysicsS:CollisionGroupsAreCollidable(val2.name,val.name),"\n")
                         end
-                    end    
+                    end
 				end,
 				Options = {
 					
 				}
 			},
             {
-				Title = "Collisions Groups",
-				Tooltip = "Prints Collisions Groups To Console",
-				Layout = 3,
-				Shortcut = "CollisionGroups",
+				Title = "Teleport Detection",
+				Tooltip = "Prints whenever any parts of your character are teleported!",
+				Layout = 4,
+				Shortcut = "TeleportDetection",
                 WhitelistedNames={"UpperTorso", "Torso", "Head", "Head", "HumanoidRootPart"} ,
 				Activate = function(self,newValue)
                     if not newValue or not C.char then return end
@@ -77,7 +77,7 @@ return function(C,Settings)
                         for _,instance in ipairs(ignoreList) do
                             if instance:IsAncestorOf(obj) then
                                 return
-                            end 
+                            end
                         end
                         local printStr
                         for attribute, val in pairs(obj:GetAttributes()) do
@@ -109,8 +109,22 @@ return function(C,Settings)
                     local start = os.clock()
                     
                     warn("[Attribute Search] Search Beggining...")
+
+                    local Count = C.comma_value(loop(game))
                     
-                    warn(("[Attribute Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(C.comma_value(loop(game)),os.clock()-start))     
+                    warn(("[Attribute Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
+				end,
+				Options = {
+					
+				}
+			},
+            {
+				Title = "Clear Development Console",
+				Tooltip = "Clears development console entirely",
+				Layout = 6,Type="NoToggle",
+				Shortcut = "ClearDevelopmentConsole",
+				Activate = function(self,newValue)
+                    
 				end,
 				Options = {
 					

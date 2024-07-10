@@ -190,6 +190,17 @@ return function(C,Settings)
 		newPart:AddTag("RemoveOnDestroy")
 		DS:AddItem(newPart,timer or 5)
 	end
+
+	function C.comma_value(amount: number)
+		local formatted = amount
+		while true do  
+		  formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+		  if (k==0) then
+			break
+		  end
+		end
+		return formatted	  
+	end
 		
 	local UserCache = {}
 	function C.GetUserNameAndId(identification: string|number)
