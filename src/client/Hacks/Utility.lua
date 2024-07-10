@@ -78,27 +78,6 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					local EnTbl = self.EnTbl.En and self.EnTbl or {}
-					--Disable TouchGui
-					if UIS.TouchEnabled then
-						local ContextActionGui = C.PlayerGui:WaitForChild("ContextActionGui")
-						local TouchGui = C.PlayerGui:WaitForChild("TouchGui");
-						local TouchGui2 = C.gameName == "FlagWars" and C.PlayerGui:WaitForChild("Mobile UI")
-						local function updateTouchScreenEnability()
-							TouchGui.Enabled = not EnTbl.DisableTouchGUI
-							ContextActionGui.Enabled = not EnTbl.DisableTouchGUI
-							if TouchGui2 then
-								TouchGui2.Enabled = not EnTbl.DisableTouchGUI
-							end
-						end
-						if EnTbl.DisableTouchGUI then
-							table.insert(self.Functs,TouchGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-							table.insert(self.Functs,ContextActionGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-							if TouchGui2 then
-								table.insert(self.Functs,TouchGui2:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-							end	
-						end
-						updateTouchScreenEnability()	
-					end
 					--Lock Camera Orientation
 					local function UpdateCamera()
 						local Camera = workspace.CurrentCamera
@@ -115,6 +94,32 @@ return function(C,Settings)
 					UpdateCamera()
 					
 					self:SetAutoJump()
+
+					--Disable TouchGui (if it exists)
+					if UIS.TouchEnabled then
+						local ContextActionGui = C.PlayerGui:WaitForChild("ContextActionGui",3)
+						local TouchGui = C.PlayerGui:WaitForChild("TouchGui");
+						local TouchGui2 = C.gameName == "FlagWars" and C.PlayerGui:WaitForChild("Mobile UI")
+						local function updateTouchScreenEnability()
+							TouchGui.Enabled = not EnTbl.DisableTouchGUI
+							if ContextActionGui then
+								ContextActionGui.Enabled = not EnTbl.DisableTouchGUI
+							end
+							if TouchGui2 then
+								TouchGui2.Enabled = not EnTbl.DisableTouchGUI
+							end
+						end
+						if EnTbl.DisableTouchGUI then
+							table.insert(self.Functs,TouchGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
+							if ContextActionGui then
+								table.insert(self.Functs,ContextActionGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
+							end
+							if TouchGui2 then
+								table.insert(self.Functs,TouchGui2:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
+							end	
+						end
+						updateTouchScreenEnability()		
+					end
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
