@@ -104,7 +104,7 @@ return function(C, _SETTINGS)
 		if category.Layout < 4 then
 			TabEx.Position = UDim2.fromOffset(250 * (category.Layout),100)
 		else
-			TabEx.Position = UDim2.fromOffset(250 * (category.Layout-4),200)
+			TabEx.Position = UDim2.fromOffset(500 + 250 * (category.Layout-4),300)
 		end
 		TabEx.Name = category.Name
 		TabEx.Parent = C.UI.TabsFrame

@@ -53,6 +53,7 @@ return function(C,Settings)
 		C.UI.HUDEn = enabled
 		C.UI.MainHUD.Visible = enabled
 		C.UI.MainHUD.Active = enabled
+		C.UI.MainHUD.Interactable = enabled
 		TS:Create(C.UI.HUDBackgroundFade,TweenInfo.new(.3),{BackgroundTransparency=(enabled and 0.3 or 1)}):Play()
 	end
 	local function ToggleOpenHUDKeyPress(actionName,inputState)
