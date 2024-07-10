@@ -1,6 +1,8 @@
 local CS = game:GetService("CollectionService")
 local HS = game:GetService("HttpService")
 local RunS = game:GetService("RunService")
+local TCS = game:GetService("TextChatService")
+local SG = game:GetService("StarterGui")
 return function(C,Settings)
 	function C.API(service,method,tries,...)
 		tries = tries or 3
@@ -115,7 +117,51 @@ return function(C,Settings)
 		end
 		return success, result
 	end
+	--Chat
+	function C.CreateSysMessage(message,color,typeText)
+		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+			(TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)):DisplaySystemMessage(message)
+		else
+			SG:SetCore("ChatMakeSystemMessage",  { Text = `[{typeText or "Sys"}] {message}`, Color = color or Color3.fromRGB(255), 
+				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
+		end
+	end
+	--Yieldable Handler
+	function C.RunFunctionWithYield(func, args, timeout)
+		--RunFunc((Function)func, (Table)args, (Number)timeout)
 	
+		local bindableEvent = Instance.new("BindableEvent")
+		bindableEvent:AddTag("RemoveOnDestroy")
+		local response
+		local success = false
+	
+		-- Coroutine to call the function
+		task.spawn(function()
+			local functionResult
+			success, functionResult = pcall(function()
+				if args then
+					return func(unpack(args))
+				else
+					return func()
+				end
+			end)
+			bindableEvent:Fire(success, functionResult)
+		end)
+	
+		-- Timer for the timeout
+		task.delay(timeout, function()
+			if not bindableEvent then
+				return
+			end
+			bindableEvent:Fire(false, "Function call timed out")
+		end)
+	
+		-- Wait for either the function to complete or the timeout
+		local success, result = bindableEvent.Event:Wait()
+		bindableEvent:Destroy()
+		
+		return success, result
+	end
 	--Destroy Function
 	function C:Destroy()
 		assert(C==self, "C is not the called function")
@@ -134,7 +180,7 @@ return function(C,Settings)
 		for actionName, hackTbl in pairs(C.BindedActions) do
 			C.UnbindAction(actionName)
 		end
-		
+
 		for key, dict in pairs(C.playerfuncts) do
 			C.ClearFunctTbl(dict)
 		end

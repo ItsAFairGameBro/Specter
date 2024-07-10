@@ -37,7 +37,7 @@ return function(C,Settings)
 	--Set Binds for UI
 	local eventsAllowed={
 		"MyCharAdded","CharAdded","OthersCharAdded",
-		"MyPlayerJoin","PlayerJoin","OthersPlayerJoin"
+		"MyPlayerAdded","PlayerAdded","OthersPlayerAdded"
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do

@@ -1,6 +1,7 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local TCS = game:GetService("TextChatService")
 local RS = game:GetService"ReplicatedStorage"
+local PS = game:GetService"Players"
 local CG = game:GetService("CoreGui")
 return function(C,Settings)
 	return {
@@ -45,6 +46,58 @@ return function(C,Settings)
 						Layout = 2,Default = "{Team} You are now on the 'Admins' team.",Min=1,Max=100,
 						Shortcut="Fake",
 					}
+				},
+			},
+            {
+				Title = "Chat Spy",
+				Tooltip = "Puts ALL whispers and team chat messages not visible to you into the chat!",
+				Layout = 2,
+				Shortcut = "ChatSpy",Default=true,
+                AddToChat = function(self,theirPlr)
+                    local DefaultChatSystemChatEvents = RS:WaitForChild("DefaultChatSystemChatEvents",10)
+                    local Config = {public = false}
+                    if not DefaultChatSystemChatEvents then
+                        return
+                    end
+                    local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
+                    table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg)
+                        msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
+						local setChannel,moveon,hidden = nil,false,true
+						local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
+							if (packet.Message==msg:sub(#msg-#packet.Message+1) and (channel=="All") and packet.SpeakerUserId==theirPlr.UserId)
+								or (channel=="Team" and Config.public==false and PS[packet.FromSpeaker].Team==C.plr.Team) then
+								hidden = false
+							end
+                            setChannel,moveon = channel, true
+						end)
+                        task.delay(C.plr:GetNetworkPing()*3,function()
+                            moveon=true
+                        end)
+                        while not moveon do
+                            RS.RenderStepped:Wait()
+                        end
+						conn:Disconnect()
+						if hidden then
+							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{setChannel} Spy`)
+						end
+                    end))
+                end,
+				Activate = function(self,newValue)
+                    if not newValue then return end
+					for num, theirPlr in ipairs(PS:GetPlayers()) do
+                        if theirPlr ~= C.plr then
+                            self:AddToChat(theirPlr)
+                        end
+                    end
+				end,
+                Events = {
+                    OthersPlayerAdded=function(self,theirPlr,firstRun)
+                        if not self.EnTbl.En then return end
+						self:AddToChat(theirPlr)
+					end,
+                },Functs={},
+				Options = {
+					
 				},
 			},
 		}
