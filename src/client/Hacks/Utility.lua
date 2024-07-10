@@ -65,7 +65,7 @@ return function(C,Settings)
 					end
 				end,
 				Activate = function(self,newValue)
-					local EnTbl = self.EnTbl.En and self.EnTbl.En or {}
+					local EnTbl = self.EnTbl.En and self.EnTbl or {}
 					--Disable TouchGui
 					if UIS.TouchEnabled then
 						local ContextActionGui = C.PlayerGui:WaitForChild("ContextActionGui")
@@ -106,7 +106,6 @@ return function(C,Settings)
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						print("New char",theirPlr.Name,firstRun)
 						self:SetAutoJump()
 						--C.DoActivate(self.Activate,self,self.EnTbl.En)
 					end,
