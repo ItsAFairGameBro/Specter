@@ -2,6 +2,7 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Text
 local TCS = game:GetService("TextChatService")
 local RS = game:GetService"ReplicatedStorage"
 local PS = game:GetService"Players"
+local RunS = game:GetService("RunService")
 local CG = game:GetService("CoreGui")
 return function(C,Settings)
 	return {
@@ -74,7 +75,7 @@ return function(C,Settings)
                             moveon=true
                         end)
                         while not moveon do
-                            RS.RenderStepped:Wait()
+                            RunS.RenderStepped:Wait()
                         end
 						conn:Disconnect()
 						if hidden then
