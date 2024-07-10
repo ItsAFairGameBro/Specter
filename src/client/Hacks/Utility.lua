@@ -4,6 +4,7 @@ local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
+local SG = game:GetService("StarterGui")
 return function(C,Settings)
 	return {
 		Category = {
@@ -39,14 +40,26 @@ return function(C,Settings)
 				Tooltip = "Simulates the chat key press",
 				Layout = 99,
 				Shortcut = "Chat",Keybind="Slash",
+				SlashPressedOld = function(self)
+					local chatBar = C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar")
+
+					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+					if C.AvailableHacks.Utility[3].Funct then
+						C.AvailableHacks.Utility[3].Funct:Disconnect()
+					end
+					table.insert(self.Functs,chatBar:GetPropertyChangedSignal("TextTransparency"):Connect(function()
+						chatBar.TextTransparency = 0
+					end))
+					chatBar.TextTransparency = 0
+					RunS.RenderStepped:Wait()
+					chatBar:CaptureFocus()
+					task.wait(2.5)
+					C.ClearFunctTbl(self.Functs)
+				end,
 				Activate = function(self,newValue)
 					if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-						local ChatBar = C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar")
-						ChatBar:CaptureFocus()
-						task.wait()
-						ChatBar:ReleaseFocus()
-						task.wait(.4)
-						ChatBar:CaptureFocus()
+						self:SlashPressedOld()
 					else
 						C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
 					end
