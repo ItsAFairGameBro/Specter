@@ -67,7 +67,7 @@ return function(C,Settings)
 				Options = {},
 			},
 			{
-				Title = "Client/Mobile Improvements",
+				Title = "Improvements",
 				Tooltip = "Many Client Improvement Settings can be found here!",
 				Layout = 103,
 				Shortcut = "ClientImprovement",Functs={},Default=true,

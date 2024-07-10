@@ -23,13 +23,12 @@ return function(C,Settings)
                     local fake = self.EnTbl.Fake
                     if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
                         fake = string.gsub(fake, "\n", "\r")
-                        TCS.TextChannels.RBXGeneral:SendAsync(real..'\r'..fake)
+                        C.SendGeneralMessage(real..'\r'..fake)
                     elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-                        RS.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(real..string.sub((" "):rep(155),#real)..fake,"All")
+                        C.SendGeneralMessage(real..string.sub((" "):rep(155),#real)..fake)
                     else
-                        error("Unknown TCS ChatVersion: "..tostring(TCS.ChatVersion))
+                        error("Unknown TCS ChatVersion For `Fake Chat`: "..tostring(TCS.ChatVersion))
                     end
-                    
 				end,
                 Events = {},
 				Options = {
@@ -70,7 +69,6 @@ return function(C,Settings)
 								hidden = false
 							end
                             setChannel,moveon = channel or packet.OriginalChannel, true
-                            print("Reieved",packet.Message)
 						end)
                         task.delay(C.plr:GetNetworkPing()*3,function()
                             moveon=true
@@ -81,6 +79,9 @@ return function(C,Settings)
 						conn:Disconnect()
 						if hidden then
 							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{setChannel or "Chat"} Spy`)
+                            if self.EnTbl.Echo then
+                                C.SendGeneralMessage("["..theirPlr.Name.."]: "..msg)
+                            end
 						end
                     end))
                 end,
@@ -99,7 +100,13 @@ return function(C,Settings)
 					end,
                 },Functs={},
 				Options = {
-					
+                    {
+						Type = Types.Slider,
+						Title = "Echo",
+						Tooltip = "What is said privately in the chat you repeat (using the chat function)",
+						Layout = 2,Default = true,
+						Shortcut="Echo",
+					}
 				},
 			},
 		}

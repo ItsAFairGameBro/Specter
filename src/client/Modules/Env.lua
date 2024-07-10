@@ -1,6 +1,8 @@
 local CAS = game:GetService("ContextActionService")
 local CS = game:GetService("CollectionService")
 local PS = game:GetService("Players")
+local TCS = game:GetService"TextChatService"
+local RS = game:GetService"ReplicatedStorage"
 local DS = game:GetService('Debris')
 return function(C,Settings)
 	function C.TblAdd(tbl,val)
@@ -222,4 +224,14 @@ return function(C,Settings)
 		return true, Username, UserID
 	end
 	
+	function C.SendGeneralMessage(message:string)
+		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+			fake = string.gsub(fake, "\n", "\r")
+			C.StringWait(TCS,"TextChannels.RBXGeneral"):SendAsync(real..'\r'..fake)
+		elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+			C.StringWait(RS,"DefaultChatSystemChatEvents.SayMessageRequest"):FireServer(real..string.sub((" "):rep(155),#real)..fake,"All")
+		else
+			error("Unknown TCS ChatVersion For SendGeneralMessage: "..tostring(TCS.ChatVersion))
+		end
+	end
 end
