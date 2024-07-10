@@ -162,7 +162,7 @@ return function(C, _SETTINGS)
 			end
 
 			--Options Activation
-			for num, optionData in ipairs(hackData.Options) do
+			for num, optionData in ipairs(hackData.Options or {}) do
 				optionData.Parent = hackData
 				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
 			end			

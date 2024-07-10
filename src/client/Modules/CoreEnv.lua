@@ -125,9 +125,9 @@ return function(C,Settings)
 			local rawFile = C.readfile(path)
 			local decoded = HS:JSONDecode(rawFile)
 			print("File Length",#rawFile)
-			for key, val in pairs(decoded) do
+			for key, val in pairs(decoded.Hacks) do
 				print("Set Key=",key)
-				C.enHacks[key] = decoded.Hacks[key]
+				C.enHacks[key] = val
 			end
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
