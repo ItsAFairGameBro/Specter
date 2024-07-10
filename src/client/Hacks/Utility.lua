@@ -59,9 +59,9 @@ return function(C,Settings)
 				Tooltip = "Many Client Improvement Settings can be found here!",
 				Layout = 103,
 				Shortcut = "ClientImprovement",Functs={},Default=true,
-				SetAutoJump = function(en: boolean)
+				SetAutoJump = function(self)
 					if C.human then
-						C.human.AutoJumpEnabled = (not self.EnTbl.En or not self.EnTbl.PreventAutoJump) and UIS.TouchEnabled
+						C.human.AutoJumpEnabled = (not self.EnTbl.En or not self.EnTbl.PreventAutoJump) and UIS.TouchEnabled and C.Defaults.AutoJumpEnabled
 					end
 				end,
 				Activate = function(self,newValue)
@@ -105,7 +105,7 @@ return function(C,Settings)
 					self:SetAutoJump()
 				end,
                 Events = {
-					CharAdded=function(self,theirPlr,theirChar,firstRun)
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						print("New char",theirPlr.Name,firstRun)
 						self:SetAutoJump()
 						--C.DoActivate(self.Activate,self,self.EnTbl.En)

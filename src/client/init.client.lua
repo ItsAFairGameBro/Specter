@@ -51,7 +51,7 @@ if C.getgenv().Defaults then
 	C.Defaults = C.getgenv().Defaults
 else
 	C.Defaults = {WalkSpeed = SP.CharacterWalkSpeed, JumpPower = SP.CharacterJumpPower, Gravity = workspace.Gravity,
-		Username = C.plr.Name,DisplayName = C.plr.DisplayName}
+		Username = C.plr.Name,DisplayName = C.plr.DisplayName, AutoJumpEnabled = SP.AutoJumpEnabled}
 	C.getgenv().Defaults = C.Defaults
 end
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")

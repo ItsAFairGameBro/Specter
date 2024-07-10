@@ -135,7 +135,7 @@ return function(C,Settings)
 					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
 				end,
 				Events = {
-					CharAdded=function(self,theirPlr,theirChar,firstRun)
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self.Activate,self,self.EnTbl.En)
 					end,
 				},
@@ -223,7 +223,7 @@ return function(C,Settings)
 					table.insert(self.Functs,RunS.PreSimulation:Connect(self.Update))
 				end,
 				Events = {
-					CharAdded=function(self,theirPlr,theirChar,firstRun)
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self.Activate,self,self.EnTbl.En)
 					end,
 				},
@@ -315,7 +315,7 @@ return function(C,Settings)
 					self:SetProperty(true)
 				end,
 				Events = {
-					CharAdded=function(self,theirPlr,theirChar,firstRun)
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self.Activate,self,self.EnTbl.En)
 					end,
 				},
@@ -359,7 +359,7 @@ return function(C,Settings)
 					self:SetProperty(true)
 				end,
 				Events = {
-					CharAdded=function(self,theirPlr,theirChar,firstRun)
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self.Activate,self,self.EnTbl.En)
 					end,
 				},
