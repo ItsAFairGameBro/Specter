@@ -106,10 +106,8 @@ return function(C,Settings)
 			local path = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
 			local path2 = SettingsPath .. SaveFileExtention
 			if C.isfile(path2) then
-				print("File Found!")
-				local decoded2 = HS:JSONDecode(C.readfile(path))
+				local decoded2 = HS:JSONDecode(C.readfile(path2))
 				C.enHacks.Settings = decoded2.Settings
-				print("Set Settings To",tostring(decoded2.Settings))
 			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
@@ -122,7 +120,6 @@ return function(C,Settings)
 			end
 			local decoded = HS:JSONDecode(C.readfile(path))
 			for key, val in pairs(decoded) do
-				print("Set",key)
 				C.enHacks[key] = decoded.Hacks[key]
 			end
 		end
