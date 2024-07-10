@@ -61,7 +61,7 @@ return function(C,Settings)
                         return
                     end
                     local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
-                    table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg)
+                    table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg,recipient)
                         msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
 						local setChannel,moveon,hidden = nil,false,true
 						local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
@@ -79,7 +79,7 @@ return function(C,Settings)
                         end
 						conn:Disconnect()
 						if hidden then
-							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{setChannel} Spy`)
+							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{setChannel or tostring(recipient) or "Chat"} Spy`)
 						end
                     end))
                 end,
