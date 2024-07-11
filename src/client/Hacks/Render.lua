@@ -17,8 +17,9 @@ return function(C,Settings)
 				Layout = 1,Default=true,Deb=0,
 				Shortcut = "PlayerHighlight", Instances = {}, Storage={},
 				UpdVisibility = function(self,robloxHighlight,enabled,color)
-					robloxHighlight.FillTransparency = enabled and 0 or 1
-					robloxHighlight.OutlineTransparency = enabled and 0 or 1
+					--robloxHighlight.FillTransparency = enabled and 0 or 1
+					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
+					robloxHighlight.Enabled = enabled
 					if color then
 						robloxHighlight.FillColor = color
 					end
@@ -80,9 +81,10 @@ return function(C,Settings)
 							return
 						end
 						local robloxHighlight = Instance.new("Highlight")
-						robloxHighlight.Parent = theirChar
-						robloxHighlight.FillTransparency, robloxHighlight.OutlineTransparency = 1, 1
+						robloxHighlight.Enabled = false
+						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 0, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
+						robloxHighlight.Parent = theirChar
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
 						local HRP = theirChar:WaitForChild("HumanoidRootPart")
