@@ -14,7 +14,7 @@ return function(C,Settings)
 			{
 				Title = "OpenConsole",
 				Tooltip = "Opens Developers Console",
-				Layout = 1,Type="NoToggle",Keybind=Enum.KeyCode.F9.Name,
+				Layout = 1,Type="NoToggle",Keybind=Enum.KeyCode.F1.Name,
 				Shortcut = "DevelopersConsole",
 				Activate = function(self,newValue)
 					SG:SetCore("DevConsoleVisible", not SG:GetCore("DevConsoleVisible"))

@@ -159,7 +159,7 @@ return function(C,Settings)
 	
 	function SliderTbl:SetValue(new,instant,firstRun)
 		local tweenInfo = TweenInfo.new(instant and 0 or .1)
-		local percentageComplete = (new-self.Min)/(self.Max-self.Min)
+		local percentageComplete = math.clamp((new-self.Min)/(self.Max-self.Min),0,1)
 		local placementX = percentageComplete * (1-(.5 * self.CurrentPosition.AbsoluteSize.X/self.Track.AbsoluteSize.X))
 		if placementX ~= placementX then
 			placementX = percentageComplete
