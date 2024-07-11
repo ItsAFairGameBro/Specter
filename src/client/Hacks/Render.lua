@@ -26,7 +26,7 @@ return function(C,Settings)
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
 					local camera = workspace.CurrentCamera
-					if self.EnTbl.Distance < 0.1 or self.EnTbl.Distance > (camera.CFrame.Position - HRP.Position).Magnitude then
+					if self.EnTbl.Distance < 0.1 or self.EnTbl.Distance < (camera.CFrame.Position - HRP.Position).Magnitude then
 						return false -- no way we're reaching them lol!
 					end							
 					local options = {
