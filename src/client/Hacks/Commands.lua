@@ -13,6 +13,7 @@ return function(C,Settings)
             C.char:PivotTo(CF)
         end
     end
+    C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.CommandFunctions = {
         --[[["refresh"]={
             Type=false,
