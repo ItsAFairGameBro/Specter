@@ -201,6 +201,14 @@ return function(C,Settings)
 		end
 		return formatted	  
 	end
+
+	function C.GetPlayerNameTagColor(theirPlr,theirChar)
+		if theirPlr.Team then
+			return theirPlr.Team.TeamColor
+		else
+			return Color3.fromRGB(0,0,255)
+		end
+	end
 		
 	local UserCache = {}
 	function C.GetUserNameAndId(identification: string|number)

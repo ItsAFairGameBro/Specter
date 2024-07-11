@@ -196,7 +196,6 @@ Buttons.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Buttons.BorderSizePixel = 0
 Buttons.Position = UDim2.new(0, 0, 0, 40)
 Buttons.Size = UDim2.new(1, 0, 0, 0)
-Buttons.Visible = false
 
 CategoryEx.Name = "CategoryEx"
 CategoryEx:AddTag("RemoveOnDestroy")
@@ -371,6 +370,7 @@ Settings.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Settings.BorderSizePixel = 0
 Settings.Position = UDim2.new(0, 0, 0, 40)
 Settings.Size = UDim2.new(1, 0, 0, 0)
+Settings.Visible = false
 
 SupportedFrame.Name = "SupportedFrame"
 SupportedFrame.Parent = Settings
@@ -447,7 +447,7 @@ RefreshButton.Size = UDim2.new(0.200000003, 0, 0.899999976, 0)
 RefreshButton.Image = "rbxassetid://13492317101"
 RefreshButton.ScaleType = Enum.ScaleType.Fit
 
-UICorner_3.CornerRadius = UDim.new(3, 0)
+UICorner_3.CornerRadius = UDim.new(0, 999)
 UICorner_3.Parent = RefreshButton
 
 UIListLayout_3.Parent = Settings
@@ -856,6 +856,7 @@ ForceTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ForceTB.BorderSizePixel = 0
 ForceTB.Position = UDim2.new(1, 0, 0, 0)
 ForceTB.Size = UDim2.new(0.300000012, 0, 0, 30)
+ForceTB.ZIndex = 2
 ForceTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 ForceTB.Text = ""
 ForceTB.TextColor3 = Color3.fromRGB(255, 255, 255)
