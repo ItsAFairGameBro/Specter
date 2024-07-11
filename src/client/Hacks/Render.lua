@@ -48,7 +48,7 @@ return function(C,Settings)
 				RunCheck = function(self,instanceData)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
-					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or (({C.isInGame(theirChar)})[1])==({C.isInGame(camera.CameraSubject.Parent)})[1]) then
+					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or (C.isInGame(theirChar)==C.isInGame(camera.CameraSubject.Parent))) then
 						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
 						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar)
 					else
@@ -64,10 +64,12 @@ return function(C,Settings)
 					local function CanRun()
 						return saveDeb == self.Deb and not C.Cleared
 					end
-					for num, theirPlr in ipairs(PS:GetPlayers()) do
-						local theirChar = theirPlr.Character
-						if theirChar then -- and theirPlr ~= C.plr then
-							task.spawn(self.Events.CharAdded,self,theirPlr,theirChar)
+					if not C.char then
+						for num, theirPlr in ipairs(PS:GetPlayers()) do
+							local theirChar = theirPlr.Character
+							if theirChar then
+								task.spawn(self.Events.CharAdded,self,theirPlr,theirChar)
+							end
 						end
 					end
 					while CanRun() do
