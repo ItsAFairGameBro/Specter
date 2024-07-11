@@ -45,6 +45,16 @@ return function(C,Settings)
 					local hitResult, hitPosition = C.Raycast(camera.CFrame.Position,(HRP.Position - camera.CFrame.Position).Unit,options)
 					return hitResult and theirChar:IsAncestorOf(hitResult.Instance)
 				end,
+				RunCheck = function(self,instanceData)
+					local camera = workspace.CurrentCamera
+					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
+					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or (({C.isInGame(theirChar)})[1])==({C.isInGame(camera.CameraSubject.Parent)})[1]) then
+						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
+						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar)
+					else
+						self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
+					end
+				end,
 				Activate = function(self,newValue)
 					self.Storage = {}
 					if not newValue then
@@ -60,16 +70,9 @@ return function(C,Settings)
 							task.spawn(self.Events.CharAdded,self,theirPlr,theirChar)
 						end
 					end
-					local camera = workspace.CurrentCamera
 					while CanRun() do
-						for num, instanceData in ipairs(self.Storage) do
-							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
-							if theirHumanoid~=camera.CameraSubject and (not C.isInGame or (({C.isInGame(theirChar)})[1])==({C.isInGame(camera.CameraSubject.Parent)})[1]) then
-								local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
-								self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar)
-							else
-								self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
-							end
+						for _, instanceData in ipairs(self.Storage) do
+							self:RunCheck(instanceData)
 						end
 						task.wait(self.EnTbl.UpdateTime)
 					end
@@ -84,12 +87,13 @@ return function(C,Settings)
 						robloxHighlight.Enabled = false
 						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 0, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
-						self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
 						robloxHighlight.Parent = theirChar
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
 						local HRP = theirChar:WaitForChild("HumanoidRootPart")
-						table.insert(self.Storage,{theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP})
+						local StorageTbl = {theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP}
+						table.insert(self.Storage,StorageTbl)
+						self:RunCheck(StorageTbl)
 					end,
 				},
 				Options = {
