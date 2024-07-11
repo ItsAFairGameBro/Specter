@@ -134,6 +134,10 @@ return function(C,Settings)
 				return false
 			end
 
+			if options.detectionFunction and options.detectionFunction(instance) then
+				return false
+			end
+
 			return true
 		end
 		

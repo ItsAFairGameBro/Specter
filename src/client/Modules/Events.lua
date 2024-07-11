@@ -35,6 +35,12 @@ return function(C,Settings)
 			C.animator = theirAnimator
 			C.hrp = centerPart
 		end
+		theirChar:AddTag("Character")
+		for num, part in ipairs(theirChar:GetDescendants()) do
+			if part:IsA("BasePart") then
+				part:AddTag("CharPart")
+			end
+		end
 		if (isMe and ShouldConnectEvent("MySeatAdded")) or (isMe and ShouldConnectEvent("MySeatRemoved")) or 
 			ShouldConnectEvent("SeatAdded") or ShouldConnectEvent("SeatRemoved") then
 			local lastSeatPart
