@@ -63,7 +63,9 @@ return function(C,Settings)
 			end))
 		end
 		if ShouldConnectEvent("CharRemoved",true) then
+			print("Conn CharRemoved")
 			C.AddObjectConnection(theirChar,"CharRemoved",theirChar.Destroying:Connect(function()
+				print("Fired CharRemoved")
 				FireEvent("CharRemoved",isMe,theirPlr,theirChar)
 			end))
 		end
