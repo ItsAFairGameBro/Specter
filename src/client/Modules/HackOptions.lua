@@ -88,7 +88,7 @@ return function(C,Settings)
 		self.Min = options.Min
 		self.Max = options.Max
 		self.Digits = options.Digits or 0
-		self.Step = options.Digits / 10
+		self.Step = 1 * 10^-options.Digits
 		if self.Step==0 then
 			self.Step = 1
 		end

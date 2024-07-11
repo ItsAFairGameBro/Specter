@@ -104,7 +104,7 @@ return function(C,Settings)
 						Type = Types.Slider,
 						Title = "Raycast Update Time",
 						Tooltip = "How often to update its visibility",
-						Layout = 2,Default=0,
+						Layout = 4,Default=1,
 						Min=0,Max=3,Digits=2,
 						Shortcut="UpdateTime",
 					},
