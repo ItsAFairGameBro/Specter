@@ -63,10 +63,11 @@ return function(C,Settings)
 			end))
 		end
 		if ShouldConnectEvent("CharRemoved",true) then
-			print("Conn CharRemoved")
-			C.AddObjectConnection(theirChar,"CharRemoved",theirChar.Destroying:Connect(function()
-				print("Fired CharRemoved")
-				FireEvent("CharRemoved",isMe,theirPlr,theirChar)
+			C.AddObjectConnection(theirChar,"CharRemoved",theirChar.AncestryChanged:Connect(function(oldParent, newParent)
+				if not newParent then
+					print("Conn fire")
+					FireEvent("CharRemoved",isMe,theirPlr,theirChar)
+				end
 			end))
 		end
 		FireEvent("CharAdded",isMe,theirPlr,theirChar,wasAlreadyIn)
