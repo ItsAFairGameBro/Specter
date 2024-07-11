@@ -85,6 +85,14 @@ return function(C,Settings)
 				Options = {
 					{
 						Type = Types.Slider,
+						Title = "Raycast Update Time*",
+						Tooltip = "How often to update its visibility (PERFORMANCE)",
+						Layout = 0,Default=1,
+						Min=0,Max=3,Digits=1,
+						Shortcut="UpdateTime",
+					},
+					{
+						Type = Types.Slider,
 						Title = "Raycast Distance",
 						Tooltip = "Highlights will not appear when a character's head can be directly seen from this distance (set to 0 to disable)",
 						Layout = 2,Default=100,
@@ -101,17 +109,9 @@ return function(C,Settings)
 					{
 						Type = Types.Toggle,
 						Title = "Ignore Uncollidible Walls",
-						Tooltip = "Whether or not the raycasts goes through uncollidible walls (walls that have CanCollide=false)",
+						Tooltip = "Whether or not the raycast goes through uncollidible walls (walls that have CanCollide=false)",
 						Layout = 3,Default=true,
 						Shortcut="IgnoreUncollidibleWalls",
-					},
-					{
-						Type = Types.Slider,
-						Title = "Raycast Update Time",
-						Tooltip = "How often to update its visibility",
-						Layout = 4,Default=1,
-						Min=0,Max=3,Digits=1,
-						Shortcut="UpdateTime",
 					},
 				}
 			},

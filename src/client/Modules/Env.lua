@@ -127,6 +127,7 @@ return function(C,Settings)
 
 		local function customFilter(instance)
 			if options.detectionFunction and options.detectionFunction(instance) then
+				print('1')
 				return true
 			end
 
@@ -139,9 +140,12 @@ return function(C,Settings)
 			end
 
 			if options.passFunction and options.passFunction(instance) then
+				print('2')
 				return false
 			end
 
+			print('3')
+		
 			return true
 		end
 		
