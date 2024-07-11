@@ -82,7 +82,7 @@ return function(C,Settings)
 				Events = {
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
 						RunService.RenderStepped:Wait()
-						if firstRun or C.Cleared then
+						if C.Cleared then
 							return
 						end
 						local robloxHighlight = Instance.new("Highlight")
