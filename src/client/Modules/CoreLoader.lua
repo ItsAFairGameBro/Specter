@@ -306,6 +306,8 @@ return function(C, _SETTINGS)
 	C.GUI.Parent = C.gethui()
 	
 	C.MakeDraggableTab(C.UI.CategoriesFrame)
+
+	C.LoadModule("CommandCore")
 	
 	C.AddNotification("Specter Loaded","Push RShift to open the UI")
 	

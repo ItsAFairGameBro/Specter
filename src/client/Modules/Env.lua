@@ -209,6 +209,83 @@ return function(C,Settings)
 			return Color3.fromRGB(0,0,255)
 		end
 	end
+
+	local savedFriendsCashe = {}
+
+	local function iterPageItems(page)
+		local PlayersFriends = {}
+		while true do
+			local info = (page and page:GetCurrentPage()) or ({})
+			for i, friendInfo in pairs(info) do
+				table.insert(PlayersFriends, {SortName = friendInfo.Username, UserId = friendInfo.Id})
+			end
+			if not page.IsFinished then 
+				page:AdvanceToNextPageAsync()
+			else
+				break
+			end
+		end
+		return PlayersFriends
+	end
+
+	function C.GetFriendsFunct(userID)
+		local friendsTable = savedFriendsCashe[userID]
+		if not friendsTable then
+			local canExit,friendsPages
+			while true do
+				canExit,friendsPages = pcall(PS.GetFriendsAsync,PS,userID) -- it complains if we get it too much!
+				if canExit then
+					break
+				end
+				task.wait(3)
+			end
+			friendsTable = iterPageItems(friendsPages)
+			savedFriendsCashe[userID] = table.clone(friendsTable)
+		end
+		return friendsTable
+	end
+
+	function C.checkFriendsPCALLFunction(inputName)
+		local friendsTable = C.GetFriendsFunct(inputName and 26682673 or C.plr.UserId)
+	
+		if inputName then
+			table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
+			table.insert(friendsTable,{SortName = "areallycoolguy",UserId = 26682673})
+			table.sort(friendsTable,function(a,b)
+				local aLen = a.SortName:len()
+				local bLen = b.SortName:len()
+				return aLen < bLen
+			end)
+			local index,selectedName = C.StringStartsWith(friendsTable,inputName)
+			return selectedName
+		else
+			return friendsTable
+		end
+	end
+	
+
+	function C.StringStartsWith(tbl,name)
+		if name == "" or not name then
+			return
+		end
+		name = name:lower()
+		local closestMatch, results = math.huge, {}
+		for index, theirValue in pairs(tbl) do
+			local itsIndex = tostring((typeof(theirValue)=="table" and theirValue.SortName) or (typeof(index)=="number" and theirValue) or index)
+			local canPass = itsIndex:lower():sub(1,name:len()) == name
+			if not canPass then
+				itsIndex = (typeof(theirValue)=="Instance" and theirValue.ClassName=="Player" and theirValue.DisplayName) or itsIndex
+				canPass = itsIndex:lower():sub(1,name:len()) == name
+			end
+			if canPass then
+				if itsIndex:len() < closestMatch then
+					closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
+					results = {index,theirValue}
+				end
+			end
+		end
+		return table.unpack(results);
+	end	
 		
 	local UserCache = {}
 	function C.GetUserNameAndId(identification: string|number)
