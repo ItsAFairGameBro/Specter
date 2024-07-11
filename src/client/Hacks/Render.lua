@@ -81,7 +81,6 @@ return function(C,Settings)
 				end,
 				Events = {
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
-						RunService.RenderStepped:Wait()
 						if C.Cleared then
 							return
 						end
