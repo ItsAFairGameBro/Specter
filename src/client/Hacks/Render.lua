@@ -104,6 +104,9 @@ return function(C,Settings)
 								table.remove(self.Storage,s)
 								C.TblRemove(self.Instances,robloxHighlight)
 								robloxHighlight:Destroy()
+								break
+							elseif s == 1 then
+								error(theChar.Name .. "does not have a valid highlight to remove!")
 							end
 						end
 					end,
