@@ -107,20 +107,17 @@ return function(C,Settings)
 		return true
 	end
 	
+	local rayParams = RaycastParams.new()
+	rayParams.IgnoreWater = true
+
 	-- Function to perform a raycast with options
 	function C.Raycast(origin, direction, options)
 		options = options or {}
 
-		local ignoreList = options.ignoreList or {}  -- List of instances to ignore
-		local ignoreInvisibleWalls = options.ignoreInvisibleWalls or false  -- Ignore parts with CanCollide = false
-		local ignoreUncollidable = options.ignoreUncollidable or false  -- Ignore parts with custom collision enabled
-		local raycastFilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude  -- Default to blacklist
-		local distance = options.distance or 30
+		local distance = options.distance or 1
 
-		local rayParams = RaycastParams.new()
-		rayParams.FilterType = raycastFilterType
-		rayParams.IgnoreWater = true
-		rayParams.FilterDescendantsInstances = ignoreList
+		rayParams.FilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude
+		rayParams.FilterDescendantsInstances = options.ignoreList or {}  -- List of instances to ignore
 
 		local hitPart, hitPosition, hitNormal = nil, nil, nil
 		local didHit = false
@@ -130,11 +127,11 @@ return function(C,Settings)
 				return true
 			end
 
-			if ignoreInvisibleWalls and instance.Transparency > .9 then
+			if options.ignoreInvisibleWalls and instance.Transparency > .9 then
 				return false
 			end
 
-			if ignoreUncollidable and not instance.CanCollide then
+			if options.ignoreUncollidable and not instance.CanCollide then
 				return false
 			end
 
@@ -145,34 +142,29 @@ return function(C,Settings)
 			return true
 		end
 		
-		--direction = (direction - origin).Unit
-		local hitResult
-		local attempts = 0
+		local hitResult, hitPosition
+		local curDistance = distance
 		repeat
-			hitResult = workspace:Raycast(origin, direction * distance, rayParams)
+			hitResult = workspace:Raycast(origin, direction * curDistance, rayParams)
 
 			if hitResult then
 				if customFilter(hitResult.Instance) then
-					hitPart = hitResult.Instance
 					hitPosition = hitResult.Position
-					hitNormal = hitResult.Normal
 					didHit = true
 				else
 					-- Adjust origin slightly to retry
 					origin = hitResult.Position + direction * 0.01
-					distance -= hitResult.Distance
+					curDistance -= hitResult.Distance
 				end
 			else
 				didHit = false
 				break
 			end
 
-			attempts = attempts + 1
 		until didHit
 		
-		local hitPosition = hitResult and hitResult.Position
 		if not hitPosition then
-			hitPosition = origin + direction * options.distance
+			hitPosition = origin + direction * distance
 		end
 
 		return hitResult, hitPosition

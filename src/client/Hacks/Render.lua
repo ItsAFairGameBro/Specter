@@ -25,7 +25,6 @@ return function(C,Settings)
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
-					local camera = workspace.CurrentCamera
 					if self.EnTbl.Distance < 0.1 or self.EnTbl.Distance < (camera.CFrame.Position - HRP.Position).Magnitude then
 						return false -- no way we're reaching them lol!
 					end							
@@ -91,6 +90,7 @@ return function(C,Settings)
 						robloxHighlight.Parent = theirChar
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
+						local camera = workspace.CurrentCamera
 						local HRP = theirChar:WaitForChild("HumanoidRootPart")
 						local StorageTbl = {theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP}
 						table.insert(self.Storage,StorageTbl)
