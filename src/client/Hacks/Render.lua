@@ -56,7 +56,7 @@ return function(C,Settings)
 								ignoreUncollidable = self.EnTbl.IgnoreUncollidibleWalls,
 								ignoreList = {camera.CameraSubject and camera.CameraSubject.Parent or nil},  -- Example: ignore parts in this list
 								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
-								distance = 1000 or self.EnTbl.Distance,  -- Retry up to 3 times,
+								distance = self.EnTbl.Distance, -- Maximum cast distance
 								detectionFunction = function(part)
 									return not theirChar:IsAncestorOf(part)--part:HasTag("CharPart") and 
 								end,
