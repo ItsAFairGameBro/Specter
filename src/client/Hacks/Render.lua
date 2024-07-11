@@ -1,5 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local PS = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 return function(C,Settings)
 	return {
@@ -28,7 +29,8 @@ return function(C,Settings)
 				end,
 				Events = {
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
-						if firstRun then
+						RunService.RenderStepped:Wait()
+						if firstRun or C.Cleared then
 							return
 						end
 						local camera = workspace.CurrentCamera
