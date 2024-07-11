@@ -16,12 +16,12 @@ return function(C,Settings)
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
 				Layout = 1,Default=true,Deb=0,
 				Shortcut = "PlayerHighlight", Instances = {}, Storage={},
-				UpdVisibility = function(self,robloxHighlight,enabled,color)
+				UpdVisibility = function(self,robloxHighlight,enabled,theirPlr,theirChar)
 					--robloxHighlight.FillTransparency = enabled and 0 or 1
 					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
 					robloxHighlight.Enabled = enabled
-					if color then
-						robloxHighlight.FillColor = color
+					if enabled then
+						robloxHighlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar)
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
@@ -66,9 +66,9 @@ return function(C,Settings)
 							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
 							if theirHumanoid~=camera.CameraSubject and (not C.isInGame or (({C.isInGame(theirChar)})[1])==({C.isInGame(camera.CameraSubject.Parent)})[1]) then
 								local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
-								self:UpdVisibility(robloxHighlight,not isInRange, C.GetPlayerNameTagColor(theirPlr,theirChar))
+								self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar)
 							else
-								self:UpdVisibility(robloxHighlight,false)
+								self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
 							end
 						end
 						task.wait(self.EnTbl.UpdateTime)
@@ -84,6 +84,7 @@ return function(C,Settings)
 						robloxHighlight.Enabled = false
 						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 0, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
+						self:UpdVisibility(robloxHighlight,true,theirPlr,theirChar)
 						robloxHighlight.Parent = theirChar
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
