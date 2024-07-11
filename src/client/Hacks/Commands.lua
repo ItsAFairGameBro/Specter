@@ -190,7 +190,7 @@ return function(C,Settings)
                 end
             end,
             Functs={},
-            CapsuleAdded=function(capsule,noAddFunct)
+            CapsuleAdded=function(self,capsule,noAddFunct)
                 local function childAdded(child)
                     if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
                         local humanDesc = C.getgenv().currentDesc[child.Name]
@@ -216,7 +216,7 @@ return function(C,Settings)
                     end
                 end
             end,
-            StartUp=function(theirPlr,theirChar,firstRun)
+            StartUp=function(self,theirPlr,theirChar,firstRun)
                 local theirHuman = theirChar:WaitForChild("Humanoid")
                 local PrimPart = theirHuman and theirChar:WaitForChild("HumanoidRootPart", 15)
                 if not theirHuman or not PrimPart then
@@ -247,7 +247,7 @@ return function(C,Settings)
                     C.CommandFunctions.morph.MorphPlayer(theirChar,currentChar,true,not firstRun)
                 end
             end,
-            Run=function(args)
+            Run=function(self,args)
                 local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])
                 if not selectedName then
                     return false,`User Not Found: {args[2]}`--C.CreateSysMessage(`User Not Found: {args[2]}`)
@@ -255,7 +255,7 @@ return function(C,Settings)
                 local outfitData
                 if args[3] and args[3] ~= "" then
                     if not C.getgenv().Outfits[selectedName.UserId] then
-                        local wasSuccess,err = C.CommandFunctions.outfits.Run({selectedName.SortName})
+                        local wasSuccess,err = C.CommandFunctions.outfits:Run({selectedName.SortName})
                         if not wasSuccess then
                             return false, "Outfit Getter Err " .. tostring(err)
                         end
@@ -327,15 +327,15 @@ return function(C,Settings)
             Type="Players",
             AfterTxt="",
             SupportsNew=true,
-            Run=function(args)
-                C.CommandFunctions.morph.Run({args[1],""})
+            Run=function(self,args)
+                C.CommandFunctions.morph:Run({args[1],""})
                 return true
             end,
         },
         ["outfits"]={
             Type=false,
             AfterTxt="%s",
-            Run=function(args)
+            Run=function(self,args)
                 local selectedName = C.checkFriendsPCALLFunction(args[1])
                 C.getgenv().Outfits = C.getgenv().Outfits or {}
                 if not selectedName then
@@ -370,7 +370,7 @@ return function(C,Settings)
         ["teleport"]={
             Type="Player",
             AfterTxt="",
-            Run=function(args)
+            Run=function(self,args)
                 local theirPlr = args[1][1]
                 local theirChar = theirPlr.Character
                 if not theirChar then
@@ -380,7 +380,7 @@ return function(C,Settings)
                 if not HRP then
                     return false, `HRP not found for {theirPlr.Name}`
                 end
-                C.CommandFunctions.unfollow.Run()
+                C.CommandFunctions.unfollow:Run()
                 teleportMyself(HRP.CFrame * CFrame.new(0,0,3))
                 return true,nil--theirPlr.Name
             end,
@@ -388,7 +388,7 @@ return function(C,Settings)
         ["time"]={
             Type="Player",
             AfterTxt="%.1f",
-            Run=function(args)
+            Run=function(self,args)
                 return true,time()
             end,
         },
@@ -398,7 +398,7 @@ return function(C,Settings)
             isFollowing=-1,
             ForcePlayAnimations={},
             MyPlayingAnimations={},
-            Run=function(args)
+            Run=function(self,args)
                 local theirPlr = args[1][1]
                 local theirChar = theirPlr.Character
                 if not theirChar then
@@ -417,7 +417,7 @@ return function(C,Settings)
                 --print("Set To",C.CommandFunctions.follow.isFollowing,theirPlr.UserId)
     
                 local saveChar = C.char
-                C.CommandFunctions.unfollow.Run()
+                C.CommandFunctions.unfollow:Run()
                 if not theirPlr then
                     return true
                 end
@@ -435,7 +435,7 @@ return function(C,Settings)
                         return
                     end
                     if not theirPlr.Parent or theirPlr.Parent ~= PS then
-                        C.CommandFunctions.unfollow.Run()
+                        C.CommandFunctions.unfollow:Run()
                         C.CreateSysMessage(`Followed User {theirPlr.Name} has left the game!`)
                         return
                     end
@@ -491,7 +491,7 @@ return function(C,Settings)
         ["unfollow"]={
             Type="",
             AfterTxt="%s",
-            Run=function(args)
+            Run=function(self,args)
                 if not C.isFollowing then
                     return false, "Not Following Any User ("..tostring(C.isFollowing)..")"
                 end
@@ -511,7 +511,7 @@ return function(C,Settings)
         ["rejoin"]={
             Type="",
             AfterTxt="%s",
-            Run=function(args)
+            Run=function(self,args)
                 if args[1] == "new" or args[1] == "small" then
                     local result, servers = pcall(game.HttpGet,game,`https://games.roblox.com/v1/games/{game.PlaceId}/servers/0?sortOrder={
                         args[1]=="small" and 1 or 2}&excludeFullGames=true&limit=100`)
@@ -548,7 +548,7 @@ return function(C,Settings)
         ["console"]={
             Type="",
             AfterTxt="%s",
-            Run=function(args)
+            Run=function(self,args)
                 SG:SetCore("DevConsoleVisible",not SG:GetCore("DevConsoleVisible"))
                 return true
             end,

@@ -71,7 +71,7 @@ return function(C,Settings)
             end
             if canRunFunction then
                 local function yieldFunction()
-                    local returns = table.pack(C.CommandFunctions[command].Run(args))
+                    local returns = table.pack(C.CommandFunctions[command]:Run(args))
                     local wasSuccess = returns[1]
                     table.remove(returns,1)
                     local displayNameCommand = command:sub(1,1):upper() .. command:sub(2)
@@ -232,4 +232,8 @@ return function(C,Settings)
         end))
     end
     registerNewChatBar(nil,true)
+
+    for num, command in ipairs(C.CommandFunctions) do
+        command.Parent = C.CommandFunctions
+    end
 end
