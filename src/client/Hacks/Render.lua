@@ -14,7 +14,7 @@ return function(C,Settings)
 				Title = "ESP Player Highlight",
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
 				Layout = 1,Default=true,
-				Shortcut = "PlayerHighlight",
+				Shortcut = "PlayerHighlight", Instances = {},
 				Activate = function(self,newValue)
 					if not newValue then
 						return
@@ -35,7 +35,7 @@ return function(C,Settings)
 						local robloxHighlight = Instance.new("Highlight")
 						robloxHighlight.Parent = theirChar
 						robloxHighlight.OutlineColor = Color3.fromRGB()
-						robloxHighlight:AddTag("RemoveOnDestroy")
+						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
 						local HRP = theirChar:WaitForChild("HumanoidRootPart")
 						local function changeVisibility(enabled,color)
@@ -56,7 +56,7 @@ return function(C,Settings)
 								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 								distance = 1000 or self.EnTbl.Distance,  -- Retry up to 3 times,
 								detectionFunction = function(part)
-									return part:HasTag("CharPart")
+									return part:HasTag("CharPart") and not theirChar:IsAncestorOf(part)
 								end,
 							}
 		
@@ -105,7 +105,7 @@ return function(C,Settings)
 						Title = "Raycast Update Time",
 						Tooltip = "How often to update its visibility",
 						Layout = 4,Default=1,
-						Min=0,Max=3,Digits=2,
+						Min=0,Max=3,Digits=1,
 						Shortcut="UpdateTime",
 					},
 				}
