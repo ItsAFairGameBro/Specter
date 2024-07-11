@@ -201,7 +201,7 @@ return function(C,Settings)
                             for num, prop in ipairs({"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}) do
                                 myClone[prop] = orgColor
                             end
-                            C.CommandFunctions.morph.MorphPlayer(child,myClone,true,true)
+                            C.CommandFunctions.morph:MorphPlayer(child,myClone,true,true)
                             DS:AddItem(myClone,15)
                         end
                     end
@@ -241,10 +241,10 @@ return function(C,Settings)
                     if JoinPlayerMorphDesc then
                         JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                         C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
-                        C.CommandFunctions.morph.MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
+                        C.CommandFunctions.morph:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
                     end
                 elseif currentChar then
-                    C.CommandFunctions.morph.MorphPlayer(theirChar,currentChar,true,not firstRun)
+                    C.CommandFunctions.morph:MorphPlayer(theirChar,currentChar,true,not firstRun)
                 end
             end,
             Run=function(self,args)
@@ -282,7 +282,7 @@ return function(C,Settings)
                     return false, "HumanoidDesc returned NULL for all players!"
                 end
                 local savedDescription = selectedName~="no" 
-                    and C.CommandFunctions.morph.GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
+                    and C.CommandFunctions.morph:GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
                 --((args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id)) or PS:GetHumanoidDescriptionFromUserId(selectedName.UserId))
                 if args[1]=="new" or args[1]=="others" or args[1]=="all" then
                     if C.getgenv().JoinPlayerMorphDesc and C.getgenv().JoinPlayerMorphDesc ~= savedDescription then
@@ -300,12 +300,12 @@ return function(C,Settings)
                             return false, `Outfit {args[3]} not found for player {theirPlr.Name}`
                         end
                         local desc2Apply = (selectedName =="no" and PS:GetHumanoidDescriptionFromUserId(theirPlr.UserId))
-                            or C.CommandFunctions.morph.GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
+                            or self:GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
                         if not desc2Apply then
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
                         end
                         if theirPlr.Character then
-                            task.spawn(C.CommandFunctions.morph.MorphPlayer,theirPlr.Character,desc2Apply,false,false,selectedName == "no")
+                            task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,selectedName == "no")
                         elseif selectedName ~= "no" then
                             if C.getgenv().currentDesc[theirPlr.Name] 
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
