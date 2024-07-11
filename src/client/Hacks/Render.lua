@@ -58,7 +58,7 @@ return function(C,Settings)
 								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 								distance = 1000 or self.EnTbl.Distance,  -- Retry up to 3 times,
 								detectionFunction = function(part)
-									return part:HasTag("CharPart") and not theirChar:IsAncestorOf(part)
+									return false--part:HasTag("CharPart") and not theirChar:IsAncestorOf(part)
 								end,
 							}
 		
