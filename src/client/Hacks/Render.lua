@@ -73,7 +73,7 @@ return function(C,Settings)
 						end
 					end
 					while CanRun() do
-						for _, instanceData in ipairs(self.Storage) do
+						for _, instanceData in pairs(self.Storage) do
 							self:RunCheck(instanceData)
 						end
 						task.wait(self.EnTbl.UpdateTime)
