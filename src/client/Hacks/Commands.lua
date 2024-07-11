@@ -191,7 +191,7 @@ return function(C,Settings)
                 end
             end,
             Functs={},
-            CapsuleAdded=function(self,capsule,noAddFunct)
+            --[[CapsuleAdded=function(self,capsule,noAddFunct)
                 local function childAdded(child)
                     if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
                         local humanDesc = C.getgenv().currentDesc[child.Name]
@@ -216,38 +216,40 @@ return function(C,Settings)
                         task.spawn(childAdded,child)
                     end
                 end
-            end,
-            StartUp=function(self,theirPlr,theirChar,firstRun)
-                local theirHuman = theirChar:WaitForChild("Humanoid")
-                local PrimPart = theirHuman and theirChar:WaitForChild("HumanoidRootPart", 15)
-                if not theirHuman or not PrimPart then
-                    return
-                end
-                CP:PreloadAsync({theirChar})
-                if firstRun then
-                    task.wait(.83) --Avatar loaded wait!
-                else
-                    task.wait(.63) --Avatar loaded wait!
-                end
-                if not theirPlr or not theirChar or not theirChar.Parent then
-                    return
-                end
-                local currentChar = C.getgenv().currentDesc[theirPlr.Name]
-                if C.gameUniverse == "NavalWarefare" then
-                    task.wait(3)
-                    print("Morphed")
-                end
-                if firstRun and not currentChar then
-                    local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
-                    if JoinPlayerMorphDesc then
-                        JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
-                        C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
-                        C.CommandFunctions.morph:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
+            end,--]]
+            Events = {
+                CharacterAdded=function(self,theirPlr,theirChar,firstRun)
+                    local theirHuman = theirChar:WaitForChild("Humanoid")
+                    local PrimPart = theirHuman and theirChar:WaitForChild("HumanoidRootPart", 15)
+                    if not theirHuman or not PrimPart then
+                        return
                     end
-                elseif currentChar then
-                    C.CommandFunctions.morph:MorphPlayer(theirChar,currentChar,true,not firstRun)
-                end
-            end,
+                    CP:PreloadAsync({theirChar})
+                    if firstRun then
+                        task.wait(.83) --Avatar loaded wait!
+                    else
+                        task.wait(.63) --Avatar loaded wait!
+                    end
+                    if not theirPlr or not theirChar or not theirChar.Parent then
+                        return
+                    end
+                    local currentChar = C.getgenv().currentDesc[theirPlr.Name]
+                    if C.gameUniverse == "NavalWarefare" then
+                        task.wait(3)
+                        print("Morphed")
+                    end
+                    if firstRun and not currentChar then
+                        local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
+                        if JoinPlayerMorphDesc then
+                            JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
+                            C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
+                            C.CommandFunctions.morph:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
+                        end
+                    elseif currentChar then
+                        C.CommandFunctions.morph:MorphPlayer(theirChar,currentChar,true,not firstRun)
+                    end
+                end,
+            },
             Run=function(self,args)
                 local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])
                 if not selectedName then
@@ -323,7 +325,8 @@ return function(C,Settings)
                     end
                 end
                 return true,args[2]=="" and "nothing" or selectedName.SortName,outfitData and (" " ..outfitData.name) or ""
-            end},
+            end
+        },
         ["unmorph"]={
             Type="Players",
             AfterTxt="",
