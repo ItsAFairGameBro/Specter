@@ -204,7 +204,7 @@ return function(C,Settings)
 
 	function C.GetPlayerNameTagColor(theirPlr,theirChar)
 		if theirPlr.Team then
-			return theirPlr.Team.TeamColor
+			return theirPlr.Team.TeamColor.Color3
 		else
 			return Color3.fromRGB(0,0,255)
 		end
