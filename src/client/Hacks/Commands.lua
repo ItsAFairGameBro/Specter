@@ -162,7 +162,7 @@ return function(C,Settings)
                 if AnimationEffectData and AnimationEffectData.Update then
                     AnimationUpdateConnection = targetChar.DescendantAdded:Connect(function(part)
                         if part:IsA("BasePart") then
-                            AnimationEffectData.Update(targetChar,part)
+                            AnimationEffectData:Update(targetChar,part)
                         end
                     end)
                 end
@@ -184,7 +184,7 @@ return function(C,Settings)
                 newHuman.Parent = nil
                 DS:AddItem(newHuman,3)
                 if AnimationEffectData then
-                    AnimationEffectData.End(targetChar)
+                    AnimationEffectData:End(targetChar)
                 end
                 if AnimationUpdateConnection then
                     AnimationUpdateConnection:Disconnect()
