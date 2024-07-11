@@ -30,6 +30,7 @@ return function(C,Settings)
 				Events = {
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
 						RunService.RenderStepped:Wait()
+						print("CHARADD")
 						if firstRun or C.Cleared then
 							return
 						end
