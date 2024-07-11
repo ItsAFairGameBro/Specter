@@ -87,7 +87,7 @@ return function(C,Settings)
 						robloxHighlight.Enabled = false
 						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 0, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
-						robloxHighlight.Parent = theirChar
+						robloxHighlight.Adornee = theirChar
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
 						local camera = workspace.CurrentCamera
