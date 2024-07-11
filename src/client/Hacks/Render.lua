@@ -73,7 +73,7 @@ return function(C,Settings)
 								changeVisibility(false)
 								camera:GetPropertyChangedSignal("CameraSubject"):Wait()
 							end
-							task.wait()
+							task.wait(self.EnTbl.UpdateTime)
 						end
 					end,
 				},
@@ -82,8 +82,8 @@ return function(C,Settings)
 						Type = Types.Slider,
 						Title = "Raycast Distance",
 						Tooltip = "Highlights will not appear when a character's head can be directly seen from this distance (set to 0 to disable)",
-						Layout = 2,Default=1000,
-						Min=0,Max=1000,Digits=1,
+						Layout = 2,Default=100,
+						Min=0,Max=100,Digits=1,
 						Shortcut="Distance",
 					},
 					{
@@ -99,6 +99,14 @@ return function(C,Settings)
 						Tooltip = "Whether or not the raycasts goes through uncollidible walls (walls that have CanCollide=false)",
 						Layout = 3,Default=true,
 						Shortcut="IgnoreUncollidibleWalls",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Raycast Update Time",
+						Tooltip = "How often to update its visibility",
+						Layout = 2,Default=0,
+						Min=0,Max=3,Digits=2,
+						Shortcut="UpdateTime",
 					},
 				}
 			},
