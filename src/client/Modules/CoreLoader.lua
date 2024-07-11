@@ -307,6 +307,8 @@ return function(C, _SETTINGS)
 	
 	C.MakeDraggableTab(C.UI.CategoriesFrame)
 
+	C.LoadModule("Hacks/Commands")
+
 	C.LoadModule("CommandCore")
 	
 	C.AddNotification("Specter Loaded","Push RShift to open the UI")
