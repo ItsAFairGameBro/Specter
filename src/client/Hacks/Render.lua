@@ -96,13 +96,15 @@ return function(C,Settings)
 						table.insert(self.Storage,StorageTbl)
 						self:RunCheck(StorageTbl)
 					end,
-					CharRemoved = function(self,theirPlr,theirChar)
+					CharRemoved = function(self,thePlr,theChar)
 						for s = #self.Storage, 1, -1 do
 							local instanceData = self.Storage[s]
 							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
-							table.remove(self.Storage,instanceData)
-							C.TblRemove(self.Instances,robloxHighlight)
-							robloxHighlight:Destroy()
+							if theirChar == theChar then
+								table.remove(self.Storage,instanceData)
+								C.TblRemove(self.Instances,robloxHighlight)
+								robloxHighlight:Destroy()
+							end
 						end
 					end,
 				},
