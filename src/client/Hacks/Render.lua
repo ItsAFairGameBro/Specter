@@ -81,6 +81,7 @@ return function(C,Settings)
 						end
 						local robloxHighlight = Instance.new("Highlight")
 						robloxHighlight.Parent = theirChar
+						robloxHighlight.FillTransparency, robloxHighlight.OutlineTransparency = 1, 1
 						robloxHighlight.OutlineColor = Color3.fromRGB()
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
