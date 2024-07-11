@@ -101,7 +101,7 @@ return function(C,Settings)
 							local instanceData = self.Storage[s]
 							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
 							if theirChar == theChar then
-								table.remove(self.Storage,instanceData)
+								table.remove(self.Storage,s)
 								C.TblRemove(self.Instances,robloxHighlight)
 								robloxHighlight:Destroy()
 							end
