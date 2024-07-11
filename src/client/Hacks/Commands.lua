@@ -78,14 +78,14 @@ return function(C,Settings)
                         end
                     end,
                     Start = function(self,targetChar)
-                        C.CommandFunctions.morph.AnimationEffectFunctions.Fade.Tween(targetChar,targetChar:GetDescendants(),false,false)
+                        self:Tween(targetChar,targetChar:GetDescendants(),false,false)
                         task.wait(2)
                     end,
                     Update = function(self,targetChar,part)
-                        C.CommandFunctions.morph.AnimationEffectFunctions.Fade.Tween(targetChar,{part},false,true)
+                       self:Tween(targetChar,{part},false,true)
                     end,
                     End = function(self,targetChar)
-                        C.CommandFunctions.morph.AnimationEffectFunctions.Fade.Tween(targetChar,targetChar:GetDescendants(),true,false)
+                       self:Tween(targetChar,targetChar:GetDescendants(),true,false)
                     end,
                 }
             },
@@ -98,7 +98,7 @@ return function(C,Settings)
                     return
                 end
                 if AnimationEffectData then
-                    AnimationEffectData.Start(targetChar)
+                    AnimationEffectData:Start(targetChar)
                 end
     
                 --local wasAnchored = targetHRP.Anchored
