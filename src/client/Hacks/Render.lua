@@ -106,7 +106,7 @@ return function(C,Settings)
 								robloxHighlight:Destroy()
 								break
 							elseif s == 1 then
-								error(theChar.Name .. "does not have a valid highlight to remove!")
+								warn(tostring(thePlr) .. " does not have a valid highlight to remove!")
 							end
 						end
 					end,

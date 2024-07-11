@@ -85,7 +85,7 @@ return function(C,Settings)
                                 if not printStr then
                                     printStr = "\tOBJ ["..obj:GetFullName().."]:"
                                 end
-                                printStr..="\n\t\t"..attribute.."="..tostring(val)
+                                printStr..="\n\t\t"..attribute.."="..tostring(val) .. " (" .. typeof(val) .. ")"
                             end
                         end
                         if printStr then

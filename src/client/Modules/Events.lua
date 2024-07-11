@@ -65,7 +65,6 @@ return function(C,Settings)
 		if ShouldConnectEvent("CharRemoved",true) then
 			C.AddObjectConnection(theirChar,"CharRemoved",theirChar.AncestryChanged:Connect(function(oldParent, newParent)
 				if not newParent then
-					print("Conn fire")
 					FireEvent("CharRemoved",isMe,theirPlr,theirChar)
 				end
 			end))
