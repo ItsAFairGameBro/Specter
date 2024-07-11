@@ -287,7 +287,7 @@ return function(C,Settings)
 			if not success then
 				continue
 			elseif id == C.plr.UserId then
-				C.AddNotification("Unavailable","You cannot add yourself as a friend")
+				C.AddNotification("Unavailable","You cannot add yourself")
 				continue
 			end
 			local OneListEx = C.Examples.OneListEx:Clone()
@@ -301,7 +301,7 @@ return function(C,Settings)
 			table.insert(newList,id)
 		end
 		if #newList ~= #new then
-			C.AddNotification("Friend Loading Failed", "Some friends have failed to render!")
+			C.AddNotification("User Loading Failed", "Some users have failed to render!")
 		end
 		self.LimitTL.Text = `{#newList}/{self.Limit}`
 		self.Value = newList

@@ -64,7 +64,7 @@ return function(C,Settings)
 					local function CanRun()
 						return saveDeb == self.Deb and not C.Cleared
 					end
-					if not C.char then
+					if C.char then
 						for num, theirPlr in ipairs(PS:GetPlayers()) do
 							local theirChar = theirPlr.Character
 							if theirChar then
@@ -81,14 +81,12 @@ return function(C,Settings)
 				end,
 				Events = {
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
-						if C.Cleared then
-							return
-						end
 						local robloxHighlight = Instance.new("Highlight")
 						robloxHighlight.Enabled = false
 						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 0, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
 						robloxHighlight.Adornee = theirChar
+						robloxHighlight:AddTag("RemoveOnDestroy")
 						robloxHighlight.Parent = C.GUI
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
@@ -97,6 +95,15 @@ return function(C,Settings)
 						local StorageTbl = {theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP}
 						table.insert(self.Storage,StorageTbl)
 						self:RunCheck(StorageTbl)
+					end,
+					CharRemoved = function(self,theirPlr,theirChar)
+						for s = #self.Storage, 1, -1 do
+							local instanceData = self.Storage[s]
+							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
+							table.remove(self.Storage,instanceData)
+							C.TblRemove(self.Instances,robloxHighlight)
+							robloxHighlight:Destroy()
+						end
 					end,
 				},
 				Options = {

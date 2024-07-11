@@ -61,6 +61,21 @@ return function(C,Settings)
 					},
 				}
 			},
-		}
+		},
+		{
+			Title = "Main Account",Shortcut="MainAccount",
+			Tooltip = "Input your main account and ",
+			Layout = 1,
+			Events = {},
+			Options = {
+				{
+					Type = Types.UserList,
+					Title = "Additional Friends",Shortcut="MainAccountId",
+					Tooltip = "A list of friends that are never targeted from modules",
+					Layout = 2,Default={},
+					Limit = 1,
+				},
+			}
+		},
 	}
 end

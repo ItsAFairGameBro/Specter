@@ -62,6 +62,11 @@ return function(C,Settings)
 				FireEvent("MyCharDied",nil,theirPlr,theirChar)
 			end))
 		end
+		if ShouldConnectEvent("CharRemoved",true) then
+			C.AddObjectConnection(theirChar,"CharRemoved",theirChar.Destroying:Connect(function()
+				FireEvent("CharRemoved",isMe,theirPlr,theirChar)
+			end))
+		end
 		FireEvent("CharAdded",isMe,theirPlr,theirChar,wasAlreadyIn)
 	end
 	local function PlrAdded(theirPlr,wasAlreadyIn)
