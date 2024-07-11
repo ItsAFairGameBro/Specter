@@ -110,8 +110,6 @@ return function(C,Settings)
 				local rawFile2 = C.readfile(path2)
 				local decoded2 = HS:JSONDecode(rawFile2)
 				C.enHacks.Settings = decoded2.Settings
-				print("Rawfile2",#rawFile2)
-				print("Set SEttings",tostring(decoded2.Settings))
 			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
@@ -124,9 +122,7 @@ return function(C,Settings)
 			end
 			local rawFile = C.readfile(path)
 			local decoded = HS:JSONDecode(rawFile)
-			print("File Length",#rawFile)
 			for key, val in pairs(decoded.Hacks) do
-				print("Set Key=",key)
 				C.enHacks[key] = val
 			end
 		end
