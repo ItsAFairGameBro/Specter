@@ -233,7 +233,7 @@ return function(C,Settings)
     end
     registerNewChatBar(nil,true)
 
-    for num, commandTbl in ipairs(C.CommandFunctions) do
+    for num, commandTbl in pairs(C.CommandFunctions) do
         commandTbl.Parent = C.CommandFunctions
         C.BindEvents(commandTbl)
     end
