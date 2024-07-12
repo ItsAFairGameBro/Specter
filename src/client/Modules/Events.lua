@@ -27,7 +27,10 @@ return function(C,Settings)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
 		local theirHuman = theirChar:WaitForChild("Humanoid")
 		local theirAnimator = theirHuman:WaitForChild("Animator")
-		local centerPart = theirChar:WaitForChild("HumanoidRootPart")
+		local centerPart = theirChar:WaitForChild("HumanoidRootPart",15)
+		if not centerPart then
+			return
+		end
 		local isMe = C.plr.Character == theirChar
 		if isMe then
 			C.char = theirChar

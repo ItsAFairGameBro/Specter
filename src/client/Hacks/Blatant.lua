@@ -257,7 +257,7 @@ return function(C,Settings)
 					local hitResult, hitPosition = C.Raycast(screenToWorldRay.Origin,screenToWorldRay.Direction,options)
 					
 
-					if self.EnTbl.AlwaysTeleport or hitResult then
+					if (self.EnTbl.AlwaysTeleport or hitResult) and C.char.PrimaryPart then
 						local OrientX,OrientY,OrientZ = C.char:GetPivot():toEulerAnglesXYZ()
 						
 						C.char:PivotTo(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
