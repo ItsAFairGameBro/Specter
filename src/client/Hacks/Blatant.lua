@@ -206,8 +206,8 @@ return function(C,Settings)
 					if not C.char then
 						return
 					end
-					for num, part in ipairs(C.char:GetChildren()) do
-						if part:IsA("BasePart") and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
+					for num, part in ipairs(C.char:GetDescendants()) do
+						if part:IsA("BasePart") then --and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
 							part.CanCollide = not value
 						end
 					end

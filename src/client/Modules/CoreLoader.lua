@@ -298,6 +298,10 @@ return function(C, _SETTINGS)
 	end
 	if C.Cleared then return end
 
+	--Load Commands
+	C.LoadModule("Hacks/Commands")
+	C.LoadModule("CommandCore")
+
 	--Load Events
 	C.LoadModule("Events")
 	if C.Cleared then return end
@@ -307,9 +311,6 @@ return function(C, _SETTINGS)
 	
 	C.MakeDraggableTab(C.UI.CategoriesFrame)
 
-	C.LoadModule("Hacks/Commands")
-
-	C.LoadModule("CommandCore")
 	
 	C.AddNotification("Specter Loaded","Push RShift to open the UI")
 	
