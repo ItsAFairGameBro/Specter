@@ -219,6 +219,7 @@ return function(C,Settings)
             end,--]]
             Events = {
                 CharAdded=function(self,theirPlr,theirChar,firstRun)
+                    print("Morph Added")
                     local theirHuman = theirChar:WaitForChild("Humanoid")
                     local PrimPart = theirHuman and theirChar:WaitForChild("HumanoidRootPart", 15)
                     if not theirHuman or not PrimPart then
