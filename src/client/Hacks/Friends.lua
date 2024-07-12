@@ -3,7 +3,7 @@ local PS = game:GetService("Players")
 return function(C,Settings)
 	return {
 		Category = {
-			Name = "Friends",
+			Name = "Users",
 			Title = "Friends",
 			Image = 10885655986,
 			Layout = 3,
@@ -64,15 +64,19 @@ return function(C,Settings)
 			{
 				Title = "Main Account",Shortcut="MainAccount",
 				Tooltip = "Input your main account and it will be",
-				Layout = 1,
+				Layout = 2,
 				Events = {},
 				Options = {
 					{
 						Type = Types.UserList,
-						Title = "Additional Friends",Shortcut="MainAccountId",
-						Tooltip = "A list of friends that are never targeted from modules",
+						Title = "Account",Shortcut="MainAccountId",
+						Tooltip = "Your main account (defaults to current account)",
 						Layout = 2,Default={},
 						Limit = 1,
+						Activate = function(self)
+							local FriendHack = self.Parent.Parent[1]
+							FriendHack.Options[1].Activate(FriendHack,FriendHack.Enabled)
+						end,
 					},
 				}
 			},
