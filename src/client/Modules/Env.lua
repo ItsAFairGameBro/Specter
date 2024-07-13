@@ -4,8 +4,8 @@ local PS = game:GetService("Players")
 local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
 local DS = game:GetService('Debris')
-local OriginalCollideName = "WeirdCanCollide"
 return function(C,Settings)
+	C.OriginalCollideName = "WeirdCanCollide"
 	--Table Functions
 	function C.TblAdd(tbl,val)
 		local key = table.find(tbl,val)
