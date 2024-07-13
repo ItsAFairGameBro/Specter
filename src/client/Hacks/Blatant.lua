@@ -223,6 +223,9 @@ return function(C,Settings)
 					end
 					table.insert(self.Functs,RunS.PreSimulation:Connect(self.Update))
 				end,
+				Cleared = function(self)
+
+				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self.Activate,self,self.EnTbl.En)
