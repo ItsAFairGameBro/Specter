@@ -203,13 +203,10 @@ return function(C,Settings)
 				Layout = 2,
 				Shortcut = "Noclip",Functs={},Default=false,Keybind = "R",
 				Update = function(value)
-					if not C.char then
-						return
-					end
 					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then --and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
 							--part.CanCollide = not value
-							C.SetCollide(part,"Noclip",not value)
+							C.SetCollide(part,"Noclip",not value,true)
 						end
 					end
 				end,
