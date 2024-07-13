@@ -42,6 +42,7 @@ return function(C,Settings)
 					end
 
 					if not newValue then
+						C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
 						return
 					else
 						task.spawn(self.StopAllAnims,self)
@@ -133,6 +134,7 @@ return function(C,Settings)
 						end
 					end
 					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
+					onUpdate()
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
