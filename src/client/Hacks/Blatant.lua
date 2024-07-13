@@ -221,7 +221,7 @@ return function(C,Settings)
 					if not newValue then
 						return
 					end
-					table.insert(self.Functs,RunS.PreSimulation:Connect(self.Update))
+					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
 				end,
 				Cleared = function(self)
 
