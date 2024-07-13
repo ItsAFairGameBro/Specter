@@ -443,7 +443,7 @@ RefreshButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 RefreshButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 RefreshButton.BorderSizePixel = 0
 RefreshButton.Position = UDim2.new(1, -1, 0.5, 0)
-RefreshButton.Size = UDim2.new(0.200000003, 0, 0.899999976, 0)
+RefreshButton.Size = UDim2.new(0, 36, 0, 36)
 RefreshButton.Image = "rbxassetid://13492317101"
 RefreshButton.ScaleType = Enum.ScaleType.Fit
 

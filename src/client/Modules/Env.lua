@@ -19,6 +19,9 @@ return function(C,Settings)
 			return true
 		end
 	end
+	function C.GetDictLength(tbl)
+		local num = 0 for _, _ in pairs(tbl) do num+=1 end return num
+	end
 	function C.DictFind(tbl,val)
 		for name, val2 in pairs(tbl) do
 			if val2 == val then

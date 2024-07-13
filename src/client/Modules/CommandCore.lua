@@ -104,12 +104,6 @@ return function(C,Settings)
             C.CreateSysMessage(`Command Not Found: {inputCommand}`)
         end
     end
-
-
-
-
-
-
     -- Chatbar Connection
     --MY PLAYER CHAT
     local chatBar
@@ -196,7 +190,7 @@ return function(C,Settings)
 
             local setTo = C.savedCommands[index] or ""
             lastText = setTo
-            RunS.RenderStepped:wait()
+            RunS.RenderStepped:Wait()
             chatBar.Text = setTo
         end
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))

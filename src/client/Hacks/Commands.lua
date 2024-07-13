@@ -114,6 +114,7 @@ return function(C,Settings)
                     else
                         C.getgenv().currentDesc[targetChar.Name] = nil
                     end
+                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc)
                 end
                 local isR6 = targetHuman.RigType == Enum.HumanoidRigType.R6
     
@@ -219,7 +220,6 @@ return function(C,Settings)
             end,--]]
             Events = {
                 CharAdded=function(self,theirPlr,theirChar,firstRun)
-                    print("Morph Added")
                     local theirHuman = theirChar:WaitForChild("Humanoid")
                     local PrimPart = theirHuman and theirChar:WaitForChild("HumanoidRootPart", 15)
                     if not theirHuman or not PrimPart then
@@ -237,7 +237,6 @@ return function(C,Settings)
                     local currentChar = C.getgenv().currentDesc[theirPlr.Name]
                     if C.gameUniverse == "NavalWarefare" then
                         task.wait(3)
-                        print("Morphed")
                     end
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc

@@ -283,7 +283,7 @@ return function(C, _SETTINGS)
 				end
 			end
 			
-			hackData:SetKeybind((enTbl.Keybind and Enum.KeyCode[enTbl.Keybind]) 
+			hackData:SetKeybind((enTbl.Keybind and Enum.KeyCode[enTbl.Keybind])
 				or (hackData.Keybind and Enum.KeyCode[hackData.Keybind]))
 			C.ButtonClick(KeybindButton,KeybindClick)
 			C.BindEvents(hackData)
