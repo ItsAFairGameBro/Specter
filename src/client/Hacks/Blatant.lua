@@ -208,7 +208,8 @@ return function(C,Settings)
 					end
 					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then --and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
-							part.CanCollide = not value
+							--part.CanCollide = not value
+							C.SetCollide(part,"Noclip",not value)
 						end
 					end
 				end,

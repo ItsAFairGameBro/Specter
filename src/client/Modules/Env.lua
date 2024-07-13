@@ -5,6 +5,7 @@ local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
 local DS = game:GetService('Debris')
 return function(C,Settings)
+	--Table Functions
 	function C.TblAdd(tbl,val)
 		local key = table.find(tbl,val)
 		if not key then
@@ -43,6 +44,7 @@ return function(C,Settings)
 			return true
 		end
 	end
+	--Connections
 	function C.ClearFunctTbl(functTbl,isDict)
 		for num, funct in (isDict and pairs or ipairs)(functTbl) do
 			funct:Disconnect()
@@ -84,7 +86,7 @@ return function(C,Settings)
 		C.objectfuncts[instance][key]:Disconnect()
 		C.objectfuncts[instance][key] = nil
 	end
-		
+	--Clear Children
 	function C.ClearChildren(parent:Instance)
 		for _, instance in ipairs(parent:GetChildren()) do
 			if instance:IsA("GuiBase") then
@@ -92,7 +94,7 @@ return function(C,Settings)
 			end
 		end
 	end
-	
+	--Update Targeting
 	function C.CanTargetPlayer(plr)
 		--if plr == C.plr then
 		--	return false
@@ -109,14 +111,11 @@ return function(C,Settings)
 		end
 		return true
 	end
-	
+	--Raycast
 	local rayParams = RaycastParams.new()
 	rayParams.IgnoreWater = true
-
-	-- Function to perform a raycast with options
 	function C.Raycast(origin, direction, options)
 		options = options or {}
-
 		local distance = options.distance or 1
 
 		rayParams.FilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude
@@ -182,7 +181,7 @@ return function(C,Settings)
 			return model:WaitForChild("Left Leg").Size.Y + (0.5 * RootPart.Size.Y) + Humanoid.HipHeight
 		end
 	end
-	
+	--Debug
 	function C.createTestPart(position,timer)
 		if not Settings.hitBoxesEnabled and false then
 			return
@@ -322,6 +321,33 @@ return function(C,Settings)
 		UserCache[Username] = SaveCache
 		return true, Username, UserID
 	end
+
+	function C.SetCollide(object,id,toEnabled,alwaysUpd)
+		if C.gameUniverse=="Flee" and object.Name=="Weight" then
+			return -- don't touch it AT ALL!
+		end
+		local org = object:GetAttribute(C.OriginalCollideName)
+		local toDisabled = not toEnabled
+		local oldID = object:GetAttribute(id)
+		if oldID == toDisabled and not alwaysUpd then
+			return
+		else
+			object:SetAttribute(id,toDisabled or nil)
+		end
+		if toDisabled then
+			if not org and (object:GetAttribute(C.OriginalCollideName) or object.CanCollide) then
+				org = (org or 0) + 1
+				object:SetAttribute(C.OriginalCollideName,org)
+			end
+			object.CanCollide=false
+		elseif org then
+			org = (org or 1) - 1
+			if org==0 then
+				object.CanCollide = true
+			end
+			object:SetAttribute(C.OriginalCollideName,org>0 and org or nil)
+		end
+	end	
 	
 	function C.SendGeneralMessage(message:string)
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
