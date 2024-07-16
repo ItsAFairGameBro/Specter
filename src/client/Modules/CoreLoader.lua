@@ -139,7 +139,7 @@ return function(C, _SETTINGS)
 			TabEx.Parent = C.UI.TabsFrame
 			C.UI.Tabs[category.Name] = TabEx
 			
-			task.delay(1,C.MakeDraggableTab,TabEx,true)
+			task.spawn(C.MakeDraggableTab,TabEx,true)
 		else
 			ScrollTab = SettingsTab:WaitForChild("ScrollTab")
 		end
@@ -171,7 +171,7 @@ return function(C, _SETTINGS)
 			for num, optionData in ipairs(hackData.Options or {}) do
 				optionData.Parent = hackData
 				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
-			end			
+			end
 			--Expand Button
 			local ViewSettingsVisible = true
 			if not hackData.Options or #hackData.Options == 0 then

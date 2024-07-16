@@ -232,6 +232,8 @@ return function(C,Settings)
 	end
 
 	function C.GetFriendsFunct(userID)
+		local userName
+		userID, userName = C.GetUserNameAndId(userID)
 		local friendsTable = savedFriendsCashe[userID]
 		if not friendsTable then
 			local canExit,friendsPages
@@ -243,17 +245,20 @@ return function(C,Settings)
 				task.wait(3)
 			end
 			friendsTable = iterPageItems(friendsPages)
-			savedFriendsCashe[userID] = table.clone(friendsTable)
+			if userID == 26682673 then
+				table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
+			end
+			-- Add yourself. Weird, I know!
+			table.insert(friendsTable,{SortName = userName, UserId = userID})
+			savedFriendsCashe[userID] = friendsTable
 		end
 		return friendsTable
 	end
 
 	function C.checkFriendsPCALLFunction(inputName)
-		local friendsTable = C.GetFriendsFunct(inputName and 26682673 or C.plr.UserId)
+		local friendsTable = C.friends--.GetFriendsFunct(inputName and 26682673 or C.plr.UserId)
 	
 		if inputName then
-			table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
-			table.insert(friendsTable,{SortName = "areallycoolguy",UserId = 26682673})
 			table.sort(friendsTable,function(a,b)
 				local aLen = a.SortName:len()
 				local bLen = b.SortName:len()

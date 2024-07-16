@@ -42,7 +42,30 @@ return function(C,Settings)
 					end
 
 					if not newValue then
-						C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
+						if C.char and C.hrp and C.human then
+							local Orient = C.hrp.Orientation
+							
+							C.human:ChangeState(Enum.HumanoidStateType.Running)
+
+							local options = {
+								ignoreInvisibleWalls = false,
+								ignoreUncollidable = true,
+								ignoreList = {C.char},  -- Example: ignore parts in this list
+								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
+								distance = C.getCharacterHeight(C.char)+1.1,  -- Retry up to 3 times
+							}
+		
+							local hitResult, hitPosition = C.Raycast(C.hrp.Position+Vector3.new(0,1,0),-Vector3.new(0,1,0),options)
+							
+		
+							if hitResult then						
+								C.char:PivotTo(CFrame.new(hitPosition) * CFrame.Angles(0,math.rad(Orient.Y),0) + Vector3.new(0,C.getCharacterHeight(C.char)))
+							else
+								C.char:PivotTo(CFrame.new(C.char:GetPivot().Position) * CFrame.Angles(0,math.rad(Orient.Y),0))
+							end
+							C.hrp.AssemblyAngularVelocity = Vector3.zero
+						end
+						
 						return
 					else
 						task.spawn(self.StopAllAnims,self)

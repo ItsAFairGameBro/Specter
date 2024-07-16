@@ -1421,8 +1421,8 @@ return function(C, Settings)
 			local y = startPos.Y.Scale * C.GUI.AbsoluteSize.Y + startPos.Y.Offset + delta.Y
 
 			-- Get the screen bounds
-			local screenWidth = C.GUI.AbsoluteSize.X
-			local screenHeight = C.GUI.AbsoluteSize.Y
+			local screenWidth = workspace.CurrentCamera.ViewportSize.X--C.GUI.AbsoluteSize.X
+			local screenHeight = workspace.CurrentCamera.ViewportSize.Y--C.GUI.AbsoluteSize.Y
 
 			-- Get the frame size
 			local frameWidth = frame.AbsoluteSize.X

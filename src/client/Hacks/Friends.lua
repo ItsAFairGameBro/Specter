@@ -25,29 +25,12 @@ return function(C,Settings)
 								C.friends = {}
 								return
 							end
-							local friendPages = PS:GetFriendsAsync(C.plr.UserId)
-							local function iterPageItems(pages)
-								return coroutine.wrap(function()
-									local pagenum = 1
-									while true do
-										for _, item in ipairs(pages:GetCurrentPage()) do
-											coroutine.yield(item, pagenum)
-										end
-										if pages.IsFinished then
-											break
-										end
-										pages:AdvanceToNextPageAsync()
-										pagenum = pagenum + 1
-									end
-								end)
-							end
-							local userids = {}
-							for item, pageNo in iterPageItems(friendPages) do
-								table.insert(userids, item.Id)
-							end
-							C.friends = userids
+							local theirEnTbl = C.enHacks.Friends.MainAccount
+							local friends = C.GetFriendsFunct(theirEnTbl.En and theirEnTbl.MainAccountId[1] or C.plr.UserId)
+							
+							C.friends = friends
 							if self.Enabled then
-								C.AddNotification("Friends Loaded",`{#userids} Friends will not be targeted by modules`)
+								C.AddNotification("Friends Loaded",`{#friends} Friends will not be targeted by modules`)
 							end
 						end,
 						Layout = 1,Default = true,
