@@ -97,28 +97,32 @@ return function(C,Settings)
 
 					--Disable TouchGui (if it exists)
 					if UIS.TouchEnabled then
-						local ContextActionGui = C.PlayerGui:WaitForChild("ContextActionGui",3)
-						local TouchGui = C.PlayerGui:WaitForChild("TouchGui");
-						local TouchGui2 = C.gameName == "FlagWars" and C.PlayerGui:WaitForChild("Mobile UI")
-						local function updateTouchScreenEnability()
-							TouchGui.Enabled = not EnTbl.DisableTouchGUI
-							if ContextActionGui then
-								ContextActionGui.Enabled = not EnTbl.DisableTouchGUI
+						local function GUIAdded()
+							local ContextActionGui = C.PlayerGui:WaitForChild("ContextActionGui",.3)
+							local TouchGui = C.PlayerGui:WaitForChild("TouchGui");
+							local TouchGui2 = C.gameName == "FlagWars" and C.PlayerGui:WaitForChild("Mobile UI")
+							local function updateTouchScreenEnability()
+								TouchGui.Enabled = not EnTbl.DisableTouchGUI
+								if ContextActionGui then
+									ContextActionGui.Enabled = not EnTbl.DisableTouchGUI
+								end
+								if TouchGui2 then
+									TouchGui2.Enabled = not EnTbl.DisableTouchGUI
+								end
 							end
-							if TouchGui2 then
-								TouchGui2.Enabled = not EnTbl.DisableTouchGUI
+							if EnTbl.DisableTouchGUI then
+								table.insert(self.Functs,TouchGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
+								if ContextActionGui then
+									table.insert(self.Functs,ContextActionGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
+								end
+								if TouchGui2 then
+									table.insert(self.Functs,TouchGui2:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
+								end	
 							end
+							updateTouchScreenEnability()	
 						end
-						if EnTbl.DisableTouchGUI then
-							table.insert(self.Functs,TouchGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-							if ContextActionGui then
-								table.insert(self.Functs,ContextActionGui:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-							end
-							if TouchGui2 then
-								table.insert(self.Functs,TouchGui2:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-							end	
-						end
-						updateTouchScreenEnability()		
+						table.insert(self.Functs,C.PlayerGui.ChildAdded:Connect(GUIAdded))
+						GUIAdded()
 					end
 				end,
                 Events = {
