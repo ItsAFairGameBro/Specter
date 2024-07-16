@@ -232,8 +232,12 @@ return function(C,Settings)
 	end
 
 	function C.GetFriendsFunct(userID)
-		local userName
-		userID, userName = C.GetUserNameAndId(userID)
+		local success,userName
+		success,userName, userID = C.GetUserNameAndId(userID)
+		if not success then
+			C.AddNotification("User API Failed",tostring(userID))
+			return
+		end
 		local friendsTable = savedFriendsCashe[userID]
 		if not friendsTable then
 			local canExit,friendsPages

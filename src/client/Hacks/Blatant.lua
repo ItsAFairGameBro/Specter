@@ -5,7 +5,7 @@ local UIS = game:GetService("UserInputService")
 local function getMass(model)
 	assert(model and model:IsA("Model"), "Model argument of getMass must be a model.");
 	
-	return model.PrimaryPart.AssemblyMass;
+	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
 return function(C,Settings)
 	return {

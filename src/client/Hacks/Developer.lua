@@ -130,6 +130,18 @@ return function(C,Settings)
 					
 				}
 			},
+            {
+				Title = "Get GameID",
+				Tooltip = "Sets the GameID to clipboard",
+				Layout = 7,Type="NoToggle",
+				Shortcut = "SetGameToClipBoard",
+				Activate = function(self,newValue)
+                    setclipboard(game.GameId)
+				end,
+				Options = {
+					
+				}
+			},
 		}
 	}
 end
