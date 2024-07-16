@@ -120,7 +120,8 @@ return function(C, _SETTINGS)
 			local TabEx = C.Examples.TabEx:Clone()
 			CategoryEx.LayoutOrder = category.Layout + (category.AfterMisc and 50 or 0)
 			CategoryEx:WaitForChild("Text").Text = category.Title
-			C.SetImage(CategoryEx:WaitForChild("Image"), category.Image and 'rbxassetid://' .. category.Image or GameImage)
+			local UsableImage = category.Image and 'rbxassetid://' .. category.Image or GameImage
+			C.SetImage(CategoryEx:WaitForChild("Image"), UsableImage)
 			CategoryEx.Parent = ButtonsTab
 			local function ToggleVisiblity()
 				visible = not visible
@@ -134,7 +135,7 @@ return function(C, _SETTINGS)
 			local HeaderTab = TabEx:WaitForChild("HeaderTab")
 			ScrollTab = TabEx:WaitForChild("ScrollTab")
 			HeaderTab:WaitForChild("Text").Text = category.Title
-			C.SetImage(HeaderTab:WaitForChild("Image"),'rbxassetid://'..category.Image)
+			C.SetImage(HeaderTab:WaitForChild("Image"),UsableImage)
 			if GameModule == name then
 				TabEx.Position = UDim2.fromOffset(250 * (4),100)
 			elseif category.Layout < 4 then
