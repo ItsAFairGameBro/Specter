@@ -4,7 +4,7 @@ local UIS = game:GetService("UserInputService")
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
-	[770538576] = {ModuleName="NavalWarefare"}
+	[770538576] = {ModuleName="NavalWarefare",GameName="Naval Warefare"}
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
@@ -32,14 +32,16 @@ return function(C, _SETTINGS)
 	local HeaderTab,ButtonsTab,SettingsTab = C.UI.CategoriesFrame:WaitForChild("HeaderTab"),
 		C.UI.CategoriesFrame:WaitForChild("Buttons"),C.UI.CategoriesFrame:WaitForChild("Settings")
 	local ThisGameTbl = GamesWithModules[game.GameId]
+	local GameModule
 	local SupportedFrame = SettingsTab:WaitForChild("SupportedFrame")
 	--local success, result = C.API(game:GetService("MarketplaceService"), "GetProductInfo", 3, game.PlaceId)
 	if ThisGameTbl then
-		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game`
+		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game✅`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
-		table.insert(ModulesToRun,ThisGameTbl.ModuleName)
+		GameModule = ThisGameTbl.ModuleName
+		table.insert(ModulesToRun,GameModule)
 	else
-		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game!`
+		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game❌`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 	end
 	--if success then
@@ -131,7 +133,9 @@ return function(C, _SETTINGS)
 			ScrollTab = TabEx:WaitForChild("ScrollTab")
 			HeaderTab:WaitForChild("Text").Text = category.Title
 			C.SetImage(HeaderTab:WaitForChild("Image"),'rbxassetid://'..category.Image)
-			if category.Layout < 4 then
+			if GameModule == name then
+				TabEx.Position = UDim2.fromOffset(250 * (7),100)
+			elseif category.Layout < 4 then
 				TabEx.Position = UDim2.fromOffset(250 * (category.Layout),100)
 			else
 				TabEx.Position = UDim2.fromOffset(250 + 500 * (category.Layout-4),300)
