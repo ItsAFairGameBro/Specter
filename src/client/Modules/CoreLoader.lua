@@ -172,7 +172,7 @@ return function(C, _SETTINGS)
 				optionData.Parent = hackData
 				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
 			end
-			--Expand Button
+			--Three Dots Button
 			local ViewSettingsVisible = true
 			if not hackData.Options or #hackData.Options == 0 then
 				HackExpand.Visible = false
@@ -245,47 +245,52 @@ return function(C, _SETTINGS)
 			
 			--Keybind
 			local BindedKey = KeybindButton:WaitForChild("BindedKey")
-			function hackData:SetKeybind(key: Enum.KeyCode)
-				if key then
-					BindedKey.Text = key.Name:gsub("Slash","/")
-					C.AddKeybind(key,hackData)
-				else
-					BindedKey.Text = ""
-					C.RemoveKeybind(hackData)
+			if name ~= "Developer" then
+				function hackData:SetKeybind(key: Enum.KeyCode)
+					if key then
+						BindedKey.Text = key.Name:gsub("Slash","/")
+						C.AddKeybind(key,hackData)
+					else
+						BindedKey.Text = ""
+						C.RemoveKeybind(hackData)
+					end
+					C.IsBinding = false
 				end
-				C.IsBinding = false
-			end
-			local function KeybindClick(override)
-				if KeybindRunFunct then
-					C.RemoveGlobalConnection(KeybindRunFunct)
-					KeybindRunFunct = nil
-					BindButton.KeybindLabel.Visible = false
-					BindButton.HighlightBackground.Visible = true
-					if BindButton == ButtonEx and override ~= true then
-						hackData:SetKeybind(nil)
+				local function KeybindClick(override)
+					if KeybindRunFunct then
+						C.RemoveGlobalConnection(KeybindRunFunct)
+						KeybindRunFunct = nil
+						BindButton.KeybindLabel.Visible = false
+						BindButton.HighlightBackground.Visible = true
+						if BindButton == ButtonEx and override ~= true then
+							hackData:SetKeybind(nil)
+						end
+					end
+					
+					if BindButton ~= ButtonEx then
+						BindButton = ButtonEx
+						KeybindRunFunct = C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject,gameProcessed)
+							if inputObject.UserInputType == Enum.UserInputType.Keyboard then
+								local key = inputObject.KeyCode
+								hackData:SetKeybind(key)
+								KeybindClick(true)
+							end
+						end))
+						ButtonEx.KeybindLabel.Visible = true
+						BindButton.HighlightBackground.Visible = false
+						C.IsBinding = true
+					else
+						BindButton = nil
 					end
 				end
 				
-				if BindButton ~= ButtonEx then
-					BindButton = ButtonEx
-					KeybindRunFunct = C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject,gameProcessed)
-						if inputObject.UserInputType == Enum.UserInputType.Keyboard then
-							local key = inputObject.KeyCode
-							hackData:SetKeybind(key)
-							KeybindClick(true)
-						end
-					end))
-					ButtonEx.KeybindLabel.Visible = true
-					BindButton.HighlightBackground.Visible = false
-					C.IsBinding = true
-				else
-					BindButton = nil
-				end
+				hackData:SetKeybind((enTbl.Keybind and Enum.KeyCode[enTbl.Keybind])
+					or (hackData.Keybind and Enum.KeyCode[hackData.Keybind]))
+				C.ButtonClick(KeybindButton,KeybindClick)
+			else
+				BindedKey.Visible = false
 			end
-			
-			hackData:SetKeybind((enTbl.Keybind and Enum.KeyCode[enTbl.Keybind])
-				or (hackData.Keybind and Enum.KeyCode[hackData.Keybind]))
-			C.ButtonClick(KeybindButton,KeybindClick)
+
 			C.BindEvents(hackData)
 
 			--Tooltip
