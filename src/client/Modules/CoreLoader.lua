@@ -34,7 +34,7 @@ return function(C, _SETTINGS)
 	local ThisGameTbl = GamesWithModules[game.GameId]
 	local GameModule
 	local SupportedFrame = SettingsTab:WaitForChild("SupportedFrame")
-	--local success, result = C.API(game:GetService("MarketplaceService"), "GetProductInfo", 3, game.PlaceId)
+	local GameImage = "https://www.roblox.com/Thumbs/Asset.ashx?Width=768&Height=432&AssetID="..game.PlaceId
 	if ThisGameTbl then
 		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game✅`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
@@ -45,7 +45,7 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 	end
 	--if success then
-	C.SetImage(SupportedFrame:WaitForChild("Image"),"https://www.roblox.com/Thumbs/Asset.ashx?Width=768&Height=432&AssetID="..game.PlaceId)
+	C.SetImage(SupportedFrame:WaitForChild("Image"),GameImage)
 	--end
 
 	--Add developer settings
@@ -105,6 +105,8 @@ return function(C, _SETTINGS)
 		local category = hack.Category
 		local idName = category and category.Name or name
 
+		local isGame = GameModule == name
+
 		local visible = false
 		local enHackTab = C.enHacks[idName] or {}
 		C.enHacks[idName] = enHackTab
@@ -118,7 +120,7 @@ return function(C, _SETTINGS)
 			local TabEx = C.Examples.TabEx:Clone()
 			CategoryEx.LayoutOrder = category.Layout + (category.AfterMisc and 50 or 0)
 			CategoryEx:WaitForChild("Text").Text = category.Title
-			C.SetImage(CategoryEx:WaitForChild("Image"), 'rbxassetid://' .. category.Image)
+			C.SetImage(CategoryEx:WaitForChild("Image"), category.Image and 'rbxassetid://' .. category.Image or GameImage)
 			CategoryEx.Parent = ButtonsTab
 			local function ToggleVisiblity()
 				visible = not visible
@@ -134,7 +136,7 @@ return function(C, _SETTINGS)
 			HeaderTab:WaitForChild("Text").Text = category.Title
 			C.SetImage(HeaderTab:WaitForChild("Image"),'rbxassetid://'..category.Image)
 			if GameModule == name then
-				TabEx.Position = UDim2.fromOffset(250 * (7),100)
+				TabEx.Position = UDim2.fromOffset(250 * (4),100)
 			elseif category.Layout < 4 then
 				TabEx.Position = UDim2.fromOffset(250 * (category.Layout),100)
 			else

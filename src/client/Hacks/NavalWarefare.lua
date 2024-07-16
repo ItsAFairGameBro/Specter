@@ -5,7 +5,7 @@ return function(C,Settings)
 		Category = {
 			Name = "NavalWarefare",
 			Title = "Naval Warefare",
-			Image = 17758639621,
+			Image = nil, -- Set Image to nil in order to get game image!
 			Layout = 20,
 		},
 		Tab = {
