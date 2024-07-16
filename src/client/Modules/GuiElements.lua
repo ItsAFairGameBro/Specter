@@ -1532,6 +1532,9 @@ return function(C, Settings)
 	else
 		SpecterGUI.Name = C.GenerateGUID()
 	end
+	SpecterGUI.SafeAreaCompatibility = false
+	SpecterGUI.ScreenInsets = Enum.ScreenInsets.None
+	SpecterGUI.ClipToDeviceSafeArea = false
 	
 	CreateOtherElements(C, Settings)
 	
