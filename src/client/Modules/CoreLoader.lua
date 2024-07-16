@@ -4,6 +4,7 @@ local UIS = game:GetService("UserInputService")
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
+	[770538576] = {ModuleName="NavalWarefare"}
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
