@@ -235,7 +235,7 @@ return function(C, _SETTINGS)
 					return
 				end
 				if hackData.Activate and (not started or hackData.Type ~= "NoToggle") then
-					task.delay(.3,hackData.Activate,hackData,hackData.Enabled)
+					task.delay(.3,hackData.Activate,hackData,hackData.Enabled,started)
 				end
 			end
 			C.ButtonClick(MainText,function()
