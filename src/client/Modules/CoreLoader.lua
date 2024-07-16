@@ -244,8 +244,8 @@ return function(C, _SETTINGS)
 			task.spawn(hackData.SetValue,hackData,enTbl.En==true, true)
 			
 			--Keybind
-			local BindedKey = KeybindButton:WaitForChild("BindedKey")
-			if name ~= "Developer" then
+			if name ~= "Settings" then
+				local BindedKey = KeybindButton:WaitForChild("BindedKey")
 				function hackData:SetKeybind(key: Enum.KeyCode)
 					if key then
 						BindedKey.Text = key.Name:gsub("Slash","/")
@@ -288,7 +288,8 @@ return function(C, _SETTINGS)
 					or (hackData.Keybind and Enum.KeyCode[hackData.Keybind]))
 				C.ButtonClick(KeybindButton,KeybindClick)
 			else
-				BindedKey.Visible = false
+				KeybindButton.Visible = false
+				MainText.Size = UDim2.new(MainText.Size.X.Scale,KeybindButton.AbsoluteSize.X,0,MainText.Size.Y.Offset)
 			end
 
 			C.BindEvents(hackData)

@@ -1412,6 +1412,7 @@ return function(C, Settings)
 		local dragStart
 		local dragStartTime
 		local startPos
+		local wantLoc
 
 		local function update(delta: UDim2, start: boolean)
 			if start then
@@ -1420,9 +1421,15 @@ return function(C, Settings)
 			local x = startPos.X.Scale * C.GUI.AbsoluteSize.X + startPos.X.Offset + delta.X
 			local y = startPos.Y.Scale * C.GUI.AbsoluteSize.Y + startPos.Y.Offset + delta.Y
 
+			if delta.Magnitude > 0 or not wantLoc then
+				wantLoc = UDim2.fromOffset(x, y)
+			else
+				x, y = wantLoc.X.Offset, wantLoc.Y.Offset
+			end
+
 			-- Get the screen bounds
-			local screenWidth = workspace.CurrentCamera.ViewportSize.X--C.GUI.AbsoluteSize.X
-			local screenHeight = workspace.CurrentCamera.ViewportSize.Y--C.GUI.AbsoluteSize.Y
+			local screenWidth = math.max(workspace.CurrentCamera.ViewportSize.X, C.GUI.AbsoluteSize.X)
+			local screenHeight = math.max(workspace.CurrentCamera.ViewportSize.Y, C.GUI.AbsoluteSize.Y)
 
 			-- Get the frame size
 			local frameWidth = frame.AbsoluteSize.X

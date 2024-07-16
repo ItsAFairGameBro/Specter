@@ -57,11 +57,19 @@ return function(C,Settings)
 						Layout = 2,Default={},
 						Limit = 1,
 						Activate = function(self)
-							local FriendHack = self.Parent.Parent[1]
-							FriendHack.Options[1].Activate(FriendHack,FriendHack.Enabled)
+							--local FriendHack = self.Parent.Parent[1]
+							--FriendHack.Options[1].Activate(FriendHack,FriendHack.Enabled)
+							self.Parent.Parent:Activate()
 						end,
 					},
-				}
+				},
+				Activate = function(self,newValue,startUp)
+					if startUp then
+						return
+					end
+					local FriendHack = self.Parent[1]
+					FriendHack.Options[1].Activate(FriendHack,FriendHack.Enabled)
+				end,
 			},
 		}
 	}

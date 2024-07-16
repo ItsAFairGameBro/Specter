@@ -305,6 +305,15 @@ return function(C,Settings)
 		end
 		self.LimitTL.Text = `{#newList}/{self.Limit}`
 		self.Value = newList
+		if #newList >= self.Limit then
+			self.AddButton.Visible = false
+			self.EnterTB.Visible = false
+			self.MainList.Position = UDim2.fromOffset(0,50)
+		else
+			self.AddButton.Visible = true
+			self.EnterTB.Visible = true
+			self.MainList.Position = UDim2.fromOffset(0,80)
+		end
 		SetValueCombined(self,firstRun)
 	end
 
