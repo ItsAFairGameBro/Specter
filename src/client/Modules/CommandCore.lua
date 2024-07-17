@@ -230,7 +230,7 @@ return function(C,Settings)
             local newLength = newInput:len()
             --Load suggestions
             C.ClearChildren(ChatAutoCompleteFrame)
-            currentIndex = 1
+            frameList, currentIndex = {}, 1
             for num, list in ipairs(C.StringStartsWith(C.CommandFunctions,newInput:sub(2))) do
                 local command, CommandData = table.unpack(list)
                 local newClone = C.Examples.AutoCompleteEx:Clone()
