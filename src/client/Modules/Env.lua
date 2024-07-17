@@ -278,7 +278,7 @@ return function(C,Settings)
 
 	function C.StringStartsWith(tbl,name)
 		if name == "" or not name then
-			return
+			return {}
 		end
 		name = name:lower()
 		local closestMatch, results = math.huge, {}
@@ -292,11 +292,11 @@ return function(C,Settings)
 			if canPass then
 				if itsIndex:len() < closestMatch then
 					closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
-					results = {index,theirValue}
+					table.insert(results,{index,theirValue})
 				end
 			end
 		end
-		return table.unpack(results);
+		return results;
 	end	
 		
 	local UserCache = {}

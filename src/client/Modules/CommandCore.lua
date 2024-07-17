@@ -2,6 +2,7 @@ local PS = game:GetService("Players")
 local TCS = game:GetService("TextChatService")
 local RunS = game:GetService("RunService")
 local CG = game:GetService("CoreGui")
+local UIS = game:GetService("UserInputService")
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands
     if not C.savedCommands then
@@ -22,7 +23,7 @@ return function(C,Settings)
         for index = 1, 3, 1 do
             args[index] = args[index] or "" -- leave them be empty so it doesn't confuse the game!
         end
-        local command, CommandData = C.StringStartsWith(C.CommandFunctions,inputCommand)
+        local command, CommandData = table.unpack(C.StringStartsWith(C.CommandFunctions,inputCommand)[1])
         if CommandData then
             if CommandData.RequiresRefresh and noRefresh then
                 return
@@ -50,8 +51,7 @@ return function(C,Settings)
                     end
                     args[1] = "new"
                 else
-                    local _
-                    _, ChosenPlr = C.StringStartsWith(PS:GetPlayers(),args[1])
+                    local ChosenPlr = select(2,table.unpack(C.StringStartsWith(PS:GetPlayers(),args[1])[1]))
                     if ChosenPlr then
                         args[1] = {ChosenPlr}
                     else
@@ -107,8 +107,10 @@ return function(C,Settings)
     -- Chatbar Connection
     --MY PLAYER CHAT
     local chatBar
+    local isFocused
     local index = 0
     local hasNewChat = TCS.ChatVersion == Enum.ChatVersion.TextChatService
+
     local function registerNewChatBar(_,firstRun)
         local sendButton = hasNewChat and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
         chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and 
@@ -169,33 +171,100 @@ return function(C,Settings)
         end
         local lastText
         local lastUpd = -5
-        local function textUpd()
-            if not chatBar or not chatBar:IsFocused() then
-                return
-            end
-            local newInput = chatBar.Text
-            local newLength = newInput:len()
-            if #C.savedCommands==0 or lastText == newInput then
-                return
-            end
-            if newInput:match("/up") then
-                index += 1
-            elseif newInput:match("/down") then
-                index -= 1
-            else
-                return
-            end
+        local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
+        local Connection
+		local function goToSaved(deltaIndex)
+			index += deltaIndex
             lastUpd = os.clock()
             index = math.clamp(index,0,#C.savedCommands+1)
 
             local setTo = C.savedCommands[index] or ""
             lastText = setTo
             RunS.RenderStepped:Wait()
-            chatBar.Text = setTo
+			chatBar.Text = setTo
+			chatBar.CursorPosition = setTo:len() + 1
+        end
+        local frameList, currentIndex = {}, 1
+        local function HighlightLayout(num)
+            currentIndex = math.clamp(num, 1, #frameList)
+            for num2, frameButton in ipairs(frameList) do
+                frameButton.BackgroundColor3 = frameButton.LayoutOrder == currentIndex and Color3.fromRGB(0,255) or Color3.fromRGB(255)
+            end
+        end
+        local function ChatBarUpdated()
+            isFocused = chatBar:IsFocused()
+            ChatAutoCompleteFrame.Visible = isFocused
+            ChatAutoCompleteFrame.Position = UDim2.fromOffset(chatBar.Parent.AbsolutePosition.X,chatBar.Parent.AbsolutePosition.Y+chatBar.Parent.AbsoluteSize.Y)
+            ChatAutoCompleteFrame.Size = UDim2.fromOffset(chatBar.AbsoluteSize.X,0)
+            if isFocused then
+                Connection = C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject, gameProcessed)
+                    if not isFocused then
+                        return
+                    end
+                    if #frameList > 0 then
+                        if inputObject.KeyCode == Enum.KeyCode.Up then
+                            HighlightLayout(currentIndex - 1)
+                        elseif inputObject.KeyCode == Enum.KeyCode.Down then
+                            HighlightLayout(currentIndex + 1)
+                        elseif inputObject.KeyCode == Enum.KeyCode.Tab then
+                            chatBar.Text = chatBar.Text:sub(1,1) .. frameList[currentIndex].Name
+                            RunS.RenderStepped:Wait()
+                            chatBar.Text = chatBar.Text:gsub("\t","")
+                            chatBar.CursorPosition = chatBar.Text:len() + 1
+                        end    
+                    else
+                        if inputObject.KeyCode == Enum.KeyCode.Up then
+                            goToSaved(1)
+                        elseif inputObject.KeyCode == Enum.KeyCode.Down then
+                            goToSaved(-1)
+                        end    
+                    end
+                end))
+            elseif Connection then
+                C.RemoveGlobalConnection(Connection)
+                Connection = nil
+            end
+        end
+        local function textUpd()
+            local newInput = chatBar.Text
+            local newLength = newInput:len()
+            --Load suggestions
+            C.ClearChildren(ChatAutoCompleteFrame)
+            currentIndex = 1
+            for num, list in ipairs(C.StringStartsWith(C.CommandFunctions,newInput:sub(2))) do
+                local command, CommandData = table.unpack(list)
+                local newClone = C.Examples.AutoCompleteEx:Clone()
+                newClone.BackgroundColor3 = num==1 and Color3.fromRGB(0,255) or Color3.fromRGB(255)
+                newClone.AutoCompleteTitleLabel.Text = command
+                newClone.Name = command
+                newClone.Parent = ChatAutoCompleteFrame
+                newClone.LayoutOrder = num
+                table.insert(frameList,newClone)
+            end
+            if not chatBar or not chatBar:IsFocused() then
+                return
+            end
+            
+            --Up Down Commands
+            if #C.savedCommands==0 or lastText == newInput then
+                return
+            end
+            if newInput:match("/up") then
+                index = 1
+            elseif newInput:match("/down") then
+                index = -1
+            else
+                return
+            end
+            goToSaved(index)
         end
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))
         textUpd()
+        
+        chatBar.Focused:Connect(ChatBarUpdated)
+        ChatBarUpdated()
         C.AddObjectConnection(chatBar,"FocusLostChatbar",chatBar.FocusLost:Connect(function(enterPressed)
+            ChatBarUpdated()
             index = 0
             local inputMsg = chatBar.Text
             if enterPressed then
@@ -207,7 +276,7 @@ return function(C,Settings)
                     task.spawn(C.RunCommand,inputMsg,true)
                 end
             end
-            if not hasNewChat then
+            if not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     if connectionFunct.Function then
                         connectionFunct.Function(enterPressed)

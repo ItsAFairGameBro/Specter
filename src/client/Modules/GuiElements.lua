@@ -123,6 +123,11 @@ local NotificationTitle = Instance.new("TextLabel")
 local NotificationDesc = Instance.new("TextLabel")
 local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 local HUDBackgroundFade = Instance.new("Frame")
+local ChatAutoComplete = Instance.new("ScrollingFrame")
+local UISizeConstraint = Instance.new("UISizeConstraint")
+local AutoCompleteEx = Instance.new("Frame")
+local AutoCompleteTitleLabel = Instance.new("TextLabel")
+local UIListLayout_8 = Instance.new("UIListLayout")
 
 --Properties:
 
@@ -856,7 +861,7 @@ ForceTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ForceTB.BorderSizePixel = 0
 ForceTB.Position = UDim2.new(1, 0, 0, 0)
 ForceTB.Size = UDim2.new(0.300000012, 0, 0, 30)
-ForceTB.ZIndex = 2
+ForceTB.ZIndex = 3
 ForceTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 ForceTB.Text = ""
 ForceTB.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -947,6 +952,7 @@ DropdownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 DropdownButton.BorderSizePixel = 0
 DropdownButton.Position = UDim2.new(0.970000029, 0, 0.5, 0)
 DropdownButton.Size = UDim2.new(0.400000006, 0, 0, 30)
+DropdownButton.ZIndex = 2
 DropdownButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 DropdownButton.Text = "God Mode⬇"
 DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -994,6 +1000,7 @@ AddButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AddButton.BorderSizePixel = 0
 AddButton.Position = UDim2.new(0.970000029, 0, 0, 40)
 AddButton.Size = UDim2.new(0.150000006, 0, 0, 30)
+AddButton.ZIndex = 2
 AddButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 AddButton.Text = "+"
 AddButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1034,6 +1041,7 @@ DeleteButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 DeleteButton.BorderSizePixel = 0
 DeleteButton.Position = UDim2.new(0.970000029, 0, 0, 0)
 DeleteButton.Size = UDim2.new(0.150000006, 0, 1, 0)
+DeleteButton.ZIndex = 2
 DeleteButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 DeleteButton.Text = "X"
 DeleteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1181,6 +1189,7 @@ EnterButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 EnterButton.BorderSizePixel = 0
 EnterButton.Position = UDim2.new(0.970000029, 0, 0, 40)
 EnterButton.Size = UDim2.new(0.150000006, 0, 0, 30)
+EnterButton.ZIndex = 2
 EnterButton.Image = "rbxassetid://504367763"
 
 UICorner_13.Parent = EnterButton
@@ -1379,6 +1388,50 @@ HUDBackgroundFade.LayoutOrder = -30
 HUDBackgroundFade.Position = UDim2.new(0.5, 0, 0.5, 0)
 HUDBackgroundFade.Size = UDim2.new(4, 0, 4, 0)
 HUDBackgroundFade.ZIndex = -30
+
+ChatAutoComplete.Name = "ChatAutoComplete"
+ChatAutoComplete.Parent = SpecterGUI
+C.UI.ChatAutoComplete = ChatAutoComplete
+ChatAutoComplete.Active = true
+ChatAutoComplete.AutomaticSize = Enum.AutomaticSize.Y
+ChatAutoComplete.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ChatAutoComplete.BackgroundTransparency = 1.000
+ChatAutoComplete.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ChatAutoComplete.BorderSizePixel = 0
+ChatAutoComplete.Size = UDim2.new(0.300000012, 0, 0, 0)
+ChatAutoComplete.Visible = false
+ChatAutoComplete.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ChatAutoComplete.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+UISizeConstraint.Parent = ChatAutoComplete
+UISizeConstraint.MaxSize = Vector2.new(9999999, 300)
+
+AutoCompleteEx.Name = "AutoCompleteEx"
+AutoCompleteEx:AddTag("RemoveOnDestroy")
+C.Examples.AutoCompleteEx = AutoCompleteEx
+AutoCompleteEx.BackgroundColor3 = Color3.fromRGB(55, 255, 0)
+AutoCompleteEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutoCompleteEx.BorderSizePixel = 0
+AutoCompleteEx.Size = UDim2.new(1, 0, 0, 25)
+
+AutoCompleteTitleLabel.Name = "AutoCompleteTitleLabel"
+AutoCompleteTitleLabel.Parent = AutoCompleteEx
+AutoCompleteTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutoCompleteTitleLabel.BackgroundTransparency = 1.000
+AutoCompleteTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutoCompleteTitleLabel.BorderSizePixel = 0
+AutoCompleteTitleLabel.Size = UDim2.new(1, 0, 1, 0)
+AutoCompleteTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+AutoCompleteTitleLabel.Text = "This sounds cool"
+AutoCompleteTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoCompleteTitleLabel.TextScaled = true
+AutoCompleteTitleLabel.TextSize = 14.000
+AutoCompleteTitleLabel.TextStrokeTransparency = 0.000
+AutoCompleteTitleLabel.TextWrapped = true
+
+UIListLayout_8.Parent = ChatAutoComplete
+UIListLayout_8.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout_8.SortOrder = Enum.SortOrder.LayoutOrder
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 

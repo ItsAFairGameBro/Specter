@@ -269,11 +269,11 @@ return function(C,Settings)
                     if tonumber(args[3]) then
                         args[3] = tonumber(args[3])
                     else
-                        local index,didFind = C.StringStartsWith(C.getgenv().Outfits[selectedName.UserId], args[3])
-                        if not didFind then
+                        local list = C.StringStartsWith(C.getgenv().Outfits[selectedName.UserId], args[3])
+                        if #list == 0 then
                             return false, "Outfit Name Not Found ("..tostring(args[3])..")"
                         end
-                        args[3] = index;
+                        args[3] = list[1][1];
                     end
                     outfitData = C.getgenv().Outfits[selectedName.UserId][args[3]]
                 else
