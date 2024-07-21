@@ -15,17 +15,17 @@ return function(C,Settings)
     end
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.CommandFunctions = {
-        --[[["refresh"]={
+        ["refresh"]={
             Type=false,
             AfterTxt="%s",
             Priority=10,
             RequiresRefresh=true,
             Run=function(args)
-                C.AvailableHacks.Basic[99].ActivateFunction()
+                C.Refresh()
                 return true
             end,
         },
-        ["reset_settings"]={
+        --[[["reset_settings"]={
             Type=false,
             AfterTxt="%s",
             RequiresRefresh=true,
@@ -340,7 +340,7 @@ return function(C,Settings)
             Type=false,
             AfterTxt="%s",
             Run=function(self,args)
-                local selectedName = C.checkFriendsPCALLFunction(args[1])
+                local index, selectedName = table.unpack(C.checkFriendsPCALLFunction(args[1])[1] or {})
                 C.getgenv().Outfits = C.getgenv().Outfits or {}
                 if not selectedName then
                     return false, "User Not Found ("..tostring(args[1])..")"
@@ -390,10 +390,10 @@ return function(C,Settings)
             end,
         },
         ["time"]={
-            Type="Player",
-            AfterTxt="%.1f",
+            Type=false,
+            AfterTxt="%i m, %.1f s (%is total)",
             Run=function(self,args)
-                return true,time()
+                return true,math.floor(time()/60), time()%60, time()
             end,
         },
         ["follow"]={
@@ -429,7 +429,7 @@ return function(C,Settings)
                     return false, "Cannot Follow Yourself!"
                 end
                 C.isFollowing = theirPlr
-                RunS:BindToRenderStep("Follow"..C.saveIndex,69,function()
+                RunS:BindToRenderStep("Follow"..C.SaveIndex,69,function()
                     --print(plr:GetAttribute("isFollowing") ~= theirPlr.UserId,plr:GetAttribute("isFollowing"),theirPlr.UserId)
                     --while isFollowing == theirPlr and HRP and HRP.Parent and saveChar.Parent and not C.C.isCleared do
                     --if (plr:GetAttribute("isFollowing") ~= theirPlr.UserId or not HRP or not HRP.Parent or C.C.isCleared) then
@@ -457,7 +457,7 @@ return function(C,Settings)
                     else
                         teleportMyself(CFrame.new(HRP.CFrame * Vector3.new(0,0,dist),HRP.Position))
                     end
-                    if C.char and C.char.PrimaryPart then
+                    if C.char and C.char.PrimaryPart and false then
                         C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
                         C.char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
                     end
@@ -493,7 +493,7 @@ return function(C,Settings)
             end,
         },
         ["unfollow"]={
-            Type="",
+            Type=false,
             AfterTxt="%s",
             Run=function(self,args)
                 if not C.isFollowing then
@@ -503,7 +503,7 @@ return function(C,Settings)
                 local str = `{theirPlr or 'Unknown'}`
                 C.isFollowing = nil
                 --C.CommandFunctions.follow.isFollowing = -1
-                RunS:UnbindFromRenderStep("Follow"..C.saveIndex)
+                RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
                 for num, myAnimTrack in pairs(C.CommandFunctions.follow.MyPlayingAnimations) do
                     myAnimTrack:Stop(0)
                 end
@@ -513,7 +513,7 @@ return function(C,Settings)
             end,
         },
         ["rejoin"]={
-            Type="",
+            Type=false,
             AfterTxt="%s",
             Run=function(self,args)
                 if args[1] == "new" or args[1] == "small" then
@@ -550,7 +550,7 @@ return function(C,Settings)
             end,
         },
         ["console"]={
-            Type="",
+            Type=false,
             AfterTxt="%s",
             Run=function(self,args)
                 SG:SetCore("DevConsoleVisible",not SG:GetCore("DevConsoleVisible"))

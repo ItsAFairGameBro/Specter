@@ -27,11 +27,14 @@ return function(C,Settings)
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
 					if self.EnTbl.Distance < 0.1 or self.EnTbl.Distance < (camera.CFrame.Position - HRP.Position).Magnitude then
 						return false -- no way we're reaching them lol!
-					end							
+					end
+					if camera.CameraSubject and camera.CameraSubject.Parent == theirChar then
+						return true
+					end
 					local options = {
 						ignoreInvisibleWalls = self.EnTbl.IgnoreInvisibleWalls,
 						ignoreUncollidable = self.EnTbl.IgnoreUncollidibleWalls,
-						ignoreList = {camera.CameraSubject and camera.CameraSubject.Parent or nil},  -- Example: ignore parts in this list
+						ignoreList = {},--{camera.CameraSubject and camera.CameraSubject.Parent or nil},  -- Example: ignore parts in this list
 						raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 						distance = self.EnTbl.Distance, -- Maximum cast distance
 						detectionFunction = function(part)

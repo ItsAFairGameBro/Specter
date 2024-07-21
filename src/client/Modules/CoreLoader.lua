@@ -65,7 +65,7 @@ return function(C, _SETTINGS)
 	local WaitButton = SaveButton:WaitForChild("Wait")
 
 	local SaveDeb = false
-	C.ButtonClick(SaveButton,function()
+	function C.Refresh()
 		if SaveDeb then return end SaveDeb = true
 		SaveButton.ImageColor3 = Color3.fromRGB(81,81,81)
 		WaitButton.Visible = true
@@ -82,7 +82,8 @@ return function(C, _SETTINGS)
 		WaitButton.Visible = false
 		SaveButton.ImageColor3 = Color3.fromRGB(255,255,255)
 		SaveDeb = false
-	end)
+	end
+	C.ButtonClick(SaveButton,C.Refresh)
 
 	local RefreshButton = SettingsTab:WaitForChild("BottomFrame"):WaitForChild("RefreshButton")
 	local AlreadyRefreshing = false

@@ -3,6 +3,7 @@ local TCS = game:GetService("TextChatService")
 local RunS = game:GetService("RunService")
 local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
+local GS = game:GetService("GuiService")
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands
     if not C.savedCommands then
@@ -23,7 +24,7 @@ return function(C,Settings)
         for index = 1, 3, 1 do
             args[index] = args[index] or "" -- leave them be empty so it doesn't confuse the game!
         end
-        local command, CommandData = table.unpack(C.StringStartsWith(C.CommandFunctions,inputCommand)[1])
+        local command, CommandData = table.unpack(C.StringStartsWith(C.CommandFunctions,inputCommand)[1] or {})
         if CommandData then
             if CommandData.RequiresRefresh and noRefresh then
                 return
@@ -51,7 +52,7 @@ return function(C,Settings)
                     end
                     args[1] = "new"
                 else
-                    local ChosenPlr = select(2,table.unpack(C.StringStartsWith(PS:GetPlayers(),args[1])[1]))
+                    local ChosenPlr = select(2,table.unpack(C.StringStartsWith(PS:GetPlayers(),args[1])[1] or {}))
                     if ChosenPlr then
                         args[1] = {ChosenPlr}
                     else
@@ -172,7 +173,13 @@ return function(C,Settings)
         local lastText
         local lastUpd = -5
         local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
+        local DidSet
         local Connection
+        local frameList, currentIndex = {}, 1
+        local function ClearSuggestions()
+            C.ClearChildren(ChatAutoCompleteFrame)
+            frameList, currentIndex = {}, 1
+        end
 		local function goToSaved(deltaIndex)
 			index += deltaIndex
             lastUpd = os.clock()
@@ -181,10 +188,11 @@ return function(C,Settings)
             local setTo = C.savedCommands[index] or ""
             lastText = setTo
             RunS.RenderStepped:Wait()
+            DidSet = true
 			chatBar.Text = setTo
+            ClearSuggestions()
 			chatBar.CursorPosition = setTo:len() + 1
         end
-        local frameList, currentIndex = {}, 1
         local function HighlightLayout(num)
             currentIndex = math.clamp(num, 1, #frameList)
             for num2, frameButton in ipairs(frameList) do
@@ -192,24 +200,30 @@ return function(C,Settings)
             end
         end
         local function ChatBarUpdated()
+            local Inset = GS:GetGuiInset().Y
             isFocused = chatBar:IsFocused()
             ChatAutoCompleteFrame.Visible = isFocused
-            ChatAutoCompleteFrame.Position = UDim2.fromOffset(chatBar.Parent.AbsolutePosition.X,chatBar.Parent.AbsolutePosition.Y+chatBar.Parent.AbsoluteSize.Y)
+            ChatAutoCompleteFrame.Position = UDim2.fromOffset(chatBar.Parent.AbsolutePosition.X,chatBar.Parent.AbsolutePosition.Y+chatBar.Parent.AbsoluteSize.Y+Inset)
             ChatAutoCompleteFrame.Size = UDim2.fromOffset(chatBar.AbsoluteSize.X,0)
             if isFocused then
                 Connection = C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject, gameProcessed)
                     if not isFocused then
                         return
                     end
-                    if #frameList > 0 then
+                    if #frameList > 0 and not UIS:IsKeyDown(Enum.KeyCode.LeftShift) and not UIS:IsKeyDown(Enum.KeyCode.LeftControl) then
                         if inputObject.KeyCode == Enum.KeyCode.Up then
                             HighlightLayout(currentIndex - 1)
                         elseif inputObject.KeyCode == Enum.KeyCode.Down then
                             HighlightLayout(currentIndex + 1)
                         elseif inputObject.KeyCode == Enum.KeyCode.Tab then
-                            chatBar.Text = chatBar.Text:sub(1,1) .. frameList[currentIndex].Name
+                            local orgName = frameList[currentIndex].Name
+                            --DidSet = true
                             RunS.RenderStepped:Wait()
-                            chatBar.Text = chatBar.Text:gsub("\t","")
+                            --DidSet = true
+                            local splitted = chatBar.Text:split(" ")
+                            table.remove(splitted,1)
+                            chatBar.Text = chatBar.Text:sub(1,1) .. orgName:gsub("\t","") 
+                                .. table.concat(splitted, " ")
                             chatBar.CursorPosition = chatBar.Text:len() + 1
                         end    
                     else
@@ -226,22 +240,31 @@ return function(C,Settings)
             end
         end
         local function textUpd()
+            if not DidSet then
+                index = 0
+            end
             local newInput = chatBar.Text
             local newLength = newInput:len()
             --Load suggestions
-            C.ClearChildren(ChatAutoCompleteFrame)
-            frameList, currentIndex = {}, 1
-            for num, list in ipairs(C.StringStartsWith(C.CommandFunctions,newInput:sub(2))) do
-                local command, CommandData = table.unpack(list)
-                local newClone = C.Examples.AutoCompleteEx:Clone()
-                newClone.BackgroundColor3 = num==1 and Color3.fromRGB(0,255) or Color3.fromRGB(255)
-                newClone.AutoCompleteTitleLabel.Text = command
-                newClone.Name = command
-                newClone.Parent = ChatAutoCompleteFrame
-                newClone.LayoutOrder = num
-                table.insert(frameList,newClone)
+            if not DidSet then
+                ClearSuggestions()
+                if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
+                    local firstCommand = newInput:sub(2):split(" ")[1]
+                    for num, list in ipairs(C.StringStartsWith(C.CommandFunctions,firstCommand,true)) do
+                        local command, CommandData = table.unpack(list)
+                        local afterTxt = (CommandData.Type == "Player" and " <user>") or (CommandData.Type == "Players" and " <user> <user>") or ""
+                        local newClone = C.Examples.AutoCompleteEx:Clone()
+                        newClone.BackgroundColor3 = num==1 and Color3.fromRGB(0,255) or Color3.fromRGB(255)
+                        newClone.AutoCompleteTitleLabel.Text = command .. afterTxt
+                        newClone.Name = command
+                        newClone.Parent = ChatAutoCompleteFrame
+                        newClone.LayoutOrder = num
+                        table.insert(frameList,newClone)
+                    end
+                end
             end
-            if not chatBar or not chatBar:IsFocused() then
+            DidSet = false
+            if not chatBar or not isFocused then
                 return
             end
             
@@ -249,14 +272,15 @@ return function(C,Settings)
             if #C.savedCommands==0 or lastText == newInput then
                 return
             end
+            local deltaIndex
             if newInput:match("/up") then
-                index = 1
+                deltaIndex = 1
             elseif newInput:match("/down") then
-                index = -1
+                deltaIndex = -1
             else
                 return
             end
-            goToSaved(index)
+            goToSaved(deltaIndex)
         end
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))
         textUpd()
@@ -265,13 +289,13 @@ return function(C,Settings)
         ChatBarUpdated()
         C.AddObjectConnection(chatBar,"FocusLostChatbar",chatBar.FocusLost:Connect(function(enterPressed)
             ChatBarUpdated()
-            index = 0
             local inputMsg = chatBar.Text
             if enterPressed then
                 if inputMsg:sub(1,1)==";" or inputMsg:sub(1,1)=="/" then
                     enterPressed = inputMsg:sub(1,1)=="/" -- only send the message if it's a /
                     if not enterPressed then
                         chatBar.Text = ""
+                        ClearSuggestions()
                     end
                     task.spawn(C.RunCommand,inputMsg,true)
                 end

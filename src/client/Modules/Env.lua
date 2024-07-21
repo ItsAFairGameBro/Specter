@@ -268,16 +268,16 @@ return function(C,Settings)
 				local bLen = b.SortName:len()
 				return aLen < bLen
 			end)
-			local index,selectedName = C.StringStartsWith(friendsTable,inputName)
-			return selectedName
+			local results = C.StringStartsWith(friendsTable,inputName)
+			return results
 		else
 			return friendsTable
 		end
 	end
 	
 
-	function C.StringStartsWith(tbl,name)
-		if name == "" or not name then
+	function C.StringStartsWith(tbl,name,override)
+		if name == "" and not override then
 			return {}
 		end
 		name = name:lower()
@@ -290,7 +290,7 @@ return function(C,Settings)
 				canPass = itsIndex:lower():sub(1,name:len()) == name
 			end
 			if canPass then
-				if itsIndex:len() < closestMatch then
+				if itsIndex:len() < closestMatch or true then
 					closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
 					table.insert(results,{index,theirValue})
 				end
