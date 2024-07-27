@@ -69,6 +69,7 @@ return function(C,Settings)
 						
 						return
 					else
+						C.human:ChangeState(Enum.HumanoidStateType.Physics)
 						task.spawn(self.StopAllAnims,self)
 					end
 
