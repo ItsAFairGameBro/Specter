@@ -1386,7 +1386,7 @@ HUDBackgroundFade.BorderSizePixel = 0
 HUDBackgroundFade.LayoutOrder = -30
 HUDBackgroundFade.Position = UDim2.new(0.5, 0, 0.5, 0)
 HUDBackgroundFade.Size = UDim2.new(4, 0, 4, 0)
-HUDBackgroundFade.ZIndex = -30
+HUDBackgroundFade.ZIndex = -3000
 
 ChatAutoComplete.Name = "ChatAutoComplete"
 ChatAutoComplete.Parent = SpecterGUI
