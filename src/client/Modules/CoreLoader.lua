@@ -65,7 +65,7 @@ return function(C, _SETTINGS)
 	local WaitButton = SaveButton:WaitForChild("Wait")
 
 	local SaveDeb = false
-	function C.Refresh()
+	function C.DoSave()
 		if SaveDeb then return end SaveDeb = true
 		SaveButton.ImageColor3 = Color3.fromRGB(81,81,81)
 		WaitButton.Visible = true
@@ -87,7 +87,7 @@ return function(C, _SETTINGS)
 
 	local RefreshButton = SettingsTab:WaitForChild("BottomFrame"):WaitForChild("RefreshButton")
 	local AlreadyRefreshing = false
-	C.ButtonClick(RefreshButton,function()
+	function C.Refresh()
 		if AlreadyRefreshing or C.isStudio then return end AlreadyRefreshing = true
 		local LoopTween = TS:Create(RefreshButton,TweenInfo.new(.8,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,-1),{Rotation=360})
 		LoopTween:Play()
@@ -98,7 +98,8 @@ return function(C, _SETTINGS)
 		end
 		LoopTween:Cancel()
 		AlreadyRefreshing = false
-	end)
+	end
+	C.ButtonClick(RefreshButton,C.Refresh)
 
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end
@@ -243,7 +244,7 @@ return function(C, _SETTINGS)
 				if C.Cleared then
 					return
 				end
-				if hackData.Activate and (not started or hackData.Type ~= "NoToggle") then
+				if hackData.Activate and not started then
 					if started then
 						--task.delay(0.3,hackData.Activate,hackData,hackData.Enabled,started)
 					else
@@ -316,9 +317,13 @@ return function(C, _SETTINGS)
 		end
 	end
 	if C.Cleared then return end
-	--for name, modData in pairs(C.hackData) do
-	--	
-	--end
+	for name, modData in pairs(C.hackData) do
+		for shortcut, data in pairs(modData) do
+			if data.Enabled and data.Activate then
+				data:Activate(data.Enabled, true)
+			end
+		end
+	end
 	if C.Cleared then return end
 
 	--Load Commands
