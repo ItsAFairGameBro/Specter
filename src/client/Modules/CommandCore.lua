@@ -302,7 +302,7 @@ return function(C,Settings)
             end
         end
         -- Function to determine the current word and its index
-        local function getCurrentWordAndIndex(words,text, cursorPosition)
+        local function getCurrentWordAndIndex(words, cursorPosition)
             local totalLength = 0
             for index, word in ipairs(words) do
                 totalLength = totalLength + #word + 1 -- +1 for the space
@@ -322,14 +322,13 @@ return function(C,Settings)
             local newLength = newInput:len()
             --Load suggestions
             if not DidSet then
-                ClearSuggestions()
                 if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
                     if doubleSpaces > 0 then
                         chatBar.Text = newInput
                     end
                     Words = newInput:sub(2):split(" ")
                     local firstCommand = Words[1] -- Command, Really Important
-                    local currentWord,currentWordIndex = getCurrentWordAndIndex(Words,newInput:sub(2),chatBar.CursorPosition-1)--minus one for the command ;
+                    local currentWord,currentWordIndex = getCurrentWordAndIndex(Words,chatBar.CursorPosition-1)--minus one for the command ;
                     local commands = C.StringStartsWith(C.CommandFunctions,firstCommand,true)
                     CurrentWordIndex = currentWordIndex
                     local options = {}
@@ -372,6 +371,7 @@ return function(C,Settings)
                             options = C.StringStartsWith(options,currentWord,true,true)
                         end
                     end
+                    ClearSuggestions()
                     for num, list in ipairs(options) do
                         local name, display = table.unpack(list)
                         local newClone = C.Examples.AutoCompleteEx:Clone()
@@ -404,6 +404,7 @@ return function(C,Settings)
             goToSaved(deltaIndex)
         end
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))
+        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
         textUpd()
         
         C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
@@ -435,7 +436,7 @@ return function(C,Settings)
         end))
     end
     if not hasNewChat then
-        table.insert(C.functs,C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
+        C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
             registerNewChatBar()
         end))
     end

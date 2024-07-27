@@ -585,6 +585,9 @@ return function(C,Settings)
             Run=function(self,args)
                 self.Parent.unfling:Run()
                 C.TblRemove(args[1],C.plr)
+                if #args[1] == 0 then
+                    return -- do nothing if there's nothing to fling!
+                end
                 self.FlingThread = task.spawn(function()
                     for num, thisPlr in ipairs(args[1]) do
                         self:SetFling(true,args[2])
@@ -597,14 +600,10 @@ return function(C,Settings)
                             end
                             task.wait(0.3)
                         end
-                        self.Parent.unfollow:Run()
-
-                        self:SetFling(false) --disable fling
-    
                         task.wait(0.1) --wait until disabled
                         if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
                             C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
-                        end 
+                        end
                     end
                     self.Parent.unfling:Run()
                 end)
