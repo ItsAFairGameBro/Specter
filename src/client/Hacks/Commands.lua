@@ -571,27 +571,39 @@ return function(C,Settings)
             Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
             AfterTxt="%s",
             FlingThread=nil,
-            SetFling=function(self,enabled)
-                
+            SetFling=function(self,enabled,speed)
+                RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
+                if enabled then
+                    self.SpinThread = RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
+                        if C.hrp then
+                            C.hrp.AssemblyAngularVelocity = Vector3.new(0,(speed or 1)*1000,0)
+                        end
+                    end)
+                end
             end,
             Run=function(self,args)
                 self.Parent.unfling:Run()
+                C.TblRemove(args[1],C.plr)
                 self.FlingThread = task.spawn(function()
-                    for i = 0,3,1 do
-                        C.HRP.CFrame = args[1].Character.HumanoidRootPart.CFrame
-                        if i == 1 then
-                            self:SetFling(true)
+                    for num, thisPlr in ipairs(args[1]) do
+                        for i = 0,3,1 do
+                            if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead then
+                                continue
+                            end
+                            C.hrp.CFrame = thisPlr.Character:GetPivot()
+                            if i == 1 then
+                                self:SetFling(true,args[2])
+                            end
+                            task.wait(0.15)
                         end
-                        task.wait(0.15)
+    
+                        self:SetFling(false) --disable fling
+    
+                        task.wait(0.1) --wait until disabled
+                        if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
+                            C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
+                        end 
                     end
-
-                    self:SetFling(false) --disable fling
-
-                    task.wait(0.1) --wait until disabled
-                    if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
-                        C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
-                    end
-
                 end)
                 return true
             end,
