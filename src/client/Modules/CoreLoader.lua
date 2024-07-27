@@ -325,7 +325,7 @@ return function(C, _SETTINGS)
 			end
 		end
 	end
-	for num, instance in ipairs(ButtonsTab:GetChildren()) do
+	for num, instance in ipairs(C.UI.TabsFrame:GetChildren()) do
 		if instance:IsA("GuiBase") then
 			for num, guiElement in ipairs(instance:GetDescendants()) do
 				if guiElement:IsA("GuiBase") then
