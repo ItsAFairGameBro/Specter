@@ -120,7 +120,7 @@ return function(C, _SETTINGS)
 			-- Create the category button
 			local CategoryEx = C.Examples.CategoryEx:Clone()
 			local TabEx = C.Examples.TabEx:Clone()
-			CategoryEx.LayoutOrder = category.Layout + (category.AfterMisc and 50 or 0)
+			CategoryEx.LayoutOrder = (category.Layout + (category.AfterMisc and 50 or 0)) * 100
 			CategoryEx:WaitForChild("Text").Text = category.Title
 			local UsableImage = category.Image and 'rbxassetid://' .. category.Image or GameImage
 			C.SetImage(CategoryEx:WaitForChild("Image"), UsableImage)
@@ -329,10 +329,10 @@ return function(C, _SETTINGS)
 		if instance:IsA("GuiBase") then
 			for num, guiElement in ipairs(instance:GetDescendants()) do
 				if guiElement:IsA("GuiBase") then
-					guiElement.ZIndex -= instance.ZIndex
+					guiElement.ZIndex += instance.ZIndex
 				end
 			end
-			instance.ZIndex -= instance.ZIndex
+			--instance.ZIndex -= instance.ZIndex
 		end
 	end
 	if C.Cleared then return end
