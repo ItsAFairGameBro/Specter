@@ -327,7 +327,9 @@ return function(C, _SETTINGS)
 	end
 	for num, instance in ipairs(ButtonsTab:GetChildren()) do
 		for num, guiElement in ipairs(instance:GetDescendants()) do
-			guiElement.ZIndex -= instance.ZIndex
+			if guiElement:IsA("GuiBase") then
+				guiElement.ZIndex -= instance.ZIndex
+			end
 		end
 	end
 	if C.Cleared then return end
