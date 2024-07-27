@@ -124,7 +124,6 @@ local NotificationDesc = Instance.new("TextLabel")
 local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 local HUDBackgroundFade = Instance.new("Frame")
 local ChatAutoComplete = Instance.new("ScrollingFrame")
-local UISizeConstraint = Instance.new("UISizeConstraint")
 local AutoCompleteEx = Instance.new("Frame")
 local AutoCompleteTitleLabel = Instance.new("TextLabel")
 local UIListLayout_8 = Instance.new("UIListLayout")
@@ -1393,7 +1392,6 @@ ChatAutoComplete.Name = "ChatAutoComplete"
 ChatAutoComplete.Parent = SpecterGUI
 C.UI.ChatAutoComplete = ChatAutoComplete
 ChatAutoComplete.Active = true
-ChatAutoComplete.AutomaticSize = Enum.AutomaticSize.Y
 ChatAutoComplete.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ChatAutoComplete.BackgroundTransparency = 1.000
 ChatAutoComplete.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1402,9 +1400,6 @@ ChatAutoComplete.Size = UDim2.new(0.300000012, 0, 0, 0)
 ChatAutoComplete.Visible = false
 ChatAutoComplete.AutomaticCanvasSize = Enum.AutomaticSize.Y
 ChatAutoComplete.CanvasSize = UDim2.new(0, 0, 0, 0)
-
-UISizeConstraint.Parent = ChatAutoComplete
-UISizeConstraint.MaxSize = Vector2.new(9999999, 300)
 
 AutoCompleteEx.Name = "AutoCompleteEx"
 AutoCompleteEx:AddTag("RemoveOnDestroy")
@@ -1459,6 +1454,9 @@ return function(C, Settings)
 	function C.SetImage(imageButton,image)
 		imageButton.Image = image
 	end
+	local function ClampNoCrash(x, min, max)
+		return math.clamp(x, math.min(min,max), math.max(min, max))
+	end
 	local function CreateDraggable(frame: Frame)
 		local dragging
 		local dragInput
@@ -1499,8 +1497,8 @@ return function(C, Settings)
 			local maxY = screenHeight - (1 - anchorY) * frameHeight
 
 			-- Clamp the x and y positions
-			x = math.clamp(x, minX, maxX)
-			y = math.clamp(y, minY, maxY)
+			x = ClampNoCrash(x, minX, maxX)
+			y = ClampNoCrash(y, minY, maxY)
 
 			TS:Create(frame,TweenInfo.new(start and 0 or .07),{Position = UDim2.fromOffset(x, y)}):Play()
 		end

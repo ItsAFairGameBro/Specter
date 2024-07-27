@@ -16,7 +16,7 @@ return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.CommandFunctions = {
         ["refresh"]={
-            Type=false,
+            Parameters={},
             AfterTxt="%s",
             Priority=10,
             RequiresRefresh=true,
@@ -26,7 +26,7 @@ return function(C,Settings)
             end,
         },
         --[[["reset_settings"]={
-            Type=false,
+            Parameters=false,
             AfterTxt="%s",
             RequiresRefresh=true,
             Run=function(args)
@@ -35,7 +35,7 @@ return function(C,Settings)
             end,
         },--]]
         ["spectate"]={
-            Type="Player",
+            Parameters={{Type="Player"}},
             AfterTxt="%s",
             RequiresRefresh=true,
             Run=function(self,args)
@@ -44,9 +44,8 @@ return function(C,Settings)
             end,
         },
         ["morph"]={
-            Type="Players",
+            Parameters={{Type="Players",SupportsNew = true}},
             AfterTxt=" to %s%s",
-            SupportsNew=true,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
                 local success, desc
@@ -328,7 +327,7 @@ return function(C,Settings)
             end
         },
         ["unmorph"]={
-            Type="Players",
+            Parameters={{Type="Players"}},
             AfterTxt="",
             SupportsNew=true,
             Run=function(self,args)
@@ -337,7 +336,7 @@ return function(C,Settings)
             end,
         },
         ["outfits"]={
-            Type=false,
+            Parameters={{Type="Friend"}},
             AfterTxt="%s",
             Run=function(self,args)
                 local index, selectedName = table.unpack(C.checkFriendsPCALLFunction(args[1])[1] or {})
@@ -372,7 +371,7 @@ return function(C,Settings)
             end,
         },
         ["teleport"]={
-            Type="Player",
+            Parameters={{Type="Player",ExcludeMe=true}},
             AfterTxt="",
             Run=function(self,args)
                 local theirPlr = args[1][1]
@@ -390,14 +389,14 @@ return function(C,Settings)
             end,
         },
         ["time"]={
-            Type=false,
-            AfterTxt="%i m, %.1f s (%is total)",
+            Parameters={},
+            AfterTxt="Connected for %i m, %.1f s (%is total)",
             Run=function(self,args)
                 return true,math.floor(time()/60), time()%60, time()
             end,
         },
         ["follow"]={
-            Type="Player",
+            Parameters={{Type="Player"},{Type="Number",Min=-100,Max=100,Default=5}},
             AfterTxt="",
             isFollowing=-1,
             ForcePlayAnimations={},
@@ -422,11 +421,8 @@ return function(C,Settings)
     
                 local saveChar = C.char
                 C.CommandFunctions.unfollow:Run()
-                if not theirPlr then
+                if not theirPlr or theirPlr == C.plr then
                     return true
-                end
-                if theirPlr == C.plr then
-                    return false, "Cannot Follow Yourself!"
                 end
                 C.isFollowing = theirPlr
                 RunS:BindToRenderStep("Follow"..C.SaveIndex,69,function()
@@ -493,7 +489,7 @@ return function(C,Settings)
             end,
         },
         ["unfollow"]={
-            Type=false,
+            Parameters={},
             AfterTxt="%s",
             Run=function(self,args)
                 if not C.isFollowing then
@@ -513,7 +509,7 @@ return function(C,Settings)
             end,
         },
         ["rejoin"]={
-            Type=false,
+            Parameters={Type="Options",Options={"new","small"}},
             AfterTxt="%s",
             Run=function(self,args)
                 if args[1] == "new" or args[1] == "small" then
@@ -550,10 +546,53 @@ return function(C,Settings)
             end,
         },
         ["console"]={
-            Type=false,
+            Parameters={},
             AfterTxt="%s",
             Run=function(self,args)
                 SG:SetCore("DevConsoleVisible",not SG:GetCore("DevConsoleVisible"))
+                return true
+            end,
+        },
+        ["unfling"]={
+            Parameters={},
+            AfterTxt="%s",
+            Run=function(self,args)
+                if self.Parent.fling.FlingThread then
+                    task.cancel(self.Parent.fling.FlingThread)
+                    self.Parent.fling.FlingThread = nil
+                end
+                self.Parent.fling:SetFling(false)
+                if C.HRP then
+                    C.HRP.AssemblyLinearVelocity, C.HRP.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
+                end
+            end,
+        },
+        ["fling"]={
+            Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
+            AfterTxt="%s",
+            FlingThread=nil,
+            SetFling=function(self,enabled)
+                
+            end,
+            Run=function(self,args)
+                self.Parent.unfling:Run()
+                self.FlingThread = task.spawn(function()
+                    for i = 0,3,1 do
+                        C.HRP.CFrame = args[1].Character.HumanoidRootPart.CFrame
+                        if i == 1 then
+                            self:SetFling(true)
+                        end
+                        task.wait(0.15)
+                    end
+
+                    self:SetFling(false) --disable fling
+
+                    task.wait(0.1) --wait until disabled
+                    if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
+                        C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
+                    end
+
+                end)
                 return true
             end,
         },

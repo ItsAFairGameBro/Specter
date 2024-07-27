@@ -276,14 +276,14 @@ return function(C,Settings)
 	end
 	
 
-	function C.StringStartsWith(tbl,name,override)
+	function C.StringStartsWith(tbl,name,override,leaveAsIs)
 		if name == "" and not override then
 			return {}
 		end
 		name = name:lower()
 		local closestMatch, results = math.huge, {}
 		for index, theirValue in pairs(tbl) do
-			local itsIndex = tostring((typeof(theirValue)=="table" and theirValue.SortName) or (typeof(index)=="number" and theirValue) or index)
+			local itsIndex = tostring((typeof(theirValue)=="table" and (theirValue.SortName or theirValue[1])) or (typeof(index)=="number" and theirValue) or index)
 			local canPass = itsIndex:lower():sub(1,name:len()) == name
 			if not canPass then
 				itsIndex = (typeof(theirValue)=="Instance" and theirValue.ClassName=="Player" and theirValue.DisplayName) or itsIndex
@@ -292,7 +292,7 @@ return function(C,Settings)
 			if canPass then
 				if itsIndex:len() < closestMatch or true then
 					closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
-					table.insert(results,{index,theirValue})
+					table.insert(results,leaveAsIs and theirValue or {index,theirValue})
 				end
 			end
 		end

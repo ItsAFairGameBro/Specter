@@ -199,7 +199,7 @@ return function(C, _SETTINGS)
 			
 			--Active Logic
 			local HighlightBackground = ButtonEx:WaitForChild("HighlightBackground")
-			local function UpdateButtonColor(started:boolean)
+			local function UpdateButtonColor(started: boolean)
 				TS:Create(HighlightBackground,TweenInfo.new(.1),
 					{BackgroundTransparency=hackData.Enabled and 0.3 or 1}):Play()
 			end
@@ -244,7 +244,11 @@ return function(C, _SETTINGS)
 					return
 				end
 				if hackData.Activate and (not started or hackData.Type ~= "NoToggle") then
-					task.delay(.3,hackData.Activate,hackData,hackData.Enabled,started)
+					if started then
+						--task.delay(0.3,hackData.Activate,hackData,hackData.Enabled,started)
+					else
+						hackData:Activate(hackData.Enabled, started)
+					end
 				end
 			end
 			C.ButtonClick(MainText,function()
@@ -311,6 +315,10 @@ return function(C, _SETTINGS)
 			ButtonEx.Parent = ScrollTab
 		end
 	end
+	if C.Cleared then return end
+	--for name, modData in pairs(C.hackData) do
+	--	
+	--end
 	if C.Cleared then return end
 
 	--Load Commands

@@ -26,11 +26,12 @@ return function(C,Settings)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
 						if not self.AllowedIds[tonumber(v.Animation.AnimationId:gmatch("%d+")())] then
 							v:Stop(1e-1)
+							v:Destroy()
 						end
 					end
 				end,
 				Activate = function(self,newValue)
-					if not C.human then return else task.wait(.1) end
+					if not C.human then return end--else task.wait(.1) end
 					C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
 					
 					if not newValue then
@@ -52,10 +53,10 @@ return function(C,Settings)
 								ignoreUncollidable = true,
 								ignoreList = {C.char},  -- Example: ignore parts in this list
 								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
-								distance = C.getCharacterHeight(C.char)+1.1,  -- Retry up to 3 times
+								distance = C.getCharacterHeight(C.char)+3.1,  -- Retry up to 3 times
 							}
 		
-							local hitResult, hitPosition = C.Raycast(C.hrp.Position+Vector3.new(0,1,0),-Vector3.new(0,1,0),options)
+							local hitResult, hitPosition = C.Raycast(C.hrp.Position+Vector3.new(0,3,0),-Vector3.new(0,3,0),options)
 							
 		
 							if hitResult then						
@@ -177,7 +178,7 @@ return function(C,Settings)
 						Type = Types.Dropdown,
 						Title = "Mode",
 						Tooltip = "What kind of movement type",
-						Layout = 2,Default="Velocity",
+						Layout = 2,Default="Physics",
 						Selections = {"Physics","CFrame","Velocity"},
 						Shortcut="Mode",
 						Activate = C.ReloadHack,
