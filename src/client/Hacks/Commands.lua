@@ -562,6 +562,7 @@ return function(C,Settings)
                     self.Parent.fling.FlingThread = nil
                 end
                 self.Parent.fling:SetFling(false)
+                self.Parent.unfollow:Run()
                 if C.HRP then
                     C.HRP.AssemblyLinearVelocity, C.HRP.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                 end
@@ -587,14 +588,14 @@ return function(C,Settings)
                 self.FlingThread = task.spawn(function()
                     for num, thisPlr in ipairs(args[1]) do
                         self:SetFling(true,args[2])
-                        for i = 0,3,1 do
+                        for i = 0,4,1 do
                             if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead then
                                 continue
                             end
                             if i == 0 then
                                 self.Parent.follow:Run({thisPlr.Character},0)
                             end
-                            task.wait(0.15)
+                            task.wait(0.3)
                         end
                         self.Parent.unfollow:Run()
 
@@ -605,6 +606,7 @@ return function(C,Settings)
                             C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                         end 
                     end
+                    self.Parent.unfling:Run()
                 end)
                 return true
             end,
