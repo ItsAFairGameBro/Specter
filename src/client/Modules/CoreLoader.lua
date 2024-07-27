@@ -326,12 +326,14 @@ return function(C, _SETTINGS)
 		end
 	end
 	for num, instance in ipairs(ButtonsTab:GetChildren()) do
-		for num, guiElement in ipairs(instance:GetDescendants()) do
-			if guiElement:IsA("GuiBase") then
-				guiElement.ZIndex -= instance.ZIndex
+		if instance:IsA("GuiBase") then
+			for num, guiElement in ipairs(instance:GetDescendants()) do
+				if guiElement:IsA("GuiBase") then
+					guiElement.ZIndex -= instance.ZIndex
+				end
 			end
+			instance.ZIndex -= instance.ZIndex
 		end
-		instance.ZIndex -= instance.ZIndex
 	end
 	if C.Cleared then return end
 
