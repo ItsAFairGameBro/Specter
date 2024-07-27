@@ -320,7 +320,7 @@ return function(C, _SETTINGS)
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
 			if data.Enabled and data.Activate then
-				data:Activate(data.Enabled, true)
+				task.spawn(data.Activate,data,data.Enabled, true)
 			end
 		end
 	end
