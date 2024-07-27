@@ -83,7 +83,7 @@ return function(C, _SETTINGS)
 		SaveButton.ImageColor3 = Color3.fromRGB(255,255,255)
 		SaveDeb = false
 	end
-	C.ButtonClick(SaveButton,C.Refresh)
+	C.ButtonClick(SaveButton,C.DoSave)
 
 	local RefreshButton = SettingsTab:WaitForChild("BottomFrame"):WaitForChild("RefreshButton")
 	local AlreadyRefreshing = false
@@ -147,6 +147,7 @@ return function(C, _SETTINGS)
 			end
 			TabEx.Name = category.Name
 			TabEx.Parent = C.UI.TabsFrame
+			TabEx.ZIndex = CategoryEx.LayoutOrder
 			C.UI.Tabs[category.Name] = TabEx
 			
 			task.spawn(C.MakeDraggableTab,TabEx,true)
@@ -322,6 +323,11 @@ return function(C, _SETTINGS)
 			if data.Enabled and data.Activate then
 				task.spawn(data.Activate,data,data.Enabled, true)
 			end
+		end
+	end
+	for num, instance in ipairs(ButtonsTab:GetChildren()) do
+		for num, guiElement in ipairs(instance:GetDescendants()) do
+			guiElement.ZIndex -= instance.ZIndex
 		end
 	end
 	if C.Cleared then return end
