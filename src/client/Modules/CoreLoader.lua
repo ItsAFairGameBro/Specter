@@ -331,6 +331,7 @@ return function(C, _SETTINGS)
 				guiElement.ZIndex -= instance.ZIndex
 			end
 		end
+		instance.ZIndex -= instance.ZIndex
 	end
 	if C.Cleared then return end
 
