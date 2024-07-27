@@ -313,6 +313,7 @@ return function(C,Settings)
             return "", 0 -- Default return if something goes wrong
         end
         local function textUpd()
+            RunS.RenderStepped:Wait()
             if not DidSet then
                 index = 0
             end
@@ -404,7 +405,7 @@ return function(C,Settings)
             goToSaved(deltaIndex)
         end
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))
-        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
+        --C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
         textUpd()
         
         C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
