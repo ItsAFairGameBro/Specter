@@ -592,7 +592,7 @@ return function(C,Settings)
                                 continue
                             end
                             if i == 0 then
-                                self.Parent.follow:Run({thisPlr.Character})
+                                self.Parent.follow:Run({thisPlr.Character},0)
                             end
                             task.wait(0.15)
                         end

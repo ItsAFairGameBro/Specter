@@ -329,10 +329,10 @@ return function(C, _SETTINGS)
 		if instance:IsA("GuiBase") then
 			for num, guiElement in ipairs(instance:GetDescendants()) do
 				if guiElement:IsA("GuiBase") then
-					guiElement.ZIndex += instance.ZIndex
+					guiElement.ZIndex -= instance.ZIndex
 				end
 			end
-			--instance.ZIndex -= instance.ZIndex
+			instance.ZIndex -= instance.ZIndex * 2
 		end
 	end
 	if C.Cleared then return end
