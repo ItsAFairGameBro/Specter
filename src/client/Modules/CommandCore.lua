@@ -406,7 +406,7 @@ return function(C,Settings)
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))
         textUpd()
         
-        chatBar.Focused:Connect(ChatBarUpdated)
+        C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
         ChatBarUpdated()
         C.AddObjectConnection(chatBar,"FocusLostChatbar",chatBar.FocusLost:Connect(function(enterPressed)
             ChatBarUpdated()
