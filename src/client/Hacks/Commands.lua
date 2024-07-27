@@ -453,7 +453,7 @@ return function(C,Settings)
                     else
                         teleportMyself(CFrame.new(HRP.CFrame * Vector3.new(0,0,dist),HRP.Position))
                     end
-                    if C.char and C.char.PrimaryPart and false then
+                    if C.char and C.char.PrimaryPart and not self.Parent.fling.FlingThread then
                         C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
                         C.char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
                     end
@@ -586,17 +586,18 @@ return function(C,Settings)
                 C.TblRemove(args[1],C.plr)
                 self.FlingThread = task.spawn(function()
                     for num, thisPlr in ipairs(args[1]) do
+                        self:SetFling(true,args[2])
                         for i = 0,3,1 do
                             if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead then
                                 continue
                             end
-                            C.hrp.CFrame = thisPlr.Character:GetPivot()
-                            if i == 1 then
-                                self:SetFling(true,args[2])
+                            if i == 0 then
+                                self.Parent.follow:Run({thisPlr.Character})
                             end
                             task.wait(0.15)
                         end
-    
+                        self.Parent.unfollow:Run()
+
                         self:SetFling(false) --disable fling
     
                         task.wait(0.1) --wait until disabled
