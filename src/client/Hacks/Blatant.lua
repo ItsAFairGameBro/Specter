@@ -167,7 +167,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self.Activate,self,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.EnTbl.En)
 					end,
 				},
 				Options = {
@@ -262,7 +262,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self.Activate,self,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.EnTbl.En)
 					end,
 				},
 				Options = {
@@ -354,7 +354,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self.Activate,self,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.EnTbl.En)
 					end,
 				},
 				Options = {
@@ -398,7 +398,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self.Activate,self,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.EnTbl.En)
 					end,
 				},
 				Options = {

@@ -44,9 +44,9 @@ return function(C,Settings)
 			hackTbl:SetValue(false,true)
 			hackTbl:SetValue(true,true)
 		end--]]
-		C.DoActivate(hackTbl.Activate,hackTbl,hackTbl.EnTbl.En)
+		C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 	end
-	function C.DoActivate(funct,self,...)
+	function C.DoActivate(self,funct,...)
 		self:ClearData()
 		funct(self,...)
 	end

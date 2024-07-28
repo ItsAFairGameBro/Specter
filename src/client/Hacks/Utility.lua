@@ -128,7 +128,7 @@ return function(C,Settings)
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						self:SetAutoJump()
-						--C.DoActivate(self.Activate,self,self.EnTbl.En)
+						--C.DoActivate(self,self.Activate,self.EnTbl.En)
 					end,
 				},
 				Options = {

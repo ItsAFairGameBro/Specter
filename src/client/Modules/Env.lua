@@ -369,7 +369,7 @@ return function(C,Settings)
 			hackTbl.RealEnabled = true
 			if old == 0 and not hackTbl.Enabled then
 				C.DebugMessage("Override",`Ran function from override`)
-				C.DoActive(hackTbl.Activate,hackTbl,hackTbl.RealEnabled)
+				C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 			end
 		end
 	end
@@ -380,7 +380,7 @@ return function(C,Settings)
 				hackTbl.RealEnabled = hackTbl.Enabled
 				if not hackTbl.RealEnabled then
 					C.DebugMessage("Override",`Removed function from override`)
-					C.DoActive(hackTbl.Activate,hackTbl,hackTbl.RealEnabled)
+					C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 				end
 			end
 		end
