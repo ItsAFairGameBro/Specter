@@ -6,7 +6,7 @@ return function(C,Settings)
 	function C.BindAction(name,funct,...)
 		name ..= C.SaveIndex
 		C.BindedActions[name] = true
-		if C.IsStudio then
+		if C.isStudio then
 			CAS:BindAction(name,funct,false,...)
 		else
 			CAS:BindCoreAction(name,funct,false,...)
@@ -15,7 +15,7 @@ return function(C,Settings)
 	function C.UnbindAction(name)
 		name ..= C.SaveIndex
 		C.BindedActions[name] = nil
-		if C.IsStudio then
+		if C.isStudio then
 			CAS:UnbindAction(name)
 		else
 			CAS:UnbindCoreAction(name)
