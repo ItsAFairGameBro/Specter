@@ -202,7 +202,7 @@ return function(C,Settings)
 				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
 					hackTbl:ClearData()
 				end
-				if hackTbl.RunOnDestroy and hackTbl.Enabled then
+				if hackTbl.RunOnDestroy and hackTbl.RealEnabled then
 					RemoveOnDestroyIndex += 1
 					task.spawn(function()
 						hackTbl:RunOnDestroy()

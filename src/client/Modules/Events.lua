@@ -15,7 +15,7 @@ return function(C,Settings)
 			end
 		end
 		for hackTbl, funct in pairs(C.events[name] or {}) do
-			if hackTbl.Enabled then
+			if hackTbl.RealEnabled then
 				funct(hackTbl,...)
 			end
 		end

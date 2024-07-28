@@ -361,6 +361,24 @@ return function(C,Settings)
 			object:SetAttribute(C.OriginalCollideName,org>0 and org or nil)
 		end
 	end--]]
+	-- Force Add Function, C.hackData[name][hackData.Shortcut]
+	function C.AddOverride(hackTbl,name)
+		local old = #hackTbl.Override
+		if C.TblAdd(hackTbl.Override,name) then
+			hackTbl.RealEnabled = true
+			if old == 0 and not hackTbl.Enabled then
+				hackTbl:Activate(hackTbl.RealEnabled)
+			end
+		end
+	end
+	function C.RemoveOverride(hackTbl,name)
+		if C.TblRemove(hackTbl.Override,name) and #hackTbl.Override == 0 then
+			hackTbl.RealEnabled = hackTbl.Enabled
+			if not hackTbl.Enabled then
+				hackTbl:Activate(false)
+			end
+		end
+	end
 
 	-- Function to set the property with an option to always set it
 	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet)

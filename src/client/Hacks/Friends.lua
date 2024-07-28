@@ -23,7 +23,7 @@ return function(C,Settings)
 					local friends = C.GetFriendsFunct(theirEnTbl.En and theirEnTbl.MainAccountId[1] or C.plr.UserId)
 					
 					C.friends = friends
-					if self.Enabled and not firstRun then
+					if self.RealEnabled and not firstRun then
 						C.AddNotification("Friends Loaded",`{#friends} Friends will not be targeted by modules`)
 					end
 				end,
@@ -68,7 +68,7 @@ return function(C,Settings)
 						return
 					end
 					local FriendHack = self.Parent.Tab[1]
-					FriendHack.Options[1].Activate(FriendHack,FriendHack.Enabled)
+					FriendHack.Options[1].Activate(FriendHack,FriendHack.RealEnabled)
 				end,
 			},
 		}

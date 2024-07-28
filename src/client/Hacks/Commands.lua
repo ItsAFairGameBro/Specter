@@ -581,11 +581,14 @@ return function(C,Settings)
             SetFling=function(self,enabled,speed)
                 RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
                 if enabled then
+                    C.AddOverride(C.hackData.Blatant.Noclip, "fling")
                     self.SpinThread = RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
                         if C.hrp then
                             C.hrp.AssemblyAngularVelocity = Vector3.new(0,(speed or 1)*1000,0)
                         end
                     end)
+                else
+                    C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                 end
             end,
             Run=function(self,args)

@@ -237,6 +237,9 @@ return function(C, _SETTINGS)
 					end
 				end
 				hackData.Enabled = value
+				if #hackData.Override==0 then
+					hackData.RealEnabled = value
+				end
 				enTbl.En = value
 				UpdateButtonColor()
 				if not value then
@@ -249,7 +252,7 @@ return function(C, _SETTINGS)
 					if started then
 						--task.delay(0.3,hackData.Activate,hackData,hackData.Enabled,started)
 					else
-						hackData:Activate(#hackData.Override>0 or hackData.Enabled, started)
+						hackData:Activate(hackData.RealEnabled, started)
 					end
 				end
 			end
@@ -321,8 +324,8 @@ return function(C, _SETTINGS)
 	if C.Cleared then return end
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
-			if data.Enabled and data.Activate then
-				task.spawn(data.Activate,data,data.Enabled, true)
+			if data.RealEnabled and data.Activate then
+				task.spawn(data.Activate,data,data.RealEnabled, true)
 			end
 		end
 	end
