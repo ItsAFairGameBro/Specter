@@ -447,7 +447,7 @@ return function(C,Settings)
 
                     local setCFrame = dist == 0 and HRP.CFrame or CFrame.new(HRP.CFrame * Vector3.new(0,0,dist),HRP.Position)
 
-                    setCFrame += HRP.AssemblyLinearVelocity * delta
+                    setCFrame += HRP.AssemblyLinearVelocity * 0.06 -- Ping
 
                     teleportMyself(setCFrame)
 
