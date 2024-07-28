@@ -208,7 +208,7 @@ return function(C,Settings)
 			end
 		end
 
-		for name, commandData in pairs(C.CommandFunctions) do
+		for name, commandData in pairs(C.CommandFunctions or {}) do
 			if commandData.RunOnDestroy then
 				RemoveOnDestroyIndex += 1
 				task.spawn(function()
@@ -244,11 +244,11 @@ return function(C,Settings)
 		end
 
 		while RemoveOnDestroyIndex > 0 do
+			print("Waiting To Be Destroyed")
 			task.wait() -- Wait while being destroyed
 		end
 		
 		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
-		RunS.RenderStepped:Wait()
 		C.getgenv().DestroyEvent:Fire()
 		
 		if C.isStudio then
@@ -275,7 +275,7 @@ return function(C,Settings)
 		C:Destroy()
 	end))
 	while #C.getgenv().Instances>1 do
-		C.getgenv().CreateEvent:Fire(C.SaveIndex)
+		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
 		RunS.RenderStepped:Wait()
 		if #C.getgenv().Instances>1 then
