@@ -204,7 +204,7 @@ return function(C,Settings)
 				if hackTbl.RunOnDestroy and hackTbl.Enabled then
 					RemoveOnDestroyIndex += 1
 					task.spawn(function()
-						--hackTbl:RunOnDestroy()
+						hackTbl:RunOnDestroy()
 						RemoveOnDestroyIndex -= 1
 					end)
 				end
@@ -215,7 +215,7 @@ return function(C,Settings)
 			if commandData.RunOnDestroy then
 				RemoveOnDestroyIndex += 1
 				task.spawn(function()
-					--commandData:RunOnDestroy()
+					commandData:RunOnDestroy()
 					RemoveOnDestroyIndex -= 1
 				end)
 			end
@@ -238,8 +238,8 @@ return function(C,Settings)
 		print("D3")
 
 		-- Then, destroy everything
-		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
-		RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
+		--RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
+		--RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
 		
 		for key, instance in ipairs(CS:GetTagged("RemoveOnDestroy")) do
 			instance:Destroy()
