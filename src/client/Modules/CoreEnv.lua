@@ -264,25 +264,22 @@ return function(C,Settings)
 	C.getgenv().SpecterIndex = C.SaveIndex
 
 	table.insert(C.getgenv().Instances,C.SaveIndex)
+	if not C.getgenv().CreateEvent then
+		C.getgenv().CreateEvent = Instance.new("BindableEvent")
+		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
+	end
 	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
 		if C.SaveIndex == SaveIndex then
 			return -- our signal sent this!
 		end
 		C:Destroy()
 	end))
-	if C.getgenv().CreateEvent then
-		while #C.getgenv().Instances>1 do
-			C.getgenv().CreateEvent:Fire(C.SaveIndex)
-			C.getgenv().DestroyEvent.Event:Wait()
-			RunS.RenderStepped:Wait()
-			if #C.getgenv().Instances>1 then
-				print("Still waiting for instances to be deleted!")
-			end
+	while #C.getgenv().Instances>1 do
+		C.getgenv().CreateEvent:Fire(C.SaveIndex)
+		C.getgenv().DestroyEvent.Event:Wait()
+		RunS.RenderStepped:Wait()
+		if #C.getgenv().Instances>1 then
+			print("Still waiting for instances to be deleted!")
 		end
-	else
-		C.getgenv().CreateEvent = Instance.new("BindableEvent")
-		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
-		
 	end
-	
 end
