@@ -23,7 +23,7 @@ return function(C,Settings)
 				Shortcut = "Fly",Functs={},Instances={},Default=false,Keybind = "Z",
 				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
 				RunOnDestroy=function(self)
-					self:Run(false)
+					self:Activate(false)
 				end,
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
@@ -234,7 +234,7 @@ return function(C,Settings)
 				Layout = 2,
 				Shortcut = "Noclip",Functs={},Default=false,Keybind = "R",
 				RunOnDestroy=function(self)
-					self:Run(false)
+					self:Activate(false)
 				end,
 				Update = function(value)
 					for num, part in ipairs(C.char:GetDescendants()) do
