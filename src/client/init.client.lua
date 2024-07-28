@@ -80,6 +80,7 @@ C.Debugs = {
 	Module = false,
 	Load = false,
 	Override = true,
+	Thread = true,
 }
 
 local Settings = C.getgenv().SETTINGS

@@ -389,6 +389,7 @@ return function(C,Settings)
 	-- Cancel thread
 	function C.StopThread(thread)
 		if coroutine.status(thread) ~= "dead" then
+			C.DebugMessage("Thread",`Stopping thread {tostring(thread)}, current status: {coroutine.status(thread)}`)
 			task.cancel(thread)
 			return true
 		end

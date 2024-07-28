@@ -590,6 +590,7 @@ return function(C,Settings)
                     self.SpinThread = RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
                         if C.hrp then
                             C.hrp.AssemblyAngularVelocity = Vector3.new(0,(speed or 1)*1000,0)
+                            C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
                 else
@@ -615,7 +616,7 @@ return function(C,Settings)
                             --if i == 0 then
                                 --self.Parent.follow:Run({{thisPlr},0})
                             --end
-                            task.wait(0.3)
+                            task.wait(0.15)
                         end
         
                         task.wait(0.1) --wait until disabled
