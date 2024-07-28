@@ -191,10 +191,19 @@ return function(C,Settings)
 		-- First, undo the connections
 		C.ClearFunctTbl(C.functs)
 
+		local RemoveOnDestroyIndex = 0
+
 		for category, groupedTabData in pairs(C.hackData) do
 			for num, hackTbl in pairs(groupedTabData) do
 				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
 					hackTbl:ClearData()
+				end
+				if hackTbl.RunOnDestroy then
+					RemoveOnDestroyIndex += 1
+					task.spawn(function()
+						hackTbl:RunOnDestroy()
+						RemoveOnDestroyIndex -= 1
+					end)
 				end
 			end
 		end
@@ -221,6 +230,10 @@ return function(C,Settings)
 			C.GUI:Destroy()
 			C.GUI = nil
 		end
+
+		while RemoveOnDestroyIndex > 0 do
+			task.wait() -- Wait while being destroyed
+		end
 		
 		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
 		RunS.RenderStepped:Wait()
@@ -233,12 +246,20 @@ return function(C,Settings)
 	
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
+
+	table.insert(C.getgenv().Instances,C.SaveIndex)
+	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
+		if C.SaveIndex == SaveIndex then
+			return -- our signal sent this!
+		end
+		C:Destroy()
+	end))
 	if C.getgenv().CreateEvent then
-		while #C.getgenv().Instances>0 do
-			C.getgenv().CreateEvent:Fire()
+		while #C.getgenv().Instances>1 do
+			C.getgenv().CreateEvent:Fire(C.SaveIndex)
 			C.getgenv().DestroyEvent.Event:Wait()
 			RunS.RenderStepped:Wait()
-			if #C.getgenv().Instances>0 then
+			if #C.getgenv().Instances>1 then
 				print("Still waiting for instances to be deleted!")
 			end
 		end
@@ -247,8 +268,5 @@ return function(C,Settings)
 		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
 		C.getgenv().Instances = {}
 	end
-	table.insert(C.getgenv().Instances,C.SaveIndex)
-	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function()
-		C:Destroy()
-	end))
+	
 end

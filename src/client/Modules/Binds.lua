@@ -4,13 +4,15 @@ local TS = game:GetService("TweenService")
 return function(C,Settings)
 	--Binds idk
 	C.BindedActions = {}
+	local BindActionFunct = C.IsStudio and "BindAction" or "BindCoreAction"
+	local UnbindActionFunct = C.IsStudio and "UnbindAction" or "UnbindCoreAction"
 	function C.BindAction(name,funct,...)
 		C.BindedActions[name] = true
-		CAS:BindAction(name,funct,false,...)
+		CAS[BindActionFunct](BindActionFunct,name,funct,false,...)
 	end
 	function C.UnbindAction(name)
 		C.BindedActions[name] = nil
-		CAS:UnbindAction(name)
+		CAS[UnbindActionFunct](UnbindActionFunct,name)
 	end
 	--Register Keybinds
 	function C.AddKeybind(key:string,tblHack:table)

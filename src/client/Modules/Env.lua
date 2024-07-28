@@ -357,7 +357,7 @@ return function(C,Settings)
 			end
 			object:SetAttribute(C.OriginalCollideName,org>0 and org or nil)
 		end
-	end	
+	end
 	
 	function C.SendGeneralMessage(message:string)
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then

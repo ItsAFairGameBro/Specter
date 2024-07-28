@@ -22,6 +22,9 @@ return function(C,Settings)
 				Layout = 1,
 				Shortcut = "Fly",Functs={},Instances={},Default=false,Keybind = "Z",
 				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
+				RunOnDestroy=function(self)
+					self:Run(false)
+				end,
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
 						if not self.AllowedIds[tonumber(v.Animation.AnimationId:gmatch("%d+")())] then
@@ -230,6 +233,9 @@ return function(C,Settings)
 				Tooltip = "Allows your character to walk through walls",
 				Layout = 2,
 				Shortcut = "Noclip",Functs={},Default=false,Keybind = "R",
+				RunOnDestroy=function(self)
+					self:Run(false)
+				end,
 				Update = function(value)
 					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then --and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then

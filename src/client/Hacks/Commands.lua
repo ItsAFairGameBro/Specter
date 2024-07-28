@@ -491,6 +491,9 @@ return function(C,Settings)
         ["unfollow"]={
             Parameters={},
             AfterTxt="%s",
+            RunOnDestroy=function(self)
+                self:Run({})
+            end,
             Run=function(self,args)
                 if not C.isFollowing then
                     return false, "Not Following Any User ("..tostring(C.isFollowing)..")"
@@ -556,6 +559,9 @@ return function(C,Settings)
         ["unfling"]={
             Parameters={},
             AfterTxt="%s",
+            RunOnDestroy=function(self)
+                self:Run({})
+            end,
             Run=function(self,args)
                 if self.Parent.fling.FlingThread then
                     task.cancel(self.Parent.fling.FlingThread)
