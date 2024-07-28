@@ -4,18 +4,18 @@ local TS = game:GetService("TweenService")
 return function(C,Settings)
 	--Binds idk
 	function C.BindAction(name,funct,...)
-		name ..= C.SaveIndex
+		--name ..= C.SaveIndex
 		C.BindedActions[name] = true
-		if C.isStudio then
+		if C.isStudio or true then
 			CAS:BindAction(name,funct,false,...)
 		else
 			CAS:BindCoreAction(name,funct,false,...)
 		end
 	end
 	function C.UnbindAction(name)
-		name ..= C.SaveIndex
+		--name ..= C.SaveIndex
 		C.BindedActions[name] = nil
-		if C.isStudio then
+		if C.isStudio or true then
 			CAS:UnbindAction(name)
 		else
 			CAS:UnbindCoreAction(name)
