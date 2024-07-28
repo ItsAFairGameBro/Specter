@@ -85,6 +85,7 @@ return function(C,Settings)
 						bodyGyro = Instance.new("BodyGyro")
 						bodyGyro.maxTorque = Vector3.new(1, 1, 1)*10^6
 						bodyGyro.P = 10^6
+						bodyGyro.D = 800
 						bodyGyro.Name = "BasePart"
 						bodyGyro.Parent = C.hrp
 						table.insert(self.Instances,bodyGyro)
@@ -238,13 +239,11 @@ return function(C,Settings)
 				end,
 				Update = function(value)
 					for num, part in ipairs(C.char:GetDescendants()) do
-						if part:IsA("BasePart") then --and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
-							--part.CanCollide = not value
-							--C.SetCollide(part,"Noclip",not value,true)
+						if part:IsA("BasePart") then
 							if value then
-								C.SetPartProperty(part,"CanCollide",false)
-							else
-								C.ResetPartProperty(part,"CanCollide")
+								C.SetPartProperty(part,"CanCollide","NoClip",false,true)
+							else--part, propertyName, requestName, value, alwaysSet
+								C.ResetPartProperty(part,"CanCollide","NoClip")
 							end
 						end
 					end
@@ -258,7 +257,7 @@ return function(C,Settings)
 						C.human:ChangeState(Enum.HumanoidStateType.Running)
 						return
 					end
-					--table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
+					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
 				end,
 				Cleared = function(self)
 

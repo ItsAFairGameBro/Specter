@@ -179,6 +179,9 @@ return function(C,Settings)
 		if Humanoid.RigType==Enum.HumanoidRigType.R15 then
 			return (0.5 * RootPart.Size.Y) + Humanoid.HipHeight
 		elseif Humanoid.RigType==Enum.HumanoidRigType.R6 then
+			if true then
+				return model:WaitForChild("Left Leg").Size.Y + RootPart.Size.Y + model:WaitForChild("Head").Size.Y/2 + Humanoid.HipHeight
+			end
 			return model:WaitForChild("Left Leg").Size.Y + (0.5 * RootPart.Size.Y) + Humanoid.HipHeight
 		end
 	end
@@ -360,7 +363,7 @@ return function(C,Settings)
 	end--]]
 
 	-- Function to set the property with an option to always set it
-	function C.SetPartProperty(part, propertyName, value, alwaysSet, requestName)
+	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet)
 		if C.gameUniverse == "Flee" and part.Name == "Weight" then
 			return
 		end
@@ -396,8 +399,6 @@ return function(C,Settings)
 					part[propertyName] = value
 				end)
 			end
-
-			part:AddTag(propertyName .. "_Set")
 		end
 
 		if requestCount == 0 or alwaysSet then

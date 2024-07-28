@@ -236,7 +236,7 @@ return function(C,Settings)
 				instance:SetAttribute(attr,nil)
 			end
 			for property, funct in pairs(propertiesTbl) do
-				C.ResetPartProperty(instance,property)
+				funct:Disconnect()
 			end
 		end C.forcePropertyFuncts = {} -- clear memory ig
 		
