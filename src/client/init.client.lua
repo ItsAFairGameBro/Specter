@@ -79,8 +79,8 @@ C.Debugs = {
 	Destroy = false,
 	Module = false,
 	Load = false,
-	Override = true,
-	Thread = true,
+	Override = false,
+	Thread = false,
 }
 
 local Settings = C.getgenv().SETTINGS

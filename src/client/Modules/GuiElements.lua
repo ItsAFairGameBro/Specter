@@ -1544,6 +1544,9 @@ return function(C, Settings)
 		return update
 	end
 	function C.MakeDraggableTab(TabEx,HasScroll)
+		if C.Cleared then
+			return
+		end
 		local PercentageVisible
 		local ScrollTab,HeaderTab
 		if HasScroll then

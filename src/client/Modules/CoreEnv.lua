@@ -197,28 +197,35 @@ return function(C,Settings)
 
 		local RemoveOnDestroyIndex = 0
 
+		local function RunOnDestroy(hackTbl,name)
+			RemoveOnDestroyIndex += 1
+			task.spawn(function()
+				local Done = false
+				task.delay(3,function()
+					if not Done then
+						C.DebugMessage("Destroy", `RunOnDestroy: {name} is still running after 3 seconds!`)
+					end
+				end)
+				hackTbl:RunOnDestroy()
+				RemoveOnDestroyIndex -= 1
+				Done = true
+			end)
+		end
+
 		for category, groupedTabData in pairs(C.hackData) do
 			for num, hackTbl in pairs(groupedTabData) do
 				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
 					hackTbl:ClearData()
 				end
 				if hackTbl.RunOnDestroy and hackTbl.RealEnabled then
-					RemoveOnDestroyIndex += 1
-					task.spawn(function()
-						hackTbl:RunOnDestroy()
-						RemoveOnDestroyIndex -= 1
-					end)
+					RunOnDestroy(hackTbl,"HackTBL: " .. hackTbl.Shortcut)
 				end
 			end
 		end
 
 		for name, commandData in pairs(C.CommandFunctions or {}) do
 			if commandData.RunOnDestroy then
-				RemoveOnDestroyIndex += 1
-				task.spawn(function()
-					commandData:RunOnDestroy()
-					RemoveOnDestroyIndex -= 1
-				end)
+				RunOnDestroy(commandData,"CmdTBL: " .. name)
 			end
 		end
 
@@ -268,7 +275,6 @@ return function(C,Settings)
 		end
 
 		while RemoveOnDestroyIndex > 0 do
-			print("Waiting To Be Destroyed")
 			task.wait() -- Wait while being destroyed
 		end
 		

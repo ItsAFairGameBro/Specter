@@ -573,7 +573,7 @@ return function(C,Settings)
                 end
                 self.Parent.unfollow:Run()
                 if notpback and self.OldLoc and C.hrp then
-                   self.OldLoc = C.hrp:GetPivot()
+                    self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
                     C.char:PivotTo(self.OldLoc)
                     self.OldLoc = nil
