@@ -36,6 +36,7 @@ return function(C,Settings)
 			Default = self.Default
 		end
 		newFrame.LayoutOrder = options.Layout
+		newFrame.Name = options.Title
 		newFrame:WaitForChild("NameTL").Text = options.Title
 		if options.Tooltip then
 			C.TooltipSetUp(newFrame:WaitForChild("NameTL"),options.Tooltip)

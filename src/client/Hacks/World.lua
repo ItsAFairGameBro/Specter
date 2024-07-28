@@ -9,7 +9,7 @@ return function(C,Settings)
 		Category = {
 			Name = "World",
 			Title = "World",
-			Image = 14503021137,
+			Image = 15170258619,
 			Layout = 4,
 		},
 		Tab = {
