@@ -254,7 +254,6 @@ return function(C,Settings)
 					end
 					self.Update(newValue)
 					if not newValue then
-						task.spawn(C.human.ChangeState,C.human,Enum.HumanoidStateType.Running)
 						return
 					end
 					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
