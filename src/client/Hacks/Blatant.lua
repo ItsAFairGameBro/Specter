@@ -49,8 +49,6 @@ return function(C,Settings)
 						if C.char and C.hrp and C.human then
 							local Orient = C.hrp.Orientation
 							
-							C.human:ChangeState(Enum.HumanoidStateType.Running)
-
 							local options = {
 								ignoreInvisibleWalls = false,
 								ignoreUncollidable = true,
@@ -68,6 +66,8 @@ return function(C,Settings)
 								C.char:PivotTo(CFrame.new(C.char:GetPivot().Position) * CFrame.Angles(0,math.rad(Orient.Y),0))
 							end
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
+							
+							C.human:ChangeState(Enum.HumanoidStateType.Running)
 						end
 						
 						return
