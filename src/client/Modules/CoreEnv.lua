@@ -287,7 +287,6 @@ return function(C,Settings)
 		end
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
-		RunS.RenderStepped:Wait()
 		if #C.getgenv().Instances>1 then
 			print("Still waiting for instances to be deleted!")
 		end
