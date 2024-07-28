@@ -73,6 +73,7 @@ C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
 C.preloadedModule = {}
+C.BindedActions = {} -- key binds
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then

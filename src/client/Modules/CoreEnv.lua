@@ -198,13 +198,23 @@ return function(C,Settings)
 				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
 					hackTbl:ClearData()
 				end
-				if hackTbl.RunOnDestroy then
+				if hackTbl.RunOnDestroy and hackTbl.Enabled then
 					RemoveOnDestroyIndex += 1
 					task.spawn(function()
 						hackTbl:RunOnDestroy()
 						RemoveOnDestroyIndex -= 1
 					end)
 				end
+			end
+		end
+
+		for name, commandData in pairs(C.CommandFunctions) do
+			if commandData.RunOnDestroy then
+				RemoveOnDestroyIndex += 1
+				task.spawn(function()
+					commandData:RunOnDestroy()
+					RemoveOnDestroyIndex -= 1
+				end)
 			end
 		end
 		
@@ -221,7 +231,9 @@ return function(C,Settings)
 		end
 
 		-- Then, destroy everything
-
+		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
+		RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
+		
 		for key, instance in ipairs(CS:GetTagged("RemoveOnDestroy")) do
 			instance:Destroy()
 		end
