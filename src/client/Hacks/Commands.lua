@@ -590,6 +590,7 @@ return function(C,Settings)
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                 end
+                C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
             end,
             Run=function(self,args)
                 self.Parent.unfling:Run()
