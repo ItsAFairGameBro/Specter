@@ -193,6 +193,7 @@ return function(C,Settings)
 		C.ClearFunctTbl(C.functs)
 
 		print("D1")
+		task.wait(1.5)
 
 		local RemoveOnDestroyIndex = 0
 
@@ -222,6 +223,7 @@ return function(C,Settings)
 		end
 
 		print("D2")
+		task.wait(1.5)
 		
 		for actionName, hackTbl in pairs(C.BindedActions) do
 			C.UnbindAction(actionName)
@@ -236,10 +238,11 @@ return function(C,Settings)
 		end
 
 		print("D3")
+		task.wait(1.5)
 
 		-- Then, destroy everything
-		--RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
-		--RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
+		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
+		RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
 		
 		for key, instance in ipairs(CS:GetTagged("RemoveOnDestroy")) do
 			instance:Destroy()
@@ -282,6 +285,10 @@ return function(C,Settings)
 		end
 		C:Destroy()
 	end))
+	if C.Debug then
+		task.wait(1)
+		print("Starting To WAIT")
+	end
 	while #C.getgenv().Instances>1 do
 		if C.Debug then
 			print("Waiting For Destruction B/C ", C.getgenv().Instances[1], #C.getgenv().Instances)
@@ -291,5 +298,9 @@ return function(C,Settings)
 		if #C.getgenv().Instances>1 then
 			print("Still waiting for instances to be deleted!")
 		end
+	end
+	if C.Debug then
+		print("Wait complete")
+		task.wait(2)	
 	end
 end
