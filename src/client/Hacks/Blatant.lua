@@ -251,8 +251,6 @@ return function(C,Settings)
 				Activate = function(self,newValue)
 					if not C.char then
 						return
-					elseif not newValue then
-						RunS.RenderStepped:Wait()
 					end
 					self.Update(newValue)
 					if not newValue then

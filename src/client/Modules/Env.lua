@@ -424,13 +424,13 @@ return function(C,Settings)
 			part:SetAttribute(requestCountAttr, requestCount - 1)
 
 			if requestCount - 1 == 0 then
-				part[propertyName] = part:GetAttribute(originalValueAttr)
-				part:SetAttribute(requestCountAttr, nil)
-
 				if C.forcePropertyFuncts[part] and C.forcePropertyFuncts[part][propertyName] then
 					C.forcePropertyFuncts[part][propertyName]:Disconnect()
 					C.forcePropertyFuncts[part][propertyName] = nil -- Remove from memory
 				end
+
+				part[propertyName] = part:GetAttribute(originalValueAttr)
+				part:SetAttribute(requestCountAttr, nil)
 			end
 		end
 	end
