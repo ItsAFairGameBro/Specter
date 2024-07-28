@@ -256,6 +256,10 @@ return function(C,Settings)
 		end
 	end
 	
+	if not C.getgenv().Instances then
+		C.getgenv().Instances = {}
+	end
+
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
 
@@ -278,7 +282,7 @@ return function(C,Settings)
 	else
 		C.getgenv().CreateEvent = Instance.new("BindableEvent")
 		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
-		C.getgenv().Instances = {}
+		
 	end
 	
 end
