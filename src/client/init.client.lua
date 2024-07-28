@@ -73,6 +73,7 @@ C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
 C.preloadedModule = {}
+C.forcePropertyFuncts = {}
 C.BindedActions = {} -- key binds
 C.Debugs = {
 	Destroy = false,

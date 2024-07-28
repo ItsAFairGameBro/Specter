@@ -223,9 +223,15 @@ return function(C,Settings)
 		end
 
 		C.DebugMessage("Destroy",`Destroy 2`)
+
+		for instance, propertiesTbl in pairs(C.forcePropertyFuncts) do
+			for property, funct in pairs(propertiesTbl) do
+				C.ResetPartProperty(instance,property)
+			end
+		end C.forcePropertyFuncts = {} -- clear memory ig
 		
 		for actionName, hackTbl in pairs(C.BindedActions) do
-			--C.UnbindAction(actionName)
+			C.UnbindAction(actionName)
 		end
 
 		for key, dict in pairs(C.playerfuncts) do

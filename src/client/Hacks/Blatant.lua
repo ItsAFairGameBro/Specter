@@ -240,7 +240,12 @@ return function(C,Settings)
 					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then --and (part.Name:find("Torso") or part.Name == "HumanoidRootPart" or part.Name == "Head") then
 							--part.CanCollide = not value
-							C.SetCollide(part,"Noclip",not value,true)
+							--C.SetCollide(part,"Noclip",not value,true)
+							if value then
+								C.SetPartProperty(part,"CanCollide",false)
+							else
+								C.ResetPartProperty(part,"CanCollide")
+							end
 						end
 					end
 				end,
@@ -250,9 +255,10 @@ return function(C,Settings)
 					end
 					self.Update(newValue)
 					if not newValue then
+						C.human:ChangeState(Enum.HumanoidStateType.Running)
 						return
 					end
-					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
+					--table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
 				end,
 				Cleared = function(self)
 

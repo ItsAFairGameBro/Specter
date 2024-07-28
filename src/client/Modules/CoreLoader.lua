@@ -249,10 +249,11 @@ return function(C, _SETTINGS)
 					if started then
 						--task.delay(0.3,hackData.Activate,hackData,hackData.Enabled,started)
 					else
-						hackData:Activate(hackData.Enabled, started)
+						hackData:Activate(#hackData.Override>0 or hackData.Enabled, started)
 					end
 				end
 			end
+			hackData.Override = hackData.Override or {}
 			C.ButtonClick(MainText,function()
 				hackData:SetValue(not hackData.Enabled)
 			end)
