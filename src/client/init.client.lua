@@ -74,6 +74,7 @@ C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
 C.preloadedModule = {}
 C.BindedActions = {} -- key binds
+C.Debug = true
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then
@@ -158,6 +159,9 @@ function GetModule(moduleName: string)
 end
 
 function C.LoadModule(moduleName: string)
+	if C.Debug then
+		print(`Loading {moduleName}`)
+	end
 	local informalSplit = moduleName:split("/")
 	local informalName = informalSplit[#informalSplit]
 	local Ret = C.SaveModules[informalName]
