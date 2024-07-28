@@ -253,9 +253,9 @@ return function(C,Settings)
                 local ConnectedFunct
                 function ConnectedFunct(inputObject, gameProcessed, noLoop)
                     if #frameList > 0 and not UIS:IsKeyDown(Enum.KeyCode.LeftShift) and not UIS:IsKeyDown(Enum.KeyCode.LeftControl) then
-                        if inputObject.KeyCode == Enum.KeyCode.Up then
+                        if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.Insert then
                             HighlightLayout(currentIndex - 1)
-                        elseif inputObject.KeyCode == Enum.KeyCode.Down then
+                        elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.Delete then
                             HighlightLayout(currentIndex + 1)
                         elseif inputObject.KeyCode == Enum.KeyCode.Tab then
                             local orgName = frameList[currentIndex].Name
@@ -268,9 +268,9 @@ return function(C,Settings)
                             return
                         end
                     else
-                        if inputObject.KeyCode == Enum.KeyCode.Up then
+                        if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.Insert then
                             goToSaved(1)
-                        elseif inputObject.KeyCode == Enum.KeyCode.Down then
+                        elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.Delete then
                             goToSaved(-1)
                         else
                             return
