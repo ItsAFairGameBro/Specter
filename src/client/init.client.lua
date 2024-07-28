@@ -74,7 +74,11 @@ C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
 C.preloadedModule = {}
 C.BindedActions = {} -- key binds
-C.Debug = true
+C.Debugs = {
+	Destroy = false,
+	Module = false,
+	Load = false,
+}
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then
@@ -82,6 +86,16 @@ if not Settings then
 	C.getgenv().SETTINGS = Settings
 end
 C.getgenv().C = C
+
+local PreDebugMessage = `[SpecterV2]: `
+function C.DebugMessage(type,message)
+	assert(C.Debugs[type]~=nil, `{PreDebugMessage}Message Type Not Found:\n{message}`)
+	if not C.Debugs[type] then
+		return false
+	end
+	print(`{PreDebugMessage}{message}`)
+	return true
+end
 
 function C.StringWait(start,path,timeout,seperationChar)
 	local seperationChar = seperationChar or "."
@@ -105,8 +119,6 @@ function C.RunLink(githubLink,gitType,name)
 
 	if not success then
 		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
-	else
-		--print(PrintName.." Found: "..name.."!")
 	end
 	local scriptName = URL:sub(20)
 	scriptName = scriptName:sub(scriptName:find("/")+1)
@@ -166,14 +178,10 @@ function C.LoadModule(moduleName: string)
 		return Ret
 	end
 	local Start = os.clock()
-	if C.Debug then
-		print(`Loading {moduleName}`)
-	end
+	C.DebugMessage("Module",`Loading {moduleName}`)
 	local Mod = GetModule(moduleName)
 	C.SaveModules[informalName] = Mod
-	if C.Debug then
-		--print((`Loaded {moduleName} in %.2f seconds`):format(os.clock()-Start))
-	end
+	C.DebugMessage("Module",(`Loaded {moduleName} in %.2f seconds`):format(os.clock()-Start))
 	return Mod
 end
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}

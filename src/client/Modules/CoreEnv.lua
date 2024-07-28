@@ -186,14 +186,14 @@ return function(C,Settings)
 	function C:Destroy()
 		assert(C==self, "C is not the called function")
 		assert(not C.Cleared, `SaveIndex {C.SaveIndex} is already cleared / being destroyed!`)
+		C.DebugMessage("Destroy",`Destroy Start`)
 		-- It is cleared
 		C.Cleared = true
 
 		-- First, undo the connections
 		C.ClearFunctTbl(C.functs)
 
-		print("D1")
-		task.wait(1.5)
+		C.DebugMessage("Destroy",`Destroy 1`)
 
 		local RemoveOnDestroyIndex = 0
 
@@ -222,8 +222,7 @@ return function(C,Settings)
 			end
 		end
 
-		print("D2")
-		task.wait(1.5)
+		C.DebugMessage("Destroy",`Destroy 2`)
 		
 		for actionName, hackTbl in pairs(C.BindedActions) do
 			--C.UnbindAction(actionName)
@@ -237,8 +236,7 @@ return function(C,Settings)
 			C.ClearFunctTbl(dict,true)
 		end
 
-		print("D3")
-		task.wait(1.5)
+		C.DebugMessage("Destroy",`Destroy 3`)
 
 		-- Then, destroy everything
 		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
@@ -285,22 +283,14 @@ return function(C,Settings)
 		end
 		C:Destroy()
 	end))
-	if C.Debug then
-		task.wait(1)
-		print("Starting To WAIT")
-	end
+	C.DebugMessage("Load",`Waiting To Load Starting`)
 	while #C.getgenv().Instances>1 do
-		if C.Debug then
-			print("Waiting For Destruction B/C ", C.getgenv().Instances[1], #C.getgenv().Instances)
-		end
+		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances} Instances`)
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
 		if #C.getgenv().Instances>1 then
-			print("Still waiting for instances to be deleted!")
+			C.DebugMessage("Load",`Still waiting for instances to be deleted!`)
 		end
 	end
-	if C.Debug then
-		print("Wait complete")
-		task.wait(2)	
-	end
+	C.DebugMessage("Load",`Waiting To Load Finished`)
 end
