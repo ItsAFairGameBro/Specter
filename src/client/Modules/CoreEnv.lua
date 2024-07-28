@@ -185,6 +185,7 @@ return function(C,Settings)
 	--Destroy Function
 	function C:Destroy()
 		assert(C==self, "C is not the called function")
+		assert(not C.Cleared, `SaveIndex {C.SaveIndex} is already cleared / being destroyed!`)
 		-- It is cleared
 		C.Cleared = true
 
