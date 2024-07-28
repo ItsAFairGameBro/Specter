@@ -360,8 +360,8 @@ return function(C,Settings)
 	end--]]
 
 	-- Function to set the property with an option to always set it
-	function C.SetPartProperty(part, propertyName, value)
-		if C.gameUniverse=="Flee" and part.Name=="Weight"then
+	function C.SetPartProperty(part, propertyName, value, alwaysSet, requestName)
+		if C.gameUniverse == "Flee" and part.Name == "Weight" then
 			return
 		end
 
@@ -380,24 +380,33 @@ return function(C,Settings)
 		-- Get the current request count
 		local requestCount = part:GetAttribute(requestCountAttr)
 
-		-- Increment the request count if alwaysSet is true or count is 0
-		if requestCount == 0 then
+		-- Create the unique attribute name for the request
+		local requestAttrName = propertyName .. "_Request_" .. requestName
+
+		-- Increment the request count if the request is not already present
+		if part:GetAttribute(requestAttrName) == nil then
+			part:SetAttribute(requestAttrName, true)
 			part:SetAttribute(requestCountAttr, requestCount + 1)
+
 			if not C.forcePropertyFuncts[part] then
 				C.forcePropertyFuncts[part] = {}
 			end
-			C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
-				part[propertyName] = value
-			end)
+			if not C.forcePropertyFuncts[part][propertyName] then
+				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
+					part[propertyName] = value
+				end)
+			end
+
+			part:AddTag(propertyName .. "_Set")
+		end
+
+		if requestCount == 0 or alwaysSet then
 			part[propertyName] = value
-			part:AddTag(propertyName.."_Set")
-		else
-			part:SetAttribute(requestCountAttr, requestCount + 1)
 		end
 	end
 
 	-- Function to remove a request
-	function C.ResetPartProperty(part, propertyName)
+	function C.ResetPartProperty(part, propertyName, requestName)
 		-- Attribute to track request count
 		local requestCountAttr = propertyName .. "_RequestCount"
 		local originalValueAttr = propertyName .. "_OriginalValue"
@@ -405,13 +414,19 @@ return function(C,Settings)
 		-- Get the current request count
 		local requestCount = part:GetAttribute(requestCountAttr)
 
+		-- Create the unique attribute name for the request
+		local requestAttrName = propertyName .. "_Request_" .. requestName
+
 		-- Decrement the request count and revert property if no more requests
-		if requestCount and requestCount > 0 then
+		if part:GetAttribute(requestAttrName) then
+			part:SetAttribute(requestAttrName, nil)
 			part:SetAttribute(requestCountAttr, requestCount - 1)
+
 			if requestCount - 1 == 0 then
 				part[propertyName] = part:GetAttribute(originalValueAttr)
 				part:SetAttribute(requestCountAttr, nil)
-				if C.forcePropertyFuncts[part][propertyName] then
+
+				if C.forcePropertyFuncts[part] and C.forcePropertyFuncts[part][propertyName] then
 					C.forcePropertyFuncts[part][propertyName]:Disconnect()
 					C.forcePropertyFuncts[part][propertyName] = nil -- Remove from memory
 				end
