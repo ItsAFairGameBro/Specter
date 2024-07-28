@@ -388,7 +388,10 @@ return function(C,Settings)
 
 	-- Cancel thread
 	function C.StopThread(thread)
-		return pcall(task.cancel,thread)
+		if coroutine.status(thread) ~= "dead" then
+			task.cancel(thread)
+			return true
+		end
 	end
 
 	-- Function to set the property with an option to always set it
