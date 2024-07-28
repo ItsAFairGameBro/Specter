@@ -275,6 +275,9 @@ return function(C,Settings)
 		C:Destroy()
 	end))
 	while #C.getgenv().Instances>1 do
+		if C.Debug then
+			print("Waiting For Destruction B/C ", C.getgenv().Instances[1], #C.getgenv().Instances)
+		end
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
 		RunS.RenderStepped:Wait()
