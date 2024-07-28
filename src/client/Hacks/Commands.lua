@@ -568,10 +568,10 @@ return function(C,Settings)
                     self.Parent.fling.FlingThread = nil
                 end
                 self.Parent.fling:SetFling(false)
-                self.Parent.unfollow:Run()
-                if C.HRP then
-                    C.HRP.AssemblyLinearVelocity, C.HRP.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
+                if C.hrp then
+                    C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                 end
+                self.Parent.unfollow:Run()
             end,
         },
         ["fling"]={
@@ -590,7 +590,6 @@ return function(C,Settings)
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                 end
-                C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
             end,
             Run=function(self,args)
                 self.Parent.unfling:Run()
