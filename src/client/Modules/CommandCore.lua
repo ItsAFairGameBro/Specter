@@ -84,6 +84,15 @@ return function(C,Settings)
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
                     end
+                elseif argumentData.Type == "Options" then
+                    if not argumentData.Options[args[num]] and canRunFunction then
+                        if args[num] == "" and argumentData.Default then
+                            args[num] = argumentData.Default
+                        else
+                            canRunFunction = false
+                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)    
+                        end
+                    end
                 elseif argumentData.Type=="" then
                     --do nothing
                 elseif argumentData.Type~=false then
@@ -367,6 +376,10 @@ return function(C,Settings)
                             elseif mySuggestion.Type == "Number" then
                                 for s = mySuggestion.Min, mySuggestion.Max, (mySuggestion.Max - mySuggestion.Min) / 8 do
                                     table.insert(options,{tostring(s),tostring(s)})
+                                end
+                            elseif mySuggestion.Type == "Options" then
+                                for num, val in ipairs(mySuggestion.Options) do
+                                    table.insert(options,{val,val})
                                 end
                             end
                             options = C.StringStartsWith(options,currentWord,true,true)

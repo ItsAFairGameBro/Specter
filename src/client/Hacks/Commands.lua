@@ -510,7 +510,7 @@ return function(C,Settings)
             end,
         },
         ["rejoin"]={
-            Parameters={Type="Options",Options={"new","small"}},
+            Parameters={Type="Options",Default="same",Options={"same","new","small"}},
             AfterTxt="%s",
             Run=function(self,args)
                 if args[1] == "new" or args[1] == "small" then
@@ -560,7 +560,7 @@ return function(C,Settings)
             RunOnDestroy=function(self)
                 self:Run({})
             end,
-            Run=function(self,args)
+            Run=function(self,args,notpback)
                 if self.Parent.fling.FlingThread then
                     C.StopThread(self.Parent.fling.FlingThread)
                     self.Parent.fling.FlingThread = nil
@@ -570,12 +570,19 @@ return function(C,Settings)
                     C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                 end
                 self.Parent.unfollow:Run()
+                if notpback and self.OldLoc and C.hrp then
+                   self.OldLoc = C.hrp:GetPivot()
+                elseif not notpback and self.OldLoc and C.char then
+                    C.char:PivotTo(self.OldLoc)
+                    self.OldLoc = nil
+                end
             end,
         },
         ["fling"]={
             Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
             AfterTxt="%s",
             FlingThread=nil,
+            OldLoc=nil,
             SetFling=function(self,enabled,speed)
                 RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
                 if enabled then
@@ -600,13 +607,17 @@ return function(C,Settings)
                         self:SetFling(true,args[2])
                         for i = 0,4,1 do
                             if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead then
-                                continue
+                                break
                             end
-                            if i == 0 then
-                                self.Parent.follow:Run({{thisPlr},0})
+                            if C.hrp and thisPlr.Character then
+                                C.hrp:PivotTo(thisPlr.Character:GetPivot())
                             end
+                            --if i == 0 then
+                                --self.Parent.follow:Run({{thisPlr},0})
+                            --end
                             task.wait(0.3)
                         end
+        
                         task.wait(0.1) --wait until disabled
                         if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
                             C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
