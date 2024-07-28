@@ -560,9 +560,11 @@ return function(C,Settings)
             RunOnDestroy=function(self)
                 self:Run({})
             end,
-            Run=function(self,args,notpback)
+            Run=function(self,args,notpback,nodeletethread)
                 if self.Parent.fling.FlingThread then
-                    C.StopThread(self.Parent.fling.FlingThread)
+                    if not nodeletethread then -- if its not our current thread
+                        C.StopThread(self.Parent.fling.FlingThread)
+                    end
                     self.Parent.fling.FlingThread = nil
                 end
                 self.Parent.fling:SetFling(false)
@@ -624,7 +626,7 @@ return function(C,Settings)
                             C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                         end
                     end
-                    self.Parent.unfling:Run()
+                    self.Parent.unfling:Run(nil,false,true)
                 end)
                 return true
             end,
