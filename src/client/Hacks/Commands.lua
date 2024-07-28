@@ -425,7 +425,7 @@ return function(C,Settings)
                     return true
                 end
                 C.isFollowing = theirPlr
-                RunS:BindToRenderStep("Follow"..C.SaveIndex,69,function()
+                RunS:BindToRenderStep("Follow"..C.SaveIndex,69,function(delta: number)
                     --print(plr:GetAttribute("isFollowing") ~= theirPlr.UserId,plr:GetAttribute("isFollowing"),theirPlr.UserId)
                     --while isFollowing == theirPlr and HRP and HRP.Parent and saveChar.Parent and not C.C.isCleared do
                     --if (plr:GetAttribute("isFollowing") ~= theirPlr.UserId or not HRP or not HRP.Parent or C.C.isCleared) then
@@ -447,8 +447,8 @@ return function(C,Settings)
 
                     local setCFrame = dist == 0 and HRP.CFrame or CFrame.new(HRP.CFrame * Vector3.new(0,0,dist),HRP.Position)
 
-                    setCFrame += HRP.AssemblyLinearVelocity
-                    
+                    setCFrame += HRP.AssemblyLinearVelocity * delta
+
                     teleportMyself(setCFrame)
 
                     if C.char and C.char.PrimaryPart and not self.Parent.fling.FlingThread then

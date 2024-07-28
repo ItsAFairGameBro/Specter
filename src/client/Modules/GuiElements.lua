@@ -132,7 +132,7 @@ local UIListLayout_8 = Instance.new("UIListLayout")
 
 SpecterGUI.Name = "SpecterGUI"
 
-SpecterGUI.DisplayOrder = 696969
+SpecterGUI.DisplayOrder = -1
 SpecterGUI.ResetOnSpawn = false
 
 MainHUD.Name = "MainHUD"
