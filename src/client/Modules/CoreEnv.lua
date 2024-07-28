@@ -255,6 +255,7 @@ return function(C,Settings)
 		end
 		
 		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
+		RunS.RenderStepped:Wait()
 		C.getgenv().DestroyEvent:Fire()
 		
 		if C.isStudio then
@@ -276,7 +277,6 @@ return function(C,Settings)
 	end
 	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
 		if C.SaveIndex == SaveIndex then
-			print(C.SaveIndex..": Break because same value!")
 			return -- our signal sent this!
 		end
 		C:Destroy()
