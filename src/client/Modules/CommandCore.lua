@@ -383,6 +383,8 @@ return function(C,Settings)
                         newClone.LayoutOrder = num
                         table.insert(frameList,newClone)
                     end
+                else
+                    ClearSuggestions()
                 end
             end
             DidSet = false

@@ -262,7 +262,7 @@ BottomFrame.Parent = Buttons
 BottomFrame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 BottomFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 BottomFrame.BorderSizePixel = 0
-BottomFrame.LayoutOrder = 2000
+BottomFrame.LayoutOrder = 12000
 BottomFrame.Size = UDim2.new(1, 0, 0, 40)
 
 SaveButton.Name = "SaveButton"
@@ -307,7 +307,7 @@ MiscDivider.Parent = Buttons
 MiscDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 MiscDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MiscDivider.BorderSizePixel = 0
-MiscDivider.LayoutOrder = 20
+MiscDivider.LayoutOrder = 2000
 MiscDivider.Size = UDim2.new(1, 0, 0, 24)
 
 MiscLabel.Name = "MiscLabel"
@@ -1386,7 +1386,7 @@ HUDBackgroundFade.BorderSizePixel = 0
 HUDBackgroundFade.LayoutOrder = -30
 HUDBackgroundFade.Position = UDim2.new(0.5, 0, 0.5, 0)
 HUDBackgroundFade.Size = UDim2.new(4, 0, 4, 0)
-HUDBackgroundFade.ZIndex = -3000
+HUDBackgroundFade.ZIndex = -1200000
 
 ChatAutoComplete.Name = "ChatAutoComplete"
 ChatAutoComplete.Parent = SpecterGUI
