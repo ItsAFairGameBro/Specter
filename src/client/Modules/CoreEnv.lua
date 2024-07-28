@@ -191,6 +191,8 @@ return function(C,Settings)
 		-- First, undo the connections
 		C.ClearFunctTbl(C.functs)
 
+		print("D1")
+
 		local RemoveOnDestroyIndex = 0
 
 		for category, groupedTabData in pairs(C.hackData) do
@@ -217,6 +219,8 @@ return function(C,Settings)
 				end)
 			end
 		end
+
+		print("D2")
 		
 		for actionName, hackTbl in pairs(C.BindedActions) do
 			C.UnbindAction(actionName)
@@ -229,6 +233,8 @@ return function(C,Settings)
 		for key, dict in pairs(C.objectfuncts) do
 			C.ClearFunctTbl(dict,true)
 		end
+
+		print("D3")
 
 		-- Then, destroy everything
 		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
@@ -270,6 +276,7 @@ return function(C,Settings)
 	end
 	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
 		if C.SaveIndex == SaveIndex then
+			print(C.SaveIndex..": Break because same value!")
 			return -- our signal sent this!
 		end
 		C:Destroy()

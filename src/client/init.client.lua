@@ -172,7 +172,7 @@ function C.LoadModule(moduleName: string)
 	local Mod = GetModule(moduleName)
 	C.SaveModules[informalName] = Mod
 	if C.Debug then
-		print((`Loaded {moduleName} in %.2f seconds`):format(os.clock()-Start))
+		--print((`Loaded {moduleName} in %.2f seconds`):format(os.clock()-Start))
 	end
 	return Mod
 end
