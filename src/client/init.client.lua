@@ -159,17 +159,21 @@ function GetModule(moduleName: string)
 end
 
 function C.LoadModule(moduleName: string)
-	if C.Debug then
-		print(`Loading {moduleName}`)
-	end
 	local informalSplit = moduleName:split("/")
 	local informalName = informalSplit[#informalSplit]
 	local Ret = C.SaveModules[informalName]
 	if Ret then
 		return Ret
 	end
+	local Start = os.clock()
+	if C.Debug then
+		print(`Loading {moduleName}`)
+	end
 	local Mod = GetModule(moduleName)
 	C.SaveModules[informalName] = Mod
+	if C.Debug then
+		print((`Loaded {moduleName} in %.2f seconds`):format(os.clock()-Start))
+	end
 	return Mod
 end
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
