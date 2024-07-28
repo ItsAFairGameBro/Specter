@@ -167,7 +167,6 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						task.wait(.1)
 						C.DoActivate(self.Activate,self,self.EnTbl.En)
 					end,
 				},

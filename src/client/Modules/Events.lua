@@ -72,6 +72,7 @@ return function(C,Settings)
 				end
 			end))
 		end
+		task.wait(0.1)
 		FireEvent("CharAdded",isMe,theirPlr,theirChar,wasAlreadyIn)
 	end
 	local function PlrAdded(theirPlr,wasAlreadyIn)
