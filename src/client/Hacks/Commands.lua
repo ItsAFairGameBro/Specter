@@ -431,9 +431,6 @@ return function(C,Settings)
                     --if (plr:GetAttribute("isFollowing") ~= theirPlr.UserId or not HRP or not HRP.Parent or C.C.isCleared) then
                     --	return
                     --end
-                    if false then
-                        return
-                    end
                     if not theirPlr.Parent or theirPlr.Parent ~= PS then
                         C.CommandFunctions.unfollow:Run()
                         C.CreateSysMessage(`Followed User {theirPlr.Name} has left the game!`)
@@ -447,12 +444,13 @@ return function(C,Settings)
                             HRP = theirChar.PrimaryPart
                         end
                     end
-    
-                    if dist == 0 then
-                        teleportMyself(HRP.CFrame)
-                    else
-                        teleportMyself(CFrame.new(HRP.CFrame * Vector3.new(0,0,dist),HRP.Position))
-                    end
+
+                    local setCFrame = dist == 0 and HRP.CFrame or CFrame.new(HRP.CFrame * Vector3.new(0,0,dist),HRP.Position)
+
+                    setCFrame += HRP.AssemblyLinearVelocity
+                    
+                    teleportMyself(setCFrame)
+
                     if C.char and C.char.PrimaryPart and not self.Parent.fling.FlingThread then
                         C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
                         C.char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
