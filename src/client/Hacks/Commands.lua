@@ -564,7 +564,7 @@ return function(C,Settings)
             end,
             Run=function(self,args)
                 if self.Parent.fling.FlingThread then
-                    task.cancel(self.Parent.fling.FlingThread)
+                    C.StopThread(self.Parent.fling.FlingThread)
                     self.Parent.fling.FlingThread = nil
                 end
                 self.Parent.fling:SetFling(false)

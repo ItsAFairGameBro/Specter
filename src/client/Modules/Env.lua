@@ -386,6 +386,11 @@ return function(C,Settings)
 		end
 	end
 
+	-- Cancel thread
+	function C.StopThread(thread)
+		return pcall(task.cancel,thread)
+	end
+
 	-- Function to set the property with an option to always set it
 	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet)
 		if C.gameUniverse == "Flee" and part.Name == "Weight" then
