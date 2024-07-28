@@ -79,6 +79,7 @@ C.Debugs = {
 	Destroy = false,
 	Module = false,
 	Load = false,
+	Override = true,
 }
 
 local Settings = C.getgenv().SETTINGS

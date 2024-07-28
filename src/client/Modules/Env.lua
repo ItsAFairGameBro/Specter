@@ -365,17 +365,23 @@ return function(C,Settings)
 	function C.AddOverride(hackTbl,name)
 		local old = #hackTbl.Override
 		if C.TblAdd(hackTbl.Override,name) then
+			C.DebugMessage("Override",`Added marker "{name}" to override`)
 			hackTbl.RealEnabled = true
 			if old == 0 and not hackTbl.Enabled then
+				C.DebugMessage("Override",`Ran function from override`)
 				hackTbl:Activate(hackTbl.RealEnabled)
 			end
 		end
 	end
 	function C.RemoveOverride(hackTbl,name)
-		if C.TblRemove(hackTbl.Override,name) and #hackTbl.Override == 0 then
-			hackTbl.RealEnabled = hackTbl.Enabled
-			if not hackTbl.Enabled then
-				hackTbl:Activate(false)
+		if C.TblRemove(hackTbl.Override,name) then
+			C.DebugMessage("Override",`Removed marker "{name}" from override`)
+			if #hackTbl.Override == 0 then
+				hackTbl.RealEnabled = hackTbl.Enabled
+				if not hackTbl.RealEnabled then
+					C.DebugMessage("Override",`Removed function from override`)
+					hackTbl:Activate(false)
+				end
 			end
 		end
 	end
