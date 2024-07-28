@@ -226,7 +226,7 @@ return function(C,Settings)
 		task.wait(1.5)
 		
 		for actionName, hackTbl in pairs(C.BindedActions) do
-			C.UnbindAction(actionName)
+			--C.UnbindAction(actionName)
 		end
 
 		for key, dict in pairs(C.playerfuncts) do
