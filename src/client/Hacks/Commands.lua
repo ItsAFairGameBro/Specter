@@ -621,7 +621,7 @@ return function(C,Settings)
                                 end
                                 if C.hrp then
                                     local SeatPart = theirHuman.SeatPart
-                                    if SeatPart then
+                                    if not SeatPart then
                                         C.hrp:PivotTo(thisPlr.Character:GetPivot())
                                     else
                                         C.hrp:PivotTo(SeatPart.Parent:GetPivot())
