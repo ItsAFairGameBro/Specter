@@ -598,6 +598,8 @@ return function(C,Settings)
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                 end
+                self.Enabled = enabled -- Toggle Events
+                self.Events.MyCharAdded(self,C.plr)
             end,
             Run=function(self,args)
                 self.Parent.unfling:Run()
@@ -630,6 +632,15 @@ return function(C,Settings)
                 end)
                 return true
             end,
+            Events={MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+                for num, basePart in ipairs(C.char:GetDescendants()) do
+                    if self.Enabled then
+                        C.SetPartProperty(basePart,"CanTouch","fling")
+                    else
+                        C.ResetPartProperty(basePart,"CanTouch","fling")
+                    end
+                end
+            end}
         },
     }
 end

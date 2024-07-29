@@ -237,6 +237,7 @@ return function(C,Settings)
 					--do nothing, it will be cleared
 				elseif attr:find("_OriginalValue") then
 					instance[attr:split("_")[1]] = val
+					continue -- don't delete it...
 				else
 					continue -- everything else keep, prob important game stuff!
 				end
