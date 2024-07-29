@@ -627,7 +627,10 @@ return function(C,Settings)
                             if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
                                 C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                             end
-                        end    
+                        end
+                        if doLoopFling then
+                            task.wait(.15)
+                        end
                     until not doLoopFling
                     self.Parent.unfling:Run(nil,false,true)
                 end)
