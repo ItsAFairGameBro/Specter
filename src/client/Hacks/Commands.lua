@@ -578,6 +578,7 @@ return function(C,Settings)
                     C.char:PivotTo(self.OldLoc)
                     self.OldLoc = nil
                 end
+                return true
             end,
         },
         ["fling"]={
@@ -602,11 +603,12 @@ return function(C,Settings)
                 self.Events.MyCharAdded(self,C.plr)
             end,
             Run=function(self,args,doLoopFling)
-                self.Parent.unfling:Run(nil,true,false)
-                C.TblRemove(args[1],C.plr)
+                C.TblRemove(args[1],C.plr) -- don't fling yourself!
                 if #args[1] == 0 then
-                    return -- do nothing if there's nothing to fling!
+                    self.Parent.unfling:Run() -- teleport back too!
+                    return true, "Stopped"-- do nothing if there's nothing to fling or just yourself!
                 end
+                self.Parent.unfling:Run(nil,true,false)
                 self.FlingThread = task.spawn(function()
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
@@ -618,9 +620,6 @@ return function(C,Settings)
                                 if C.hrp and thisPlr.Character then
                                     C.hrp:PivotTo(thisPlr.Character:GetPivot())
                                 end
-                                --if i == 0 then
-                                    --self.Parent.follow:Run({{thisPlr},0})
-                                --end
                                 task.wait(0.15)
                             end
             
