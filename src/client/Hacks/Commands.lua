@@ -613,12 +613,15 @@ return function(C,Settings)
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
                             self:SetFling(true,args[2])
-                            for i = 0,99,1 do
+                            for i = 0,30,1 do
                                 local theirChar = thisPlr.Character
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 local theirPrim = theirChar and theirChar.PrimaryPart
                                 if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
                                     break
+                                end
+                                if theirPrim.AssemblyLinearVelocity.Magnitude > 1000 then
+                                    break -- We did enough damage!
                                 end
                                 if C.hrp then
                                     local SeatPart = theirHuman.SeatPart
