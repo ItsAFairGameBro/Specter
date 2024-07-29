@@ -634,6 +634,9 @@ return function(C,Settings)
             end,
             Events={MyCharAdded=function(self,theirPlr,theirChar,firstRun)
                 for num, basePart in ipairs(C.char:GetDescendants()) do
+                    if not basePart:IsA("BasePart") then
+                        continue
+                    end
                     if self.Enabled then
                         C.SetPartProperty(basePart,"CanTouch","fling")
                     else
