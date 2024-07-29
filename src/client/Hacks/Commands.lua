@@ -602,7 +602,7 @@ return function(C,Settings)
                 self.Events.MyCharAdded(self,C.plr)
             end,
             Run=function(self,args)
-                self.Parent.unfling:Run()
+                self.Parent.unfling:Run(nil,true,false)
                 C.TblRemove(args[1],C.plr)
                 if #args[1] == 0 then
                     return -- do nothing if there's nothing to fling!
