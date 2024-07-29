@@ -601,32 +601,34 @@ return function(C,Settings)
                 self.Enabled = enabled -- Toggle Events
                 self.Events.MyCharAdded(self,C.plr)
             end,
-            Run=function(self,args)
+            Run=function(self,args,doLoopFling)
                 self.Parent.unfling:Run(nil,true,false)
                 C.TblRemove(args[1],C.plr)
                 if #args[1] == 0 then
                     return -- do nothing if there's nothing to fling!
                 end
                 self.FlingThread = task.spawn(function()
-                    for num, thisPlr in ipairs(args[1]) do
-                        self:SetFling(true,args[2])
-                        for i = 0,4,1 do
-                            if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead or thisPlr.Character.Humanoid.Health <= 0 then
-                                break
+                    repeat
+                        for num, thisPlr in ipairs(args[1]) do
+                            self:SetFling(true,args[2])
+                            for i = 0,4,1 do
+                                if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead or thisPlr.Character.Humanoid.Health <= 0 then
+                                    break
+                                end
+                                if C.hrp and thisPlr.Character then
+                                    C.hrp:PivotTo(thisPlr.Character:GetPivot())
+                                end
+                                --if i == 0 then
+                                    --self.Parent.follow:Run({{thisPlr},0})
+                                --end
+                                task.wait(0.15)
                             end
-                            if C.hrp and thisPlr.Character then
-                                C.hrp:PivotTo(thisPlr.Character:GetPivot())
+            
+                            if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
+                                C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                             end
-                            --if i == 0 then
-                                --self.Parent.follow:Run({{thisPlr},0})
-                            --end
-                            task.wait(0.15)
-                        end
-        
-                        if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
-                            C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
-                        end
-                    end
+                        end    
+                    until not doLoopFling
                     self.Parent.unfling:Run(nil,false,true)
                 end)
                 return true
@@ -643,6 +645,13 @@ return function(C,Settings)
                     end
                 end
             end}
+        },
+        ["lfling"]={
+            Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
+            AfterTxt="%s",
+            Run = function(self,args)
+                return self.Parent.fling:Run(args,true)
+            end
         },
     }
 end
