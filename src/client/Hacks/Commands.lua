@@ -611,7 +611,7 @@ return function(C,Settings)
                     for num, thisPlr in ipairs(args[1]) do
                         self:SetFling(true,args[2])
                         for i = 0,4,1 do
-                            if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead then
+                            if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead or thisPlr.Character.Humanoid.Health <= 0 then
                                 break
                             end
                             if C.hrp and thisPlr.Character then
@@ -623,7 +623,6 @@ return function(C,Settings)
                             task.wait(0.15)
                         end
         
-                        task.wait(0.1) --wait until disabled
                         if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
                             C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                         end
