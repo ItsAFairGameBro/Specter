@@ -592,7 +592,7 @@ return function(C,Settings)
                     C.AddOverride(C.hackData.Blatant.Noclip, "fling")
                     RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
                         if C.hrp then
-                            C.hrp.AssemblyAngularVelocity = Vector3.new(0,(speed or 1)*1000,0)
+                            C.hrp.AssemblyAngularVelocity = Vector3.new(1,1,1) * (speed or 1)*1000
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
@@ -625,10 +625,13 @@ return function(C,Settings)
                                     local Target
                                     if not SeatPart or not SeatPart.Parent then
                                         Target = thisPlr.Character:GetPivot()
+                                        Target += theirPrim.AssemblyLinearVelocity * .06
                                     else
                                         Target = SeatPart.Parent:GetPivot()
                                     end
-                                    Target += theirPrim.AssemblyLinearVelocity
+                                    if Target.Y < workspace.FallenPartsDestroyHeight + 5 then
+                                        Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 5,0)
+                                    end
                                     C.hrp:PivotTo(Target)
                                 end
                                 task.wait(0.15)
