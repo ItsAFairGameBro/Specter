@@ -615,13 +615,13 @@ return function(C,Settings)
                             self:SetFling(true,args[2])
                             for i = 0,4,1 do
                                 local theirChar = thisPlr.Character
-                                local theirHuman = theirChar:FindFirstChild("Humanoid")
+                                local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 then
                                     break
                                 end
                                 if C.hrp then
                                     local SeatPart = theirHuman.SeatPart
-                                    if not SeatPart then
+                                    if not SeatPart or not SeatPart.Parent then
                                         C.hrp:PivotTo(thisPlr.Character:GetPivot())
                                     else
                                         C.hrp:PivotTo(SeatPart.Parent:GetPivot())
