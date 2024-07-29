@@ -568,14 +568,14 @@ return function(C,Settings)
                     self.Parent.fling.FlingThread = nil
                 end
                 self.Parent.fling:SetFling(false)
+                self.Parent.unfollow:Run()
                 if C.hrp then
                     C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                 end
-                self.Parent.unfollow:Run()
                 if notpback and not self.OldLoc and C.hrp then
                     self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
-                    C.char:PivotTo(self.OldLoc)
+                    task.delay(.1,C.char.PivotTo,C.char,self.OldLoc)
                     self.OldLoc = nil
                 end
                 return true
@@ -590,7 +590,7 @@ return function(C,Settings)
                 RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
                 if enabled then
                     C.AddOverride(C.hackData.Blatant.Noclip, "fling")
-                    self.SpinThread = RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
+                    RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
                         if C.hrp then
                             C.hrp.AssemblyAngularVelocity = Vector3.new(0,(speed or 1)*1000,0)
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
@@ -613,19 +613,23 @@ return function(C,Settings)
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
                             self:SetFling(true,args[2])
-                            for i = 0,4,1 do
+                            for i = 0,99,1 do
                                 local theirChar = thisPlr.Character
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
-                                if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 then
+                                local theirPrim = theirChar and theirChar.PrimaryPart
+                                if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
                                     break
                                 end
                                 if C.hrp then
                                     local SeatPart = theirHuman.SeatPart
+                                    local Target
                                     if not SeatPart or not SeatPart.Parent then
-                                        C.hrp:PivotTo(thisPlr.Character:GetPivot())
+                                        Target = thisPlr.Character:GetPivot()
                                     else
-                                        C.hrp:PivotTo(SeatPart.Parent:GetPivot())
+                                        Target = SeatPart.Parent:GetPivot()
                                     end
+                                    Target += theirPrim.AssemblyLinearVelocity
+                                    C.hrp:PivotTo(Target)
                                 end
                                 task.wait(0.15)
                             end
