@@ -614,11 +614,18 @@ return function(C,Settings)
                         for num, thisPlr in ipairs(args[1]) do
                             self:SetFling(true,args[2])
                             for i = 0,4,1 do
-                                if thisPlr.Parent ~= PS or not thisPlr.Character or thisPlr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Dead or thisPlr.Character.Humanoid.Health <= 0 then
+                                local theirChar = thisPlr.Character
+                                local theirHuman = theirChar:FindFirstChild("Humanoid")
+                                if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 then
                                     break
                                 end
-                                if C.hrp and thisPlr.Character then
-                                    C.hrp:PivotTo(thisPlr.Character:GetPivot())
+                                if C.hrp then
+                                    local SeatPart = theirHuman.SeatPart
+                                    if SeatPart then
+                                        C.hrp:PivotTo(thisPlr.Character:GetPivot())
+                                    else
+                                        C.hrp:PivotTo(SeatPart.Parent:GetPivot())
+                                    end
                                 end
                                 task.wait(0.15)
                             end
