@@ -572,7 +572,7 @@ return function(C,Settings)
                     C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                 end
                 self.Parent.unfollow:Run()
-                if notpback and self.OldLoc and C.hrp then
+                if notpback and not self.OldLoc and C.hrp then
                     self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
                     C.char:PivotTo(self.OldLoc)
