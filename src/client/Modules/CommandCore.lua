@@ -330,7 +330,7 @@ return function(C,Settings)
             --Load suggestions
             if not DidSet then
                 if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
-                    if doubleSpaces > 0 then
+                    if doubleSpaces > 0 and chatBar.Text ~= newInput then
                         print("Upd",doubleSpaces,moreSpaces)
                         chatBar.Text = newInput
                     end
