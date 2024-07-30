@@ -335,7 +335,7 @@ return function(C,Settings)
 						end
 						task.wait(.5)
 						if firstRun then
-							task.wait(5)
+							task.wait(2.5)
 							self:Activate(self.RealEnabled)
 						end
 					end,
@@ -354,7 +354,7 @@ return function(C,Settings)
 						Title = "Parts",
 						Tooltip = "Whether or not regular parts are affected",
 						Layout = 1,Default=true,
-						Shortcut="Humanoids",
+						Shortcut="Parts",
 						Activate = C.ReloadHack
 					},
 					{
