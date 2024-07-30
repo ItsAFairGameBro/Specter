@@ -210,9 +210,6 @@ return function(C,Settings)
 						local actionClone = C.AddAction({Name=Title,Tags={"RemoveOnDestroy"},Stop=function(onRequest)
 							C.DoActivate(self,self.Activate,false)
 						end,})
-						if not actionClone then
-							return
-						end
 						if not self.LastSpotted and C.char and C.hrp then
 							self.LastSpotted = C.char:GetPivot()
 						end
