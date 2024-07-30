@@ -350,7 +350,7 @@ return function(C,Settings)
                             end
                             table.insert(options,{command,command..afterTxt})
                         end
-                    else
+                    elseif commands[1] then
                         local command,CommandData = table.unpack(commands[1]) -- Selected command
                         local mySuggestion = CommandData.Parameters[currentWordIndex - 1]
                         if mySuggestion then
