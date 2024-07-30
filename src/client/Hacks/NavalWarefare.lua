@@ -3,7 +3,7 @@ local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
 local RunS = game:GetService("RunService")
 local PS = game:GetService("Players")
-local RS = game:GetService("RunService")
+local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
 	C.DataStorage={
 		["USDock"]={Health=25e3,Base="Dock",Type="Base"},
