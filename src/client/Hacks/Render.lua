@@ -96,7 +96,10 @@ return function(C,Settings)
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
 						local camera = workspace.CurrentCamera
-						local HRP = theirChar:WaitForChild("HumanoidRootPart")
+						local HRP = theirChar:WaitForChild("HumanoidRootPart",15)
+						if not HRP then
+							return
+						end
 						local StorageTbl = {theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP}
 						table.insert(self.Storage,StorageTbl)
 						self:RunCheck(StorageTbl)

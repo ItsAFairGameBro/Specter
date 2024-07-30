@@ -1,5 +1,7 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local CG = game:GetService("CoreGui")
+local UIS = game:GetService("UserInputService")
+local RunS = game:GetService("RunService")
 return function(C,Settings)
 	return {
 		Category = {
@@ -11,48 +13,42 @@ return function(C,Settings)
 		Tab = {
 			{
 				Title = "AimAssist",
-				Tooltip = "Aims At Enemies",
-				Layout = 1,
+				Tooltip = "Automatically Aims At Enemies When In A Turret",
+				Layout = 1, Functs = {},
 				Shortcut = "AimAssist",
 				Activate = function(self,newValue)
-					print("wow",newValue)
+					local c = 800 -- bullet velocity you can put between 799-800
+					local function l(m, n)
+						if not m then return m.Position end
+						local o = m.Velocity
+						return m.Position + (o * n)
+					end
+					local function p(q)
+						local r = C.plr.Character
+						if not r or not r:FindFirstChild("HumanoidRootPart") then return 0 end
+						local s = r.HumanoidRootPart.Position
+						local t = (q - s).Magnitude
+						return t / c
+					end
+					if newValue then
+						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObject,gameProcessed)
+							if inputObject.KeyCode == Enum.KeyCode.F then
+								while UIS:IsKeyDown(Enum.KeyCode.F) and C.enHacks.Blatant_NavalAutoAim do
+									local u = C.getClosest()
+									if u then
+										local v = u.Parent:FindFirstChild("HumanoidRootPart")
+										if v then
+											local w = p(v.Position)
+											local x = l(v, w)
+											C.RemoteEvent:FireServer("aim", {x})
+										end
+									end
+									RunS.RenderStepped:Wait()
+								end
+							end
+						end))
+					end
 				end,
-				Events = {
-					
-				},
-				Options = {
-					{
-						Type = Types.Toggle,
-						Title = "God Mode",
-						Tooltip = "Swings everywhere cuz why not?",
-						Layout = 1,Default = true,
-						Shortcut="GodMode",
-					},
-					{
-						Type = Types.Slider,
-						Title = "Distance",
-						Tooltip = "How far an enemy can be before the interaction occurs",
-						Layout = 2,Default=10,
-						Min=0,Max=100,Digits=1,
-						Shortcut="Distance",
-					},
-					{
-						Type = Types.Dropdown,
-						Title = "Mode",
-						Tooltip = "What kind of mode to select",
-						Layout = 3,Default="Ranged",
-						Selections = {"Ranged","Legit","Far"},
-						Shortcut="Dropdown1",
-					},
-					{
-						Type = Types.Dropdown,
-						Title = "Mode2",
-						Tooltip = "What kind of mode to select",
-						Layout = 4,Default="Ranged2",
-						Selections = {"Ranged2","Legit2","Far2"},
-						Shortcut="Dropdown2",
-					},
-				}
 			},
 		}
 	}

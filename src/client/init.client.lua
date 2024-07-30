@@ -76,11 +76,11 @@ C.preloadedModule = {}
 C.forcePropertyFuncts = {}
 C.BindedActions = {} -- key binds
 C.Debugs = {
-	Destroy = true,
-	Module = true,
-	Load = true,
-	Override = true,
-	Thread = true,
+	Destroy = false,
+	Module = false,
+	Load = false,
+	Override = false,
+	Thread = false,
 }
 
 local Settings = C.getgenv().SETTINGS
