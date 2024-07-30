@@ -9,11 +9,6 @@ local CP = game:GetService("ContentProvider")
 local SG = game:GetService("StarterGui")
 local HS = game:GetService("HttpService")
 return function(C,Settings)
-    local function teleportMyself(CF)
-        if C.char then
-            C.char:PivotTo(CF)
-        end
-    end
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.CommandFunctions = {
         ["refresh"]={
@@ -650,7 +645,7 @@ return function(C,Settings)
                                     if Target.Y < workspace.FallenPartsDestroyHeight + 12 then
                                         Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 12,0)
                                     end
-                                    C.hrp:PivotTo(Target)
+                                    C.DoTeleport(Target)
                                 end
                                 task.wait(0.15)
                             end

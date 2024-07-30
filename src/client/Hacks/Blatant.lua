@@ -106,9 +106,9 @@ return function(C,Settings)
 							
 		
 							if hitResult then						
-								C.char:PivotTo(CFrame.new(hitPosition) * CFrame.Angles(0,math.rad(Orient.Y),0) + Vector3.new(0,C.getCharacterHeight(C.char)))
+								C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(0,math.rad(Orient.Y),0) + Vector3.new(0,C.getCharacterHeight(C.char)))
 							else
-								C.char:PivotTo(CFrame.new(C.char:GetPivot().Position) * CFrame.Angles(0,math.rad(Orient.Y),0))
+								C.DoTeleport(CFrame.new(C.char:GetPivot().Position) * CFrame.Angles(0,math.rad(Orient.Y),0))
 							end
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 							
@@ -191,7 +191,7 @@ return function(C,Settings)
 						if SaveMode == "Physics" then
 							bodyVel.Velocity = newVelocity
 						elseif SaveMode == "CFrame" then
-							C.char:PivotTo(charCF + dt * newVelocity)
+							C.DoTeleport(charCF + dt * newVelocity)
 							C.hrp.AssemblyLinearVelocity = Vector3.zero-- + dt * CharacterMass * workspace.Gravity * Vector3.new(0, 1, 0)
 							--C.hrp.AssemblyAngularVelocity = Vector3.zero
 							--bodyVel.Velocity = Vector3.new(0,newVelocity.Y,0)
@@ -343,7 +343,7 @@ return function(C,Settings)
 					if (self.EnTbl.AlwaysTeleport or hitResult) and C.char.PrimaryPart then
 						local OrientX,OrientY,OrientZ = C.char:GetPivot():toEulerAnglesXYZ()
 						
-						C.char:PivotTo(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
+						C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
 					end
 				end,
 				Options = {

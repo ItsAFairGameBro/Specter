@@ -396,6 +396,14 @@ return function(C,Settings)
 		end
 	end
 
+	-- Teleport
+	function C.DoTeleport(NewLocation: CFrame)
+		if C.char then
+			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
+			C.char:PivotTo(NewLocation)
+		end
+	end
+
 	-- Get Non Friends
 	function C.GetNonFriends()
 		local list = {}
