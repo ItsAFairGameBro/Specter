@@ -219,7 +219,7 @@ return function(C,Settings)
 						while Time and self.RealEnabled and C.char == saveChar and C.char.PrimaryPart and C.human and C.human.Health>0 do
 							local theirHead, dist = C.getClosest()
 							if theirHead then
-								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,100,0))
+								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,20,0))
 								Time.Text = theirHead.Parent.Name
 								self.Parent.Tab[2]:Shoot(theirHead)
 							else

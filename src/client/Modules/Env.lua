@@ -402,6 +402,9 @@ return function(C,Settings)
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
 			C.char:PivotTo(NewLocation)
 		end
+		if C.hrp then
+			C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
+		end
 	end
 
 	-- Disable Humanoid Parts
