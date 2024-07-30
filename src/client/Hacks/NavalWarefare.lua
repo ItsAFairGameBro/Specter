@@ -84,45 +84,44 @@ local function Static(C,Settings)
 		return selBase, maxDist
 	end
 	C.getgenv().isInGame = C.isInGame
-	if C.gameUniverse=="NavalWarefare" then
-		C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
-		local BasesToLookFor = {"USDock","JapanDock","Island"}
-		C.Bases = {Dock={},Island={}}
-		C.Planes, C.Ships = {}, {}
-		local function newChild(instance)
-			if instance.ClassName ~= "Model" then
-				return
-			end
-			local instData = C.DataStorage[instance.Name]
-			if instData then
-				--if instData.Type == "Base" then
-				local HitCode = instance:WaitForChild("HitCode")
-				local ID = instData.Base or instData.Type -- Dock or Island
-				local SelectTbl = C[instData.Type.."s"]
-				if SelectTbl[ID] then
-					SelectTbl = SelectTbl[ID]
-				end
-				table.insert(SelectTbl,instance)
-				C.defaultFunction(ID .. "Added",{instance})
-				C.objectFuncts[instance] = C.objectFuncts[instance] or {}
-				C.objectFuncts[instance]["Destroying"] = {instance.Destroying:Connect(function()
-					--Disconnect the event
-					local num = table.find(SelectTbl, instance)
-					if num then
-						table.remove(SelectTbl,num)
-					end
-					C.defaultFunction(ID .. "Removed",{instance})
-					C.objectFuncts[instance] = nil
-				end)}
-				--end
-
-			end
+	C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
+	local BasesToLookFor = {"USDock","JapanDock","Island"}
+	C.Bases = {Dock={},Island={}}
+	C.Planes, C.Ships = {}, {}
+	local function newChild(instance)
+		if instance.ClassName ~= "Model" then
+			return
 		end
-		table.insert(C.functs,workspace.ChildAdded:Connect(newChild))
-		for num, instance in ipairs(workspace:GetChildren()) do
-			newChild(instance)
+		local instData = C.DataStorage[instance.Name]
+		if instData then
+			--if instData.Type == "Base" then
+			local HitCode = instance:WaitForChild("HitCode")
+			local ID = instData.Base or instData.Type -- Dock or Island
+			local SelectTbl = C[instData.Type.."s"]
+			if SelectTbl[ID] then
+				SelectTbl = SelectTbl[ID]
+			end
+			table.insert(SelectTbl,instance)
+			C.defaultFunction(ID .. "Added",{instance})
+			C.objectFuncts[instance] = C.objectFuncts[instance] or {}
+			C.objectFuncts[instance]["Destroying"] = {instance.Destroying:Connect(function()
+				--Disconnect the event
+				local num = table.find(SelectTbl, instance)
+				if num then
+					table.remove(SelectTbl,num)
+				end
+				C.defaultFunction(ID .. "Removed",{instance})
+				C.objectFuncts[instance] = nil
+			end)}
+			--end
+
 		end
 	end
+	table.insert(C.functs,workspace.ChildAdded:Connect(newChild))
+	for num, instance in ipairs(workspace:GetChildren()) do
+		newChild(instance)
+	end
+	
 end
 return function(C,Settings)
 	Static(C,Settings)
