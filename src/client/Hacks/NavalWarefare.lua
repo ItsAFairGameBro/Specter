@@ -2,6 +2,7 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Text
 local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
 local RunS = game:GetService("RunService")
+local DS = game:GetService("Debris")
 local PS = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
@@ -171,8 +172,9 @@ return function(C,Settings)
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
 				Shoot = function(self,Target: BasePart)
-					if C.char and not C.char:FindFirstChild("InGame") then
+					if C.char and not C.char:FindFirstChild("InGame") and not C.char:GetAttribute("InGame") then
 						C.RemoteEvent:FireServer("Teleport",{"Harbour",""})
+						C.char:SetAttribute("InGame",true) -- Only fire once, no need for spam
 					end
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
@@ -250,6 +252,50 @@ return function(C,Settings)
 					end,
 				}
 			},
+			{
+				Title = ({"OP","Balanced","NEENOO's","NotAVirus","Easy"})[math.random(1,5)].." God Mode",
+				Tooltip = "Keeps you invulerable using a forcefield. Only works in planes and when unseated",
+				Layout = 4, Functs = {}, Threads = {},
+				Shortcut = "GodMode",
+				Activate = function(self,newValue)
+					if not C.char or not newValue then
+						return
+					end
+					while true do
+						if not C.isInGame(C.char) then
+							task.wait(4) -- FF lasts for 20 seconds so we good
+						end
+						local FF = C.char:FindFirstChildWhichIsA("ForceField")
+						if FF then
+							FF.Visible = self.EnTbl.FFVisibility
+							DS:AddItem(FF,15) -- Delete it after 15 seconds!
+							FF.AncestryChanged:Wait() -- Wait until we're defenseless!
+						elseif C.human.SeatPart then
+							C.human:GetPropertyChangedSignal("SeatPart"):Wait()
+						else
+							C.RemoteEvent:FireServer("Teleport", {
+								[1] = "Harbour",
+								[2] = ""
+							})
+							task.wait(2) -- Wait a bit so it doesn't lag!
+						end
+					end
+				end,
+				Events = {
+					CharAdded = function(self,theirPlr,theirChar,firstRun)
+						task.delay(2,C.DoActivate,self,self.Activate,self.RealEnabled)
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Forcefield Visibility",
+						Tooltip = "Whether or not you can see your own forcefield. Enable for better visiblity.",
+						Layout = 1,Default=true,
+						Shortcut="FFVisibility",
+					},
+				},
+			}
 		}
 	}
 end
