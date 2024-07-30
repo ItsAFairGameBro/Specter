@@ -598,7 +598,7 @@ return function(C,Settings)
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
-                    self.ActionFrame = self.ActionFrame or C.AddAction({Title="fling",Name="Flinging..",Tags={"RemoveOnDestroy"},Time=function(ActionClone,info)
+                    self.ActionFrame = self.ActionFrame or C.AddAction({Name="fling",Title="Flinging..",Tags={"RemoveOnDestroy"},Time=function(ActionClone,info)
                         ActionClone.Time.Text = "Loading.."
                     end,Stop=function(onRequest)
                         self.Parent.unfling:Run()
