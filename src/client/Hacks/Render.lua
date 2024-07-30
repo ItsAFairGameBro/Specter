@@ -182,7 +182,7 @@ return function(C,Settings)
 				UndoTransmitter=function(self,index)
 					local data = self.TouchTransmitters[index]
 					local object, parent, Type, TouchToggle = table.unpack(data or {})
-					if parent and parent.Parent and not self:CanBeEnabled(object,Type) then
+					if parent and parent.Parent then-- and not self:CanBeEnabled(object,Type) then
 						C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 						if TouchToggle then
 							TouchToggle:Destroy()
@@ -237,8 +237,7 @@ return function(C,Settings)
 							local saveCollide = parent.CanCollide or parent.Parent.Name=="FadingTiles"
 							local function clickfunction(didClick: boolean)
 								if self.EnTbl.ClickMode == "Activate" then
-									local HRP = C.char and C.char:FindFirstChild("HumanoidRootPart")
-									if not HRP then
+									if not C.hrp then
 										return
 									end
 
@@ -261,9 +260,8 @@ return function(C,Settings)
 
 									C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 									RunS.RenderStepped:Wait()
-									C.firetouchinterest(parent,HRP, toTouch)
+									C.firetouchinterest(parent,C.hrp, toTouch)
 									RunS.RenderStepped:Wait()
-									task.wait(.5)
 
 									if TouchToggle.Parent then
 										C.SetPartProperty(parent,"CanTouch","DisableTouchTransmitters",false)
