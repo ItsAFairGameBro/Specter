@@ -2033,6 +2033,6 @@ return function(C, Settings)
 	
 	C.GUI = SpecterGUI
 
-	ActionsFrame.Position = UDim2.fromOffset(C.GUI.AbsoluteSize.X * 3, C.GUI.AbsoluteSize.Y * 3)
+	ActionsFrame.Position = UDim2.fromOffset(0, C.GUI.AbsoluteSize.Y * 3)
 	C.MakeDraggableTab(ActionsFrame, true)
 end

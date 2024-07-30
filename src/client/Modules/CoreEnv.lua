@@ -265,6 +265,9 @@ return function(C,Settings)
 		-- Then, destroy everything
 		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
 		RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
+		if C.PurgeActionsWithTag then
+			C.PurgeActionsWithTag("RemoveOnDestroy")
+		end
 		
 		for key, instance in ipairs(CS:GetTagged("RemoveOnDestroy")) do
 			instance:Destroy()
