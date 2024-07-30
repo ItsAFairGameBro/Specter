@@ -106,7 +106,7 @@ return function(C,Settings)
                     local displayNameCommand = command:sub(1,1):upper() .. command:sub(2)
                     if wasSuccess then
                         local Length = ChosenPlr and #ChosenPlr
-                        local playersAffected = typeof(ChosenPlr) == "table" and (Length>1 and Length .. " Players" or tostring(ChosenPlr[1])) or "Successful!"
+                        local playersAffected = typeof(ChosenPlr) == "table" and (Length>1 and Length .. " Players" or tostring(ChosenPlr[1])) or ""
                             --(typeof(ChosenPlr)=="Instance" and (ChosenPlr==C.plr and ChosenPlr.Name) or ChosenPlr.Name) 
                            -- or (ChosenPlr:sub(1,1):upper() .. 
                             --    ChosenPlr:sub(2,ChosenPlr:sub(ChosenPlr:len())=="s" and ChosenPlr:len()-1 or ChosenPlr:len()))
