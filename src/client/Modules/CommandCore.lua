@@ -417,7 +417,7 @@ return function(C,Settings)
             end
             goToSaved(deltaIndex)
         end
-        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))
+        C.AddObjectConnection(chatBar,"TextChatbar",chatBar.Changed:Connect(textUpd))--:GetPropertyChangedSignal("Text"):Connect(textUpd))
         --C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
         textUpd()
         
