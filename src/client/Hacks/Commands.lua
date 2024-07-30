@@ -606,7 +606,7 @@ return function(C,Settings)
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                     C.RemoveAction("fling")
-                    self.Parent.spectate:Run({})
+                    self.Parent.spectate:Run({{}})
                 end
                 self.Enabled = enabled -- Toggle Events
                 self.Events.MyCharAdded(self,C.plr)
