@@ -205,6 +205,12 @@ return function(C,Settings)
 				end,
 				Events = {
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
+						if self.RealEnabled and not firstRun then
+							local Rifle = C.plr:WaitForChild("Backpack"):WaitForChild("M1 Garand",5)
+							if Rifle then
+								C.human:EquipTool(Rifle)
+							end
+						end
 						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				}
