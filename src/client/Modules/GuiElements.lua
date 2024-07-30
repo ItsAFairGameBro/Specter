@@ -140,6 +140,8 @@ local Title = Instance.new("TextLabel")
 local StopButton = Instance.new("TextButton")
 local Time = Instance.new("TextLabel")
 local UIGradient_6 = Instance.new("UIGradient")
+local ToggleTagEx = Instance.new("BillboardGui")
+local Toggle = Instance.new("TextButton")
 
 --Properties:
 
@@ -1609,6 +1611,30 @@ Time.TextXAlignment = Enum.TextXAlignment.Left
 
 UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(140, 140, 140)), ColorSequenceKeypoint.new(0.96, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(39, 39, 39))}
 UIGradient_6.Parent = ActionsEx
+
+ToggleTagEx.Name = "ToggleTagEx"
+ToggleTagEx:AddTag("RemoveOnDestroy")
+C.Examples.ToggleTagEx = ToggleTagEx
+ToggleTagEx.Enabled = false
+ToggleTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ToggleTagEx.Active = true
+ToggleTagEx.AlwaysOnTop = true
+ToggleTagEx.ExtentsOffsetWorldSpace = Vector3.new(0, 4, 0)
+ToggleTagEx.LightInfluence = 1.000
+ToggleTagEx.Size = UDim2.new(1, 30, 0.75, 10)
+
+Toggle.Name = "Toggle"
+Toggle.Parent = ToggleTagEx
+Toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Toggle.BorderSizePixel = 0
+Toggle.Size = UDim2.new(1, 0, 1, 0)
+Toggle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+Toggle.TextScaled = true
+Toggle.TextSize = 14.000
+Toggle.TextStrokeTransparency = 0.000
+Toggle.TextWrapped = true
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 

@@ -1,6 +1,8 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local PS = game:GetService("Players")
-local RunService = game:GetService("RunService")
+local RunS = game:GetService("RunService")
+local CS = game:GetService("CollectionService")
+local DS = game:GetService("Debris")
 local UIS = game:GetService("UserInputService")
 return function(C,Settings)
 	return {
@@ -145,6 +147,247 @@ return function(C,Settings)
 						Layout = 3,Default=true,
 						Shortcut="IgnoreUncollidibleWalls",
 					},
+				}
+			},
+			{
+				Title = "ESP Touch Transmitters",
+				Tooltip = "Ability to toggle/activate touch transmitters",
+				Layout = 2,Default=true,
+				Shortcut = "DisableTouchTransmitters", Instances = {}, Functs={},
+				TouchTransmitters={},
+				GlobalTouchTransmitters={},
+				GetType=function(self,instance)
+					if instance.Parent.Parent.ClassName=="Model" and instance.Parent.Parent.Parent==workspace
+						and instance.Parent.Parent:WaitForChild("Humanoid",.1) then
+						return "Humanoid"
+					else
+						return "Part"
+					end
+				end,
+				CanBeEnabled=function(self,instance,Type)
+					Type = Type or self:GetType(instance)
+					if C.isCleared or not instance or not instance.Parent then
+						return false, Type
+					end
+					if C.enHacks.Basic_DisableTouchTransmitters=="Humanoids" and Type=="Humanoid" then
+						return true, Type
+					elseif C.enHacks.Basic_DisableTouchTransmitters=="Parts" and Type=="Part" then
+						return true, Type
+					elseif C.enHacks.Basic_DisableTouchTransmitters==true then
+						return true, Type
+					elseif not C.enHacks.Basic_DisableTouchTransmitters then
+						return false, Type
+					end
+				end,
+				UndoTransmitter=function(self,index)
+					local data = self.TouchTransmitters[index]
+					local object, parent, Type, TouchToggle = table.unpack(data or {})
+					if parent and parent.Parent and not self:CanBeEnabled(object,Type) then
+							--[[if typeof(parent)=="table" then
+								for num, connection in ipairs(parent) do
+									if connection.Function then
+										connection:Enable()
+									else
+										warn("Function Not Found! May not work!")
+									end
+								end
+							else--]]
+						parent.CanTouch = true--object.Parent = parent
+						if TouchToggle then
+							TouchToggle:Destroy()
+						end
+						parent:RemoveTag("TouchDisabled")
+						self.TouchTransmitters[index]=nil
+						self.GlobalTouchTransmitters[parent] = nil
+						--table.remove(self.TouchTransmitters,index)
+						--end
+					end
+				end,
+				UndoTransmitters=function(self,saveEn)
+					for index = #self.TouchTransmitters,1,-1 do --for parent, object in pairs(self.TouchTransmitters) do
+						if saveEn ~= C.enHacks.Basic_DisableTouchTransmitters and not C.isCleared then
+							return
+						end
+						self:UndoTransmitter(index)
+						if index%15==0 then
+							RunS.RenderStepped:Wait()
+						end
+					end
+				end,
+				RunOnDestroy=function(self)
+					self:UndoTransmitters()
+				end,
+				ApplyTransmitters=function(self,instance)
+					if instance:IsA("TouchTransmitter") and instance.Parent and instance.Parent.Parent then
+						local parent = instance.Parent
+						local canBeEn, Type = self:CanBeEnabled(instance)
+						if canBeEn and not parent:HasTag("TouchDisabled") then
+							local TouchToggle=C.Examples.ToggleTagEx:Clone()
+							local insertTbl = {instance,parent,Type,TouchToggle,{}}
+							table.insert(self.TouchTransmitters,insertTbl)
+
+							TouchToggle.Name = "TouchToggle"
+							TouchToggle.Parent=C.GUI
+							TouchToggle.Adornee=parent
+							TouchToggle.ExtentsOffsetWorldSpace = Vector3.new(0, 0, 0)
+							TouchToggle.Enabled = true
+							CS:AddTag(TouchToggle,"RemoveOnDestroy")
+							CS:AddTag(parent,"TouchDisabled")
+
+							if Type=="Part" then
+								if parent.CanCollide then
+									TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(0, 255, 238)
+								else
+									TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(80, 0, 255)
+								end
+								TouchToggle.Toggle.Text = "Activate"
+							else
+								TouchToggle.Toggle.Text = "Enable"
+								TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(0,170)
+							end
+							local saveCollide = parent.CanCollide or parent.Parent.Name=="FadingTiles"
+							local function clickfunction()
+								if Type=="Part" then
+									local HRP = C.char and C.char:FindFirstChild("HumanoidRootPart")
+									if not HRP then
+										return
+									end
+
+									local toTouch
+
+									if TouchToggle.Toggle.Text == "Activate" then
+										TouchToggle.Toggle.Text = "DeActivate"
+										TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(255,0,80)
+										toTouch = 0
+									else
+										TouchToggle.Toggle.Text = "Activate"
+										if saveCollide then
+											TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(0, 255, 238)
+										else
+											TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(80, 0, 255)
+										end
+										toTouch = 1
+									end
+
+
+									parent.CanTouch = true
+									RunS.RenderStepped:Wait()
+									--warn("RUNNING",parent,toTouch)
+									C.firetouchinterest(parent,HRP, toTouch)
+									RunS.RenderStepped:Wait()
+									task.wait(.5)
+
+									if TouchToggle.Parent then
+										parent.CanTouch = false
+									end
+
+									--[[firetouchinterest(parent,HRP, 1)
+									task.wait(1)
+									if TouchToggle.Parent then
+										parent.CanTouch = false
+									end--]]
+								else
+									if parent.CanTouch then
+										TouchToggle.Toggle.Text = "Enable"
+										TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(0,170)
+									else
+										TouchToggle.Toggle.Text = "Disable"
+										TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(170)
+									end
+									parent.CanTouch = not parent.CanTouch
+								end
+							end
+							table.insert(insertTbl[5],TouchToggle.Toggle.MouseButton1Up:Connect(clickfunction))
+							self.GlobalTouchTransmitters[parent] = clickfunction
+							if Type=="Part" then
+								--task.delay(Random.new():NextNumber(3,20),clickfunction)
+							end
+							--firetouchinterest(parent,HRP, toTouch)
+							table.insert(insertTbl[5],parent.AncestryChanged:Connect(function(child,newParent)
+								if not newParent then
+									task.wait(1)
+									local Key = table.find(self.TouchTransmitters,insertTbl)
+									if Key then
+										self.UndoTransmitter(Key)
+									end
+								else
+									TouchToggle.Adornee=workspace:IsAncestorOf(child) and parent or nil
+								end
+							end))
+							C.objectFuncts[parent]={Destroying = {parent.Destroying:Connect(function()
+								DS:AddItem(TouchToggle,1)--Delay it so that 1) no crashes and 2) no lag!
+							end)}}
+							parent.CanTouch = false
+							--instance:Destroy()
+							--end
+						end
+					end
+
+					local saveEn = C.enHacks.Basic_DisableTouchTransmitters
+					for num, location in ipairs(instance:GetChildren()) do
+						if saveEn ~= C.enHacks.Basic_DisableTouchTransmitters then
+							return
+						end
+						self:ApplyTransmitters(location)
+						if num%150==0 then
+							RunS.RenderStepped:Wait()
+						end
+					end
+				end,
+				ActivateFunction=function(self,newValue)
+					C.ClearFunctTbl(self.Functs)
+					self.UndoTransmitters(newValue)
+					if newValue then
+						self.Funct = workspace.DescendantAdded:Connect(function(descendant)
+							self:ApplyTransmitters(descendant)
+						end)
+						self:ApplyTransmitters(workspace)
+					end
+				end,
+				Events={
+					CharAdded=function(self,theirPlr,theirChar,firstRun)
+						local theirHRP = theirChar:WaitForChild("HumanoidRootPart",30)-- wait for it to be loaded!
+						if not theirHRP then
+							return
+						end
+						task.wait(.5)
+						if firstRun then
+							task.wait(5)
+							self:Activate(C.enHacks.Basic_DisableTouchTransmitters)
+						end
+					end,
+				},
+				Options = {
+					--[[{
+						Type = Types.Slider,
+						Title = "Raycast Update Time*",
+						Tooltip = "How often to update its visibility (PERFORMANCE)",
+						Layout = 0,Default=1,
+						Min=0,Max=3,Digits=1,
+						Shortcut="UpdateTime",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Raycast Distance",
+						Tooltip = "Highlights will not appear when a character's head can be directly seen from this distance (set to 0 to disable)",
+						Layout = 2,Default=100,
+						Min=0,Max=100,Digits=1,
+						Shortcut="Distance",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Ignore Invisible Walls",
+						Tooltip = "Whether or not the raycast goes through invisible walls",
+						Layout = 2,Default=true,
+						Shortcut="IgnoreInvisibleWalls",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Ignore Uncollidible Walls",
+						Tooltip = "Whether or not the raycast goes through uncollidible walls (walls that have CanCollide=false)",
+						Layout = 3,Default=true,
+						Shortcut="IgnoreUncollidibleWalls",
+					},--]]
 				}
 			},
 		}
