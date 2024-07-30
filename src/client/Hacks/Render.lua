@@ -152,7 +152,7 @@ return function(C,Settings)
 			{
 				Title = "ESP Touch Transmitters",
 				Tooltip = "Ability to toggle/activate touch transmitters",
-				Layout = 2,Default=true,
+				Layout = 2,Default=true,Deb=0,
 				Shortcut = "DisableTouchTransmitters", Instances = {}, Functs={},
 				TouchTransmitters={},
 				GlobalTouchTransmitters={},
@@ -169,42 +169,31 @@ return function(C,Settings)
 					if C.isCleared or not instance or not instance.Parent then
 						return false, Type
 					end
-					if C.enHacks.Basic_DisableTouchTransmitters=="Humanoids" and Type=="Humanoid" then
-						return true, Type
-					elseif C.enHacks.Basic_DisableTouchTransmitters=="Parts" and Type=="Part" then
-						return true, Type
-					elseif C.enHacks.Basic_DisableTouchTransmitters==true then
-						return true, Type
-					elseif not C.enHacks.Basic_DisableTouchTransmitters then
+					if not self.RealEnabled then
 						return false, Type
+					elseif self.RealEnabled=="Humanoids" and Type=="Humanoid" then
+						return true, Type
+					elseif self.RealEnabled=="Parts" and Type=="Part" then
+						return true, Type
+					else
+						return true, Type
 					end
 				end,
 				UndoTransmitter=function(self,index)
 					local data = self.TouchTransmitters[index]
 					local object, parent, Type, TouchToggle = table.unpack(data or {})
 					if parent and parent.Parent and not self:CanBeEnabled(object,Type) then
-							--[[if typeof(parent)=="table" then
-								for num, connection in ipairs(parent) do
-									if connection.Function then
-										connection:Enable()
-									else
-										warn("Function Not Found! May not work!")
-									end
-								end
-							else--]]
-						parent.CanTouch = true--object.Parent = parent
+						C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 						if TouchToggle then
 							TouchToggle:Destroy()
 						end
 						parent:RemoveTag("TouchDisabled")
 						self.TouchTransmitters[index]=nil
 						self.GlobalTouchTransmitters[parent] = nil
-						--table.remove(self.TouchTransmitters,index)
-						--end
 					end
 				end,
 				UndoTransmitters=function(self,saveEn)
-					for index = #self.TouchTransmitters,1,-1 do --for parent, object in pairs(self.TouchTransmitters) do
+					for index = #self.TouchTransmitters,1,-1 do
 						if saveEn ~= C.enHacks.Basic_DisableTouchTransmitters and not C.isCleared then
 							return
 						end
@@ -270,22 +259,16 @@ return function(C,Settings)
 									end
 
 
-									parent.CanTouch = true
+									C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 									RunS.RenderStepped:Wait()
-									--warn("RUNNING",parent,toTouch)
 									C.firetouchinterest(parent,HRP, toTouch)
 									RunS.RenderStepped:Wait()
 									task.wait(.5)
 
 									if TouchToggle.Parent then
-										parent.CanTouch = false
+										C.SetPartProperty(parent,"CanTouch","DisableTouchTransmitters",false)
 									end
 
-									--[[firetouchinterest(parent,HRP, 1)
-									task.wait(1)
-									if TouchToggle.Parent then
-										parent.CanTouch = false
-									end--]]
 								else
 									if parent.CanTouch then
 										TouchToggle.Toggle.Text = "Enable"
@@ -294,15 +277,15 @@ return function(C,Settings)
 										TouchToggle.Toggle.Text = "Disable"
 										TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(170)
 									end
-									parent.CanTouch = not parent.CanTouch
+									if parent.CanTouch then
+										C.SetPartProperty(parent,"CanTouch","DisableTouchTransmitters",false)
+									else
+										C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
+									end
 								end
 							end
 							table.insert(insertTbl[5],TouchToggle.Toggle.MouseButton1Up:Connect(clickfunction))
 							self.GlobalTouchTransmitters[parent] = clickfunction
-							if Type=="Part" then
-								--task.delay(Random.new():NextNumber(3,20),clickfunction)
-							end
-							--firetouchinterest(parent,HRP, toTouch)
 							table.insert(insertTbl[5],parent.AncestryChanged:Connect(function(child,newParent)
 								if not newParent then
 									task.wait(1)
@@ -314,18 +297,16 @@ return function(C,Settings)
 									TouchToggle.Adornee=workspace:IsAncestorOf(child) and parent or nil
 								end
 							end))
-							C.objectFuncts[parent]={Destroying = {parent.Destroying:Connect(function()
-								DS:AddItem(TouchToggle,1)--Delay it so that 1) no crashes and 2) no lag!
-							end)}}
-							parent.CanTouch = false
-							--instance:Destroy()
-							--end
+							C.AddObjectConnection(parent,"DisableTouchTransmitters",parent.Destroying:Connect(function()
+								DS:AddItem(TouchToggle,1)
+							end))
+							C.SetPartProperty(parent,"CanTouch","DisableTouchTransmitters",false)
 						end
 					end
 
-					local saveEn = C.enHacks.Basic_DisableTouchTransmitters
+					local saveEn = self.RealEnabled
 					for num, location in ipairs(instance:GetChildren()) do
-						if saveEn ~= C.enHacks.Basic_DisableTouchTransmitters then
+						if saveEn ~= self.RealEnabled then
 							return
 						end
 						self:ApplyTransmitters(location)
