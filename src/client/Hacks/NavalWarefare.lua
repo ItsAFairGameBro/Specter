@@ -171,7 +171,6 @@ return function(C,Settings)
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
 				Shoot = function(self,Target: BasePart)
-					C.RemoteEvent = RS.Event
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
@@ -218,7 +217,7 @@ return function(C,Settings)
 						local Time = actionClone:FindFirstChild("Time")
 						local saveChar = C.char
 						while Time and self.RealEnabled and C.char == saveChar and C.char.PrimaryPart and C.human and C.human.Health>0 do
-							local theirHead, dist = C.getClosest()
+							local theirHead, dist = C.getClosest(true)
 							if theirHead then
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,20,0))
 								Time.Text = theirHead.Parent.Name
@@ -228,11 +227,11 @@ return function(C,Settings)
 							end
 							RunS.RenderStepped:Wait()
 						end
-						print("Loop Ended!")
 					else
 						C.RemoveAction(Title)
 						if self.LastSpotted then
 							C.DoTeleport(self.LastSpotted)
+							self.LastSpotted = false
 						end
 					end
 				end,
@@ -245,7 +244,6 @@ return function(C,Settings)
 							end
 						end
 						C.DoActivate(self,self.Activate,self.RealEnabled)
-			
 					end,
 				}
 			},
