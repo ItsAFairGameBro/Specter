@@ -48,7 +48,10 @@ return function(C,Settings)
 	end
 	function C.DoActivate(self,funct,...)
 		self:ClearData()
-		funct(self,...)
+		local Thread = task.spawn(funct,self,...)
+		if self.Threads then
+			table.insert(self.Threads,Thread)
+		end
 	end
 	function C:ReloadStates()
 		for name, groupedTabData in pairs(C.hackData) do

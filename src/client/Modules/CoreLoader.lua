@@ -206,6 +206,11 @@ return function(C, _SETTINGS)
 					{BackgroundTransparency=hackData.Enabled and 0.3 or 1}):Play()
 			end
 			function hackData:ClearData()
+				if hackData.Threads then
+					for num, thread in ipairs(hackData.Threads) do
+						C.StopThread(thread)
+					end
+				end
 				if hackData.Instances then
 					for num, inst in ipairs(hackData.Instances) do
 						inst:Destroy()
@@ -242,9 +247,9 @@ return function(C, _SETTINGS)
 				end
 				enTbl.En = value
 				UpdateButtonColor()
-				if not value then
-					hackData:ClearData()
-				end
+				--if not value then
+				--	hackData:ClearData()
+				--end
 				if C.Cleared then
 					return
 				end
@@ -252,7 +257,7 @@ return function(C, _SETTINGS)
 					if started then
 						--task.delay(0.3,hackData.Activate,hackData,hackData.Enabled,started)
 					else
-						hackData:Activate(hackData.RealEnabled, started)
+						C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started)
 					end
 				end
 			end

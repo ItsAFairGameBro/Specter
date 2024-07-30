@@ -154,7 +154,7 @@ return function(C,Settings)
 				Tooltip = "Ability to toggle/activate touch transmitters",
 				Layout = 2,Default=true,Deb=0,
 				Shortcut = "DisableTouchTransmitters", Instances = {}, Functs={},
-				TouchTransmitters={},
+				TouchTransmitters={}, Threads = {},
 				GlobalTouchTransmitters={},
 				GetType=function(self,instance)
 					if instance.Parent.Parent.ClassName=="Model" and instance.Parent.Parent.Parent==workspace
