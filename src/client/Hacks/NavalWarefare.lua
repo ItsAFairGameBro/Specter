@@ -171,6 +171,7 @@ return function(C,Settings)
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
 				Shoot = function(self,Target: BasePart)
+					C.RemoteEvent = RS.Event
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
@@ -209,7 +210,7 @@ return function(C,Settings)
 					C.SetHumanoidTouch(newValue,"rifleLoopKill")
 					if newValue then
 						local actionClone = C.AddAction({Name=Title,Tags={"RemoveOnDestroy"},Stop=function(onRequest)
-							C.DoActivate(self,self.Activate,false)
+							self:SetValue(false)
 						end,})
 						if not self.LastSpotted and C.char and C.hrp then
 							self.LastSpotted = C.char:GetPivot()
