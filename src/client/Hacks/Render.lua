@@ -357,14 +357,14 @@ return function(C,Settings)
 						Shortcut="Humanoids",
 					},
 					{
-						Type = Types.Dropdown, Options = {"Activate","Enable"},
+						Type = Types.Dropdown, Selections = {"Activate","Enable"},
 						Title = "Click Mode",
 						Tooltip = "What happens when you click on a disabled object",
 						Layout = 2,Default="Activate",
 						Shortcut="ClickMode",
 					},
 					{
-						Type = Types.Dropdown, Options = {"Instant", "Forever"},
+						Type = Types.Dropdown, Selections = {"Instant", "Forever"},
 						Title = "Click Duration",
 						Tooltip = "How long the clicking lasts before it reverts to being disabled",
 						Layout = 3,Default="Instant",
