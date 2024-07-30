@@ -202,7 +202,9 @@ return function(C,Settings)
 				Layout = 3, Functs = {}, Threads = {},
 				Shortcut = "LoopKillEnemies",
 				Activate = function(self,newValue)
-					if not C.char then return end
+					if not C.char then
+						return
+					end
 					local Title = "Loop Kill Enemies"
 					if newValue then
 						local actionClone = C.AddAction({Name=Title,Tags={"RemoveOnDestroy"},Stop=function(onRequest)
