@@ -85,7 +85,6 @@ local function Static(C,Settings)
 	end
 	C.getgenv().isInGame = C.isInGame
 	C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
-	local BasesToLookFor = {"USDock","JapanDock","Island"}
 	C.Bases = {Dock={},Island={}}
 	C.Planes, C.Ships = {}, {}
 	local function newChild(instance)
@@ -94,7 +93,6 @@ local function Static(C,Settings)
 		end
 		local instData = C.DataStorage[instance.Name]
 		if instData then
-			--if instData.Type == "Base" then
 			local HitCode = instance:WaitForChild("HitCode")
 			local ID = instData.Base or instData.Type -- Dock or Island
 			local SelectTbl = C[instData.Type.."s"]
@@ -102,19 +100,14 @@ local function Static(C,Settings)
 				SelectTbl = SelectTbl[ID]
 			end
 			table.insert(SelectTbl,instance)
-			C.defaultFunction(ID .. "Added",{instance})
+			C.FireEvent(ID .. "Added",nil,instance)
 			C.objectFuncts[instance] = C.objectFuncts[instance] or {}
-			C.objectFuncts[instance]["Destroying"] = {instance.Destroying:Connect(function()
+			C.AddObjectConnection(instance,"NavalWarefareDestroying",instance.Destroying:Connect(function()
 				--Disconnect the event
-				local num = table.find(SelectTbl, instance)
-				if num then
-					table.remove(SelectTbl,num)
-				end
-				C.defaultFunction(ID .. "Removed",{instance})
+				C.TblRemove(SelectTbl,instance)
+				C.FireEvent(ID .. "Removed",nil,instance)
 				C.objectFuncts[instance] = nil
-			end)}
-			--end
-
+			end))
 		end
 	end
 	table.insert(C.functs,workspace.ChildAdded:Connect(newChild))

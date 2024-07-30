@@ -23,6 +23,7 @@ return function(C,Settings)
 	local function ShouldConnectEvent(name)
 		return Settings.ConnectAllEvents or C.events[name]~=nil
 	end
+	C.FireEvent = FireEvent
 	local function CharAdded(theirChar,wasAlreadyIn)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
 		local theirHuman = theirChar:WaitForChild("Humanoid")
