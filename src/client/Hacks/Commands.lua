@@ -602,7 +602,7 @@ return function(C,Settings)
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                     C.RemoveAction("fling")
-                    self.Parent.spectate:Run({{C.plr}})
+                    C.Spectate(C.plr.Character)
                 end
                 self.Enabled = enabled -- Toggle Events
                 self.Events.MyCharAdded(self,C.plr)
@@ -626,7 +626,7 @@ return function(C,Settings)
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 local theirPrim = theirChar and theirChar.PrimaryPart
                                 self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
-                                self.Parent.spectate:Run({{thisPlr}})
+                                C.Spectate(theirChar)
                                 if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
                                     break
                                 end

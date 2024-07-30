@@ -297,7 +297,61 @@ return function(C,Settings)
 						Shortcut="FFVisibility",
 					},
 				},
-			}
+			},
+			{
+				Title = "Projectile Hit",
+				Tooltip = "Instantly hits enemies when shooting bullets",
+				Layout = 4, Functs = {},
+				Shortcut = "ProjectileHit",
+				Activate = function(self,newValue)
+					if not C.char then
+						return
+					end
+					if newValue then
+						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
+							task.wait(.1)
+							if instance.Name == "bullet" and instance.Parent and UIS:IsKeyDown(Enum.KeyCode.F) then
+								local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
+								if closestBasePart then
+									if self.EnTbl.Spectate then
+										C.Spectate(closestBasePart.Parent)
+									end
+									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
+									for s = 0, 1, 1 do
+										C.firetouchinterest(instance,closestBasePart,0)
+										task.wait()
+										C.firetouchinterest(instance,closestBasePart,1)
+										task.wait()
+									end
+								end
+							end
+						end))
+					else
+						C.Spectate()
+					end
+				end,
+				Events = {
+					CharAdded = function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Spectate Users",
+						Tooltip = "Whether or not spectate who you are killing.",
+						Layout = 1,Default=true,
+						Shortcut="Spectate",
+					},
+					{
+						Type = Types.Dropdown, Selection = {"InGame","All"},
+						Title = "Target Users",
+						Tooltip = "Who on the enemy team to target.",
+						Layout = 2,Default="All",
+						Shortcut="Target",
+					},
+				},
+			},
 		}
 	}
 end
