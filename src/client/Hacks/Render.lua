@@ -334,13 +334,13 @@ return function(C,Settings)
 						end
 					end
 				end,
-				ActivateFunction=function(self,newValue)
+				Activate=function(self,newValue)
 					C.ClearFunctTbl(self.Functs)
 					self.UndoTransmitters(newValue)
 					if newValue then
-						self.Funct = workspace.DescendantAdded:Connect(function(descendant)
+						table.insert(self.Functs,workspace.DescendantAdded:Connect(function(descendant)
 							self:ApplyTransmitters(descendant)
-						end)
+						end))
 						self:ApplyTransmitters(workspace)
 					end
 				end,
