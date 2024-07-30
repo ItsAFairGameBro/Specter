@@ -344,7 +344,7 @@ return function(C,Settings)
 						Shortcut="Spectate",
 					},
 					{
-						Type = Types.Dropdown, Selection = {"InGame","All"},
+						Type = Types.Dropdown, Selections = {"InGame","All"},
 						Title = "Target Users",
 						Tooltip = "Who on the enemy team to target.",
 						Layout = 2,Default="All",
