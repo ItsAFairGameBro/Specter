@@ -641,8 +641,8 @@ return function(C,Settings)
                                     else
                                         Target = SeatPart.Parent:GetPivot()
                                     end
-                                    if Target.Y < workspace.FallenPartsDestroyHeight + 5 then
-                                        Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 5,0)
+                                    if Target.Y < workspace.FallenPartsDestroyHeight + 12 then
+                                        Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 12,0)
                                     end
                                     C.hrp:PivotTo(Target)
                                 end
