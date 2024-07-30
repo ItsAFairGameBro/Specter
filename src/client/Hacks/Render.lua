@@ -353,7 +353,7 @@ return function(C,Settings)
 						task.wait(.5)
 						if firstRun then
 							task.wait(5)
-							self:Activate(C.enHacks.Basic_DisableTouchTransmitters)
+							self:Activate(self.RealEnabled)
 						end
 					end,
 				},
