@@ -221,7 +221,7 @@ return function(C,Settings)
 							if theirHead then
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,100,0))
 								Time.Text = theirHead.Parent.Name
-								self.Parent[2].Tab:Shoot(theirHead.Parent)
+								self.Parent.Tab[2]:Shoot(theirHead.Parent)
 							else
 								Time.Text = "(Waiting)"
 							end
