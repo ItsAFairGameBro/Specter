@@ -30,14 +30,8 @@ return function(C,Settings)
 					local newInput = nil
 					C.LastLoc = C.char:GetPivot() -- Inital Starting Position
 					self.BlockTeleports = true or (not C.isInGame or C.isInGame(C.char))
-					local function CanRun()
-						return C.char and CenterPart and C.enHacks.Blatant_TeleportBack
-					end
-					table.insert(self.Threads,task.spawn(function()
-						while CanRun() do
-							C.LastLoc = C.char:GetPivot()
-							RunS.RenderStepped:Wait()
-						end
+					table.insert(self.Functs,RunS.RenderStepped:Connect(function()
+						C.LastLoc = C.char:GetPivot()
 					end))
 					local function TeleportDetected()
 						newInput = C.char:GetPivot()
