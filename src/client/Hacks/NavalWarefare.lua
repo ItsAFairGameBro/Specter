@@ -33,7 +33,7 @@ return function(C,Settings)
 					if newValue then
 						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObject,gameProcessed)
 							if inputObject.KeyCode == Enum.KeyCode.F then
-								while UIS:IsKeyDown(Enum.KeyCode.F) and C.enHacks.Blatant_NavalAutoAim do
+								while UIS:IsKeyDown(Enum.KeyCode.F) and self.RealEnabled do
 									local u = C.getClosest()
 									if u then
 										local v = u.Parent:FindFirstChild("HumanoidRootPart")
