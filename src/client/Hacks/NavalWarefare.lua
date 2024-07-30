@@ -166,9 +166,34 @@ return function(C,Settings)
 				end,
 			},
 			{
+				Title = "Rifle Kill Aura",
+				Tooltip = "Uses rifle to loop kill nearby enemies.\nPlease note that people know who killed them",
+				Layout = 2, Functs = {}, Threads = {},
+				Shortcut = "KillAura",
+				Activate = function(self,newValue)
+					local Tool = C.char:FindFirstChildWhichIsA("Tool")
+					while self.RealEnabled do
+						local Target, Distance = C.getClosest()
+						if Target and Distance <= 450 then
+							C.RemoteEvent:FireServer("shootRifle","",{Target}) 
+							C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
+						end
+						RunS.RenderStepped:Wait()
+						while not Tool or not Tool:IsA("Tool") or not Tool.Parent or not Tool.Parent.Parent do
+							Tool = C.char.ChildAdded:Wait() -- Wait for new tool!
+						end
+					end
+				end,
+				Events = {
+					CharAdded = function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+				}
+			},
+			{
 				Title = "Loop Kill Enemies",
 				Tooltip = "Uses rifle to loop kill enemies.\nPlease note that people know who killed them",
-				Layout = 2, Functs = {}, Threads = {},
+				Layout = 3, Functs = {}, Threads = {},
 				Shortcut = "LoopKillEnemies",
 				Activate = function(self,newValue)
 					if not C.char then return end
