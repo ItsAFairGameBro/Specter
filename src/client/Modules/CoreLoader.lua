@@ -209,7 +209,7 @@ return function(C, _SETTINGS)
 				if hackData.Threads then
 					for num, thread in ipairs(hackData.Threads) do
 						C.StopThread(thread)
-					end
+					end hackData.Threads = {}
 				end
 				if hackData.Instances then
 					for num, inst in ipairs(hackData.Instances) do
@@ -247,9 +247,6 @@ return function(C, _SETTINGS)
 				end
 				enTbl.En = value
 				UpdateButtonColor()
-				--if not value then
-				--	hackData:ClearData()
-				--end
 				if C.Cleared then
 					return
 				end

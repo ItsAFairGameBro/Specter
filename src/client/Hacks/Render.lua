@@ -171,9 +171,9 @@ return function(C,Settings)
 					end
 					if not self.RealEnabled then
 						return false, Type
-					elseif self.RealEnabled=="Humanoids" and Type=="Humanoid" then
+					elseif self.EnTbl.Humanoids and Type=="Humanoid" then
 						return true, Type
-					elseif self.RealEnabled=="Parts" and Type=="Part" then
+					elseif self.EnTbl.Parts and Type=="Part" then
 						return true, Type
 					else
 						return true, Type
@@ -236,7 +236,7 @@ return function(C,Settings)
 							end
 							local saveCollide = parent.CanCollide or parent.Parent.Name=="FadingTiles"
 							local function clickfunction()
-								if Type=="Part" then
+								if self.EnTbl.ClickMode == "Activate" then
 									local HRP = C.char and C.char:FindFirstChild("HumanoidRootPart")
 									if not HRP then
 										return
@@ -282,6 +282,9 @@ return function(C,Settings)
 									else
 										C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 									end
+								end
+								if self.EnTbl.ClickDuration ~= "Forever" then
+									table.insert(self.Threads,task.delay(tonumber(self.EnTbl.ClickDuration) or 0, clickfunction))
 								end
 							end
 							table.insert(insertTbl[5],TouchToggle.Toggle.MouseButton1Up:Connect(clickfunction))
@@ -339,6 +342,34 @@ return function(C,Settings)
 					end,
 				},
 				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Humanoids",
+						Tooltip = "Whether or not parts that are humanoids are affected",
+						Layout = 0,Default=false,
+						Shortcut="Humanoids",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Parts",
+						Tooltip = "Whether or not regular parts are affected",
+						Layout = 1,Default=true,
+						Shortcut="Humanoids",
+					},
+					{
+						Type = Types.Dropdown, Options = {"Activate","Enable"},
+						Title = "Click Mode",
+						Tooltip = "What happens when you click on a disabled object",
+						Layout = 2,Default="Activate",
+						Shortcut="ClickMode",
+					},
+					{
+						Type = Types.Dropdown, Options = {"Instant", "Forever"},
+						Title = "Click Duration",
+						Tooltip = "How long the clicking lasts before it reverts to being disabled",
+						Layout = 3,Default="Instant",
+						Shortcut="ClickDuration",
+					},
 					--[[{
 						Type = Types.Slider,
 						Title = "Raycast Update Time*",
