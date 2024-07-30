@@ -35,7 +35,7 @@ return function(C,Settings)
             AfterTxt="%s",
             RequiresRefresh=true,
             Run=function(self,args)
-                workspace.CurrentCamera.CameraSubject = args[1][1].Character.Humanoid
+                C.Spectate(args[1][1].Character)
                 return true,"Successful"
             end,
         },

@@ -227,12 +227,14 @@ return function(C,Settings)
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,20,0))
 								Time.Text = theirHead.Parent.Name
 								self.Parent.Tab[2]:Shoot(theirHead)
+								C.Spectate(theirHead.Parent)
 							else
 								Time.Text = "(Waiting)"
 							end
 							RunS.RenderStepped:Wait()
 						end
 					else
+						C.Spectate()
 						C.RemoveAction(Title)
 						if self.LastSpotted then
 							C.DoTeleport(self.LastSpotted)
@@ -290,8 +292,8 @@ return function(C,Settings)
 					{
 						Type = Types.Toggle,
 						Title = "Forcefield Visibility",
-						Tooltip = "Whether or not you can see your own forcefield. Enable for better visiblity.",
-						Layout = 1,Default=true,
+						Tooltip = "Whether or not you can see your own forcefield. Disable for better visiblity.",
+						Layout = 1,Default=false,
 						Shortcut="FFVisibility",
 					},
 				},

@@ -407,6 +407,11 @@ return function(C,Settings)
 		end
 	end
 
+	-- Spectate
+	function C.Spectate(theirChar: Model)
+		workspace.CurrentCamera.CameraSubject = theirChar:FindFirstChild("Humanoid") or C.human
+	end
+
 	-- Disable Humanoid Parts
 	function C.SetHumanoidTouch(enabled,reason)
 		for num, basePart in ipairs(C.char:GetDescendants()) do
