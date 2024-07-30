@@ -17,6 +17,20 @@ return function(C,Settings)
 		},
 		Tab = {
 			{
+				Title = "AutoTeleportBack",
+				Tooltip = "Teleports back when inside of the game",
+				Layout = 0,
+				Shortcut = "AutoTeleportBack",Functs={},Instances={},Default=true,
+				Activate = function(self,newValue)
+					
+				end,
+				Events = {
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+				},
+			},
+			{
 				Title = "Fly",
 				Tooltip = "Allows you to fly on enable",
 				Layout = 1,
@@ -167,7 +181,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self,self.Activate,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				},
 				Options = {
@@ -262,7 +276,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self,self.Activate,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				},
 				Options = {
@@ -340,7 +354,7 @@ return function(C,Settings)
 				Shortcut = "Walkspeed",Functs={},
 				SetProperty = function(self)
 					if C.human then
-						C.human.WalkSpeed = self.EnTbl.En and self.EnTbl.Speed or C.Defaults.WalkSpeed
+						C.human.WalkSpeed = self.RealEnabled and self.EnTbl.Speed or C.Defaults.WalkSpeed
 					end
 				end,
 				Activate = function(self,newValue)
@@ -354,7 +368,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self,self.Activate,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				},
 				Options = {
@@ -384,7 +398,7 @@ return function(C,Settings)
 				Shortcut = "JumpPower",Functs={},
 				SetProperty = function(self)
 					if C.human then
-						C.human.JumpPower = self.EnTbl.En and self.EnTbl.Jump or C.Defaults.JumpPower
+						C.human.JumpPower = self.RealEnabled and self.EnTbl.Jump or C.Defaults.JumpPower
 					end
 				end,
 				Activate = function(self,newValue)
@@ -398,7 +412,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self,self.Activate,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				},
 				Options = {
@@ -427,7 +441,7 @@ return function(C,Settings)
 				Layout = 99,
 				Shortcut = "Gravity",Functs={},
 				SetProperty = function(self)
-					workspace.Gravity = self.EnTbl.En and self.EnTbl.Gravity or C.Defaults.Gravity
+					workspace.Gravity = self.RealEnabled and self.EnTbl.Gravity or C.Defaults.Gravity
 				end,
 				Activate = function(self,newValue)
 					if self.EnTbl.Override then

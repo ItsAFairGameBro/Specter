@@ -60,7 +60,7 @@ return function(C,Settings)
                 Functs={},
 				Events = {
                     MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						C.DoActivate(self,self.Activate,self.EnTbl.En)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				}
 			},

@@ -48,7 +48,7 @@ return function(C,Settings)
 					end
 				end,
 				Activate = function(self,newValue)
-					if self.EnTbl.En then
+					if self.RealEnabled then
 						self:Set(self.EnTbl.Username,self.EnTbl.DisplayName)
 						table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)
 							self:DescendantAdded(child)

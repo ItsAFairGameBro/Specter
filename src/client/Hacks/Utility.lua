@@ -1,5 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
+local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local VU = game:GetService("VirtualUser")
@@ -73,11 +74,18 @@ return function(C,Settings)
 				Shortcut = "ClientImprovement",Functs={},Default=true,
 				SetAutoJump = function(self)
 					if C.human then
-						C.human.AutoJumpEnabled = (not self.EnTbl.En or not self.EnTbl.PreventAutoJump) and UIS.TouchEnabled and C.Defaults.AutoJumpEnabled
+						C.human.AutoJumpEnabled = (not self.RealEnabled or not self.EnTbl.PreventAutoJump) and UIS.TouchEnabled and C.Defaults.AutoJumpEnabled
 					end
 				end,
-				Activate = function(self,newValue)
-					local EnTbl = self.EnTbl.En and self.EnTbl or {}
+				Activate = function(self,newValue,firstRun)
+					local EnTbl = self.RealEnabled and self.EnTbl or {}
+					--Fix Keyboard
+					if EnTbl.FixKeyboard then
+						local tb = Instance.new("TextBox")
+						tb:AddTag("RemoveOnDestroy")
+						tb:CaptureFocus()
+						DS:AddItem(tb,0)
+					end
 					--Lock Camera Orientation
 					local function UpdateCamera()
 						local Camera = workspace.CurrentCamera
@@ -128,7 +136,7 @@ return function(C,Settings)
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						self:SetAutoJump()
-						--C.DoActivate(self,self.Activate,self.EnTbl.En)
+						--C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
 				},
 				Options = {
@@ -154,6 +162,14 @@ return function(C,Settings)
 						Tooltip = "Prevents the character from jumping when an object is near",
 						Layout = 1,Default=true,
 						Shortcut="PreventAutoJump",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Fix Keyboard",
+						Tooltip = "Fixes the keyboard so that you can move when you first join",
+						Layout = 0,Default=true,
+						Shortcut="FixKeyboard",
 						Activate = C.ReloadHack,
 					},
 				},

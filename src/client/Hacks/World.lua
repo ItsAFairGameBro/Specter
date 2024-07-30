@@ -95,7 +95,7 @@ return function(C,Settings)
 				end,
                 Events = {
                     OthersPlayerAdded=function(self,theirPlr,firstRun)
-                        if not self.EnTbl.En or firstRun then return end
+                        if not self.RealEnabled or firstRun then return end
 						self:AddToChat(theirPlr)
 					end,
                 },Functs={},
