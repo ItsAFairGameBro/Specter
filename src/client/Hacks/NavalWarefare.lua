@@ -308,22 +308,35 @@ return function(C,Settings)
 						return
 					end
 					if newValue then
-						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
-							task.wait(.1)
-							if instance.Name == "bullet" and instance.Parent and UIS:IsKeyDown(Enum.KeyCode.F) then
-								local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
-								if closestBasePart then
-									if self.EnTbl.Spectate then
-										C.Spectate(closestBasePart.Parent)
+						table.insert(self.Fucnts,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
+							if inputObj.KeyCode == Enum.KeyCode.F then
+								table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
+									task.wait(.1)
+									if instance.Name == "bullet" and instance.Parent then
+										local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
+										if closestBasePart then
+											if self.EnTbl.Spectate then
+												C.Spectate(closestBasePart.Parent)
+											end
+											--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
+											for s = 0, 1, 1 do
+												C.firetouchinterest(instance,closestBasePart,0)
+												task.wait()
+												C.firetouchinterest(instance,closestBasePart,1)
+												task.wait()
+											end
+										end
 									end
-									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
-									for s = 0, 1, 1 do
-										C.firetouchinterest(instance,closestBasePart,0)
-										task.wait()
-										C.firetouchinterest(instance,closestBasePart,1)
-										task.wait()
-									end
+								end))	
+							end
+						end))
+						table.insert(self.Fucnts,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
+							if inputObj.KeyCode == Enum.KeyCode.F then
+								if self.Functs[3] then
+									self.Functs[3]:Disconnect()
+									table.insert(self.Functs,3)
 								end
+								C.Spectate(	
 							end
 						end))
 					else
