@@ -170,7 +170,7 @@ return function(C,Settings)
 				Tooltip = "Uses rifle to loop kill nearby enemies.\nPlease note that people know who killed them",
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
-				Shoot = function(self,Target: Model)
+				Shoot = function(self,Target: BasePart)
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
@@ -208,7 +208,7 @@ return function(C,Settings)
 					local Title = "Loop Kill Enemies"
 					if newValue then
 						local actionClone = C.AddAction({Name=Title,Tags={"RemoveOnDestroy"},Stop=function(onRequest)
-							self:SetValue(false)
+							C.DoActivate(self,self.Activate,false)
 						end,})
 						if not actionClone then
 							return
@@ -227,8 +227,8 @@ return function(C,Settings)
 							else
 								Time.Text = "(Waiting)"
 							end
-							--C.char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
-							--C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
+							C.hrp.AssemblyLinearVelocity = Vector3.new()
+							C.hrp.AssemblyAngularVelocity = Vector3.new()
 							RunS.RenderStepped:Wait()
 						end
 					else
