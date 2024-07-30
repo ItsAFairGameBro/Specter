@@ -171,6 +171,9 @@ return function(C,Settings)
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
 				Shoot = function(self,Target: BasePart)
+					if C.char and not C.char:FindFirstChild("InGame") then
+						C.RemoteEvent:FireServer("Teleport",{"Harbour",""})
+					end
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
@@ -217,7 +220,7 @@ return function(C,Settings)
 						local Time = actionClone:FindFirstChild("Time")
 						local saveChar = C.char
 						while Time and self.RealEnabled and C.char == saveChar and C.char.PrimaryPart and C.human and C.human.Health>0 do
-							local theirHead, dist = C.getClosest(true)
+							local theirHead, dist = C.getClosest()
 							if theirHead then
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,20,0))
 								Time.Text = theirHead.Parent.Name
