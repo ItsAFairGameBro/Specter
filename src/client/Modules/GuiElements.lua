@@ -127,6 +127,19 @@ local ChatAutoComplete = Instance.new("ScrollingFrame")
 local AutoCompleteEx = Instance.new("Frame")
 local AutoCompleteTitleLabel = Instance.new("TextLabel")
 local UIListLayout_8 = Instance.new("UIListLayout")
+local Actions = Instance.new("CanvasGroup")
+local HeaderTab_3 = Instance.new("Frame")
+local HeaderTitleLabel_3 = Instance.new("TextLabel")
+local DropDownButton_2 = Instance.new("ImageButton")
+local Text_3 = Instance.new("TextLabel")
+local Image_4 = Instance.new("ImageLabel")
+local ScrollTab_3 = Instance.new("ScrollingFrame")
+local UIListLayout_9 = Instance.new("UIListLayout")
+local ActionsEx = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local StopButton = Instance.new("TextButton")
+local Time = Instance.new("TextLabel")
+local UIGradient_6 = Instance.new("UIGradient")
 
 --Properties:
 
@@ -1427,6 +1440,175 @@ AutoCompleteTitleLabel.TextWrapped = true
 UIListLayout_8.Parent = ChatAutoComplete
 UIListLayout_8.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIListLayout_8.SortOrder = Enum.SortOrder.LayoutOrder
+
+Actions.Name = "Actions"
+Actions.Parent = SpecterGUI
+C.UI.Actions = Actions
+Actions.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+Actions.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Actions.BorderSizePixel = 0
+Actions.LayoutOrder = -14
+Actions.Position = UDim2.new(1, 0, 1, 0)
+Actions.Size = UDim2.new(0, 230, 0, 200)
+Actions.ZIndex = -50
+
+HeaderTab_3.Name = "HeaderTab"
+HeaderTab_3.Parent = Actions
+HeaderTab_3.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+HeaderTab_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+HeaderTab_3.BorderSizePixel = 0
+HeaderTab_3.LayoutOrder = -13
+HeaderTab_3.Size = UDim2.new(1, 0, 0, 30)
+HeaderTab_3.ZIndex = -49
+
+HeaderTitleLabel_3.Name = "HeaderTitleLabel"
+HeaderTitleLabel_3.Parent = HeaderTab_3
+HeaderTitleLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+HeaderTitleLabel_3.BackgroundTransparency = 1.000
+HeaderTitleLabel_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+HeaderTitleLabel_3.BorderSizePixel = 0
+HeaderTitleLabel_3.LayoutOrder = -12
+HeaderTitleLabel_3.Size = UDim2.new(0.600000024, 0, 1, 0)
+HeaderTitleLabel_3.Visible = false
+HeaderTitleLabel_3.ZIndex = -47
+HeaderTitleLabel_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+HeaderTitleLabel_3.Text = " SPECTER"
+HeaderTitleLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+HeaderTitleLabel_3.TextScaled = true
+HeaderTitleLabel_3.TextSize = 14.000
+HeaderTitleLabel_3.TextStrokeTransparency = 0.000
+HeaderTitleLabel_3.TextWrapped = true
+HeaderTitleLabel_3.TextXAlignment = Enum.TextXAlignment.Left
+
+DropDownButton_2.Name = "DropDownButton"
+DropDownButton_2.Parent = HeaderTab_3
+DropDownButton_2.AnchorPoint = Vector2.new(1, 0.5)
+DropDownButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+DropDownButton_2.BackgroundTransparency = 1.000
+DropDownButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+DropDownButton_2.BorderSizePixel = 0
+DropDownButton_2.LayoutOrder = -12
+DropDownButton_2.Position = UDim2.new(0.980000019, 0, 0.5, 0)
+DropDownButton_2.Size = UDim2.new(0.200000003, 0, 0.5, 0)
+DropDownButton_2.ZIndex = -47
+DropDownButton_2.Image = "rbxassetid://14569017448"
+DropDownButton_2.ScaleType = Enum.ScaleType.Fit
+
+Text_3.Name = "Text"
+Text_3.Parent = HeaderTab_3
+Text_3.AnchorPoint = Vector2.new(0, 0.5)
+Text_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Text_3.BackgroundTransparency = 1.000
+Text_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Text_3.BorderSizePixel = 0
+Text_3.LayoutOrder = -12
+Text_3.Position = UDim2.new(0.150000036, 0, 0.5, 0)
+Text_3.Size = UDim2.new(0.629999995, 0, 1, 0)
+Text_3.ZIndex = -47
+Text_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+Text_3.Text = " Actions"
+Text_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text_3.TextScaled = true
+Text_3.TextSize = 14.000
+Text_3.TextWrapped = true
+Text_3.TextXAlignment = Enum.TextXAlignment.Left
+
+Image_4.Name = "Image"
+Image_4.Parent = HeaderTab_3
+Image_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Image_4.BackgroundTransparency = 1.000
+Image_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Image_4.BorderSizePixel = 0
+Image_4.LayoutOrder = -12
+Image_4.Size = UDim2.new(0.150000006, 0, 1, 0)
+Image_4.ZIndex = -47
+Image_4.Image = "rbxassetid://8068133"
+Image_4.ScaleType = Enum.ScaleType.Fit
+
+ScrollTab_3.Name = "ScrollTab"
+ScrollTab_3.Parent = Actions
+ScrollTab_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ScrollTab_3.BackgroundTransparency = 1.000
+ScrollTab_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ScrollTab_3.BorderSizePixel = 0
+ScrollTab_3.LayoutOrder = -13
+ScrollTab_3.Position = UDim2.new(0, 0, 0, 30)
+ScrollTab_3.Size = UDim2.new(1, 0, 0, 300)
+ScrollTab_3.ZIndex = -49
+ScrollTab_3.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollTab_3.BottomImage = "rbxassetid://3062505976"
+ScrollTab_3.CanvasSize = UDim2.new(0, 0, 0, 0)
+ScrollTab_3.MidImage = "rbxassetid://3062506202"
+ScrollTab_3.TopImage = "rbxassetid://3062506445"
+ScrollTab_3.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+
+UIListLayout_9.Parent = ScrollTab_3
+UIListLayout_9.SortOrder = Enum.SortOrder.LayoutOrder
+
+ActionsEx.Name = "ActionsEx"
+ActionsEx:AddTag("RemoveOnDestroy")
+C.Examples.ActionsEx = ActionsEx
+ActionsEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ActionsEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ActionsEx.BorderSizePixel = 0
+ActionsEx.Size = UDim2.new(1, 0, 0, 40)
+ActionsEx.ZIndex = -47
+
+Title.Name = "Title"
+Title.Parent = ActionsEx
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 0
+Title.Size = UDim2.new(0.699999988, 0, 0.5, 0)
+Title.ZIndex = -45
+Title.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+Title.Text = "HACKING COMPUTER 5"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextScaled = true
+Title.TextSize = 14.000
+Title.TextStrokeTransparency = 0.000
+Title.TextWrapped = true
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+StopButton.Name = "StopButton"
+StopButton.Parent = ActionsEx
+StopButton.AnchorPoint = Vector2.new(1, 1)
+StopButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+StopButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+StopButton.BorderSizePixel = 0
+StopButton.Position = UDim2.new(1, 0, 1, 0)
+StopButton.Size = UDim2.new(0.286956519, 0, 0.5, 0)
+StopButton.ZIndex = -45
+StopButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+StopButton.Text = "CANCEL"
+StopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+StopButton.TextScaled = true
+StopButton.TextSize = 14.000
+StopButton.TextStrokeTransparency = 0.000
+StopButton.TextWrapped = true
+
+Time.Name = "Time"
+Time.Parent = ActionsEx
+Time.AnchorPoint = Vector2.new(0, 1)
+Time.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Time.BackgroundTransparency = 1.000
+Time.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Time.BorderSizePixel = 0
+Time.Position = UDim2.new(-0, 0, 1, 0)
+Time.Size = UDim2.new(0.713, -1, 0.5, 0)
+Time.ZIndex = -45
+Time.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+Time.Text = "34 m, 24 s"
+Time.TextColor3 = Color3.fromRGB(255, 255, 255)
+Time.TextScaled = true
+Time.TextSize = 14.000
+Time.TextStrokeTransparency = 0.000
+Time.TextWrapped = true
+Time.TextXAlignment = Enum.TextXAlignment.Left
+
+UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(140, 140, 140)), ColorSequenceKeypoint.new(0.96, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(39, 39, 39))}
+UIGradient_6.Parent = ActionsEx
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 
@@ -1743,6 +1925,103 @@ return function(C, Settings)
 		end)
 	end
 
+	-- Set up actions
+
+	local ActionsFrame = C.UI.Actions
+	local ActionsList = ActionsFrame:WaitForChild("ScrollTab")
+
+	C.getgenv().ActionsList = C.getgenv().ActionsList or {}
+	
+	function C.AddAction(info)
+		if ActionsList:FindFirstChild(info.Name) then
+			return
+		end
+		info.Tags = info.Tags or {}
+		local ActionClone = C.Examples.ActionsEx:Clone()
+		ActionClone.Name = info.Name
+		ActionClone.Title.Text = (info.Title or info.Name):gsub("/"," "):gsub("_"," "):gsub("%l%u",function(old) return old:sub(1,1) .. " " .. old:sub(2) end)
+		ActionClone.Visible = true
+		local StopEvent = Instance.new("BindableEvent",ActionClone)
+		StopEvent.Name = "StopEvent"
+		StopEvent.Event:Connect(function(onRequest)
+			StopEvent:Destroy()
+			if info.Stop then
+				info.Stop(onRequest)
+			end
+			info.Enabled = false
+			ActionsFrame.Visible = #ActionsList:GetChildren()-1 > 2 -- If there's something else apart from UIListLayout and the deleted instance!
+			ActionClone:Destroy()
+		end)
+		ActionClone.StopButton.MouseButton1Click:Connect(function()
+			StopEvent:Fire(true)
+		end)
+		C.getgenv().ActionsList[info.Name] = info
+		ActionClone.Parent = ActionsList
+		if info.Time then
+			if typeof(info.Time) == "number" then
+				task.spawn(function()
+					for s = info.Time, 1, -1 do
+						if not ActionClone.Parent then
+							return
+						end
+						ActionClone.Time.Text = s
+						task.wait(1)
+					end
+					if StopEvent.Parent then
+						StopEvent:Fire()
+					end
+				end)
+			else
+				task.spawn(info.Time,ActionClone,info)
+			end
+		else
+			--Probably utilized elsewhere!
+		end
+		info.Enabled = true
+		ActionsFrame.Visible = true
+		return ActionClone
+	end
+	
+	function C.GetAction(name)
+		local actionInstance = ActionsList:FindFirstChild(name)
+		if actionInstance then
+			return actionInstance
+		end
+	end
+	
+	function C.RemoveAction(name)
+		local actionInstance = ActionsList:FindFirstChild(name)
+		if actionInstance then
+			local event = actionInstance:FindFirstChild("StopEvent")
+			if event then
+				event:Fire()
+			end
+		end
+		if C.getgenv().ActionsList[name] then
+			C.getgenv().ActionsList[name] = nil
+		end
+	end
+	
+	function C.GetActionsWithTag(tagName:string)
+		local Items = {}
+		for name, data in pairs(C.getgenv().ActionsList) do
+			if table.find(data.Tags,tagName) then
+				C.RemoveAction(name)
+				Items[name] = data
+			end
+		end
+		return Items
+	end
+	
+	function C.PurgeActionsWithTag(tagName:string)
+		for name, data in pairs(C.GetActionsWithTag(tagName)) do
+			C.RemoveAction(name)
+		end
+	end
+
+	for name, actionData in pairs(C.getgenv().ActionsList) do
+		C.AddAction(actionData)
+	end
 	
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("HackOptions")
@@ -1751,4 +2030,7 @@ return function(C, Settings)
 	C.UI.TabsFrame = TabsFrame
 	
 	C.GUI = SpecterGUI
+
+	ActionsFrame.Position = UDim2.fromOffset(C.GUI.AbsoluteSize.X * 3, C.GUI.AbsoluteSize.Y * 3)
+	C.MakeDraggableTab(ActionsFrame, true)
 end

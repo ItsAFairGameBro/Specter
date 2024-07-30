@@ -587,6 +587,7 @@ return function(C,Settings)
             AfterTxt="%s",
             FlingThread=nil,
             OldLoc=nil,
+            ActionFrame=nil,
             SetFling=function(self,enabled,speed)
                 RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
                 if enabled then
@@ -597,8 +598,14 @@ return function(C,Settings)
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
+                    self.ActionFrame = C.AddAction({Title="fling",Name="Flinging..",Tags={"RemoveOnDestroy"},Time=function(ActionClone,info)
+                        ActionClone.Time.Text = "Loading.."
+                    end,Stop=function(onRequest)
+                        self.Parent.unfling:Run()
+                    end,})
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
+                    C.RemoveAction("fling")
                 end
                 self.Enabled = enabled -- Toggle Events
                 self.Events.MyCharAdded(self,C.plr)
@@ -618,6 +625,7 @@ return function(C,Settings)
                                 local theirChar = thisPlr.Character
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 local theirPrim = theirChar and theirChar.PrimaryPart
+                                self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
                                 if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
                                     break
                                 end
