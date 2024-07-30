@@ -224,8 +224,6 @@ return function(C,Settings)
 							else
 								Time.Text = "(Waiting)"
 							end
-							C.hrp.AssemblyLinearVelocity = Vector3.new()
-							C.hrp.AssemblyAngularVelocity = Vector3.new()
 							RunS.RenderStepped:Wait()
 						end
 						print("Loop Ended!")
