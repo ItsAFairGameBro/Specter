@@ -29,7 +29,7 @@ return function(C,Settings)
 						or (C.human.RigType == Enum.HumanoidRigType.R6 and C.char:WaitForChild("Torso",2)) or C.char:WaitForChild("HumanoidRootPart")
 					local newInput = nil
 					C.LastLoc = C.char:GetPivot() -- Inital Starting Position
-					C.AvailableHacks.Blatant[5].BlockTeleports = false and (C.isInGame and C.isInGame(C.char))
+					self.BlockTeleports = false and (C.isInGame and C.isInGame(C.char))
 					local function CanRun()
 						return C.char and CenterPart and C.enHacks.Blatant_TeleportBack
 					end
@@ -41,7 +41,7 @@ return function(C,Settings)
 					end))
 					local function TeleportDetected()
 						newInput = C.char:GetPivot()
-						if C.AvailableHacks.Blatant[5].BlockTeleports then
+						if self.BlockTeleports then
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 16 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
@@ -53,7 +53,7 @@ return function(C,Settings)
 					end
 					local function AddToCFrameDetection(part)
 						table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
-						--table.insert(C.AvailableHacks.Blatant[5].Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
+						--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
 					end
 					for num, part in ipairs(C.char:GetChildren()) do
 						if part:IsA("BasePart") then--and part.Name == "Head" then
