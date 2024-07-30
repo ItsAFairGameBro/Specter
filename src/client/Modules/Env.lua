@@ -100,7 +100,7 @@ return function(C,Settings)
 		if plr == C.plr then
 			return false
 		end
-		local NoTargetFriends = C.enHacks.Friends.NoTargetFriends
+		local NoTargetFriends = C.enHacks.Users.NoTargetFriends
 		if not NoTargetFriends.En then
 			return true,"e"
 		end

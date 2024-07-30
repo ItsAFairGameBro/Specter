@@ -319,7 +319,6 @@ return function(C,Settings)
             return "", 0 -- Default return if something goes wrong
         end
         local function textUpd()
-            
             if not DidSet then
                 index = 0
             end
