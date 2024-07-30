@@ -176,7 +176,7 @@ return function(C,Settings)
 					elseif self.EnTbl.Parts and Type=="Part" then
 						return true, Type
 					else
-						return true, Type
+						return false, Type
 					end
 				end,
 				UndoTransmitter=function(self,index)
