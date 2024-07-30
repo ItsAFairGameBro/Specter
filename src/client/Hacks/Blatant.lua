@@ -19,10 +19,47 @@ return function(C,Settings)
 			{
 				Title = "AutoTeleportBack",
 				Tooltip = "Teleports back when inside of the game",
-				Layout = 0,
-				Shortcut = "AutoTeleportBack",Functs={},Instances={},Default=true,
+				Layout = 0, Threads = {}, Functs={},
+				Shortcut = "AutoTeleportBack",Default=true,
 				Activate = function(self,newValue)
-					
+					if not newValue then
+						return
+					end
+					local CenterPart = (C.gameName == "FleeMain" and C.char:FindFirstChild("HumanoidRootPart")) 
+						or (C.human.RigType == Enum.HumanoidRigType.R6 and C.char:WaitForChild("Torso",2)) or C.char:WaitForChild("HumanoidRootPart")
+					local newInput = nil
+					C.LastLoc = C.char:GetPivot() -- Inital Starting Position
+					C.AvailableHacks.Blatant[5].BlockTeleports = false and (C.isInGame and C.isInGame(C.char))
+					local function CanRun()
+						return C.char and CenterPart and C.enHacks.Blatant_TeleportBack
+					end
+					table.insert(self.Threads,task.spawn(function()
+						while CanRun() do
+							C.LastLoc = C.char:GetPivot()
+							RunS.RenderStepped:Wait()
+						end
+					end))
+					local function TeleportDetected()
+						newInput = C.char:GetPivot()
+						if C.AvailableHacks.Blatant[5].BlockTeleports then
+							if (newInput.Position - C.LastLoc.Position).Magnitude > 16 then
+								C.LastTeleportLoc = C.LastLoc
+								C.char:PivotTo(C.LastLoc)
+							end
+						elseif (C.isInGame and C.isInGame(C.char)) then
+							task.wait(.5)
+							self.BlockTeleports = true
+						end
+					end
+					local function AddToCFrameDetection(part)
+						table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
+						--table.insert(C.AvailableHacks.Blatant[5].Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
+					end
+					for num, part in ipairs(C.char:GetChildren()) do
+						if part:IsA("BasePart") then--and part.Name == "Head" then
+							AddToCFrameDetection(part)
+						end
+					end
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
