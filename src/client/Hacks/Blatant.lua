@@ -29,7 +29,7 @@ return function(C,Settings)
 						or (C.human.RigType == Enum.HumanoidRigType.R6 and C.char:WaitForChild("Torso",2)) or C.char:WaitForChild("HumanoidRootPart")
 					local newInput = nil
 					C.LastLoc = C.char:GetPivot() -- Inital Starting Position
-					self.BlockTeleports = false and (C.isInGame and C.isInGame(C.char))
+					self.BlockTeleports = true or (not C.isInGame or C.isInGame(C.char))
 					local function CanRun()
 						return C.char and CenterPart and C.enHacks.Blatant_TeleportBack
 					end
