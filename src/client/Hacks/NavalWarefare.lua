@@ -165,6 +165,50 @@ return function(C,Settings)
 					end
 				end,
 			},
+			{
+				Title = "Loop Kill Enemies",
+				Tooltip = "Uses rifle to loop kill enemies.\nPlease note that people know who killed them",
+				Layout = 2, Functs = {}, Threads = {},
+				Shortcut = "LoopKillEnemies",
+				Activate = function(self,newValue)
+					local Title = "Loop Kill Enemies"
+					if newValue then
+						local actionClone = C.AddAction({Name=Title,Tags={"RemoveOnDestroy"},Stop=function(onRequest)
+							self:SetValue(false)
+						end,})
+						if not actionClone then
+							return
+						end
+						if not self.LastSpotted and C.char and C.hrp then
+							self.LastSpotted = C.char:GetPivot()
+						end
+						local Time = actionClone:FindFirstChild("Time")
+						local saveChar = C.char
+						while Time and self.RealEnabled and C.char == saveChar and C.char.PrimaryPart and C.human and C.human.Health>0 do
+							local theirHead, dist = C.getClosest()
+							if theirHead then
+								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,100,0))
+								Time.Text = theirHead.Parent.Name
+							else
+								Time.Text = "(Waiting)"
+							end
+							--C.char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
+							--C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
+							RunS.RenderStepped:Wait()
+						end
+					else
+						C.RemoveAction(Title)
+						if self.LastSpotted then
+							C.DoTeleport(self.LastSpotted)
+						end
+					end
+				end,
+				Events = {
+					CharAdded = function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+				}
+			},
 		}
 	}
 end
