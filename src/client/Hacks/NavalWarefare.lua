@@ -308,8 +308,9 @@ return function(C,Settings)
 						return
 					end
 					if newValue then
-						table.insert(self.Fucnts,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
+						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F then
+								print("inserted")
 								table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
 									if instance.Name == "bullet" and instance.Parent then
@@ -330,8 +331,9 @@ return function(C,Settings)
 								end))	
 							end
 						end))
-						table.insert(self.Fucnts,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
+						table.insert(self.Functs,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F then
+								print('deleted')
 								if self.Functs[3] then
 									self.Functs[3]:Disconnect()
 									table.insert(self.Functs,3)
