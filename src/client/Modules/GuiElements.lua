@@ -2019,6 +2019,8 @@ return function(C, Settings)
 		end
 	end
 
+	ActionsFrame.Visible = false
+
 	for name, actionData in pairs(C.getgenv().ActionsList) do
 		C.AddAction(actionData)
 	end
