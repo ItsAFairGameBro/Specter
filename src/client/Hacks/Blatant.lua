@@ -22,7 +22,7 @@ return function(C,Settings)
 				Layout = 0, Threads = {}, Functs={},
 				Shortcut = "AutoTeleportBack",Default=true,
 				Activate = function(self,newValue)
-					if not newValue then
+					if not newValue or not C.human then
 						return
 					end
 					local CenterPart = (C.gameName == "FleeMain" and C.char:FindFirstChild("HumanoidRootPart")) 
