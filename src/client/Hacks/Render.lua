@@ -235,7 +235,7 @@ return function(C,Settings)
 								TouchToggle.Toggle.BackgroundColor3 = Color3.fromRGB(0,170)
 							end
 							local saveCollide = parent.CanCollide or parent.Parent.Name=="FadingTiles"
-							local function clickfunction()
+							local function clickfunction(didClick: boolean)
 								if self.EnTbl.ClickMode == "Activate" then
 									local HRP = C.char and C.char:FindFirstChild("HumanoidRootPart")
 									if not HRP then
@@ -268,7 +268,6 @@ return function(C,Settings)
 									if TouchToggle.Parent then
 										C.SetPartProperty(parent,"CanTouch","DisableTouchTransmitters",false)
 									end
-
 								else
 									if parent.CanTouch then
 										TouchToggle.Toggle.Text = "Enable"
@@ -283,8 +282,8 @@ return function(C,Settings)
 										C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 									end
 								end
-								if self.EnTbl.ClickDuration ~= "Forever" then
-									table.insert(self.Threads,task.delay(tonumber(self.EnTbl.ClickDuration) or 0, clickfunction))
+								if self.EnTbl.ClickDuration ~= "Forever" and didClick ~= false then
+									table.insert(self.Threads,task.delay(tonumber(self.EnTbl.ClickDuration) or 0, clickfunction,false))
 								end
 							end
 							table.insert(insertTbl[5],TouchToggle.Toggle.MouseButton1Up:Connect(clickfunction))
@@ -348,6 +347,7 @@ return function(C,Settings)
 						Tooltip = "Whether or not parts that are humanoids are affected",
 						Layout = 0,Default=false,
 						Shortcut="Humanoids",
+						Activate = C.ReloadHack
 					},
 					{
 						Type = Types.Toggle,
@@ -355,6 +355,7 @@ return function(C,Settings)
 						Tooltip = "Whether or not regular parts are affected",
 						Layout = 1,Default=true,
 						Shortcut="Humanoids",
+						Activate = C.ReloadHack
 					},
 					{
 						Type = Types.Dropdown, Selections = {"Activate","Enable"},
@@ -362,6 +363,7 @@ return function(C,Settings)
 						Tooltip = "What happens when you click on a disabled object",
 						Layout = 2,Default="Activate",
 						Shortcut="ClickMode",
+						Activate = C.ReloadHack
 					},
 					{
 						Type = Types.Dropdown, Selections = {"Instant", "Forever"},
@@ -369,6 +371,7 @@ return function(C,Settings)
 						Tooltip = "How long the clicking lasts before it reverts to being disabled",
 						Layout = 3,Default="Instant",
 						Shortcut="ClickDuration",
+						Activate = C.ReloadHack
 					},
 					--[[{
 						Type = Types.Slider,
