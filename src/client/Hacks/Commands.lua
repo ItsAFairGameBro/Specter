@@ -557,9 +557,9 @@ return function(C,Settings)
         ["unfling"]={
             Parameters={},
             AfterTxt="%s",
-            RunOnDestroy=function(self)
-                self:Run({})
-            end,
+            --RunOnDestroy=function(self)
+            --    self:Run({})
+           -- end,
             Run=function(self,args,notpback,nodeletethread)
                 if self.Parent.fling.FlingThread then
                     if not nodeletethread then -- if its not our current thread
