@@ -44,10 +44,7 @@ return function(C,Settings)
                     elseif args[num] == "me" or args[num] == "" then
                         args[num] = {C.plr}
                     elseif args[num] == "random" then
-                        local plrList = PS:GetPlayers()
-                        if argumentData.ExcludeMe then
-                            C.TblRemove(plrList,C.plr)
-                        end
+                        local plrList = C.GetNonFriends()
                         args[num] = {plrList[Random.new():NextInteger(1,#plrList)]}
                     elseif args[num] == "new" then
                         if not argumentData.SupportsNew then
@@ -368,12 +365,13 @@ return function(C,Settings)
                                     end
                                 end
                                 if not mySuggestion.ExcludeMe then
-                                    table.insert(options,{"me","me"})
+                                    table.insert(options,1,{"me","me"})
                                 end
                                 if mySuggestion.Type == "Players" then
-                                    table.insert(options,{"all","all"})
-                                    table.insert(options,{"others","others"})
+                                    table.insert(options,1,{"others","others"})
+                                    table.insert(options,1,{"all","all"})
                                 end
+                                table.insert(options,{"random","random"})
                             elseif mySuggestion.Type == "Number" then
                                 for s = mySuggestion.Min, mySuggestion.Max, (mySuggestion.Max - mySuggestion.Min) / 8 do
                                     table.insert(options,{tostring(s),tostring(s)})

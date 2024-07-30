@@ -97,9 +97,9 @@ return function(C,Settings)
 	end
 	--Update Targeting
 	function C.CanTargetPlayer(plr)
-		--if plr == C.plr then
-		--	return false
-		--end
+		if plr == C.plr then
+			return false
+		end
 		local NoTargetFriends = C.enHacks.Friends.NoTargetFriends
 		if not NoTargetFriends.En then
 			return true,"e"
@@ -110,6 +110,7 @@ return function(C,Settings)
 		if table.find(NoTargetFriends.AdditionalFriends,plr.UserId) then
 			return false,2
 		end
+		
 		return true
 	end
 	--Raycast
@@ -393,6 +394,17 @@ return function(C,Settings)
 			task.cancel(thread)
 			return true
 		end
+	end
+
+	-- Get Non Friends
+	function C.GetNonFriends()
+		local list = {}
+		for num, theirPlr in ipairs(PS:GetPlayers()) do
+			if C.CanTargetPlayer(theirPlr) then
+				table.insert(list, theirPlr)
+			end
+		end
+		return list
 	end
 
 	-- Function to set the property with an option to always set it
