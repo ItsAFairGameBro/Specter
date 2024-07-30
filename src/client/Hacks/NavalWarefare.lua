@@ -180,7 +180,7 @@ return function(C,Settings)
 					end
 					local Tool = C.char:FindFirstChildWhichIsA("Tool")
 					while self.RealEnabled do
-						local Target, Distance = C.getClosest(true)
+						local Target, Distance = C.getClosest()
 						if Target and Distance <= 450 then
 							self:Shoot(Target)
 						end
@@ -219,11 +219,11 @@ return function(C,Settings)
 						local Time = actionClone:FindFirstChild("Time")
 						local saveChar = C.char
 						while Time and self.RealEnabled and C.char == saveChar and C.char.PrimaryPart and C.human and C.human.Health>0 do
-							local theirHead, dist = C.getClosest(true)
+							local theirHead, dist = C.getClosest()
 							if theirHead then
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,100,0))
 								Time.Text = theirHead.Parent.Name
-								self.Parent.Tab[2]:Shoot(theirHead.Parent)
+								self.Parent.Tab[2]:Shoot(theirHead)
 							else
 								Time.Text = "(Waiting)"
 							end
