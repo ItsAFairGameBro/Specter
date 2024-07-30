@@ -170,13 +170,19 @@ return function(C,Settings)
 				Tooltip = "Uses rifle to loop kill nearby enemies.\nPlease note that people know who killed them",
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
+				Shoot = function(self,Target: Model)
+					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
+					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
+				end,
 				Activate = function(self,newValue)
+					if not C.char then
+						return
+					end
 					local Tool = C.char:FindFirstChildWhichIsA("Tool")
 					while self.RealEnabled do
 						local Target, Distance = C.getClosest()
 						if Target and Distance <= 450 then
-							C.RemoteEvent:FireServer("shootRifle","",{Target}) 
-							C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
+							self:Shoot(Target)
 						end
 						RunS.RenderStepped:Wait()
 						while not Tool or not Tool:IsA("Tool") or not Tool.Parent or not Tool.Parent.Parent do
@@ -215,6 +221,7 @@ return function(C,Settings)
 							if theirHead then
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,100,0))
 								Time.Text = theirHead.Parent.Name
+								self.Parent[2]:Shoot(theirHead.Parent)
 							else
 								Time.Text = "(Waiting)"
 							end
