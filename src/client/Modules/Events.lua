@@ -91,4 +91,10 @@ return function(C,Settings)
 	for num, theirPlr in ipairs(PS:GetPlayers()) do
 		task.spawn(PlrAdded,theirPlr,true)
 	end
+
+	-- Connect other events
+	for num, eventFunct in ipairs(C.EventFunctions) do
+		eventFunct()
+	end
+	C.EventFunctions = nil
 end

@@ -72,7 +72,7 @@ local function Static(C,Settings)
 		local selBase, maxDist = nil, math.huge
 		for baseType, bases in pairs(C.Bases) do
 			for num, base in ipairs(bases) do
-				if base:FindFirstChild("Team") and base.Team.Value ~= "" and base.Team.Value ~= plr.Team.Name and base.HP.Value > 0 then
+				if base:FindFirstChild("Team") and base.Team.Value ~= "" and base.Team.Value ~= C.plr.Team.Name and base.HP.Value > 0 then
 					local MainBody = base:WaitForChild("MainBody")
 					local d = (MainBody.Position - C.char.PrimaryPart.Position).Magnitude
 					if d < maxDist then
@@ -87,34 +87,33 @@ local function Static(C,Settings)
 	C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
 	C.Bases = {Dock={},Island={}}
 	C.Planes, C.Ships = {}, {}
-	local function newChild(instance)
-		if instance.ClassName ~= "Model" then
-			return
-		end
-		local instData = C.DataStorage[instance.Name]
-		if instData then
-			local HitCode = instance:WaitForChild("HitCode")
-			local ID = instData.Base or instData.Type -- Dock or Island
-			local SelectTbl = C[instData.Type.."s"]
-			if SelectTbl[ID] then
-				SelectTbl = SelectTbl[ID]
+	table.insert(C.EventFunctions,function()
+		local function newChild(instance)
+			if instance.ClassName ~= "Model" then
+				return
 			end
-			table.insert(SelectTbl,instance)
-			C.FireEvent(ID .. "Added",nil,instance)
-			C.objectFuncts[instance] = C.objectFuncts[instance] or {}
-			C.AddObjectConnection(instance,"NavalWarefareDestroying",instance.Destroying:Connect(function()
-				--Disconnect the event
-				C.TblRemove(SelectTbl,instance)
-				C.FireEvent(ID .. "Removed",nil,instance)
-				C.objectFuncts[instance] = nil
-			end))
+			local instData = C.DataStorage[instance.Name]
+			if instData then
+				local HitCode = instance:WaitForChild("HitCode")
+				local ID = instData.Base or instData.Type -- Dock or Island
+				local SelectTbl = C[instData.Type.."s"]
+				if SelectTbl[ID] then
+					SelectTbl = SelectTbl[ID]
+				end
+				table.insert(SelectTbl,instance)
+				C.FireEvent(ID .. "Added",nil,instance)
+				C.AddObjectConnection(instance,"NavalWarefareDestroying",instance.Destroying:Connect(function()
+					--Disconnect the event
+					C.TblRemove(SelectTbl,instance)
+					C.FireEvent(ID .. "Removed",nil,instance)
+				end))
+			end
 		end
-	end
-	table.insert(C.functs,workspace.ChildAdded:Connect(newChild))
-	for num, instance in ipairs(workspace:GetChildren()) do
-		newChild(instance)
-	end
-	
+		table.insert(C.functs,workspace.ChildAdded:Connect(newChild))
+		for num, instance in ipairs(workspace:GetChildren()) do
+			newChild(instance)
+		end
+	end)
 end
 return function(C,Settings)
 	Static(C,Settings)
