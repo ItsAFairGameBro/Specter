@@ -1,3 +1,4 @@
+local PhysicsService = game:GetService("PhysicsService")
 local RunS = game:GetService("RunService")
 local TS = game:GetService("TweenService")
 local PS = game:GetService("Players")
@@ -618,6 +619,9 @@ return function(C,Settings)
                     return true, "Stopped"-- do nothing if there's nothing to fling or just yourself!
                 end
                 self.Parent.unfling:Run(nil,true,false)
+                if C.hrp and not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,C.hrp.CollisionGroup) then
+                    return false, "Fling cannot work because you walk through other players"
+                end
                 self.FlingThread = task.spawn(function()
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
