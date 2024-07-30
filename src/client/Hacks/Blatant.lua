@@ -29,7 +29,7 @@ return function(C,Settings)
 						or (C.human.RigType == Enum.HumanoidRigType.R6 and C.char:WaitForChild("Torso",2)) or C.char:WaitForChild("HumanoidRootPart")
 					local newInput = nil
 					C.LastLoc = C.char:GetPivot() -- Inital Starting Position
-					self.BlockTeleports = (not C.isInGame or not C.isInGame(C.char))
+					self.BlockTeleports = (not C.isInGame or C.isInGame(C.char))
 					table.insert(self.Functs,RunS.RenderStepped:Connect(function()
 						C.LastLoc = C.char:GetPivot()
 					end))
