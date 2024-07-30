@@ -336,7 +336,7 @@ return function(C,Settings)
 				end,
 				Activate=function(self,newValue)
 					C.ClearFunctTbl(self.Functs)
-					self.UndoTransmitters(newValue)
+					self:UndoTransmitters(newValue)
 					if newValue then
 						table.insert(self.Functs,workspace.DescendantAdded:Connect(function(descendant)
 							self:ApplyTransmitters(descendant)
