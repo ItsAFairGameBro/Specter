@@ -32,11 +32,12 @@ return function(C,Settings)
             local canRunFunction = true
             for num, argumentData in ipairs(CommandData.Parameters) do
                 if argumentData.Type=="Players" or argumentData.Type=="Player" then
+                    local plrList = C.GetNonFriends()
                     if args[num]=="all" then
-                        args[num] = PS:GetPlayers()
+                        args[num] = plrList
                     elseif args[num] == "others" then
-                        args[num] = PS:GetPlayers()
-                        table.remove(args[num],table.find(args[num],C.plr))
+                        args[num] = plrList
+                        C.TblRemove(args[num],C.plr)
                         if #args[num]==0 then
                             canRunFunction = false
                             C.CreateSysMessage(`No other players found`)
@@ -44,7 +45,6 @@ return function(C,Settings)
                     elseif args[num] == "me" or args[num] == "" then
                         args[num] = {C.plr}
                     elseif args[num] == "random" then
-                        local plrList = C.GetNonFriends()
                         args[num] = {plrList[Random.new():NextInteger(1,#plrList)]}
                     elseif args[num] == "new" then
                         if not argumentData.SupportsNew then

@@ -575,6 +575,7 @@ return function(C,Settings)
                 if notpback and not self.OldLoc and C.hrp then
                     self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
+                    C.human:ChangeState(Enum.HumanoidStateType.Landed)
                     task.delay(.1,C.char.PivotTo,C.char,self.OldLoc)
                     self.OldLoc = nil
                 end
@@ -620,7 +621,7 @@ return function(C,Settings)
                                 if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
                                     break
                                 end
-                                if theirPrim.AssemblyLinearVelocity.Magnitude > 1000 then
+                                if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
                                     break -- We did enough damage!
                                 end
                                 if C.hrp then
