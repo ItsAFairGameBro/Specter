@@ -231,6 +231,7 @@ return function(C,Settings)
 							C.hrp.AssemblyAngularVelocity = Vector3.new()
 							RunS.RenderStepped:Wait()
 						end
+						print("Loop Ended!")
 					else
 						C.RemoveAction(Title)
 						if self.LastSpotted then
