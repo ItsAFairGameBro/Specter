@@ -404,6 +404,20 @@ return function(C,Settings)
 		end
 	end
 
+	-- Disable Humanoid Parts
+	function C.SetHumanoidTouch(enabled,reason)
+		for num, basePart in ipairs(C.char:GetDescendants()) do
+			if not basePart:IsA("BasePart") then
+				continue
+			end
+			if enabled then
+				C.SetPartProperty(basePart,"CanTouch",reason)
+			else
+				C.ResetPartProperty(basePart,"CanTouch",reason)
+			end
+		end
+	end
+
 	-- Get Non Friends
 	function C.GetNonFriends()
 		local list = {}

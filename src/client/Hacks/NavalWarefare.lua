@@ -206,6 +206,7 @@ return function(C,Settings)
 						return
 					end
 					local Title = "Loop Kill Enemies"
+					C.SetHumanoidTouch(newValue,"rifleLoopKill")
 					if newValue then
 						local actionClone = C.AddAction({Name=Title,Tags={"RemoveOnDestroy"},Stop=function(onRequest)
 							C.DoActivate(self,self.Activate,false)
@@ -243,6 +244,7 @@ return function(C,Settings)
 							end
 						end
 						C.DoActivate(self,self.Activate,self.RealEnabled)
+			
 					end,
 				}
 			},

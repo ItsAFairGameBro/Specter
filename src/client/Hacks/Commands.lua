@@ -663,16 +663,7 @@ return function(C,Settings)
                 return true
             end,
             Events={MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-                for num, basePart in ipairs(C.char:GetDescendants()) do
-                    if not basePart:IsA("BasePart") then
-                        continue
-                    end
-                    if self.Enabled then
-                        C.SetPartProperty(basePart,"CanTouch","fling")
-                    else
-                        C.ResetPartProperty(basePart,"CanTouch","fling")
-                    end
-                end
+                C.SetHumanoidTouch(self.Enabled,"fling")
             end}
         },
         ["lfling"]={
