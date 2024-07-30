@@ -336,7 +336,7 @@ return function(C,Settings)
 									self.Functs[3]:Disconnect()
 									table.insert(self.Functs,3)
 								end
-								C.Spectate(	
+								C.Spectate()
 							end
 						end))
 					else
