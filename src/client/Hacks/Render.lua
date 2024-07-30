@@ -166,7 +166,7 @@ return function(C,Settings)
 				end,
 				CanBeEnabled=function(self,instance,Type)
 					Type = Type or self:GetType(instance)
-					if C.isCleared or not instance or not instance.Parent then
+					if C.Cleared or not instance or not instance.Parent then
 						return false, Type
 					end
 					if not self.RealEnabled then
@@ -194,7 +194,7 @@ return function(C,Settings)
 				end,
 				UndoTransmitters=function(self,saveEn)
 					for index = #self.TouchTransmitters,1,-1 do
-						if saveEn ~= C.enHacks.Basic_DisableTouchTransmitters and not C.isCleared then
+						if saveEn ~= self.RealEnabled and not C.Cleared then
 							return
 						end
 						self:UndoTransmitter(index)
@@ -291,7 +291,7 @@ return function(C,Settings)
 									task.wait(1)
 									local Key = table.find(self.TouchTransmitters,insertTbl)
 									if Key then
-										self.UndoTransmitter(Key)
+										self:UndoTransmitter(Key)
 									end
 								else
 									TouchToggle.Adornee=workspace:IsAncestorOf(child) and parent or nil
