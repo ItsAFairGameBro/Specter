@@ -317,7 +317,7 @@ return function(C,Settings)
 								MyConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
 									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
-										local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
+										local closestBasePart = C.getClosest(true,true)
 										if closestBasePart then
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
@@ -365,10 +365,10 @@ return function(C,Settings)
 						Shortcut="Spectate",
 					},
 					{
-						Type = Types.Dropdown, Selections = {"InGame","All"},
+						Type = Types.Dropdown, Selections = {"InGame"},
 						Title = "Target Users",
-						Tooltip = "Who on the enemy team to target.",
-						Layout = 2,Default="All",
+						Tooltip = "Who on the enemy team to target. (PATCHED: Can only target INGAME players with NO FF)",
+						Layout = 2,Default="InGame",
 						Shortcut="Target",
 					},
 				},
