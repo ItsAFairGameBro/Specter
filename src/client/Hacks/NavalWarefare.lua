@@ -308,10 +308,11 @@ return function(C,Settings)
 						return
 					end
 					if newValue then
+						local CurConn
 						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
-							if inputObj.KeyCode == Enum.KeyCode.F then
+							if inputObj.KeyCode == Enum.KeyCode.F and not CurConn then
 								print("inserted")
-								table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
+								CurConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
 									if instance.Name == "bullet" and instance.Parent then
 										local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
@@ -328,15 +329,17 @@ return function(C,Settings)
 											end
 										end
 									end
-								end))	
+								end)
+								table.insert(self.Functs,CurConn)	
 							end
 						end))
 						table.insert(self.Functs,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F then
 								print('deleted',#self.Functs)
-								if self.Functs[3] then
-									self.Functs[3]:Disconnect()
-									table.remove(self.Functs,3)
+								C.TblRemove(self.Functs,CurConn)
+								if CurConn then
+									CurConn:Disconnect()
+									CurConn = nil
 								end
 								C.Spectate()
 							end
