@@ -315,7 +315,7 @@ return function(C,Settings)
 								local MyConn
 								MyConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
-									if instance.Name == "bullet" and instance.Parent then
+									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
 										local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
 										if closestBasePart then
 											if self.EnTbl.Spectate then
