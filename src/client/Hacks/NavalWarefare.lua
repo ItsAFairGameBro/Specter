@@ -312,7 +312,8 @@ return function(C,Settings)
 						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F and not CurConn then
 								print("inserted")
-								CurConn = workspace.ChildAdded:Connect(function(instance)
+								local MyConn
+								MyConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
 									if instance.Name == "bullet" and instance.Parent then
 										local closestBasePart = C.getClosest(self.EnTbl.Target=="All",true)
@@ -330,6 +331,7 @@ return function(C,Settings)
 										end
 									end
 								end)
+								CurConn = MyConn 
 								table.insert(self.Functs,CurConn)	
 							end
 						end))
