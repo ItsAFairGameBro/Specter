@@ -37,7 +37,7 @@ local function Static(C,Settings)
 
 		return true, player.Team -- Player exists!
 	end
-	function C.getClosest(canBeInLobby:boolean,notSeated:boolean)
+	function C.getClosest(noForcefield:boolean,notSeated:boolean)
 		local myHRP = C.char and C.char.PrimaryPart
 		if not C.human or C.human.Health <= 0 or not myHRP then return end
 
@@ -51,7 +51,8 @@ local function Static(C,Settings)
 			local theirChar = v.Character
 			if not theirChar then continue end
 			local isInGame,team = C.isInGame(theirChar)
-			if not isInGame and not canBeInLobby then continue end
+			if not isInGame then continue end
+			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then continue end
 			if team == C.plr.Team then continue end
 			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
 			if not theirHumanoid or theirHumanoid.Health <= 0 then continue end
@@ -332,7 +333,7 @@ return function(C,Settings)
 									end
 								end)
 								CurConn = MyConn 
-								table.insert(self.Functs,CurConn)	
+								table.insert(self.Functs,CurConn)
 							end
 						end))
 						table.insert(self.Functs,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
