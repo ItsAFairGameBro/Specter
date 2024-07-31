@@ -336,7 +336,7 @@ return function(C,Settings)
 								print('deleted')
 								if self.Functs[3] then
 									self.Functs[3]:Disconnect()
-									table.insert(self.Functs,3)
+									table.remove(self.Functs,3)
 								end
 								C.Spectate()
 							end
