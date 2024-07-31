@@ -333,7 +333,7 @@ return function(C,Settings)
 						end))
 						table.insert(self.Functs,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F then
-								print('deleted',#self.Functs[3])
+								print('deleted',#self.Functs)
 								if self.Functs[3] then
 									self.Functs[3]:Disconnect()
 									table.remove(self.Functs,3)
