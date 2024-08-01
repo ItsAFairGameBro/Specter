@@ -125,7 +125,7 @@ local function Static(C,Settings)
 				end))
 			end
 		end
-		table.insert(C.functs,workspace.ChildAdded:Connect(newChild))
+		C.AddGlobalConnection(workspace.ChildAdded:Connect(newChild))
 		for num, instance in ipairs(workspace:GetChildren()) do
 			newChild(instance)
 		end
@@ -789,9 +789,9 @@ return function(C,Settings)
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
 						table.insert(self.Instances, newTag)
 		
-						C.AddObjectConnection(island,"Parent",function()
+						C.AddObjectConnection(island,"Parent",island:GetPropertyChangedSignal("Parent"):Connect(function()
 							newTag:Destroy()
-						end)
+						end))
 						local IslandData = C.DataStorage[island.Name]
 						local TeamVal = island:WaitForChild("Team")
 						local HPVal = island:WaitForChild("HP")
