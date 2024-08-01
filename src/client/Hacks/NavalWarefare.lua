@@ -637,7 +637,7 @@ return function(C,Settings)
 						if not HitCode or HitCode.Value ~= "Plane" then
 							return
 						end
-						while self.EnTbl.PlaneHitbox do
+						while self.EnTbl.PlaneHitbox and C.SeatPart == seatPart do
 							local isGrounded = seatPart.AssemblyLinearVelocity.Magnitude < 0.2
 							self:ToggleVehicleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
 							self:ToggleBaseColliders(not isGrounded)
