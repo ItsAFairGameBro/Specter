@@ -594,22 +594,24 @@ return function(C,Settings)
 						C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
 					end
 				end,
-				ToggleColliders = function(self,Vehicle,Enabled)
+				ToggleVehicleColliders = function(self,Vehicle,Enabled)
 					if not Vehicle then
 						return
 					end
-					local EnemyHarbor = C.plr.Team.Name == "Japan" and workspace:WaitForChild("USDock") or workspace:WaitForChild("JapanDock")
 					for num, part in ipairs(Vehicle:GetDescendants()) do
 						if part:IsA("BasePart") then
 							self:SetPartEn(part,Enabled)
 						end
 					end
+				end,
+				ToggleBaseColliders = function(self,Enabled)
+					local EnemyHarbor = C.plr.Team.Name == "Japan" and workspace:WaitForChild("USDock") or workspace:WaitForChild("JapanDock")
 					for num, part in ipairs(C.StringWait(EnemyHarbor,"Decoration.ConcreteBases"):GetChildren()) do
 						if part:IsA("BasePart") then
-							self:SetPartEn(part,not Enabled)
+							self:SetPartEn(part,Enabled)
 						end
 					end
-					self:SetPartEn(EnemyHarbor:WaitForChild("MainBody"),not Enabled)
+					self:SetPartEn(EnemyHarbor:WaitForChild("MainBody"),Enabled)
 				end,
 				Activate = function(self,newValue)
 					local SeaFloorGroup = C.StringWait(workspace,"Setting.SeaFloor")
@@ -624,6 +626,8 @@ return function(C,Settings)
 					end
 					if C.human and C.human.SeatPart then
 						self.Events.MySeatAdded(self,C.human.SeatPart)
+					else
+						self:ToggleBaseColliders(false)
 					end
 				end,
 				Events = {
@@ -635,13 +639,15 @@ return function(C,Settings)
 						end
 						while self.EnTbl.PlaneHitbox do
 							local isGrounded = seatPart.AssemblyLinearVelocity.Magnitude < 0.2
-							self:ToggleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
+							self:ToggleVehicleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
+							self:ToggleBaseColliders(not isGrounded)
 							RunS.PreSimulation:Wait()
 						end
 					end,
 					MySeatRemoved = function(self,seatPart)
 						local Vehicle = seatPart.Parent
-						self:ToggleColliders(Vehicle,true) -- Disable CanTouch colliders
+						self:ToggleVehicleColliders(Vehicle,true) -- Disable CanTouch colliders
+						self:ToggleBaseColliders(false)
 					end,
 				},
 				Options = {
