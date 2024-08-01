@@ -587,19 +587,29 @@ return function(C,Settings)
 				Tooltip = "Disables the Pacific Ocean kill floor (the grey blocks below the ocean 🌊🦈)",
 				Layout = 100, Threads = {}, Default = true,
 				Shortcut = "DisableKillBricks",
+				SetPartEn = function(self,part,en)
+					if en then
+						C.ResetPartProperty(part, "CanTouch", "AntiBounds")
+					else
+						C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
+					end
+				end,
 				ToggleColliders = function(self,Vehicle,Enabled)
 					if not Vehicle then
 						return
 					end
+					local EnemyHarbor = C.plr.Team.Name == "Japan" and workspace:WaitForChild("USDock") or workspace:WaitForChild("JapanDock")
 					for num, part in ipairs(Vehicle:GetDescendants()) do
 						if part:IsA("BasePart") then
-							if Enabled then
-								C.ResetPartProperty(part, "CanTouch", "AntiBounds")
-							else
-								C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
-							end
+							self:SetPartEn(part,Enabled)
 						end
 					end
+					for num, part in ipairs(C.StringWait(EnemyHarbor,"Decoration.ConcreteBases"):GetChildren()) do
+						if part:IsA("BasePart") then
+							self:SetPartEn(part,not Enabled)
+						end
+					end
+					self:SetPartEn(EnemyHarbor:WaitForChild("MainBody"),not Enabled)
 				end,
 				Activate = function(self,newValue)
 					local SeaFloorGroup = C.StringWait(workspace,"Setting.SeaFloor")
