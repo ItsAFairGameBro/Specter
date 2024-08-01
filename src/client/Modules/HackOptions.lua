@@ -138,7 +138,7 @@ return function(C,Settings)
 	end
 	
 	function SliderTbl:SetValueFromSlider(input)
-		local percentage = (input.Position.X - self.Track.AbsolutePosition.X) / self.Track.AbsoluteSize.X
+		local percentage = math.clamp((input.Position.X - self.Track.AbsolutePosition.X) / self.Track.AbsoluteSize.X, 0, 1)
 		local value = percentage * (self.Max - self.Min) + self.Min
 		self:SetValue(self:FormatValue(value))
 	end

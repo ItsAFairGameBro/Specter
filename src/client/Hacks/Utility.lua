@@ -87,8 +87,13 @@ return function(C,Settings)
 						DS:AddItem(tb,0)
 					end
 					--Lock Camera Orientation
+					local LastCameraSubjectChangeSignal, LastCamera
 					local function UpdateCamera()
 						local Camera = workspace.CurrentCamera
+						if LastCameraSubjectChangeSignal and Camera ~= LastCamera then
+							LastCameraSubjectChangeSignal:Disconnect()
+							C.TblRemove(self.Functs,LastCameraSubjectChangeSignal)
+						end
 						if Camera then
 							local newCameraType = Camera.CameraType
 							if newCameraType == Enum.CameraType.Custom and EnTbl.LockCamera then
@@ -96,6 +101,8 @@ return function(C,Settings)
 							elseif newCameraType == Enum.CameraType.Track and not EnTbl.LockCamera then
 								Camera.CameraType = Enum.CameraType.Custom
 							end
+							LastCameraSubjectChangeSignal = Camera:GetPropertyChangedSignal("CameraType"):Connect(UpdateCamera)
+							table.insert(self.Functs, LastCameraSubjectChangeSignal)
 						end
 					end
 					table.insert(self.Functs,workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(UpdateCamera))

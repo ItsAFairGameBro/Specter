@@ -458,7 +458,7 @@ return function(C,Settings)
 						Title = "Pull Up Speed",
 						Tooltip = "How fast you are re-orientated back to inside the bounds of the map.",
 						Layout = 1,Default=30,
-						Min=20,Max=40,Step=1,
+						Min=20,Max=40,Digits=0,
 						Shortcut="PullUpSpeed",
 					},
 					{
@@ -466,7 +466,7 @@ return function(C,Settings)
 						Title = "Min Height",
 						Tooltip = "The minimum y height a plane can be before it is pulled up using `Pull Up Speed`",
 						Layout = 1,Default=10,
-						Min=7,Max=13,Step=1,
+						Min=7,Max=13,Digits=0,
 						Shortcut="MinHeight",
 					},
 				},
@@ -506,7 +506,7 @@ return function(C,Settings)
 						Title = "Size",
 						Tooltip = "The size, in studs, that the hitboxes are expanded in every direction",
 						Layout = 1,Default=2,
-						Min=0.1,Max=10,Step=0.1,
+						Min=0.1,Max=10,Digits=1,
 						Shortcut="Size",
 						Activate = C.ReloadHack,
 					}
@@ -799,7 +799,7 @@ return function(C,Settings)
 						Title = "HP",
 						Tooltip = "Refuels when your health is below this percentage",
 						Layout = 0,Default=30,
-						Min=0,Max=99,Step=1,
+						Min=0,Max=99,Digits=0,
 						Shortcut="MinHPPercentage",
 						Activate = C.ReloadHack,
 					},
@@ -832,7 +832,7 @@ return function(C,Settings)
 			{
 				Title = "Vehicle",
 				Tooltip = "Allows you to modify speed for ships and planes",
-				Layout = 11, Threads = {}, Functs = {}, Default = true,
+				Layout = 11, Functs = {}, Default = true,
 				Shortcut = "PlaneRestock",
 				DontActivate = true,
 				Activate = function(self)
@@ -862,7 +862,7 @@ return function(C,Settings)
 								if VehicleType=="Ship" then
 									SpeedMult = math.min(SpeedMult,1.8)
 								end
-								local TurnMult = C.enHacks.Blatant_NavalVehicleTurnSpeed or 1
+								local TurnMult = SpeedMult--self.EnTbl[HitCode.Value .. "Turn"] or 1
 								if C.GetAction("LoopBomb") or C.GetAction("Plane Refuel") then
 									SpeedMult,TurnMult = 0, 0 -- Override to stop it from moving!
 								end
@@ -878,12 +878,13 @@ return function(C,Settings)
 									end
 								end
 								local isOn = (LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
-									(FlyButton.BackgroundColor3.R*255>250 and C.enHacks.Blatant_NavalInfPlaneFuel) or VehicleType == "Ship"
+									(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel) or VehicleType == "Ship"
 								LineVelocity.VectorVelocity = lastSet
+								C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
 
-								LineVelocity.MaxAxesForce = Vector3.new(1000,1000,1000) * SpeedMult
+								C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
 								LineVelocity.MaxForce = isOn and ((VehicleType=="Ship" and 49.281604e6 or 31.148e3) * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
-								AlignOrientation.Responsiveness = 20 * (TurnMult/16)
+								C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult/16),true)
 								AlignOrientation.MaxTorque = isOn and (33.5e3 * TurnMult) or 0
 							end
 							table.insert(self.Functs,LineVelocity:GetPropertyChangedSignal("VectorVelocity"):Connect(Upd))
@@ -891,6 +892,7 @@ return function(C,Settings)
 						end
 					end,
 					MySeatRemoved = function(self, seatPart)
+						self:ClearData()
 						local Vehicle = seatPart.Parent
 						if Vehicle and Vehicle.PrimaryPart then
 							Vehicle.PrimaryPart.AssemblyLinearVelocity = Vector3.zero
@@ -921,14 +923,13 @@ return function(C,Settings)
 						Tooltip = "Tricks the game into thinking that you have infinite fuel",
 						Layout = 4,Default=true,
 						Shortcut="InfFuel",
-						Activate = C.ReloadHack,
 					},
 					{
 						Type = Types.Slider,
 						Title = "Plane Speed",
 						Tooltip = "How much faster you go when driving a plane",
 						Layout = 5,Default=3,
-						Min=0,Max=20,Step=1,
+						Min=0,Max=20,Digits=1,
 						Shortcut="PlaneSpeed",
 					},
 					{
@@ -936,7 +937,7 @@ return function(C,Settings)
 						Title = "Ship Speed",
 						Tooltip = "How much faster you go when driving a ship",
 						Layout = 6,Default=3,
-						Min=0,Max=20,Step=1,
+						Min=0,Max=20,Digits=1,
 						Shortcut="ShipSpeed",
 					},
 				}
