@@ -770,14 +770,14 @@ return function(C,Settings)
 					end
 				end,
 				Events = {
-					MyPlayerAdded=function()
-						C.AvailableHacks.Render[36].Funct = C.plr:GetPropertyChangedSignal("Team"):Connect(C.AvailableHacks.Render[36].ActivateFunction)
+					MyTeamAdded=function(self)
+						self:RefreshAllTags()
 					end,
 					MySeatAdded=function(self)
-						self:Activate()
+						self:RefreshAllTags()
 					end,
-					MySeatRemoved=function()
-						C.AvailableHacks.Render[36].ActivateFunction()
+					MySeatRemoved=function(self)
+						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)
 						local DropOffset = 250
