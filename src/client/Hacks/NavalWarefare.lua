@@ -480,26 +480,28 @@ return function(C,Settings)
 				RunOnDestroy = function(self)
 					self:Activate(false)
 				end,
-				ShipAdded=function(self,ship)
-					local MainBody = ship:WaitForChild("MainBody")
-					local Team = ship:WaitForChild("Team")
-					local ExpandSize = Team.Value == C.plr.Team.Name and 0 or self.EnTbl.Size
-					local DefaultSize = C.GetPartProperty(MainBody,"Size")
-
-					if self.RealEnabled then
-						C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",DefaultSize + 2 * Vector3.one * ExpandSize, true)-- Times two in order to expand in EVERY direction
-					else
-						C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
-					end
-				end,
 				Activate=function(self,newValue)
 					for num, ship in ipairs(C.Ships) do
 						self:ShipAdded(ship)
 					end
 				end,
-				MyTeamAdded=function(self,newTeam)
-					self:Activate()
-				end,
+				Events = {
+					ShipAdded=function(self,ship)
+						local MainBody = ship:WaitForChild("MainBody")
+						local Team = ship:WaitForChild("Team")
+						local ExpandSize = Team.Value == C.plr.Team.Name and 0 or self.EnTbl.Size
+						local DefaultSize = C.GetPartProperty(MainBody,"Size")
+	
+						if self.RealEnabled then
+							C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",DefaultSize + 2 * Vector3.one * ExpandSize, true)-- Times two in order to expand in EVERY direction
+						else
+							C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
+						end
+					end,
+					MyTeamAdded=function(self,newTeam)
+						self:Activate()
+					end,
+				},
 				Options = {
 					{
 						Type = Types.Slider,
@@ -882,8 +884,8 @@ return function(C,Settings)
 					DockAdded=function(self,dock)
 						self.Events.IslandAdded(self,dock)
 					end,
-					ShipAdded=function(self,dock)
-						self.Events.IslandAdded(self,dock)
+					ShipAdded=function(self,ship)
+						self.Events.IslandAdded(self,ship)
 					end,
 				}
 			},
