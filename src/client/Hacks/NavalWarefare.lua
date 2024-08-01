@@ -751,6 +751,11 @@ return function(C,Settings)
 									if not C.GetAction("LoopBomb") then
 										Plane:PivotTo(Origin)
 									end
+									if onRequest then
+										self:SetValue(false)
+									else
+										self:ClearData()
+									end
 								end,}
 								local actionClone = C.AddAction(Info)
 								if actionClone then
@@ -786,7 +791,6 @@ return function(C,Settings)
 					end,
 					MySeatRemoved=function(self)
 						C.RemoveAction("Plane Refuel")
-						self:ClearData()
 					end,
 				},
 				Options = {
