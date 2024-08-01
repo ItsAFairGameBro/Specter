@@ -539,6 +539,7 @@ return function(C,Settings)
 								if closestBasePart2 and (not closestBasePart or distance2 < distance) then
 									closestBasePart, distance = closestBasePart2, distance2
 								end
+								print(closestBasePart, closestBasePart2)
 								if closestBasePart then
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									for s = 0, 1, 1 do
