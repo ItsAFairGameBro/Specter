@@ -590,9 +590,9 @@ return function(C,Settings)
 				Shortcut = "DisableKillBricks",
 				SetPartEn = function(self,part,en)
 					if en then
-						C.ResetPartProperty(part, "CanTouch", "AntiBounds")
+						C.ResetPartProperty(part, "CanTouch", "DisableKillBricks")
 					else
-						C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
+						C.SetPartProperty(part, "CanTouch", "DisableKillBricks",false)
 					end
 				end,
 				ToggleVehicleColliders = function(self,Vehicle,Enabled)
@@ -618,17 +618,13 @@ return function(C,Settings)
 					local SeaFloorGroup = C.StringWait(workspace,"Setting.SeaFloor")
 					for num, seaFloorPart in ipairs(SeaFloorGroup:GetChildren()) do
 						if seaFloorPart:IsA("BasePart") then
-							if newValue then
-								C.SetPartProperty(seaFloorPart,"CanTouch","DisableKillBricks",false)
-							else
-								C.ResetPartProperty(seaFloorPart,"CanTouch","DisableKillBricks")
-							end
+							self:SetPartEn(seaFloorPart,not newValue)
 						end
 					end
 					if C.human and C.human.SeatPart then
 						self.Events.MySeatAdded(self,C.human.SeatPart)
 					else
-						self:ToggleBaseColliders(false)
+						self:ToggleBaseColliders(not newValue)
 					end
 				end,
 				Events = {
