@@ -647,7 +647,7 @@ return function(C,Settings)
 			},
 			{
 				Title = "ESP Island Capture",
-				Tooltip = "",
+				Tooltip = "Adds a button to capture neutral islands automatically",
 				Layout = 30, Threads = {}, Instances = {}, Functs = {}, Default = true,
 				Shortcut = "ESPIslandCapture",
 				DontActivate = true,
@@ -686,7 +686,6 @@ return function(C,Settings)
 								local ActionClone = C.AddAction(Info)
 								local Touching = false
 								while Info.Enabled and TeamVal.Value == "" and ActionClone and ActionClone.Parent do
-									--ActionClone.Time.Text = ("%.2f%%"):format(100 * (HPVal.Value / (8000)))
 									C.SetActionPercentage(ActionClone, HPVal.Value / C.DataStorage.Island.Health)
 									Touching = not Touching
 									local PrimaryPart = C.char and C.char.PrimaryPart
@@ -711,8 +710,120 @@ return function(C,Settings)
 						newTag.Adornee=FlagPad
 						newTag.Enabled = true
 					end,
-					MyTeamAdded = C.ReloadHack,
 				}
+			},
+			{
+				Title = "Plane Restock",
+				Tooltip = "Refuels",
+				Layout = 10, Threads = {}, Functs = {}, Default = true,
+				Shortcut = "PlaneRestock",
+				DontActivate = true,
+				Activate=function(self,newValue)
+					if not newValue then
+						self.Events.MySeatRemoved(self) -- Cancel the action
+					elseif C.human.SeatPart then
+						self.Events.MySeatAdded(self,C.human.SeatPart)
+					end
+				end,
+				Events = {
+					MySeatAdded=function(self,seatPart)
+						self.Events.MySeatRemoved(self)
+						local Plane = seatPart.Parent
+						local HitCode = Plane:WaitForChild("HitCode",5)
+						if HitCode and HitCode.Value == "Plane" then
+							local HP = Plane:WaitForChild("HP")
+							local Fuel = Plane:WaitForChild("Fuel")
+							--local AmmoC = Plane:WaitForChild("Ammo")
+							local BombC = Plane:WaitForChild("BombC")
+							local function canRun(toRun)
+								return Plane and Plane.Parent and C.human and seatPart == C.human.SeatPart and not C.Cleared
+									and (not toRun or 
+										((self.EnTbl.Bomb and BombC.Value == 0) 
+											or (self.EnTbl.MinHPPercentage*C.DataStorage[Plane.Name].Health/100>=HP.Value)
+											or (self.EnTbl.Fuel and Fuel.Value <= 3)))
+							end
+							local function HarborRefuel()
+								local Harbor = workspace:WaitForChild(C.plr.Team.Name:gsub("USA","US").."Dock")
+								local HarborMain = Harbor:WaitForChild("MainBody")
+								local MainBody = Plane:WaitForChild("MainBody")
+								local Origin = Plane:GetPivot()
+								local Info = {Name="Plane Refuel",Tags={"RemoveOnDestroy"},Stop=function(onRequest)
+									if not C.GetAction("LoopBomb") then
+										Plane:PivotTo(Origin)
+									end
+								end,}
+								local actionClone = C.AddAction(Info)
+								if actionClone then
+									actionClone:WaitForChild("Time").Text = "~2s"
+								end
+								while canRun(true) and Info.Enabled do
+									if (Plane:GetPivot().Position - HarborMain.Position).Magnitude > 30 then
+										Plane:PivotTo(HarborMain:GetPivot() * CFrame.new(0,45,15))
+									end
+									MainBody.AssemblyLinearVelocity = Vector3.new()
+									MainBody.AssemblyAngularVelocity = Vector3.new()
+									RunS.RenderStepped:Wait()
+								end
+							end
+							local function CheckDORefuel(newBomb)
+								if newBomb ~= nil then
+									task.wait(1/3) -- wait for the bomb to spawn!
+								end
+								if not canRun() then
+									return
+								end
+								if canRun(true) then
+									HarborRefuel()
+								else -- Refueled!
+									C.RemoveAction("Plane Refuel")
+								end
+							end
+							table.insert(self.Functs,BombC:GetPropertyChangedSignal("Value"):Connect(CheckDORefuel))
+							table.insert(self.Functs,HP:GetPropertyChangedSignal("Value"):Connect(CheckDORefuel))
+							table.insert(self.Functs,Fuel:GetPropertyChangedSignal("Value"):Connect(CheckDORefuel))
+							CheckDORefuel()
+						end
+					end,
+					MySeatRemoved=function(self)
+						C.RemoveAction("Plane Refuel")
+						self:ClearData()
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "HP",
+						Tooltip = "Refuels when your health is below this percentage",
+						Layout = 0,Default=true,
+						Min=0,Max=99,Step=1,
+						Shortcut="MinHPPercentage",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "❌Ammo",
+						Tooltip = "Refuels when ammo is low",
+						Layout = 1,Default=true,
+						Shortcut="Ammo",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Bomb",
+						Tooltip = "Refuels when bombs are out",
+						Layout = 2,Default=true,
+						Shortcut="Bomb",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Fuel",
+						Tooltip = "Refuels when fuel is out",
+						Layout = 3,Default=true,
+						Shortcut="Fuel",
+						Activate = C.ReloadHack,
+					},
+				},
 			}
 		}
 	}

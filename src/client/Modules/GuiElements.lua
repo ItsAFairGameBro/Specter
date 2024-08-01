@@ -2016,7 +2016,6 @@ return function(C, Settings)
 			local LastPing, LastPercentage = actionClone:GetAttribute("LastPing"), actionClone:GetAttribute("LastPercentage")
 			if not LastPercentage or LastPercentage ~= percentage then
 				if LastPing and LastPercentage then
-					print(("DifTime: %.2f; DifPercent: %.2f"):format(os.clock() - LastPing, percentage - LastPercentage))
 					local WholeTime = (os.clock() - LastPing) / (percentage - LastPercentage)
 					local TimeLeft = (1 - percentage) * WholeTime
 					Display ..= (" (%.0f seconds)"):format(TimeLeft)
