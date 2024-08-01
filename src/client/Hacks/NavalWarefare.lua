@@ -755,7 +755,7 @@ return function(C,Settings)
 					tag.Enabled = false
 				end,
 				RefreshAllTags = function(self)
-					for num, tag in ipairs(self.Instances:GetChildren()) do
+					for num, tag in ipairs(self.Instances) do
 						self:RefreshEn(tag)
 					end
 				end,
@@ -783,7 +783,7 @@ return function(C,Settings)
 						local DropOffset = 250
 						local TimeFromDropToExpl = math.sqrt(DropOffset/workspace.Gravity)
 						
-						local newTag=C.Examples.ToggleTag:Clone()
+						local newTag=C.Examples.ToggleTagEx:Clone()
 						newTag.Name = "LoopBombESP"
 						newTag.Parent=C.GUI
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
