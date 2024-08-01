@@ -794,7 +794,7 @@ return function(C,Settings)
 						Type = Types.Slider,
 						Title = "HP",
 						Tooltip = "Refuels when your health is below this percentage",
-						Layout = 0,Default=true,
+						Layout = 0,Default=30,
 						Min=0,Max=99,Step=1,
 						Shortcut="MinHPPercentage",
 						Activate = C.ReloadHack,
