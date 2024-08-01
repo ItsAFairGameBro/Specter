@@ -1010,7 +1010,7 @@ return function(C,Settings)
 				DontActivate = true,
 				Activate = function(self)
 					if C.human and C.human.SeatPart then
-						self.Events.MySeatAdded(C.human.SeatPart)
+						self.Events.MySeatAdded(self,C.human.SeatPart)
 					end
 				end,
 				Events = {
