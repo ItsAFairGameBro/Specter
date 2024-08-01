@@ -59,7 +59,7 @@ return function(C,Settings)
 				if isMe then
 					C.seatPart = seatPart
 				end
-				FireEvent("Seat"..(active and "Added" or "Removed"),nil,lastSeatPart)
+				FireEvent("Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
 			end--instance,key,connection
 			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.Seated:Connect(SeatAdded))
 			SeatAdded(theirHuman.SeatPart~=nil, theirHuman.SeatPart)
