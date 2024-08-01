@@ -638,7 +638,7 @@ return function(C,Settings)
 						Type = Types.Toggle,
 						Title = "Plane Hitbox",
 						Tooltip = "Disables Plane Hitbox.",
-						Layout = 3,Default=true,
+						Layout = 1,Default=true,
 						Shortcut="PlaneHitbox",
 						Activate = C.ReloadHack,
 					}
