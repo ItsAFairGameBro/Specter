@@ -50,6 +50,7 @@ return function(C,Settings)
 		"MyCharRemoved","CharRemoved","OthersCharRemoved",
 		"MySeatAdded","SeatAdded","OthersSeatAdded",
 		"MySeatRemoved","SeatRemoved","OthersSeatRemoved",
+		"IslandAdded",
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do
