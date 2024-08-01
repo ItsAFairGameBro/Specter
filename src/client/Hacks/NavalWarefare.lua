@@ -373,6 +373,106 @@ return function(C,Settings)
 					},
 				},
 			},
+			{
+				Title = "Anti Bounds",
+				Tooltip = "Prevents your plane from going into the Pacific or exiting!",
+				Layout = 5, Functs = {},
+				Shortcut = "AntiBounds",
+				ToggleColliders = function(self,Vehicle,Enabled)
+					if not Vehicle then
+						return
+					end
+					for num, part in ipairs(Vehicle:GetDescendants()) do
+						if part:IsA("BasePart") then
+							if Enabled then
+								C.ResetPartProperty(part, "CanTouch", "AntiBounds")
+							else
+								C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
+							end
+						end
+					end
+				end,
+				Events = {
+					MySeatAdded = function(self,seatPart)
+						local Vehicle = seatPart.Parent
+						local HitCode = Vehicle:WaitForChild("HitCode",5)
+						if not HitCode then return end
+						local VehicleType = HitCode.Value
+						local EnemyHarbor = workspace:WaitForChild(C.plr.Team.Name=="Japan" and "USDock" or "JapanDock")
+						local HarborMainBody = EnemyHarbor:WaitForChild("MainBody")
+						local LineVelocity = Vehicle:FindFirstChild("BodyVelocity",true)
+						local MainVelocity = LineVelocity.Parent
+						local LowestAcceptablePoint = 10
+
+						local BoundingSize = Vector3.new(10240,20e3,16384)
+
+						local HarborSize = HarborMainBody.Size+Vector3.new(60,220,60)
+						local HarborCF = HarborMainBody.CFrame*CFrame.new(0,-40,0)
+
+						--The "BodyVelocity" is actually "LineVelocity"
+						if VehicleType=="Plane" or VehicleType == "Ship" then
+							self:ToggleColliders(Vehicle,false) -- Disable CanTouch colliders
+							while C.human and C.human.SeatPart == seatPart do
+								if self.Enabled then
+									local BoundingCF = CFrame.new(0, BoundingSize.Y/2 + self.EnTbl.MinHeight, 0)
+									local OldVelocity = MainVelocity.AssemblyLinearVelocity
+									local GetOutSpeed = Vector3.zero
+									--{PartCF,PartSize,isBlacklist} (All Three Arguments Required)
+									local ListedAreas = {{BoundingCF,BoundingSize,false},{HarborCF,HarborSize,true}}
+									for num, data in ipairs(ListedAreas) do
+										if not C.IsInBox then
+											warn("C.iSinbox not found/loaded!")
+											continue
+										end
+										if C.IsInBox(data[1],data[2],seatPart.Position) == data[3] then
+											local PullUpSpeed = self.EnTbl.PullUpSpeed
+											GetOutSpeed += 
+												((data[3] and C.ClosestPointOnPartSurface or C.ClosestPointOnPart)(data[1], data[2], seatPart.Position) 
+													- seatPart.Position) * (data[3] and PullUpSpeed/3 or PullUpSpeed)
+										end
+									end
+									if GetOutSpeed.Magnitude > .3 then
+										local NewX, NewY, NewZ = OldVelocity.X, OldVelocity.Y, OldVelocity.Z
+										if math.abs(GetOutSpeed.X) > .5 then
+											NewX = GetOutSpeed.X
+										end
+										if math.abs(GetOutSpeed.Y) > .5 then
+											NewY = GetOutSpeed.Y
+										end
+										if math.abs(GetOutSpeed.Z) > .5 then
+											NewZ = GetOutSpeed.Z
+										end
+										MainVelocity.AssemblyLinearVelocity = Vector3.new(NewX,NewY,NewZ)
+									end
+								end
+								RunS.RenderStepped:Wait()
+							end
+						end
+					end,
+					MySeatRemoved = function(self,seatPart)
+						local Vehicle = seatPart.Parent
+						self:ToggleColliders(Vehicle,true) -- Disable CanTouch colliders
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "Pull Up Speed",
+						Tooltip = "How fast you are re-orientated back to inside the bounds of the map.",
+						Layout = 1,Default=30,
+						Min=20,Max=40,Step=1,
+						Shortcut="PullUpSpeed",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Min Height",
+						Tooltip = "The minimum y height a plane can be before it is pulled up using `Pull Up Speed`",
+						Layout = 1,Default=10,
+						Min=7,Max=13,Step=1,
+						Shortcut="MinHeight",
+					},
+				},
+			},
 		}
 	}
 end
