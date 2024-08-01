@@ -8,6 +8,7 @@ return function(C,Settings)
 	end--]]
 	
 	local function FireEvent(name,doExternalConn,...)
+		print("Fired",name)
 		if doExternalConn~=nil then
 			if doExternalConn then
 				FireEvent("My"..name,nil,...)

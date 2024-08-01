@@ -854,10 +854,10 @@ return function(C,Settings)
 										PlaneMB:PivotTo(TargetCF)
 									end
 									if Distance < 300 then
-										WhileIn += RunS.RenderStepped:Wait()
+										WhileIn += RunS.PreSimulation:Wait()
 									else
 										WhileIn = 0
-										RunS.RenderStepped:Wait()
+										RunS.PreSimulation:Wait()
 									end
 								end
 								isEn = true
