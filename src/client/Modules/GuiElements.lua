@@ -2012,15 +2012,18 @@ return function(C, Settings)
 	function C.SetActionPercentage(actionClone: ActionClone, percentage: float)
 		local Time = actionClone:WaitForChild("Time",5)
 		if Time then
-			local Display = ("%.2f"):format(percentage)
+			local Display = ("%.2f%%"):format(percentage * 100)
 			local LastPing, LastPercentage = actionClone:GetAttribute("LastPing"), actionClone:GetAttribute("LastPercentage")
-			if LastPing and LastPercentage then
-				local WholeTime = (os.clock() - LastPing) / (percentage - LastPercentage)
-				local TimeLeft = (1 - percentage) * WholeTime
-				Display ..= (" (%.2f seconds)"):format(TimeLeft)
+			if not LastPercentage or LastPercentage ~= percentage then
+				if LastPing and LastPercentage then
+					print(("DifTime: %.2f; DifPercent: %.2f"):format(os.clock() - LastPing, percentage - LastPercentage))
+					local WholeTime = (os.clock() - LastPing) / (percentage - LastPercentage)
+					local TimeLeft = (1 - percentage) * WholeTime
+					Display ..= (" (%.2f seconds)"):format(TimeLeft)
+				end
+				actionClone:SetAttribute("LastPing", os.clock())
+				actionClone:SetAttribute("LastPercentage",percentage)	
 			end
-			actionClone:SetAttribute("LastPing", os.clock())
-			actionClone:SetAttribute("LastPercentage",percentage)
 			Time.Text = Display
 		end
 	end
