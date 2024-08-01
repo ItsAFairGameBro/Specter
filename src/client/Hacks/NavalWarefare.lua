@@ -5,6 +5,7 @@ local RunS = game:GetService("RunService")
 local DS = game:GetService("Debris")
 local PS = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
+local CS = game:GetService("CollectionService")
 local function Static(C,Settings)
 	C.DataStorage={
 		["USDock"]={Health=25e3,Base="Dock",Type="Base"},
@@ -643,6 +644,74 @@ return function(C,Settings)
 						Activate = C.ReloadHack,
 					}
 				},
+			},
+			{
+				Title = "ESP Island Capture",
+				Tooltip = "",
+				Layout = 30, Threads = {}, Instances = {}, Functs = {}, Default = true,
+				Shortcut = "ESPIslandCapture",
+				DontActivate = true,
+				Activate=function(self,newValue)
+					if not newValue then
+						return
+					end
+					for num, island in pairs(C.Bases.Island) do
+						self.Events.IslandAdded(self,island)
+					end
+				end,
+				Events = {
+					IslandAdded=function(self,island)
+						local newTag=C.Examples.ToggleTagEx:Clone()
+						newTag.Name = "Island"
+						newTag.Parent=C.GUI
+						newTag.StudsOffsetWorldSpace = Vector3.new(0, 45, 0)
+						newTag.ExtentsOffsetWorldSpace = Vector3.zero
+		
+						table.insert(self.Instances,newTag)
+						C.AddObjectConnection(island,"ESPIslandCapture",island.Destroying:Connect(function()
+							newTag:Destroy()
+						end))
+						local TeamVal = island:WaitForChild("Team")
+						local HPVal = island:WaitForChild("HP")
+						local IslandCode = island:WaitForChild("IslandCode").Value
+						local FlagPad = island:WaitForChild("Flag"):WaitForChild("FlagPad")
+						local button = newTag:WaitForChild("Toggle")
+						local isEn = false
+						local Info = {Name="Capturing "..IslandCode,Tags={"RemoveOnDestroy"}}
+						local function activate(new)
+							isEn = new
+							button.Text = isEn and "Pause" or "Capture"
+							button.BackgroundColor3 = isEn and Color3.fromRGB(255) or Color3.fromRGB(170,0,255)
+							if new then
+								local ActionClone = C.AddAction(Info)
+								local Touching = false
+								while Info.Enabled and TeamVal.Value == "" and ActionClone and ActionClone.Parent do
+									ActionClone.Time.Text = ("%.2f%%"):format(100 * (HPVal.Value / (8000)))
+									Touching = not Touching
+									local PrimaryPart = C.char and C.char.PrimaryPart
+									if PrimaryPart then
+										C.firetouchinterest(FlagPad, C.char.PrimaryPart, Touching and 0 or 1)
+									end
+									RunS.RenderStepped:Wait()
+								end
+								return activate(false) -- Disable it
+							end
+							C.RemoveAction(Info.Name)
+						end
+						button.MouseButton1Up:Connect(function()
+							activate(not isEn)
+						end)
+						activate(isEn)
+						local function UpdVisibiltiy()
+							button.Visible = TeamVal.Value == ""
+						end
+						table.insert(self.Functs,TeamVal:GetPropertyChangedSignal("Value"):Connect(UpdVisibiltiy))
+						UpdVisibiltiy()
+						newTag.Adornee=FlagPad
+						newTag.Enabled = true
+					end,
+					MyTeamAdded = C.ReloadHack,
+				}
 			}
 		}
 	}
