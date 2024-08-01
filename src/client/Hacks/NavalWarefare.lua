@@ -845,7 +845,7 @@ return function(C,Settings)
 											WhileIn = 0
 											C.RemoteEvent:FireServer("bomb")
 										end
-									elseif BombC.Value == 0 and not C.enHacks.NavalWarefare.PlaneRestock.RealEnabled then
+									elseif BombC.Value == 0 and not C.enHacks.NavalWarefare.PlaneRestock.En then
 										break
 									end
 									ActionClone.Time.Text = ("%.2f%%"):format(100-100 * (HPVal.Value / IslandData.Health))
