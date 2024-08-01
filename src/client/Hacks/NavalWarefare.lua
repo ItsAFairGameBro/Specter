@@ -729,6 +729,163 @@ return function(C,Settings)
 				}
 			},
 			{
+				Title = "ESP Loop Bomb",
+				Tooltip = "Adds a button above objectives to bomb them continously",
+				Layout = 31, Threads = {}, Instances = {}, Functs = {}, Default = true,
+				Shortcut = "ESPIslandCapture",
+				DontActivate = true,
+				RefreshEn=function(self,tag)
+					if not tag.Adornee then
+						return
+					end
+					local Base = tag.Adornee.Parent
+					if Base then 
+						local Team, HP = Base:WaitForChild("Team",5), Base:WaitForChild("HP")
+						if Team and HP and HP.Value > 0 then
+							local Plane = C.human and C.human.SeatPart and C.human.SeatPart.Parent
+							if Plane and C.human.SeatPart.Name == "Seat" then
+								local HitCode = Plane:FindFirstChild("HitCode")
+								if HitCode and HitCode.Value == "Plane" then
+									tag.Enabled = C.enHacks.Render_IslandBombBase and Team.Value ~= C.plr.Team.Name and Team.Value ~= ""
+									return
+								end
+							end
+						end
+					end
+					tag.Enabled = false
+				end,
+				RefreshAllTags = function(self)
+					for num, tag in ipairs(self.Instances:GetChildren()) do
+						self:RefreshEn(tag)
+					end
+				end,
+				Activate=function(self,newValue)
+					for name, data in pairs(C.Bases) do
+						for num, island in ipairs(data) do
+							self.Events.IslandAdded(self,island)
+						end
+					end
+					for num, ship in ipairs(C.Ships) do
+						self.Events.ShipAdded(self,ship)
+					end
+				end,
+				Events = {
+					MyPlayerAdded=function()
+						C.AvailableHacks.Render[36].Funct = C.plr:GetPropertyChangedSignal("Team"):Connect(C.AvailableHacks.Render[36].ActivateFunction)
+					end,
+					MySeatAdded=function(self)
+						self:Activate()
+					end,
+					MySeatRemoved=function()
+						C.AvailableHacks.Render[36].ActivateFunction()
+					end,
+					IslandAdded=function(self,island)
+						local DropOffset = 250
+						local TimeFromDropToExpl = math.sqrt(DropOffset/workspace.Gravity)
+						
+						local newTag=C.ToggleTag:Clone()
+						newTag.Name = "LoopBombESP"
+						newTag.Parent=C.GUI
+						newTag.ExtentsOffsetWorldSpace = Vector3.zero
+						table.insert(self.Instances, newTag)
+		
+						C.AddObjectConnection(island,"Parent",function()
+							newTag:Destroy()
+						end)
+						local IslandData = C.DataStorage[island.Name]
+						local TeamVal = island:WaitForChild("Team")
+						local HPVal = island:WaitForChild("HP")
+						local HitCode = island:WaitForChild("HitCode").Value
+						local IslandBody = island:WaitForChild("MainBody")
+						local button = newTag:WaitForChild("Toggle")
+						local isEn = false
+						local Info = {Name="LoopBomb",Title="Bombing "..HitCode,Tags={"RemoveOnDestroy"}}
+						newTag.StudsOffsetWorldSpace = Vector3.new(0, HitCode=="Dock" and 120 or 60, 0)
+						local function basebomb_activate(new)
+							button.Text = new and "Pause" or "Bomb"
+							button.BackgroundColor3 = new and Color3.fromRGB(255) or (HitCode=="Dock" and Color3.fromRGB(170,0,255) or Color3.fromRGB(170,255))
+							if new then
+								if C.GetAction(Info.Name) then
+									C.RemoveAction(Info.Name)
+									RunS.RenderStepped:Wait()
+								end
+								
+								
+								local Plane = C.human.SeatPart.Parent
+								local PlaneMB = Plane:WaitForChild("MainBody")
+								local BombC = Plane:WaitForChild("BombC")
+								local ActionClone = C.AddAction(Info)
+								
+								local IslandLoc
+								
+								local HalfSize = IslandBody.Size/4 -- Make it a quarter so it doesn't miss!
+								local Randomizer = Random.new()
+								
+								local XOfffset,ZOffset
+								local TargetCF
+								
+								local function CalculateNew(Regenerate)
+									if Regenerate or not XOfffset then
+										XOfffset,ZOffset = Randomizer:NextNumber(-HalfSize.X,HalfSize.X), Randomizer:NextNumber(-HalfSize.Z,HalfSize.Z)
+									end
+									IslandLoc = IslandBody:GetPivot() + (IslandBody.AssemblyLinearVelocity * TimeFromDropToExpl)
+									TargetCF = IslandLoc * CFrame.new(XOfffset,0,ZOffset) + Vector3.new(0,DropOffset,0)
+								end
+														
+								local WhileIn = 0
+								while Info.Enabled and TeamVal.Value ~= "" and TeamVal.Value ~= C.plr.Team.Name and ActionClone and ActionClone.Parent and island.Parent
+									and C.human.SeatPart and C.human.SeatPart.Parent == Plane and HPVal.Value > 0 do
+									CalculateNew(Randomizer:NextInteger(1,5) == 1)
+									if not C.GetAction("Plane Refuel") and BombC.Value > 0 then
+										PlaneMB.AssemblyLinearVelocity = TargetCF.Position - PlaneMB.Position
+										--PlaneMB.AssemblyAngularVelocity = Vector3.zero
+										if BombC.Value > 0 and WhileIn>.5 then
+											WhileIn = 0
+											C.RemoteEvent:FireServer("bomb")
+										end
+									elseif BombC.Value == 0 and not C.enHacks.Blatant_NavalInstantRefuel then
+										break
+									end
+									ActionClone.Time.Text = ("%.2f%%"):format(100-100 * (HPVal.Value / IslandData.Health))
+									local Distance = ((PlaneMB:GetPivot().Position - TargetCF.Position)/Vector3.new(1,1000,1)).Magnitude
+									if Distance > 30 and not C.GetAction("Plane Refuel") then
+										PlaneMB:PivotTo(TargetCF)
+									end
+									if Distance < 300 then
+										WhileIn += RunS.RenderStepped:Wait()
+									else
+										WhileIn = 0
+										RunS.RenderStepped:Wait()
+									end
+								end
+								isEn = true
+								return basebomb_activate(false) -- Disable it
+							elseif isEn then -- Disable only if we WERE bombing earlier!
+								C.RemoveAction(Info.Name)
+							end
+							isEn = new
+						end
+						button.MouseButton1Up:Connect(function()
+							basebomb_activate(not isEn)
+						end)
+						basebomb_activate(isEn)
+						local function UpdVisibiltiy()
+							self:RefreshEn(newTag)
+						end
+						C.AddObjectConnection(TeamVal,"Value",UpdVisibiltiy)
+						C.AddObjectConnection(HPVal,"Value",UpdVisibiltiy)
+						UpdVisibiltiy()
+						newTag.Adornee=IslandBody
+					end,
+					DockAdded=function(self,dock)
+						self.Events.IslandAdded(self,dock)
+					end,
+					ShipAdded=function(self,dock)
+						self.Events.IslandAdded(self,dock)
+					end,
+				}
+			},
+			{
 				Title = "Plane Restock",
 				Tooltip = "Refuels when things like ammo, bombs, or health are below certain configurable thresholds",
 				Layout = 10, Threads = {}, Functs = {}, Default = true,
