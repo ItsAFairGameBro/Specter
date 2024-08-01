@@ -611,6 +611,9 @@ return function(C,Settings)
 							end
 						end
 					end
+					if C.human.SeatPart then
+						self.Events.MySeatAdded(self,C.human.SeatPart)
+					end
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
@@ -619,7 +622,7 @@ return function(C,Settings)
 						if not HitCode or HitCode.Value ~= "Plane" then
 							return
 						end
-						while true do
+						while self.EnTbl.PlaneHitbox do
 							local isGrounded = seatPart.AssemblyLinearVelocity.Magnitude < 0.2
 							self:ToggleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
 							RunS.PreSimulation:Wait()
@@ -631,7 +634,14 @@ return function(C,Settings)
 					end,
 				},
 				Options = {
-					
+					{
+						Type = Types.Toggle,
+						Title = "Plane Hitbox",
+						Tooltip = "Disables Plane Hitbox.",
+						Layout = 3,Default=true,
+						Shortcut="PlaneHitbox",
+						Activate = C.ReloadHack,
+					}
 				},
 			}
 		}
