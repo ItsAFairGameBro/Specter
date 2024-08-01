@@ -476,6 +476,24 @@ return function(C,Settings)
 					},
 				},
 			},
+			{
+				Title = "Disable Kill Bricks",
+				Tooltip = "Disables the Pacific Ocean kill floor (the grey blocks below the ocean 🌊🦈)",
+				Layout = 100, Threads = {},
+				Shortcut = "DisableKillBricks",
+				Activate = function(self,newValue)
+					local SeaFloorGroup = C.StringWait(workspace,"Setting.SeaFloor")
+					for num, seaFloorPart in ipairs(SeaFloorGroup:GetChildren()) do
+						if seaFloorPart:IsA("BasePart") then
+							if newValue then
+								C.SetPartProperty(seaFloorPart,"CanTouch","DisableKillBricks",false)
+							else
+								C.ResetPartProperty(seaFloorPart,"CanTouch","DisableKillBricks")
+							end
+						end
+					end
+				end,
+			}
 		}
 	}
 end

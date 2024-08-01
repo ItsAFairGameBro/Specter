@@ -55,6 +55,8 @@ return function(C,Settings)
 				--Do not connect global SeatAdded connections, hence the "nil"
 				if active then
 					lastSeatPart = seatPart
+				elseif not active and not lastSeatPart then
+					return -- get out, was not seated!
 				end
 				if isMe then
 					C.seatPart = seatPart
