@@ -390,9 +390,13 @@ return function(C,Settings)
 
 	-- Cancel thread
 	function C.StopThread(thread)
-		if coroutine.status(thread) ~= "dead" then
-			C.DebugMessage("Thread",`Stopping thread {tostring(thread)}, current status: {coroutine.status(thread)}`)
-			task.cancel(thread)
+		local Status = coroutine.status(thread)
+		if Status ~= "dead" then
+			C.DebugMessage("Thread",`Stopping thread {tostring(thread)}, current status: {Status}`)
+			local success, result = pcall(task.cancel,thread)
+			if not success then
+				warn(`Failed to stop thread {tostring(thread)} (Status: {Status}); {result}.`)
+			end
 			return true
 		end
 	end

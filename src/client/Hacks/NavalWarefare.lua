@@ -872,8 +872,8 @@ return function(C,Settings)
 						local function UpdVisibiltiy()
 							self:RefreshEn(newTag)
 						end
-						C.AddObjectConnection(TeamVal,"Value",UpdVisibiltiy)
-						C.AddObjectConnection(HPVal,"Value",UpdVisibiltiy)
+						C.AddObjectConnection(TeamVal,"LoopBomb",TeamVal:GetPropertyChangedSignal("Value"):Connect(UpdVisibiltiy))
+						C.AddObjectConnection(HPVal,"LoopBomb",HPVal:GetPropertyChangedSignal("Value"):Connect(UpdVisibiltiy))
 						UpdVisibiltiy()
 						newTag.Adornee=IslandBody
 					end,
