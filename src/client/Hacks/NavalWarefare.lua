@@ -86,17 +86,17 @@ local function Static(C,Settings)
 		return selBase, maxDist
 	end
 	function C.getClosestShip()
-		local selBase, maxDist = nil, math.huge
+		local selShip, maxDist = nil, math.huge
 		for num, ship  in pairs(C.Ships) do
 			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and ship.HP.Value > 0 then
 				local MainBody = ship:WaitForChild("MainBody")
 				local d = (MainBody.Position - C.char.PrimaryPart.Position).Magnitude
 				if d < maxDist then
-					selBase, maxDist = MainBody, d
+					selShip, maxDist = MainBody, d
 				end
 			end
 		end
-		return selBase, maxDist
+		return selShip, maxDist
 	end
 	C.getgenv().isInGame = C.isInGame
 	C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
@@ -550,11 +550,14 @@ return function(C,Settings)
 									closestBasePart2, distance2 = C.getClosest()
 								end
 								local closestBasePart3, distance3
-								if self.EnTbl.User then
+								if self.EnTbl.Ship then
 									closestBasePart3, distance3 = C.getClosestShip()
 								end
 								if closestBasePart2 and (not closestBasePart or distance2 < distance) then
 									closestBasePart, distance = closestBasePart2, distance2
+								end
+								if closestBasePart3 and (not closestBasePart or distance3 < distance) then
+									closestBasePart, distance = closestBasePart3, distance3
 								end
 								print(closestBasePart, closestBasePart2)
 								if closestBasePart then
