@@ -1,5 +1,6 @@
 local CAS = game:GetService("ContextActionService")
 local CS = game:GetService("CollectionService")
+local PhysicsService = game:GetService("PhysicsService")
 local PS = game:GetService("Players")
 local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
@@ -135,7 +136,7 @@ return function(C,Settings)
 				return false
 			end
 
-			if options.ignoreUncollidable and not instance.CanCollide then
+			if options.ignoreUncollidable and (not instance.CanCollide or not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,instance.CollisionGroup)) then
 				return false
 			end
 
