@@ -289,7 +289,7 @@ return function(C,Settings)
 							FF.AncestryChanged:Wait() -- Wait until we're defenseless!
 						elseif C.human.SeatPart then
 							C.human:GetPropertyChangedSignal("SeatPart"):Wait()
-						else
+						elseif C.human.Health > 0 then
 							C.RemoteEvent:FireServer("Teleport", {
 								[1] = "Harbour",
 								[2] = ""
@@ -457,8 +457,8 @@ return function(C,Settings)
 						Type = Types.Slider,
 						Title = "Pull Up Speed",
 						Tooltip = "How fast you are re-orientated back to inside the bounds of the map.",
-						Layout = 1,Default=30,
-						Min=20,Max=40,Digits=0,
+						Layout = 1,Default=20,
+						Min=10,Max=40,Digits=0,
 						Shortcut="PullUpSpeed",
 					},
 					{
@@ -466,7 +466,7 @@ return function(C,Settings)
 						Title = "Min Height",
 						Tooltip = "The minimum y height a plane can be before it is pulled up using `Pull Up Speed`",
 						Layout = 1,Default=10,
-						Min=7,Max=13,Digits=0,
+						Min=0,Max=20,Digits=0,
 						Shortcut="MinHeight",
 					},
 				},
