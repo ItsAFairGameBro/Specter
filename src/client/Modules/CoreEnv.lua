@@ -220,6 +220,7 @@ return function(C,Settings)
 				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
 					hackTbl:ClearData()
 				end
+				hackTbl.Enabled, hackTbl.RealEnabled = false, false -- disable their enabled states!
 				if hackTbl.RunOnDestroy and hackTbl.RealEnabled then
 					RunOnDestroy(hackTbl,"HackTBL: " .. hackTbl.Shortcut)
 				end

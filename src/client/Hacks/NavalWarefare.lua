@@ -477,6 +477,48 @@ return function(C,Settings)
 				},
 			},
 			{
+				Title = "Hitbox Expander",
+				Tooltip = "How large each ship's hitbox is",
+				Layout = 6, Threads = {},
+				Shortcut = "HitboxExpander",
+				DontActivate = true,
+				RunOnDestroy = function(self)
+					self:Activate(false)
+				end,
+				ShipAdded=function(self,ship)
+					print(ship,"added")
+					local MainBody = ship:WaitForChild("MainBody")
+					local Team = ship:WaitForChild("Team")
+					local ExpandSize = Team.Value == C.plr.Team.Name and 0 or self.EnTbl.Size
+					local DefaultSize = C.GetPartProperty(MainBody,"Size")
+
+					if self.RealEnabled then
+						C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",DefaultSize + 2 * Vector3.one * ExpandSize)-- Times two in order to expand in EVERY direction
+					else
+						C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
+					end
+					
+				end,
+				Activate=function(self,newValue)
+					for num, ship in ipairs(C.Ships) do
+						self:ShipAdded(ship)
+					end
+				end,
+				MyTeamAdded=function(self,newTeam)
+					self:Activate()
+				end,
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "Size",
+						Tooltip = "The size, in studs, that the hitboxes are expanded in every direction",
+						Layout = 1,Default=2,
+						Min=0.1,Max=10,Step=0.1,
+						Shortcut="Size",
+					}
+				}
+			},
+			{
 				Title = "Disable Kill Bricks",
 				Tooltip = "Disables the Pacific Ocean kill floor (the grey blocks below the ocean 🌊🦈)",
 				Layout = 100, Threads = {}, Default = true,

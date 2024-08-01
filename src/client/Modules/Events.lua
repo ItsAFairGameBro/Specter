@@ -82,11 +82,22 @@ return function(C,Settings)
 		FireEvent("CharAdded",isMe,theirPlr,theirChar,wasAlreadyIn)
 	end
 	local function PlrAdded(theirPlr,wasAlreadyIn)
+		local isMe = theirPlr == C.plr
 		if theirPlr.Character then
 			task.spawn(CharAdded,theirPlr.Character,true)
 		end
 		C.AddPlayerConnection(theirPlr,theirPlr.CharacterAdded:Connect(CharAdded))
-		FireEvent("PlayerAdded",theirPlr==C.plr,theirPlr,wasAlreadyIn)
+		FireEvent("PlayerAdded",isMe,theirPlr,wasAlreadyIn)
+		if (isMe and ShouldConnectEvent("MyTeamAdded")) or (isMe and ShouldConnectEvent("MyTeamRemoved")) or 
+			ShouldConnectEvent("TeamAdded") or ShouldConnectEvent("TeamRemoved") then
+			local function RegisterNewTeam()
+				if theirPlr.Team then
+					FireEvent("TeamAdded",isMe,theirPlr,theirPlr.Team)
+				end
+			end
+			C.AddPlayerConnection(theirPlr, theirPlr:GetPropertyChangedSignal("Team"):Connect(RegisterNewTeam))
+			RegisterNewTeam()
+		end
 	end
 	local function PlrRemoving(theirPlr)
 		C.RemoveAllPlayerConnections(theirPlr)

@@ -437,6 +437,14 @@ return function(C,Settings)
 		return list
 	end
 
+	-- Function to get originally property
+	function C.GetPartProperty(part, propertyName)
+		local value = part:GetAttribute(propertyName .. "_OriginalValue")
+		if value ~= nil then
+			return value
+		end
+		return part[propertyName]
+	end
 	-- Function to set the property with an option to always set it
 	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet)
 		if C.gameUniverse == "Flee" and part.Name == "Weight" then
