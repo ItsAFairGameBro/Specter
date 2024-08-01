@@ -753,7 +753,7 @@ return function(C,Settings)
 									end
 									if onRequest then
 										self:SetValue(false)
-									else
+									elseif seatPart ~= C.human.SeatPart then
 										self:ClearData()
 									end
 								end,}
