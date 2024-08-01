@@ -956,9 +956,9 @@ return function(C,Settings)
 									C.RemoveAction("Plane Refuel")
 								end
 							end
-							table.insert(self.Functs,BombC:GetPropertyChangedSignal("Value"):Connect(CheckDORefuel))
-							table.insert(self.Functs,HP:GetPropertyChangedSignal("Value"):Connect(CheckDORefuel))
-							table.insert(self.Functs,Fuel:GetPropertyChangedSignal("Value"):Connect(CheckDORefuel))
+							table.insert(self.Functs,BombC.Changed:Connect(CheckDORefuel))
+							table.insert(self.Functs,HP.Changed:Connect(CheckDORefuel))
+							table.insert(self.Functs,Fuel.Changed:Connect(CheckDORefuel))
 							CheckDORefuel()
 						end
 					end,
