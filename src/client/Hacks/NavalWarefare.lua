@@ -880,7 +880,7 @@ return function(C,Settings)
 								local isOn = (LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
 									(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel) or VehicleType == "Ship"
 								LineVelocity.VectorVelocity = lastSet
-								C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
+								--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
 
 								C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
 								LineVelocity.MaxForce = isOn and ((VehicleType=="Ship" and 49.281604e6 or 31.148e3) * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
