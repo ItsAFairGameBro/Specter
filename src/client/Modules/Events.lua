@@ -58,7 +58,7 @@ return function(C,Settings)
 				end
 				FireEvent("Seat"..(active and "Added" or "Removed"),nil,lastSeatPart)
 			end--instance,key,connection
-			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.SeatAdded:Connect(SeatAdded))
+			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.Seated:Connect(SeatAdded))
 			SeatAdded(theirHuman.SeatPart~=nil, theirHuman.SeatPart)
 		end
 		if ShouldConnectEvent("MyCharDied",true) and isMe then
