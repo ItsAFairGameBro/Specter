@@ -374,7 +374,7 @@ return function(C,Settings)
 			{
 				Title = "Anti Bounds",
 				Tooltip = "Prevents your plane from going into the Pacific or exiting!",
-				Layout = 5, Functs = {},
+				Layout = 5, Threads = {},
 				Shortcut = "AntiBounds",
 				ToggleColliders = function(self,Vehicle,Enabled)
 					if not Vehicle then
@@ -390,9 +390,16 @@ return function(C,Settings)
 						end
 					end
 				end,
+				Activate = function(self)
+					if not C.char then
+						return
+					end
+					if C.human.SeatPart then
+						self.Events.MySeatAdded(self,C.human.SeatPart)
+					end
+				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
-						print("Seated",seatPart)
 						local Vehicle = seatPart.Parent
 						local HitCode = Vehicle:WaitForChild("HitCode",5)
 						if not HitCode then return end
@@ -410,41 +417,38 @@ return function(C,Settings)
 						--The "BodyVelocity" is actually "LineVelocity"
 						if VehicleType=="Plane" or VehicleType == "Ship" then
 							self:ToggleColliders(Vehicle,false) -- Disable CanTouch colliders
-							while C.human and C.human.SeatPart == seatPart do
-								print("Running")
-								if self.RealEnabled then
-									local BoundingCF = CFrame.new(0, BoundingSize.Y/2 + self.EnTbl.MinHeight, 0)
-									local OldVelocity = MainVelocity.AssemblyLinearVelocity
-									local GetOutSpeed = Vector3.zero
-									--{PartCF,PartSize,isBlacklist} (All Three Arguments Required)
-									local ListedAreas = {{BoundingCF,BoundingSize,false},{HarborCF,HarborSize,true}}
-									for num, data in ipairs(ListedAreas) do
-										if not C.IsInBox then
-											warn("C.iSinbox not found/loaded!")
-											continue
-										end
-										if C.IsInBox(data[1],data[2],seatPart.Position) == data[3] then
-											local PullUpSpeed = self.EnTbl.PullUpSpeed
-											GetOutSpeed += 
-												((data[3] and C.ClosestPointOnPartSurface or C.ClosestPointOnPart)(data[1], data[2], seatPart.Position) 
-													- seatPart.Position) * (data[3] and PullUpSpeed/3 or PullUpSpeed)
-										end
+							while C.human and C.human.SeatPart == seatPart and self.RealEnabled do
+								local BoundingCF = CFrame.new(0, BoundingSize.Y/2 + self.EnTbl.MinHeight, 0)
+								local OldVelocity = MainVelocity.AssemblyLinearVelocity
+								local GetOutSpeed = Vector3.zero
+								--{PartCF,PartSize,isBlacklist} (All Three Arguments Required)
+								local ListedAreas = {{BoundingCF,BoundingSize,false},{HarborCF,HarborSize,true}}
+								for num, data in ipairs(ListedAreas) do
+									if not C.IsInBox then
+										warn("C.iSinbox not found/loaded!")
+										continue
 									end
-									if GetOutSpeed.Magnitude > .3 then
-										local NewX, NewY, NewZ = OldVelocity.X, OldVelocity.Y, OldVelocity.Z
-										if math.abs(GetOutSpeed.X) > .5 then
-											NewX = GetOutSpeed.X
-										end
-										if math.abs(GetOutSpeed.Y) > .5 then
-											NewY = GetOutSpeed.Y
-										end
-										if math.abs(GetOutSpeed.Z) > .5 then
-											NewZ = GetOutSpeed.Z
-										end
-										MainVelocity.AssemblyLinearVelocity = Vector3.new(NewX,NewY,NewZ)
+									if C.IsInBox(data[1],data[2],seatPart.Position) == data[3] then
+										local PullUpSpeed = self.EnTbl.PullUpSpeed
+										GetOutSpeed += 
+											((data[3] and C.ClosestPointOnPartSurface or C.ClosestPointOnPart)(data[1], data[2], seatPart.Position) 
+												- seatPart.Position) * (data[3] and PullUpSpeed/3 or PullUpSpeed)
 									end
 								end
-								RunS.RenderStepped:Wait()
+								if GetOutSpeed.Magnitude > .3 then
+									local NewX, NewY, NewZ = OldVelocity.X, OldVelocity.Y, OldVelocity.Z
+									if math.abs(GetOutSpeed.X) > .5 then
+										NewX = GetOutSpeed.X
+									end
+									if math.abs(GetOutSpeed.Y) > .5 then
+										NewY = GetOutSpeed.Y
+									end
+									if math.abs(GetOutSpeed.Z) > .5 then
+										NewZ = GetOutSpeed.Z
+									end
+									MainVelocity.AssemblyLinearVelocity = Vector3.new(NewX,NewY,NewZ)
+								end
+								RunS.PreSimulation:Wait()
 							end
 						end
 					end,
