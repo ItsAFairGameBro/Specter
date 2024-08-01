@@ -486,7 +486,6 @@ return function(C,Settings)
 					self:Activate(false)
 				end,
 				ShipAdded=function(self,ship)
-					print(ship,"added")
 					local MainBody = ship:WaitForChild("MainBody")
 					local Team = ship:WaitForChild("Team")
 					local ExpandSize = Team.Value == C.plr.Team.Name and 0 or self.EnTbl.Size
@@ -497,7 +496,6 @@ return function(C,Settings)
 					else
 						C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
 					end
-					
 				end,
 				Activate=function(self,newValue)
 					for num, ship in ipairs(C.Ships) do
@@ -515,6 +513,69 @@ return function(C,Settings)
 						Layout = 1,Default=2,
 						Min=0.1,Max=10,Step=0.1,
 						Shortcut="Size",
+						Activate = C.ReloadHack,
+					}
+				}
+			},
+			{
+				Title = "Bomb Instant Hit",
+				Tooltip = "Bombs hit the closest target",
+				Layout = 7, Functs = {},
+				Shortcut = "BombInstantHit",
+				Activate = function(self, newValue)
+					-- Disconnect funct and set up childadded workspace event for the projectiles
+					if newValue then
+						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
+							task.wait(.2)
+							if instance.Name == "Bomb" and instance.Parent then
+								local closestBasePart, distance
+								if self.EnTbl.Base then
+									closestBasePart, distance = C.getClosestBase()
+								end
+								local closestBasePart2, distance2
+								if self.EnTbl.User then
+									closestBasePart2, distance2 = C.getClosest()
+								end
+								if closestBasePart2 and (not closestBasePart or distance2 < distance) then
+									closestBasePart, distance = closestBasePart2, distance2
+								end
+								if closestBasePart then
+									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
+									for s = 0, 1, 1 do
+										C.firetouchinterest(instance,closestBasePart,0)
+										task.wait()
+										C.firetouchinterest(instance,closestBasePart,1)
+										task.wait()
+									end
+								end
+							end
+						end))
+					end
+				end,
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Bases",
+						Tooltip = "Allows targets such as bases, i.e. harbours and enemy islands.",
+						Layout = 1,Default=true,
+						Shortcut="Base",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Ships",
+						Tooltip = "Allows targets such as ships, i.e. subs and battleships.",
+						Layout = 2,Default=true,
+						Shortcut="Ship",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Users",
+						Tooltip = "Allows targets such as individual users.",
+						Layout = 3,Default=true,
+						Shortcut="User",
+						Activate = C.ReloadHack,
 					}
 				}
 			},
