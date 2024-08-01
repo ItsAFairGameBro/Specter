@@ -263,7 +263,7 @@ return function(C,Settings)
 
 									C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 									RunS.RenderStepped:Wait()
-									C.firetouchinterest(parent,C.hrp, toTouch)
+									C.firetouchinterest(C.hrp,parent, toTouch)
 									RunS.RenderStepped:Wait()
 
 									if TouchToggle.Parent then

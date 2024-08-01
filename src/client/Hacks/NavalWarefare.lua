@@ -706,7 +706,7 @@ return function(C,Settings)
 									Touching = not Touching
 									local PrimaryPart = C.char and C.char.PrimaryPart
 									if PrimaryPart then
-										C.firetouchinterest(FlagPad, C.char.PrimaryPart, Touching and 0 or 1)
+										C.firetouchinterest(C.char.PrimaryPart, FlagPad, Touching and 0 or 1)
 									end
 									RunS.RenderStepped:Wait()
 								end

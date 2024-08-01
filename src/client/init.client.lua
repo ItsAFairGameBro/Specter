@@ -26,7 +26,11 @@ local function RegisterFunctions()
 	C.hookmetamethod = isStudio and function() return end or hookmetamethod
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
-	C.firetouchinterest = isStudio and function() return end or firetouchinterest
+	C.firetouchinterest = isStudio and function() return end or function(part1,part2,number)
+		if part2.Parent then
+			firetouchinterest(part1,part2,number)
+		end
+	end
 	C.fireclickdetector = isStudio and function() return end or fireclickdetector
 	C.getloadedmodules = isStudio and function() return {C.PlayerScripts.PlayerModule.ControlModule} end or getloadedmodules
 	C.request = not isStudio and request
