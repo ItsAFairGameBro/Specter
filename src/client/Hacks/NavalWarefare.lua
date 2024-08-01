@@ -746,7 +746,7 @@ return function(C,Settings)
 							if Plane and C.human.SeatPart.Name == "Seat" then
 								local HitCode = Plane:FindFirstChild("HitCode")
 								if HitCode and HitCode.Value == "Plane" then
-									tag.Enabled = C.enHacks.Render_IslandBombBase and Team.Value ~= C.plr.Team.Name and Team.Value ~= ""
+									tag.Enabled = self.RealEnabled and Team.Value ~= C.plr.Team.Name and Team.Value ~= ""
 									return
 								end
 							end
@@ -811,7 +811,10 @@ return function(C,Settings)
 								end
 								
 								
-								local Plane = C.human.SeatPart.Parent
+								local Plane = C.SeatPart and C.SeatPart.Parent
+								if not Plane then
+									return basebomb_activate(false)
+								end
 								local PlaneMB = Plane:WaitForChild("MainBody")
 								local BombC = Plane:WaitForChild("BombC")
 								local ActionClone = C.AddAction(Info)
