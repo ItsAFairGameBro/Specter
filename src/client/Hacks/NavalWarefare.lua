@@ -619,6 +619,7 @@ return function(C,Settings)
 						return
 					end
 					while true do
+						print("Touching",seatPart:IsGrounded())
 						self:ToggleColliders(Vehicle,seatPart:IsGrounded()) -- Disable CanTouch colliders
 						RunS.PreSimulation:Wait()
 					end
@@ -627,6 +628,9 @@ return function(C,Settings)
 					local Vehicle = seatPart.Parent
 					self:ToggleColliders(Vehicle,true) -- Disable CanTouch colliders
 				end,
+				Options = {
+					
+				},
 			}
 		}
 	}
