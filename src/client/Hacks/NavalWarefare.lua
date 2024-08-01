@@ -783,7 +783,7 @@ return function(C,Settings)
 						local DropOffset = 250
 						local TimeFromDropToExpl = math.sqrt(DropOffset/workspace.Gravity)
 						
-						local newTag=C.ToggleTag:Clone()
+						local newTag=C.Examples.ToggleTag:Clone()
 						newTag.Name = "LoopBombESP"
 						newTag.Parent=C.GUI
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
@@ -843,7 +843,7 @@ return function(C,Settings)
 											WhileIn = 0
 											C.RemoteEvent:FireServer("bomb")
 										end
-									elseif BombC.Value == 0 and not C.enHacks.Blatant_NavalInstantRefuel then
+									elseif BombC.Value == 0 and not C.enHacks.NavalWarefare.PlaneRestock.RealEnabled then
 										break
 									end
 									ActionClone.Time.Text = ("%.2f%%"):format(100-100 * (HPVal.Value / IslandData.Health))
