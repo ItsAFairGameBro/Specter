@@ -16,7 +16,10 @@ return function(C,Settings)
 		end
 		for hackTbl, funct in pairs(C.events[name] or {}) do
 			if hackTbl.RealEnabled then
-				funct(hackTbl,...)
+				local Thread = task.spawn(funct,hackTbl,...)
+				if hackTbl.Threads then
+					table.insert(hackTbl.Threads,Thread)
+				end
 			end
 		end
 	end

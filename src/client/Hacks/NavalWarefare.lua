@@ -392,6 +392,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
+						print("Seated",seatPart)
 						local Vehicle = seatPart.Parent
 						local HitCode = Vehicle:WaitForChild("HitCode",5)
 						if not HitCode then return end
@@ -400,7 +401,6 @@ return function(C,Settings)
 						local HarborMainBody = EnemyHarbor:WaitForChild("MainBody")
 						local LineVelocity = Vehicle:FindFirstChild("BodyVelocity",true)
 						local MainVelocity = LineVelocity.Parent
-						local LowestAcceptablePoint = 10
 
 						local BoundingSize = Vector3.new(10240,20e3,16384)
 
@@ -411,7 +411,8 @@ return function(C,Settings)
 						if VehicleType=="Plane" or VehicleType == "Ship" then
 							self:ToggleColliders(Vehicle,false) -- Disable CanTouch colliders
 							while C.human and C.human.SeatPart == seatPart do
-								if self.Enabled then
+								print("Running")
+								if self.RealEnabled then
 									local BoundingCF = CFrame.new(0, BoundingSize.Y/2 + self.EnTbl.MinHeight, 0)
 									local OldVelocity = MainVelocity.AssemblyLinearVelocity
 									local GetOutSpeed = Vector3.zero
