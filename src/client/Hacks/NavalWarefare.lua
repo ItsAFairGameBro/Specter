@@ -802,6 +802,7 @@ return function(C,Settings)
 						local Info = {Name="LoopBomb",Title="Bombing "..HitCode,Tags={"RemoveOnDestroy"}}
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, HitCode=="Dock" and 120 or 60, 0)
 						local function basebomb_activate(new)
+							print("click")
 							button.Text = new and "Pause" or "Bomb"
 							button.BackgroundColor3 = new and Color3.fromRGB(255) or (HitCode=="Dock" and Color3.fromRGB(170,0,255) or Color3.fromRGB(170,255))
 							if new then
@@ -811,8 +812,9 @@ return function(C,Settings)
 								end
 								
 								
-								local Plane = C.SeatPart and C.SeatPart.Parent
+								local Plane = C.human.SeatPart and C.human.SeatPart.Parent
 								if not Plane then
+									print("plane not found")
 									return basebomb_activate(false)
 								end
 								local PlaneMB = Plane:WaitForChild("MainBody")

@@ -88,7 +88,7 @@ return function(C,Settings)
 					CharAdded = function(self,theirPlr,theirChar,firstRun)
 						local robloxHighlight = Instance.new("Highlight")
 						robloxHighlight.Enabled = false
-						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 0, 0
+						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 1, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
 						robloxHighlight.Adornee = theirChar
 						robloxHighlight:AddTag("RemoveOnDestroy")
