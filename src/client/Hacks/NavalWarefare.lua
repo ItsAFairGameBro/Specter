@@ -612,7 +612,7 @@ return function(C,Settings)
 							end
 						end
 					end
-					if C.human.SeatPart then
+					if C.human and C.human.SeatPart then
 						self.Events.MySeatAdded(self,C.human.SeatPart)
 					end
 				end,
@@ -686,7 +686,8 @@ return function(C,Settings)
 								local ActionClone = C.AddAction(Info)
 								local Touching = false
 								while Info.Enabled and TeamVal.Value == "" and ActionClone and ActionClone.Parent do
-									ActionClone.Time.Text = ("%.2f%%"):format(100 * (HPVal.Value / (8000)))
+									--ActionClone.Time.Text = ("%.2f%%"):format(100 * (HPVal.Value / (8000)))
+									C.SetActionPercentage(ActionClone, HPVal.Value / C.DataStorage.Island.Health)
 									Touching = not Touching
 									local PrimaryPart = C.char and C.char.PrimaryPart
 									if PrimaryPart then

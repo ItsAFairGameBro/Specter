@@ -2008,6 +2008,22 @@ return function(C, Settings)
 		ActionsFrame.Visible = true
 		return ActionClone
 	end
+
+	function C.SetActionPercentage(actionClone: ActionClone, percentage: float)
+		local Time = actionClone:WaitForChild("Time",5)
+		if Time then
+			local Display = ("%.2f"):format(percentage)
+			local LastPing, LastPercentage = actionClone:GetAttribute("LastPing"), actionClone:GetAttribute("LastPercentage")
+			if LastPing and LastPercentage then
+				local WholeTime = (os.clock() - LastPing) / (percentage - LastPercentage)
+				local TimeLeft = (1 - percentage) * WholeTime
+				Display ..= (" (%.2f seconds)"):format(TimeLeft)
+			end
+			actionClone:SetAttribute("LastPing", os.clock())
+			actionClone:SetAttribute("LastPercentage",percentage)
+			Time.Text = Display
+		end
+	end
 	
 	function C.GetAction(name)
 		local actionInstance = ActionsList:FindFirstChild(name)
