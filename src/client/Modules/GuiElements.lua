@@ -2022,9 +2022,9 @@ return function(C, Settings)
 					Display ..= (" (%.2f seconds)"):format(TimeLeft)
 				end
 				actionClone:SetAttribute("LastPing", os.clock())
-				actionClone:SetAttribute("LastPercentage",percentage)	
+				actionClone:SetAttribute("LastPercentage",percentage)
+				Time.Text = Display
 			end
-			Time.Text = Display
 		end
 	end
 	
