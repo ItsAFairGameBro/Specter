@@ -279,7 +279,7 @@ return function(C,Settings)
 						return
 					end
 					while true do
-						if not C.isInGame(C.char) then
+						while not C.isInGame(C.char) do
 							task.wait(4) -- FF lasts for 20 seconds so we good
 						end
 						local FF = C.char:FindFirstChildWhichIsA("ForceField")
