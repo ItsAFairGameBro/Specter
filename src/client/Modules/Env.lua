@@ -519,4 +519,60 @@ return function(C,Settings)
 			error("Unknown TCS ChatVersion For SendGeneralMessage: "..TCS.ChatVersion.Name)
 		end
 	end
+
+	function C.IsInBox(PartCF:CFrame,PartSize:Vector3,Point:Vector3)
+		local Transform = PartCF:pointToObjectSpace(Point) -- Transform into local space
+		local HalfSize = PartSize * 0.5
+
+		return math.abs(Transform.x) <= HalfSize.x and
+			math.abs(Transform.y) <= HalfSize.y and
+			math.abs(Transform.z) <= HalfSize.z
+	end
+	function C.ClosestPointOnPart(PartCF, PartSize, Point)
+		local Transform = PartCF:pointToObjectSpace(Point) -- Transform into local space
+		local HalfSize = PartSize * 0.5
+		return PartCF * Vector3.new( -- Clamp & transform into world space
+			math.clamp(Transform.x, -HalfSize.x, HalfSize.x),
+			math.clamp(Transform.y, -HalfSize.y, HalfSize.y),
+			math.clamp(Transform.z, -HalfSize.z, HalfSize.z)
+		)
+	end
+	function C.ClosestPointOnPartSurface(PartCF, PartSize, Point)
+		local Transform = PartCF:pointToObjectSpace(Point) -- Transform into local space
+		local HalfSize = PartSize * 0.5
+
+		-- Calculate distances to each face
+		local distances = {
+			xMin = math.abs(Transform.x + HalfSize.x),
+			xMax = math.abs(Transform.x - HalfSize.x),
+			yMin = math.abs(Transform.y + HalfSize.y),
+			yMax = math.abs(Transform.y - HalfSize.y),
+			zMin = math.abs(Transform.z + HalfSize.z),
+			zMax = math.abs(Transform.z - HalfSize.z)
+		}
+
+		-- Determine the minimum distance to a surface
+		local minDistance = math.min(distances.xMin, distances.xMax, distances.yMin, distances.yMax, distances.zMin, distances.zMax)
+
+		-- Create a new vector for the clamped point
+		local clampedPoint
+
+		-- Project the point to the closest surface
+		if minDistance == distances.xMin then
+			clampedPoint = Vector3.new(-HalfSize.x, Transform.y, Transform.z)
+		elseif minDistance == distances.xMax then
+			clampedPoint = Vector3.new(HalfSize.x, Transform.y, Transform.z)
+		elseif minDistance == distances.yMin then
+			clampedPoint = Vector3.new(Transform.x, -HalfSize.y, Transform.z)
+		elseif minDistance == distances.yMax then
+			clampedPoint = Vector3.new(Transform.x, HalfSize.y, Transform.z)
+		elseif minDistance == distances.zMin then
+			clampedPoint = Vector3.new(Transform.x, Transform.y, -HalfSize.z)
+		elseif minDistance == distances.zMax then
+			clampedPoint = Vector3.new(Transform.x, Transform.y, HalfSize.z)
+		end
+
+		-- Transform back to world space and return the point on the surface
+		return PartCF * clampedPoint
+	end
 end
