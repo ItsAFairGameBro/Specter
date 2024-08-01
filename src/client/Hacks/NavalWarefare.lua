@@ -714,7 +714,7 @@ return function(C,Settings)
 			},
 			{
 				Title = "Plane Restock",
-				Tooltip = "Refuels",
+				Tooltip = "Refuels when things like ammo, bombs, or health are below certain configurable thresholds",
 				Layout = 10, Threads = {}, Functs = {}, Default = true,
 				Shortcut = "PlaneRestock",
 				DontActivate = true,
@@ -828,6 +828,118 @@ return function(C,Settings)
 						Activate = C.ReloadHack,
 					},
 				},
+			},
+			{
+				Title = "Vehicle",
+				Tooltip = "Allows you to modify speed for ships and planes",
+				Layout = 11, Threads = {}, Functs = {}, Default = true,
+				Shortcut = "PlaneRestock",
+				DontActivate = true,
+				Activate = function(self)
+					if C.human and C.human.SeatPart then
+						self.Events.MySeatAdded(C.human.SeatPart)
+					end
+				end,
+				Events = {
+					MySeatAdded = function(self,seatPart)
+						self.Events.MySeatRemoved(self,seatPart)
+						local Vehicle = seatPart.Parent
+						local HitCode = Vehicle:WaitForChild("HitCode",5)
+						local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
+						--The "BodyVelocity" is actually "LineVelocity"
+						if HitCode and ((HitCode.Value == "Ship" and self.EnTbl.Ship) or (HitCode.Value == "Plane" and self.EnTbl.Plane)) then
+							local MainBody = Vehicle:WaitForChild("MainBody")
+							local LineVelocity = MainBody:WaitForChild("BodyVelocity")
+							local VehicleType = Vehicle:WaitForChild("HitCode").Value
+							local FuelLeft = HitCode.Value == "Plane" and Vehicle:WaitForChild("Fuel")
+							local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")
+							local lastSet
+							local function Upd()
+								if lastSet and (LineVelocity.VectorVelocity - lastSet).Magnitude < 0.3 then
+									return
+								end
+								local SpeedMult = self.EnTbl[HitCode.Value .. "Speed"]
+								if VehicleType=="Ship" then
+									SpeedMult = math.min(SpeedMult,1.8)
+								end
+								local TurnMult = C.enHacks.Blatant_NavalVehicleTurnSpeed or 1
+								if C.GetAction("LoopBomb") or C.GetAction("Plane Refuel") then
+									SpeedMult,TurnMult = 0, 0 -- Override to stop it from moving!
+								end
+								lastSet = SpeedMult * LineVelocity.VectorVelocity
+								if FuelLeft then
+									if self.EnTbl.InfFuel then
+										if FuelLeft.Value < 500 then
+											FuelLeft:SetAttribute("RealFuel",FuelLeft.Value)
+										end
+										FuelLeft.Value = math.huge
+									elseif FuelLeft:GetAttribute("RealFuel") then
+										FuelLeft.Value = FuelLeft:GetAttribute("RealFuel")
+									end
+								end
+								local isOn = (LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
+									(FlyButton.BackgroundColor3.R*255>250 and C.enHacks.Blatant_NavalInfPlaneFuel) or VehicleType == "Ship"
+								LineVelocity.VectorVelocity = lastSet
+
+								LineVelocity.MaxAxesForce = Vector3.new(1000,1000,1000) * SpeedMult
+								LineVelocity.MaxForce = isOn and ((VehicleType=="Ship" and 49.281604e6 or 31.148e3) * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
+								AlignOrientation.Responsiveness = 20 * (TurnMult/16)
+								AlignOrientation.MaxTorque = isOn and (33.5e3 * TurnMult) or 0
+							end
+							table.insert(self.Functs,LineVelocity:GetPropertyChangedSignal("VectorVelocity"):Connect(Upd))
+							Upd()
+						end
+					end,
+					MySeatRemoved = function(self, seatPart)
+						local Vehicle = seatPart.Parent
+						if Vehicle and Vehicle.PrimaryPart then
+							Vehicle.PrimaryPart.AssemblyLinearVelocity = Vector3.zero
+							Vehicle.PrimaryPart.AssemblyAngularVelocity = Vector3.zero
+						end
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Ships",
+						Tooltip = "Injects into Ships (i.e. submarines, battleships, carriers, cruisers)",
+						Layout = 1,Default=true,
+						Shortcut="Ship",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Planes",
+						Tooltip = "Injects into Planes (i.e. Heavy Bomber, Torpedo Bomber, Bomber)",
+						Layout = 2,Default=true,
+						Shortcut="Plane",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Inf Fuel",
+						Tooltip = "Tricks the game into thinking that you have infinite fuel",
+						Layout = 4,Default=true,
+						Shortcut="InfFuel",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Slider,
+						Title = "Plane Speed",
+						Tooltip = "How much faster you go when driving a plane",
+						Layout = 5,Default=3,
+						Min=0,Max=20,Step=1,
+						Shortcut="PlaneSpeed",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Ship Speed",
+						Tooltip = "How much faster you go when driving a ship",
+						Layout = 6,Default=3,
+						Min=0,Max=20,Step=1,
+						Shortcut="ShipSpeed",
+					},
+				}
 			}
 		}
 	}
