@@ -389,20 +389,6 @@ return function(C,Settings)
 				Tooltip = "Prevents your plane from going into the Pacific or exiting!",
 				Layout = 5, Threads = {},
 				Shortcut = "AntiBounds",
-				ToggleColliders = function(self,Vehicle,Enabled)
-					if not Vehicle then
-						return
-					end
-					for num, part in ipairs(Vehicle:GetDescendants()) do
-						if part:IsA("BasePart") then
-							if Enabled then
-								C.ResetPartProperty(part, "CanTouch", "AntiBounds")
-							else
-								C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
-							end
-						end
-					end
-				end,
 				Activate = function(self)
 					if not C.char then
 						return
@@ -429,7 +415,6 @@ return function(C,Settings)
 
 						--The "BodyVelocity" is actually "LineVelocity"
 						if VehicleType=="Plane" or VehicleType == "Ship" then
-							self:ToggleColliders(Vehicle,false) -- Disable CanTouch colliders
 							while C.human and C.human.SeatPart == seatPart and self.RealEnabled do
 								local BoundingCF = CFrame.new(0, BoundingSize.Y/2 + self.EnTbl.MinHeight, 0)
 								local OldVelocity = MainVelocity.AssemblyLinearVelocity
@@ -464,10 +449,6 @@ return function(C,Settings)
 								RunS.PreSimulation:Wait()
 							end
 						end
-					end,
-					MySeatRemoved = function(self,seatPart)
-						local Vehicle = seatPart.Parent
-						self:ToggleColliders(Vehicle,true) -- Disable CanTouch colliders
 					end,
 				},
 				Options = {
@@ -605,6 +586,20 @@ return function(C,Settings)
 				Tooltip = "Disables the Pacific Ocean kill floor (the grey blocks below the ocean 🌊🦈)",
 				Layout = 100, Threads = {}, Default = true,
 				Shortcut = "DisableKillBricks",
+				ToggleColliders = function(self,Vehicle,Enabled)
+					if not Vehicle then
+						return
+					end
+					for num, part in ipairs(Vehicle:GetDescendants()) do
+						if part:IsA("BasePart") then
+							if Enabled then
+								C.ResetPartProperty(part, "CanTouch", "AntiBounds")
+							else
+								C.SetPartProperty(part, "CanTouch", "AntiBounds",false)
+							end
+						end
+					end
+				end,
 				Activate = function(self,newValue)
 					local SeaFloorGroup = C.StringWait(workspace,"Setting.SeaFloor")
 					for num, seaFloorPart in ipairs(SeaFloorGroup:GetChildren()) do
@@ -616,6 +611,21 @@ return function(C,Settings)
 							end
 						end
 					end
+				end,
+				MySeatAdded = function(self,seatPart)
+					local Vehicle = seatPart.Parent
+					local HitCode = Vehicle:WaitForChild("HitCode",5)
+					if not HitCode or HitCode.Value ~= "Plane" then
+						return
+					end
+					while true do
+						self:ToggleColliders(Vehicle,seatPart:IsGrounded()) -- Disable CanTouch colliders
+						RunS.PreSimulation:Wait()
+					end
+				end,
+				MySeatRemoved = function(self,seatPart)
+					local Vehicle = seatPart.Parent
+					self:ToggleColliders(Vehicle,true) -- Disable CanTouch colliders
 				end,
 			}
 		}
