@@ -614,16 +614,13 @@ return function(C,Settings)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
-						print("Seat Added")
 						local Vehicle = seatPart.Parent
 						local HitCode = Vehicle:WaitForChild("HitCode",5)
 						if not HitCode or HitCode.Value ~= "Plane" then
-							print("No HitCode or no plane")
 							return
 						end
 						while true do
 							local isGrounded = seatPart.AssemblyLinearVelocity.Magnitude < 0.2
-							print("Touching",isGrounded)
 							self:ToggleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
 							RunS.PreSimulation:Wait()
 						end
