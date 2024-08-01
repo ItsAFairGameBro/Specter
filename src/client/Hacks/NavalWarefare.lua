@@ -492,7 +492,7 @@ return function(C,Settings)
 					local DefaultSize = C.GetPartProperty(MainBody,"Size")
 
 					if self.RealEnabled then
-						C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",DefaultSize + 2 * Vector3.one * ExpandSize)-- Times two in order to expand in EVERY direction
+						C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",DefaultSize + 2 * Vector3.one * ExpandSize, true)-- Times two in order to expand in EVERY direction
 					else
 						C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
 					end
