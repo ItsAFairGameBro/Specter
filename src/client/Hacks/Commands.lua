@@ -380,7 +380,7 @@ return function(C,Settings)
                     return false, `HRP not found for {theirPlr.Name}`
                 end
                 C.CommandFunctions.unfollow:Run()
-                teleportMyself(HRP.CFrame * CFrame.new(0,0,3))
+                C.DoTeleport(HRP.CFrame * CFrame.new(0,0,3))
                 return true,nil--theirPlr.Name
             end,
         },
@@ -445,7 +445,7 @@ return function(C,Settings)
 
                     setCFrame += HRP.AssemblyLinearVelocity * 0.06 -- Ping
 
-                    teleportMyself(setCFrame)
+                    C.DoTeleport(setCFrame)
 
                     if C.char and C.char.PrimaryPart and not self.Parent.fling.FlingThread then
                         C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()

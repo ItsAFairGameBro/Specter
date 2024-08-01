@@ -312,7 +312,6 @@ return function(C,Settings)
 						local CurConn
 						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F and not CurConn then
-								print("inserted")
 								local MyConn
 								MyConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
@@ -338,7 +337,6 @@ return function(C,Settings)
 						end))
 						table.insert(self.Functs,UIS.InputEnded:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F then
-								print('deleted',#self.Functs)
 								C.TblRemove(self.Functs,CurConn)
 								if CurConn then
 									CurConn:Disconnect()
