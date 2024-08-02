@@ -865,7 +865,7 @@ return function(C,Settings)
 									CalculateNew(Randomizer:NextInteger(1,5) == 1)
 									if not C.GetAction("Plane Refuel") and BombC.Value > 0 then
 										PlaneMB.AssemblyLinearVelocity = TargetCF.Position - PlaneMB.Position
-										--PlaneMB.AssemblyAngularVelocity = Vector3.zero
+										PlaneMB.AssemblyAngularVelocity = Vector3.zero
 										if BombC.Value > 0 and WhileIn>.5 then
 											WhileIn = 0
 											C.RemoteEvent:FireServer("bomb")
@@ -873,16 +873,16 @@ return function(C,Settings)
 									elseif BombC.Value == 0 and not C.enHacks.NavalWarefare.PlaneRestock.En then
 										break
 									end
-									ActionClone.Time.Text = ("%.2f%%"):format(100-100 * (HPVal.Value / IslandData.Health))
+									C.SetActionPercentage(ActionClone,1-(HPVal.Value / IslandData.Health))
 									local Distance = ((PlaneMB:GetPivot().Position - TargetCF.Position)/Vector3.new(1,1000,1)).Magnitude
 									if Distance > 30 and not C.GetAction("Plane Refuel") then
 										C.VehicleTeleport(PlaneMB,TargetCF)
 									end
 									if Distance < 300 then
-										WhileIn += RunS.PreSimulation:Wait()
+										WhileIn += RunS.RenderStepped:Wait()
 									else
 										WhileIn = 0
-										RunS.PreSimulation:Wait()
+										RunS.RenderStepped:Wait()
 									end
 								end
 								isEn = true
