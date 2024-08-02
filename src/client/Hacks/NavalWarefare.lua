@@ -99,7 +99,10 @@ local function Static(C,Settings)
 		end
 		return selShip, maxDist
 	end
-	function C.VehicleTeleport(vehicle, loc)
+	function C.VehicleTeleport(vehicle, loc, useCF)
+		if not useCF then
+			useCF = loc.Rotation * CFrame.new(useCF.Position)
+		end
 		local HitCode = vehicle:FindFirstChild("HitCode")
 		if HitCode then
 			local Turret = vehicle:FindFirstChild("Turret")
