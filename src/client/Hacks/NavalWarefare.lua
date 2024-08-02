@@ -672,6 +672,7 @@ return function(C,Settings)
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
 						end
+						print("Loop Ended",self.EnTbl.PlaneHitbox,C.SeatPart,C.SeatPart == seatPart)
 						self.Events.MySeatRemoved(self,seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
