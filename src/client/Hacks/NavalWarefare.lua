@@ -475,7 +475,7 @@ return function(C,Settings)
 									end
 									MainVelocity.AssemblyLinearVelocity = Vector3.new(NewX,NewY,NewZ)
 								end
-								RunS.PreSimulation:Wait()
+								RunS.RunService:Wait()
 							end
 						end
 					end,
@@ -791,7 +791,7 @@ return function(C,Settings)
 						end
 					end
 					for num, ship in ipairs(C.Ships) do
-						self.Events.ShipAdded(self,ship)
+						table.insert(self.Threads,task.spawn(self.Events.ShipAdded,self,ship))
 					end
 				end,
 				Events = {
@@ -904,8 +904,8 @@ return function(C,Settings)
 						end
 						C.AddObjectConnection(TeamVal,"LoopBomb",TeamVal:GetPropertyChangedSignal("Value"):Connect(UpdVisibiltiy))
 						C.AddObjectConnection(HPVal,"LoopBomb",HPVal:GetPropertyChangedSignal("Value"):Connect(UpdVisibiltiy))
-						UpdVisibiltiy()
 						newTag.Adornee=IslandBody
+						UpdVisibiltiy()
 					end,
 					DockAdded=function(self,dock)
 						self.Events.IslandAdded(self,dock)
