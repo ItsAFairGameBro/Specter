@@ -102,7 +102,7 @@ local function Static(C,Settings)
 	function C.VehicleTeleport(vehicle, loc)
 		local HitCode = vehicle:FindFirstChild("HitCode")
 		if HitCode then
-			local TurretC = vehicle:FindFirstChild("TurretC")
+			local TurretC = vehicle:FindFirstChild("Turret")
 			if TurretC then
 				-- Calculate the relative offset and rotation of the turret to the vehicle
 				local Offset = TurretC:GetPivot().Position - vehicle:GetPivot().Position
