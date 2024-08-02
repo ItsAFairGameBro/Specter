@@ -825,7 +825,7 @@ return function(C,Settings)
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, HitCode=="Dock" and 120 or 60, 0)
 						local function basebomb_activate(new)
 							print("Begin Activate",new)
-							task.wait()
+							task.wait(.5)
 							button.Text = new and "Pause" or "Bomb"
 							button.BackgroundColor3 = new and Color3.fromRGB(255) or (HitCode=="Dock" and Color3.fromRGB(170,0,255) or Color3.fromRGB(170,255))
 							if new then
