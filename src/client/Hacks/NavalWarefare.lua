@@ -102,21 +102,23 @@ local function Static(C,Settings)
 	function C.VehicleTeleport(vehicle, loc)
 		local HitCode = vehicle:FindFirstChild("HitCode")
 		if HitCode then
-			local TurretC = vehicle:FindFirstChild("Turret")
-			if TurretC then
+			local Turret = vehicle:FindFirstChild("Turret")
+			if Turret then
 				-- Calculate the relative offset and rotation of the turret to the vehicle
-				local Offset = TurretC:GetPivot().Position - vehicle:GetPivot().Position
-				local OriginalRot = TurretC:GetPivot().Rotation - vehicle:GetPivot().Rotation
+				local Offset = Turret:GetPivot().Position - vehicle:GetPivot().Position
+				local RelativeRotation = vehicle:GetPivot():ToObjectSpace(Turret:GetPivot())
 	
 				-- Move the vehicle to the new location
 				vehicle:PivotTo(loc)
 	
-				-- Calculate the new position and rotation for the turret
-				local newTurretPos = vehicle:GetPivot().Position + Offset
-				local newTurretRot = loc.Rotation + OriginalRot
+				-- Calculate the new position for the turret
+				local newTurretPos = loc.Position + Offset
+	
+				-- Calculate the new rotation for the turret
+				local newTurretCFrame = loc * RelativeRotation
 	
 				-- Set the turret's new position and rotation
-				TurretC:PivotTo(CFrame.new(newTurretPos) * CFrame.fromEulerAnglesXYZ(newTurretRot.X, newTurretRot.Y, newTurretRot.Z))
+				Turret:PivotTo(newTurretCFrame)
 			else
 				vehicle:PivotTo(loc)
 			end
