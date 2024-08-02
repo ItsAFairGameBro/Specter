@@ -83,7 +83,7 @@ local function Static(C,Settings)
 					local d = (MainBody.Position - myHRPPos).Magnitude
 					if d < maxDist then
 						if baseType == "Dock" then
-							d -= 100
+							d -= 50
 						end
 						selBase, maxDist = MainBody, d
 					end
@@ -683,10 +683,10 @@ return function(C,Settings)
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
 						end
+						if true then return end
 						self.Events.MySeatRemoved(self,seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
-						if true then return end
 						local Vehicle = seatPart.Parent
 						self:ToggleVehicleColliders(Vehicle,true) -- Disable CanTouch colliders
 						self:ToggleBaseColliders(false)
@@ -819,7 +819,6 @@ return function(C,Settings)
 						self:RefreshAllTags()
 					end,
 					MySeatRemoved = function(self)
-						if true then return end
 						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)
@@ -942,6 +941,7 @@ return function(C,Settings)
 				DontActivate = true,
 				Activate=function(self,newValue)
 					if not newValue then
+						if true then return end
 						self.Events.MySeatRemoved(self) -- Cancel the action
 					elseif C.human.SeatPart then
 						self.Events.MySeatAdded(self,C.human.SeatPart)
@@ -949,6 +949,7 @@ return function(C,Settings)
 				end,
 				Events = {
 					MySeatAdded=function(self,seatPart)
+						
 						self.Events.MySeatRemoved(self)
 						local Plane = seatPart.Parent
 						local HitCode = Plane:WaitForChild("HitCode",5)
