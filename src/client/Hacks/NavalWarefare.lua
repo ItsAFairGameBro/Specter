@@ -670,7 +670,7 @@ return function(C,Settings)
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
 						end
-						self:MySeatRemoved(seatPart)
+						self.Events.MySeatRemoved(self,seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
 						local Vehicle = seatPart.Parent
