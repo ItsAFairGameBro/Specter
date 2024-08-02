@@ -99,6 +99,29 @@ local function Static(C,Settings)
 		end
 		return selShip, maxDist
 	end
+	function C.VehicleTeleport(vehicle, loc)
+		local HitCode = vehicle:FindFirstChild("HitCode")
+		if HitCode then
+			local TurretC = vehicle:FindFirstChild("TurretC")
+			if TurretC then
+				-- Calculate the relative offset and rotation of the turret to the vehicle
+				local Offset = TurretC:GetPivot().Position - vehicle:GetPivot().Position
+				local OriginalRot = TurretC:GetPivot().Rotation - vehicle:GetPivot().Rotation
+	
+				-- Move the vehicle to the new location
+				vehicle:PivotTo(loc)
+	
+				-- Calculate the new position and rotation for the turret
+				local newTurretPos = vehicle:GetPivot().Position + Offset
+				local newTurretRot = loc.Rotation + OriginalRot
+	
+				-- Set the turret's new position and rotation
+				TurretC:PivotTo(CFrame.new(newTurretPos) * CFrame.fromEulerAnglesXYZ(newTurretRot.X, newTurretRot.Y, newTurretRot.Z))
+			else
+				vehicle:PivotTo(loc)
+			end
+		end
+	end	
 	C.getgenv().isInGame = C.isInGame
 	C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
 	C.Bases = {Dock={},Island={}}
@@ -799,6 +822,8 @@ return function(C,Settings)
 						local Info = {Name="LoopBomb",Title="Bombing "..HitCode,Tags={"RemoveOnDestroy"}}
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, HitCode=="Dock" and 120 or 60, 0)
 						local function basebomb_activate(new)
+							print("Begin Activate",new)
+							task.wait()
 							button.Text = new and "Pause" or "Bomb"
 							button.BackgroundColor3 = new and Color3.fromRGB(255) or (HitCode=="Dock" and Color3.fromRGB(170,0,255) or Color3.fromRGB(170,255))
 							if new then
@@ -849,7 +874,7 @@ return function(C,Settings)
 									ActionClone.Time.Text = ("%.2f%%"):format(100-100 * (HPVal.Value / IslandData.Health))
 									local Distance = ((PlaneMB:GetPivot().Position - TargetCF.Position)/Vector3.new(1,1000,1)).Magnitude
 									if Distance > 30 and not C.GetAction("Plane Refuel") then
-										PlaneMB:PivotTo(TargetCF)
+										C.VehicleTeleport(PlaneMB,TargetCF)
 									end
 									if Distance < 300 then
 										WhileIn += RunS.PreSimulation:Wait()
@@ -922,7 +947,7 @@ return function(C,Settings)
 								local Origin = Plane:GetPivot()
 								local Info = {Name="Plane Refuel",Tags={"RemoveOnDestroy"},Stop=function(onRequest)
 									if not C.GetAction("LoopBomb") then
-										Plane:PivotTo(Origin)
+										C.VehicleTeleport(Plane,Origin)
 									end
 									if onRequest then
 										self:SetValue(false)
@@ -936,7 +961,7 @@ return function(C,Settings)
 								end
 								while canRun(true) and Info.Enabled do
 									if (Plane:GetPivot().Position - HarborMain.Position).Magnitude > 30 then
-										Plane:PivotTo(HarborMain:GetPivot() * CFrame.new(0,45,15))
+										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(0,45,15))
 									end
 									MainBody.AssemblyLinearVelocity = Vector3.new()
 									MainBody.AssemblyAngularVelocity = Vector3.new()
