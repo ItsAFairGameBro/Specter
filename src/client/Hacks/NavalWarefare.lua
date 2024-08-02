@@ -555,7 +555,7 @@ return function(C,Settings)
 							if instance.Name == "Bomb" then
 								instance.CanTouch = false
 							end
-							task.wait(.2)
+							task.wait(.8)
 							if instance.Name == "Bomb" and instance.Parent then
 								local closestBasePart, distance
 								if self.EnTbl.Base then
