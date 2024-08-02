@@ -670,6 +670,7 @@ return function(C,Settings)
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
 						end
+						self:MySeatRemoved(seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
 						local Vehicle = seatPart.Parent
@@ -829,7 +830,6 @@ return function(C,Settings)
 						local Info = {Name="LoopBomb",Title="Bombing "..HitCode,Tags={"RemoveOnDestroy"}}
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, HitCode=="Dock" and 120 or 60, 0)
 						local function basebomb_activate(new)
-							print("Begin Activate",new)
 							task.wait(.5)
 							button.Text = new and "Pause" or "Bomb"
 							button.BackgroundColor3 = new and Color3.fromRGB(255) or (HitCode=="Dock" and Color3.fromRGB(170,0,255) or Color3.fromRGB(170,255))
