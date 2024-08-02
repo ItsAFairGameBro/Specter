@@ -475,7 +475,7 @@ return function(C,Settings)
 									end
 									MainVelocity.AssemblyLinearVelocity = Vector3.new(NewX,NewY,NewZ)
 								end
-								RunS.RunService:Wait()
+								RunS.RenderStepped:Wait()
 							end
 						end
 					end,
