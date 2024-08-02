@@ -517,11 +517,13 @@ return function(C,Settings)
 					ShipAdded=function(self,ship)
 						local MainBody = ship:WaitForChild("MainBody")
 						local Team = ship:WaitForChild("Team")
-						local ExpandSize = Team.Value == C.plr.Team.Name and 0 or self.EnTbl.Size
+						local ExpandSize = Team.Value == C.plr.Team.Name or self.RealEnabled and 0 or self.EnTbl.Size
 						local DefaultSize = C.GetPartProperty(MainBody,"Size")
 	
-						if self.RealEnabled then
-							C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",DefaultSize + 2 * Vector3.one * ExpandSize, true)-- Times two in order to expand in EVERY direction
+						if ExpandSize == 0 then
+							local NewSize = DefaultSize + 2 * Vector3.one * ExpandSize
+							C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",NewSize, true)-- Times two in order to expand in EVERY direction
+							MainBody.Size = NewSize
 						else
 							C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
 						end
