@@ -519,14 +519,12 @@ return function(C,Settings)
 						local Team = ship:WaitForChild("Team")
 						local ExpandSize = (Team.Value == C.plr.Team.Name or not self.RealEnabled) and 0 or self.EnTbl.Size
 						local DefaultSize = C.GetPartProperty(MainBody,"Size")
-						print(ship.Name,Team.Value,ExpandSize)
 	
+						C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
+
 						if ExpandSize == 0 then
 							local NewSize = DefaultSize + 2 * Vector3.one * ExpandSize
 							C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",NewSize, true)-- Times two in order to expand in EVERY direction
-							MainBody.Size = NewSize
-						else
-							C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
 						end
 					end,
 					MyTeamAdded=function(self,newTeam)
