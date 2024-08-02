@@ -38,9 +38,9 @@ local function Static(C,Settings)
 
 		return true, player.Team -- Player exists!
 	end
-	function C.getClosest(noForcefield:boolean,notSeated:boolean)
-		local myHRP = C.char and C.char.PrimaryPart
-		if not C.human or C.human.Health <= 0 or not myHRP then return end
+	function C.getClosest(noForcefield:boolean,notSeated:boolean,location:Vector3)
+		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
+		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
 
 
 		local closest = nil;
@@ -61,7 +61,7 @@ local function Static(C,Settings)
 			local theirHead = theirChar.FindFirstChild(theirChar,"Head")
 			if not theirHead then continue end
 
-			local d = (theirHead.Position - myHRP.Position).Magnitude
+			local d = (theirHead.Position - myHRPPos).Magnitude
 
 			if d < distance then
 				distance = d
@@ -71,7 +71,10 @@ local function Static(C,Settings)
 
 		return closest, distance
 	end
-	function C.getClosestBase()
+	function C.getClosestBase(location: Vector3)
+		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
+		if not myHRPPos then return end
+
 		local selBase, maxDist = nil, math.huge
 		for baseType, bases in pairs(C.Bases) do
 			for num, base in ipairs(bases) do
@@ -79,6 +82,9 @@ local function Static(C,Settings)
 					local MainBody = base:WaitForChild("MainBody")
 					local d = (MainBody.Position - C.char.PrimaryPart.Position).Magnitude
 					if d < maxDist then
+						if baseType == "Dock" then
+							d -= 100
+						end
 						selBase, maxDist = MainBody, d
 					end
 				end
@@ -86,12 +92,15 @@ local function Static(C,Settings)
 		end
 		return selBase, maxDist
 	end
-	function C.getClosestShip()
+	function C.getClosestShip(location: Vector3)
+		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
+		if not myHRPPos then return end
+
 		local selShip, maxDist = nil, math.huge
 		for num, ship  in pairs(C.Ships) do
 			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and ship.HP.Value > 0 then
 				local MainBody = ship:WaitForChild("MainBody")
-				local d = (MainBody.Position - C.char.PrimaryPart.Position).Magnitude
+				local d = (MainBody.Position - location).Magnitude
 				if d < maxDist then
 					selShip, maxDist = MainBody, d
 				end
@@ -677,6 +686,7 @@ return function(C,Settings)
 						self.Events.MySeatRemoved(self,seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
+						if true then return end
 						local Vehicle = seatPart.Parent
 						self:ToggleVehicleColliders(Vehicle,true) -- Disable CanTouch colliders
 						self:ToggleBaseColliders(false)
@@ -808,7 +818,8 @@ return function(C,Settings)
 					MySeatAdded=function(self)
 						self:RefreshAllTags()
 					end,
-					MySeatRemoved=function(self)
+					MySeatRemoved = function(self)
+						if true then return end
 						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)
@@ -1001,7 +1012,8 @@ return function(C,Settings)
 							CheckDORefuel()
 						end
 					end,
-					MySeatRemoved=function(self)
+					MySeatRemoved = function(self)
+						if true then return end
 						C.RemoveAction("Plane Refuel")
 					end,
 				},
@@ -1104,6 +1116,7 @@ return function(C,Settings)
 						end
 					end,
 					MySeatRemoved = function(self, seatPart)
+						if true then return end
 						self:ClearData()
 						local Vehicle = seatPart.Parent
 						if Vehicle and Vehicle.PrimaryPart then
