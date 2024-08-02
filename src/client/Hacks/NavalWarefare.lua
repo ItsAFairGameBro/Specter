@@ -668,7 +668,7 @@ return function(C,Settings)
 						end
 						local LineVelocity = Vehicle:WaitForChild("MainBody"):WaitForChild("BodyVelocity")
 						while self.EnTbl.PlaneHitbox and C.SeatPart == seatPart do
-							local isGrounded = LineVelocity.MaxForce.Magnitude < 0.2
+							local isGrounded = LineVelocity.MaxForce < 2
 							self:ToggleVehicleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
