@@ -632,7 +632,6 @@ return function(C,Settings)
 					if not Vehicle then
 						return
 					end
-					print(Vehicle.Name,"Collider",Enabled)
 					for num, part in ipairs(Vehicle:GetDescendants()) do
 						if part:IsA("BasePart") then
 							self:SetPartEn(part,Enabled)
@@ -663,11 +662,9 @@ return function(C,Settings)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
-						print("Seat Added")
 						local Vehicle = seatPart.Parent
 						local HitCode = Vehicle:WaitForChild("HitCode",5)
 						if not HitCode or HitCode.Value ~= "Plane" then
-							print("Invalid Seat",HitCode.Value)
 							return
 						end
 						local LineVelocity = Vehicle:WaitForChild("MainBody"):WaitForChild("BodyVelocity")
@@ -677,7 +674,6 @@ return function(C,Settings)
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
 						end
-						print("Loop Ended",self.EnTbl.PlaneHitbox,C.SeatPart,C.SeatPart == seatPart)
 						self.Events.MySeatRemoved(self,seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
