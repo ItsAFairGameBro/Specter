@@ -544,7 +544,7 @@ return function(C,Settings)
 				}
 			},
 			{
-				Title = "Bomb Instant Hit",
+				Title = "Bomb Hit",
 				Tooltip = "Bombs hit the closest target",
 				Layout = 7, Functs = {},
 				Shortcut = "BombInstantHit",
@@ -552,6 +552,9 @@ return function(C,Settings)
 					-- Disconnect funct and set up childadded workspace event for the projectiles
 					if newValue then
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
+							if instance.Name == "Bomb" then
+								instance.CanTouch = false
+							end
 							task.wait(.2)
 							if instance.Name == "Bomb" and instance.Parent then
 								local closestBasePart, distance
@@ -574,6 +577,7 @@ return function(C,Settings)
 								end
 								if closestBasePart then
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
+									instance.CanTouch = true
 									for s = 0, 1, 1 do
 										C.firetouchinterest(instance,closestBasePart,0)
 										task.wait()
