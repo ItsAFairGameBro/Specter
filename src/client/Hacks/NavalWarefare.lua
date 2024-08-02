@@ -501,7 +501,7 @@ return function(C,Settings)
 			},
 			{
 				Title = "Hitbox Expander",
-				Tooltip = "How large each ship's hitbox is",
+				Tooltip = "Expands enemy ship's hitbox, making them easier to hit!",
 				Layout = 6, Threads = {},
 				Shortcut = "HitboxExpander",
 				DontActivate = true,
@@ -537,7 +537,7 @@ return function(C,Settings)
 						Title = "Size",
 						Tooltip = "The size, in studs, that the hitboxes are expanded in every direction",
 						Layout = 1,Default=2,
-						Min=0.1,Max=10,Digits=1,
+						Min=0.1,Max=50,Digits=1,
 						Shortcut="Size",
 						Activate = C.ReloadHack,
 					}
@@ -628,6 +628,7 @@ return function(C,Settings)
 					if not Vehicle then
 						return
 					end
+					print(Vehicle.Name,"Collider",Enabled)
 					for num, part in ipairs(Vehicle:GetDescendants()) do
 						if part:IsA("BasePart") then
 							self:SetPartEn(part,Enabled)
