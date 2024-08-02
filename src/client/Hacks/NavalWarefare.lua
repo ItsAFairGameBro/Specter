@@ -659,9 +659,11 @@ return function(C,Settings)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
+						print("Seat Added")
 						local Vehicle = seatPart.Parent
 						local HitCode = Vehicle:WaitForChild("HitCode",5)
 						if not HitCode or HitCode.Value ~= "Plane" then
+							print("Invalid Seat",HitCode.Value)
 							return
 						end
 						while self.EnTbl.PlaneHitbox and C.SeatPart == seatPart do
