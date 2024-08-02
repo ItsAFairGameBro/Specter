@@ -563,18 +563,18 @@ return function(C,Settings)
 								end
 								local closestBasePart2, distance2
 								if self.EnTbl.User then
-									closestBasePart2, distance2 = C.getClosest()
+									closestBasePart2, distance2 = C.getClosestShip()
 								end
-								local closestBasePart3, distance3
-								if self.EnTbl.Ship then
-									closestBasePart3, distance3 = C.getClosestShip()
-								end
-								if closestBasePart2 and (not closestBasePart or distance2 < distance) then
+								--local closestBasePart3, distance3
+								--if self.EnTbl.Ship then
+								--	closestBasePart3, distance3 = C.getClosest()
+								--end
+								if closestBasePart2 and (not closestBasePart or distance2 + 50 < distance) then
 									closestBasePart, distance = closestBasePart2, distance2
 								end
-								if closestBasePart3 and (not closestBasePart or distance3 < distance) then
-									closestBasePart, distance = closestBasePart3, distance3
-								end
+								--if closestBasePart3 and (not closestBasePart or distance3 < distance) then
+								--	closestBasePart, distance = closestBasePart3, distance3
+								--end
 								if closestBasePart then
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									instance.CanTouch = true
@@ -608,10 +608,10 @@ return function(C,Settings)
 					},
 					{
 						Type = Types.Toggle,
-						Title = "Users",
+						Title = "Planes",
 						Tooltip = "Allows targets such as individual users.",
 						Layout = 3,Default=true,
-						Shortcut="User",
+						Shortcut="Plane",
 						Activate = C.ReloadHack,
 					}
 				}
