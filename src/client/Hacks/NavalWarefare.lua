@@ -507,7 +507,7 @@ return function(C,Settings)
 				end,
 				Activate=function(self,newValue)
 					for num, ship in ipairs(C.Ships) do
-						self:ShipAdded(ship)
+						self.Events.ShipAdded(self,ship)
 					end
 				end,
 				Events = {
