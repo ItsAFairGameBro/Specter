@@ -60,7 +60,7 @@ return function(C,Settings)
 					return -- get out, was not seated!
 				end
 				if isMe then
-					C.seatPart = seatPart
+					C.SeatPart = seatPart
 				end
 				FireEvent("Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
 			end--instance,key,connection
