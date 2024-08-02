@@ -898,7 +898,7 @@ return function(C,Settings)
 						button.MouseButton1Up:Connect(function()
 							basebomb_activate(not isEn)
 						end)
-						basebomb_activate(isEn)
+						table.insert(self.Threads,task.spawn(basebomb_activate,isEn))
 						local function UpdVisibiltiy()
 							self:RefreshEn(newTag)
 						end
