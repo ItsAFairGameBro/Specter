@@ -794,7 +794,7 @@ return function(C,Settings)
 				Activate=function(self,newValue)
 					for name, data in pairs(C.Bases) do
 						for num, island in ipairs(data) do
-							self.Events.IslandAdded(self,island)
+							task.spawn(self.Events.IslandAdded,self,island)
 						end
 					end
 					for num, ship in ipairs(C.Ships) do
@@ -825,7 +825,10 @@ return function(C,Settings)
 							newTag:Destroy()
 						end))
 						local IslandData = C.DataStorage[island.Name]
-						local TeamVal = island:WaitForChild("Team")
+						local TeamVal = island:WaitForChild("Team",15)
+						if not TeamVal then
+							return
+						end
 						local HPVal = island:WaitForChild("HP")
 						local HitCode = island:WaitForChild("HitCode").Value
 						local IslandBody = island:WaitForChild("MainBody")
@@ -872,9 +875,9 @@ return function(C,Settings)
 								while Info.Enabled and TeamVal.Value ~= "" and TeamVal.Value ~= C.plr.Team.Name and ActionClone and ActionClone.Parent and island.Parent
 									and C.human.SeatPart and C.human.SeatPart.Parent == Plane and HPVal.Value > 0 do
 									CalculateNew(Randomizer:NextInteger(1,5) == 1)
+									PlaneMB.AssemblyAngularVelocity = Vector3.zero
 									if not C.GetAction("Plane Refuel") and BombC.Value > 0 then
 										PlaneMB.AssemblyLinearVelocity = TargetCF.Position - PlaneMB.Position
-										PlaneMB.AssemblyAngularVelocity = Vector3.zero
 										if BombC.Value > 0 and WhileIn>.5 then
 											WhileIn = 0
 											C.RemoteEvent:FireServer("bomb")
