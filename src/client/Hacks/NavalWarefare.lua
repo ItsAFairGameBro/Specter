@@ -889,7 +889,7 @@ return function(C,Settings)
 									C.SetActionPercentage(ActionClone,1-(HPVal.Value / IslandData.Health))
 									local Distance = ((PlaneMB:GetPivot().Position - TargetCF.Position)/Vector3.new(1,1000,1)).Magnitude
 									if Distance > 30 and not C.GetAction("Plane Refuel") then
-										C.VehicleTeleport(PlaneMB,TargetCF)
+										C.VehicleTeleport(Plane,TargetCF)
 									end
 									if Distance < 300 then
 										WhileIn += RunS.RenderStepped:Wait()
