@@ -517,7 +517,7 @@ return function(C,Settings)
 					ShipAdded=function(self,ship)
 						local MainBody = ship:WaitForChild("MainBody")
 						local Team = ship:WaitForChild("Team")
-						local ExpandSize = Team.Value == C.plr.Team.Name or self.RealEnabled and 0 or self.EnTbl.Size
+						local ExpandSize = (Team.Value == C.plr.Team.Name or not self.RealEnabled) and 0 or self.EnTbl.Size
 						local DefaultSize = C.GetPartProperty(MainBody,"Size")
 	
 						if ExpandSize == 0 then
@@ -668,7 +668,7 @@ return function(C,Settings)
 							local isGrounded = seatPart.AssemblyLinearVelocity.Magnitude < 0.2
 							self:ToggleVehicleColliders(Vehicle,isGrounded) -- Disable CanTouch colliders
 							self:ToggleBaseColliders(not isGrounded)
-							RunS.PreSimulation:Wait()
+							RunS.RenderStepped:Wait()
 						end
 					end,
 					MySeatRemoved = function(self,seatPart)
