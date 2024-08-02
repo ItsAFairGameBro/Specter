@@ -80,7 +80,7 @@ local function Static(C,Settings)
 			for num, base in ipairs(bases) do
 				if base:FindFirstChild("Team") and base.Team.Value ~= "" and base.Team.Value ~= C.plr.Team.Name and base.HP.Value > 0 then
 					local MainBody = base:WaitForChild("MainBody")
-					local d = (MainBody.Position - C.char.PrimaryPart.Position).Magnitude
+					local d = (MainBody.Position - myHRPPos).Magnitude
 					if d < maxDist then
 						if baseType == "Dock" then
 							d -= 100
@@ -100,7 +100,7 @@ local function Static(C,Settings)
 		for num, ship  in pairs(C.Ships) do
 			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and ship.HP.Value > 0 then
 				local MainBody = ship:WaitForChild("MainBody")
-				local d = (MainBody.Position - location).Magnitude
+				local d = (MainBody.Position - myHRPPos).Magnitude
 				if d < maxDist then
 					selShip, maxDist = MainBody, d
 				end
@@ -367,7 +367,7 @@ return function(C,Settings)
 								MyConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
 									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
-										local closestBasePart = C.getClosest(true,true)
+										local closestBasePart = C.getClosest(true,true,instance.Position)
 										if closestBasePart then
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
@@ -568,11 +568,11 @@ return function(C,Settings)
 							if instance.Name == "Bomb" and instance.Parent then
 								local closestBasePart, distance
 								if self.EnTbl.Base then
-									closestBasePart, distance = C.getClosestBase()
+									closestBasePart, distance = C.getClosestBase(instance.Position)
 								end
 								local closestBasePart2, distance2
 								if self.EnTbl.User then
-									closestBasePart2, distance2 = C.getClosestShip()
+									closestBasePart2, distance2 = C.getClosestShip(instance.Position)
 								end
 								--local closestBasePart3, distance3
 								--if self.EnTbl.Ship then
@@ -848,7 +848,6 @@ return function(C,Settings)
 						local Info = {Name="LoopBomb",Title="Bombing "..HitCode,Tags={"RemoveOnDestroy"}}
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, HitCode=="Dock" and 120 or 60, 0)
 						local function basebomb_activate(new)
-							task.wait(.5)
 							button.Text = new and "Pause" or "Bomb"
 							button.BackgroundColor3 = new and Color3.fromRGB(255) or (HitCode=="Dock" and Color3.fromRGB(170,0,255) or Color3.fromRGB(170,255))
 							if new then
