@@ -524,7 +524,7 @@ return function(C,Settings)
 
 						if ExpandSize == 0 then
 							local NewSize = DefaultSize + 2 * Vector3.one * ExpandSize
-							C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",NewSize, true)-- Times two in order to expand in EVERY direction
+							C.SetPartProperty(MainBody,"Size","ShipHitboxExpander",NewSize, true, true)-- Times two in order to expand in EVERY direction
 						end
 					end,
 					MyTeamAdded=function(self,newTeam)

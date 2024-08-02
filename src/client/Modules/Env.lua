@@ -451,7 +451,7 @@ return function(C,Settings)
 		return part[propertyName]
 	end
 	-- Function to set the property with an option to always set it
-	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet)
+	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet, noFunction)
 		if C.gameUniverse == "Flee" and part.Name == "Weight" then
 			return
 		end
@@ -482,8 +482,9 @@ return function(C,Settings)
 			if not C.forcePropertyFuncts[part] then
 				C.forcePropertyFuncts[part] = {}
 			end
-			if not C.forcePropertyFuncts[part][propertyName] then
+			if not C.forcePropertyFuncts[part][propertyName] and not noFunction then
 				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
+
 					part[propertyName] = value
 				end)
 			end
