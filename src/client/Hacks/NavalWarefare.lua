@@ -20,7 +20,7 @@ local function Static(C,Settings)
 		["Submarine"]={Health=1000,Type="Ship"},
 
 		["Bomber"]={Health=100,Type="Plane",MaxTorque=33.5e3,MaxForce=31148.7},
-		["Torpedo Bomber"]={Health=100,Type="Plane"},
+		["Torpedo Bomber"]={Health=100,Type="Plane",MaxTorque=33.5e3,MaxForce=31148.7},
 		["Large Bomber"]={Health=300,Type="Plane",MaxTorque=13e4,MaxForce=71223.6},
 	}
 	function C.isInGame(theirChar)
