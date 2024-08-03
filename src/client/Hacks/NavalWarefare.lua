@@ -1000,7 +1000,6 @@ return function(C,Settings)
 							local BombC = Plane:WaitForChild("BombC")
 							local Conn
 							local function canRun(toRun)
-								print("Running")
 								return MainBody and Plane.Parent and table.find(self.Functs,Conn) and not MainBody:FindFirstChild("weldConstraint")
 									and C.human and seatPart == C.human.SeatPart and not C.Cleared
 									and (not toRun or 
@@ -1106,6 +1105,7 @@ return function(C,Settings)
 				Shortcut = "VehicleSpeed",
 				DontActivate = true,
 				Activate = function(self)
+					print("Start",#self.Functs)
 					if C.human and C.human.SeatPart then
 						self.Events.MySeatAdded(self,C.human.SeatPart)
 					end
