@@ -1118,7 +1118,7 @@ return function(C,Settings)
 					--print("SEt",Vehicle,SpeedMult,TurnMult)
 					local MainBody = Vehicle:WaitForChild("MainBody")
 					local LineVelocity = MainBody:WaitForChild("BodyVelocity")
-					local AlignOrientation = MainBody:FindFirstChild("AlignOrientation")
+					local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")
 					local VehicleType = Vehicle:WaitForChild("HitCode").Value
 					local FuelLeft = VehicleType == "Plane" and Vehicle:WaitForChild("Fuel")
 					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
