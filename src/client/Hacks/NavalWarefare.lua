@@ -21,7 +21,7 @@ local function Static(C,Settings)
 
 		["Bomber"]={Health=100,Type="Plane"},
 		["Torpedo Bomber"]={Health=100,Type="Plane"},
-		["Large Bomber"]={Health=300,Type="Plane"},
+		["Large Bomber"]={Health=300,Type="Plane",MaxTorque=13e4,MaxForce=71223.6},
 	}
 	function C.isInGame(theirChar)
 		if theirChar and theirChar.Name == "InviClone" then
@@ -1118,17 +1118,18 @@ return function(C,Settings)
 					local VehicleType = Vehicle:WaitForChild("HitCode").Value
 					local FuelLeft = VehicleType == "Plane" and Vehicle:WaitForChild("Fuel")
 					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
+					local MyData = C.DataStorage[Vehicle.Name]
 
 					local isOn = (((not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
 						(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship")
 					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)F
 
 					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
-					LineVelocity.MaxForce = isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
+					LineVelocity.MaxForce = isOn and (MyData.MaxForce * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
 					--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
 					--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
 					if AlignOrientation then
-						AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
+						AlignOrientation.MaxTorque = isOn and (MyData.MaxTorque * TurnMult) or 0
 					end
 					--print("Finished",SpeedMult,LineVelocity.MaxForce)
 				end,
