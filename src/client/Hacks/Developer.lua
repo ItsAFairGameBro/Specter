@@ -164,7 +164,7 @@ return function(C,Settings)
                     
                     warn("[Script Search] Search Beggining...")
 
-                    local Count = C.comma_value(loop(C.plr)+loop(C.char))
+                    local Count = C.comma_value(loop(game))
                     
                     warn(("[Script Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
 				end,
