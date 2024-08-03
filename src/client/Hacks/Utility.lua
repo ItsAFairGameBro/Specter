@@ -5,6 +5,7 @@ local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
+local GS = game:GetService("GuiService")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
 	return {
@@ -66,6 +67,35 @@ return function(C,Settings)
 				end,
                 Events = {},
 				Options = {},
+			},
+			{
+				Title = "NoKick UI",
+				Tooltip = "Hides the kick display a few seconds after you are kicked",
+				Layout = 100, Default = true,
+				Shortcut = "NoKick",
+				Functs={},
+				Activate = function(self,newValue)
+					if not newValue then
+						return
+					end
+					table.insert(self.Functs,game:GetService("NetworkClient").ChildRemoved:Connect(function()
+						SG:SetCore("DevConsoleVisible", true)
+						GS:ClearError()
+						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
+						local ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
+						if ErrorMessage then
+							warn(ErrorMessage.Text)
+							C.UI.KickedButton.Text = `You have been kicked from the game, meaning that you cannot interact with the game or other players.`
+								.. `\n{ErrorMessage.Text}\nClick on this prompt to close`
+							C.UI.KickedButton.Visible = true
+							C.ButtonClick(C.UI.KickedButton,function()
+								C.UI.KickedButton:Destroy()
+							end)
+						else
+							warn("Error Message Not Found, Yielding Failed")
+						end
+					end))
+				end,
 			},
 			{
 				Title = "Improvements",

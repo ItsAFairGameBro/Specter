@@ -142,6 +142,7 @@ local Time = Instance.new("TextLabel")
 local UIGradient_6 = Instance.new("UIGradient")
 local ToggleTagEx = Instance.new("BillboardGui")
 local Toggle = Instance.new("TextButton")
+local KickedButton = Instance.new("TextButton")
 
 --Properties:
 
@@ -1635,6 +1636,23 @@ Toggle.TextScaled = true
 Toggle.TextSize = 14.000
 Toggle.TextStrokeTransparency = 0.000
 Toggle.TextWrapped = true
+
+KickedButton.Name = "KickedButton"
+KickedButton.Parent = SpecterGUI
+C.UI.KickedButton = KickedButton
+KickedButton.AnchorPoint = Vector2.new(0.5, 1)
+KickedButton.BackgroundColor3 = Color3.fromRGB(255, 106, 32)
+KickedButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+KickedButton.BorderSizePixel = 0
+KickedButton.Position = UDim2.new(0.5, 0, 0.980000019, 0)
+KickedButton.Size = UDim2.new(0.5, 0, 0, 0)
+KickedButton.Visible = false
+KickedButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+KickedButton.Text = "You are kicked. This means that you cannot interact with the game nor other players.Click to hide this prompt"
+KickedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+KickedButton.TextSize = 33.000
+KickedButton.TextStrokeTransparency = 0.000
+KickedButton.TextWrapped = true
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 

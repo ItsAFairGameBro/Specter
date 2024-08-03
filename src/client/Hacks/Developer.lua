@@ -139,8 +139,8 @@ return function(C,Settings)
 						["RealFuel"]=true}
 					local ignoreRegex = {"[%a%d]+_OriginalValue","[%a%d]+_Request_","[%a%d]+_RequestCount"}
                     local function printScr(obj)
-                        if obj:IsA("LocalScript") or (obj:IsA("Script") and obj.ScriptContext == Enum.RunContext.Client) then
-							print(`[{obj:GetFullName()}]: {obj.Name}, {obj.Enabled}`)
+                        if obj and (obj:IsA("LocalScript") or (obj:IsA("Script") and obj.ScriptContext == Enum.RunContext.Client)) then
+							print(`[OBJ {obj.Parent:GetFullName()}]: {obj.Name}, {obj.Enabled}`)
 						end
                     end
                     local function loop(obj,instsScanned)
