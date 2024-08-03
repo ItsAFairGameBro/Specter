@@ -395,7 +395,7 @@ return function(C,Settings)
 									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
 										local nearestTbl = {}
 										if self.EnTbl.Users then
-											table.insert(nearestTbl,{C.getClosest(true,true,instance.Position)})
+											table.insert(nearestTbl,{C.getClosest(true,false,instance.Position)})
 										end
 										if self.EnTbl.Planes then
 											table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
