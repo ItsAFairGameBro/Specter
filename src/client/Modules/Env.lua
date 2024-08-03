@@ -414,7 +414,8 @@ return function(C,Settings)
 
 	-- Spectate
 	function C.Spectate(theirChar: Model)
-		workspace.CurrentCamera.CameraSubject = theirChar and theirChar:FindFirstChild("Humanoid") or C.human
+		workspace.CurrentCamera.CameraSubject = (theirChar:IsA("Model") and (theirChar:FindFirstChild("Humanoid") or theirChar.PrimaryPart))
+			or (theirChar:IsA("BasePart") and theirChar) or C.human
 	end
 
 	-- Disable Humanoid Parts
