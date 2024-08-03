@@ -1127,7 +1127,7 @@ return function(C,Settings)
 					self.LastSet = SpeedMult * LineVelocity.VectorVelocity
 					LineVelocity.VectorVelocity = self.LastSet
 					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
-					C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack",isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * SpeedMult) or 0,true)
+					C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack",isOn and (MyData.MaxForce * SpeedMult) or 0,true)
 					--LineVelocity.MaxForce = isOn and (MyData.MaxForce * SpeedMult) or 0
 					--C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack", isOn and (MyData.MaxForce * math.max(1,SpeedMult/6)) or 0, true) --* SpeedMult/8) or 0
 					--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
@@ -1135,7 +1135,23 @@ return function(C,Settings)
 					if AlignOrientation then
 						AlignOrientation.MaxTorque = isOn and (MyData.MaxTorque * TurnMult) or 0
 					end
+					local Collisions = not self.EnTbl.NoCollisions or not isOn
+					if Vehicle.PrimaryPart:GetProperty("CanCollide_Request_VehicleHack") ~= Collisions then
+						self:SetCollisions(Vehicle,Collisions)
+						print"Set Collisions"
+					end
 					--print("Finished",SpeedMult,LineVelocity.MaxForce)
+				end,
+				SetCollisions = function(self,Vehicle,Collidible)
+					for num, basePart in ipairs(Vehicle:GetDescendants()) do
+						if basePart:IsA("BasePart") then
+							if Collidible then
+								C.ResetPartProperty(basePart,"CanCollide","VehicleHack")
+							else
+								C.SetPartProperty(basePart,"CanCollide","VehicleHack",false)
+							end
+						end
+					end
 				end,
 				LastSet = nil,
 				Events = {
@@ -1215,7 +1231,7 @@ return function(C,Settings)
 						Title = "No Collisions",
 						Tooltip = "Allows vehicles that you drive to go through collidble objects",
 						Layout = 3,Default=false,
-						Shortcut="Collisions",
+						Shortcut="NoCollisions",
 					},
 					--[[{
 						Type = Types.Toggle,
@@ -1231,6 +1247,7 @@ return function(C,Settings)
 						Layout = 5,Default=3,
 						Min=0,Max=20,Digits=1,
 						Shortcut="PlaneSpeed",
+						Activate = C.ReloadHack,
 					},
 					{
 						Type = Types.Slider,
@@ -1239,6 +1256,7 @@ return function(C,Settings)
 						Layout = 6,Default=3,
 						Min=0,Max=20,Digits=1,
 						Shortcut="ShipSpeed",
+						Activate = C.ReloadHack,
 					},
 				}
 			}
