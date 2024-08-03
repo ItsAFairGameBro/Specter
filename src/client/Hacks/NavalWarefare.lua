@@ -1105,7 +1105,6 @@ return function(C,Settings)
 				Shortcut = "VehicleSpeed",
 				DontActivate = true,
 				Activate = function(self,newValue)
-					print("Start",#self.Functs)
 					if C.human and C.human.SeatPart then
 						if newValue then
 							self.Events.MySeatAdded(self,C.human.SeatPart)
@@ -1134,6 +1133,7 @@ return function(C,Settings)
 					if AlignOrientation then
 						AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
 					end
+					print("Finished",SpeedMult)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
