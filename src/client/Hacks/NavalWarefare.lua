@@ -888,6 +888,7 @@ return function(C,Settings)
 								local WhileIn = 0
 								while Info.Enabled and TeamVal.Value ~= "" and TeamVal.Value ~= C.plr.Team.Name and ActionClone and ActionClone.Parent and island.Parent
 									and C.human.SeatPart and C.human.SeatPart.Parent == Plane and HPVal.Value > 0 do
+									print("BOMBING")
 									CalculateNew(Randomizer:NextInteger(1,5) == 1)
 									if not C.GetAction("Plane Refuel") and BombC.Value > 0 then
 										PlaneMB.AssemblyAngularVelocity = Vector3.zero
