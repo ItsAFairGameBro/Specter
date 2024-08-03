@@ -2087,6 +2087,10 @@ return function(C, Settings)
 	for name, actionData in pairs(C.getgenv().ActionsList) do
 		C.AddAction(actionData)
 	end
+
+	C.ButtonClick(C.UI.KickedButton,function()
+		C.UI.KickedButton:Destroy()
+	end)
 	
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("HackOptions")

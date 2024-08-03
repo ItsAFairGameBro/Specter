@@ -74,26 +74,44 @@ return function(C,Settings)
 				Layout = 100, Default = true,
 				Shortcut = "NoKick",
 				Functs={},
+				Update = function(self)
+					local KickedButton = C.UI.KickedButton
+
+					local errorCode = GS:GetErrorCode()
+					local errorMessage = GS:GetErrorMessage()
+					local FFlagShowConnectionErrorCode = settings():GetFFlag("ShowConnectionErrorCode")
+
+					if KickedButton then
+						if not FFlagShowConnectionErrorCode then
+							KickedButton.Text = errorMessage
+						else
+							if not errorCode then
+								KickedButton.Text = ("%s (Error Code: -1)"):format(errorMessage)
+							else
+								KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode.Value)
+							end
+						end	
+					end
+				end,
 				Activate = function(self,newValue)
 					if not newValue then
 						return
 					end
-					table.insert(self.Functs,game:GetService("NetworkClient").ChildRemoved:Connect(function()
-						SG:SetCore("DevConsoleVisible", true)
+					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
 						GS:ClearError()
+						self:Update()
 						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
-						local ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
+						--[[local ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
 						if ErrorMessage then
 							warn(ErrorMessage.Text)
-							C.UI.KickedButton.Text = `You have been kicked from the game, meaning that you cannot interact with the game or other players.`
+							if C.UI.KickedButton then
+								C.UI.KickedButton.Text = `You have been kicked from the game, meaning that you cannot interact with the game or other players.`
 								.. `\n{ErrorMessage.Text}\nClick on this prompt to close`
-							C.UI.KickedButton.Visible = true
-							C.ButtonClick(C.UI.KickedButton,function()
-								C.UI.KickedButton:Destroy()
-							end)
+								C.UI.KickedButton.Visible = true
+							end
 						else
 							warn("Error Message Not Found, Yielding Failed")
-						end
+						end--]]
 					end))
 				end,
 			},
