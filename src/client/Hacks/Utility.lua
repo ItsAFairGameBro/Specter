@@ -81,6 +81,7 @@ return function(C,Settings)
 					local errorMessage = GS:GetErrorMessage()
 
 					if KickedButton then
+						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
 						KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode and errorCode.Value or -1)
 						KickedButton.Visible = true
 					end
