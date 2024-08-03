@@ -108,6 +108,22 @@ local function Static(C,Settings)
 		end
 		return selShip, maxDist
 	end
+	function C.getClosestPlane(location: Vector3)
+		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
+		if not myHRPPos then return end
+
+		local selShip, maxDist = nil, math.huge
+		for num, plane  in pairs(C.Planes) do
+			if plane:FindFirstChild("Team") and plane.Team.Value ~= "" and plane.Team.Value ~= C.plr.Team.Name and plane.HP.Value > 0 then
+				local MainBody = plane:WaitForChild("MainBody")
+				local d = (MainBody.Position - myHRPPos).Magnitude
+				if d < maxDist then
+					selShip, maxDist = MainBody, d
+				end
+			end
+		end
+		return selShip, maxDist
+	end
 	function C.VehicleTeleport(vehicle, loc, useCF)
 		if not useCF then
 			useCF = loc.Rotation * CFrame.new(loc.Position)
@@ -575,17 +591,25 @@ return function(C,Settings)
 								if self.EnTbl.User then
 									closestBasePart2, distance2 = C.getClosestShip(instance.Position)
 								end
+								local closestBasePart3, distance3
+								if self.EnTbl.Plane then
+									closestBasePart3, distance3 = C.getClosestPlane(instance.Position)
+								end
 								--local closestBasePart3, distance3
 								--if self.EnTbl.Ship then
 								--	closestBasePart3, distance3 = C.getClosest()
 								--end
 								if closestBasePart2 and (not closestBasePart or distance2 + 50 < distance) then
 									closestBasePart, distance = closestBasePart2, distance2
+									if distance3 < distance then
+										closestBasePart, distance = closestBasePart3, distance3
+									end
 								end
 								--if closestBasePart3 and (not closestBasePart or distance3 < distance) then
 								--	closestBasePart, distance = closestBasePart3, distance3
 								--end
 								if closestBasePart then
+									print("Bomb Hit",closestBasePart)
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									instance.CanTouch = true
 									for s = 0, 1, 1 do
@@ -1099,7 +1123,7 @@ return function(C,Settings)
 								end
 								lastSet = SpeedMult * LineVelocity.VectorVelocity
 								if FuelLeft then
-									if self.EnTbl.InfFuel then
+									if self.EnTbl.InfFuel and false then
 										if FuelLeft.Value < 500 then
 											FuelLeft:SetAttribute("RealFuel",FuelLeft.Value)
 										end
@@ -1109,7 +1133,7 @@ return function(C,Settings)
 									end
 								end
 								local isOn = (LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
-									(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel) or VehicleType == "Ship"
+									(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship"
 								LineVelocity.VectorVelocity = lastSet
 								--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
 
