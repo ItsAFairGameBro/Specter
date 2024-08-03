@@ -337,7 +337,7 @@ return function(C,Settings)
 						end
 						local FF = C.char:FindFirstChildWhichIsA("ForceField")
 						if FF then
-							FF.Visible = self.EnTbl.FFVisibility
+							FF.Visible = not self.EnTbl.FFVisibility
 							DS:AddItem(FF,15) -- Delete it after 15 seconds!
 							FF.AncestryChanged:Wait() -- Wait until we're defenseless!
 						elseif C.human.SeatPart then
@@ -360,9 +360,9 @@ return function(C,Settings)
 				Options = {
 					{
 						Type = Types.Toggle,
-						Title = "Forcefield Visibility",
+						Title = "Disable Visibility",
 						Tooltip = "Whether or not you can see your own forcefield. Disable for better visiblity.",
-						Layout = 1,Default=false,
+						Layout = 1,Default=true,
 						Shortcut="FFVisibility",
 					},
 				},
@@ -1127,8 +1127,8 @@ return function(C,Settings)
 					self.LastSet = SpeedMult * LineVelocity.VectorVelocity
 					LineVelocity.VectorVelocity = self.LastSet
 					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
-					C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack",isOn and (MyData.MaxForce * SpeedMult) or 0,true)
-					LineVelocity.MaxForce = isOn and (MyData.MaxForce * SpeedMult) or 0
+					C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack",isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * SpeedMult) or 0,true)
+					--LineVelocity.MaxForce = isOn and (MyData.MaxForce * SpeedMult) or 0
 					--C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack", isOn and (MyData.MaxForce * math.max(1,SpeedMult/6)) or 0, true) --* SpeedMult/8) or 0
 					--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
 					--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
@@ -1175,7 +1175,7 @@ return function(C,Settings)
 									end
 								end
 								self:Set(Vehicle,LineVelocity,AlignOrientation,SpeedMult,TurnMult)
-							end--33.5e3
+							end
 							table.insert(self.Functs,LineVelocity:GetPropertyChangedSignal("VectorVelocity"):Connect(Upd))
 							Upd()
 						end
@@ -1209,6 +1209,13 @@ return function(C,Settings)
 						Layout = 2,Default=true,
 						Shortcut="Plane",
 						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "No Collisions",
+						Tooltip = "Allows vehicles that you drive to go through collidble objects",
+						Layout = 3,Default=false,
+						Shortcut="Collisions",
 					},
 					--[[{
 						Type = Types.Toggle,
