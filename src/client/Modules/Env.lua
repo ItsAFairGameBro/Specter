@@ -476,7 +476,6 @@ return function(C,Settings)
 		local requestAttrName = propertyName .. "_Request_" .. requestName
 
 		-- Increment the request count if the request is not already present
-		part:SetAttribute(requestAttrName, value)
 		if part:GetAttribute(requestAttrName) == nil then
 			part:SetAttribute(requestCountAttr, requestCount + 1)
 
@@ -490,6 +489,7 @@ return function(C,Settings)
 				end)
 			end
 		end
+		part:SetAttribute(requestAttrName, value)
 
 		if requestCount == 0 or alwaysSet then
 			part[propertyName] = value
