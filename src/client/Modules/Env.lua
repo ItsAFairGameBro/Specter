@@ -6,7 +6,6 @@ local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
 local DS = game:GetService('Debris')
 return function(C,Settings)
-	C.OriginalCollideName = "WeirdCanCollide"
 	--Table Functions
 	function C.TblAdd(tbl,val)
 		local key = table.find(tbl,val)
@@ -336,7 +335,7 @@ return function(C,Settings)
 		UserCache[Username] = SaveCache
 		return true, Username, UserID
 	end
-
+	--C.OriginalCollideName = "WeirdCanCollide"
 	--[[function C.SetCollide(object,id,toEnabled,alwaysUpd)
 		if C.gameUniverse=="Flee" and object.Name=="Weight" then
 			return -- don't touch it AT ALL!

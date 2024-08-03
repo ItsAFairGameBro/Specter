@@ -183,6 +183,15 @@ local function Static(C,Settings)
 			newChild(instance)
 		end
 	end)
+	function C.GetNearestTuple(tbl)
+		local closestPart, closestDist = nil, math.huge
+		for num, values in ipairs(tbl) do
+			if values[1] and (not closestPart or values[2] < closestDist) then
+				closestPart, closestDist = values[1], values[2]
+			end
+		end
+		return closestPart,closestDist
+	end
 end
 return function(C,Settings)
 	Static(C,Settings)
@@ -384,7 +393,14 @@ return function(C,Settings)
 								MyConn = workspace.ChildAdded:Connect(function(instance)
 									task.wait(.1)
 									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
-										local closestBasePart = C.getClosest(true,true,instance.Position)
+										local nearestTbl = {}
+										if self.EnTbl.Users then
+											table.insert(nearestTbl,{C.getClosest(true,true,instance.Position)})
+										end
+										if self.EnTbl.Planes then
+											table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
+										end
+										local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 										if closestBasePart then
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
@@ -432,11 +448,25 @@ return function(C,Settings)
 					},
 					{
 						Type = Types.Dropdown, Selections = {"InGame"},
+						Title = "Users",
+						Tooltip = "Shoots users not in vehicles (PARTIALLY PATCHED: Can only target INGAME players with NO FF)",
+						Layout = 2,Default=true,
+						Shortcut="Users",
+					},
+					{
+						Type = Types.Dropdown, Selections = {"InGame"},
+						Title = "Planes",
+						Tooltip = "Target enemy planes",
+						Layout = 3,Default=true,
+						Shortcut="Planes",
+					},
+					--[[{
+						Type = Types.Dropdown, Selections = {"InGame"},
 						Title = "Target Users",
 						Tooltip = "Who on the enemy team to target. (PATCHED: Can only target INGAME players with NO FF)",
 						Layout = 2,Default="InGame",
 						Shortcut="Target",
-					},
+					},--]]
 				},
 			},
 			{
@@ -584,31 +614,19 @@ return function(C,Settings)
 							end
 							task.wait(.8)
 							if instance.Name == "Bomb" and instance.Parent then
-								local closestBasePart, distance
+								local nearestTbl = {}
+
 								if self.EnTbl.Base then
-									closestBasePart, distance = C.getClosestBase(instance.Position)
+									table.insert(nearestTbl,{C.getClosestBase(instance.Position)})
 								end
-								local closestBasePart2, distance2
-								if self.EnTbl.User then
-									closestBasePart2, distance2 = C.getClosestShip(instance.Position)
+								if self.EnTbl.Ship then
+									table.insert(nearestTbl,{C.getClosestShip(instance.Position)})
 								end
-								local closestBasePart3, distance3
 								if self.EnTbl.Plane then
-									closestBasePart3, distance3 = C.getClosestPlane(instance.Position)
+									table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
 								end
-								--local closestBasePart3, distance3
-								--if self.EnTbl.Ship then
-								--	closestBasePart3, distance3 = C.getClosest()
-								--end
-								if closestBasePart2 and (not closestBasePart or distance2 < distance) then
-									closestBasePart, distance = closestBasePart2, distance2
-								end
-								if closestBasePart3 and distance3 < distance then
-									closestBasePart, distance = closestBasePart3, distance3
-								end
-								--if closestBasePart3 and (not closestBasePart or distance3 < distance) then
-								--	closestBasePart, distance = closestBasePart3, distance3
-								--end
+
+								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 								if closestBasePart then
 									if self.EnTbl.Spectate then
 										deb+= 1 local saveDeb = deb
@@ -1119,6 +1137,9 @@ return function(C,Settings)
 					local FuelLeft = VehicleType == "Plane" and Vehicle:WaitForChild("Fuel")
 					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
 					local MyData = C.DataStorage[Vehicle.Name]
+					if not MyData.MaxTorque or not MyData.MaxForce then
+						return
+					end
 
 					local isOn = (VehicleType == "Ship" or FlyButton.BackgroundColor3.R*255>250) and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)
 						--(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false))
@@ -1137,9 +1158,7 @@ return function(C,Settings)
 					local Collisions = not self.EnTbl.NoCollisions or not isOn
 					if Vehicle.PrimaryPart:GetAttribute("CanCollide_Request_VehicleHack") ~= (Collisions and nil) then
 						self:SetCollisions(Vehicle,Collisions)
-						print("Set Collisions",Collisions)
 					end
-					--print("Finished",SpeedMult,LineVelocity.MaxForce)
 				end,
 				SetCollisions = function(self,Vehicle,Collidible)
 					for num, basePart in ipairs(Vehicle:GetDescendants()) do
