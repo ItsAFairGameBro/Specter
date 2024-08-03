@@ -721,7 +721,6 @@ return function(C,Settings)
 							self:ToggleBaseColliders(not isGrounded)
 							RunS.RenderStepped:Wait()
 						end
-						if true then return end
 						self.Events.MySeatRemoved(self,seatPart)
 					end,
 					MySeatRemoved = function(self,seatPart)
@@ -982,7 +981,6 @@ return function(C,Settings)
 				DontActivate = true,
 				Activate=function(self,newValue)
 					if not newValue then
-						if true then return end
 						self.Events.MySeatRemoved(self) -- Cancel the action
 					elseif C.human.SeatPart then
 						self.Events.MySeatAdded(self,C.human.SeatPart)
@@ -1002,7 +1000,6 @@ return function(C,Settings)
 							local AmmoC2 = Plane:FindFirstChild("BulletC2")
 							local BombC = Plane:WaitForChild("BombC")
 							local function canRun(toRun)
-								print("CanRun",MainBody:FindFirstChild("weldConstraint"))
 								return MainBody and Plane.Parent and not MainBody:FindFirstChild("weldConstraint")
 									and C.human and seatPart == C.human.SeatPart and not C.Cleared
 									and (not toRun or 
@@ -1061,7 +1058,6 @@ return function(C,Settings)
 						end
 					end,
 					MySeatRemoved = function(self)
-						if true then return end
 						C.RemoveAction("Plane Refuel")
 					end,
 				},
@@ -1165,7 +1161,6 @@ return function(C,Settings)
 						end
 					end,
 					MySeatRemoved = function(self, seatPart)
-						if true then return end
 						self:ClearData()
 						local Vehicle = seatPart.Parent
 						if Vehicle and Vehicle.PrimaryPart then
