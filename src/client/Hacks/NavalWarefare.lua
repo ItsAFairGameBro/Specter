@@ -1138,7 +1138,7 @@ return function(C,Settings)
 					local Collisions = not self.EnTbl.NoCollisions or not isOn
 					if Vehicle.PrimaryPart:GetProperty("CanCollide_Request_VehicleHack") ~= Collisions then
 						self:SetCollisions(Vehicle,Collisions)
-						print"Set Collisions"
+						print("Set Collisions",Collisions)
 					end
 					--print("Finished",SpeedMult,LineVelocity.MaxForce)
 				end,
