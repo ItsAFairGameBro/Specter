@@ -658,7 +658,7 @@ return function(C,Settings)
 						Type = Types.Toggle,
 						Title = "Spectate",
 						Tooltip = "Spectates who you did dirty..",
-						Layout = 3,Default=true,
+						Layout = 4,Default=true,
 						Shortcut="Spectate",
 					}
 				}
