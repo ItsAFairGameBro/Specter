@@ -1133,7 +1133,7 @@ return function(C,Settings)
 					if AlignOrientation then
 						AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
 					end
-					print("Finished",SpeedMult)
+					print("Finished",SpeedMult,LineVelocity.MaxForce)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
