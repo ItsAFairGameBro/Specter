@@ -333,6 +333,7 @@ return function(C,Settings)
 							})
 							task.wait(2) -- Wait a bit so it doesn't lag!
 						end
+						RunS.RenderStepped:Wait()
 					end
 				end,
 				Events = {
