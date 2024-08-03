@@ -1113,11 +1113,8 @@ return function(C,Settings)
 						end
 					end
 				end,
-				Set = function(self, Vehicle, SpeedMult, TurnMult)
+				Set = function(self, Vehicle, LineVelocity, AlignOrientation, SpeedMult, TurnMult)
 					--print("SEt",Vehicle,SpeedMult,TurnMult)
-					local MainBody = Vehicle:WaitForChild("MainBody")
-					local LineVelocity = MainBody:WaitForChild("BodyVelocity")
-					local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")
 					local VehicleType = Vehicle:WaitForChild("HitCode").Value
 					local FuelLeft = VehicleType == "Plane" and Vehicle:WaitForChild("Fuel")
 					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
@@ -1172,7 +1169,7 @@ return function(C,Settings)
 										FuelLeft.Value = FuelLeft:GetAttribute("RealFuel")
 									end
 								end
-								self:Set(Vehicle,SpeedMult,TurnMult)
+								self:Set(Vehicle,LineVelocity,AlignOrientation,SpeedMult,TurnMult)
 							end--33.5e3
 							table.insert(self.Functs,LineVelocity:GetPropertyChangedSignal("VectorVelocity"):Connect(Upd))
 							Upd()
@@ -1184,7 +1181,10 @@ return function(C,Settings)
 						if Vehicle and Vehicle.PrimaryPart then
 							Vehicle.PrimaryPart.AssemblyLinearVelocity = Vector3.zero
 							Vehicle.PrimaryPart.AssemblyAngularVelocity = Vector3.zero
-							self:Set(Vehicle,1, 1)
+							local MainBody = Vehicle:WaitForChild("MainBody")
+							local LineVelocity = MainBody:WaitForChild("BodyVelocity")
+							local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")		
+							self:Set(Vehicle,LineVelocity,AlignOrientation,1, 1)
 						end
 					end,
 				},
