@@ -1002,7 +1002,8 @@ return function(C,Settings)
 							local AmmoC2 = Plane:FindFirstChild("BulletC2")
 							local BombC = Plane:WaitForChild("BombC")
 							local function canRun(toRun)
-								return MainBody and Plane.Parent and MainBody:FindFirstChild("weldConstraint")
+								print("CanRun",MainBody:FindFirstChild("weldConstraint"))
+								return MainBody and Plane.Parent and not MainBody:FindFirstChild("weldConstraint")
 									and C.human and seatPart == C.human.SeatPart and not C.Cleared
 									and (not toRun or 
 										((self.EnTbl.Bomb and BombC.Value == 0) 
