@@ -889,8 +889,8 @@ return function(C,Settings)
 								while Info.Enabled and TeamVal.Value ~= "" and TeamVal.Value ~= C.plr.Team.Name and ActionClone and ActionClone.Parent and island.Parent
 									and C.human.SeatPart and C.human.SeatPart.Parent == Plane and HPVal.Value > 0 do
 									CalculateNew(Randomizer:NextInteger(1,5) == 1)
-									PlaneMB.AssemblyAngularVelocity = Vector3.zero
 									if not C.GetAction("Plane Refuel") and BombC.Value > 0 then
+										PlaneMB.AssemblyAngularVelocity = Vector3.zero
 										PlaneMB.AssemblyLinearVelocity = TargetCF.Position - PlaneMB.Position
 										if BombC.Value > 0 and WhileIn>.5 then
 											WhileIn = 0
@@ -970,7 +970,7 @@ return function(C,Settings)
 										((self.EnTbl.Bomb and BombC.Value == 0) 
 											or (self.EnTbl.MinHPPercentage*C.DataStorage[Plane.Name].Health/100>=HP.Value)
 											or (self.EnTbl.Fuel and Fuel.Value <= 3))
-											or (self.EnTbl.Ammo and ((AmmoC and AmmoC.Value <= 0) or (AmmoC2 and AmmoC2.Value <= 0)))
+											or (self.EnTbl.Ammo and ((AmmoC and AmmoC.Value <= 30) or (AmmoC2 and AmmoC2.Value <= 0)))
 										)
 							end
 							local function HarborRefuel()

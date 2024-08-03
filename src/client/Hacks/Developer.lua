@@ -72,7 +72,8 @@ return function(C,Settings)
 				Activate = function(self,newValue)
                     local ignoreParents = {[game.CoreGui]=true}
                     local ignoreList = {["OrgColor"]=true,["OrgTrans"]=true,['wallclip']=true,['HackGUI1']=true,["LastTP"]=true,
-                        ["OriginalCollide"]=true,["OrgSize"]=true,["WeirdCanCollide"]=true,["Opened"]=true,["SaveVolume"]=true,['ClearedHackGUI1']=true}
+                        ["OriginalCollide"]=true,["OrgSize"]=true,["WeirdCanCollide"]=true,["Opened"]=true,["SaveVolume"]=true,['ClearedHackGUI1']=true,
+						["RealFuel"]=true}
 					local ignoreRegex = {"[%a%d]+_OriginalValue","[%a%d]+_Request_","[%a%d]+_RequestCount"}
                     local function printAtt(obj)
                         for _,instance in ipairs(ignoreList) do
