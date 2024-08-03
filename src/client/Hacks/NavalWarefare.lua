@@ -615,7 +615,7 @@ return function(C,Settings)
 							if instance.Name == "Bomb" then
 								instance.CanTouch = false
 							end
-							task.wait(.8)
+							task.wait(.4)
 							if instance.Name == "Bomb" and instance.Parent then
 								local nearestTbl = {}
 
@@ -630,7 +630,7 @@ return function(C,Settings)
 								end
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
-								--print(closestBasePart and closestBasePart.Parent)
+								print(closestBasePart and closestBasePart.Parent)
 								if closestBasePart then
 									if self.EnTbl.Spectate then
 										deb+= 1 local saveDeb = deb
