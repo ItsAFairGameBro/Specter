@@ -447,14 +447,14 @@ return function(C,Settings)
 						Shortcut="Spectate",
 					},
 					{
-						Type = Types.Dropdown, Selections = {"InGame"},
+						Type = Types.Toggle,
 						Title = "Users",
 						Tooltip = "Shoots users not in vehicles (PARTIALLY PATCHED: Can only target INGAME players with NO FF)",
 						Layout = 2,Default=true,
 						Shortcut="Users",
 					},
 					{
-						Type = Types.Dropdown, Selections = {"InGame"},
+						Type = Types.Toggle,
 						Title = "Planes",
 						Tooltip = "Target enemy planes",
 						Layout = 3,Default=true,
