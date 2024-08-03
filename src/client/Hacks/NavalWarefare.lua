@@ -1104,11 +1104,33 @@ return function(C,Settings)
 				Layout = 11, Functs = {}, Default = true,
 				Shortcut = "VehicleSpeed",
 				DontActivate = true,
-				Activate = function(self)
+				Activate = function(self,newValue)
 					print("Start",#self.Functs)
 					if C.human and C.human.SeatPart then
-						self.Events.MySeatAdded(self,C.human.SeatPart)
+						if newValue then
+							self.Events.MySeatAdded(self,C.human.SeatPart)
+						else
+							self.Events.MySeatRemoved(self,C.human.SeatPart)
+						end
 					end
+				end,
+				Set = function(self, Vehicle, SpeedMult, TurnMult)
+					local MainBody = Vehicle:WaitForChild("MainBody")
+					local LineVelocity = MainBody:WaitForChild("BodyVelocity")
+					local AlignOrientation = MainBody:FindFirstChildWhichIsA("AlignOrientation")
+					local VehicleType = Vehicle:WaitForChild("HitCode").Value
+					local FuelLeft = VehicleType == "Plane" and Vehicle:WaitForChild("Fuel")
+					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
+
+					local isOn = (LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
+						(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship"
+					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
+
+					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
+					LineVelocity.MaxForce = isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
+					--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
+					--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
+					AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
@@ -1147,16 +1169,7 @@ return function(C,Settings)
 										FuelLeft.Value = FuelLeft:GetAttribute("RealFuel")
 									end
 								end
-								local isOn = (LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
-									(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship"
-								LineVelocity.VectorVelocity = lastSet
-								--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
-
-								C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
-								LineVelocity.MaxForce = isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
-								--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
-								--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
-								AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
+								self:Set(Vehicle,SpeedMult,TurnMult)
 							end--33.5e3
 							table.insert(self.Functs,LineVelocity:GetPropertyChangedSignal("VectorVelocity"):Connect(Upd))
 							Upd()
@@ -1169,6 +1182,7 @@ return function(C,Settings)
 							Vehicle.PrimaryPart.AssemblyLinearVelocity = Vector3.zero
 							Vehicle.PrimaryPart.AssemblyAngularVelocity = Vector3.zero
 						end
+						self:Set(Vehicle,1, 1)
 					end,
 				},
 				Options = {
