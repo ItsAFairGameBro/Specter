@@ -1115,7 +1115,7 @@ return function(C,Settings)
 					end
 				end,
 				Set = function(self, Vehicle, SpeedMult, TurnMult)
-					print("SEt",Vehicle,SpeedMult,TurnMult)
+					--print("SEt",Vehicle,SpeedMult,TurnMult)
 					local MainBody = Vehicle:WaitForChild("MainBody")
 					local LineVelocity = MainBody:WaitForChild("BodyVelocity")
 					local AlignOrientation = MainBody:FindFirstChild("AlignOrientation")
