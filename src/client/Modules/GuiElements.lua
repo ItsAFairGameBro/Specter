@@ -2090,6 +2090,7 @@ return function(C, Settings)
 
 	C.ButtonClick(C.UI.KickedButton,function()
 		C.UI.KickedButton:Destroy()
+		C.UI.KickedButton = nil
 	end)
 	
 	--Load Settings Loader

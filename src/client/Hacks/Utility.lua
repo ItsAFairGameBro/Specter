@@ -85,12 +85,9 @@ return function(C,Settings)
 						if not FFlagShowConnectionErrorCode then
 							KickedButton.Text = errorMessage
 						else
-							if not errorCode then
-								KickedButton.Text = ("%s (Error Code: -1)"):format(errorMessage)
-							else
-								KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode.Value)
-							end
-						end	
+							KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode and errorCode.Value or -1)
+						end
+						KickedButton.Visible = true
 					end
 				end,
 				Activate = function(self,newValue)
@@ -100,18 +97,7 @@ return function(C,Settings)
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
 						GS:ClearError()
 						self:Update()
-						print(debug.traceback("Client/Server Kick Has Occured (%.2f)"):format(time()))
-						--[[local ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
-						if ErrorMessage then
-							warn(ErrorMessage.Text)
-							if C.UI.KickedButton then
-								C.UI.KickedButton.Text = `You have been kicked from the game, meaning that you cannot interact with the game or other players.`
-								.. `\n{ErrorMessage.Text}\nClick on this prompt to close`
-								C.UI.KickedButton.Visible = true
-							end
-						else
-							warn("Error Message Not Found, Yielding Failed")
-						end--]]
+						print("Client/Server Kick Has Occured (%.2f)"):format(time())
 					end))
 				end,
 			},
