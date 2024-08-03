@@ -79,14 +79,9 @@ return function(C,Settings)
 
 					local errorCode = GS:GetErrorCode()
 					local errorMessage = GS:GetErrorMessage()
-					local FFlagShowConnectionErrorCode = settings():GetFFlag("ShowConnectionErrorCode")
 
 					if KickedButton then
-						if not FFlagShowConnectionErrorCode then
-							KickedButton.Text = errorMessage
-						else
-							KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode and errorCode.Value or -1)
-						end
+						KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode and errorCode.Value or -1)
 						KickedButton.Visible = true
 					end
 				end,
