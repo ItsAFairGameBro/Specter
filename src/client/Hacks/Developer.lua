@@ -128,12 +128,42 @@ return function(C,Settings)
 				}
 			},
             {
-				Title = "Clear Development Console",
-				Tooltip = "Clears development console entirely",
+				Title = "Find Scripts",
+				Tooltip = "Finds all the scripts in Player object and character",
 				Layout = 6,Type="NoToggle",
-				Shortcut = "ClearDevelopmentConsole",
+				Shortcut = "FindAllScripts",
 				Activate = function(self,newValue)
+                    local ignoreParents = {[game.CoreGui]=true}
+                    local ignoreList = {["OrgColor"]=true,["OrgTrans"]=true,['wallclip']=true,['HackGUI1']=true,["LastTP"]=true,
+                        ["OriginalCollide"]=true,["OrgSize"]=true,["WeirdCanCollide"]=true,["Opened"]=true,["SaveVolume"]=true,['ClearedHackGUI1']=true,
+						["RealFuel"]=true}
+					local ignoreRegex = {"[%a%d]+_OriginalValue","[%a%d]+_Request_","[%a%d]+_RequestCount"}
+                    local function printScr(obj)
+                        if obj:IsA("LocalScript") or (obj:IsA("Script") and obj.ScriptContext == Enum.RunContext.Client) then
+							print(`[{obj:GetFullName()}]: {obj.Name}, {obj.Enabled}`)
+						end
+                    end
+                    local function loop(obj,instsScanned)
+                        instsScanned = (instsScanned or 0) + 1
+                        printScr(obj)
+                        if ignoreParents[obj] then
+                            return -- don't go through ignoreparents!
+                        end
+                        for num, instance in ipairs(obj:GetChildren()) do
+                            instsScanned = loop(instance,instsScanned)
+                            if num%40==0 then
+                                game["Run Service"].RenderStepped:Wait()
+                            end
+                        end
+                        return instsScanned
+                    end
+                    local start = os.clock()
                     
+                    warn("[Script Search] Search Beggining...")
+
+                    local Count = C.comma_value(loop(C.plr)+loop(C.char))
+                    
+                    warn(("[Script Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
 				end,
 				Options = {
 					
