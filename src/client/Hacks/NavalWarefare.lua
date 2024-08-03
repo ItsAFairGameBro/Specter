@@ -988,7 +988,6 @@ return function(C,Settings)
 				end,
 				Events = {
 					MySeatAdded=function(self,seatPart)
-						
 						self.Events.MySeatRemoved(self)
 						local Plane = seatPart.Parent
 						local HitCode = Plane:WaitForChild("HitCode",5)
@@ -999,8 +998,9 @@ return function(C,Settings)
 							local AmmoC = Plane:FindFirstChild("BulletC1")
 							local AmmoC2 = Plane:FindFirstChild("BulletC2")
 							local BombC = Plane:WaitForChild("BombC")
+							local Conn
 							local function canRun(toRun)
-								return MainBody and Plane.Parent and not MainBody:FindFirstChild("weldConstraint")
+								return MainBody and Plane.Parent and table.find(self.Functs,Conn) and not MainBody:FindFirstChild("weldConstraint")
 									and C.human and seatPart == C.human.SeatPart and not C.Cleared
 									and (not toRun or 
 										((self.EnTbl.Bomb and BombC.Value == 0) 
@@ -1050,7 +1050,8 @@ return function(C,Settings)
 									C.RemoveAction("Plane Refuel")
 								end
 							end
-							table.insert(self.Functs,BombC.Changed:Connect(CheckDORefuel))
+							Conn = BombC.Changed:Connect(CheckDORefuel)
+							table.insert(self.Functs,Conn)
 							table.insert(self.Functs,HP.Changed:Connect(CheckDORefuel))
 							table.insert(self.Functs,Fuel.Changed:Connect(CheckDORefuel))
 							table.insert(self.Functs,MainBody.ChildRemoved:Connect(CheckDORefuel))
