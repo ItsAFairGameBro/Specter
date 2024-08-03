@@ -643,6 +643,7 @@ return function(C,Settings)
 									end
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									instance.CanTouch = true
+									RunS.RenderStepped:Wait()
 									for s = 0, 1, 1 do
 										C.firetouchinterest(instance,closestBasePart,0)
 										task.wait()
