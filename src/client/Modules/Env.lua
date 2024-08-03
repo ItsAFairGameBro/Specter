@@ -485,6 +485,7 @@ return function(C,Settings)
 			end
 			if not C.forcePropertyFuncts[part][propertyName] and not noFunction then
 				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
+					print(part,propertyName,"Changed; SEt To", part:GetAttribute(requestAttrName))
 					part[propertyName] = part:GetAttribute(requestAttrName) -- get latest value
 				end)
 			end
