@@ -1125,7 +1125,7 @@ return function(C,Settings)
 					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)F
 
 					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
-					LineVelocity.MaxForce = isOn and (MyData.MaxForce * math.max(1,SpeedMult)) or 0
+					LineVelocity.MaxForce = isOn and (MyData.MaxForce * SpeedMult) or 0
 					--C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack", isOn and (MyData.MaxForce * math.max(1,SpeedMult/6)) or 0, true) --* SpeedMult/8) or 0
 					--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
 					--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
