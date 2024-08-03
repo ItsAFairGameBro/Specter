@@ -404,7 +404,7 @@ return function(C,Settings)
 	function C.DoTeleport(NewLocation: CFrame)
 		if C.human and C.human.SeatPart and C.VehicleTeleport then
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
-			C.VehicleTeleport(C.human.SeatPart.Parent)
+			C.VehicleTeleport(C.human.SeatPart.Parent,NewLocation)
 		elseif C.char then
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
 			C.char:PivotTo(NewLocation)
