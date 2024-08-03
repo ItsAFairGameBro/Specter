@@ -994,14 +994,16 @@ return function(C,Settings)
 						self.Events.MySeatRemoved(self)
 						local Plane = seatPart.Parent
 						local HitCode = Plane:WaitForChild("HitCode",5)
-						if HitCode and HitCode.Value == "Plane" then
+						local MainBody = Plane.PrimaryPart
+						if HitCode and MainBody and HitCode.Value == "Plane" then
 							local HP = Plane:WaitForChild("HP")
 							local Fuel = Plane:WaitForChild("Fuel")
 							local AmmoC = Plane:FindFirstChild("BulletC1")
 							local AmmoC2 = Plane:FindFirstChild("BulletC2")
 							local BombC = Plane:WaitForChild("BombC")
 							local function canRun(toRun)
-								return Plane and Plane.Parent and C.human and seatPart == C.human.SeatPart and not C.Cleared
+								return MainBody and Plane.Parent and MainBody:FindFirstChild("weldConstraint")
+									and C.human and seatPart == C.human.SeatPart and not C.Cleared
 									and (not toRun or 
 										((self.EnTbl.Bomb and BombC.Value == 0) 
 											or (self.EnTbl.MinHPPercentage*C.DataStorage[Plane.Name].Health/100>=HP.Value)
@@ -1033,7 +1035,7 @@ return function(C,Settings)
 										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(0,45,15))
 									end
 									MainBody.AssemblyLinearVelocity = Vector3.new()
-									MainBody.AssemblyAngularVelocity = Vector3.new()
+									--MainBody.AssemblyAngularVelocity = Vector3.new()
 									RunS.RenderStepped:Wait()
 								end
 							end
@@ -1053,6 +1055,7 @@ return function(C,Settings)
 							table.insert(self.Functs,BombC.Changed:Connect(CheckDORefuel))
 							table.insert(self.Functs,HP.Changed:Connect(CheckDORefuel))
 							table.insert(self.Functs,Fuel.Changed:Connect(CheckDORefuel))
+							table.insert(self.Functs,MainBody.ChildRemoved:Connect(CheckDORefuel))
 							CheckDORefuel()
 						end
 					end,
