@@ -100,7 +100,7 @@ return function(C,Settings)
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
 						GS:ClearError()
 						self:Update()
-						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
+						print(debug.traceback("Client/Server Kick Has Occured (%.2f)"):format(time()))
 						--[[local ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
 						if ErrorMessage then
 							warn(ErrorMessage.Text)
