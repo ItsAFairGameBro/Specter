@@ -402,7 +402,10 @@ return function(C,Settings)
 
 	-- Teleport
 	function C.DoTeleport(NewLocation: CFrame)
-		if C.char then
+		if C.human and C.human.SeatPart and C.VehicleTeleport then
+			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
+			C.VehicleTeleport(C.human.SeatPart.Parent)
+		elseif C.char then
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
 			C.char:PivotTo(NewLocation)
 		end

@@ -617,6 +617,7 @@ return function(C,Settings)
                 if C.hrp and not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,C.hrp.CollisionGroup) then
                     return false, "Fling cannot work because you walk through other players"
                 end
+                local wasSeated = C.human:GetState() == Enum.HumanoidStateType.Seated
                 self.FlingThread = task.spawn(function()
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
@@ -650,7 +651,7 @@ return function(C,Settings)
                                 task.wait(0.15)
                             end
             
-                            if C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
+                            if C.human:GetState() == Enum.HumanoidStateType.Seated and not wasSeated then --check if seated
                                 C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                             end
                         end

@@ -129,6 +129,8 @@ local function Static(C,Settings)
 			useCF = loc.Rotation * CFrame.new(loc.Position)
 		end
 		local HitCode = vehicle:FindFirstChild("HitCode")
+		-- Move the vehicle to the new location
+		vehicle:PivotTo(loc)
 		if HitCode then
 			local Turret = vehicle:FindFirstChild("Turret")
 			if Turret then
@@ -136,8 +138,6 @@ local function Static(C,Settings)
 				local Offset = Turret:GetPivot().Position - vehicle:GetPivot().Position
 				local RelativeRotation = vehicle:GetPivot():ToObjectSpace(Turret:GetPivot())
 	
-				-- Move the vehicle to the new location
-				vehicle:PivotTo(loc)
 	
 				-- Calculate the new position for the turret
 				local newTurretPos = loc.Position + Offset
@@ -627,7 +627,7 @@ return function(C,Settings)
 								end
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
-								print(closestBasePart and closestBasePart.Parent)
+								--print(closestBasePart and closestBasePart.Parent)
 								if closestBasePart then
 									if self.EnTbl.Spectate then
 										deb+= 1 local saveDeb = deb
