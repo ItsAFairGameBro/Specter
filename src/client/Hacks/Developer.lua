@@ -144,6 +144,9 @@ return function(C,Settings)
 						end
                     end
                     local function loop(obj,instsScanned)
+                        if not obj then
+                            return
+                        end
                         instsScanned = (instsScanned or 0) + 1
                         printScr(obj)
                         if ignoreParents[obj] then
