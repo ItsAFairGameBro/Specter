@@ -483,6 +483,7 @@ return function(C,Settings)
 				C.forcePropertyFuncts[part] = {}
 			end
 			if not C.forcePropertyFuncts[part][propertyName] and not noFunction then
+				print(part,propertyName,"Added!")
 				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
 					print(part,propertyName,"Changed; SEt To", part:GetAttribute(requestAttrName))
 					part[propertyName] = part:GetAttribute(requestAttrName) -- get latest value
