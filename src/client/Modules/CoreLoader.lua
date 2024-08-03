@@ -14,6 +14,8 @@ local KeybindRunFunct,BindButton
 return function(C, _SETTINGS)
 	--Load Locale Environment
 	C.LoadModule('Env')
+	--Load AntiCheat
+	C.LoadModule("AntiCheat")
 	--Load Core Env
 	C.LoadModule('CoreEnv')
 	if C.Cleared then return end
