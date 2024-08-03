@@ -1123,7 +1123,7 @@ return function(C,Settings)
 					local FuelLeft = VehicleType == "Plane" and Vehicle:WaitForChild("Fuel")
 					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
 
-					local isOn = self.RealEnabled and ((LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
+					local isOn = ((LineVelocity.MaxForce > 10 and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
 						(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship")
 					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
 
