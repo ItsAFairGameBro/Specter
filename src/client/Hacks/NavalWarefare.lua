@@ -803,6 +803,10 @@ return function(C,Settings)
 					end
 				end,
 				Activate=function(self,newValue)
+					if not newValue then
+						C.RemoveAction("LoopBomb")
+						return
+					end
 					for name, data in pairs(C.Bases) do
 						for num, island in ipairs(data) do
 							task.spawn(self.Events.IslandAdded,self,island)
@@ -957,14 +961,17 @@ return function(C,Settings)
 						if HitCode and HitCode.Value == "Plane" then
 							local HP = Plane:WaitForChild("HP")
 							local Fuel = Plane:WaitForChild("Fuel")
-							--local AmmoC = Plane:WaitForChild("Ammo")
+							local AmmoC = Plane:FindFirstChild("BulletC1")
+							local AmmoC2 = Plane:FindFirstChild("BulletC2")
 							local BombC = Plane:WaitForChild("BombC")
 							local function canRun(toRun)
 								return Plane and Plane.Parent and C.human and seatPart == C.human.SeatPart and not C.Cleared
 									and (not toRun or 
 										((self.EnTbl.Bomb and BombC.Value == 0) 
 											or (self.EnTbl.MinHPPercentage*C.DataStorage[Plane.Name].Health/100>=HP.Value)
-											or (self.EnTbl.Fuel and Fuel.Value <= 3)))
+											or (self.EnTbl.Fuel and Fuel.Value <= 3))
+											or (self.EnTbl.Ammo and ((AmmoC and AmmoC.Value <= 0) or (AmmoC2 and AmmoC2.Value <= 0)))
+										)
 							end
 							local function HarborRefuel()
 								local Harbor = workspace:WaitForChild(C.plr.Team.Name:gsub("USA","US").."Dock")
@@ -1030,7 +1037,7 @@ return function(C,Settings)
 					},
 					{
 						Type = Types.Toggle,
-						Title = "❌Ammo",
+						Title = "Ammo",
 						Tooltip = "Refuels when ammo is low",
 						Layout = 1,Default=true,
 						Shortcut="Ammo",
@@ -1097,7 +1104,7 @@ return function(C,Settings)
 										if FuelLeft.Value < 500 then
 											FuelLeft:SetAttribute("RealFuel",FuelLeft.Value)
 										end
-										FuelLeft.Value = math.huge
+										FuelLeft.Value = 999999
 									elseif FuelLeft:GetAttribute("RealFuel") then
 										FuelLeft.Value = FuelLeft:GetAttribute("RealFuel")
 									end
@@ -1108,8 +1115,8 @@ return function(C,Settings)
 								--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
 
 								C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
-								LineVelocity.MaxForce = isOn and ((VehicleType=="Ship" and 49.281604e6 or 31.148e3) * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
-
+								LineVelocity.MaxForce = isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
+								--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
 								--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
 								AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
 							end--33.5e3
@@ -1144,13 +1151,13 @@ return function(C,Settings)
 						Shortcut="Plane",
 						Activate = C.ReloadHack,
 					},
-					{
+					--[[{
 						Type = Types.Toggle,
 						Title = "Inf Fuel",
 						Tooltip = "Tricks the game into thinking that you have infinite fuel",
 						Layout = 4,Default=true,
 						Shortcut="InfFuel",
-					},
+					},--]]
 					{
 						Type = Types.Slider,
 						Title = "Plane Speed",

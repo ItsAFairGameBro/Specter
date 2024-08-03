@@ -73,6 +73,7 @@ return function(C,Settings)
                     local ignoreParents = {[game.CoreGui]=true}
                     local ignoreList = {["OrgColor"]=true,["OrgTrans"]=true,['wallclip']=true,['HackGUI1']=true,["LastTP"]=true,
                         ["OriginalCollide"]=true,["OrgSize"]=true,["WeirdCanCollide"]=true,["Opened"]=true,["SaveVolume"]=true,['ClearedHackGUI1']=true}
+					local ignoreRegex = {"(%a%d)+_OriginalValue","(%a%d)+_Request_","(%a%d)+_RequestCount"}
                     local function printAtt(obj)
                         for _,instance in ipairs(ignoreList) do
                             if instance:IsAncestorOf(obj) then
@@ -81,7 +82,13 @@ return function(C,Settings)
                         end
                         local printStr
                         for attribute, val in pairs(obj:GetAttributes()) do
-                            if not ignoreList[attribute] then
+							local hasRegex = false
+							for num, val in ipairs(ignoreRegex) do
+								if attribute:gmatch(val)() then
+									hasRegex = true
+								end
+							end
+                            if not ignoreList[attribute] and not hasRegex then
                                 if not printStr then
                                     printStr = "\tOBJ ["..obj:GetFullName().."]:"
                                 end
