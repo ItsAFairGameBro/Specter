@@ -577,6 +577,7 @@ return function(C,Settings)
 				Activate = function(self, newValue)
 					-- Disconnect funct and set up childadded workspace event for the projectiles
 					if newValue then
+						local deb = 0
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
 							if instance.Name == "Bomb" then
 								instance.CanTouch = false
@@ -609,7 +610,15 @@ return function(C,Settings)
 								--	closestBasePart, distance = closestBasePart3, distance3
 								--end
 								if closestBasePart then
-									print("Bomb Hit",closestBasePart)
+									if self.EnTbl.Spectate then
+										deb+= 1 local saveDeb = deb
+										C.Spectate(closestBasePart)
+										task.delay(1,function()
+											if deb == saveDeb then
+												C.Spectate() -- undo it
+											end
+										end)	
+									end
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									instance.CanTouch = true
 									for s = 0, 1, 1 do
@@ -630,7 +639,6 @@ return function(C,Settings)
 						Tooltip = "Allows targets such as bases, i.e. harbours and enemy islands.",
 						Layout = 1,Default=true,
 						Shortcut="Base",
-						Activate = C.ReloadHack,
 					},
 					{
 						Type = Types.Toggle,
@@ -638,7 +646,6 @@ return function(C,Settings)
 						Tooltip = "Allows targets such as ships, i.e. subs and battleships.",
 						Layout = 2,Default=true,
 						Shortcut="Ship",
-						Activate = C.ReloadHack,
 					},
 					{
 						Type = Types.Toggle,
@@ -646,7 +653,13 @@ return function(C,Settings)
 						Tooltip = "Allows targets such as individual users.",
 						Layout = 3,Default=true,
 						Shortcut="Plane",
-						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Spectate",
+						Tooltip = "Spectates who you did dirty..",
+						Layout = 3,Default=true,
+						Shortcut="Spectate",
 					}
 				}
 			},
