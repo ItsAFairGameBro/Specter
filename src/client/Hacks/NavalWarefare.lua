@@ -1121,7 +1121,7 @@ return function(C,Settings)
 
 					local isOn = (((not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
 						(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship")
-					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)
+					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)F
 
 					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
 					LineVelocity.MaxForce = isOn and (C.GetPartProperty(LineVelocity,"MaxForce") * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
@@ -1130,7 +1130,7 @@ return function(C,Settings)
 					if AlignOrientation then
 						AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
 					end
-					print("Finished",SpeedMult,LineVelocity.MaxForce)
+					--print("Finished",SpeedMult,LineVelocity.MaxForce)
 				end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
