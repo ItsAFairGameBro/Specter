@@ -1135,7 +1135,7 @@ return function(C,Settings)
 						AlignOrientation.MaxTorque = isOn and (MyData.MaxTorque * TurnMult) or 0
 					end
 					local Collisions = not self.EnTbl.NoCollisions or not isOn
-					if Vehicle.PrimaryPart:GetAttribute("CanCollide_Request_VehicleHack") ~= Collisions then
+					if Vehicle.PrimaryPart:GetAttribute("CanCollide_Request_VehicleHack") ~= (Collisions and nil) then
 						self:SetCollisions(Vehicle,Collisions)
 						print("Set Collisions",Collisions)
 					end
