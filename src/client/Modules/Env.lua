@@ -510,7 +510,7 @@ return function(C,Settings)
 		local requestAttrName = propertyName .. "_Request_" .. requestName
 
 		-- Decrement the request count and revert property if no more requests
-		if part:GetAttribute(requestAttrName) then
+		if part:GetAttribute(requestAttrName) ~= nil then
 			part:SetAttribute(requestAttrName, nil)
 			part:SetAttribute(requestCountAttr, requestCount - 1)
 
