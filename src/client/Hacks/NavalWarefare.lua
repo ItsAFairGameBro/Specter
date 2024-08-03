@@ -1120,9 +1120,8 @@ return function(C,Settings)
 					local FlyButton = C.StringWait(C.PlayerGui,"ScreenGui.InfoFrame.Fly")
 					local MyData = C.DataStorage[Vehicle.Name]
 
-					local isOn = (((not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)) or 
-						(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship")
-					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)F
+					local isOn = (VehicleType == "Ship" or FlyButton.BackgroundColor3.R*255>250) and (not FuelLeft or (FuelLeft:GetAttribute("RealFuel") or FuelLeft.Value) > 0)
+						--(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false))
 
 					self.LastSet = SpeedMult * LineVelocity.VectorVelocity
 					LineVelocity.VectorVelocity = self.LastSet
@@ -1136,7 +1135,7 @@ return function(C,Settings)
 						AlignOrientation.MaxTorque = isOn and (MyData.MaxTorque * TurnMult) or 0
 					end
 					local Collisions = not self.EnTbl.NoCollisions or not isOn
-					if Vehicle.PrimaryPart:GetProperty("CanCollide_Request_VehicleHack") ~= Collisions then
+					if Vehicle.PrimaryPart:GetAttribute("CanCollide_Request_VehicleHack") ~= Collisions then
 						self:SetCollisions(Vehicle,Collisions)
 						print("Set Collisions",Collisions)
 					end
