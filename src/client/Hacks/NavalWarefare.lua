@@ -599,11 +599,11 @@ return function(C,Settings)
 								--if self.EnTbl.Ship then
 								--	closestBasePart3, distance3 = C.getClosest()
 								--end
-								if closestBasePart2 and (not closestBasePart or distance2 + 50 < distance) then
+								if closestBasePart2 and (not closestBasePart or distance2 < distance) then
 									closestBasePart, distance = closestBasePart2, distance2
-									if distance3 < distance then
-										closestBasePart, distance = closestBasePart3, distance3
-									end
+								end
+								if closestBasePart3 and distance3 < distance then
+									closestBasePart, distance = closestBasePart3, distance3
 								end
 								--if closestBasePart3 and (not closestBasePart or distance3 < distance) then
 								--	closestBasePart, distance = closestBasePart3, distance3
