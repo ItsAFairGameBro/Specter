@@ -129,27 +129,30 @@ local function Static(C,Settings)
 			useCF = loc.Rotation * CFrame.new(loc.Position)
 		end
 		local HitCode = vehicle:FindFirstChild("HitCode")
-		-- Move the vehicle to the new location
-		vehicle:PivotTo(loc)
 		if HitCode then
-			local Turret = vehicle:FindFirstChild("Turret")
-			if Turret then
-				-- Calculate the relative offset and rotation of the turret to the vehicle
-				local Offset = Turret:GetPivot().Position - vehicle:GetPivot().Position
-				local RelativeRotation = vehicle:GetPivot():ToObjectSpace(Turret:GetPivot())
-	
-	
+			-- Get where the secondary turrets are relative to basepart
+			local saveData = {}
+			for num, model in ipairs(vehicle:GetChildren()) do
+				if model.Name == "Turret" then
+					table.insert(saveData,{model,model:GetPivot().Position - vehicle:GetPivot().Position,vehicle:GetPivot():ToObjectSpace(model:GetPivot())})
+				end
+			end
+			-- Move the main object
+			vehicle:PivotTo(loc)
+			-- Move the secondary turret objects
+			for num, data in ipairs(saveData) do
+				local Turret, Offset, RelativeRotation = table.unpack(data)
 				-- Calculate the new position for the turret
 				local newTurretPos = loc.Position + Offset
-	
+
 				-- Calculate the new rotation for the turret
 				local newTurretCFrame = loc * RelativeRotation
-	
+
 				-- Set the turret's new position and rotation
 				Turret:PivotTo(newTurretCFrame)
-			else
-				vehicle:PivotTo(loc)
 			end
+		else
+			vehicle:PivotTo(loc)
 		end
 	end	
 	C.getgenv().isInGame = C.isInGame
