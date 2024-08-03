@@ -145,7 +145,7 @@ return function(C,Settings)
                     end
                     local function loop(obj,instsScanned)
                         if not obj then
-                            return
+                            return instsScanned or 0
                         end
                         instsScanned = (instsScanned or 0) + 1
                         printScr(obj)
