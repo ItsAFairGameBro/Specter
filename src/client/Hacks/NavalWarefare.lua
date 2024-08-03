@@ -1124,9 +1124,11 @@ return function(C,Settings)
 						(FlyButton.BackgroundColor3.R*255>250 and self.EnTbl.InfFuel and false) or VehicleType == "Ship")
 					--C.SetPartProperty(LineVelocity,"VectorVelocity","VehicleHack",lastSet,true)F
 
+					self.LastSet = SpeedMult * LineVelocity.VectorVelocity
+					LineVelocity.VectorVelocity = self.LastSet
 					C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
 					C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack",isOn and (MyData.MaxForce * SpeedMult) or 0,true)
-					--LineVelocity.MaxForce = isOn and (MyData.MaxForce * SpeedMult) or 0
+					LineVelocity.MaxForce = isOn and (MyData.MaxForce * SpeedMult) or 0
 					--C.SetPartProperty(LineVelocity,"MaxForce","VehicleHack", isOn and (MyData.MaxForce * math.max(1,SpeedMult/6)) or 0, true) --* SpeedMult/8) or 0
 					--(VehicleType=="Ship" and 49.281604e6 or 31.148e3)
 					--C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult*16),true)
@@ -1135,6 +1137,7 @@ return function(C,Settings)
 					end
 					--print("Finished",SpeedMult,LineVelocity.MaxForce)
 				end,
+				LastSet = nil,
 				Events = {
 					MySeatAdded = function(self,seatPart)
 						self.Events.MySeatRemoved(self,seatPart)
@@ -1148,9 +1151,9 @@ return function(C,Settings)
 							local VehicleType = Vehicle:WaitForChild("HitCode").Value
 							local FuelLeft = HitCode.Value == "Plane" and Vehicle:WaitForChild("Fuel")
 							local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")
-							local lastSet
+							self.LastSet = nil
 							local function Upd()
-								if lastSet and (LineVelocity.VectorVelocity - lastSet).Magnitude < 0.3 then
+								if self.LastSet and (LineVelocity.VectorVelocity - self.LastSet).Magnitude < 0.3 then
 									return
 								end
 								local SpeedMult = self.EnTbl[HitCode.Value .. "Speed"]
@@ -1161,7 +1164,6 @@ return function(C,Settings)
 								if C.GetAction("LoopBomb") or C.GetAction("Plane Refuel") then
 									SpeedMult,TurnMult = 0, 0 -- Override to stop it from moving!
 								end
-								lastSet = SpeedMult * LineVelocity.VectorVelocity
 								if FuelLeft then
 									if self.EnTbl.InfFuel and false then
 										if FuelLeft.Value < 500 then
