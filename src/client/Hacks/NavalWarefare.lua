@@ -1110,8 +1110,8 @@ return function(C,Settings)
 								C.SetPartProperty(LineVelocity,"MaxAxesForce","VehicleHack",C.GetPartProperty(LineVelocity,"MaxAxesForce") * SpeedMult,true)
 								LineVelocity.MaxForce = isOn and ((VehicleType=="Ship" and 49.281604e6 or 31.148e3) * math.max(1,SpeedMult/6)) or 0 --* SpeedMult/8) or 0
 
-								C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult/16),true)
-								AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
+								C.SetPartProperty(AlignOrientation,"Responsiveness","VehicleHack",C.GetPartProperty(AlignOrientation,"Responsiveness") * (TurnMult),true)
+								--AlignOrientation.MaxTorque = isOn and (C.GetPartProperty(AlignOrientation,"MaxTorque") * TurnMult) or 0
 							end--33.5e3
 							table.insert(self.Functs,LineVelocity:GetPropertyChangedSignal("VectorVelocity"):Connect(Upd))
 							Upd()
