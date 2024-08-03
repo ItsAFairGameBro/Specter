@@ -81,6 +81,7 @@ return function(C,Settings)
 					local errorMessage = GS:GetErrorMessage()
 
 					if KickedButton then
+						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
 						KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode and errorCode.Value or -1)
 						KickedButton.Visible = true
