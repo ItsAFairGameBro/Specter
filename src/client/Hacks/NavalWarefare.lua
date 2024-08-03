@@ -315,7 +315,7 @@ return function(C,Settings)
 					if not C.char or not newValue then
 						return
 					end
-					while true do
+					while C.human.Health > 0 do
 						while not C.isInGame(C.char) do
 							task.wait(4) -- FF lasts for 20 seconds so we good
 						end
