@@ -476,8 +476,8 @@ return function(C,Settings)
 		local requestAttrName = propertyName .. "_Request_" .. requestName
 
 		-- Increment the request count if the request is not already present
+		part:SetAttribute(requestAttrName, value)
 		if part:GetAttribute(requestAttrName) == nil then
-			part:SetAttribute(requestAttrName, true)
 			part:SetAttribute(requestCountAttr, requestCount + 1)
 
 			if not C.forcePropertyFuncts[part] then
@@ -485,8 +485,7 @@ return function(C,Settings)
 			end
 			if not C.forcePropertyFuncts[part][propertyName] and not noFunction then
 				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
-
-					part[propertyName] = value
+					part[propertyName] = part:GetAttribute(requestAttrName) -- get latest value
 				end)
 			end
 		end
