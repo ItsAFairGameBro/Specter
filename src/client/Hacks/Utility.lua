@@ -97,7 +97,8 @@ return function(C,Settings)
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
 						GS:ClearError()
 						self:Update()
-						print("Client/Server Kick Has Occured (%.2f)"):format(time())
+						-- Debug.Traceback doesn't work for this:
+						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
 					end))
 				end,
 			},
