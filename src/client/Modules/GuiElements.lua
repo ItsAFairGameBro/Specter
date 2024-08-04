@@ -2792,7 +2792,7 @@ return function(C, Settings)
 			if not success then
 				return success, result
 			end
-			local success2, result2 = C.API(HS,"JSONDecode",result)
+			local success2, result2 = C.API(HS,"JSONDecode",1,result)
 			if not success2 then
 				return success2, result2
 			end
@@ -2848,7 +2848,7 @@ return function(C, Settings)
 			end
 		end
 		local hasArrows = tabName == "Game" or false
-		local titleAfter = tabName == "Game" and index or `pg {PageNum}`
+		local titleAfter = tabName == "Game" and `pg {PageNum}` or index 
 
 		NextButton.BackgroundColor3 = Next and Color3.fromRGB(60, 255, 0) or Color3.fromRGB(170,170,170)
 		PrevButton.BackgroundColor3 = Prev and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
@@ -2861,13 +2861,13 @@ return function(C, Settings)
 		if not Next then
 			return
 		end
-		ActivateServers(tabName,true)
+		ActivateServers(CurrentlySel,true)
 	end)
 	C.ButtonClick(PrevButton, function()
 		if not Previous then
 			return
 		end
-		ActivateServers(tabName,false)
+		ActivateServers(CurrentlySel,false)
 	end)
 
 	local Visible = true

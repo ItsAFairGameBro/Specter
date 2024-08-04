@@ -6,6 +6,7 @@ local PS = game:GetService("Players")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
 	function C.API(service,method,tries,...)
+		assert(typeof(tries)=="number" or tries==nil,"[C.API]: Tries parameter must be a number")
 		tries = tries or 3
 		local success, result
 		while (tries > 0 or tries == -1) and not success do
@@ -16,7 +17,7 @@ return function(C,Settings)
 			end
 			if not success then
 				C.AddNotification("API Failed",`{tostring(method)} from service {tostring(service)} has failed!\nTries: {tries<0 and "inf" or tries}`)
-				warn(`{tostring(method)} from service {tostring(service)} has failed! Args: {table.concat(table.pack(...),", ")} Tries: {tries<0 and "inf" or tries}`)
+				warn(debug.traceback(`{tostring(method)} from service {tostring(service)} has failed! Args: {table.concat(table.pack(...),", ")} Tries: {tries<0 and "inf" or tries}`))
 			end
 			tries -= 1
 		end
