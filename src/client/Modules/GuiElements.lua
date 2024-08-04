@@ -2883,26 +2883,31 @@ return function(C, Settings)
 			if tabName~="Recent" or (data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId)) then
 				index+=1
 				local serverClone = C.Examples.ServerEx:Clone()
+				local RealIndex = (PageNum-1)*100 + index
+				local JobId = data.JobId or data.id
 				local listedData = {
-					(tabName=="Friend" and `{data.UserName}`) or `Server {(PageNum-1)*100 + index}`,
+					(tabName=="Friend" and `{data.UserName}`) or (JobId == game.JobId and `Your Server`) or `Server {RealIndex}`,
 					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`) 
 						or (data.PlaceId and MS:GetProductInfo(data.PlaceId).Name) or "Not InGame",
 					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`) or (data.LocationType and `{LocationType[data.LocationType]}`),
-					data.JobId or data.id,
 				}
 				serverClone.Name = index
 				serverClone.ServerTitle.Text = listedData[1]
 				serverClone.SecondData.Text = listedData[2]
 				serverClone.TimeStamp.Text = listedData[3]
 				serverClone.LayoutOrder = index
-				serverClone.BackgroundColor3 = C.ComputeNameColor(listedData[4])
+				if JobId == game.JobId then
+					serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
+				else
+					serverClone.BackgroundColor3 = C.ComputeNameColor(RealIndex)
+				end
 				C.ButtonClick(serverClone, function()
 					if JoinServerDeb then return end
-					if not listedData[1] then
+					if not JobId then
 						return C.Prompt(`Not InGame`, `{listedData[1]} is currently not in a game.\nPlease try again later.`)
 					end
-					if C.Prompt(`Join {listedData[1]}?`, `JobId: {listedData[4]}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
-						C.ServerTeleport(data.PlaceId or game.PlaceId,listedData[4])
+					if C.Prompt(`Join {listedData[1]}?`, `JobId: {JobId}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
+						C.ServerTeleport(data.PlaceId or game.PlaceId,JobId)
 					end
 				end)
 				serverClone.Parent = MainScroll
