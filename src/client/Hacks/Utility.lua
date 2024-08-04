@@ -80,7 +80,9 @@ return function(C,Settings)
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
-						KickedButton.Text = self.ErrorMessage.Text
+						if self.ErrorMessage then
+							KickedButton.Text = self.ErrorMessage.Text
+						end
 						KickedButton.Visible = true
 					end
 				end,
@@ -88,7 +90,8 @@ return function(C,Settings)
 					if not newValue then
 						return
 					end
-					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
+					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(...)
+						print("Sent",...)
 						GS:ClearError()
 						self:Update()
 						-- Debug.Traceback doesn't work for this:
@@ -98,7 +101,7 @@ return function(C,Settings)
 					-- This will wait forever
 					self.ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",math.huge)
 					if self.ErrorMessage then
-						warn(self.ErrorMessage.Text)
+						warn("MESSAGE FINALLY FOUND",self.ErrorMessage.Text)
 						table.insert(self.Functs,self.ErrorMessage:GetPropertyChangedSignal("Text"):Connect(function()
 							local KickedButton = C.UI.KickedButton
 
