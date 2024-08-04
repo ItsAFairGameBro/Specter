@@ -2795,6 +2795,7 @@ return function(C, Settings)
 				return false, result.StatusMessage
 			end
 			local success2, result2 = C.API(HS,"JSONDecode",1,result.Body)
+			print(result.Body)
 			if not success2 then
 				return success2, result2
 			end
