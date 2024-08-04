@@ -2835,7 +2835,7 @@ return function(C, Settings)
 				index+=1
 				local serverClone = C.Examples.ServerEx:Clone()
 				local listedData = {
-					`Server {(pageNum-1)*100 + index}`,
+					`Server {(PageNum-1)*100 + index}`,
 					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`),
 					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`),
 					data.JobId or data.id,
