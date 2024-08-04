@@ -70,9 +70,9 @@ return function(C,Settings)
 		if self ~= C then
 			error("Invalid SaveProfile Call: must use `:` but only used `.`")
 		end
-		local profileName = C.getgenv().ProfileName
+		local profileName = C.getgenv().ProfileId
 		if not C.readfile or not C.writefile or profileName == "" then
-			C.DebugMessage("Save","Save Stopped, profileName: "..tostring(profileName))
+			C.DebugMessage("Save","Save Stopped, profileName: "..(profileName or "nil"))
 			return
 		end
 		local function internallySaveProfile()
@@ -144,7 +144,7 @@ return function(C,Settings)
 					C.AddNotification(`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
 				end
 				if not C.isStudio then
-					C.getgenv().ProfileName = "Default"
+					C.getgenv().ProfileId = "Default"
 				end
 				return
 			end
@@ -156,7 +156,7 @@ return function(C,Settings)
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
 		if success then
-			C.getgenv().ProfileName = profileName
+			C.getgenv().ProfileId = profileName
 			if not C.StartUp then
 				C:ReloadStates()
 			end
