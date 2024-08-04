@@ -2812,7 +2812,7 @@ return function(C, Settings)
 	local PrevButton, NextButton = BottomButtons:WaitForChild("Previous"), BottomButtons:WaitForChild("Next")
 
 	local CurrentlySel
-	local PageNum,Previous,Next = 0, "", ""
+	local MaxPageNum,PageNum,Previous,Next = 0, 0, "", ""
 	local JoinServerDeb = false
 
 	local GetServers = {
@@ -2872,7 +2872,7 @@ return function(C, Settings)
 			PageNum-=1
 		else
 			Previous,Next = nil,nil
-			PageNum = 1
+			PageNum,MaxPageNum = 1, nil
 		end
 		local success, result = GetServers[tabName](Cursor)
 		LoadingDeb = false
@@ -2919,7 +2919,17 @@ return function(C, Settings)
 			end
 		end
 		local hasArrows = tabName == "Game" and (Next or Previous)
-		local titleAfter = tabName == "Game" and `pg {PageNum}` or index
+		local titleAfter = index
+		if not Next then
+			MaxPageNum = PageNum--We on last page
+		end
+		if tabName == "Game" then
+			if MaxPageNum then
+				titleAfter = `pg {PageNum}/{MaxPageNum}`
+			else
+				titleAfter = `pg {PageNum}`
+			end
+		end
 
 		NextButton.BackgroundColor3 = Next and Color3.fromRGB(60, 255, 0) or Color3.fromRGB(170,170,170)
 		PrevButton.BackgroundColor3 = Previous and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
