@@ -585,7 +585,7 @@ return function(C,Settings)
 							if instance.Name ~= "Bomb" then
 								return
 							end
-							local Spectate = (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude > 180
+							local Spectate = (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude < 90
 							instance.CanTouch = false
 							task.wait(.4)
 							if instance.Parent then
