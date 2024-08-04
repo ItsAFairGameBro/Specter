@@ -28,7 +28,7 @@ return function(C,Settings)
                     if Bomb then
                         print("Bomb Found")
                         while Bomb.Parent and Bomb.Parent == C.char do
-                            local closestHead, dist = C.getClosest()
+                            local closestHead, dist = C.getClosest({noTeam=true})
                             if not closestHead then
                                 error("Nearest player failed: nobody found!")
                             end

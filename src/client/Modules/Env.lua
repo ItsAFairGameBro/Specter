@@ -416,7 +416,8 @@ return function(C,Settings)
 	end
 
 	-- Closest Plr
-	function C.getClosest(noForcefield:boolean,notSeated:boolean,location:Vector3)
+	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean},location:Vector3)
+		data = data or {}
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
 		if not C.human or C.human.Health <= 0 or not myHRPPos then print"1" return end
 
@@ -436,11 +437,11 @@ return function(C,Settings)
 			else
 				team = v.Team
 			end
-			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then  print"3"  continue end
-			if team == C.plr.Team and #TS:GetChildren()>1 then  print"4"  continue end
+			if data.noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then  print"3"  continue end
+			if not data.noTeam and team == C.plr.Team and #TS:GetChildren()>1 then  print"4"  continue end
 			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
 			if not theirHumanoid or theirHumanoid.Health <= 0 then  print"5"  continue end
-			if notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then  print"6"  continue end
+			if data.notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then  print"6"  continue end
 			local theirHead = theirChar.FindFirstChild(theirChar,"Head")
 			if not theirHead then print"7"  continue end
 

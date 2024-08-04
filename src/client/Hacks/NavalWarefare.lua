@@ -198,7 +198,7 @@ return function(C,Settings)
 						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObject,gameProcessed)
 							if inputObject.KeyCode == Enum.KeyCode.F then
 								while UIS:IsKeyDown(Enum.KeyCode.F) and self.RealEnabled do
-									local u = C.getClosest()
+									local u = C.getClosest({})
 									if u then
 										local v = u.Parent:FindFirstChild("HumanoidRootPart")
 										if v then
@@ -233,7 +233,7 @@ return function(C,Settings)
 					end
 					local Tool = C.char:FindFirstChildWhichIsA("Tool")
 					while self.RealEnabled do
-						local Target, Distance = C.getClosest()
+						local Target, Distance = C.getClosest({})
 						if Target and Distance <= 450 then
 							self:Shoot(Target)
 						end
@@ -270,7 +270,7 @@ return function(C,Settings)
 						local Time = actionClone:FindFirstChild("Time")
 						local saveChar = C.char
 						while Time and self.RealEnabled and C.char == saveChar and C.char.PrimaryPart and C.human and C.human.Health>0 do
-							local theirHead, dist = C.getClosest()
+							local theirHead, dist = C.getClosest({})
 							if theirHead then
 								C.DoTeleport(theirHead.Parent:GetPivot() * CFrame.new(0,20,0))
 								Time.Text = theirHead.Parent.Name
@@ -366,7 +366,7 @@ return function(C,Settings)
 									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
 										local nearestTbl = {}
 										if self.EnTbl.Users then
-											table.insert(nearestTbl,{C.getClosest(false,false,instance.Position)})
+											table.insert(nearestTbl,{C.getClosest({},instance.Position)})
 										end
 										if self.EnTbl.Planes then
 											table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
