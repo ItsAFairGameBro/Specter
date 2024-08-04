@@ -93,20 +93,27 @@ return function(C,Settings)
 			if not C.getgenv().PreviousServers then
 				C.getgenv().PreviousServers = {}
 			end
-			if true then -- Private server detection, cannot join any other servers! EDIT: CANNOT ACCESS FROM CLIENT
-				if #C.getgenv().PreviousServers == 0 or C.getgenv().PreviousServers[1].JobId ~= game.JobId then
-					table.insert(C.getgenv().PreviousServers,1,{
-						PlaceId = game.PlaceId,
-						JobId = game.JobId,
-						GameId = game.GameId,
-						Time = os.time(),
-						Players = #PS:GetPlayers(),
-						MaxPlayers = PS.MaxPlayers,
-					})
-				else
+			do -- Private server detection, cannot join any other servers! EDIT: CANNOT ACCESS FROM CLIENT
+				local PreviousServers = C.getgenv().PreviousServers
+				--if #PreviousServers == 0 or PreviousServers[1].JobId ~= game.JobId or PreviousServers[1].PlaceId ~= game.PlaceId then
+				for index = #PreviousServers, 1, -1 do
+					local data = PreviousServers[index]
+					if data.JobId == game.JobId and data.PlaceId == game.PlaceId and data.GameId == game.GameId then
+						table.remove(PreviousServers,index)
+					end
+				end
+				table.insert(PreviousServers,1,{
+					PlaceId = game.PlaceId,
+					JobId = game.JobId,
+					GameId = game.GameId,
+					Time = os.time(),
+					Players = #PS:GetPlayers(),
+					MaxPlayers = PS.MaxPlayers,
+				})
+			--[[else
 					C.getgenv().PreviousServers[1].Time = os.time() -- Update time
 					C.getgenv().PreviousServers[1].Players = #PS:GetPlayers() -- Update players
-				end
+				end--]]
 			end
 			
 			local EncodedSaveDict2 = HS:JSONEncode({
