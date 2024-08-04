@@ -2773,14 +2773,16 @@ return function(C, Settings)
 	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
 	local ServersTL = ServersFrame:WaitForChild("ServersTitleLabel")
 
+	local CurrentlySel
 	local JoinServerDeb = false
 
 	local function ActivateServers(tabName: string)
+		CurrentlySel = tabName
 		C.ClearChildren(MainScroll)
 		local index = 0
 		if tabName == "Recent" then
 			for num, data in ipairs(C.getgenv().PreviousServers) do
-				if data.GameId ~= game.GameId then
+				if data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId then
 					index+=1
 					local serverClone = C.Examples.ServerEx:Clone()
 					local listedData = {
@@ -2813,6 +2815,9 @@ return function(C, Settings)
 	local Visible = true
 	function C.ToggleServersVisiblity()
 		Visible = not Visible
+		if Visible and not CurrentlySel then
+			ActivateServers("Recent")
+		end
 		SecondaryHUD.Visible = Visible
 	end
 	C.ToggleServersVisiblity()
