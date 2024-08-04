@@ -428,8 +428,13 @@ return function(C,Settings)
 			if not C.CanTargetPlayer(v) then continue end
 			local theirChar = v.Character
 			if not theirChar then continue end
-			local isInGame,team = C.isInGame(theirChar)
-			if not isInGame then continue end
+			local isInGame,team
+			if C.isInGame then
+				isInGame,team = C.isInGame(theirChar)
+				if not isInGame then continue end
+			else
+				team = v.Team
+			end
 			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then continue end
 			if team == C.plr.Team then continue end
 			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
