@@ -7,6 +7,7 @@ local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
 local GS = game:GetService("GuiService")
 local SG = game:GetService("StarterGui")
+local NC = game:GetService("NetworkClient")
 return function(C,Settings)
 	return {
 		Category = {
@@ -94,6 +95,9 @@ return function(C,Settings)
 						return
 					end
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg)
+						if NC:FindFirstChild("ClientReplicator") then
+							return -- We are still in the game!
+						end
 						if not msg or msg:len() == 0 then
 							task.delay(.5,GS.ClearError,GS)
 							return

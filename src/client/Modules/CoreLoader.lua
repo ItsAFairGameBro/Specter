@@ -18,6 +18,9 @@ return function(C, _SETTINGS)
 	--Load AntiCheat
 	C.LoadModule("AntiCheat")
 	if C.Cleared then return end
+	--Load GUI Elements
+	C.LoadModule('GuiElements')
+	if C.Cleared then return end
 	--Load Core Env
 	C.LoadModule('CoreEnv')
 	if C.SaveIndex == 1 then
@@ -25,9 +28,6 @@ return function(C, _SETTINGS)
 		if C.Cleared then return end
 	end
 	if C.Cleared then return end
-	--Load GUI Elements
-	C.LoadModule('GuiElements')
-	if C.Cleared then return end	
 	--Load Binds and such
 	C.LoadModule("Binds")
 	--Load Current Profile, But Only If We're The First

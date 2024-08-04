@@ -2759,8 +2759,9 @@ return function(C, Settings)
 	--Kick button
 
 	C.ButtonClick(C.UI.KickedButton,function()
-		C.UI.KickedButton:Destroy()
-		C.UI.KickedButton = nil
+		--C.UI.KickedButton:Destroy()
+		--C.UI.KickedButton = nil
+		C.UI.KickedButton.Visible = false
 	end)
 
 	--Load Servers
@@ -2779,7 +2780,7 @@ return function(C, Settings)
 		local index = 0
 		if tabName == "Recent" then
 			for num, data in ipairs(C.getgenv().PreviousServers) do
-				if data.GameId == game.GameId then
+				if data.GameId ~= game.GameId then
 					index+=1
 					local serverClone = C.Examples.ServerEx:Clone()
 					local listedData = {
