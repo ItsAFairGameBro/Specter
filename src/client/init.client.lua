@@ -1,4 +1,4 @@
-task.wait(0 - time())
+task.wait(3 - time())
 local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
@@ -27,7 +27,7 @@ local function RegisterFunctions()
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
 	C.firetouchinterest = isStudio and function() return end or function(part1,part2,number)
-		if part2.Parent then
+		if part1.Parent and part2.Parent then
 			firetouchinterest(part1,part2,number)
 		end
 	end
@@ -80,12 +80,12 @@ C.preloadedModule = {}
 C.forcePropertyFuncts = {}
 C.BindedActions = {} -- key binds
 C.EventFunctions = {}
-C.Debugs = {
+C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
 	SaveSystem = false,
-	Teleport = true,
+	Teleport = false,
 	Override = false,
 	Thread = false,
 	AntiCheat = false,
@@ -103,7 +103,7 @@ C.getgenv().C = C
 local PreDebugMessage = `[SpecterV2/%s]: `
 function C.DebugMessage(type,message)
 	assert(C.Debugs[type]~=nil, `{PreDebugMessage}Message Type Not Found: "{tostring(type)}" in an attempt to create message: "{message}"`)
-	if not C.Debugs[type] then
+	if not C.Debugs[type] and not C.Debugs.All then
 		return false
 	end
 	print(`{PreDebugMessage:format(type)}{message}`)

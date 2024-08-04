@@ -4,6 +4,7 @@ local TS = game:GetService("TweenService")
 local RS = game:GetService("ReplicatedStorage")
 local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
+local MS = game:GetService("MarketplaceService")
 local HS = game:GetService("HttpService")
 
 local function LoadCore(C,Settings)
@@ -2781,6 +2782,7 @@ return function(C, Settings)
 	local TabsSelection = ServersFrame:WaitForChild("TabsSelection")
 	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
 	local ServersTL = ServersFrame:WaitForChild("ServersTitleLabel")
+	local NoneFound = ServersFrame:WaitForChild("NoneFoundLabel")
 	local PrevButton, NextButton = BottomButtons:WaitForChild("Previous"), BottomButtons:WaitForChild("Next")
 
 	local CurrentlySel
@@ -2806,7 +2808,7 @@ return function(C, Settings)
 			return true, result2.data
 		end,
 		Friend = function()
-			local success, result = C.API(PS,"GetFriendsOnline",1)
+			local success, result = C.API(C.plr,"GetFriendsOnline",1)
 			if not success then
 				return success, result
 			end
@@ -2817,9 +2819,19 @@ return function(C, Settings)
 			return true, result
 		end,
 	}
+	local LocationType = {
+		[0]="Mobile Website",
+		[1]="Mobile InGame",
+		[2]="Webpage",
+		[3]="Studio",
+		[4]="InGame",
+		[5]="Xbox",
+		[6]="Team Create"
+	}
 	local LoadingDeb
 	local function ActivateServers(tabName: string, increment: boolean | nil)
 		if LoadingDeb then return end LoadingDeb = true
+		NoneFound.Visible = false
 		local Cursor = ""
 		if increment then
 			Cursor = Next
@@ -2847,8 +2859,9 @@ return function(C, Settings)
 				local serverClone = C.Examples.ServerEx:Clone()
 				local listedData = {
 					(tabName=="Friend" and `{data.UserName}`) or `Server {(PageNum-1)*100 + index}`,
-					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`),
-					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`),
+					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`) 
+						or (data.PlaceId and MS:GetProductInfo(data.PlaceId).Name) or "Not InGame",
+					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`) or (data.LocationType and `{LocationType[data.LocationType]}`),
 					data.JobId or data.id,
 				}
 				serverClone.Name = index
@@ -2859,6 +2872,9 @@ return function(C, Settings)
 				serverClone.BackgroundColor3 = C.ComputeNameColor(listedData[4])
 				C.ButtonClick(serverClone, function()
 					if JoinServerDeb then return end
+					if not listedData[1] then
+						return C.Prompt(`Not InGame`, `{listedData[1]} is currently not in a game.\nPlease try again later.`)
+					end
 					if C.Prompt(`Join {listedData[1]}?`, `JobId: {listedData[4]}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
 						C.ServerTeleport(data.PlaceId or game.PlaceId,listedData[4])
 					end
@@ -2866,8 +2882,8 @@ return function(C, Settings)
 				serverClone.Parent = MainScroll
 			end
 		end
-		local hasArrows = tabName == "Game" or false
-		local titleAfter = tabName == "Game" and `pg {PageNum}` or index 
+		local hasArrows = tabName == "Game" and (Next or Previous)
+		local titleAfter = tabName == "Game" and `pg {PageNum}` or index
 
 		NextButton.BackgroundColor3 = Next and Color3.fromRGB(60, 255, 0) or Color3.fromRGB(170,170,170)
 		PrevButton.BackgroundColor3 = Previous and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
@@ -2875,6 +2891,7 @@ return function(C, Settings)
 		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
 		BottomButtons.Visible = hasArrows
 		ServersTL.Text = `{tabName:upper()} SERVERS ({titleAfter})`
+		NoneFound.Visible = index == 0
 	end
 	C.ButtonClick(NextButton, function()
 		if not Next then
@@ -2893,7 +2910,7 @@ return function(C, Settings)
 	function C.ToggleServersVisiblity()
 		Visible = not Visible
 		if Visible and not CurrentlySel then
-			ActivateServers("Recent")
+			ActivateServers("Friend")
 		end
 		SecondaryHUD.Visible = Visible
 	end
