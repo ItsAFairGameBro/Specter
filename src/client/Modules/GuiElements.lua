@@ -9,2097 +9,2227 @@ local function LoadCore(C,Settings)
 
 -- Instances:
 
-local SpecterGUI = Instance.new("ScreenGui")
-local MainHUD = Instance.new("Frame")
-local DropdownFrame = Instance.new("Frame")
-local UIListLayout = Instance.new("UIListLayout")
-local DropdownButtonEx = Instance.new("TextButton")
-local UICorner = Instance.new("UICorner")
-local UIStroke = Instance.new("UIStroke")
-local CategoriesFrame = Instance.new("Frame")
-local Buttons = Instance.new("Frame")
-local CategoryEx = Instance.new("Frame")
-local Image = Instance.new("ImageLabel")
-local Text = Instance.new("TextLabel")
-local Arrow = Instance.new("TextLabel")
-local BottomFrame = Instance.new("Frame")
-local SaveButton = Instance.new("ImageLabel")
-local Wait = Instance.new("TextLabel")
-local UICorner_2 = Instance.new("UICorner")
-local UIListLayout_2 = Instance.new("UIListLayout")
-local MiscDivider = Instance.new("Frame")
-local MiscLabel = Instance.new("TextLabel")
-local HeaderTab = Instance.new("Frame")
-local HeaderTitleLabel = Instance.new("TextLabel")
-local SettingsButton = Instance.new("ImageButton")
-local Settings = Instance.new("Frame")
-local SupportedFrame = Instance.new("Frame")
-local Image_2 = Instance.new("ImageLabel")
-local Description = Instance.new("TextLabel")
-local Supported = Instance.new("TextLabel")
-local BottomFrame_2 = Instance.new("Frame")
-local RefreshButton = Instance.new("ImageLabel")
-local UICorner_3 = Instance.new("UICorner")
-local UIStroke_2 = Instance.new("UIStroke")
-local UIListLayout_3 = Instance.new("UIListLayout")
-local HackDivider = Instance.new("Frame")
-local HackLabel = Instance.new("TextLabel")
-local GameDivider = Instance.new("Frame")
-local GameLabel = Instance.new("TextLabel")
-local ScrollTab = Instance.new("ScrollingFrame")
-local UIListLayout_4 = Instance.new("UIListLayout")
-local TabsFrame = Instance.new("Frame")
-local TabEx = Instance.new("CanvasGroup")
-local HeaderTab_2 = Instance.new("Frame")
-local HeaderTitleLabel_2 = Instance.new("TextLabel")
-local DropDownButton = Instance.new("ImageButton")
-local Text_2 = Instance.new("TextLabel")
-local Image_3 = Instance.new("ImageLabel")
-local ScrollTab_2 = Instance.new("ScrollingFrame")
-local UIListLayout_5 = Instance.new("UIListLayout")
-local HackButtonEx = Instance.new("Frame")
-local HackText = Instance.new("TextLabel")
-local HackExpand = Instance.new("ImageButton")
-local OptionsList = Instance.new("Frame")
-local UIListLayout_6 = Instance.new("UIListLayout")
-local ToggleEx = Instance.new("Frame")
-local NameTL = Instance.new("TextLabel")
-local ToggleSwitchSlider = Instance.new("ImageButton")
-local UICorner_4 = Instance.new("UICorner")
-local ToggleCircle = Instance.new("Frame")
-local UICorner_5 = Instance.new("UICorner")
-local UIGradient = Instance.new("UIGradient")
-local UIGradient_2 = Instance.new("UIGradient")
-local UIStroke_3 = Instance.new("UIStroke")
-local SliderEx = Instance.new("Frame")
-local NameTL_2 = Instance.new("TextLabel")
-local SlidingBar = Instance.new("ImageButton")
-local UICorner_6 = Instance.new("UICorner")
-local CurrentPosition = Instance.new("Frame")
-local UICorner_7 = Instance.new("UICorner")
-local UIGradient_3 = Instance.new("UIGradient")
-local UIGradient_4 = Instance.new("UIGradient")
-local Backing = Instance.new("Frame")
-local Track = Instance.new("Frame")
-local ForceTB = Instance.new("TextBox")
-local TBUnderbar = Instance.new("Frame")
-local LeftBound = Instance.new("TextLabel")
-local RightBound = Instance.new("TextLabel")
-local UIStroke_4 = Instance.new("UIStroke")
-local DropdownEx = Instance.new("Frame")
-local NameTL_3 = Instance.new("TextLabel")
-local UIStroke_5 = Instance.new("UIStroke")
-local DropdownButton = Instance.new("TextButton")
-local UICorner_8 = Instance.new("UICorner")
-local UIStroke_6 = Instance.new("UIStroke")
-local UserListEx = Instance.new("Frame")
-local NameTL_4 = Instance.new("TextLabel")
-local UIStroke_7 = Instance.new("UIStroke")
-local AddButton = Instance.new("TextButton")
-local UICorner_9 = Instance.new("UICorner")
-local UIStroke_8 = Instance.new("UIStroke")
-local MainList = Instance.new("Frame")
-local UIListLayout_7 = Instance.new("UIListLayout")
-local OneListEx = Instance.new("Frame")
-local DeleteButton = Instance.new("TextButton")
-local UICorner_10 = Instance.new("UICorner")
-local UIStroke_9 = Instance.new("UIStroke")
-local UserTL = Instance.new("TextLabel")
-local EnterTB = Instance.new("TextBox")
-local UICorner_11 = Instance.new("UICorner")
-local UIStroke_10 = Instance.new("UIStroke")
-local LimitTL = Instance.new("TextLabel")
-local TextboxEx = Instance.new("Frame")
-local NameTL_5 = Instance.new("TextLabel")
-local UIStroke_11 = Instance.new("UIStroke")
-local SetTB = Instance.new("TextBox")
-local UICorner_12 = Instance.new("UICorner")
-local UIStroke_12 = Instance.new("UIStroke")
-local LimitTL_2 = Instance.new("TextLabel")
-local EnterButton = Instance.new("ImageButton")
-local UICorner_13 = Instance.new("UICorner")
-local UIStroke_13 = Instance.new("UIStroke")
-local HighlightBackground = Instance.new("Frame")
-local KeybindButton = Instance.new("ImageButton")
-local BindedKey = Instance.new("TextLabel")
-local KeybindLabel = Instance.new("TextLabel")
-local KeybindBacking = Instance.new("Frame")
-local UIGradient_5 = Instance.new("UIGradient")
-local ToolTipHeaderFrame = Instance.new("Frame")
-local ToolTipText = Instance.new("TextLabel")
-local UICorner_14 = Instance.new("UICorner")
-local Notifications = Instance.new("Frame")
-local NotificationEx = Instance.new("Frame")
-local Timer = Instance.new("Frame")
-local UICorner_15 = Instance.new("UICorner")
-local NotificationTitle = Instance.new("TextLabel")
-local NotificationDesc = Instance.new("TextLabel")
-local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
-local HUDBackgroundFade = Instance.new("Frame")
-local ChatAutoComplete = Instance.new("ScrollingFrame")
-local AutoCompleteEx = Instance.new("Frame")
-local AutoCompleteTitleLabel = Instance.new("TextLabel")
-local UIListLayout_8 = Instance.new("UIListLayout")
-local Actions = Instance.new("CanvasGroup")
-local HeaderTab_3 = Instance.new("Frame")
-local HeaderTitleLabel_3 = Instance.new("TextLabel")
-local DropDownButton_2 = Instance.new("ImageButton")
-local Text_3 = Instance.new("TextLabel")
-local Image_4 = Instance.new("ImageLabel")
-local ScrollTab_3 = Instance.new("ScrollingFrame")
-local UIListLayout_9 = Instance.new("UIListLayout")
-local ActionsEx = Instance.new("Frame")
-local Title = Instance.new("TextLabel")
-local StopButton = Instance.new("TextButton")
-local UIStroke_14 = Instance.new("UIStroke")
-local Time = Instance.new("TextLabel")
-local UIStroke_15 = Instance.new("UIStroke")
-local UIStroke_16 = Instance.new("UIStroke")
-local UIGradient_6 = Instance.new("UIGradient")
-local ToggleTagEx = Instance.new("BillboardGui")
-local Toggle = Instance.new("TextButton")
-local UIStroke_17 = Instance.new("UIStroke")
-local KickedButton = Instance.new("TextButton")
-local SecondaryHUD = Instance.new("Frame")
-local Servers = Instance.new("Frame")
-local UICorner_16 = Instance.new("UICorner")
-local ServersTitleLabel = Instance.new("TextLabel")
-local TabsSelection = Instance.new("Frame")
-local FromGame = Instance.new("TextButton")
-local UICorner_17 = Instance.new("UICorner")
-local UIStroke_18 = Instance.new("UIStroke")
-local UIGridLayout = Instance.new("UIGridLayout")
-local Recent = Instance.new("TextButton")
-local UICorner_18 = Instance.new("UICorner")
-local UIStroke_19 = Instance.new("UIStroke")
-local Close = Instance.new("TextButton")
-local UICorner_19 = Instance.new("UICorner")
-local UIStroke_20 = Instance.new("UIStroke")
-local Friends = Instance.new("TextButton")
-local UICorner_20 = Instance.new("UICorner")
-local UIStroke_21 = Instance.new("UIStroke")
-local MainScroll = Instance.new("ScrollingFrame")
-local ServerEx = Instance.new("Frame")
-local ServerTitle = Instance.new("TextLabel")
-local TimeStamp = Instance.new("TextLabel")
-local SecondData = Instance.new("TextLabel")
-local UICorner_21 = Instance.new("UICorner")
-local UIStroke_22 = Instance.new("UIStroke")
-local UIGridLayout_2 = Instance.new("UIGridLayout")
-local BottomButtons = Instance.new("Frame")
-local Previous = Instance.new("TextButton")
-local UICorner_22 = Instance.new("UICorner")
-local UIStroke_23 = Instance.new("UIStroke")
-local UIGridLayout_3 = Instance.new("UIGridLayout")
-local Join = Instance.new("TextButton")
-local UICorner_23 = Instance.new("UICorner")
-local UIStroke_24 = Instance.new("UIStroke")
-local Next = Instance.new("TextButton")
-local UICorner_24 = Instance.new("UICorner")
-local UIStroke_25 = Instance.new("UIStroke")
-local ExtraLabel = Instance.new("TextLabel")
-local UICorner_25 = Instance.new("UICorner")
-local UIStroke_26 = Instance.new("UIStroke")
+local ToggleTagEx = {
+	SpecterGUI = Instance.new("ScreenGui"),
+	MainHUD = Instance.new("Frame"),
+	DropdownFrame = Instance.new("Frame"),
+	UIListLayout = Instance.new("UIListLayout"),
+	DropdownButtonEx = Instance.new("TextButton"),
+	UICorner = Instance.new("UICorner"),
+	UIStroke = Instance.new("UIStroke"),
+	CategoriesFrame = Instance.new("Frame"),
+	Buttons = Instance.new("Frame"),
+	CategoryEx = Instance.new("Frame"),
+	Image = Instance.new("ImageLabel"),
+	Text = Instance.new("TextLabel"),
+	Arrow = Instance.new("TextLabel"),
+	BottomFrame = Instance.new("Frame"),
+	SaveButton = Instance.new("ImageLabel"),
+	Wait = Instance.new("TextLabel"),
+	UICorner_2 = Instance.new("UICorner"),
+	UIListLayout_2 = Instance.new("UIListLayout"),
+	MiscDivider = Instance.new("Frame"),
+	MiscLabel = Instance.new("TextLabel"),
+	HeaderTab = Instance.new("Frame"),
+	HeaderTitleLabel = Instance.new("TextLabel"),
+	SettingsButton = Instance.new("ImageButton"),
+	Settings = Instance.new("Frame"),
+	SupportedFrame = Instance.new("Frame"),
+	Image_2 = Instance.new("ImageLabel"),
+	Description = Instance.new("TextLabel"),
+	Supported = Instance.new("TextLabel"),
+	BottomFrame_2 = Instance.new("Frame"),
+	RefreshButton = Instance.new("ImageLabel"),
+	UICorner_3 = Instance.new("UICorner"),
+	UIStroke_2 = Instance.new("UIStroke"),
+	UIListLayout_3 = Instance.new("UIListLayout"),
+	HackDivider = Instance.new("Frame"),
+	HackLabel = Instance.new("TextLabel"),
+	GameDivider = Instance.new("Frame"),
+	GameLabel = Instance.new("TextLabel"),
+	ScrollTab = Instance.new("ScrollingFrame"),
+	UIListLayout_4 = Instance.new("UIListLayout"),
+	TabsFrame = Instance.new("Frame"),
+	TabEx = Instance.new("CanvasGroup"),
+	HeaderTab_2 = Instance.new("Frame"),
+	HeaderTitleLabel_2 = Instance.new("TextLabel"),
+	DropDownButton = Instance.new("ImageButton"),
+	Text_2 = Instance.new("TextLabel"),
+	Image_3 = Instance.new("ImageLabel"),
+	ScrollTab_2 = Instance.new("ScrollingFrame"),
+	UIListLayout_5 = Instance.new("UIListLayout"),
+	HackButtonEx = Instance.new("Frame"),
+	HackText = Instance.new("TextLabel"),
+	HackExpand = Instance.new("ImageButton"),
+	OptionsList = Instance.new("Frame"),
+	UIListLayout_6 = Instance.new("UIListLayout"),
+	ToggleEx = Instance.new("Frame"),
+	NameTL = Instance.new("TextLabel"),
+	ToggleSwitchSlider = Instance.new("ImageButton"),
+	UICorner_4 = Instance.new("UICorner"),
+	ToggleCircle = Instance.new("Frame"),
+	UICorner_5 = Instance.new("UICorner"),
+	UIGradient = Instance.new("UIGradient"),
+	UIGradient_2 = Instance.new("UIGradient"),
+	UIStroke_3 = Instance.new("UIStroke"),
+	SliderEx = Instance.new("Frame"),
+	NameTL_2 = Instance.new("TextLabel"),
+	SlidingBar = Instance.new("ImageButton"),
+	UICorner_6 = Instance.new("UICorner"),
+	CurrentPosition = Instance.new("Frame"),
+	UICorner_7 = Instance.new("UICorner"),
+	UIGradient_3 = Instance.new("UIGradient"),
+	UIGradient_4 = Instance.new("UIGradient"),
+	Backing = Instance.new("Frame"),
+	Track = Instance.new("Frame"),
+	ForceTB = Instance.new("TextBox"),
+	TBUnderbar = Instance.new("Frame"),
+	LeftBound = Instance.new("TextLabel"),
+	RightBound = Instance.new("TextLabel"),
+	UIStroke_4 = Instance.new("UIStroke"),
+	DropdownEx = Instance.new("Frame"),
+	NameTL_3 = Instance.new("TextLabel"),
+	UIStroke_5 = Instance.new("UIStroke"),
+	DropdownButton = Instance.new("TextButton"),
+	UICorner_8 = Instance.new("UICorner"),
+	UIStroke_6 = Instance.new("UIStroke"),
+	UserListEx = Instance.new("Frame"),
+	NameTL_4 = Instance.new("TextLabel"),
+	UIStroke_7 = Instance.new("UIStroke"),
+	AddButton = Instance.new("TextButton"),
+	UICorner_9 = Instance.new("UICorner"),
+	UIStroke_8 = Instance.new("UIStroke"),
+	MainList = Instance.new("Frame"),
+	UIListLayout_7 = Instance.new("UIListLayout"),
+	OneListEx = Instance.new("Frame"),
+	DeleteButton = Instance.new("TextButton"),
+	UICorner_10 = Instance.new("UICorner"),
+	UIStroke_9 = Instance.new("UIStroke"),
+	UserTL = Instance.new("TextLabel"),
+	EnterTB = Instance.new("TextBox"),
+	UICorner_11 = Instance.new("UICorner"),
+	UIStroke_10 = Instance.new("UIStroke"),
+	LimitTL = Instance.new("TextLabel"),
+	TextboxEx = Instance.new("Frame"),
+	NameTL_5 = Instance.new("TextLabel"),
+	UIStroke_11 = Instance.new("UIStroke"),
+	SetTB = Instance.new("TextBox"),
+	UICorner_12 = Instance.new("UICorner"),
+	UIStroke_12 = Instance.new("UIStroke"),
+	LimitTL_2 = Instance.new("TextLabel"),
+	EnterButton = Instance.new("ImageButton"),
+	UICorner_13 = Instance.new("UICorner"),
+	UIStroke_13 = Instance.new("UIStroke"),
+	HighlightBackground = Instance.new("Frame"),
+	KeybindButton = Instance.new("ImageButton"),
+	BindedKey = Instance.new("TextLabel"),
+	KeybindLabel = Instance.new("TextLabel"),
+	KeybindBacking = Instance.new("Frame"),
+	UIGradient_5 = Instance.new("UIGradient"),
+	ToolTipHeaderFrame = Instance.new("Frame"),
+	ToolTipText = Instance.new("TextLabel"),
+	UICorner_14 = Instance.new("UICorner"),
+	Notifications = Instance.new("Frame"),
+	NotificationEx = Instance.new("Frame"),
+	Timer = Instance.new("Frame"),
+	UICorner_15 = Instance.new("UICorner"),
+	NotificationTitle = Instance.new("TextLabel"),
+	NotificationDesc = Instance.new("TextLabel"),
+	UITextSizeConstraint = Instance.new("UITextSizeConstraint"),
+	HUDBackgroundFade = Instance.new("Frame"),
+	ChatAutoComplete = Instance.new("ScrollingFrame"),
+	AutoCompleteEx = Instance.new("Frame"),
+	AutoCompleteTitleLabel = Instance.new("TextLabel"),
+	UIListLayout_8 = Instance.new("UIListLayout"),
+	Actions = Instance.new("CanvasGroup"),
+	HeaderTab_3 = Instance.new("Frame"),
+	HeaderTitleLabel_3 = Instance.new("TextLabel"),
+	DropDownButton_2 = Instance.new("ImageButton"),
+	Text_3 = Instance.new("TextLabel"),
+	Image_4 = Instance.new("ImageLabel"),
+	ScrollTab_3 = Instance.new("ScrollingFrame"),
+	UIListLayout_9 = Instance.new("UIListLayout"),
+	ActionsEx = Instance.new("Frame"),
+	Title = Instance.new("TextLabel"),
+	StopButton = Instance.new("TextButton"),
+	UIStroke_14 = Instance.new("UIStroke"),
+	Time = Instance.new("TextLabel"),
+	UIStroke_15 = Instance.new("UIStroke"),
+	UIStroke_16 = Instance.new("UIStroke"),
+	UIGradient_6 = Instance.new("UIGradient"),
+	ToggleTagEx = Instance.new("BillboardGui"),
+	Toggle = Instance.new("TextButton"),
+	UIStroke_17 = Instance.new("UIStroke"),
+	KickedButton = Instance.new("TextButton"),
+	SecondaryHUD = Instance.new("Frame"),
+	Servers = Instance.new("Frame"),
+	UICorner_16 = Instance.new("UICorner"),
+	ServersTitleLabel = Instance.new("TextLabel"),
+	TabsSelection = Instance.new("Frame"),
+	FromGame = Instance.new("TextButton"),
+	UICorner_17 = Instance.new("UICorner"),
+	UIStroke_18 = Instance.new("UIStroke"),
+	UIGridLayout = Instance.new("UIGridLayout"),
+	Recent = Instance.new("TextButton"),
+	UICorner_18 = Instance.new("UICorner"),
+	UIStroke_19 = Instance.new("UIStroke"),
+	Close = Instance.new("TextButton"),
+	UICorner_19 = Instance.new("UICorner"),
+	UIStroke_20 = Instance.new("UIStroke"),
+	Friends = Instance.new("TextButton"),
+	UICorner_20 = Instance.new("UICorner"),
+	UIStroke_21 = Instance.new("UIStroke"),
+	MainScroll = Instance.new("ScrollingFrame"),
+	ServerEx = Instance.new("Frame"),
+	ServerTitle = Instance.new("TextLabel"),
+	TimeStamp = Instance.new("TextLabel"),
+	SecondData = Instance.new("TextLabel"),
+	UICorner_21 = Instance.new("UICorner"),
+	UIStroke_22 = Instance.new("UIStroke"),
+	UIGridLayout_2 = Instance.new("UIGridLayout"),
+	BottomButtons = Instance.new("Frame"),
+	Previous = Instance.new("TextButton"),
+	UICorner_22 = Instance.new("UICorner"),
+	UIStroke_23 = Instance.new("UIStroke"),
+	UIGridLayout_3 = Instance.new("UIGridLayout"),
+	Join = Instance.new("TextButton"),
+	UICorner_23 = Instance.new("UICorner"),
+	UIStroke_24 = Instance.new("UIStroke"),
+	Next = Instance.new("TextButton"),
+	UICorner_24 = Instance.new("UICorner"),
+	UIStroke_25 = Instance.new("UIStroke"),
+	ExtraLabel = Instance.new("TextLabel"),
+	UICorner_25 = Instance.new("UICorner"),
+	UIStroke_26 = Instance.new("UIStroke"),
+	Notifications_2 = Instance.new("Frame"),
+	UICorner_26 = Instance.new("UICorner"),
+	UIStroke_27 = Instance.new("UIStroke"),
+	NotificationTitle_2 = Instance.new("TextLabel"),
+	NotificationDesc_2 = Instance.new("TextLabel"),
+	NotificationButtons = Instance.new("Frame"),
+	UIGridLayout_4 = Instance.new("UIGridLayout"),
+	YesButton = Instance.new("TextButton"),
+	UIStroke_28 = Instance.new("UIStroke"),
+	UICorner_27 = Instance.new("UICorner"),
+	NoButton = Instance.new("TextButton"),
+	UIStroke_29 = Instance.new("UIStroke"),
+	UICorner_28 = Instance.new("UICorner"),
+	OkayButton = Instance.new("TextButton"),
+	UIStroke_30 = Instance.new("UIStroke"),
+	UICorner_29 = Instance.new("UICorner"),
+}
 
 --Properties:
 
-SpecterGUI.Name = "SpecterGUI"
-
-SpecterGUI.DisplayOrder = -1
-SpecterGUI.ResetOnSpawn = false
-
-MainHUD.Name = "MainHUD"
-MainHUD.Parent = SpecterGUI
-C.UI.MainHUD = MainHUD
-MainHUD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-MainHUD.BackgroundTransparency = 1.000
-MainHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MainHUD.BorderSizePixel = 0
-MainHUD.Size = UDim2.new(1, 0, 1, 0)
-
-DropdownFrame.Name = "DropdownFrame"
-DropdownFrame.Parent = MainHUD
-C.UI.DropdownFrame = DropdownFrame
-DropdownFrame.AutomaticSize = Enum.AutomaticSize.Y
-DropdownFrame.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-DropdownFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DropdownFrame.BorderSizePixel = 0
-DropdownFrame.Position = UDim2.new(0, 532, 0, 332)
-DropdownFrame.Size = UDim2.new(0, 92, 0, 0)
-DropdownFrame.Visible = false
-DropdownFrame.ZIndex = 20
-
-UIListLayout.Parent = DropdownFrame
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-DropdownButtonEx.Name = "DropdownButtonEx"
-DropdownButtonEx:AddTag("RemoveOnDestroy")
-C.Examples.DropdownButtonEx = DropdownButtonEx
-DropdownButtonEx.AnchorPoint = Vector2.new(1, 0.5)
-DropdownButtonEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-DropdownButtonEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DropdownButtonEx.BorderSizePixel = 0
-DropdownButtonEx.Position = UDim2.new(0.970000029, 0, 0.5, 0)
-DropdownButtonEx.Size = UDim2.new(1, 0, 0, 30)
-DropdownButtonEx.ZIndex = 21
-DropdownButtonEx.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-DropdownButtonEx.Text = "God Mode"
-DropdownButtonEx.TextColor3 = Color3.fromRGB(255, 255, 255)
-DropdownButtonEx.TextScaled = true
-DropdownButtonEx.TextSize = 14.000
-DropdownButtonEx.TextStrokeTransparency = 0.000
-DropdownButtonEx.TextWrapped = true
-
-UICorner.Parent = DropdownButtonEx
-
-UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke.Parent = DropdownButtonEx
-
-CategoriesFrame.Name = "CategoriesFrame"
-CategoriesFrame.Parent = MainHUD
-C.UI.CategoriesFrame = CategoriesFrame
-CategoriesFrame.Active = true
-CategoriesFrame.AutomaticSize = Enum.AutomaticSize.Y
-CategoriesFrame.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-CategoriesFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CategoriesFrame.BorderSizePixel = 0
-CategoriesFrame.LayoutOrder = -15
-CategoriesFrame.Position = UDim2.new(0, 30, 0, 100)
-CategoriesFrame.Size = UDim2.new(0, 200, 0, 0)
-
-Buttons.Name = "Buttons"
-Buttons.Parent = CategoriesFrame
-Buttons.AutomaticSize = Enum.AutomaticSize.Y
-Buttons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Buttons.BackgroundTransparency = 1.000
-Buttons.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Buttons.BorderSizePixel = 0
-Buttons.Position = UDim2.new(0, 0, 0, 40)
-Buttons.Size = UDim2.new(1, 0, 0, 0)
-
-CategoryEx.Name = "CategoryEx"
-CategoryEx:AddTag("RemoveOnDestroy")
-C.Examples.CategoryEx = CategoryEx
-CategoryEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-CategoryEx.BackgroundTransparency = 1.000
-CategoryEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CategoryEx.BorderSizePixel = 0
-CategoryEx.LayoutOrder = 1
-CategoryEx.Size = UDim2.new(1, 0, 0, 40)
-
-Image.Name = "Image"
-Image.Parent = CategoryEx
-Image.Active = true
-Image.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Image.BackgroundTransparency = 1.000
-Image.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Image.BorderSizePixel = 0
-Image.Size = UDim2.new(0.150000006, 0, 1, 0)
-Image.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
-Image.ScaleType = Enum.ScaleType.Fit
-
-Text.Name = "Text"
-Text.Parent = CategoryEx
-Text.Active = true
-Text.AnchorPoint = Vector2.new(0, 0.5)
-Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Text.BackgroundTransparency = 1.000
-Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Text.BorderSizePixel = 0
-Text.Position = UDim2.new(0.150000006, 0, 0.5, 0)
-Text.Size = UDim2.new(0.670000017, 0, 0.730000019, 0)
-Text.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Text.Text = " Render"
-Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-Text.TextScaled = true
-Text.TextSize = 14.000
-Text.TextWrapped = true
-Text.TextXAlignment = Enum.TextXAlignment.Left
-
-Arrow.Name = "Arrow"
-Arrow.Parent = CategoryEx
-Arrow.Active = true
-Arrow.AnchorPoint = Vector2.new(0, 0.5)
-Arrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Arrow.BackgroundTransparency = 1.000
-Arrow.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Arrow.BorderSizePixel = 0
-Arrow.Position = UDim2.new(0.779999971, 0, 0.5, 0)
-Arrow.Size = UDim2.new(0.199999779, 0, 0.730000138, 0)
-Arrow.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Arrow.Text = ">"
-Arrow.TextColor3 = Color3.fromRGB(115, 115, 115)
-Arrow.TextScaled = true
-Arrow.TextSize = 14.000
-Arrow.TextWrapped = true
-
-BottomFrame.Name = "BottomFrame"
-BottomFrame.Parent = Buttons
-BottomFrame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-BottomFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-BottomFrame.BorderSizePixel = 0
-BottomFrame.LayoutOrder = 12000
-BottomFrame.Size = UDim2.new(1, 0, 0, 40)
-
-SaveButton.Name = "SaveButton"
-SaveButton.Parent = BottomFrame
-SaveButton.Active = true
-SaveButton.AnchorPoint = Vector2.new(0, 0.5)
-SaveButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SaveButton.BackgroundTransparency = 1.000
-SaveButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SaveButton.BorderSizePixel = 0
-SaveButton.Position = UDim2.new(0, 0, 0.5, 0)
-SaveButton.Size = UDim2.new(0.200000003, 0, 0.899999976, 0)
-SaveButton.Image = "rbxassetid://14737163568"
-SaveButton.ScaleType = Enum.ScaleType.Fit
-
-Wait.Name = "Wait"
-Wait.Parent = SaveButton
-Wait.AnchorPoint = Vector2.new(0.5, 0.5)
-Wait.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Wait.BackgroundTransparency = 1.000
-Wait.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Wait.BorderSizePixel = 0
-Wait.Position = UDim2.new(0.5, 0, 0.5, 0)
-Wait.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
-Wait.Visible = false
-Wait.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
-Wait.Text = "•••"
-Wait.TextColor3 = Color3.fromRGB(143, 143, 143)
-Wait.TextScaled = true
-Wait.TextSize = 40.000
-Wait.TextStrokeTransparency = 0.000
-Wait.TextWrapped = true
-
-UICorner_2.CornerRadius = UDim.new(2, 0)
-UICorner_2.Parent = Wait
-
-UIListLayout_2.Parent = Buttons
-UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-
-MiscDivider.Name = "MiscDivider"
-MiscDivider.Parent = Buttons
-MiscDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-MiscDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MiscDivider.BorderSizePixel = 0
-MiscDivider.LayoutOrder = 2000
-MiscDivider.Size = UDim2.new(1, 0, 0, 24)
-
-MiscLabel.Name = "MiscLabel"
-MiscLabel.Parent = MiscDivider
-MiscLabel.AnchorPoint = Vector2.new(0, 0.5)
-MiscLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-MiscLabel.BackgroundTransparency = 1.000
-MiscLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MiscLabel.BorderSizePixel = 0
-MiscLabel.Position = UDim2.new(0.100000001, 0, 0.5, 0)
-MiscLabel.Size = UDim2.new(0.699999988, 0, 0.800000012, 0)
-MiscLabel.FontFace = Font.new("rbxasset://fonts/families/Nunito.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-MiscLabel.Text = "MISC"
-MiscLabel.TextColor3 = Color3.fromRGB(111, 111, 111)
-MiscLabel.TextScaled = true
-MiscLabel.TextSize = 14.000
-MiscLabel.TextStrokeTransparency = 0.000
-MiscLabel.TextWrapped = true
-MiscLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-HeaderTab.Name = "HeaderTab"
-HeaderTab.Parent = CategoriesFrame
-HeaderTab.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-HeaderTab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HeaderTab.BorderSizePixel = 0
-HeaderTab.LayoutOrder = -20
-HeaderTab.Size = UDim2.new(1, 0, 0, 40)
-
-HeaderTitleLabel.Name = "HeaderTitleLabel"
-HeaderTitleLabel.Parent = HeaderTab
-HeaderTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HeaderTitleLabel.BackgroundTransparency = 1.000
-HeaderTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HeaderTitleLabel.BorderSizePixel = 0
-HeaderTitleLabel.Size = UDim2.new(0.600000024, 0, 1, 0)
-HeaderTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-HeaderTitleLabel.Text = " SPECTER"
-HeaderTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-HeaderTitleLabel.TextScaled = true
-HeaderTitleLabel.TextSize = 14.000
-HeaderTitleLabel.TextStrokeTransparency = 0.000
-HeaderTitleLabel.TextWrapped = true
-HeaderTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-SettingsButton.Name = "SettingsButton"
-SettingsButton.Parent = HeaderTab
-SettingsButton.AnchorPoint = Vector2.new(1, 0.5)
-SettingsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SettingsButton.BackgroundTransparency = 1.000
-SettingsButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SettingsButton.BorderSizePixel = 0
-SettingsButton.Position = UDim2.new(0.980000019, 0, 0.5, 0)
-SettingsButton.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
-SettingsButton.ZIndex = 50
-SettingsButton.Image = "rbxassetid://14134158045"
-SettingsButton.ScaleType = Enum.ScaleType.Fit
-
-Settings.Name = "Settings"
-Settings.Parent = CategoriesFrame
-Settings.AutomaticSize = Enum.AutomaticSize.Y
-Settings.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Settings.BackgroundTransparency = 1.000
-Settings.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Settings.BorderSizePixel = 0
-Settings.Position = UDim2.new(0, 0, 0, 40)
-Settings.Size = UDim2.new(1, 0, 0, 0)
-Settings.Visible = false
-
-SupportedFrame.Name = "SupportedFrame"
-SupportedFrame.Parent = Settings
-SupportedFrame.AutomaticSize = Enum.AutomaticSize.Y
-SupportedFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SupportedFrame.BackgroundTransparency = 1.000
-SupportedFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SupportedFrame.BorderSizePixel = 0
-SupportedFrame.LayoutOrder = 1
-SupportedFrame.Size = UDim2.new(1, 0, 0, 0)
-
-Image_2.Name = "Image"
-Image_2.Parent = SupportedFrame
-Image_2.Active = true
-Image_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Image_2.BackgroundTransparency = 1.000
-Image_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Image_2.BorderSizePixel = 0
-Image_2.Size = UDim2.new(0.150000006, 0, 1, 0)
-Image_2.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
-Image_2.ScaleType = Enum.ScaleType.Fit
-
-Description.Name = "Description"
-Description.Parent = SupportedFrame
-Description.Active = true
-Description.AutomaticSize = Enum.AutomaticSize.Y
-Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Description.BackgroundTransparency = 1.000
-Description.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Description.BorderSizePixel = 0
-Description.Position = UDim2.new(0.150000006, 0, 0, 20)
-Description.Size = UDim2.new(0.790000021, 0, 0, 0)
-Description.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Description.Text = " Render"
-Description.TextColor3 = Color3.fromRGB(255, 255, 255)
-Description.TextSize = 14.000
-Description.TextWrapped = true
-Description.TextXAlignment = Enum.TextXAlignment.Left
-
-Supported.Name = "Supported"
-Supported.Parent = SupportedFrame
-Supported.Active = true
-Supported.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Supported.BackgroundTransparency = 1.000
-Supported.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Supported.BorderSizePixel = 0
-Supported.Position = UDim2.new(0.150000006, 0, 0, 0)
-Supported.Size = UDim2.new(0.790000021, 0, 0, 20)
-Supported.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Supported.Text = "Supported Game"
-Supported.TextColor3 = Color3.fromRGB(255, 255, 255)
-Supported.TextScaled = true
-Supported.TextSize = 14.000
-Supported.TextWrapped = true
-Supported.TextXAlignment = Enum.TextXAlignment.Left
-
-BottomFrame_2.Name = "BottomFrame"
-BottomFrame_2.Parent = Settings
-BottomFrame_2.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-BottomFrame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-BottomFrame_2.BorderSizePixel = 0
-BottomFrame_2.LayoutOrder = 50
-BottomFrame_2.Size = UDim2.new(1, 0, 0, 40)
-
-RefreshButton.Name = "RefreshButton"
-RefreshButton.Parent = BottomFrame_2
-RefreshButton.Active = true
-RefreshButton.AnchorPoint = Vector2.new(1, 0.5)
-RefreshButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-RefreshButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-RefreshButton.BorderSizePixel = 0
-RefreshButton.Position = UDim2.new(1, -1, 0.5, 0)
-RefreshButton.Size = UDim2.new(0, 36, 0, 36)
-RefreshButton.Image = "rbxassetid://13492317101"
-RefreshButton.ScaleType = Enum.ScaleType.Fit
-
-UICorner_3.CornerRadius = UDim.new(0, 999)
-UICorner_3.Parent = RefreshButton
-
-UIStroke_2.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_2.Parent = RefreshButton
-
-UIListLayout_3.Parent = Settings
-UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-
-HackDivider.Name = "HackDivider"
-HackDivider.Parent = Settings
-HackDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-HackDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HackDivider.BorderSizePixel = 0
-HackDivider.LayoutOrder = 20
-HackDivider.Size = UDim2.new(1, 0, 0, 24)
-
-HackLabel.Name = "HackLabel"
-HackLabel.Parent = HackDivider
-HackLabel.AnchorPoint = Vector2.new(0, 0.5)
-HackLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HackLabel.BackgroundTransparency = 1.000
-HackLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HackLabel.BorderSizePixel = 0
-HackLabel.Position = UDim2.new(0.100000001, 0, 0.5, 0)
-HackLabel.Size = UDim2.new(0.699999988, 0, 0.800000012, 0)
-HackLabel.FontFace = Font.new("rbxasset://fonts/families/Nunito.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-HackLabel.Text = "HACK"
-HackLabel.TextColor3 = Color3.fromRGB(111, 111, 111)
-HackLabel.TextScaled = true
-HackLabel.TextSize = 14.000
-HackLabel.TextStrokeTransparency = 0.000
-HackLabel.TextWrapped = true
-HackLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-GameDivider.Name = "GameDivider"
-GameDivider.Parent = Settings
-GameDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-GameDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GameDivider.BorderSizePixel = 0
-GameDivider.LayoutOrder = -20
-GameDivider.Size = UDim2.new(1, 0, 0, 24)
-
-GameLabel.Name = "GameLabel"
-GameLabel.Parent = GameDivider
-GameLabel.AnchorPoint = Vector2.new(0, 0.5)
-GameLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-GameLabel.BackgroundTransparency = 1.000
-GameLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GameLabel.BorderSizePixel = 0
-GameLabel.Position = UDim2.new(0.100000001, 0, 0.5, 0)
-GameLabel.Size = UDim2.new(0.699999988, 0, 0.800000012, 0)
-GameLabel.FontFace = Font.new("rbxasset://fonts/families/Nunito.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GameLabel.Text = "GAME"
-GameLabel.TextColor3 = Color3.fromRGB(111, 111, 111)
-GameLabel.TextScaled = true
-GameLabel.TextSize = 14.000
-GameLabel.TextStrokeTransparency = 0.000
-GameLabel.TextWrapped = true
-GameLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-ScrollTab.Name = "ScrollTab"
-ScrollTab.Parent = Settings
-ScrollTab.AutomaticSize = Enum.AutomaticSize.Y
-ScrollTab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ScrollTab.BackgroundTransparency = 1.000
-ScrollTab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ScrollTab.BorderSizePixel = 0
-ScrollTab.LayoutOrder = 40
-ScrollTab.Position = UDim2.new(0, 0, 0, 45)
-ScrollTab.Size = UDim2.new(1, 0, 0, 0)
-ScrollTab.ZIndex = 0
-ScrollTab.AutomaticCanvasSize = Enum.AutomaticSize.Y
-ScrollTab.BottomImage = "rbxassetid://3062505976"
-ScrollTab.CanvasSize = UDim2.new(0, 0, 0, 0)
-ScrollTab.MidImage = "rbxassetid://3062506202"
-ScrollTab.TopImage = "rbxassetid://3062506445"
-ScrollTab.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
-
-UIListLayout_4.Parent = ScrollTab
-UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
-
-TabsFrame.Name = "TabsFrame"
-TabsFrame.Parent = MainHUD
-C.UI.TabsFrame = TabsFrame
-TabsFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TabsFrame.BackgroundTransparency = 1.000
-TabsFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TabsFrame.BorderSizePixel = 0
-TabsFrame.LayoutOrder = -15
-TabsFrame.Size = UDim2.new(1, 0, 1, 0)
-TabsFrame.ZIndex = -15
-
-TabEx.Name = "TabEx"
-TabEx:AddTag("RemoveOnDestroy")
-C.Examples.TabEx = TabEx
-TabEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-TabEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TabEx.BorderSizePixel = 0
-TabEx.LayoutOrder = -14
-TabEx.Position = UDim2.new(0, 400, 0, 100)
-TabEx.Size = UDim2.new(0, 230, 0, 400)
-TabEx.ZIndex = -14
-
-HeaderTab_2.Name = "HeaderTab"
-HeaderTab_2.Parent = TabEx
-HeaderTab_2.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-HeaderTab_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HeaderTab_2.BorderSizePixel = 0
-HeaderTab_2.LayoutOrder = -13
-HeaderTab_2.Size = UDim2.new(1, 0, 0, 45)
-HeaderTab_2.ZIndex = -13
-
-HeaderTitleLabel_2.Name = "HeaderTitleLabel"
-HeaderTitleLabel_2.Parent = HeaderTab_2
-HeaderTitleLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HeaderTitleLabel_2.BackgroundTransparency = 1.000
-HeaderTitleLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HeaderTitleLabel_2.BorderSizePixel = 0
-HeaderTitleLabel_2.LayoutOrder = -12
-HeaderTitleLabel_2.Size = UDim2.new(0.600000024, 0, 1, 0)
-HeaderTitleLabel_2.Visible = false
-HeaderTitleLabel_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-HeaderTitleLabel_2.Text = " SPECTER"
-HeaderTitleLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-HeaderTitleLabel_2.TextScaled = true
-HeaderTitleLabel_2.TextSize = 14.000
-HeaderTitleLabel_2.TextStrokeTransparency = 0.000
-HeaderTitleLabel_2.TextWrapped = true
-HeaderTitleLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-
-DropDownButton.Name = "DropDownButton"
-DropDownButton.Parent = HeaderTab_2
-DropDownButton.AnchorPoint = Vector2.new(1, 0.5)
-DropDownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-DropDownButton.BackgroundTransparency = 1.000
-DropDownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DropDownButton.BorderSizePixel = 0
-DropDownButton.LayoutOrder = -12
-DropDownButton.Position = UDim2.new(0.980000019, 0, 0.5, 0)
-DropDownButton.Size = UDim2.new(0.200000003, 0, 0.5, 0)
-DropDownButton.Image = "rbxassetid://14569017448"
-DropDownButton.ScaleType = Enum.ScaleType.Fit
-
-Text_2.Name = "Text"
-Text_2.Parent = HeaderTab_2
-Text_2.AnchorPoint = Vector2.new(0, 0.5)
-Text_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Text_2.BackgroundTransparency = 1.000
-Text_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Text_2.BorderSizePixel = 0
-Text_2.LayoutOrder = -12
-Text_2.Position = UDim2.new(0.150000036, 0, 0.5, 0)
-Text_2.Size = UDim2.new(0.629999697, 0, 0.730000138, 0)
-Text_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Text_2.Text = " Render"
-Text_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-Text_2.TextScaled = true
-Text_2.TextSize = 14.000
-Text_2.TextWrapped = true
-Text_2.TextXAlignment = Enum.TextXAlignment.Left
-
-Image_3.Name = "Image"
-Image_3.Parent = HeaderTab_2
-Image_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Image_3.BackgroundTransparency = 1.000
-Image_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Image_3.BorderSizePixel = 0
-Image_3.LayoutOrder = -12
-Image_3.Size = UDim2.new(0.150000006, 0, 1, 0)
-Image_3.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
-Image_3.ScaleType = Enum.ScaleType.Fit
-
-ScrollTab_2.Name = "ScrollTab"
-ScrollTab_2.Parent = TabEx
-ScrollTab_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ScrollTab_2.BackgroundTransparency = 1.000
-ScrollTab_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ScrollTab_2.BorderSizePixel = 0
-ScrollTab_2.LayoutOrder = -13
-ScrollTab_2.Position = UDim2.new(0, 0, 0, 45)
-ScrollTab_2.Size = UDim2.new(1, 0, 0, 300)
-ScrollTab_2.ZIndex = 0
-ScrollTab_2.AutomaticCanvasSize = Enum.AutomaticSize.Y
-ScrollTab_2.BottomImage = "rbxassetid://3062505976"
-ScrollTab_2.CanvasSize = UDim2.new(0, 0, 0, 0)
-ScrollTab_2.MidImage = "rbxassetid://3062506202"
-ScrollTab_2.TopImage = "rbxassetid://3062506445"
-ScrollTab_2.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
-
-UIListLayout_5.Parent = ScrollTab_2
-UIListLayout_5.SortOrder = Enum.SortOrder.LayoutOrder
-
-HackButtonEx.Name = "HackButtonEx"
-HackButtonEx:AddTag("RemoveOnDestroy")
-C.Examples.HackButtonEx = HackButtonEx
-HackButtonEx.AutomaticSize = Enum.AutomaticSize.Y
-HackButtonEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-HackButtonEx.BackgroundTransparency = 1.000
-HackButtonEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HackButtonEx.BorderSizePixel = 0
-HackButtonEx.LayoutOrder = -12
-HackButtonEx.Size = UDim2.new(1, 0, 0, 0)
-
-HackText.Name = "HackText"
-HackText.Parent = HackButtonEx
-HackText.Active = true
-HackText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HackText.BackgroundTransparency = 1.000
-HackText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HackText.BorderSizePixel = 0
-HackText.Position = UDim2.new(0.0500000007, 0, 0, 0)
-HackText.Size = UDim2.new(0.649999976, 0, 0, 40)
-HackText.ZIndex = 2
-HackText.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-HackText.Text = "AimAssist"
-HackText.TextColor3 = Color3.fromRGB(255, 255, 255)
-HackText.TextScaled = true
-HackText.TextSize = 14.000
-HackText.TextStrokeTransparency = 0.000
-HackText.TextWrapped = true
-HackText.TextXAlignment = Enum.TextXAlignment.Left
-
-HackExpand.Name = "HackExpand"
-HackExpand.Parent = HackButtonEx
-HackExpand.Active = false
-HackExpand.AnchorPoint = Vector2.new(1, 0.5)
-HackExpand.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HackExpand.BackgroundTransparency = 1.000
-HackExpand.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HackExpand.BorderSizePixel = 0
-HackExpand.Position = UDim2.new(1, 0, 0, 20)
-HackExpand.Selectable = false
-HackExpand.Size = UDim2.new(0, 31, 0, 40)
-HackExpand.ZIndex = 3
-HackExpand.Image = "rbxassetid://12809025337"
-HackExpand.ScaleType = Enum.ScaleType.Fit
-
-OptionsList.Name = "OptionsList"
-OptionsList.Parent = HackButtonEx
-OptionsList.AutomaticSize = Enum.AutomaticSize.Y
-OptionsList.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
-OptionsList.BorderColor3 = Color3.fromRGB(0, 0, 0)
-OptionsList.BorderSizePixel = 0
-OptionsList.Position = UDim2.new(0, 0, 0, 40)
-OptionsList.Size = UDim2.new(1, 0, 0, 0)
-OptionsList.ZIndex = 2
-
-UIListLayout_6.Parent = OptionsList
-UIListLayout_6.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout_6.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout_6.Padding = UDim.new(0, 1)
-
-ToggleEx.Name = "ToggleEx"
-ToggleEx:AddTag("RemoveOnDestroy")
-C.Examples.ToggleEx = ToggleEx
-ToggleEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
-ToggleEx.BackgroundTransparency = 1.000
-ToggleEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleEx.BorderSizePixel = 0
-ToggleEx.Size = UDim2.new(1, 0, 0, 40)
-
-NameTL.Name = "NameTL"
-NameTL.Parent = ToggleEx
-NameTL.Active = true
-NameTL.AnchorPoint = Vector2.new(0, 0.5)
-NameTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameTL.BackgroundTransparency = 1.000
-NameTL.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameTL.BorderSizePixel = 0
-NameTL.Position = UDim2.new(0.0500000007, 0, 0.5, 0)
-NameTL.Size = UDim2.new(0.600000024, 0, 0, 30)
-NameTL.ZIndex = 2
-NameTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NameTL.Text = "AimAssist"
-NameTL.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameTL.TextScaled = true
-NameTL.TextSize = 14.000
-NameTL.TextStrokeTransparency = 0.000
-NameTL.TextWrapped = true
-NameTL.TextXAlignment = Enum.TextXAlignment.Left
-
-ToggleSwitchSlider.Name = "ToggleSwitchSlider"
-ToggleSwitchSlider.Parent = ToggleEx
-ToggleSwitchSlider.Active = false
-ToggleSwitchSlider.AnchorPoint = Vector2.new(1, 0.5)
-ToggleSwitchSlider.BackgroundColor3 = Color3.fromRGB(113, 113, 113)
-ToggleSwitchSlider.BorderColor3 = Color3.fromRGB(27, 42, 53)
-ToggleSwitchSlider.Position = UDim2.new(0.949999988, 0, 0.5, 0)
-ToggleSwitchSlider.Selectable = false
-ToggleSwitchSlider.Size = UDim2.new(0.25, 0, 0.600000024, 0)
-ToggleSwitchSlider.ZIndex = 2
-ToggleSwitchSlider.AutoButtonColor = false
-
-UICorner_4.CornerRadius = UDim.new(1, 0)
-UICorner_4.Parent = ToggleSwitchSlider
-
-ToggleCircle.Name = "ToggleCircle"
-ToggleCircle.Parent = ToggleSwitchSlider
-ToggleCircle.Active = true
-ToggleCircle.AnchorPoint = Vector2.new(0, 0.5)
-ToggleCircle.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
-ToggleCircle.BorderColor3 = Color3.fromRGB(27, 42, 53)
-ToggleCircle.Position = UDim2.new(0.603999972, 0, 0.5, 0)
-ToggleCircle.Size = UDim2.new(0.345999986, 0, 0.649999976, 0)
-ToggleCircle.ZIndex = 3
-
-UICorner_5.CornerRadius = UDim.new(0, 100)
-UICorner_5.Parent = ToggleCircle
-
-UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
-UIGradient.Rotation = 90
-UIGradient.Parent = ToggleCircle
-
-UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
-UIGradient_2.Rotation = 90
-UIGradient_2.Parent = ToggleSwitchSlider
-
-UIStroke_3.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_3.Parent = ToggleEx
-
-SliderEx.Name = "SliderEx"
-SliderEx:AddTag("RemoveOnDestroy")
-C.Examples.SliderEx = SliderEx
-SliderEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
-SliderEx.BackgroundTransparency = 1.000
-SliderEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SliderEx.BorderSizePixel = 0
-SliderEx.Size = UDim2.new(1, 0, 0, 60)
-
-NameTL_2.Name = "NameTL"
-NameTL_2.Parent = SliderEx
-NameTL_2.Active = true
-NameTL_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_2.BackgroundTransparency = 1.000
-NameTL_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameTL_2.BorderSizePixel = 0
-NameTL_2.Position = UDim2.new(0.0500000007, 0, 0, 0)
-NameTL_2.Size = UDim2.new(0.600000024, 0, 0, 30)
-NameTL_2.ZIndex = 2
-NameTL_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NameTL_2.Text = "Range"
-NameTL_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_2.TextScaled = true
-NameTL_2.TextSize = 14.000
-NameTL_2.TextStrokeTransparency = 0.000
-NameTL_2.TextWrapped = true
-NameTL_2.TextXAlignment = Enum.TextXAlignment.Left
-
-SlidingBar.Name = "SlidingBar"
-SlidingBar.Parent = SliderEx
-SlidingBar.AnchorPoint = Vector2.new(0.5, 1)
-SlidingBar.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
-SlidingBar.BorderColor3 = Color3.fromRGB(27, 42, 53)
-SlidingBar.Position = UDim2.new(0.5, 0, 0.879999995, 0)
-SlidingBar.Selectable = false
-SlidingBar.Size = UDim2.new(0.699999988, 0, 0, 15)
-SlidingBar.ZIndex = 2
-SlidingBar.AutoButtonColor = false
-
-UICorner_6.CornerRadius = UDim.new(1, 0)
-UICorner_6.Parent = SlidingBar
-
-CurrentPosition.Name = "CurrentPosition"
-CurrentPosition.Parent = SlidingBar
-CurrentPosition.Active = true
-CurrentPosition.AnchorPoint = Vector2.new(0.5, 0.5)
-CurrentPosition.BackgroundColor3 = Color3.fromRGB(89, 89, 89)
-CurrentPosition.BorderColor3 = Color3.fromRGB(27, 42, 53)
-CurrentPosition.Position = UDim2.new(0.200000003, 0, 0.5, 0)
-CurrentPosition.Size = UDim2.new(0.100000001, 0, 1, 0)
-CurrentPosition.ZIndex = 3
-
-UICorner_7.CornerRadius = UDim.new(0, 100)
-UICorner_7.Parent = CurrentPosition
-
-UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
-UIGradient_3.Rotation = 90
-UIGradient_3.Parent = CurrentPosition
-
-UIGradient_4.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
-UIGradient_4.Rotation = 90
-UIGradient_4.Parent = SlidingBar
-
-Backing.Name = "Backing"
-Backing.Parent = SlidingBar
-Backing.AnchorPoint = Vector2.new(0.5, 0.5)
-Backing.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Backing.BackgroundTransparency = 1.000
-Backing.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Backing.BorderSizePixel = 0
-Backing.Position = UDim2.new(0.5, 0, 0.5, 0)
-Backing.Size = UDim2.new(1.29999995, 0, 1.70000005, 0)
-Backing.ZIndex = 9
-
-Track.Name = "Track"
-Track.Parent = SlidingBar
-Track.AnchorPoint = Vector2.new(0.5, 0.5)
-Track.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Track.BackgroundTransparency = 1.000
-Track.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Track.BorderSizePixel = 0
-Track.Position = UDim2.new(0.5, 0, 0.5, 0)
-Track.Size = UDim2.new(0.899999976, 0, 0.100000001, 0)
-Track.ZIndex = 9
-
-ForceTB.Name = "ForceTB"
-ForceTB.Parent = SliderEx
-ForceTB.AnchorPoint = Vector2.new(1, 0)
-ForceTB.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ForceTB.BackgroundTransparency = 1.000
-ForceTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ForceTB.BorderSizePixel = 0
-ForceTB.Position = UDim2.new(1, 0, 0, 0)
-ForceTB.Size = UDim2.new(0.300000012, 0, 0, 30)
-ForceTB.ZIndex = 3
-ForceTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ForceTB.Text = ""
-ForceTB.TextColor3 = Color3.fromRGB(255, 255, 255)
-ForceTB.TextScaled = true
-ForceTB.TextSize = 14.000
-ForceTB.TextStrokeTransparency = 0.000
-ForceTB.TextWrapped = true
-
-TBUnderbar.Name = "TBUnderbar"
-TBUnderbar.Parent = ForceTB
-TBUnderbar.AnchorPoint = Vector2.new(0.5, 1)
-TBUnderbar.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
-TBUnderbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TBUnderbar.BorderSizePixel = 0
-TBUnderbar.Position = UDim2.new(0.5, 0, 0.959999979, 0)
-TBUnderbar.Size = UDim2.new(0.400000006, 0, 0, 1)
-
-LeftBound.Name = "LeftBound"
-LeftBound.Parent = SliderEx
-LeftBound.Active = true
-LeftBound.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-LeftBound.BackgroundTransparency = 1.000
-LeftBound.BorderColor3 = Color3.fromRGB(0, 0, 0)
-LeftBound.BorderSizePixel = 0
-LeftBound.Position = UDim2.new(0.0500000007, 0, 0.629999995, 0)
-LeftBound.Size = UDim2.new(0.100000001, 0, -0.25, 30)
-LeftBound.ZIndex = 2
-LeftBound.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-LeftBound.Text = "30"
-LeftBound.TextColor3 = Color3.fromRGB(255, 255, 255)
-LeftBound.TextScaled = true
-LeftBound.TextSize = 14.000
-LeftBound.TextStrokeTransparency = 0.000
-LeftBound.TextWrapped = true
-
-RightBound.Name = "RightBound"
-RightBound.Parent = SliderEx
-RightBound.Active = true
-RightBound.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-RightBound.BackgroundTransparency = 1.000
-RightBound.BorderColor3 = Color3.fromRGB(0, 0, 0)
-RightBound.BorderSizePixel = 0
-RightBound.Position = UDim2.new(0.850000024, 0, 0.629999995, 0)
-RightBound.Size = UDim2.new(0.100000001, 0, -0.25, 30)
-RightBound.ZIndex = 2
-RightBound.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-RightBound.Text = "100"
-RightBound.TextColor3 = Color3.fromRGB(255, 255, 255)
-RightBound.TextScaled = true
-RightBound.TextSize = 14.000
-RightBound.TextStrokeTransparency = 0.000
-RightBound.TextWrapped = true
-
-UIStroke_4.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_4.Parent = SliderEx
-
-DropdownEx.Name = "DropdownEx"
-DropdownEx:AddTag("RemoveOnDestroy")
-C.Examples.DropdownEx = DropdownEx
-DropdownEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
-DropdownEx.BackgroundTransparency = 1.000
-DropdownEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DropdownEx.BorderSizePixel = 0
-DropdownEx.Size = UDim2.new(1, 0, 0, 40)
-
-NameTL_3.Name = "NameTL"
-NameTL_3.Parent = DropdownEx
-NameTL_3.Active = true
-NameTL_3.AnchorPoint = Vector2.new(0, 0.5)
-NameTL_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_3.BackgroundTransparency = 1.000
-NameTL_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameTL_3.BorderSizePixel = 0
-NameTL_3.Position = UDim2.new(0.0500000007, 0, 0.5, 0)
-NameTL_3.Size = UDim2.new(0.5, 0, 0, 30)
-NameTL_3.ZIndex = 2
-NameTL_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NameTL_3.Text = "AimAssist"
-NameTL_3.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_3.TextScaled = true
-NameTL_3.TextSize = 14.000
-NameTL_3.TextStrokeTransparency = 0.000
-NameTL_3.TextWrapped = true
-NameTL_3.TextXAlignment = Enum.TextXAlignment.Left
-
-UIStroke_5.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_5.Parent = DropdownEx
-
-DropdownButton.Name = "DropdownButton"
-DropdownButton.Parent = DropdownEx
-DropdownButton.AnchorPoint = Vector2.new(1, 0.5)
-DropdownButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-DropdownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DropdownButton.BorderSizePixel = 0
-DropdownButton.Position = UDim2.new(0.970000029, 0, 0.5, 0)
-DropdownButton.Size = UDim2.new(0.400000006, 0, 0, 30)
-DropdownButton.ZIndex = 2
-DropdownButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-DropdownButton.Text = "God Mode⬇"
-DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-DropdownButton.TextScaled = true
-DropdownButton.TextSize = 14.000
-DropdownButton.TextStrokeTransparency = 0.000
-DropdownButton.TextWrapped = true
-
-UICorner_8.Parent = DropdownButton
-
-UIStroke_6.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_6.Parent = DropdownButton
-
-UserListEx.Name = "UserListEx"
-UserListEx:AddTag("RemoveOnDestroy")
-C.Examples.UserListEx = UserListEx
-UserListEx.AutomaticSize = Enum.AutomaticSize.Y
-UserListEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
-UserListEx.BackgroundTransparency = 1.000
-UserListEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-UserListEx.BorderSizePixel = 0
-UserListEx.Size = UDim2.new(1, 0, 0, 40)
-
-NameTL_4.Name = "NameTL"
-NameTL_4.Parent = UserListEx
-NameTL_4.Active = true
-NameTL_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_4.BackgroundTransparency = 1.000
-NameTL_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameTL_4.BorderSizePixel = 0
-NameTL_4.Position = UDim2.new(0.0500000007, 0, 0, 5)
-NameTL_4.Size = UDim2.new(0.699999988, 0, 0, 30)
-NameTL_4.ZIndex = 2
-NameTL_4.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NameTL_4.Text = "AimAssist"
-NameTL_4.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_4.TextScaled = true
-NameTL_4.TextSize = 14.000
-NameTL_4.TextStrokeTransparency = 0.000
-NameTL_4.TextWrapped = true
-NameTL_4.TextXAlignment = Enum.TextXAlignment.Left
-
-UIStroke_7.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_7.Parent = UserListEx
-
-AddButton.Name = "AddButton"
-AddButton.Parent = UserListEx
-AddButton.AnchorPoint = Vector2.new(1, 0)
-AddButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-AddButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AddButton.BorderSizePixel = 0
-AddButton.Position = UDim2.new(0.970000029, 0, 0, 40)
-AddButton.Size = UDim2.new(0.150000006, 0, 0, 30)
-AddButton.ZIndex = 2
-AddButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-AddButton.Text = "+"
-AddButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-AddButton.TextScaled = true
-AddButton.TextSize = 14.000
-AddButton.TextStrokeTransparency = 0.000
-AddButton.TextWrapped = true
-
-UICorner_9.Parent = AddButton
-
-UIStroke_8.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_8.Parent = AddButton
-
-MainList.Name = "MainList"
-MainList.Parent = UserListEx
-MainList.AutomaticSize = Enum.AutomaticSize.Y
-MainList.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-MainList.BackgroundTransparency = 1.000
-MainList.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MainList.BorderSizePixel = 0
-MainList.Position = UDim2.new(0, 0, 0, 80)
-MainList.Size = UDim2.new(1, 0, 0, 0)
-
-UIListLayout_7.Parent = MainList
-UIListLayout_7.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout_7.SortOrder = Enum.SortOrder.LayoutOrder
-
-OneListEx.Name = "OneListEx"
-OneListEx:AddTag("RemoveOnDestroy")
-C.Examples.OneListEx = OneListEx
-OneListEx.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
-OneListEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-OneListEx.BorderSizePixel = 0
-OneListEx.Size = UDim2.new(1, 0, 0, 20)
-
-DeleteButton.Name = "DeleteButton"
-DeleteButton.Parent = OneListEx
-DeleteButton.AnchorPoint = Vector2.new(1, 0)
-DeleteButton.BackgroundColor3 = Color3.fromRGB(198, 0, 0)
-DeleteButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DeleteButton.BorderSizePixel = 0
-DeleteButton.Position = UDim2.new(0.970000029, 0, 0, 0)
-DeleteButton.Size = UDim2.new(0.150000006, 0, 1, 0)
-DeleteButton.ZIndex = 2
-DeleteButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-DeleteButton.Text = "X"
-DeleteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-DeleteButton.TextScaled = true
-DeleteButton.TextSize = 14.000
-DeleteButton.TextStrokeTransparency = 0.000
-DeleteButton.TextWrapped = true
-
-UICorner_10.Parent = DeleteButton
-
-UIStroke_9.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_9.Parent = DeleteButton
-
-UserTL.Name = "UserTL"
-UserTL.Parent = OneListEx
-UserTL.Active = true
-UserTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-UserTL.BackgroundTransparency = 1.000
-UserTL.BorderColor3 = Color3.fromRGB(0, 0, 0)
-UserTL.BorderSizePixel = 0
-UserTL.Position = UDim2.new(0.0500000007, 0, 0, 0)
-UserTL.Size = UDim2.new(0.699999988, 0, 1, 0)
-UserTL.ZIndex = 2
-UserTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-UserTL.Text = "areallycoolguy"
-UserTL.TextColor3 = Color3.fromRGB(255, 255, 255)
-UserTL.TextScaled = true
-UserTL.TextSize = 14.000
-UserTL.TextStrokeTransparency = 0.000
-UserTL.TextWrapped = true
-UserTL.TextXAlignment = Enum.TextXAlignment.Left
-
-EnterTB.Name = "EnterTB"
-EnterTB.Parent = UserListEx
-EnterTB.BackgroundColor3 = Color3.fromRGB(188, 188, 188)
-EnterTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EnterTB.BorderSizePixel = 0
-EnterTB.Position = UDim2.new(0.0500000007, 0, 0, 40)
-EnterTB.Selectable = false
-EnterTB.Size = UDim2.new(0.730000019, 0, 0, 30)
-EnterTB.ZIndex = 2
-EnterTB.ClearTextOnFocus = false
-EnterTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-EnterTB.PlaceholderText = "Enter username/userid"
-EnterTB.Text = ""
-EnterTB.TextColor3 = Color3.fromRGB(255, 255, 255)
-EnterTB.TextScaled = true
-EnterTB.TextSize = 14.000
-EnterTB.TextStrokeTransparency = 0.000
-EnterTB.TextWrapped = true
-
-UICorner_11.Parent = EnterTB
-
-UIStroke_10.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_10.Parent = EnterTB
-
-LimitTL.Name = "LimitTL"
-LimitTL.Parent = UserListEx
-LimitTL.Active = true
-LimitTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-LimitTL.BackgroundTransparency = 1.000
-LimitTL.BorderColor3 = Color3.fromRGB(0, 0, 0)
-LimitTL.BorderSizePixel = 0
-LimitTL.Position = UDim2.new(0.789999783, 0, 0, 5)
-LimitTL.Size = UDim2.new(0.177391246, 0, 0, 30)
-LimitTL.ZIndex = 2
-LimitTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
-LimitTL.Text = "0/50"
-LimitTL.TextColor3 = Color3.fromRGB(255, 255, 255)
-LimitTL.TextScaled = true
-LimitTL.TextSize = 14.000
-LimitTL.TextStrokeTransparency = 0.000
-LimitTL.TextWrapped = true
-LimitTL.TextXAlignment = Enum.TextXAlignment.Left
-
-TextboxEx.Name = "TextboxEx"
-TextboxEx:AddTag("RemoveOnDestroy")
-C.Examples.TextboxEx = TextboxEx
-TextboxEx.AutomaticSize = Enum.AutomaticSize.Y
-TextboxEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
-TextboxEx.BackgroundTransparency = 1.000
-TextboxEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextboxEx.BorderSizePixel = 0
-TextboxEx.Size = UDim2.new(1, 0, 0, 40)
-
-NameTL_5.Name = "NameTL"
-NameTL_5.Parent = TextboxEx
-NameTL_5.Active = true
-NameTL_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_5.BackgroundTransparency = 1.000
-NameTL_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameTL_5.BorderSizePixel = 0
-NameTL_5.Position = UDim2.new(0.0500000007, 0, 0, 5)
-NameTL_5.Size = UDim2.new(0.699999988, 0, 0, 30)
-NameTL_5.ZIndex = 2
-NameTL_5.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NameTL_5.Text = "AimAssist"
-NameTL_5.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameTL_5.TextScaled = true
-NameTL_5.TextSize = 14.000
-NameTL_5.TextStrokeTransparency = 0.000
-NameTL_5.TextWrapped = true
-NameTL_5.TextXAlignment = Enum.TextXAlignment.Left
-
-UIStroke_11.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_11.Parent = TextboxEx
-
-SetTB.Name = "SetTB"
-SetTB.Parent = TextboxEx
-SetTB.BackgroundColor3 = Color3.fromRGB(188, 188, 188)
-SetTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SetTB.BorderSizePixel = 0
-SetTB.Position = UDim2.new(0.0500000007, 0, 0, 40)
-SetTB.Selectable = false
-SetTB.Size = UDim2.new(0.730000019, 0, 0, 30)
-SetTB.ZIndex = 2
-SetTB.ClearTextOnFocus = false
-SetTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-SetTB.PlaceholderText = "Enter something here.."
-SetTB.Text = ""
-SetTB.TextColor3 = Color3.fromRGB(255, 255, 255)
-SetTB.TextScaled = true
-SetTB.TextSize = 14.000
-SetTB.TextStrokeTransparency = 0.100
-SetTB.TextTransparency = 0.100
-SetTB.TextWrapped = true
-
-UICorner_12.Parent = SetTB
-
-UIStroke_12.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_12.Parent = SetTB
-
-LimitTL_2.Name = "LimitTL"
-LimitTL_2.Parent = TextboxEx
-LimitTL_2.Active = true
-LimitTL_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-LimitTL_2.BackgroundTransparency = 1.000
-LimitTL_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-LimitTL_2.BorderSizePixel = 0
-LimitTL_2.Position = UDim2.new(0.789999783, 0, 0, 5)
-LimitTL_2.Size = UDim2.new(0.177391246, 0, 0, 30)
-LimitTL_2.ZIndex = 2
-LimitTL_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
-LimitTL_2.Text = "0/50"
-LimitTL_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-LimitTL_2.TextScaled = true
-LimitTL_2.TextSize = 14.000
-LimitTL_2.TextStrokeTransparency = 0.000
-LimitTL_2.TextWrapped = true
-LimitTL_2.TextXAlignment = Enum.TextXAlignment.Left
-
-EnterButton.Name = "EnterButton"
-EnterButton.Parent = TextboxEx
-EnterButton.AnchorPoint = Vector2.new(1, 0)
-EnterButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-EnterButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EnterButton.BorderSizePixel = 0
-EnterButton.Position = UDim2.new(0.970000029, 0, 0, 40)
-EnterButton.Size = UDim2.new(0.150000006, 0, 0, 30)
-EnterButton.ZIndex = 2
-EnterButton.Image = "rbxassetid://504367763"
-
-UICorner_13.Parent = EnterButton
-
-UIStroke_13.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_13.Parent = EnterButton
-
-HighlightBackground.Name = "HighlightBackground"
-HighlightBackground.Parent = HackButtonEx
-HighlightBackground.BackgroundColor3 = Color3.fromRGB(0, 255, 60)
-HighlightBackground.BackgroundTransparency = 1.000
-HighlightBackground.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HighlightBackground.BorderSizePixel = 0
-HighlightBackground.Size = UDim2.new(1, 0, 0, 40)
-
-KeybindButton.Name = "KeybindButton"
-KeybindButton.Parent = HackButtonEx
-KeybindButton.Active = false
-KeybindButton.AnchorPoint = Vector2.new(1, 0.5)
-KeybindButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeybindButton.BackgroundTransparency = 1.000
-KeybindButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KeybindButton.BorderSizePixel = 0
-KeybindButton.Position = UDim2.new(0.841303527, 0, 0, 20)
-KeybindButton.Selectable = false
-KeybindButton.Size = UDim2.new(0, 34, 0, 40)
-KeybindButton.ZIndex = 3
-KeybindButton.Image = "rbxassetid://6884453656"
-KeybindButton.ScaleType = Enum.ScaleType.Fit
-
-BindedKey.Name = "BindedKey"
-BindedKey.Parent = KeybindButton
-BindedKey.Active = true
-BindedKey.AnchorPoint = Vector2.new(0.5, 0.5)
-BindedKey.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-BindedKey.BackgroundTransparency = 1.000
-BindedKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
-BindedKey.BorderSizePixel = 0
-BindedKey.Position = UDim2.new(0.5, 0, 0.5, 0)
-BindedKey.Size = UDim2.new(0.800000012, 0, 0.600000024, 0)
-BindedKey.ZIndex = 4
-BindedKey.FontFace = Font.new("rbxasset://fonts/families/Jura.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
-BindedKey.Text = ""
-BindedKey.TextColor3 = Color3.fromRGB(255, 255, 255)
-BindedKey.TextScaled = true
-BindedKey.TextSize = 14.000
-BindedKey.TextStrokeTransparency = 0.000
-BindedKey.TextWrapped = true
-
-KeybindLabel.Name = "KeybindLabel"
-KeybindLabel.Parent = HackButtonEx
-KeybindLabel.Active = true
-KeybindLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeybindLabel.BackgroundTransparency = 1.000
-KeybindLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KeybindLabel.BorderSizePixel = 0
-KeybindLabel.Position = UDim2.new(0.0500000007, 0, 0, 0)
-KeybindLabel.Size = UDim2.new(0.649999976, 0, 0, 40)
-KeybindLabel.Visible = false
-KeybindLabel.ZIndex = 3
-KeybindLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-KeybindLabel.Text = "PRESS KEY TO BIND"
-KeybindLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeybindLabel.TextScaled = true
-KeybindLabel.TextSize = 14.000
-KeybindLabel.TextStrokeTransparency = 0.000
-KeybindLabel.TextWrapped = true
-KeybindLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-KeybindBacking.Name = "KeybindBacking"
-KeybindBacking.Parent = KeybindLabel
-KeybindBacking.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeybindBacking.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KeybindBacking.BorderSizePixel = 0
-KeybindBacking.Position = UDim2.new(-0.0769230798, 0, 0, 0)
-KeybindBacking.Size = UDim2.new(1.53846157, 0, 1, 0)
-KeybindBacking.ZIndex = 2
-
-UIGradient_5.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(117, 75, 255)), ColorSequenceKeypoint.new(0.52, Color3.fromRGB(169, 0, 23)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(197, 255, 39))}
-UIGradient_5.Parent = KeybindBacking
-
-ToolTipHeaderFrame.Name = "ToolTipHeaderFrame"
-ToolTipHeaderFrame.Parent = MainHUD
-C.UI.ToolTipHeaderFrame = ToolTipHeaderFrame
-ToolTipHeaderFrame.AutomaticSize = Enum.AutomaticSize.Y
-ToolTipHeaderFrame.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
-ToolTipHeaderFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToolTipHeaderFrame.BorderSizePixel = 0
-ToolTipHeaderFrame.Position = UDim2.new(0, 536, 0, 180)
-ToolTipHeaderFrame.Size = UDim2.new(0, 200, 0, 0)
-ToolTipHeaderFrame.Visible = false
-ToolTipHeaderFrame.ZIndex = 15
-
-ToolTipText.Name = "ToolTipText"
-ToolTipText.Parent = ToolTipHeaderFrame
-ToolTipText.AutomaticSize = Enum.AutomaticSize.Y
-ToolTipText.AnchorPoint = Vector2.new(0.5, 0)
-ToolTipText.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
-ToolTipText.BackgroundTransparency = 1.000
-ToolTipText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToolTipText.BorderSizePixel = 0
-ToolTipText.Position = UDim2.new(0.5, 0, 0, 0)
-ToolTipText.Size = UDim2.new(0.800000012, 0, 0, 0)
-ToolTipText.ZIndex = 16
-ToolTipText.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ToolTipText.Text = "Aims At Enemies"
-ToolTipText.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToolTipText.TextSize = 22.000
-ToolTipText.TextStrokeTransparency = 0.000
-ToolTipText.TextWrapped = true
-
-UICorner_14.CornerRadius = UDim.new(0.400000006, 0)
-UICorner_14.Parent = ToolTipHeaderFrame
-
-Notifications.Name = "Notifications"
-Notifications.Parent = SpecterGUI
-C.UI.Notifications = Notifications
-Notifications.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Notifications.BackgroundTransparency = 1.000
-Notifications.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Notifications.BorderSizePixel = 0
-Notifications.Size = UDim2.new(1, 0, 1, 0)
-
-NotificationEx.Name = "NotificationEx"
-NotificationEx:AddTag("RemoveOnDestroy")
-C.Examples.NotificationEx = NotificationEx
-NotificationEx.AnchorPoint = Vector2.new(1, 1)
-NotificationEx.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-NotificationEx.BackgroundTransparency = 0.300
-NotificationEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NotificationEx.BorderSizePixel = 0
-NotificationEx.Position = UDim2.new(1, 0, 1, 0)
-NotificationEx.Size = UDim2.new(0.150000006, 0, 0.100000001, 0)
-NotificationEx.Visible = false
-NotificationEx.ZIndex = 2
-
-Timer.Name = "Timer"
-Timer.Parent = NotificationEx
-Timer.AnchorPoint = Vector2.new(0, 1)
-Timer.BackgroundColor3 = Color3.fromRGB(0, 115, 255)
-Timer.BackgroundTransparency = 0.600
-Timer.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Timer.BorderSizePixel = 0
-Timer.Position = UDim2.new(0, 0, 1, -15)
-Timer.Size = UDim2.new(1, 0, 0, 3)
-Timer.ZIndex = 3
-
-UICorner_15.CornerRadius = UDim.new(0, 20)
-UICorner_15.Parent = NotificationEx
-
-NotificationTitle.Name = "NotificationTitle"
-NotificationTitle.Parent = NotificationEx
-NotificationTitle.AnchorPoint = Vector2.new(0.5, 0)
-NotificationTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NotificationTitle.BackgroundTransparency = 1.000
-NotificationTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NotificationTitle.BorderSizePixel = 0
-NotificationTitle.Position = UDim2.new(0.5, 0, -0, 0)
-NotificationTitle.Size = UDim2.new(0.800000012, 0, 0.200000003, 0)
-NotificationTitle.ZIndex = 3
-NotificationTitle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NotificationTitle.Text = "UI Loaded"
-NotificationTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-NotificationTitle.TextScaled = true
-NotificationTitle.TextSize = 22.000
-NotificationTitle.TextStrokeTransparency = 0.000
-NotificationTitle.TextWrapped = true
-
-NotificationDesc.Name = "NotificationDesc"
-NotificationDesc.Parent = NotificationEx
-NotificationDesc.AnchorPoint = Vector2.new(0.5, 0)
-NotificationDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NotificationDesc.BackgroundTransparency = 1.000
-NotificationDesc.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NotificationDesc.BorderSizePixel = 0
-NotificationDesc.Position = UDim2.new(0.500000179, 0, 0.190796182, 0)
-NotificationDesc.Size = UDim2.new(0.800000072, 0, 0.583613932, 0)
-NotificationDesc.ZIndex = 3
-NotificationDesc.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-NotificationDesc.Text = "UI Loaded"
-NotificationDesc.TextColor3 = Color3.fromRGB(255, 255, 255)
-NotificationDesc.TextScaled = true
-NotificationDesc.TextSize = 22.000
-NotificationDesc.TextStrokeTransparency = 0.000
-NotificationDesc.TextWrapped = true
-
-UITextSizeConstraint.Parent = NotificationDesc
-UITextSizeConstraint.MaxTextSize = 44
-
-HUDBackgroundFade.Name = "HUDBackgroundFade"
-HUDBackgroundFade.Parent = SpecterGUI
-C.UI.HUDBackgroundFade = HUDBackgroundFade
-HUDBackgroundFade.AnchorPoint = Vector2.new(0.5, 0.5)
-HUDBackgroundFade.BackgroundColor3 = Color3.fromRGB(6, 6, 6)
-HUDBackgroundFade.BackgroundTransparency = 1.000
-HUDBackgroundFade.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HUDBackgroundFade.BorderSizePixel = 0
-HUDBackgroundFade.LayoutOrder = -30
-HUDBackgroundFade.Position = UDim2.new(0.5, 0, 0.5, 0)
-HUDBackgroundFade.Size = UDim2.new(4, 0, 4, 0)
-HUDBackgroundFade.ZIndex = -1200000
-
-ChatAutoComplete.Name = "ChatAutoComplete"
-ChatAutoComplete.Parent = SpecterGUI
-C.UI.ChatAutoComplete = ChatAutoComplete
-ChatAutoComplete.Active = true
-ChatAutoComplete.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ChatAutoComplete.BackgroundTransparency = 1.000
-ChatAutoComplete.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ChatAutoComplete.BorderSizePixel = 0
-ChatAutoComplete.Size = UDim2.new(0.300000012, 0, 0, 0)
-ChatAutoComplete.Visible = false
-ChatAutoComplete.AutomaticCanvasSize = Enum.AutomaticSize.Y
-ChatAutoComplete.CanvasSize = UDim2.new(0, 0, 0, 0)
-
-AutoCompleteEx.Name = "AutoCompleteEx"
-AutoCompleteEx:AddTag("RemoveOnDestroy")
-C.Examples.AutoCompleteEx = AutoCompleteEx
-AutoCompleteEx.BackgroundColor3 = Color3.fromRGB(55, 255, 0)
-AutoCompleteEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoCompleteEx.BorderSizePixel = 0
-AutoCompleteEx.Size = UDim2.new(1, 0, 0, 25)
-
-AutoCompleteTitleLabel.Name = "AutoCompleteTitleLabel"
-AutoCompleteTitleLabel.Parent = AutoCompleteEx
-AutoCompleteTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-AutoCompleteTitleLabel.BackgroundTransparency = 1.000
-AutoCompleteTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoCompleteTitleLabel.BorderSizePixel = 0
-AutoCompleteTitleLabel.Size = UDim2.new(1, 0, 1, 0)
-AutoCompleteTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-AutoCompleteTitleLabel.Text = "This sounds cool"
-AutoCompleteTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-AutoCompleteTitleLabel.TextScaled = true
-AutoCompleteTitleLabel.TextSize = 14.000
-AutoCompleteTitleLabel.TextStrokeTransparency = 0.000
-AutoCompleteTitleLabel.TextWrapped = true
-
-UIListLayout_8.Parent = ChatAutoComplete
-UIListLayout_8.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout_8.SortOrder = Enum.SortOrder.LayoutOrder
-
-Actions.Name = "Actions"
-Actions.Parent = SpecterGUI
-C.UI.Actions = Actions
-Actions.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-Actions.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Actions.BorderSizePixel = 0
-Actions.LayoutOrder = -14
-Actions.Position = UDim2.new(1, 0, 1, 0)
-Actions.Size = UDim2.new(0, 230, 0, 200)
-Actions.ZIndex = -50
-
-HeaderTab_3.Name = "HeaderTab"
-HeaderTab_3.Parent = Actions
-HeaderTab_3.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-HeaderTab_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HeaderTab_3.BorderSizePixel = 0
-HeaderTab_3.LayoutOrder = -13
-HeaderTab_3.Size = UDim2.new(1, 0, 0, 30)
-HeaderTab_3.ZIndex = -49
-
-HeaderTitleLabel_3.Name = "HeaderTitleLabel"
-HeaderTitleLabel_3.Parent = HeaderTab_3
-HeaderTitleLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HeaderTitleLabel_3.BackgroundTransparency = 1.000
-HeaderTitleLabel_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HeaderTitleLabel_3.BorderSizePixel = 0
-HeaderTitleLabel_3.LayoutOrder = -12
-HeaderTitleLabel_3.Size = UDim2.new(0.600000024, 0, 1, 0)
-HeaderTitleLabel_3.Visible = false
-HeaderTitleLabel_3.ZIndex = -47
-HeaderTitleLabel_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-HeaderTitleLabel_3.Text = " SPECTER"
-HeaderTitleLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
-HeaderTitleLabel_3.TextScaled = true
-HeaderTitleLabel_3.TextSize = 14.000
-HeaderTitleLabel_3.TextStrokeTransparency = 0.000
-HeaderTitleLabel_3.TextWrapped = true
-HeaderTitleLabel_3.TextXAlignment = Enum.TextXAlignment.Left
-
-DropDownButton_2.Name = "DropDownButton"
-DropDownButton_2.Parent = HeaderTab_3
-DropDownButton_2.AnchorPoint = Vector2.new(1, 0.5)
-DropDownButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-DropDownButton_2.BackgroundTransparency = 1.000
-DropDownButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DropDownButton_2.BorderSizePixel = 0
-DropDownButton_2.LayoutOrder = -12
-DropDownButton_2.Position = UDim2.new(0.980000019, 0, 0.5, 0)
-DropDownButton_2.Size = UDim2.new(0.200000003, 0, 0.5, 0)
-DropDownButton_2.ZIndex = -47
-DropDownButton_2.Image = "rbxassetid://14569017448"
-DropDownButton_2.ScaleType = Enum.ScaleType.Fit
-
-Text_3.Name = "Text"
-Text_3.Parent = HeaderTab_3
-Text_3.AnchorPoint = Vector2.new(0, 0.5)
-Text_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Text_3.BackgroundTransparency = 1.000
-Text_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Text_3.BorderSizePixel = 0
-Text_3.LayoutOrder = -12
-Text_3.Position = UDim2.new(0.150000036, 0, 0.5, 0)
-Text_3.Size = UDim2.new(0.629999995, 0, 1, 0)
-Text_3.ZIndex = -47
-Text_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Text_3.Text = " Actions"
-Text_3.TextColor3 = Color3.fromRGB(255, 255, 255)
-Text_3.TextScaled = true
-Text_3.TextSize = 14.000
-Text_3.TextWrapped = true
-Text_3.TextXAlignment = Enum.TextXAlignment.Left
-
-Image_4.Name = "Image"
-Image_4.Parent = HeaderTab_3
-Image_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Image_4.BackgroundTransparency = 1.000
-Image_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Image_4.BorderSizePixel = 0
-Image_4.LayoutOrder = -12
-Image_4.Size = UDim2.new(0.150000006, 0, 1, 0)
-Image_4.ZIndex = -47
-Image_4.Image = "rbxassetid://8068133"
-Image_4.ScaleType = Enum.ScaleType.Fit
-
-ScrollTab_3.Name = "ScrollTab"
-ScrollTab_3.Parent = Actions
-ScrollTab_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ScrollTab_3.BackgroundTransparency = 1.000
-ScrollTab_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ScrollTab_3.BorderSizePixel = 0
-ScrollTab_3.LayoutOrder = -13
-ScrollTab_3.Position = UDim2.new(0, 0, 0, 30)
-ScrollTab_3.Size = UDim2.new(1, 0, 0, 300)
-ScrollTab_3.ZIndex = -49
-ScrollTab_3.AutomaticCanvasSize = Enum.AutomaticSize.Y
-ScrollTab_3.BottomImage = "rbxassetid://3062505976"
-ScrollTab_3.CanvasSize = UDim2.new(0, 0, 0, 0)
-ScrollTab_3.MidImage = "rbxassetid://3062506202"
-ScrollTab_3.TopImage = "rbxassetid://3062506445"
-ScrollTab_3.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
-
-UIListLayout_9.Parent = ScrollTab_3
-UIListLayout_9.SortOrder = Enum.SortOrder.LayoutOrder
-
-ActionsEx.Name = "ActionsEx"
-ActionsEx:AddTag("RemoveOnDestroy")
-C.Examples.ActionsEx = ActionsEx
-ActionsEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ActionsEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ActionsEx.BorderSizePixel = 0
-ActionsEx.Size = UDim2.new(1, 0, 0, 40)
-ActionsEx.ZIndex = -47
-
-Title.Name = "Title"
-Title.Parent = ActionsEx
-Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Title.BackgroundTransparency = 1.000
-Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Title.BorderSizePixel = 0
-Title.Size = UDim2.new(0.699999988, 0, 0.5, 0)
-Title.ZIndex = -45
-Title.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Title.Text = "HACKING COMPUTER 5"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.TextScaled = true
-Title.TextSize = 14.000
-Title.TextStrokeTransparency = 0.000
-Title.TextWrapped = true
-Title.TextXAlignment = Enum.TextXAlignment.Left
-
-StopButton.Name = "StopButton"
-StopButton.Parent = ActionsEx
-StopButton.AnchorPoint = Vector2.new(1, 1)
-StopButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-StopButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-StopButton.BorderSizePixel = 0
-StopButton.Position = UDim2.new(1, 0, 1, 0)
-StopButton.Size = UDim2.new(0.286956519, 0, 0.5, 0)
-StopButton.ZIndex = -45
-StopButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-StopButton.Text = "CANCEL"
-StopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-StopButton.TextScaled = true
-StopButton.TextSize = 14.000
-StopButton.TextStrokeTransparency = 0.000
-StopButton.TextWrapped = true
-
-UIStroke_14.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_14.Parent = StopButton
-
-Time.Name = "Time"
-Time.Parent = ActionsEx
-Time.AnchorPoint = Vector2.new(0, 1)
-Time.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Time.BackgroundTransparency = 1.000
-Time.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Time.BorderSizePixel = 0
-Time.Position = UDim2.new(-0, 0, 1, 0)
-Time.Size = UDim2.new(0.713, -1, 0.5, 0)
-Time.ZIndex = -45
-Time.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Time.Text = "34 m, 24 s"
-Time.TextColor3 = Color3.fromRGB(255, 255, 255)
-Time.TextScaled = true
-Time.TextSize = 14.000
-Time.TextStrokeTransparency = 0.000
-Time.TextWrapped = true
-Time.TextXAlignment = Enum.TextXAlignment.Left
-
-UIStroke_15.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_15.Parent = Time
-
-UIStroke_16.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_16.Parent = ActionsEx
-
-UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(140, 140, 140)), ColorSequenceKeypoint.new(0.96, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(39, 39, 39))}
-UIGradient_6.Parent = ActionsEx
-
-ToggleTagEx.Name = "ToggleTagEx"
-ToggleTagEx:AddTag("RemoveOnDestroy")
-C.Examples.ToggleTagEx = ToggleTagEx
-ToggleTagEx.Enabled = false
-ToggleTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ToggleTagEx.Active = true
-ToggleTagEx.AlwaysOnTop = true
-ToggleTagEx.ExtentsOffsetWorldSpace = Vector3.new(0, 4, 0)
-ToggleTagEx.LightInfluence = 1.000
-ToggleTagEx.Size = UDim2.new(1, 30, 0.75, 10)
-
-Toggle.Name = "Toggle"
-Toggle.Parent = ToggleTagEx
-Toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Toggle.BorderSizePixel = 0
-Toggle.Size = UDim2.new(1, 0, 1, 0)
-Toggle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-Toggle.TextScaled = true
-Toggle.TextSize = 14.000
-Toggle.TextStrokeTransparency = 0.000
-Toggle.TextWrapped = true
-
-UIStroke_17.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_17.Parent = Toggle
-
-KickedButton.Name = "KickedButton"
-KickedButton.Parent = SpecterGUI
-C.UI.KickedButton = KickedButton
-KickedButton.AnchorPoint = Vector2.new(0.5, 1)
-KickedButton.BackgroundColor3 = Color3.fromRGB(255, 106, 32)
-KickedButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KickedButton.BorderSizePixel = 0
-KickedButton.Position = UDim2.new(0.5, 0, 0.980000019, 0)
-KickedButton.Size = UDim2.new(0.5, 0, 0, 0)
-KickedButton.Visible = false
-KickedButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-KickedButton.Text = "You are kicked. This means that you cannot interact with the game nor other players.Click to hide this prompt"
-KickedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-KickedButton.TextSize = 33.000
-KickedButton.TextStrokeTransparency = 0.000
-KickedButton.TextWrapped = true
-
-SecondaryHUD.Name = "SecondaryHUD"
-SecondaryHUD.Parent = SpecterGUI
-C.UI.SecondaryHUD = SecondaryHUD
-SecondaryHUD.AnchorPoint = Vector2.new(0.5, 0.5)
-SecondaryHUD.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
-SecondaryHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SecondaryHUD.BorderSizePixel = 0
-SecondaryHUD.Position = UDim2.new(0.5, 0, 0.5, 0)
-SecondaryHUD.Size = UDim2.new(0.5, 0, 0.5, 0)
-SecondaryHUD.ZIndex = 100
-
-Servers.Name = "Servers"
-Servers.Parent = SecondaryHUD
-Servers.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
-Servers.BackgroundTransparency = 1.000
-Servers.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Servers.BorderSizePixel = 0
-Servers.Size = UDim2.new(1, 0, 1, 0)
-Servers.ZIndex = 101
-
-UICorner_16.CornerRadius = UDim.new(0, 32)
-UICorner_16.Parent = Servers
-
-ServersTitleLabel.Name = "ServersTitleLabel"
-ServersTitleLabel.Parent = Servers
-ServersTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ServersTitleLabel.BackgroundTransparency = 1.000
-ServersTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ServersTitleLabel.BorderSizePixel = 0
-ServersTitleLabel.Position = UDim2.new(0.300000012, 0, 0, 0)
-ServersTitleLabel.Size = UDim2.new(0.699999988, 0, 0.100000001, 0)
-ServersTitleLabel.ZIndex = 102
-ServersTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ServersTitleLabel.Text = "SERVERS"
-ServersTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-ServersTitleLabel.TextScaled = true
-ServersTitleLabel.TextSize = 14.000
-ServersTitleLabel.TextStrokeTransparency = 0.000
-ServersTitleLabel.TextWrapped = true
-
-TabsSelection.Name = "TabsSelection"
-TabsSelection.Parent = Servers
-TabsSelection.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TabsSelection.BackgroundTransparency = 1.000
-TabsSelection.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TabsSelection.BorderSizePixel = 0
-TabsSelection.Size = UDim2.new(0.300000012, 0, 1, 0)
-TabsSelection.ZIndex = 102
-
-FromGame.Name = "FromGame"
-FromGame.Parent = TabsSelection
-FromGame.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-FromGame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FromGame.BorderSizePixel = 0
-FromGame.LayoutOrder = -1
-FromGame.Size = UDim2.new(0, 200, 0, 50)
-FromGame.ZIndex = 103
-FromGame.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-FromGame.Text = "All"
-FromGame.TextColor3 = Color3.fromRGB(255, 255, 255)
-FromGame.TextScaled = true
-FromGame.TextSize = 14.000
-FromGame.TextStrokeTransparency = 0.000
-FromGame.TextWrapped = true
-
-UICorner_17.CornerRadius = UDim.new(0, 32)
-UICorner_17.Parent = FromGame
-
-UIStroke_18.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_18.Parent = FromGame
-
-UIGridLayout.Parent = TabsSelection
-UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout.CellPadding = UDim2.new(0, 0, 0.13333334, 0)
-UIGridLayout.CellSize = UDim2.new(1, 0, 0.150000006, 0)
-
-Recent.Name = "Recent"
-Recent.Parent = TabsSelection
-Recent.BackgroundColor3 = Color3.fromRGB(0, 110, 255)
-Recent.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Recent.BorderSizePixel = 0
-Recent.Size = UDim2.new(0, 200, 0, 50)
-Recent.ZIndex = 103
-Recent.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Recent.Text = "Recent"
-Recent.TextColor3 = Color3.fromRGB(255, 255, 255)
-Recent.TextScaled = true
-Recent.TextSize = 14.000
-Recent.TextStrokeTransparency = 0.000
-Recent.TextWrapped = true
-
-UICorner_18.CornerRadius = UDim.new(0, 32)
-UICorner_18.Parent = Recent
-
-UIStroke_19.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_19.Parent = Recent
-
-Close.Name = "Close"
-Close.Parent = TabsSelection
-Close.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Close.BorderSizePixel = 0
-Close.LayoutOrder = 2
-Close.Size = UDim2.new(0, 200, 0, 50)
-Close.ZIndex = 103
-Close.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Close.Text = "Exit"
-Close.TextColor3 = Color3.fromRGB(255, 255, 255)
-Close.TextScaled = true
-Close.TextSize = 14.000
-Close.TextStrokeTransparency = 0.000
-Close.TextWrapped = true
-
-UICorner_19.CornerRadius = UDim.new(0, 32)
-UICorner_19.Parent = Close
-
-UIStroke_20.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_20.Parent = Close
-
-Friends.Name = "Friends"
-Friends.Parent = TabsSelection
-Friends.BackgroundColor3 = Color3.fromRGB(34, 255, 0)
-Friends.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Friends.BorderSizePixel = 0
-Friends.LayoutOrder = 1
-Friends.Size = UDim2.new(0, 200, 0, 50)
-Friends.ZIndex = 103
-Friends.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Friends.Text = "Friends"
-Friends.TextColor3 = Color3.fromRGB(255, 255, 255)
-Friends.TextScaled = true
-Friends.TextSize = 14.000
-Friends.TextStrokeTransparency = 0.000
-Friends.TextWrapped = true
-
-UICorner_20.CornerRadius = UDim.new(0, 32)
-UICorner_20.Parent = Friends
-
-UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_21.Parent = Friends
-
-MainScroll.Name = "MainScroll"
-MainScroll.Parent = Servers
-MainScroll.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-MainScroll.BackgroundTransparency = 1.000
-MainScroll.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MainScroll.BorderSizePixel = 0
-MainScroll.LayoutOrder = -13
-MainScroll.Position = UDim2.new(0.299999952, 0, 0.100000001, 0)
-MainScroll.Size = UDim2.new(0.699999988, 0, 0.760000229, 0)
-MainScroll.ZIndex = 102
-MainScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-MainScroll.BottomImage = "rbxassetid://3062505976"
-MainScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-MainScroll.MidImage = "rbxassetid://3062506202"
-MainScroll.TopImage = "rbxassetid://3062506445"
-
-ServerEx.Name = "ServerEx"
-ServerEx:AddTag("RemoveOnDestroy")
-C.Examples.ServerEx = ServerEx
-ServerEx.BackgroundColor3 = Color3.fromRGB(255, 81, 0)
-ServerEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ServerEx.BorderSizePixel = 0
-ServerEx.Size = UDim2.new(1, 0, 0, 60)
-ServerEx.ZIndex = 103
-
-ServerTitle.Name = "ServerTitle"
-ServerTitle.Parent = ServerEx
-ServerTitle.AnchorPoint = Vector2.new(0.5, 0)
-ServerTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ServerTitle.BackgroundTransparency = 1.000
-ServerTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ServerTitle.BorderSizePixel = 0
-ServerTitle.Position = UDim2.new(0.5, 0, 0, 0)
-ServerTitle.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
-ServerTitle.ZIndex = 103
-ServerTitle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ServerTitle.Text = "SERVER"
-ServerTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-ServerTitle.TextScaled = true
-ServerTitle.TextSize = 14.000
-ServerTitle.TextStrokeTransparency = 0.000
-ServerTitle.TextWrapped = true
-
-TimeStamp.Name = "TimeStamp"
-TimeStamp.Parent = ServerEx
-TimeStamp.AnchorPoint = Vector2.new(0.5, 0)
-TimeStamp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TimeStamp.BackgroundTransparency = 1.000
-TimeStamp.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TimeStamp.BorderSizePixel = 0
-TimeStamp.Position = UDim2.new(0.5, 0, 0.699999988, 0)
-TimeStamp.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
-TimeStamp.ZIndex = 103
-TimeStamp.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-TimeStamp.Text = "7:56 PM"
-TimeStamp.TextColor3 = Color3.fromRGB(255, 255, 255)
-TimeStamp.TextScaled = true
-TimeStamp.TextSize = 14.000
-TimeStamp.TextStrokeTransparency = 0.000
-TimeStamp.TextWrapped = true
-
-SecondData.Name = "SecondData"
-SecondData.Parent = ServerEx
-SecondData.AnchorPoint = Vector2.new(0.5, 0)
-SecondData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SecondData.BackgroundTransparency = 1.000
-SecondData.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SecondData.BorderSizePixel = 0
-SecondData.Position = UDim2.new(0.5, 0, 0.349999994, 0)
-SecondData.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
-SecondData.ZIndex = 103
-SecondData.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-SecondData.Text = "5/10 PLAYERS"
-SecondData.TextColor3 = Color3.fromRGB(255, 255, 255)
-SecondData.TextScaled = true
-SecondData.TextSize = 14.000
-SecondData.TextStrokeTransparency = 0.000
-SecondData.TextWrapped = true
-
-UICorner_21.CornerRadius = UDim.new(0, 32)
-UICorner_21.Parent = ServerEx
-
-UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_22.Parent = ServerEx
-
-UIGridLayout_2.Parent = MainScroll
-UIGridLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIGridLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout_2.CellPadding = UDim2.new(0, 0, 0, 0)
-UIGridLayout_2.CellSize = UDim2.new(0.300000012, 0, 0, 150)
-
-BottomButtons.Name = "BottomButtons"
-BottomButtons.Parent = Servers
-BottomButtons.AnchorPoint = Vector2.new(0, 1)
-BottomButtons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-BottomButtons.BackgroundTransparency = 1.000
-BottomButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
-BottomButtons.BorderSizePixel = 0
-BottomButtons.Position = UDim2.new(0.300000012, 0, 0.980000019, 0)
-BottomButtons.Size = UDim2.new(0.699999988, 0, 0.109999999, 0)
-BottomButtons.ZIndex = 102
-
-Previous.Name = "Previous"
-Previous.Parent = BottomButtons
-Previous.BackgroundColor3 = Color3.fromRGB(255, 238, 0)
-Previous.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Previous.BorderSizePixel = 0
-Previous.LayoutOrder = -1
-Previous.Size = UDim2.new(0, 200, 0, 50)
-Previous.ZIndex = 103
-Previous.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Previous.Text = "Previous"
-Previous.TextColor3 = Color3.fromRGB(255, 255, 255)
-Previous.TextScaled = true
-Previous.TextSize = 14.000
-Previous.TextStrokeTransparency = 0.000
-Previous.TextWrapped = true
-
-UICorner_22.CornerRadius = UDim.new(0, 32)
-UICorner_22.Parent = Previous
-
-UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_23.Parent = Previous
-
-UIGridLayout_3.Parent = BottomButtons
-UIGridLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIGridLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout_3.CellPadding = UDim2.new(0, 0, 0, 0)
-UIGridLayout_3.CellSize = UDim2.new(0.333299994, 0, 1, 0)
-
-Join.Name = "Join"
-Join.Parent = BottomButtons
-Join.BackgroundColor3 = Color3.fromRGB(140, 0, 255)
-Join.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Join.BorderSizePixel = 0
-Join.Size = UDim2.new(0, 200, 0, 50)
-Join.Visible = false
-Join.ZIndex = 103
-Join.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Join.Text = "Join"
-Join.TextColor3 = Color3.fromRGB(255, 255, 255)
-Join.TextScaled = true
-Join.TextSize = 14.000
-Join.TextStrokeTransparency = 0.000
-Join.TextWrapped = true
-
-UICorner_23.CornerRadius = UDim.new(0, 32)
-UICorner_23.Parent = Join
-
-UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_24.Parent = Join
-
-Next.Name = "Next"
-Next.Parent = BottomButtons
-Next.BackgroundColor3 = Color3.fromRGB(60, 255, 0)
-Next.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Next.BorderSizePixel = 0
-Next.LayoutOrder = 1
-Next.Size = UDim2.new(0, 200, 0, 50)
-Next.ZIndex = 103
-Next.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-Next.Text = "Next"
-Next.TextColor3 = Color3.fromRGB(255, 255, 255)
-Next.TextScaled = true
-Next.TextSize = 14.000
-Next.TextStrokeTransparency = 0.000
-Next.TextWrapped = true
-
-UICorner_24.CornerRadius = UDim.new(0, 32)
-UICorner_24.Parent = Next
-
-UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_25.Parent = Next
-
-ExtraLabel.Name = "ExtraLabel"
-ExtraLabel.Parent = Servers
-ExtraLabel.AnchorPoint = Vector2.new(0.5, 0)
-ExtraLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ExtraLabel.BackgroundTransparency = 1.000
-ExtraLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ExtraLabel.BorderSizePixel = 0
-ExtraLabel.Position = UDim2.new(0.5, 0, 1, 0)
-ExtraLabel.Size = UDim2.new(1, 0, 0, 30)
-ExtraLabel.ZIndex = 102
-ExtraLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ExtraLabel.Text = "Only public servers in this universe are visible; player count or server status may not be up to date"
-ExtraLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-ExtraLabel.TextScaled = true
-ExtraLabel.TextSize = 14.000
-ExtraLabel.TextStrokeTransparency = 0.000
-ExtraLabel.TextWrapped = true
-
-UICorner_25.CornerRadius = UDim.new(0, 32)
-UICorner_25.Parent = SecondaryHUD
-
-UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_26.Parent = SecondaryHUD
+ToggleTagEx.SpecterGUI.Name = "SpecterGUI"
+ToggleTagEx.
+ToggleTagEx.SpecterGUI.DisplayOrder = -1
+ToggleTagEx.SpecterGUI.ResetOnSpawn = false
+
+ToggleTagEx.MainHUD.Name = "MainHUD"
+ToggleTagEx.MainHUD.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.MainHUD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.MainHUD.BackgroundTransparency = 1.000
+ToggleTagEx.MainHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.MainHUD.BorderSizePixel = 0
+ToggleTagEx.MainHUD.Size = UDim2.new(1, 0, 1, 0)
+
+ToggleTagEx.DropdownFrame.Name = "DropdownFrame"
+ToggleTagEx.DropdownFrame.Parent = ToggleTagEx.MainHUD
+ToggleTagEx.DropdownFrame.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.DropdownFrame.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+ToggleTagEx.DropdownFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DropdownFrame.BorderSizePixel = 0
+ToggleTagEx.DropdownFrame.Position = UDim2.new(0, 532, 0, 332)
+ToggleTagEx.DropdownFrame.Size = UDim2.new(0, 92, 0, 0)
+ToggleTagEx.DropdownFrame.Visible = false
+ToggleTagEx.DropdownFrame.ZIndex = 20
+
+ToggleTagEx.UIListLayout.Parent = ToggleTagEx.DropdownFrame
+ToggleTagEx.UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.DropdownButtonEx.Name = "DropdownButtonEx"
+ToggleTagEx.DropdownButtonEx.Parent = ToggleTagEx.DropdownFrame
+ToggleTagEx.DropdownButtonEx.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.DropdownButtonEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+ToggleTagEx.DropdownButtonEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DropdownButtonEx.BorderSizePixel = 0
+ToggleTagEx.DropdownButtonEx.Position = UDim2.new(0.970000029, 0, 0.5, 0)
+ToggleTagEx.DropdownButtonEx.Size = UDim2.new(1, 0, 0, 30)
+ToggleTagEx.DropdownButtonEx.ZIndex = 21
+ToggleTagEx.DropdownButtonEx.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.DropdownButtonEx.Text = "God Mode"
+ToggleTagEx.DropdownButtonEx.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.DropdownButtonEx.TextScaled = true
+ToggleTagEx.DropdownButtonEx.TextSize = 14.000
+ToggleTagEx.DropdownButtonEx.TextStrokeTransparency = 0.000
+ToggleTagEx.DropdownButtonEx.TextWrapped = true
+
+ToggleTagEx.UICorner.Parent = ToggleTagEx.DropdownButtonEx
+
+ToggleTagEx.UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke.Parent = ToggleTagEx.DropdownButtonEx
+
+ToggleTagEx.CategoriesFrame.Name = "CategoriesFrame"
+ToggleTagEx.CategoriesFrame.Parent = ToggleTagEx.MainHUD
+ToggleTagEx.CategoriesFrame.Active = true
+ToggleTagEx.CategoriesFrame.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.CategoriesFrame.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+ToggleTagEx.CategoriesFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.CategoriesFrame.BorderSizePixel = 0
+ToggleTagEx.CategoriesFrame.LayoutOrder = -15
+ToggleTagEx.CategoriesFrame.Position = UDim2.new(0, 30, 0, 100)
+ToggleTagEx.CategoriesFrame.Size = UDim2.new(0, 200, 0, 0)
+
+ToggleTagEx.Buttons.Name = "Buttons"
+ToggleTagEx.Buttons.Parent = ToggleTagEx.CategoriesFrame
+ToggleTagEx.Buttons.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.Buttons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Buttons.BackgroundTransparency = 1.000
+ToggleTagEx.Buttons.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Buttons.BorderSizePixel = 0
+ToggleTagEx.Buttons.Position = UDim2.new(0, 0, 0, 40)
+ToggleTagEx.Buttons.Size = UDim2.new(1, 0, 0, 0)
+
+ToggleTagEx.CategoryEx.Name = "CategoryEx"
+ToggleTagEx.CategoryEx.Parent = ToggleTagEx.Buttons
+ToggleTagEx.CategoryEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.CategoryEx.BackgroundTransparency = 1.000
+ToggleTagEx.CategoryEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.CategoryEx.BorderSizePixel = 0
+ToggleTagEx.CategoryEx.LayoutOrder = 1
+ToggleTagEx.CategoryEx.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.Image.Name = "Image"
+ToggleTagEx.Image.Parent = ToggleTagEx.CategoryEx
+ToggleTagEx.Image.Active = true
+ToggleTagEx.Image.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Image.BackgroundTransparency = 1.000
+ToggleTagEx.Image.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Image.BorderSizePixel = 0
+ToggleTagEx.Image.Size = UDim2.new(0.150000006, 0, 1, 0)
+ToggleTagEx.Image.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+ToggleTagEx.Image.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.Text.Name = "Text"
+ToggleTagEx.Text.Parent = ToggleTagEx.CategoryEx
+ToggleTagEx.Text.Active = true
+ToggleTagEx.Text.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Text.BackgroundTransparency = 1.000
+ToggleTagEx.Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Text.BorderSizePixel = 0
+ToggleTagEx.Text.Position = UDim2.new(0.150000006, 0, 0.5, 0)
+ToggleTagEx.Text.Size = UDim2.new(0.670000017, 0, 0.730000019, 0)
+ToggleTagEx.Text.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Text.Text = " Render"
+ToggleTagEx.Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Text.TextScaled = true
+ToggleTagEx.Text.TextSize = 14.000
+ToggleTagEx.Text.TextWrapped = true
+ToggleTagEx.Text.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.Arrow.Name = "Arrow"
+ToggleTagEx.Arrow.Parent = ToggleTagEx.CategoryEx
+ToggleTagEx.Arrow.Active = true
+ToggleTagEx.Arrow.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.Arrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Arrow.BackgroundTransparency = 1.000
+ToggleTagEx.Arrow.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Arrow.BorderSizePixel = 0
+ToggleTagEx.Arrow.Position = UDim2.new(0.779999971, 0, 0.5, 0)
+ToggleTagEx.Arrow.Size = UDim2.new(0.199999779, 0, 0.730000138, 0)
+ToggleTagEx.Arrow.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Arrow.Text = ">"
+ToggleTagEx.Arrow.TextColor3 = Color3.fromRGB(115, 115, 115)
+ToggleTagEx.Arrow.TextScaled = true
+ToggleTagEx.Arrow.TextSize = 14.000
+ToggleTagEx.Arrow.TextWrapped = true
+
+ToggleTagEx.BottomFrame.Name = "BottomFrame"
+ToggleTagEx.BottomFrame.Parent = ToggleTagEx.Buttons
+ToggleTagEx.BottomFrame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.BottomFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.BottomFrame.BorderSizePixel = 0
+ToggleTagEx.BottomFrame.LayoutOrder = 12000
+ToggleTagEx.BottomFrame.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.SaveButton.Name = "SaveButton"
+ToggleTagEx.SaveButton.Parent = ToggleTagEx.BottomFrame
+ToggleTagEx.SaveButton.Active = true
+ToggleTagEx.SaveButton.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.SaveButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.SaveButton.BackgroundTransparency = 1.000
+ToggleTagEx.SaveButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SaveButton.BorderSizePixel = 0
+ToggleTagEx.SaveButton.Position = UDim2.new(0, 0, 0.5, 0)
+ToggleTagEx.SaveButton.Size = UDim2.new(0.200000003, 0, 0.899999976, 0)
+ToggleTagEx.SaveButton.Image = "rbxassetid://14737163568"
+ToggleTagEx.SaveButton.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.Wait.Name = "Wait"
+ToggleTagEx.Wait.Parent = ToggleTagEx.SaveButton
+ToggleTagEx.Wait.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.Wait.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Wait.BackgroundTransparency = 1.000
+ToggleTagEx.Wait.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Wait.BorderSizePixel = 0
+ToggleTagEx.Wait.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.Wait.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
+ToggleTagEx.Wait.Visible = false
+ToggleTagEx.Wait.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+ToggleTagEx.Wait.Text = "•••"
+ToggleTagEx.Wait.TextColor3 = Color3.fromRGB(143, 143, 143)
+ToggleTagEx.Wait.TextScaled = true
+ToggleTagEx.Wait.TextSize = 40.000
+ToggleTagEx.Wait.TextStrokeTransparency = 0.000
+ToggleTagEx.Wait.TextWrapped = true
+
+ToggleTagEx.UICorner_2.CornerRadius = UDim.new(2, 0)
+ToggleTagEx.UICorner_2.Parent = ToggleTagEx.Wait
+
+ToggleTagEx.UIListLayout_2.Parent = ToggleTagEx.Buttons
+ToggleTagEx.UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.MiscDivider.Name = "MiscDivider"
+ToggleTagEx.MiscDivider.Parent = ToggleTagEx.Buttons
+ToggleTagEx.MiscDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.MiscDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.MiscDivider.BorderSizePixel = 0
+ToggleTagEx.MiscDivider.LayoutOrder = 2000
+ToggleTagEx.MiscDivider.Size = UDim2.new(1, 0, 0, 24)
+
+ToggleTagEx.MiscLabel.Name = "MiscLabel"
+ToggleTagEx.MiscLabel.Parent = ToggleTagEx.MiscDivider
+ToggleTagEx.MiscLabel.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.MiscLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.MiscLabel.BackgroundTransparency = 1.000
+ToggleTagEx.MiscLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.MiscLabel.BorderSizePixel = 0
+ToggleTagEx.MiscLabel.Position = UDim2.new(0.100000001, 0, 0.5, 0)
+ToggleTagEx.MiscLabel.Size = UDim2.new(0.699999988, 0, 0.800000012, 0)
+ToggleTagEx.MiscLabel.FontFace = Font.new("rbxasset://fonts/families/Nunito.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.MiscLabel.Text = "MISC"
+ToggleTagEx.MiscLabel.TextColor3 = Color3.fromRGB(111, 111, 111)
+ToggleTagEx.MiscLabel.TextScaled = true
+ToggleTagEx.MiscLabel.TextSize = 14.000
+ToggleTagEx.MiscLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.MiscLabel.TextWrapped = true
+ToggleTagEx.MiscLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.HeaderTab.Name = "HeaderTab"
+ToggleTagEx.HeaderTab.Parent = ToggleTagEx.CategoriesFrame
+ToggleTagEx.HeaderTab.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.HeaderTab.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HeaderTab.BorderSizePixel = 0
+ToggleTagEx.HeaderTab.LayoutOrder = -20
+ToggleTagEx.HeaderTab.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.HeaderTitleLabel.Name = "HeaderTitleLabel"
+ToggleTagEx.HeaderTitleLabel.Parent = ToggleTagEx.HeaderTab
+ToggleTagEx.HeaderTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HeaderTitleLabel.BackgroundTransparency = 1.000
+ToggleTagEx.HeaderTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HeaderTitleLabel.BorderSizePixel = 0
+ToggleTagEx.HeaderTitleLabel.Size = UDim2.new(0.600000024, 0, 1, 0)
+ToggleTagEx.HeaderTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.HeaderTitleLabel.Text = " SPECTER"
+ToggleTagEx.HeaderTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HeaderTitleLabel.TextScaled = true
+ToggleTagEx.HeaderTitleLabel.TextSize = 14.000
+ToggleTagEx.HeaderTitleLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.HeaderTitleLabel.TextWrapped = true
+ToggleTagEx.HeaderTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.SettingsButton.Name = "SettingsButton"
+ToggleTagEx.SettingsButton.Parent = ToggleTagEx.HeaderTab
+ToggleTagEx.SettingsButton.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.SettingsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.SettingsButton.BackgroundTransparency = 1.000
+ToggleTagEx.SettingsButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SettingsButton.BorderSizePixel = 0
+ToggleTagEx.SettingsButton.Position = UDim2.new(0.980000019, 0, 0.5, 0)
+ToggleTagEx.SettingsButton.Size = UDim2.new(0.200000003, 0, 0.800000012, 0)
+ToggleTagEx.SettingsButton.ZIndex = 50
+ToggleTagEx.SettingsButton.Image = "rbxassetid://14134158045"
+ToggleTagEx.SettingsButton.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.Settings.Name = "Settings"
+ToggleTagEx.Settings.Parent = ToggleTagEx.CategoriesFrame
+ToggleTagEx.Settings.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.Settings.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Settings.BackgroundTransparency = 1.000
+ToggleTagEx.Settings.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Settings.BorderSizePixel = 0
+ToggleTagEx.Settings.Position = UDim2.new(0, 0, 0, 40)
+ToggleTagEx.Settings.Size = UDim2.new(1, 0, 0, 0)
+ToggleTagEx.Settings.Visible = false
+
+ToggleTagEx.SupportedFrame.Name = "SupportedFrame"
+ToggleTagEx.SupportedFrame.Parent = ToggleTagEx.Settings
+ToggleTagEx.SupportedFrame.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.SupportedFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.SupportedFrame.BackgroundTransparency = 1.000
+ToggleTagEx.SupportedFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SupportedFrame.BorderSizePixel = 0
+ToggleTagEx.SupportedFrame.LayoutOrder = 1
+ToggleTagEx.SupportedFrame.Size = UDim2.new(1, 0, 0, 0)
+
+ToggleTagEx.Image_2.Name = "Image"
+ToggleTagEx.Image_2.Parent = ToggleTagEx.SupportedFrame
+ToggleTagEx.Image_2.Active = true
+ToggleTagEx.Image_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Image_2.BackgroundTransparency = 1.000
+ToggleTagEx.Image_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Image_2.BorderSizePixel = 0
+ToggleTagEx.Image_2.Size = UDim2.new(0.150000006, 0, 1, 0)
+ToggleTagEx.Image_2.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+ToggleTagEx.Image_2.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.Description.Name = "Description"
+ToggleTagEx.Description.Parent = ToggleTagEx.SupportedFrame
+ToggleTagEx.Description.Active = true
+ToggleTagEx.Description.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Description.BackgroundTransparency = 1.000
+ToggleTagEx.Description.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Description.BorderSizePixel = 0
+ToggleTagEx.Description.Position = UDim2.new(0.150000006, 0, 0, 20)
+ToggleTagEx.Description.Size = UDim2.new(0.790000021, 0, 0, 0)
+ToggleTagEx.Description.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Description.Text = " Render"
+ToggleTagEx.Description.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Description.TextSize = 14.000
+ToggleTagEx.Description.TextWrapped = true
+ToggleTagEx.Description.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.Supported.Name = "Supported"
+ToggleTagEx.Supported.Parent = ToggleTagEx.SupportedFrame
+ToggleTagEx.Supported.Active = true
+ToggleTagEx.Supported.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Supported.BackgroundTransparency = 1.000
+ToggleTagEx.Supported.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Supported.BorderSizePixel = 0
+ToggleTagEx.Supported.Position = UDim2.new(0.150000006, 0, 0, 0)
+ToggleTagEx.Supported.Size = UDim2.new(0.790000021, 0, 0, 20)
+ToggleTagEx.Supported.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Supported.Text = "Supported Game"
+ToggleTagEx.Supported.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Supported.TextScaled = true
+ToggleTagEx.Supported.TextSize = 14.000
+ToggleTagEx.Supported.TextWrapped = true
+ToggleTagEx.Supported.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.BottomFrame_2.Name = "BottomFrame"
+ToggleTagEx.BottomFrame_2.Parent = ToggleTagEx.Settings
+ToggleTagEx.BottomFrame_2.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.BottomFrame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.BottomFrame_2.BorderSizePixel = 0
+ToggleTagEx.BottomFrame_2.LayoutOrder = 50
+ToggleTagEx.BottomFrame_2.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.RefreshButton.Name = "RefreshButton"
+ToggleTagEx.RefreshButton.Parent = ToggleTagEx.BottomFrame_2
+ToggleTagEx.RefreshButton.Active = true
+ToggleTagEx.RefreshButton.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.RefreshButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+ToggleTagEx.RefreshButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.RefreshButton.BorderSizePixel = 0
+ToggleTagEx.RefreshButton.Position = UDim2.new(1, -1, 0.5, 0)
+ToggleTagEx.RefreshButton.Size = UDim2.new(0, 36, 0, 36)
+ToggleTagEx.RefreshButton.Image = "rbxassetid://13492317101"
+ToggleTagEx.RefreshButton.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.UICorner_3.CornerRadius = UDim.new(0, 999)
+ToggleTagEx.UICorner_3.Parent = ToggleTagEx.RefreshButton
+
+ToggleTagEx.UIStroke_2.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_2.Parent = ToggleTagEx.RefreshButton
+
+ToggleTagEx.UIListLayout_3.Parent = ToggleTagEx.Settings
+ToggleTagEx.UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.HackDivider.Name = "HackDivider"
+ToggleTagEx.HackDivider.Parent = ToggleTagEx.Settings
+ToggleTagEx.HackDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.HackDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HackDivider.BorderSizePixel = 0
+ToggleTagEx.HackDivider.LayoutOrder = 20
+ToggleTagEx.HackDivider.Size = UDim2.new(1, 0, 0, 24)
+
+ToggleTagEx.HackLabel.Name = "HackLabel"
+ToggleTagEx.HackLabel.Parent = ToggleTagEx.HackDivider
+ToggleTagEx.HackLabel.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.HackLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HackLabel.BackgroundTransparency = 1.000
+ToggleTagEx.HackLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HackLabel.BorderSizePixel = 0
+ToggleTagEx.HackLabel.Position = UDim2.new(0.100000001, 0, 0.5, 0)
+ToggleTagEx.HackLabel.Size = UDim2.new(0.699999988, 0, 0.800000012, 0)
+ToggleTagEx.HackLabel.FontFace = Font.new("rbxasset://fonts/families/Nunito.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.HackLabel.Text = "HACK"
+ToggleTagEx.HackLabel.TextColor3 = Color3.fromRGB(111, 111, 111)
+ToggleTagEx.HackLabel.TextScaled = true
+ToggleTagEx.HackLabel.TextSize = 14.000
+ToggleTagEx.HackLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.HackLabel.TextWrapped = true
+ToggleTagEx.HackLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.GameDivider.Name = "GameDivider"
+ToggleTagEx.GameDivider.Parent = ToggleTagEx.Settings
+ToggleTagEx.GameDivider.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.GameDivider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.GameDivider.BorderSizePixel = 0
+ToggleTagEx.GameDivider.LayoutOrder = -20
+ToggleTagEx.GameDivider.Size = UDim2.new(1, 0, 0, 24)
+
+ToggleTagEx.GameLabel.Name = "GameLabel"
+ToggleTagEx.GameLabel.Parent = ToggleTagEx.GameDivider
+ToggleTagEx.GameLabel.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.GameLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.GameLabel.BackgroundTransparency = 1.000
+ToggleTagEx.GameLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.GameLabel.BorderSizePixel = 0
+ToggleTagEx.GameLabel.Position = UDim2.new(0.100000001, 0, 0.5, 0)
+ToggleTagEx.GameLabel.Size = UDim2.new(0.699999988, 0, 0.800000012, 0)
+ToggleTagEx.GameLabel.FontFace = Font.new("rbxasset://fonts/families/Nunito.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.GameLabel.Text = "GAME"
+ToggleTagEx.GameLabel.TextColor3 = Color3.fromRGB(111, 111, 111)
+ToggleTagEx.GameLabel.TextScaled = true
+ToggleTagEx.GameLabel.TextSize = 14.000
+ToggleTagEx.GameLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.GameLabel.TextWrapped = true
+ToggleTagEx.GameLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.ScrollTab.Name = "ScrollTab"
+ToggleTagEx.ScrollTab.Parent = ToggleTagEx.Settings
+ToggleTagEx.ScrollTab.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.ScrollTab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ScrollTab.BackgroundTransparency = 1.000
+ToggleTagEx.ScrollTab.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ScrollTab.BorderSizePixel = 0
+ToggleTagEx.ScrollTab.LayoutOrder = 40
+ToggleTagEx.ScrollTab.Position = UDim2.new(0, 0, 0, 45)
+ToggleTagEx.ScrollTab.Size = UDim2.new(1, 0, 0, 0)
+ToggleTagEx.ScrollTab.ZIndex = 0
+ToggleTagEx.ScrollTab.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ToggleTagEx.ScrollTab.BottomImage = "rbxassetid://3062505976"
+ToggleTagEx.ScrollTab.CanvasSize = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.ScrollTab.MidImage = "rbxassetid://3062506202"
+ToggleTagEx.ScrollTab.TopImage = "rbxassetid://3062506445"
+ToggleTagEx.ScrollTab.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+
+ToggleTagEx.UIListLayout_4.Parent = ToggleTagEx.ScrollTab
+ToggleTagEx.UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.TabsFrame.Name = "TabsFrame"
+ToggleTagEx.TabsFrame.Parent = ToggleTagEx.MainHUD
+ToggleTagEx.TabsFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.TabsFrame.BackgroundTransparency = 1.000
+ToggleTagEx.TabsFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.TabsFrame.BorderSizePixel = 0
+ToggleTagEx.TabsFrame.LayoutOrder = -15
+ToggleTagEx.TabsFrame.Size = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.TabsFrame.ZIndex = -15
+
+ToggleTagEx.TabEx.Name = "TabEx"
+ToggleTagEx.TabEx.Parent = ToggleTagEx.TabsFrame
+ToggleTagEx.TabEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+ToggleTagEx.TabEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.TabEx.BorderSizePixel = 0
+ToggleTagEx.TabEx.LayoutOrder = -14
+ToggleTagEx.TabEx.Position = UDim2.new(0, 400, 0, 100)
+ToggleTagEx.TabEx.Size = UDim2.new(0, 230, 0, 400)
+ToggleTagEx.TabEx.ZIndex = -14
+
+ToggleTagEx.HeaderTab_2.Name = "HeaderTab"
+ToggleTagEx.HeaderTab_2.Parent = ToggleTagEx.TabEx
+ToggleTagEx.HeaderTab_2.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.HeaderTab_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HeaderTab_2.BorderSizePixel = 0
+ToggleTagEx.HeaderTab_2.LayoutOrder = -13
+ToggleTagEx.HeaderTab_2.Size = UDim2.new(1, 0, 0, 45)
+ToggleTagEx.HeaderTab_2.ZIndex = -13
+
+ToggleTagEx.HeaderTitleLabel_2.Name = "HeaderTitleLabel"
+ToggleTagEx.HeaderTitleLabel_2.Parent = ToggleTagEx.HeaderTab_2
+ToggleTagEx.HeaderTitleLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HeaderTitleLabel_2.BackgroundTransparency = 1.000
+ToggleTagEx.HeaderTitleLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HeaderTitleLabel_2.BorderSizePixel = 0
+ToggleTagEx.HeaderTitleLabel_2.LayoutOrder = -12
+ToggleTagEx.HeaderTitleLabel_2.Size = UDim2.new(0.600000024, 0, 1, 0)
+ToggleTagEx.HeaderTitleLabel_2.Visible = false
+ToggleTagEx.HeaderTitleLabel_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.HeaderTitleLabel_2.Text = " SPECTER"
+ToggleTagEx.HeaderTitleLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HeaderTitleLabel_2.TextScaled = true
+ToggleTagEx.HeaderTitleLabel_2.TextSize = 14.000
+ToggleTagEx.HeaderTitleLabel_2.TextStrokeTransparency = 0.000
+ToggleTagEx.HeaderTitleLabel_2.TextWrapped = true
+ToggleTagEx.HeaderTitleLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.DropDownButton.Name = "DropDownButton"
+ToggleTagEx.DropDownButton.Parent = ToggleTagEx.HeaderTab_2
+ToggleTagEx.DropDownButton.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.DropDownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.DropDownButton.BackgroundTransparency = 1.000
+ToggleTagEx.DropDownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DropDownButton.BorderSizePixel = 0
+ToggleTagEx.DropDownButton.LayoutOrder = -12
+ToggleTagEx.DropDownButton.Position = UDim2.new(0.980000019, 0, 0.5, 0)
+ToggleTagEx.DropDownButton.Size = UDim2.new(0.200000003, 0, 0.5, 0)
+ToggleTagEx.DropDownButton.Image = "rbxassetid://14569017448"
+ToggleTagEx.DropDownButton.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.Text_2.Name = "Text"
+ToggleTagEx.Text_2.Parent = ToggleTagEx.HeaderTab_2
+ToggleTagEx.Text_2.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.Text_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Text_2.BackgroundTransparency = 1.000
+ToggleTagEx.Text_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Text_2.BorderSizePixel = 0
+ToggleTagEx.Text_2.LayoutOrder = -12
+ToggleTagEx.Text_2.Position = UDim2.new(0.150000036, 0, 0.5, 0)
+ToggleTagEx.Text_2.Size = UDim2.new(0.629999697, 0, 0.730000138, 0)
+ToggleTagEx.Text_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Text_2.Text = " Render"
+ToggleTagEx.Text_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Text_2.TextScaled = true
+ToggleTagEx.Text_2.TextSize = 14.000
+ToggleTagEx.Text_2.TextWrapped = true
+ToggleTagEx.Text_2.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.Image_3.Name = "Image"
+ToggleTagEx.Image_3.Parent = ToggleTagEx.HeaderTab_2
+ToggleTagEx.Image_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Image_3.BackgroundTransparency = 1.000
+ToggleTagEx.Image_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Image_3.BorderSizePixel = 0
+ToggleTagEx.Image_3.LayoutOrder = -12
+ToggleTagEx.Image_3.Size = UDim2.new(0.150000006, 0, 1, 0)
+ToggleTagEx.Image_3.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+ToggleTagEx.Image_3.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.ScrollTab_2.Name = "ScrollTab"
+ToggleTagEx.ScrollTab_2.Parent = ToggleTagEx.TabEx
+ToggleTagEx.ScrollTab_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ScrollTab_2.BackgroundTransparency = 1.000
+ToggleTagEx.ScrollTab_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ScrollTab_2.BorderSizePixel = 0
+ToggleTagEx.ScrollTab_2.LayoutOrder = -13
+ToggleTagEx.ScrollTab_2.Position = UDim2.new(0, 0, 0, 45)
+ToggleTagEx.ScrollTab_2.Size = UDim2.new(1, 0, 0, 300)
+ToggleTagEx.ScrollTab_2.ZIndex = 0
+ToggleTagEx.ScrollTab_2.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ToggleTagEx.ScrollTab_2.BottomImage = "rbxassetid://3062505976"
+ToggleTagEx.ScrollTab_2.CanvasSize = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.ScrollTab_2.MidImage = "rbxassetid://3062506202"
+ToggleTagEx.ScrollTab_2.TopImage = "rbxassetid://3062506445"
+ToggleTagEx.ScrollTab_2.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+
+ToggleTagEx.UIListLayout_5.Parent = ToggleTagEx.ScrollTab_2
+ToggleTagEx.UIListLayout_5.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.HackButtonEx.Name = "HackButtonEx"
+ToggleTagEx.HackButtonEx.Parent = ToggleTagEx.ScrollTab_2
+ToggleTagEx.HackButtonEx.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.HackButtonEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+ToggleTagEx.HackButtonEx.BackgroundTransparency = 1.000
+ToggleTagEx.HackButtonEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HackButtonEx.BorderSizePixel = 0
+ToggleTagEx.HackButtonEx.LayoutOrder = -12
+ToggleTagEx.HackButtonEx.Size = UDim2.new(1, 0, 0, 0)
+
+ToggleTagEx.HackText.Name = "HackText"
+ToggleTagEx.HackText.Parent = ToggleTagEx.HackButtonEx
+ToggleTagEx.HackText.Active = true
+ToggleTagEx.HackText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HackText.BackgroundTransparency = 1.000
+ToggleTagEx.HackText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HackText.BorderSizePixel = 0
+ToggleTagEx.HackText.Position = UDim2.new(0.0500000007, 0, 0, 0)
+ToggleTagEx.HackText.Size = UDim2.new(0.649999976, 0, 0, 40)
+ToggleTagEx.HackText.ZIndex = 2
+ToggleTagEx.HackText.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.HackText.Text = "AimAssist"
+ToggleTagEx.HackText.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HackText.TextScaled = true
+ToggleTagEx.HackText.TextSize = 14.000
+ToggleTagEx.HackText.TextStrokeTransparency = 0.000
+ToggleTagEx.HackText.TextWrapped = true
+ToggleTagEx.HackText.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.HackExpand.Name = "HackExpand"
+ToggleTagEx.HackExpand.Parent = ToggleTagEx.HackButtonEx
+ToggleTagEx.HackExpand.Active = false
+ToggleTagEx.HackExpand.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.HackExpand.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HackExpand.BackgroundTransparency = 1.000
+ToggleTagEx.HackExpand.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HackExpand.BorderSizePixel = 0
+ToggleTagEx.HackExpand.Position = UDim2.new(1, 0, 0, 20)
+ToggleTagEx.HackExpand.Selectable = false
+ToggleTagEx.HackExpand.Size = UDim2.new(0, 31, 0, 40)
+ToggleTagEx.HackExpand.ZIndex = 3
+ToggleTagEx.HackExpand.Image = "rbxassetid://12809025337"
+ToggleTagEx.HackExpand.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.OptionsList.Name = "OptionsList"
+ToggleTagEx.OptionsList.Parent = ToggleTagEx.HackButtonEx
+ToggleTagEx.OptionsList.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.OptionsList.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
+ToggleTagEx.OptionsList.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.OptionsList.BorderSizePixel = 0
+ToggleTagEx.OptionsList.Position = UDim2.new(0, 0, 0, 40)
+ToggleTagEx.OptionsList.Size = UDim2.new(1, 0, 0, 0)
+ToggleTagEx.OptionsList.ZIndex = 2
+
+ToggleTagEx.UIListLayout_6.Parent = ToggleTagEx.OptionsList
+ToggleTagEx.UIListLayout_6.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ToggleTagEx.UIListLayout_6.SortOrder = Enum.SortOrder.LayoutOrder
+ToggleTagEx.UIListLayout_6.Padding = UDim.new(0, 1)
+
+ToggleTagEx.ToggleEx.Name = "ToggleEx"
+ToggleTagEx.ToggleEx.Parent = ToggleTagEx.OptionsList
+ToggleTagEx.ToggleEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
+ToggleTagEx.ToggleEx.BackgroundTransparency = 1.000
+ToggleTagEx.ToggleEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ToggleEx.BorderSizePixel = 0
+ToggleTagEx.ToggleEx.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.NameTL.Name = "NameTL"
+ToggleTagEx.NameTL.Parent = ToggleTagEx.ToggleEx
+ToggleTagEx.NameTL.Active = true
+ToggleTagEx.NameTL.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.NameTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL.BackgroundTransparency = 1.000
+ToggleTagEx.NameTL.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NameTL.BorderSizePixel = 0
+ToggleTagEx.NameTL.Position = UDim2.new(0.0500000007, 0, 0.5, 0)
+ToggleTagEx.NameTL.Size = UDim2.new(0.600000024, 0, 0, 30)
+ToggleTagEx.NameTL.ZIndex = 2
+ToggleTagEx.NameTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NameTL.Text = "AimAssist"
+ToggleTagEx.NameTL.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL.TextScaled = true
+ToggleTagEx.NameTL.TextSize = 14.000
+ToggleTagEx.NameTL.TextStrokeTransparency = 0.000
+ToggleTagEx.NameTL.TextWrapped = true
+ToggleTagEx.NameTL.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.ToggleSwitchSlider.Name = "ToggleSwitchSlider"
+ToggleTagEx.ToggleSwitchSlider.Parent = ToggleTagEx.ToggleEx
+ToggleTagEx.ToggleSwitchSlider.Active = false
+ToggleTagEx.ToggleSwitchSlider.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.ToggleSwitchSlider.BackgroundColor3 = Color3.fromRGB(113, 113, 113)
+ToggleTagEx.ToggleSwitchSlider.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ToggleTagEx.ToggleSwitchSlider.Position = UDim2.new(0.949999988, 0, 0.5, 0)
+ToggleTagEx.ToggleSwitchSlider.Selectable = false
+ToggleTagEx.ToggleSwitchSlider.Size = UDim2.new(0.25, 0, 0.600000024, 0)
+ToggleTagEx.ToggleSwitchSlider.ZIndex = 2
+ToggleTagEx.ToggleSwitchSlider.AutoButtonColor = false
+
+ToggleTagEx.UICorner_4.CornerRadius = UDim.new(1, 0)
+ToggleTagEx.UICorner_4.Parent = ToggleTagEx.ToggleSwitchSlider
+
+ToggleTagEx.ToggleCircle.Name = "ToggleCircle"
+ToggleTagEx.ToggleCircle.Parent = ToggleTagEx.ToggleSwitchSlider
+ToggleTagEx.ToggleCircle.Active = true
+ToggleTagEx.ToggleCircle.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.ToggleCircle.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
+ToggleTagEx.ToggleCircle.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ToggleTagEx.ToggleCircle.Position = UDim2.new(0.603999972, 0, 0.5, 0)
+ToggleTagEx.ToggleCircle.Size = UDim2.new(0.345999986, 0, 0.649999976, 0)
+ToggleTagEx.ToggleCircle.ZIndex = 3
+
+ToggleTagEx.UICorner_5.CornerRadius = UDim.new(0, 100)
+ToggleTagEx.UICorner_5.Parent = ToggleTagEx.ToggleCircle
+
+ToggleTagEx.UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
+ToggleTagEx.UIGradient.Rotation = 90
+ToggleTagEx.UIGradient.Parent = ToggleTagEx.ToggleCircle
+
+ToggleTagEx.UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
+ToggleTagEx.UIGradient_2.Rotation = 90
+ToggleTagEx.UIGradient_2.Parent = ToggleTagEx.ToggleSwitchSlider
+
+ToggleTagEx.UIStroke_3.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_3.Parent = ToggleTagEx.ToggleEx
+
+ToggleTagEx.SliderEx.Name = "SliderEx"
+ToggleTagEx.SliderEx.Parent = ToggleTagEx.OptionsList
+ToggleTagEx.SliderEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
+ToggleTagEx.SliderEx.BackgroundTransparency = 1.000
+ToggleTagEx.SliderEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SliderEx.BorderSizePixel = 0
+ToggleTagEx.SliderEx.Size = UDim2.new(1, 0, 0, 60)
+
+ToggleTagEx.NameTL_2.Name = "NameTL"
+ToggleTagEx.NameTL_2.Parent = ToggleTagEx.SliderEx
+ToggleTagEx.NameTL_2.Active = true
+ToggleTagEx.NameTL_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_2.BackgroundTransparency = 1.000
+ToggleTagEx.NameTL_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NameTL_2.BorderSizePixel = 0
+ToggleTagEx.NameTL_2.Position = UDim2.new(0.0500000007, 0, 0, 0)
+ToggleTagEx.NameTL_2.Size = UDim2.new(0.600000024, 0, 0, 30)
+ToggleTagEx.NameTL_2.ZIndex = 2
+ToggleTagEx.NameTL_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NameTL_2.Text = "Range"
+ToggleTagEx.NameTL_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_2.TextScaled = true
+ToggleTagEx.NameTL_2.TextSize = 14.000
+ToggleTagEx.NameTL_2.TextStrokeTransparency = 0.000
+ToggleTagEx.NameTL_2.TextWrapped = true
+ToggleTagEx.NameTL_2.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.SlidingBar.Name = "SlidingBar"
+ToggleTagEx.SlidingBar.Parent = ToggleTagEx.SliderEx
+ToggleTagEx.SlidingBar.AnchorPoint = Vector2.new(0.5, 1)
+ToggleTagEx.SlidingBar.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
+ToggleTagEx.SlidingBar.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ToggleTagEx.SlidingBar.Position = UDim2.new(0.5, 0, 0.879999995, 0)
+ToggleTagEx.SlidingBar.Selectable = false
+ToggleTagEx.SlidingBar.Size = UDim2.new(0.699999988, 0, 0, 15)
+ToggleTagEx.SlidingBar.ZIndex = 2
+ToggleTagEx.SlidingBar.AutoButtonColor = false
+
+ToggleTagEx.UICorner_6.CornerRadius = UDim.new(1, 0)
+ToggleTagEx.UICorner_6.Parent = ToggleTagEx.SlidingBar
+
+ToggleTagEx.CurrentPosition.Name = "CurrentPosition"
+ToggleTagEx.CurrentPosition.Parent = ToggleTagEx.SlidingBar
+ToggleTagEx.CurrentPosition.Active = true
+ToggleTagEx.CurrentPosition.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.CurrentPosition.BackgroundColor3 = Color3.fromRGB(89, 89, 89)
+ToggleTagEx.CurrentPosition.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ToggleTagEx.CurrentPosition.Position = UDim2.new(0.200000003, 0, 0.5, 0)
+ToggleTagEx.CurrentPosition.Size = UDim2.new(0.100000001, 0, 1, 0)
+ToggleTagEx.CurrentPosition.ZIndex = 3
+
+ToggleTagEx.UICorner_7.CornerRadius = UDim.new(0, 100)
+ToggleTagEx.UICorner_7.Parent = ToggleTagEx.CurrentPosition
+
+ToggleTagEx.UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
+ToggleTagEx.UIGradient_3.Rotation = 90
+ToggleTagEx.UIGradient_3.Parent = ToggleTagEx.CurrentPosition
+
+ToggleTagEx.UIGradient_4.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(83, 83, 83))}
+ToggleTagEx.UIGradient_4.Rotation = 90
+ToggleTagEx.UIGradient_4.Parent = ToggleTagEx.SlidingBar
+
+ToggleTagEx.Backing.Name = "Backing"
+ToggleTagEx.Backing.Parent = ToggleTagEx.SlidingBar
+ToggleTagEx.Backing.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.Backing.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Backing.BackgroundTransparency = 1.000
+ToggleTagEx.Backing.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Backing.BorderSizePixel = 0
+ToggleTagEx.Backing.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.Backing.Size = UDim2.new(1.29999995, 0, 1.70000005, 0)
+ToggleTagEx.Backing.ZIndex = 9
+
+ToggleTagEx.Track.Name = "Track"
+ToggleTagEx.Track.Parent = ToggleTagEx.SlidingBar
+ToggleTagEx.Track.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.Track.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Track.BackgroundTransparency = 1.000
+ToggleTagEx.Track.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Track.BorderSizePixel = 0
+ToggleTagEx.Track.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.Track.Size = UDim2.new(0.899999976, 0, 0.100000001, 0)
+ToggleTagEx.Track.ZIndex = 9
+
+ToggleTagEx.ForceTB.Name = "ForceTB"
+ToggleTagEx.ForceTB.Parent = ToggleTagEx.SliderEx
+ToggleTagEx.ForceTB.AnchorPoint = Vector2.new(1, 0)
+ToggleTagEx.ForceTB.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ForceTB.BackgroundTransparency = 1.000
+ToggleTagEx.ForceTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ForceTB.BorderSizePixel = 0
+ToggleTagEx.ForceTB.Position = UDim2.new(1, 0, 0, 0)
+ToggleTagEx.ForceTB.Size = UDim2.new(0.300000012, 0, 0, 30)
+ToggleTagEx.ForceTB.ZIndex = 3
+ToggleTagEx.ForceTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.ForceTB.Text = ""
+ToggleTagEx.ForceTB.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ForceTB.TextScaled = true
+ToggleTagEx.ForceTB.TextSize = 14.000
+ToggleTagEx.ForceTB.TextStrokeTransparency = 0.000
+ToggleTagEx.ForceTB.TextWrapped = true
+
+ToggleTagEx.TBUnderbar.Name = "TBUnderbar"
+ToggleTagEx.TBUnderbar.Parent = ToggleTagEx.ForceTB
+ToggleTagEx.TBUnderbar.AnchorPoint = Vector2.new(0.5, 1)
+ToggleTagEx.TBUnderbar.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+ToggleTagEx.TBUnderbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.TBUnderbar.BorderSizePixel = 0
+ToggleTagEx.TBUnderbar.Position = UDim2.new(0.5, 0, 0.959999979, 0)
+ToggleTagEx.TBUnderbar.Size = UDim2.new(0.400000006, 0, 0, 1)
+
+ToggleTagEx.LeftBound.Name = "LeftBound"
+ToggleTagEx.LeftBound.Parent = ToggleTagEx.SliderEx
+ToggleTagEx.LeftBound.Active = true
+ToggleTagEx.LeftBound.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.LeftBound.BackgroundTransparency = 1.000
+ToggleTagEx.LeftBound.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.LeftBound.BorderSizePixel = 0
+ToggleTagEx.LeftBound.Position = UDim2.new(0.0500000007, 0, 0.629999995, 0)
+ToggleTagEx.LeftBound.Size = UDim2.new(0.100000001, 0, -0.25, 30)
+ToggleTagEx.LeftBound.ZIndex = 2
+ToggleTagEx.LeftBound.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.LeftBound.Text = "30"
+ToggleTagEx.LeftBound.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.LeftBound.TextScaled = true
+ToggleTagEx.LeftBound.TextSize = 14.000
+ToggleTagEx.LeftBound.TextStrokeTransparency = 0.000
+ToggleTagEx.LeftBound.TextWrapped = true
+
+ToggleTagEx.RightBound.Name = "RightBound"
+ToggleTagEx.RightBound.Parent = ToggleTagEx.SliderEx
+ToggleTagEx.RightBound.Active = true
+ToggleTagEx.RightBound.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.RightBound.BackgroundTransparency = 1.000
+ToggleTagEx.RightBound.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.RightBound.BorderSizePixel = 0
+ToggleTagEx.RightBound.Position = UDim2.new(0.850000024, 0, 0.629999995, 0)
+ToggleTagEx.RightBound.Size = UDim2.new(0.100000001, 0, -0.25, 30)
+ToggleTagEx.RightBound.ZIndex = 2
+ToggleTagEx.RightBound.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.RightBound.Text = "100"
+ToggleTagEx.RightBound.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.RightBound.TextScaled = true
+ToggleTagEx.RightBound.TextSize = 14.000
+ToggleTagEx.RightBound.TextStrokeTransparency = 0.000
+ToggleTagEx.RightBound.TextWrapped = true
+
+ToggleTagEx.UIStroke_4.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_4.Parent = ToggleTagEx.SliderEx
+
+ToggleTagEx.DropdownEx.Name = "DropdownEx"
+ToggleTagEx.DropdownEx.Parent = ToggleTagEx.OptionsList
+ToggleTagEx.DropdownEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
+ToggleTagEx.DropdownEx.BackgroundTransparency = 1.000
+ToggleTagEx.DropdownEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DropdownEx.BorderSizePixel = 0
+ToggleTagEx.DropdownEx.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.NameTL_3.Name = "NameTL"
+ToggleTagEx.NameTL_3.Parent = ToggleTagEx.DropdownEx
+ToggleTagEx.NameTL_3.Active = true
+ToggleTagEx.NameTL_3.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.NameTL_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_3.BackgroundTransparency = 1.000
+ToggleTagEx.NameTL_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NameTL_3.BorderSizePixel = 0
+ToggleTagEx.NameTL_3.Position = UDim2.new(0.0500000007, 0, 0.5, 0)
+ToggleTagEx.NameTL_3.Size = UDim2.new(0.5, 0, 0, 30)
+ToggleTagEx.NameTL_3.ZIndex = 2
+ToggleTagEx.NameTL_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NameTL_3.Text = "AimAssist"
+ToggleTagEx.NameTL_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_3.TextScaled = true
+ToggleTagEx.NameTL_3.TextSize = 14.000
+ToggleTagEx.NameTL_3.TextStrokeTransparency = 0.000
+ToggleTagEx.NameTL_3.TextWrapped = true
+ToggleTagEx.NameTL_3.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.UIStroke_5.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_5.Parent = ToggleTagEx.DropdownEx
+
+ToggleTagEx.DropdownButton.Name = "DropdownButton"
+ToggleTagEx.DropdownButton.Parent = ToggleTagEx.DropdownEx
+ToggleTagEx.DropdownButton.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.DropdownButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ToggleTagEx.DropdownButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DropdownButton.BorderSizePixel = 0
+ToggleTagEx.DropdownButton.Position = UDim2.new(0.970000029, 0, 0.5, 0)
+ToggleTagEx.DropdownButton.Size = UDim2.new(0.400000006, 0, 0, 30)
+ToggleTagEx.DropdownButton.ZIndex = 2
+ToggleTagEx.DropdownButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.DropdownButton.Text = "God Mode⬇"
+ToggleTagEx.DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.DropdownButton.TextScaled = true
+ToggleTagEx.DropdownButton.TextSize = 14.000
+ToggleTagEx.DropdownButton.TextStrokeTransparency = 0.000
+ToggleTagEx.DropdownButton.TextWrapped = true
+
+ToggleTagEx.UICorner_8.Parent = ToggleTagEx.DropdownButton
+
+ToggleTagEx.UIStroke_6.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_6.Parent = ToggleTagEx.DropdownButton
+
+ToggleTagEx.UserListEx.Name = "UserListEx"
+ToggleTagEx.UserListEx.Parent = ToggleTagEx.OptionsList
+ToggleTagEx.UserListEx.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.UserListEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
+ToggleTagEx.UserListEx.BackgroundTransparency = 1.000
+ToggleTagEx.UserListEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.UserListEx.BorderSizePixel = 0
+ToggleTagEx.UserListEx.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.NameTL_4.Name = "NameTL"
+ToggleTagEx.NameTL_4.Parent = ToggleTagEx.UserListEx
+ToggleTagEx.NameTL_4.Active = true
+ToggleTagEx.NameTL_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_4.BackgroundTransparency = 1.000
+ToggleTagEx.NameTL_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NameTL_4.BorderSizePixel = 0
+ToggleTagEx.NameTL_4.Position = UDim2.new(0.0500000007, 0, 0, 5)
+ToggleTagEx.NameTL_4.Size = UDim2.new(0.699999988, 0, 0, 30)
+ToggleTagEx.NameTL_4.ZIndex = 2
+ToggleTagEx.NameTL_4.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NameTL_4.Text = "AimAssist"
+ToggleTagEx.NameTL_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_4.TextScaled = true
+ToggleTagEx.NameTL_4.TextSize = 14.000
+ToggleTagEx.NameTL_4.TextStrokeTransparency = 0.000
+ToggleTagEx.NameTL_4.TextWrapped = true
+ToggleTagEx.NameTL_4.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.UIStroke_7.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_7.Parent = ToggleTagEx.UserListEx
+
+ToggleTagEx.AddButton.Name = "AddButton"
+ToggleTagEx.AddButton.Parent = ToggleTagEx.UserListEx
+ToggleTagEx.AddButton.AnchorPoint = Vector2.new(1, 0)
+ToggleTagEx.AddButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ToggleTagEx.AddButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.AddButton.BorderSizePixel = 0
+ToggleTagEx.AddButton.Position = UDim2.new(0.970000029, 0, 0, 40)
+ToggleTagEx.AddButton.Size = UDim2.new(0.150000006, 0, 0, 30)
+ToggleTagEx.AddButton.ZIndex = 2
+ToggleTagEx.AddButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.AddButton.Text = "+"
+ToggleTagEx.AddButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.AddButton.TextScaled = true
+ToggleTagEx.AddButton.TextSize = 14.000
+ToggleTagEx.AddButton.TextStrokeTransparency = 0.000
+ToggleTagEx.AddButton.TextWrapped = true
+
+ToggleTagEx.UICorner_9.Parent = ToggleTagEx.AddButton
+
+ToggleTagEx.UIStroke_8.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_8.Parent = ToggleTagEx.AddButton
+
+ToggleTagEx.MainList.Name = "MainList"
+ToggleTagEx.MainList.Parent = ToggleTagEx.UserListEx
+ToggleTagEx.MainList.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.MainList.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.MainList.BackgroundTransparency = 1.000
+ToggleTagEx.MainList.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.MainList.BorderSizePixel = 0
+ToggleTagEx.MainList.Position = UDim2.new(0, 0, 0, 80)
+ToggleTagEx.MainList.Size = UDim2.new(1, 0, 0, 0)
+
+ToggleTagEx.UIListLayout_7.Parent = ToggleTagEx.MainList
+ToggleTagEx.UIListLayout_7.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ToggleTagEx.UIListLayout_7.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.OneListEx.Name = "OneListEx"
+ToggleTagEx.OneListEx.Parent = ToggleTagEx.MainList
+ToggleTagEx.OneListEx.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
+ToggleTagEx.OneListEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.OneListEx.BorderSizePixel = 0
+ToggleTagEx.OneListEx.Size = UDim2.new(1, 0, 0, 20)
+
+ToggleTagEx.DeleteButton.Name = "DeleteButton"
+ToggleTagEx.DeleteButton.Parent = ToggleTagEx.OneListEx
+ToggleTagEx.DeleteButton.AnchorPoint = Vector2.new(1, 0)
+ToggleTagEx.DeleteButton.BackgroundColor3 = Color3.fromRGB(198, 0, 0)
+ToggleTagEx.DeleteButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DeleteButton.BorderSizePixel = 0
+ToggleTagEx.DeleteButton.Position = UDim2.new(0.970000029, 0, 0, 0)
+ToggleTagEx.DeleteButton.Size = UDim2.new(0.150000006, 0, 1, 0)
+ToggleTagEx.DeleteButton.ZIndex = 2
+ToggleTagEx.DeleteButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.DeleteButton.Text = "X"
+ToggleTagEx.DeleteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.DeleteButton.TextScaled = true
+ToggleTagEx.DeleteButton.TextSize = 14.000
+ToggleTagEx.DeleteButton.TextStrokeTransparency = 0.000
+ToggleTagEx.DeleteButton.TextWrapped = true
+
+ToggleTagEx.UICorner_10.Parent = ToggleTagEx.DeleteButton
+
+ToggleTagEx.UIStroke_9.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_9.Parent = ToggleTagEx.DeleteButton
+
+ToggleTagEx.UserTL.Name = "UserTL"
+ToggleTagEx.UserTL.Parent = ToggleTagEx.OneListEx
+ToggleTagEx.UserTL.Active = true
+ToggleTagEx.UserTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.UserTL.BackgroundTransparency = 1.000
+ToggleTagEx.UserTL.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.UserTL.BorderSizePixel = 0
+ToggleTagEx.UserTL.Position = UDim2.new(0.0500000007, 0, 0, 0)
+ToggleTagEx.UserTL.Size = UDim2.new(0.699999988, 0, 1, 0)
+ToggleTagEx.UserTL.ZIndex = 2
+ToggleTagEx.UserTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.UserTL.Text = "areallycoolguy"
+ToggleTagEx.UserTL.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.UserTL.TextScaled = true
+ToggleTagEx.UserTL.TextSize = 14.000
+ToggleTagEx.UserTL.TextStrokeTransparency = 0.000
+ToggleTagEx.UserTL.TextWrapped = true
+ToggleTagEx.UserTL.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.EnterTB.Name = "EnterTB"
+ToggleTagEx.EnterTB.Parent = ToggleTagEx.UserListEx
+ToggleTagEx.EnterTB.BackgroundColor3 = Color3.fromRGB(188, 188, 188)
+ToggleTagEx.EnterTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.EnterTB.BorderSizePixel = 0
+ToggleTagEx.EnterTB.Position = UDim2.new(0.0500000007, 0, 0, 40)
+ToggleTagEx.EnterTB.Selectable = false
+ToggleTagEx.EnterTB.Size = UDim2.new(0.730000019, 0, 0, 30)
+ToggleTagEx.EnterTB.ZIndex = 2
+ToggleTagEx.EnterTB.ClearTextOnFocus = false
+ToggleTagEx.EnterTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.EnterTB.PlaceholderText = "Enter username/userid"
+ToggleTagEx.EnterTB.Text = ""
+ToggleTagEx.EnterTB.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.EnterTB.TextScaled = true
+ToggleTagEx.EnterTB.TextSize = 14.000
+ToggleTagEx.EnterTB.TextStrokeTransparency = 0.000
+ToggleTagEx.EnterTB.TextWrapped = true
+
+ToggleTagEx.UICorner_11.Parent = ToggleTagEx.EnterTB
+
+ToggleTagEx.UIStroke_10.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_10.Parent = ToggleTagEx.EnterTB
+
+ToggleTagEx.LimitTL.Name = "LimitTL"
+ToggleTagEx.LimitTL.Parent = ToggleTagEx.UserListEx
+ToggleTagEx.LimitTL.Active = true
+ToggleTagEx.LimitTL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.LimitTL.BackgroundTransparency = 1.000
+ToggleTagEx.LimitTL.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.LimitTL.BorderSizePixel = 0
+ToggleTagEx.LimitTL.Position = UDim2.new(0.789999783, 0, 0, 5)
+ToggleTagEx.LimitTL.Size = UDim2.new(0.177391246, 0, 0, 30)
+ToggleTagEx.LimitTL.ZIndex = 2
+ToggleTagEx.LimitTL.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+ToggleTagEx.LimitTL.Text = "0/50"
+ToggleTagEx.LimitTL.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.LimitTL.TextScaled = true
+ToggleTagEx.LimitTL.TextSize = 14.000
+ToggleTagEx.LimitTL.TextStrokeTransparency = 0.000
+ToggleTagEx.LimitTL.TextWrapped = true
+ToggleTagEx.LimitTL.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.TextboxEx.Name = "TextboxEx"
+ToggleTagEx.TextboxEx.Parent = ToggleTagEx.OptionsList
+ToggleTagEx.TextboxEx.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.TextboxEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
+ToggleTagEx.TextboxEx.BackgroundTransparency = 1.000
+ToggleTagEx.TextboxEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.TextboxEx.BorderSizePixel = 0
+ToggleTagEx.TextboxEx.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.NameTL_5.Name = "NameTL"
+ToggleTagEx.NameTL_5.Parent = ToggleTagEx.TextboxEx
+ToggleTagEx.NameTL_5.Active = true
+ToggleTagEx.NameTL_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_5.BackgroundTransparency = 1.000
+ToggleTagEx.NameTL_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NameTL_5.BorderSizePixel = 0
+ToggleTagEx.NameTL_5.Position = UDim2.new(0.0500000007, 0, 0, 5)
+ToggleTagEx.NameTL_5.Size = UDim2.new(0.699999988, 0, 0, 30)
+ToggleTagEx.NameTL_5.ZIndex = 2
+ToggleTagEx.NameTL_5.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NameTL_5.Text = "AimAssist"
+ToggleTagEx.NameTL_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NameTL_5.TextScaled = true
+ToggleTagEx.NameTL_5.TextSize = 14.000
+ToggleTagEx.NameTL_5.TextStrokeTransparency = 0.000
+ToggleTagEx.NameTL_5.TextWrapped = true
+ToggleTagEx.NameTL_5.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.UIStroke_11.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_11.Parent = ToggleTagEx.TextboxEx
+
+ToggleTagEx.SetTB.Name = "SetTB"
+ToggleTagEx.SetTB.Parent = ToggleTagEx.TextboxEx
+ToggleTagEx.SetTB.BackgroundColor3 = Color3.fromRGB(188, 188, 188)
+ToggleTagEx.SetTB.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SetTB.BorderSizePixel = 0
+ToggleTagEx.SetTB.Position = UDim2.new(0.0500000007, 0, 0, 40)
+ToggleTagEx.SetTB.Selectable = false
+ToggleTagEx.SetTB.Size = UDim2.new(0.730000019, 0, 0, 30)
+ToggleTagEx.SetTB.ZIndex = 2
+ToggleTagEx.SetTB.ClearTextOnFocus = false
+ToggleTagEx.SetTB.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.SetTB.PlaceholderText = "Enter something here.."
+ToggleTagEx.SetTB.Text = ""
+ToggleTagEx.SetTB.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.SetTB.TextScaled = true
+ToggleTagEx.SetTB.TextSize = 14.000
+ToggleTagEx.SetTB.TextStrokeTransparency = 0.100
+ToggleTagEx.SetTB.TextTransparency = 0.100
+ToggleTagEx.SetTB.TextWrapped = true
+
+ToggleTagEx.UICorner_12.Parent = ToggleTagEx.SetTB
+
+ToggleTagEx.UIStroke_12.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_12.Parent = ToggleTagEx.SetTB
+
+ToggleTagEx.LimitTL_2.Name = "LimitTL"
+ToggleTagEx.LimitTL_2.Parent = ToggleTagEx.TextboxEx
+ToggleTagEx.LimitTL_2.Active = true
+ToggleTagEx.LimitTL_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.LimitTL_2.BackgroundTransparency = 1.000
+ToggleTagEx.LimitTL_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.LimitTL_2.BorderSizePixel = 0
+ToggleTagEx.LimitTL_2.Position = UDim2.new(0.789999783, 0, 0, 5)
+ToggleTagEx.LimitTL_2.Size = UDim2.new(0.177391246, 0, 0, 30)
+ToggleTagEx.LimitTL_2.ZIndex = 2
+ToggleTagEx.LimitTL_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+ToggleTagEx.LimitTL_2.Text = "0/50"
+ToggleTagEx.LimitTL_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.LimitTL_2.TextScaled = true
+ToggleTagEx.LimitTL_2.TextSize = 14.000
+ToggleTagEx.LimitTL_2.TextStrokeTransparency = 0.000
+ToggleTagEx.LimitTL_2.TextWrapped = true
+ToggleTagEx.LimitTL_2.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.EnterButton.Name = "EnterButton"
+ToggleTagEx.EnterButton.Parent = ToggleTagEx.TextboxEx
+ToggleTagEx.EnterButton.AnchorPoint = Vector2.new(1, 0)
+ToggleTagEx.EnterButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ToggleTagEx.EnterButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.EnterButton.BorderSizePixel = 0
+ToggleTagEx.EnterButton.Position = UDim2.new(0.970000029, 0, 0, 40)
+ToggleTagEx.EnterButton.Size = UDim2.new(0.150000006, 0, 0, 30)
+ToggleTagEx.EnterButton.ZIndex = 2
+ToggleTagEx.EnterButton.Image = "rbxassetid://504367763"
+
+ToggleTagEx.UICorner_13.Parent = ToggleTagEx.EnterButton
+
+ToggleTagEx.UIStroke_13.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_13.Parent = ToggleTagEx.EnterButton
+
+ToggleTagEx.HighlightBackground.Name = "HighlightBackground"
+ToggleTagEx.HighlightBackground.Parent = ToggleTagEx.HackButtonEx
+ToggleTagEx.HighlightBackground.BackgroundColor3 = Color3.fromRGB(0, 255, 60)
+ToggleTagEx.HighlightBackground.BackgroundTransparency = 1.000
+ToggleTagEx.HighlightBackground.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HighlightBackground.BorderSizePixel = 0
+ToggleTagEx.HighlightBackground.Size = UDim2.new(1, 0, 0, 40)
+
+ToggleTagEx.KeybindButton.Name = "KeybindButton"
+ToggleTagEx.KeybindButton.Parent = ToggleTagEx.HackButtonEx
+ToggleTagEx.KeybindButton.Active = false
+ToggleTagEx.KeybindButton.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.KeybindButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.KeybindButton.BackgroundTransparency = 1.000
+ToggleTagEx.KeybindButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.KeybindButton.BorderSizePixel = 0
+ToggleTagEx.KeybindButton.Position = UDim2.new(0.841303527, 0, 0, 20)
+ToggleTagEx.KeybindButton.Selectable = false
+ToggleTagEx.KeybindButton.Size = UDim2.new(0, 34, 0, 40)
+ToggleTagEx.KeybindButton.ZIndex = 3
+ToggleTagEx.KeybindButton.Image = "rbxassetid://6884453656"
+ToggleTagEx.KeybindButton.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.BindedKey.Name = "BindedKey"
+ToggleTagEx.BindedKey.Parent = ToggleTagEx.KeybindButton
+ToggleTagEx.BindedKey.Active = true
+ToggleTagEx.BindedKey.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.BindedKey.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.BindedKey.BackgroundTransparency = 1.000
+ToggleTagEx.BindedKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.BindedKey.BorderSizePixel = 0
+ToggleTagEx.BindedKey.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.BindedKey.Size = UDim2.new(0.800000012, 0, 0.600000024, 0)
+ToggleTagEx.BindedKey.ZIndex = 4
+ToggleTagEx.BindedKey.FontFace = Font.new("rbxasset://fonts/families/Jura.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+ToggleTagEx.BindedKey.Text = ""
+ToggleTagEx.BindedKey.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.BindedKey.TextScaled = true
+ToggleTagEx.BindedKey.TextSize = 14.000
+ToggleTagEx.BindedKey.TextStrokeTransparency = 0.000
+ToggleTagEx.BindedKey.TextWrapped = true
+
+ToggleTagEx.KeybindLabel.Name = "KeybindLabel"
+ToggleTagEx.KeybindLabel.Parent = ToggleTagEx.HackButtonEx
+ToggleTagEx.KeybindLabel.Active = true
+ToggleTagEx.KeybindLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.KeybindLabel.BackgroundTransparency = 1.000
+ToggleTagEx.KeybindLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.KeybindLabel.BorderSizePixel = 0
+ToggleTagEx.KeybindLabel.Position = UDim2.new(0.0500000007, 0, 0, 0)
+ToggleTagEx.KeybindLabel.Size = UDim2.new(0.649999976, 0, 0, 40)
+ToggleTagEx.KeybindLabel.Visible = false
+ToggleTagEx.KeybindLabel.ZIndex = 3
+ToggleTagEx.KeybindLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.KeybindLabel.Text = "PRESS KEY TO BIND"
+ToggleTagEx.KeybindLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.KeybindLabel.TextScaled = true
+ToggleTagEx.KeybindLabel.TextSize = 14.000
+ToggleTagEx.KeybindLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.KeybindLabel.TextWrapped = true
+ToggleTagEx.KeybindLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.KeybindBacking.Name = "KeybindBacking"
+ToggleTagEx.KeybindBacking.Parent = ToggleTagEx.KeybindLabel
+ToggleTagEx.KeybindBacking.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.KeybindBacking.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.KeybindBacking.BorderSizePixel = 0
+ToggleTagEx.KeybindBacking.Position = UDim2.new(-0.0769230798, 0, 0, 0)
+ToggleTagEx.KeybindBacking.Size = UDim2.new(1.53846157, 0, 1, 0)
+ToggleTagEx.KeybindBacking.ZIndex = 2
+
+ToggleTagEx.UIGradient_5.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(117, 75, 255)), ColorSequenceKeypoint.new(0.52, Color3.fromRGB(169, 0, 23)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(197, 255, 39))}
+ToggleTagEx.UIGradient_5.Parent = ToggleTagEx.KeybindBacking
+
+ToggleTagEx.ToolTipHeaderFrame.Name = "ToolTipHeaderFrame"
+ToggleTagEx.ToolTipHeaderFrame.Parent = ToggleTagEx.MainHUD
+ToggleTagEx.ToolTipHeaderFrame.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.ToolTipHeaderFrame.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
+ToggleTagEx.ToolTipHeaderFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ToolTipHeaderFrame.BorderSizePixel = 0
+ToggleTagEx.ToolTipHeaderFrame.Position = UDim2.new(0, 536, 0, 180)
+ToggleTagEx.ToolTipHeaderFrame.Size = UDim2.new(0, 200, 0, 0)
+ToggleTagEx.ToolTipHeaderFrame.Visible = false
+ToggleTagEx.ToolTipHeaderFrame.ZIndex = 15
+
+ToggleTagEx.ToolTipText.Name = "ToolTipText"
+ToggleTagEx.ToolTipText.Parent = ToggleTagEx.ToolTipHeaderFrame
+ToggleTagEx.ToolTipText.AutomaticSize = Enum.AutomaticSize.Y
+ToggleTagEx.ToolTipText.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.ToolTipText.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
+ToggleTagEx.ToolTipText.BackgroundTransparency = 1.000
+ToggleTagEx.ToolTipText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ToolTipText.BorderSizePixel = 0
+ToggleTagEx.ToolTipText.Position = UDim2.new(0.5, 0, 0, 0)
+ToggleTagEx.ToolTipText.Size = UDim2.new(0.800000012, 0, 0, 0)
+ToggleTagEx.ToolTipText.ZIndex = 16
+ToggleTagEx.ToolTipText.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.ToolTipText.Text = "Aims At Enemies"
+ToggleTagEx.ToolTipText.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ToolTipText.TextSize = 22.000
+ToggleTagEx.ToolTipText.TextStrokeTransparency = 0.000
+ToggleTagEx.ToolTipText.TextWrapped = true
+
+ToggleTagEx.UICorner_14.CornerRadius = UDim.new(0.400000006, 0)
+ToggleTagEx.UICorner_14.Parent = ToggleTagEx.ToolTipHeaderFrame
+
+ToggleTagEx.Notifications.Name = "Notifications"
+ToggleTagEx.Notifications.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.Notifications.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Notifications.BackgroundTransparency = 1.000
+ToggleTagEx.Notifications.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Notifications.BorderSizePixel = 0
+ToggleTagEx.Notifications.Size = UDim2.new(1, 0, 1, 0)
+
+ToggleTagEx.NotificationEx.Name = "NotificationEx"
+ToggleTagEx.NotificationEx.Parent = ToggleTagEx.Notifications
+ToggleTagEx.NotificationEx.AnchorPoint = Vector2.new(1, 1)
+ToggleTagEx.NotificationEx.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ToggleTagEx.NotificationEx.BackgroundTransparency = 0.300
+ToggleTagEx.NotificationEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NotificationEx.BorderSizePixel = 0
+ToggleTagEx.NotificationEx.Position = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.NotificationEx.Size = UDim2.new(0.150000006, 0, 0.100000001, 0)
+ToggleTagEx.NotificationEx.Visible = false
+ToggleTagEx.NotificationEx.ZIndex = 2
+
+ToggleTagEx.Timer.Name = "Timer"
+ToggleTagEx.Timer.Parent = ToggleTagEx.NotificationEx
+ToggleTagEx.Timer.AnchorPoint = Vector2.new(0, 1)
+ToggleTagEx.Timer.BackgroundColor3 = Color3.fromRGB(0, 115, 255)
+ToggleTagEx.Timer.BackgroundTransparency = 0.600
+ToggleTagEx.Timer.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Timer.BorderSizePixel = 0
+ToggleTagEx.Timer.Position = UDim2.new(0, 0, 1, -15)
+ToggleTagEx.Timer.Size = UDim2.new(1, 0, 0, 3)
+ToggleTagEx.Timer.ZIndex = 3
+
+ToggleTagEx.UICorner_15.CornerRadius = UDim.new(0, 20)
+ToggleTagEx.UICorner_15.Parent = ToggleTagEx.NotificationEx
+
+ToggleTagEx.NotificationTitle.Name = "NotificationTitle"
+ToggleTagEx.NotificationTitle.Parent = ToggleTagEx.NotificationEx
+ToggleTagEx.NotificationTitle.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.NotificationTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationTitle.BackgroundTransparency = 1.000
+ToggleTagEx.NotificationTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NotificationTitle.BorderSizePixel = 0
+ToggleTagEx.NotificationTitle.Position = UDim2.new(0.5, 0, -0, 0)
+ToggleTagEx.NotificationTitle.Size = UDim2.new(0.800000012, 0, 0.200000003, 0)
+ToggleTagEx.NotificationTitle.ZIndex = 3
+ToggleTagEx.NotificationTitle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NotificationTitle.Text = "UI Loaded"
+ToggleTagEx.NotificationTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationTitle.TextScaled = true
+ToggleTagEx.NotificationTitle.TextSize = 22.000
+ToggleTagEx.NotificationTitle.TextStrokeTransparency = 0.000
+ToggleTagEx.NotificationTitle.TextWrapped = true
+
+ToggleTagEx.NotificationDesc.Name = "NotificationDesc"
+ToggleTagEx.NotificationDesc.Parent = ToggleTagEx.NotificationEx
+ToggleTagEx.NotificationDesc.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.NotificationDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationDesc.BackgroundTransparency = 1.000
+ToggleTagEx.NotificationDesc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NotificationDesc.BorderSizePixel = 0
+ToggleTagEx.NotificationDesc.Position = UDim2.new(0.500000179, 0, 0.190796182, 0)
+ToggleTagEx.NotificationDesc.Size = UDim2.new(0.800000072, 0, 0.583613932, 0)
+ToggleTagEx.NotificationDesc.ZIndex = 3
+ToggleTagEx.NotificationDesc.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NotificationDesc.Text = "UI Loaded"
+ToggleTagEx.NotificationDesc.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationDesc.TextScaled = true
+ToggleTagEx.NotificationDesc.TextSize = 22.000
+ToggleTagEx.NotificationDesc.TextStrokeTransparency = 0.000
+ToggleTagEx.NotificationDesc.TextWrapped = true
+
+ToggleTagEx.UITextSizeConstraint.Parent = ToggleTagEx.NotificationDesc
+ToggleTagEx.UITextSizeConstraint.MaxTextSize = 44
+
+ToggleTagEx.HUDBackgroundFade.Name = "HUDBackgroundFade"
+ToggleTagEx.HUDBackgroundFade.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.HUDBackgroundFade.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.HUDBackgroundFade.BackgroundColor3 = Color3.fromRGB(6, 6, 6)
+ToggleTagEx.HUDBackgroundFade.BackgroundTransparency = 1.000
+ToggleTagEx.HUDBackgroundFade.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HUDBackgroundFade.BorderSizePixel = 0
+ToggleTagEx.HUDBackgroundFade.LayoutOrder = -30
+ToggleTagEx.HUDBackgroundFade.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.HUDBackgroundFade.Size = UDim2.new(4, 0, 4, 0)
+ToggleTagEx.HUDBackgroundFade.ZIndex = -1200000
+
+ToggleTagEx.ChatAutoComplete.Name = "ChatAutoComplete"
+ToggleTagEx.ChatAutoComplete.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.ChatAutoComplete.Active = true
+ToggleTagEx.ChatAutoComplete.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ChatAutoComplete.BackgroundTransparency = 1.000
+ToggleTagEx.ChatAutoComplete.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ChatAutoComplete.BorderSizePixel = 0
+ToggleTagEx.ChatAutoComplete.Size = UDim2.new(0.300000012, 0, 0, 0)
+ToggleTagEx.ChatAutoComplete.Visible = false
+ToggleTagEx.ChatAutoComplete.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ToggleTagEx.ChatAutoComplete.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+ToggleTagEx.AutoCompleteEx.Name = "AutoCompleteEx"
+ToggleTagEx.AutoCompleteEx.Parent = ToggleTagEx.ChatAutoComplete
+ToggleTagEx.AutoCompleteEx.BackgroundColor3 = Color3.fromRGB(55, 255, 0)
+ToggleTagEx.AutoCompleteEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.AutoCompleteEx.BorderSizePixel = 0
+ToggleTagEx.AutoCompleteEx.Size = UDim2.new(1, 0, 0, 25)
+
+ToggleTagEx.AutoCompleteTitleLabel.Name = "AutoCompleteTitleLabel"
+ToggleTagEx.AutoCompleteTitleLabel.Parent = ToggleTagEx.AutoCompleteEx
+ToggleTagEx.AutoCompleteTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.AutoCompleteTitleLabel.BackgroundTransparency = 1.000
+ToggleTagEx.AutoCompleteTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.AutoCompleteTitleLabel.BorderSizePixel = 0
+ToggleTagEx.AutoCompleteTitleLabel.Size = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.AutoCompleteTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.AutoCompleteTitleLabel.Text = "This sounds cool"
+ToggleTagEx.AutoCompleteTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.AutoCompleteTitleLabel.TextScaled = true
+ToggleTagEx.AutoCompleteTitleLabel.TextSize = 14.000
+ToggleTagEx.AutoCompleteTitleLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.AutoCompleteTitleLabel.TextWrapped = true
+
+ToggleTagEx.UIListLayout_8.Parent = ToggleTagEx.ChatAutoComplete
+ToggleTagEx.UIListLayout_8.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ToggleTagEx.UIListLayout_8.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.Actions.Name = "Actions"
+ToggleTagEx.Actions.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.Actions.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+ToggleTagEx.Actions.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Actions.BorderSizePixel = 0
+ToggleTagEx.Actions.LayoutOrder = -14
+ToggleTagEx.Actions.Position = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.Actions.Size = UDim2.new(0, 230, 0, 200)
+ToggleTagEx.Actions.ZIndex = -50
+
+ToggleTagEx.HeaderTab_3.Name = "HeaderTab"
+ToggleTagEx.HeaderTab_3.Parent = ToggleTagEx.Actions
+ToggleTagEx.HeaderTab_3.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+ToggleTagEx.HeaderTab_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HeaderTab_3.BorderSizePixel = 0
+ToggleTagEx.HeaderTab_3.LayoutOrder = -13
+ToggleTagEx.HeaderTab_3.Size = UDim2.new(1, 0, 0, 30)
+ToggleTagEx.HeaderTab_3.ZIndex = -49
+
+ToggleTagEx.HeaderTitleLabel_3.Name = "HeaderTitleLabel"
+ToggleTagEx.HeaderTitleLabel_3.Parent = ToggleTagEx.HeaderTab_3
+ToggleTagEx.HeaderTitleLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HeaderTitleLabel_3.BackgroundTransparency = 1.000
+ToggleTagEx.HeaderTitleLabel_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.HeaderTitleLabel_3.BorderSizePixel = 0
+ToggleTagEx.HeaderTitleLabel_3.LayoutOrder = -12
+ToggleTagEx.HeaderTitleLabel_3.Size = UDim2.new(0.600000024, 0, 1, 0)
+ToggleTagEx.HeaderTitleLabel_3.Visible = false
+ToggleTagEx.HeaderTitleLabel_3.ZIndex = -47
+ToggleTagEx.HeaderTitleLabel_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.HeaderTitleLabel_3.Text = " SPECTER"
+ToggleTagEx.HeaderTitleLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.HeaderTitleLabel_3.TextScaled = true
+ToggleTagEx.HeaderTitleLabel_3.TextSize = 14.000
+ToggleTagEx.HeaderTitleLabel_3.TextStrokeTransparency = 0.000
+ToggleTagEx.HeaderTitleLabel_3.TextWrapped = true
+ToggleTagEx.HeaderTitleLabel_3.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.DropDownButton_2.Name = "DropDownButton"
+ToggleTagEx.DropDownButton_2.Parent = ToggleTagEx.HeaderTab_3
+ToggleTagEx.DropDownButton_2.AnchorPoint = Vector2.new(1, 0.5)
+ToggleTagEx.DropDownButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.DropDownButton_2.BackgroundTransparency = 1.000
+ToggleTagEx.DropDownButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.DropDownButton_2.BorderSizePixel = 0
+ToggleTagEx.DropDownButton_2.LayoutOrder = -12
+ToggleTagEx.DropDownButton_2.Position = UDim2.new(0.980000019, 0, 0.5, 0)
+ToggleTagEx.DropDownButton_2.Size = UDim2.new(0.200000003, 0, 0.5, 0)
+ToggleTagEx.DropDownButton_2.ZIndex = -47
+ToggleTagEx.DropDownButton_2.Image = "rbxassetid://14569017448"
+ToggleTagEx.DropDownButton_2.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.Text_3.Name = "Text"
+ToggleTagEx.Text_3.Parent = ToggleTagEx.HeaderTab_3
+ToggleTagEx.Text_3.AnchorPoint = Vector2.new(0, 0.5)
+ToggleTagEx.Text_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Text_3.BackgroundTransparency = 1.000
+ToggleTagEx.Text_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Text_3.BorderSizePixel = 0
+ToggleTagEx.Text_3.LayoutOrder = -12
+ToggleTagEx.Text_3.Position = UDim2.new(0.150000036, 0, 0.5, 0)
+ToggleTagEx.Text_3.Size = UDim2.new(0.629999995, 0, 1, 0)
+ToggleTagEx.Text_3.ZIndex = -47
+ToggleTagEx.Text_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Text_3.Text = " Actions"
+ToggleTagEx.Text_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Text_3.TextScaled = true
+ToggleTagEx.Text_3.TextSize = 14.000
+ToggleTagEx.Text_3.TextWrapped = true
+ToggleTagEx.Text_3.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.Image_4.Name = "Image"
+ToggleTagEx.Image_4.Parent = ToggleTagEx.HeaderTab_3
+ToggleTagEx.Image_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Image_4.BackgroundTransparency = 1.000
+ToggleTagEx.Image_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Image_4.BorderSizePixel = 0
+ToggleTagEx.Image_4.LayoutOrder = -12
+ToggleTagEx.Image_4.Size = UDim2.new(0.150000006, 0, 1, 0)
+ToggleTagEx.Image_4.ZIndex = -47
+ToggleTagEx.Image_4.Image = "rbxassetid://8068133"
+ToggleTagEx.Image_4.ScaleType = Enum.ScaleType.Fit
+
+ToggleTagEx.ScrollTab_3.Name = "ScrollTab"
+ToggleTagEx.ScrollTab_3.Parent = ToggleTagEx.Actions
+ToggleTagEx.ScrollTab_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ScrollTab_3.BackgroundTransparency = 1.000
+ToggleTagEx.ScrollTab_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ScrollTab_3.BorderSizePixel = 0
+ToggleTagEx.ScrollTab_3.LayoutOrder = -13
+ToggleTagEx.ScrollTab_3.Position = UDim2.new(0, 0, 0, 30)
+ToggleTagEx.ScrollTab_3.Size = UDim2.new(1, 0, 0, 300)
+ToggleTagEx.ScrollTab_3.ZIndex = -49
+ToggleTagEx.ScrollTab_3.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ToggleTagEx.ScrollTab_3.BottomImage = "rbxassetid://3062505976"
+ToggleTagEx.ScrollTab_3.CanvasSize = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.ScrollTab_3.MidImage = "rbxassetid://3062506202"
+ToggleTagEx.ScrollTab_3.TopImage = "rbxassetid://3062506445"
+ToggleTagEx.ScrollTab_3.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+
+ToggleTagEx.UIListLayout_9.Parent = ToggleTagEx.ScrollTab_3
+ToggleTagEx.UIListLayout_9.SortOrder = Enum.SortOrder.LayoutOrder
+
+ToggleTagEx.ActionsEx.Name = "ActionsEx"
+ToggleTagEx.ActionsEx.Parent = ToggleTagEx.ScrollTab_3
+ToggleTagEx.ActionsEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ActionsEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ActionsEx.BorderSizePixel = 0
+ToggleTagEx.ActionsEx.Size = UDim2.new(1, 0, 0, 40)
+ToggleTagEx.ActionsEx.ZIndex = -47
+
+ToggleTagEx.Title.Name = "Title"
+ToggleTagEx.Title.Parent = ToggleTagEx.ActionsEx
+ToggleTagEx.Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Title.BackgroundTransparency = 1.000
+ToggleTagEx.Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Title.BorderSizePixel = 0
+ToggleTagEx.Title.Size = UDim2.new(0.699999988, 0, 0.5, 0)
+ToggleTagEx.Title.ZIndex = -45
+ToggleTagEx.Title.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Title.Text = "HACKING COMPUTER 5"
+ToggleTagEx.Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Title.TextScaled = true
+ToggleTagEx.Title.TextSize = 14.000
+ToggleTagEx.Title.TextStrokeTransparency = 0.000
+ToggleTagEx.Title.TextWrapped = true
+ToggleTagEx.Title.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.StopButton.Name = "StopButton"
+ToggleTagEx.StopButton.Parent = ToggleTagEx.ActionsEx
+ToggleTagEx.StopButton.AnchorPoint = Vector2.new(1, 1)
+ToggleTagEx.StopButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ToggleTagEx.StopButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.StopButton.BorderSizePixel = 0
+ToggleTagEx.StopButton.Position = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.StopButton.Size = UDim2.new(0.286956519, 0, 0.5, 0)
+ToggleTagEx.StopButton.ZIndex = -45
+ToggleTagEx.StopButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.StopButton.Text = "CANCEL"
+ToggleTagEx.StopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.StopButton.TextScaled = true
+ToggleTagEx.StopButton.TextSize = 14.000
+ToggleTagEx.StopButton.TextStrokeTransparency = 0.000
+ToggleTagEx.StopButton.TextWrapped = true
+
+ToggleTagEx.UIStroke_14.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_14.Parent = ToggleTagEx.StopButton
+
+ToggleTagEx.Time.Name = "Time"
+ToggleTagEx.Time.Parent = ToggleTagEx.ActionsEx
+ToggleTagEx.Time.AnchorPoint = Vector2.new(0, 1)
+ToggleTagEx.Time.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Time.BackgroundTransparency = 1.000
+ToggleTagEx.Time.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Time.BorderSizePixel = 0
+ToggleTagEx.Time.Position = UDim2.new(-0, 0, 1, 0)
+ToggleTagEx.Time.Size = UDim2.new(0.713, -1, 0.5, 0)
+ToggleTagEx.Time.ZIndex = -45
+ToggleTagEx.Time.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Time.Text = "34 m, 24 s"
+ToggleTagEx.Time.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Time.TextScaled = true
+ToggleTagEx.Time.TextSize = 14.000
+ToggleTagEx.Time.TextStrokeTransparency = 0.000
+ToggleTagEx.Time.TextWrapped = true
+ToggleTagEx.Time.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleTagEx.UIStroke_15.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_15.Parent = ToggleTagEx.Time
+
+ToggleTagEx.UIStroke_16.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_16.Parent = ToggleTagEx.ActionsEx
+
+ToggleTagEx.UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(140, 140, 140)), ColorSequenceKeypoint.new(0.96, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(39, 39, 39))}
+ToggleTagEx.UIGradient_6.Parent = ToggleTagEx.ActionsEx
+
+ToggleTagEx.ToggleTagEx.Name = "ToggleTagEx"
+ToggleTagEx.ToggleTagEx.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.ToggleTagEx.Enabled = false
+ToggleTagEx.ToggleTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ToggleTagEx.ToggleTagEx.Active = true
+ToggleTagEx.ToggleTagEx.AlwaysOnTop = true
+ToggleTagEx.ToggleTagEx.ExtentsOffsetWorldSpace = Vector3.new(0, 4, 0)
+ToggleTagEx.ToggleTagEx.LightInfluence = 1.000
+ToggleTagEx.ToggleTagEx.Size = UDim2.new(1, 30, 0.75, 10)
+
+ToggleTagEx.Toggle.Name = "Toggle"
+ToggleTagEx.Toggle.Parent = ToggleTagEx.ToggleTagEx
+ToggleTagEx.Toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ToggleTagEx.Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Toggle.BorderSizePixel = 0
+ToggleTagEx.Toggle.Size = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.Toggle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Toggle.TextScaled = true
+ToggleTagEx.Toggle.TextSize = 14.000
+ToggleTagEx.Toggle.TextStrokeTransparency = 0.000
+ToggleTagEx.Toggle.TextWrapped = true
+
+ToggleTagEx.UIStroke_17.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_17.Parent = ToggleTagEx.Toggle
+
+ToggleTagEx.KickedButton.Name = "KickedButton"
+ToggleTagEx.KickedButton.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.KickedButton.AnchorPoint = Vector2.new(0.5, 1)
+ToggleTagEx.KickedButton.BackgroundColor3 = Color3.fromRGB(255, 106, 32)
+ToggleTagEx.KickedButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.KickedButton.BorderSizePixel = 0
+ToggleTagEx.KickedButton.Position = UDim2.new(0.5, 0, 0.980000019, 0)
+ToggleTagEx.KickedButton.Size = UDim2.new(0.5, 0, 0, 0)
+ToggleTagEx.KickedButton.Visible = false
+ToggleTagEx.KickedButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.KickedButton.Text = "You are kicked. This means that you cannot interact with the game nor other players.Click to hide this prompt"
+ToggleTagEx.KickedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.KickedButton.TextSize = 33.000
+ToggleTagEx.KickedButton.TextStrokeTransparency = 0.000
+ToggleTagEx.KickedButton.TextWrapped = true
+
+ToggleTagEx.SecondaryHUD.Name = "SecondaryHUD"
+ToggleTagEx.SecondaryHUD.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.SecondaryHUD.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.SecondaryHUD.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
+ToggleTagEx.SecondaryHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SecondaryHUD.BorderSizePixel = 0
+ToggleTagEx.SecondaryHUD.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.SecondaryHUD.Size = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.SecondaryHUD.Visible = false
+ToggleTagEx.SecondaryHUD.ZIndex = 100
+
+ToggleTagEx.Servers.Name = "Servers"
+ToggleTagEx.Servers.Parent = ToggleTagEx.SecondaryHUD
+ToggleTagEx.Servers.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
+ToggleTagEx.Servers.BackgroundTransparency = 1.000
+ToggleTagEx.Servers.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Servers.BorderSizePixel = 0
+ToggleTagEx.Servers.Size = UDim2.new(1, 0, 1, 0)
+ToggleTagEx.Servers.ZIndex = 101
+
+ToggleTagEx.UICorner_16.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_16.Parent = ToggleTagEx.Servers
+
+ToggleTagEx.ServersTitleLabel.Name = "ServersTitleLabel"
+ToggleTagEx.ServersTitleLabel.Parent = ToggleTagEx.Servers
+ToggleTagEx.ServersTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ServersTitleLabel.BackgroundTransparency = 1.000
+ToggleTagEx.ServersTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ServersTitleLabel.BorderSizePixel = 0
+ToggleTagEx.ServersTitleLabel.Position = UDim2.new(0.300000012, 0, 0, 0)
+ToggleTagEx.ServersTitleLabel.Size = UDim2.new(0.699999988, 0, 0.100000001, 0)
+ToggleTagEx.ServersTitleLabel.ZIndex = 102
+ToggleTagEx.ServersTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.ServersTitleLabel.Text = "SERVERS"
+ToggleTagEx.ServersTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ServersTitleLabel.TextScaled = true
+ToggleTagEx.ServersTitleLabel.TextSize = 14.000
+ToggleTagEx.ServersTitleLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.ServersTitleLabel.TextWrapped = true
+
+ToggleTagEx.TabsSelection.Name = "TabsSelection"
+ToggleTagEx.TabsSelection.Parent = ToggleTagEx.Servers
+ToggleTagEx.TabsSelection.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.TabsSelection.BackgroundTransparency = 1.000
+ToggleTagEx.TabsSelection.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.TabsSelection.BorderSizePixel = 0
+ToggleTagEx.TabsSelection.Size = UDim2.new(0.300000012, 0, 1, 0)
+ToggleTagEx.TabsSelection.ZIndex = 102
+
+ToggleTagEx.FromGame.Name = "FromGame"
+ToggleTagEx.FromGame.Parent = ToggleTagEx.TabsSelection
+ToggleTagEx.FromGame.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+ToggleTagEx.FromGame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.FromGame.BorderSizePixel = 0
+ToggleTagEx.FromGame.LayoutOrder = -1
+ToggleTagEx.FromGame.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.FromGame.ZIndex = 103
+ToggleTagEx.FromGame.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.FromGame.Text = "All"
+ToggleTagEx.FromGame.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.FromGame.TextScaled = true
+ToggleTagEx.FromGame.TextSize = 14.000
+ToggleTagEx.FromGame.TextStrokeTransparency = 0.000
+ToggleTagEx.FromGame.TextWrapped = true
+
+ToggleTagEx.UICorner_17.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_17.Parent = ToggleTagEx.FromGame
+
+ToggleTagEx.UIStroke_18.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_18.Parent = ToggleTagEx.FromGame
+
+ToggleTagEx.UIGridLayout.Parent = ToggleTagEx.TabsSelection
+ToggleTagEx.UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+ToggleTagEx.UIGridLayout.CellPadding = UDim2.new(0, 0, 0.13333334, 0)
+ToggleTagEx.UIGridLayout.CellSize = UDim2.new(1, 0, 0.150000006, 0)
+
+ToggleTagEx.Recent.Name = "Recent"
+ToggleTagEx.Recent.Parent = ToggleTagEx.TabsSelection
+ToggleTagEx.Recent.BackgroundColor3 = Color3.fromRGB(0, 110, 255)
+ToggleTagEx.Recent.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Recent.BorderSizePixel = 0
+ToggleTagEx.Recent.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Recent.ZIndex = 103
+ToggleTagEx.Recent.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Recent.Text = "Recent"
+ToggleTagEx.Recent.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Recent.TextScaled = true
+ToggleTagEx.Recent.TextSize = 14.000
+ToggleTagEx.Recent.TextStrokeTransparency = 0.000
+ToggleTagEx.Recent.TextWrapped = true
+
+ToggleTagEx.UICorner_18.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_18.Parent = ToggleTagEx.Recent
+
+ToggleTagEx.UIStroke_19.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_19.Parent = ToggleTagEx.Recent
+
+ToggleTagEx.Close.Name = "Close"
+ToggleTagEx.Close.Parent = ToggleTagEx.TabsSelection
+ToggleTagEx.Close.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ToggleTagEx.Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Close.BorderSizePixel = 0
+ToggleTagEx.Close.LayoutOrder = 2
+ToggleTagEx.Close.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Close.ZIndex = 103
+ToggleTagEx.Close.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Close.Text = "Exit"
+ToggleTagEx.Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Close.TextScaled = true
+ToggleTagEx.Close.TextSize = 14.000
+ToggleTagEx.Close.TextStrokeTransparency = 0.000
+ToggleTagEx.Close.TextWrapped = true
+
+ToggleTagEx.UICorner_19.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_19.Parent = ToggleTagEx.Close
+
+ToggleTagEx.UIStroke_20.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_20.Parent = ToggleTagEx.Close
+
+ToggleTagEx.Friends.Name = "Friends"
+ToggleTagEx.Friends.Parent = ToggleTagEx.TabsSelection
+ToggleTagEx.Friends.BackgroundColor3 = Color3.fromRGB(34, 255, 0)
+ToggleTagEx.Friends.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Friends.BorderSizePixel = 0
+ToggleTagEx.Friends.LayoutOrder = 1
+ToggleTagEx.Friends.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Friends.ZIndex = 103
+ToggleTagEx.Friends.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Friends.Text = "Friends"
+ToggleTagEx.Friends.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Friends.TextScaled = true
+ToggleTagEx.Friends.TextSize = 14.000
+ToggleTagEx.Friends.TextStrokeTransparency = 0.000
+ToggleTagEx.Friends.TextWrapped = true
+
+ToggleTagEx.UICorner_20.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_20.Parent = ToggleTagEx.Friends
+
+ToggleTagEx.UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_21.Parent = ToggleTagEx.Friends
+
+ToggleTagEx.MainScroll.Name = "MainScroll"
+ToggleTagEx.MainScroll.Parent = ToggleTagEx.Servers
+ToggleTagEx.MainScroll.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.MainScroll.BackgroundTransparency = 1.000
+ToggleTagEx.MainScroll.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.MainScroll.BorderSizePixel = 0
+ToggleTagEx.MainScroll.LayoutOrder = -13
+ToggleTagEx.MainScroll.Position = UDim2.new(0.299999952, 0, 0.100000001, 0)
+ToggleTagEx.MainScroll.Size = UDim2.new(0.699999988, 0, 0.760000229, 0)
+ToggleTagEx.MainScroll.ZIndex = 102
+ToggleTagEx.MainScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ToggleTagEx.MainScroll.BottomImage = "rbxassetid://3062505976"
+ToggleTagEx.MainScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.MainScroll.MidImage = "rbxassetid://3062506202"
+ToggleTagEx.MainScroll.TopImage = "rbxassetid://3062506445"
+
+ToggleTagEx.ServerEx.Name = "ServerEx"
+ToggleTagEx.ServerEx.Parent = ToggleTagEx.MainScroll
+ToggleTagEx.ServerEx.Active = true
+ToggleTagEx.ServerEx.BackgroundColor3 = Color3.fromRGB(255, 81, 0)
+ToggleTagEx.ServerEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ServerEx.BorderSizePixel = 0
+ToggleTagEx.ServerEx.Size = UDim2.new(1, 0, 0, 60)
+ToggleTagEx.ServerEx.ZIndex = 103
+
+ToggleTagEx.ServerTitle.Name = "ServerTitle"
+ToggleTagEx.ServerTitle.Parent = ToggleTagEx.ServerEx
+ToggleTagEx.ServerTitle.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.ServerTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ServerTitle.BackgroundTransparency = 1.000
+ToggleTagEx.ServerTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ServerTitle.BorderSizePixel = 0
+ToggleTagEx.ServerTitle.Position = UDim2.new(0.5, 0, 0, 0)
+ToggleTagEx.ServerTitle.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
+ToggleTagEx.ServerTitle.ZIndex = 103
+ToggleTagEx.ServerTitle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.ServerTitle.Text = "SERVER"
+ToggleTagEx.ServerTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ServerTitle.TextScaled = true
+ToggleTagEx.ServerTitle.TextSize = 14.000
+ToggleTagEx.ServerTitle.TextStrokeTransparency = 0.000
+ToggleTagEx.ServerTitle.TextWrapped = true
+
+ToggleTagEx.TimeStamp.Name = "TimeStamp"
+ToggleTagEx.TimeStamp.Parent = ToggleTagEx.ServerEx
+ToggleTagEx.TimeStamp.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.TimeStamp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.TimeStamp.BackgroundTransparency = 1.000
+ToggleTagEx.TimeStamp.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.TimeStamp.BorderSizePixel = 0
+ToggleTagEx.TimeStamp.Position = UDim2.new(0.5, 0, 0.699999988, 0)
+ToggleTagEx.TimeStamp.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
+ToggleTagEx.TimeStamp.ZIndex = 103
+ToggleTagEx.TimeStamp.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.TimeStamp.Text = "7:56 PM"
+ToggleTagEx.TimeStamp.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.TimeStamp.TextScaled = true
+ToggleTagEx.TimeStamp.TextSize = 14.000
+ToggleTagEx.TimeStamp.TextStrokeTransparency = 0.000
+ToggleTagEx.TimeStamp.TextWrapped = true
+
+ToggleTagEx.SecondData.Name = "SecondData"
+ToggleTagEx.SecondData.Parent = ToggleTagEx.ServerEx
+ToggleTagEx.SecondData.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.SecondData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.SecondData.BackgroundTransparency = 1.000
+ToggleTagEx.SecondData.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.SecondData.BorderSizePixel = 0
+ToggleTagEx.SecondData.Position = UDim2.new(0.5, 0, 0.349999994, 0)
+ToggleTagEx.SecondData.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
+ToggleTagEx.SecondData.ZIndex = 103
+ToggleTagEx.SecondData.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.SecondData.Text = "5/10 PLAYERS"
+ToggleTagEx.SecondData.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.SecondData.TextScaled = true
+ToggleTagEx.SecondData.TextSize = 14.000
+ToggleTagEx.SecondData.TextStrokeTransparency = 0.000
+ToggleTagEx.SecondData.TextWrapped = true
+
+ToggleTagEx.UICorner_21.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_21.Parent = ToggleTagEx.ServerEx
+
+ToggleTagEx.UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_22.Parent = ToggleTagEx.ServerEx
+
+ToggleTagEx.UIGridLayout_2.Parent = ToggleTagEx.MainScroll
+ToggleTagEx.UIGridLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ToggleTagEx.UIGridLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+ToggleTagEx.UIGridLayout_2.CellPadding = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.UIGridLayout_2.CellSize = UDim2.new(0.300000012, 0, 0, 150)
+
+ToggleTagEx.BottomButtons.Name = "BottomButtons"
+ToggleTagEx.BottomButtons.Parent = ToggleTagEx.Servers
+ToggleTagEx.BottomButtons.AnchorPoint = Vector2.new(0, 1)
+ToggleTagEx.BottomButtons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.BottomButtons.BackgroundTransparency = 1.000
+ToggleTagEx.BottomButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.BottomButtons.BorderSizePixel = 0
+ToggleTagEx.BottomButtons.Position = UDim2.new(0.300000012, 0, 0.980000019, 0)
+ToggleTagEx.BottomButtons.Size = UDim2.new(0.699999988, 0, 0.109999999, 0)
+ToggleTagEx.BottomButtons.ZIndex = 102
+
+ToggleTagEx.Previous.Name = "Previous"
+ToggleTagEx.Previous.Parent = ToggleTagEx.BottomButtons
+ToggleTagEx.Previous.BackgroundColor3 = Color3.fromRGB(255, 238, 0)
+ToggleTagEx.Previous.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Previous.BorderSizePixel = 0
+ToggleTagEx.Previous.LayoutOrder = -1
+ToggleTagEx.Previous.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Previous.ZIndex = 103
+ToggleTagEx.Previous.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Previous.Text = "Previous"
+ToggleTagEx.Previous.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Previous.TextScaled = true
+ToggleTagEx.Previous.TextSize = 14.000
+ToggleTagEx.Previous.TextStrokeTransparency = 0.000
+ToggleTagEx.Previous.TextWrapped = true
+
+ToggleTagEx.UICorner_22.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_22.Parent = ToggleTagEx.Previous
+
+ToggleTagEx.UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_23.Parent = ToggleTagEx.Previous
+
+ToggleTagEx.UIGridLayout_3.Parent = ToggleTagEx.BottomButtons
+ToggleTagEx.UIGridLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ToggleTagEx.UIGridLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+ToggleTagEx.UIGridLayout_3.CellPadding = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.UIGridLayout_3.CellSize = UDim2.new(0.333299994, 0, 1, 0)
+
+ToggleTagEx.Join.Name = "Join"
+ToggleTagEx.Join.Parent = ToggleTagEx.BottomButtons
+ToggleTagEx.Join.BackgroundColor3 = Color3.fromRGB(140, 0, 255)
+ToggleTagEx.Join.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Join.BorderSizePixel = 0
+ToggleTagEx.Join.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Join.Visible = false
+ToggleTagEx.Join.ZIndex = 103
+ToggleTagEx.Join.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Join.Text = "Join"
+ToggleTagEx.Join.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Join.TextScaled = true
+ToggleTagEx.Join.TextSize = 14.000
+ToggleTagEx.Join.TextStrokeTransparency = 0.000
+ToggleTagEx.Join.TextWrapped = true
+
+ToggleTagEx.UICorner_23.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_23.Parent = ToggleTagEx.Join
+
+ToggleTagEx.UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_24.Parent = ToggleTagEx.Join
+
+ToggleTagEx.Next.Name = "Next"
+ToggleTagEx.Next.Parent = ToggleTagEx.BottomButtons
+ToggleTagEx.Next.BackgroundColor3 = Color3.fromRGB(60, 255, 0)
+ToggleTagEx.Next.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Next.BorderSizePixel = 0
+ToggleTagEx.Next.LayoutOrder = 1
+ToggleTagEx.Next.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Next.ZIndex = 103
+ToggleTagEx.Next.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Next.Text = "Next"
+ToggleTagEx.Next.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Next.TextScaled = true
+ToggleTagEx.Next.TextSize = 14.000
+ToggleTagEx.Next.TextStrokeTransparency = 0.000
+ToggleTagEx.Next.TextWrapped = true
+
+ToggleTagEx.UICorner_24.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_24.Parent = ToggleTagEx.Next
+
+ToggleTagEx.UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_25.Parent = ToggleTagEx.Next
+
+ToggleTagEx.ExtraLabel.Name = "ExtraLabel"
+ToggleTagEx.ExtraLabel.Parent = ToggleTagEx.Servers
+ToggleTagEx.ExtraLabel.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.ExtraLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ExtraLabel.BackgroundTransparency = 1.000
+ToggleTagEx.ExtraLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.ExtraLabel.BorderSizePixel = 0
+ToggleTagEx.ExtraLabel.Position = UDim2.new(0.5, 0, 1, 0)
+ToggleTagEx.ExtraLabel.Size = UDim2.new(1, 0, 0, 30)
+ToggleTagEx.ExtraLabel.ZIndex = 102
+ToggleTagEx.ExtraLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.ExtraLabel.Text = "Only public servers in this universe are visible; player count or server status may not be up to date"
+ToggleTagEx.ExtraLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.ExtraLabel.TextScaled = true
+ToggleTagEx.ExtraLabel.TextSize = 14.000
+ToggleTagEx.ExtraLabel.TextStrokeTransparency = 0.000
+ToggleTagEx.ExtraLabel.TextWrapped = true
+
+ToggleTagEx.UICorner_25.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_25.Parent = ToggleTagEx.SecondaryHUD
+
+ToggleTagEx.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_26.Parent = ToggleTagEx.SecondaryHUD
+
+ToggleTagEx.Notifications_2.Name = "Notifications"
+ToggleTagEx.Notifications_2.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.Notifications_2.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.Notifications_2.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+ToggleTagEx.Notifications_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Notifications_2.BorderSizePixel = 0
+ToggleTagEx.Notifications_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.Notifications_2.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
+ToggleTagEx.Notifications_2.Visible = false
+ToggleTagEx.Notifications_2.ZIndex = 1000
+
+ToggleTagEx.UICorner_26.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_26.Parent = ToggleTagEx.Notifications_2
+
+ToggleTagEx.UIStroke_27.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_27.Parent = ToggleTagEx.Notifications_2
+
+ToggleTagEx.NotificationTitle_2.Name = "NotificationTitle"
+ToggleTagEx.NotificationTitle_2.Parent = ToggleTagEx.Notifications_2
+ToggleTagEx.NotificationTitle_2.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.NotificationTitle_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationTitle_2.BackgroundTransparency = 1.000
+ToggleTagEx.NotificationTitle_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NotificationTitle_2.BorderSizePixel = 0
+ToggleTagEx.NotificationTitle_2.Position = UDim2.new(0.5, 0, 0, 0)
+ToggleTagEx.NotificationTitle_2.Size = UDim2.new(0.699999988, 0, 0.125, 0)
+ToggleTagEx.NotificationTitle_2.ZIndex = 1002
+ToggleTagEx.NotificationTitle_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NotificationTitle_2.Text = "SERVERS"
+ToggleTagEx.NotificationTitle_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationTitle_2.TextScaled = true
+ToggleTagEx.NotificationTitle_2.TextSize = 14.000
+ToggleTagEx.NotificationTitle_2.TextStrokeTransparency = 0.000
+ToggleTagEx.NotificationTitle_2.TextWrapped = true
+
+ToggleTagEx.NotificationDesc_2.Name = "NotificationDesc"
+ToggleTagEx.NotificationDesc_2.Parent = ToggleTagEx.Notifications_2
+ToggleTagEx.NotificationDesc_2.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.NotificationDesc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationDesc_2.BackgroundTransparency = 1.000
+ToggleTagEx.NotificationDesc_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NotificationDesc_2.BorderSizePixel = 0
+ToggleTagEx.NotificationDesc_2.Position = UDim2.new(0.5, 0, 0.12226776, 0)
+ToggleTagEx.NotificationDesc_2.Size = UDim2.new(0.699999988, 0, 0.699999988, 0)
+ToggleTagEx.NotificationDesc_2.ZIndex = 1002
+ToggleTagEx.NotificationDesc_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NotificationDesc_2.Text = "Insert a notifaction text here later. You can put a lot or a little, and it will scale."
+ToggleTagEx.NotificationDesc_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationDesc_2.TextScaled = true
+ToggleTagEx.NotificationDesc_2.TextSize = 14.000
+ToggleTagEx.NotificationDesc_2.TextStrokeTransparency = 0.000
+ToggleTagEx.NotificationDesc_2.TextWrapped = true
+
+ToggleTagEx.NotificationButtons.Name = "NotificationButtons"
+ToggleTagEx.NotificationButtons.Parent = ToggleTagEx.Notifications_2
+ToggleTagEx.NotificationButtons.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.NotificationButtons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NotificationButtons.BackgroundTransparency = 1.000
+ToggleTagEx.NotificationButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NotificationButtons.BorderSizePixel = 0
+ToggleTagEx.NotificationButtons.Position = UDim2.new(0.5, 0, 0.819672108, 0)
+ToggleTagEx.NotificationButtons.Size = UDim2.new(0.800000012, 0, 0.150000006, 0)
+ToggleTagEx.NotificationButtons.ZIndex = 1003
+
+ToggleTagEx.UIGridLayout_4.Parent = ToggleTagEx.NotificationButtons
+ToggleTagEx.UIGridLayout_4.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ToggleTagEx.UIGridLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
+ToggleTagEx.UIGridLayout_4.CellPadding = UDim2.new(0, 0, 0, 0)
+ToggleTagEx.UIGridLayout_4.CellSize = UDim2.new(0.5, 0, 1, 0)
+
+ToggleTagEx.YesButton.Name = "YesButton"
+ToggleTagEx.YesButton.Parent = ToggleTagEx.NotificationButtons
+ToggleTagEx.YesButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+ToggleTagEx.YesButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.YesButton.BorderSizePixel = 0
+ToggleTagEx.YesButton.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.YesButton.ZIndex = 1004
+ToggleTagEx.YesButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.YesButton.Text = "Yes"
+ToggleTagEx.YesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.YesButton.TextScaled = true
+ToggleTagEx.YesButton.TextSize = 14.000
+ToggleTagEx.YesButton.TextStrokeTransparency = 0.000
+ToggleTagEx.YesButton.TextWrapped = true
+
+ToggleTagEx.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_28.Parent = ToggleTagEx.YesButton
+
+ToggleTagEx.UICorner_27.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_27.Parent = ToggleTagEx.YesButton
+
+ToggleTagEx.NoButton.Name = "NoButton"
+ToggleTagEx.NoButton.Parent = ToggleTagEx.NotificationButtons
+ToggleTagEx.NoButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ToggleTagEx.NoButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.NoButton.BorderSizePixel = 0
+ToggleTagEx.NoButton.LayoutOrder = 1
+ToggleTagEx.NoButton.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.NoButton.ZIndex = 1004
+ToggleTagEx.NoButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.NoButton.Text = "No"
+ToggleTagEx.NoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.NoButton.TextScaled = true
+ToggleTagEx.NoButton.TextSize = 14.000
+ToggleTagEx.NoButton.TextStrokeTransparency = 0.000
+ToggleTagEx.NoButton.TextWrapped = true
+
+ToggleTagEx.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_29.Parent = ToggleTagEx.NoButton
+
+ToggleTagEx.UICorner_28.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_28.Parent = ToggleTagEx.NoButton
+
+ToggleTagEx.OkayButton.Name = "OkayButton"
+ToggleTagEx.OkayButton.Parent = ToggleTagEx.NotificationButtons
+ToggleTagEx.OkayButton.BackgroundColor3 = Color3.fromRGB(0, 132, 255)
+ToggleTagEx.OkayButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.OkayButton.BorderSizePixel = 0
+ToggleTagEx.OkayButton.LayoutOrder = 2
+ToggleTagEx.OkayButton.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.OkayButton.Visible = false
+ToggleTagEx.OkayButton.ZIndex = 1004
+ToggleTagEx.OkayButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.OkayButton.Text = "Ok"
+ToggleTagEx.OkayButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.OkayButton.TextScaled = true
+ToggleTagEx.OkayButton.TextSize = 14.000
+ToggleTagEx.OkayButton.TextStrokeTransparency = 0.000
+ToggleTagEx.OkayButton.TextWrapped = true
+
+ToggleTagEx.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+ToggleTagEx.UIStroke_30.Parent = ToggleTagEx.OkayButton
+
+ToggleTagEx.UICorner_29.CornerRadius = UDim.new(0, 32)
+ToggleTagEx.UICorner_29.Parent = ToggleTagEx.OkayButton
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 
@@ -2535,6 +2665,76 @@ return function(C, Settings)
 		C.AddAction(actionData)
 	end
 
+	--Add Prompt control
+	local PromptFrame=C.UI.Prompt
+	local count=0
+	local queue,canRunEvent={},Instance.new("BindableEvent",script)
+	local buttonTriggerEvent=Instance.new("BindableEvent",script)
+	buttonTriggerEvent:AddTag("RemoveOnDestroy")
+	canRunEvent:AddTag("RemoveOnDestroy")
+
+	for num, button in ipairs(PromptFrame.PromptButtons:GetChildren()) do
+		C.ButtonClick(newButton,function() 
+			if not buttonTriggerEvent then return end
+			buttonTriggerEvent:Fire(button.Name)
+		end)
+	end
+
+	function C.Prompt(Title: string,Desc: string,Buttons: table): string
+		count+=1
+		local saveNum=count
+		table.insert(queue,saveNum)
+		while table.find(queue,saveNum)~=1 do
+			canRunEvent.Event:Wait()
+		end
+		PromptFrame.PromptTitle.Text=Title
+		PromptFrame.PromptTitle.TextColor3=C.ComputeNameColor(Title)
+		PromptFrame.PromptDesc.Text=Desc
+		--PromptFrame.PictureLabel.Visible = Image~=nil
+		--PromptFrame.PictureLabel.Image = Image~=nil and Image or 0
+		--PromptFrame.DescLabel.Size = Image~=nil and UDim2.fromScale(.575, .541) or UDim2.fromScale(.9,.541)
+		local buttonCount=0
+		for num, button in ipairs(PromptFrame.PromptButtons:GetChildren()) do
+			if not button:IsA("UIBase") then
+				continue
+			end
+			if button.Name == "Ok" then
+				button.Visible = Buttons == "Ok" or not Buttons
+			elseif button.Name == "Yes" or button.Name == "No" then
+				button.Visible = Buttons == "Y/N"
+			else
+				error(`[Prompt]: Unknown Button: {button.Name}`)
+			end
+			if button.Visible then
+				buttonCount+=1
+			end
+		end
+		--PromptFrame.Buttons.UIGridLayout.CellSize=UDim2.new(1/buttonCount,-3,1,0)
+		PromptFrame.Position=UDim2.new(0.5, 0,-PromptFrame.Size.Y.Scale/2, -36)
+		PromptFrame:TweenPosition(UDim2.new(0.5, 0,.5, 18),"Out","Quad",3/8,true)
+		PromptFrame.Visible=true
+		local result=buttonTriggerEvent.Event:Wait()
+		buttonTriggerEvent:Destroy()
+		PromptFrame:TweenPosition(UDim2.new(0.5,0,1+PromptFrame.Size.Y.Scale/2,36),"Out","Quad",3/8,true)
+		task.delay(3/8,function()
+			C.TblRemove(queue,saveNum)
+			if #queue<=0 then
+				PromptFrame.Visible=false
+			end
+			canRunEvent:Fire()
+		end)
+		return result
+	end
+
+	task.delay(3,function()
+		while true do
+			print(C.Prompt("HELLO","wjgeowirjgioewjigjewiotejwijgmqeogfqeoikqek","Ok"))
+			task.wait()
+		end
+	end)
+
+	--Kick button
+
 	C.ButtonClick(C.UI.KickedButton,function()
 		C.UI.KickedButton:Destroy()
 		C.UI.KickedButton = nil
@@ -2547,6 +2747,7 @@ return function(C, Settings)
 	local MainScroll = ServersFrame:WaitForChild("MainScroll")
 	local TabsSelection = ServersFrame:WaitForChild("TabsSelection")
 	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
+	local ServersTL = ServersFrame:WaitForChild("ServersTitleLabel")
 
 	local function ActivateServers(tabName: string)
 		C.ClearChildren(MainScroll)
@@ -2565,10 +2766,11 @@ return function(C, Settings)
 					serverClone.Parent = MainScroll
 				end
 			end
-			local hasArrows = tabName == "All"
-			MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
-			BottomButtons.Visible = hasArrows
 		end
+		local hasArrows = tabName == "All"
+		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
+		BottomButtons.Visible = hasArrows
+		ServersTL.Text = `{tabName} SERVERS`
 	end
 
 	local Visible = true
