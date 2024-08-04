@@ -161,7 +161,7 @@ return function(C, _SETTINGS)
 		-- Load Individual Hacks
 		for num, hackData in ipairs(hack.Tab) do
 			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
-			if hackData.NoStudio then
+			if C.isStudio and hackData.NoStudio then
 				continue
 			end
 			C.hackData[name][hackData.Shortcut] = hackData
