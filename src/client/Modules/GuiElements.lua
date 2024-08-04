@@ -1,6 +1,8 @@
+local PolicyService = game:GetService("PolicyService")
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
 local RS = game:GetService("ReplicatedStorage")
+local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local HS = game:GetService("HttpService")
 
@@ -2388,12 +2390,14 @@ return function(C, Settings)
 			PercentageVisible.Name = "PercentageVisible"
 			PercentageVisible.Value = 1
 		end
+		--UIListLayout
+		local UIListLayout = ScrollTab and ScrollTab:WaitForChild("UIListLayout")
 		--Draggable
 		local UpdateBounds = CreateDraggable(TabEx)
 		-- Tab Resizing
 		local function UpdateTabSize()
 			if ScrollTab then
-				local ySize =  math.min(ScrollTab.UIListLayout.AbsoluteContentSize.Y,300)
+				local ySize =  math.min(UIListLayout.AbsoluteContentSize.Y,300)
 				if HasScroll then
 					ySize *= PercentageVisible.Value
 				end
@@ -2404,7 +2408,7 @@ return function(C, Settings)
 		end
 		if HasScroll then
 			PercentageVisible.Changed:Connect(UpdateTabSize)
-			ScrollTab.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(UpdateTabSize)
+			UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(UpdateTabSize)
 			local vis = true
 			C.ButtonClick(HeaderTab:WaitForChild("DropDownButton"),function()
 				vis = not vis
@@ -2802,8 +2806,15 @@ return function(C, Settings)
 			return true, result2.data
 		end,
 		Friend = function()
-			C.Prompt("Friends Not Available", "The Friends feature is not available for use yet.\nPlease DM the creator to give him motivation")
-			return false, "Coming Soon"
+			local success, result = C.API(PS,"GetFriendsOnline",1)
+			if not success then
+				return success, result
+			end
+			for num, friendData in ipairs(result) do
+				friendData.JobId = friendData.GameId
+				friendData.GameId = nil
+			end
+			return true, result
 		end,
 	}
 	local LoadingDeb
@@ -2835,7 +2846,7 @@ return function(C, Settings)
 				index+=1
 				local serverClone = C.Examples.ServerEx:Clone()
 				local listedData = {
-					`Server {(PageNum-1)*100 + index}`,
+					(tabName=="Friend" and `{data.UserName}`) or `Server {(PageNum-1)*100 + index}`,
 					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`),
 					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`),
 					data.JobId or data.id,
