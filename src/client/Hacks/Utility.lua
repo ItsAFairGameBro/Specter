@@ -74,16 +74,15 @@ return function(C,Settings)
 				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
+				Message = "Kick Message: %s",
 				Update = function(self,msg)
 					local KickedButton = C.UI.KickedButton
 
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
-						if self.ErrorMessage then
-							KickedButton.Text = self.ErrorMessage.Text
-						else
-							KickedButton.Text = msg
+						if msg then
+							KickedButton.Text = self.Message:format(msg)
 						end
 						KickedButton.Visible = true
 					end
@@ -101,22 +100,6 @@ return function(C,Settings)
 						-- Debug.Traceback doesn't work for this:
 						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
 					end))
-
-					-- This will wait forever
-					self.ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",math.huge)
-					if self.ErrorMessage then
-						warn("MESSAGE FINALLY FOUND",self.ErrorMessage.Text)
-						table.insert(self.Functs,self.ErrorMessage:GetPropertyChangedSignal("Text"):Connect(function()
-							local KickedButton = C.UI.KickedButton
-
-							if KickedButton then
-								KickedButton.Text = self.ErrorMessage.Text
-							end
-						end))
-					else
-						warn("Error Message Not Found, Yielding Failed")
-					end
-					
 				end,
 			},
 			{
