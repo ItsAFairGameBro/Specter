@@ -86,6 +86,7 @@ C.Debugs = {
 	Load = false,
 	Override = false,
 	Thread = false,
+	AntiCheat = false,
 }
 
 local Settings = C.getgenv().SETTINGS

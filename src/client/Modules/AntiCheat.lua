@@ -1,18 +1,39 @@
-local function yieldForeverFunct(...)
-    print(debug.traceback('AntiCheat Disabled Successfully'))
-    game:WaitForChild("SuckMyPp",math.huge)
-    return true
+local function Static(C,Settings)
+    local function yieldForeverFunct(...)
+        C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
+        game:WaitForChild("SuckMyPp",math.huge)
+        return true
+    end
+    return yieldForeverFunct
 end
 return function(C,Settings)
+    local yieldForeverFunct = Static(C,Settings)
     -- Here's where the anti cheat stuff is done
-    if game.GameId == 1069466626 and not C.getgenv().AntiCheat1 then -- Pass the bomb
-        local Old
-        Old = C.hookfunction(C.getrenv().task.spawn, function(funct,...)
-            if funct == C.getrenv().xpcall then
-                return yieldForeverFunct()
+    local AntiCheat = {
+        {
+            Run = function(self)
+                local Old
+                Old = C.hookfunction(C.getrenv().task.spawn, function(funct,...)
+                    if funct == C.getrenv().xpcall then
+                        return yieldForeverFunct()
+                    end
+                    return Old(funct,...)
+                end)
+                return true -- indicate that the anti cheat is successful
+            end,
+            KeepGoing = false, RunOnce = true,
+            GameIds = {1069466626},
+        }
+    }
+    for num, cheatTbl in ipairs(AntiCheat) do
+        if table.find(cheatTbl,game.GameId) then
+            if not cheatTbl.RunOnce or not C.getgenv()["AntiCheat"..num] then
+                cheatTbl.Run(cheatTbl)
+                C.getgenv()["AntiCheat"..num] = true
             end
-            return Old(funct,...)
-        end)
-        C.getgenv().AntiCheat1 = true -- Mark it as finisheds
+            if not cheatTbl.KeepGoing then
+                break
+            end
+        end
     end
 end
