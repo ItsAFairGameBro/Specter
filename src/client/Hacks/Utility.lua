@@ -93,13 +93,13 @@ return function(C,Settings)
 						return
 					end
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg)
-						if not msg then
+						if not msg or msg:len() == 0 then
 							return
 						end
 						task.delay(1,GS.ClearError,GS)
 						self:Update(msg)
 						-- Debug.Traceback doesn't work for this:
-						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
+						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
 					end))
 
 					-- This will wait forever
