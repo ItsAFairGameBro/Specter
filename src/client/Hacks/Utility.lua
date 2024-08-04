@@ -97,10 +97,12 @@ return function(C,Settings)
 						if not msg or msg:len() == 0 then
 							return
 						end
-						task.delay(1,GS.ClearError,GS)
+						
 						self:Update(msg)
 						-- Debug.Traceback doesn't work for this:
 						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
+						--task.delay(1,GS.ClearError,GS)
+						GS:ClearError()
 					end))
 				end,
 			},
