@@ -53,7 +53,12 @@ return function(C,Settings)
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-						local BombVal = C.char:WaitForChild("GotBombVal")
+                        print("Waiting FOr GotBombVal")
+						local BombVal = theirChar:WaitForChild("GotBombVal",10)
+                        if not BombVal then
+                            print"Failed after 10s"
+                            return
+                        end
                         table.insert(self.Functs,BombVal.Changed:Connect(function(new)
                             if new then
                                 self:PassBomb()
