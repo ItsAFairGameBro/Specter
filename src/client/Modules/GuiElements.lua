@@ -2704,8 +2704,12 @@ return function(C, Settings)
 		if button:IsA("UIBase") then
 			continue
 		end
+		local Return = (button.Name == "Yes" and true) or button.Name
+		if Return == "No" then
+			Return = false
+		end
 		C.ButtonClick(button,function()
-			buttonTriggerEvent:Fire(button.Name)
+			buttonTriggerEvent:Fire(Return)
 		end)
 	end
 	

@@ -32,7 +32,7 @@ local function Static(C,Settings)
 			return false, "Neutral"--No player, no team!
 		end
 		local PrimaryPart = theirChar.PrimaryPart
-		if not PrimaryPart or PrimaryPart.Position.Y < -260 then
+		if not PrimaryPart or PrimaryPart.Position.Y < -103 then
 			return false, player.Team -- Player, but in lobby!
 		end
 
