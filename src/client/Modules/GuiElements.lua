@@ -201,20 +201,20 @@ local ToggleTagEx = {
 	ExtraLabel = Instance.new("TextLabel"),
 	UICorner_25 = Instance.new("UICorner"),
 	UIStroke_26 = Instance.new("UIStroke"),
-	Notifications_2 = Instance.new("Frame"),
+	PromptFrame = Instance.new("Frame"),
 	UICorner_26 = Instance.new("UICorner"),
 	UIStroke_27 = Instance.new("UIStroke"),
-	NotificationTitle_2 = Instance.new("TextLabel"),
-	NotificationDesc_2 = Instance.new("TextLabel"),
-	NotificationButtons = Instance.new("Frame"),
+	PromptTile = Instance.new("TextLabel"),
+	PromptDesc = Instance.new("TextLabel"),
+	PromptButtons = Instance.new("Frame"),
 	UIGridLayout_4 = Instance.new("UIGridLayout"),
-	YesButton = Instance.new("TextButton"),
+	Yes = Instance.new("TextButton"),
 	UIStroke_28 = Instance.new("UIStroke"),
 	UICorner_27 = Instance.new("UICorner"),
-	NoButton = Instance.new("TextButton"),
+	No = Instance.new("TextButton"),
 	UIStroke_29 = Instance.new("UIStroke"),
 	UICorner_28 = Instance.new("UICorner"),
-	OkayButton = Instance.new("TextButton"),
+	Ok = Instance.new("TextButton"),
 	UIStroke_30 = Instance.new("UIStroke"),
 	UICorner_29 = Instance.new("UICorner"),
 }
@@ -222,7 +222,6 @@ local ToggleTagEx = {
 --Properties:
 
 ToggleTagEx.SpecterGUI.Name = "SpecterGUI"
-ToggleTagEx.
 ToggleTagEx.SpecterGUI.DisplayOrder = -1
 ToggleTagEx.SpecterGUI.ResetOnSpawn = false
 
@@ -2095,142 +2094,142 @@ ToggleTagEx.UICorner_25.Parent = ToggleTagEx.SecondaryHUD
 ToggleTagEx.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 ToggleTagEx.UIStroke_26.Parent = ToggleTagEx.SecondaryHUD
 
-ToggleTagEx.Notifications_2.Name = "Notifications"
-ToggleTagEx.Notifications_2.Parent = ToggleTagEx.SpecterGUI
-ToggleTagEx.Notifications_2.AnchorPoint = Vector2.new(0.5, 0.5)
-ToggleTagEx.Notifications_2.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
-ToggleTagEx.Notifications_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.Notifications_2.BorderSizePixel = 0
-ToggleTagEx.Notifications_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-ToggleTagEx.Notifications_2.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
-ToggleTagEx.Notifications_2.Visible = false
-ToggleTagEx.Notifications_2.ZIndex = 1000
+ToggleTagEx.PromptFrame.Name = "PromptFrame"
+ToggleTagEx.PromptFrame.Parent = ToggleTagEx.SpecterGUI
+ToggleTagEx.PromptFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+ToggleTagEx.PromptFrame.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+ToggleTagEx.PromptFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.PromptFrame.BorderSizePixel = 0
+ToggleTagEx.PromptFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+ToggleTagEx.PromptFrame.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
+ToggleTagEx.PromptFrame.Visible = false
+ToggleTagEx.PromptFrame.ZIndex = 1000
 
 ToggleTagEx.UICorner_26.CornerRadius = UDim.new(0, 32)
-ToggleTagEx.UICorner_26.Parent = ToggleTagEx.Notifications_2
+ToggleTagEx.UICorner_26.Parent = ToggleTagEx.PromptFrame
 
 ToggleTagEx.UIStroke_27.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-ToggleTagEx.UIStroke_27.Parent = ToggleTagEx.Notifications_2
+ToggleTagEx.UIStroke_27.Parent = ToggleTagEx.PromptFrame
 
-ToggleTagEx.NotificationTitle_2.Name = "NotificationTitle"
-ToggleTagEx.NotificationTitle_2.Parent = ToggleTagEx.Notifications_2
-ToggleTagEx.NotificationTitle_2.AnchorPoint = Vector2.new(0.5, 0)
-ToggleTagEx.NotificationTitle_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.NotificationTitle_2.BackgroundTransparency = 1.000
-ToggleTagEx.NotificationTitle_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.NotificationTitle_2.BorderSizePixel = 0
-ToggleTagEx.NotificationTitle_2.Position = UDim2.new(0.5, 0, 0, 0)
-ToggleTagEx.NotificationTitle_2.Size = UDim2.new(0.699999988, 0, 0.125, 0)
-ToggleTagEx.NotificationTitle_2.ZIndex = 1002
-ToggleTagEx.NotificationTitle_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ToggleTagEx.NotificationTitle_2.Text = "SERVERS"
-ToggleTagEx.NotificationTitle_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.NotificationTitle_2.TextScaled = true
-ToggleTagEx.NotificationTitle_2.TextSize = 14.000
-ToggleTagEx.NotificationTitle_2.TextStrokeTransparency = 0.000
-ToggleTagEx.NotificationTitle_2.TextWrapped = true
+ToggleTagEx.PromptTile.Name = "PromptTile"
+ToggleTagEx.PromptTile.Parent = ToggleTagEx.PromptFrame
+ToggleTagEx.PromptTile.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.PromptTile.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.PromptTile.BackgroundTransparency = 1.000
+ToggleTagEx.PromptTile.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.PromptTile.BorderSizePixel = 0
+ToggleTagEx.PromptTile.Position = UDim2.new(0.5, 0, 0, 0)
+ToggleTagEx.PromptTile.Size = UDim2.new(0.699999988, 0, 0.125, 0)
+ToggleTagEx.PromptTile.ZIndex = 1002
+ToggleTagEx.PromptTile.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.PromptTile.Text = "SERVERS"
+ToggleTagEx.PromptTile.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.PromptTile.TextScaled = true
+ToggleTagEx.PromptTile.TextSize = 14.000
+ToggleTagEx.PromptTile.TextStrokeTransparency = 0.000
+ToggleTagEx.PromptTile.TextWrapped = true
 
-ToggleTagEx.NotificationDesc_2.Name = "NotificationDesc"
-ToggleTagEx.NotificationDesc_2.Parent = ToggleTagEx.Notifications_2
-ToggleTagEx.NotificationDesc_2.AnchorPoint = Vector2.new(0.5, 0)
-ToggleTagEx.NotificationDesc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.NotificationDesc_2.BackgroundTransparency = 1.000
-ToggleTagEx.NotificationDesc_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.NotificationDesc_2.BorderSizePixel = 0
-ToggleTagEx.NotificationDesc_2.Position = UDim2.new(0.5, 0, 0.12226776, 0)
-ToggleTagEx.NotificationDesc_2.Size = UDim2.new(0.699999988, 0, 0.699999988, 0)
-ToggleTagEx.NotificationDesc_2.ZIndex = 1002
-ToggleTagEx.NotificationDesc_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ToggleTagEx.NotificationDesc_2.Text = "Insert a notifaction text here later. You can put a lot or a little, and it will scale."
-ToggleTagEx.NotificationDesc_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.NotificationDesc_2.TextScaled = true
-ToggleTagEx.NotificationDesc_2.TextSize = 14.000
-ToggleTagEx.NotificationDesc_2.TextStrokeTransparency = 0.000
-ToggleTagEx.NotificationDesc_2.TextWrapped = true
+ToggleTagEx.PromptDesc.Name = "PromptDesc"
+ToggleTagEx.PromptDesc.Parent = ToggleTagEx.PromptFrame
+ToggleTagEx.PromptDesc.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.PromptDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.PromptDesc.BackgroundTransparency = 1.000
+ToggleTagEx.PromptDesc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.PromptDesc.BorderSizePixel = 0
+ToggleTagEx.PromptDesc.Position = UDim2.new(0.5, 0, 0.12226776, 0)
+ToggleTagEx.PromptDesc.Size = UDim2.new(0.699999988, 0, 0.699999988, 0)
+ToggleTagEx.PromptDesc.ZIndex = 1002
+ToggleTagEx.PromptDesc.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.PromptDesc.Text = "Insert a notifaction text here later. You can put a lot or a little, and it will scale."
+ToggleTagEx.PromptDesc.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.PromptDesc.TextScaled = true
+ToggleTagEx.PromptDesc.TextSize = 14.000
+ToggleTagEx.PromptDesc.TextStrokeTransparency = 0.000
+ToggleTagEx.PromptDesc.TextWrapped = true
 
-ToggleTagEx.NotificationButtons.Name = "NotificationButtons"
-ToggleTagEx.NotificationButtons.Parent = ToggleTagEx.Notifications_2
-ToggleTagEx.NotificationButtons.AnchorPoint = Vector2.new(0.5, 0)
-ToggleTagEx.NotificationButtons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.NotificationButtons.BackgroundTransparency = 1.000
-ToggleTagEx.NotificationButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.NotificationButtons.BorderSizePixel = 0
-ToggleTagEx.NotificationButtons.Position = UDim2.new(0.5, 0, 0.819672108, 0)
-ToggleTagEx.NotificationButtons.Size = UDim2.new(0.800000012, 0, 0.150000006, 0)
-ToggleTagEx.NotificationButtons.ZIndex = 1003
+ToggleTagEx.PromptButtons.Name = "PromptButtons"
+ToggleTagEx.PromptButtons.Parent = ToggleTagEx.PromptFrame
+ToggleTagEx.PromptButtons.AnchorPoint = Vector2.new(0.5, 0)
+ToggleTagEx.PromptButtons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.PromptButtons.BackgroundTransparency = 1.000
+ToggleTagEx.PromptButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.PromptButtons.BorderSizePixel = 0
+ToggleTagEx.PromptButtons.Position = UDim2.new(0.5, 0, 0.819672108, 0)
+ToggleTagEx.PromptButtons.Size = UDim2.new(0.800000012, 0, 0.150000006, 0)
+ToggleTagEx.PromptButtons.ZIndex = 1003
 
-ToggleTagEx.UIGridLayout_4.Parent = ToggleTagEx.NotificationButtons
+ToggleTagEx.UIGridLayout_4.Parent = ToggleTagEx.PromptButtons
 ToggleTagEx.UIGridLayout_4.HorizontalAlignment = Enum.HorizontalAlignment.Center
 ToggleTagEx.UIGridLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
 ToggleTagEx.UIGridLayout_4.CellPadding = UDim2.new(0, 0, 0, 0)
 ToggleTagEx.UIGridLayout_4.CellSize = UDim2.new(0.5, 0, 1, 0)
 
-ToggleTagEx.YesButton.Name = "YesButton"
-ToggleTagEx.YesButton.Parent = ToggleTagEx.NotificationButtons
-ToggleTagEx.YesButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-ToggleTagEx.YesButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.YesButton.BorderSizePixel = 0
-ToggleTagEx.YesButton.Size = UDim2.new(0, 200, 0, 50)
-ToggleTagEx.YesButton.ZIndex = 1004
-ToggleTagEx.YesButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ToggleTagEx.YesButton.Text = "Yes"
-ToggleTagEx.YesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.YesButton.TextScaled = true
-ToggleTagEx.YesButton.TextSize = 14.000
-ToggleTagEx.YesButton.TextStrokeTransparency = 0.000
-ToggleTagEx.YesButton.TextWrapped = true
+ToggleTagEx.Yes.Name = "Yes"
+ToggleTagEx.Yes.Parent = ToggleTagEx.PromptButtons
+ToggleTagEx.Yes.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+ToggleTagEx.Yes.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Yes.BorderSizePixel = 0
+ToggleTagEx.Yes.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Yes.ZIndex = 1004
+ToggleTagEx.Yes.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Yes.Text = "Yes"
+ToggleTagEx.Yes.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Yes.TextScaled = true
+ToggleTagEx.Yes.TextSize = 14.000
+ToggleTagEx.Yes.TextStrokeTransparency = 0.000
+ToggleTagEx.Yes.TextWrapped = true
 
 ToggleTagEx.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-ToggleTagEx.UIStroke_28.Parent = ToggleTagEx.YesButton
+ToggleTagEx.UIStroke_28.Parent = ToggleTagEx.Yes
 
 ToggleTagEx.UICorner_27.CornerRadius = UDim.new(0, 32)
-ToggleTagEx.UICorner_27.Parent = ToggleTagEx.YesButton
+ToggleTagEx.UICorner_27.Parent = ToggleTagEx.Yes
 
-ToggleTagEx.NoButton.Name = "NoButton"
-ToggleTagEx.NoButton.Parent = ToggleTagEx.NotificationButtons
-ToggleTagEx.NoButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-ToggleTagEx.NoButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.NoButton.BorderSizePixel = 0
-ToggleTagEx.NoButton.LayoutOrder = 1
-ToggleTagEx.NoButton.Size = UDim2.new(0, 200, 0, 50)
-ToggleTagEx.NoButton.ZIndex = 1004
-ToggleTagEx.NoButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ToggleTagEx.NoButton.Text = "No"
-ToggleTagEx.NoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.NoButton.TextScaled = true
-ToggleTagEx.NoButton.TextSize = 14.000
-ToggleTagEx.NoButton.TextStrokeTransparency = 0.000
-ToggleTagEx.NoButton.TextWrapped = true
+ToggleTagEx.No.Name = "No"
+ToggleTagEx.No.Parent = ToggleTagEx.PromptButtons
+ToggleTagEx.No.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ToggleTagEx.No.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.No.BorderSizePixel = 0
+ToggleTagEx.No.LayoutOrder = 1
+ToggleTagEx.No.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.No.ZIndex = 1004
+ToggleTagEx.No.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.No.Text = "No"
+ToggleTagEx.No.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.No.TextScaled = true
+ToggleTagEx.No.TextSize = 14.000
+ToggleTagEx.No.TextStrokeTransparency = 0.000
+ToggleTagEx.No.TextWrapped = true
 
 ToggleTagEx.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-ToggleTagEx.UIStroke_29.Parent = ToggleTagEx.NoButton
+ToggleTagEx.UIStroke_29.Parent = ToggleTagEx.No
 
 ToggleTagEx.UICorner_28.CornerRadius = UDim.new(0, 32)
-ToggleTagEx.UICorner_28.Parent = ToggleTagEx.NoButton
+ToggleTagEx.UICorner_28.Parent = ToggleTagEx.No
 
-ToggleTagEx.OkayButton.Name = "OkayButton"
-ToggleTagEx.OkayButton.Parent = ToggleTagEx.NotificationButtons
-ToggleTagEx.OkayButton.BackgroundColor3 = Color3.fromRGB(0, 132, 255)
-ToggleTagEx.OkayButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ToggleTagEx.OkayButton.BorderSizePixel = 0
-ToggleTagEx.OkayButton.LayoutOrder = 2
-ToggleTagEx.OkayButton.Size = UDim2.new(0, 200, 0, 50)
-ToggleTagEx.OkayButton.Visible = false
-ToggleTagEx.OkayButton.ZIndex = 1004
-ToggleTagEx.OkayButton.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-ToggleTagEx.OkayButton.Text = "Ok"
-ToggleTagEx.OkayButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleTagEx.OkayButton.TextScaled = true
-ToggleTagEx.OkayButton.TextSize = 14.000
-ToggleTagEx.OkayButton.TextStrokeTransparency = 0.000
-ToggleTagEx.OkayButton.TextWrapped = true
+ToggleTagEx.Ok.Name = "Ok"
+ToggleTagEx.Ok.Parent = ToggleTagEx.PromptButtons
+ToggleTagEx.Ok.BackgroundColor3 = Color3.fromRGB(0, 132, 255)
+ToggleTagEx.Ok.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ToggleTagEx.Ok.BorderSizePixel = 0
+ToggleTagEx.Ok.LayoutOrder = 2
+ToggleTagEx.Ok.Size = UDim2.new(0, 200, 0, 50)
+ToggleTagEx.Ok.Visible = false
+ToggleTagEx.Ok.ZIndex = 1004
+ToggleTagEx.Ok.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ToggleTagEx.Ok.Text = "Ok"
+ToggleTagEx.Ok.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleTagEx.Ok.TextScaled = true
+ToggleTagEx.Ok.TextSize = 14.000
+ToggleTagEx.Ok.TextStrokeTransparency = 0.000
+ToggleTagEx.Ok.TextWrapped = true
 
 ToggleTagEx.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-ToggleTagEx.UIStroke_30.Parent = ToggleTagEx.OkayButton
+ToggleTagEx.UIStroke_30.Parent = ToggleTagEx.Ok
 
 ToggleTagEx.UICorner_29.CornerRadius = UDim.new(0, 32)
-ToggleTagEx.UICorner_29.Parent = ToggleTagEx.OkayButton
-	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
+ToggleTagEx.UICorner_29.Parent = ToggleTagEx.Ok
+	return ToggleTagEx.SpecterGUI,ToggleTagEx.CategoriesFrame,ToggleTagEx.TabsFrame,ToggleTagEx.ToolTipHeaderFrame,ToggleTagEx.ToolTipText
 end
 
 local function CreateOtherElements(C, Settings)
@@ -2673,9 +2672,8 @@ return function(C, Settings)
 	buttonTriggerEvent:AddTag("RemoveOnDestroy")
 	canRunEvent:AddTag("RemoveOnDestroy")
 
-	for num, button in ipairs(PromptFrame.PromptButtons:GetChildren()) do
-		C.ButtonClick(newButton,function() 
-			if not buttonTriggerEvent then return end
+	for _, button in ipairs(PromptFrame.PromptButtons:GetChildren()) do
+		C.ButtonClick(button,function()
 			buttonTriggerEvent:Fire(button.Name)
 		end)
 	end
