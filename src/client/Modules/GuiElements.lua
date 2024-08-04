@@ -2802,31 +2802,33 @@ return function(C, Settings)
 			return true, result2.data
 		end,
 		Friend = function()
-
+			C.Prompt("Friends Not Available", "The Friends feature is not available for use yet.\nPlease DM the creator to give him motivation")
+			return false, "Coming Soon"
 		end,
 	}
-
+	local LoadingDeb
 	local function ActivateServers(tabName: string, increment: boolean | nil)
-		CurrentlySel = tabName
-		C.ClearChildren(MainScroll)
-		local index = 0
+		if LoadingDeb then return end LoadingDeb = true
 		local Cursor = ""
-		if increment ~= nil then
-			if Cursor then
-				Cursor = Next
-				PageNum+=1
-			else
-				Cursor = Previous
-				PageNum-=1
-			end
+		if increment then
+			Cursor = Next
+			PageNum+=1
+		elseif increment == false then
+			Cursor = Previous
+			PageNum-=1
 		else
 			Previous,Next = nil,nil
 			PageNum = 1
 		end
 		local success, result = GetServers[tabName](Cursor)
+		LoadingDeb = false
 		if not success then
 			return
 		end
+
+		CurrentlySel = tabName
+		C.ClearChildren(MainScroll)
+		local index = 0
 		for num, data in ipairs(result) do
 			if tabName~="Recent" or (data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId)) then
 				index+=1
@@ -2856,7 +2858,7 @@ return function(C, Settings)
 		local titleAfter = tabName == "Game" and `pg {PageNum}` or index 
 
 		NextButton.BackgroundColor3 = Next and Color3.fromRGB(60, 255, 0) or Color3.fromRGB(170,170,170)
-		PrevButton.BackgroundColor3 = Prev and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
+		PrevButton.BackgroundColor3 = Previous and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
 
 		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
 		BottomButtons.Visible = hasArrows
