@@ -183,6 +183,7 @@ return function(C, _SETTINGS)
 
 			--Options Activation
 			local optionsUnused = table.clone(enTbl)
+			enTbl.En = nil -- Delete, it's useless
 			for num, optionData in ipairs(hackData.Options or {}) do
 				optionData.Parent = hackData
 				optionsUnused[optionData.Shortcut] = nil
