@@ -2851,7 +2851,7 @@ return function(C, Settings)
 		local titleAfter = tabName == "Game" and index or `pg {PageNum}`
 
 		NextButton.BackgroundColor3 = Next and Color3.fromRGB(60, 255, 0) or Color3.fromRGB(170,170,170)
-		PreviousButton.BackgroundColor3 = Prev and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
+		PrevButton.BackgroundColor3 = Prev and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
 
 		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
 		BottomButtons.Visible = hasArrows
@@ -2863,7 +2863,7 @@ return function(C, Settings)
 		end
 		ActivateServers(tabName,true)
 	end)
-	C.ButtonClick(PreviousButton, function()
+	C.ButtonClick(PrevButton, function()
 		if not Previous then
 			return
 		end
