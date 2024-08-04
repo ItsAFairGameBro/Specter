@@ -575,14 +575,19 @@ return function(C,Settings)
 				Tooltip = "Bombs hit the closest target",
 				Layout = 7, Functs = {},
 				Shortcut = "BombInstantHit",
+				BombThrowTime = {},
 				Activate = function(self, newValue)
 					-- Disconnect funct and set up childadded workspace event for the projectiles
 					if newValue then
-						local deb = 0
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
-							if instance.Name == "Bomb" then
-								instance.CanTouch = false
+							if instance.Name ~= "Bomb" then
+								return
 							end
+							if (instance.Position - C.hrp.Position).Magnitude > 30 then
+								print("GONE")
+								return
+							end
+							instance.CanTouch = false
 							task.wait(.4)
 							if instance.Name == "Bomb" and instance.Parent then
 								local nearestTbl = {}
@@ -598,7 +603,6 @@ return function(C,Settings)
 								end
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
-								print(closestBasePart and closestBasePart.Parent)
 								if closestBasePart then
 									if self.EnTbl.Spectate then
 										deb+= 1 local saveDeb = deb
@@ -607,7 +611,7 @@ return function(C,Settings)
 											if deb == saveDeb then
 												C.Spectate() -- undo it
 											end
-										end)	
+										end)
 									end
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									instance.CanTouch = true
@@ -620,8 +624,22 @@ return function(C,Settings)
 								end
 							end
 						end))
+						--[[if C.SeatPart then
+							self.Events.MySeatAdded(self,C.SeatPart)
+						end--]]
 					end
 				end,
+				--[[Events = {
+					MySeatAdded = function(self,seatPart)
+						local vehicle = seatPart.Parent
+						local bomb = vehicle:FindFirstChild("Bomb")
+						if bomb then
+							table.insert(self.Functs,bomb:GetPropertyChangedSignal("Value"):Connect(function()
+								
+							end))
+						end
+					end
+				},--]]
 				Options = {
 					{
 						Type = Types.Toggle,

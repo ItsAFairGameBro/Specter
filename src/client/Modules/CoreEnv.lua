@@ -92,7 +92,7 @@ return function(C,Settings)
 			if not C.getgenv().PreviousServers then
 				C.getgenv().PreviousServers = {}
 			end
-			if game.PrivateServerId == "" then -- Public server detection, cannot join any other servers!
+			if game.PrivateServerOwnerId ~= 0 then -- Private server detection, cannot join any other servers!
 				if not C.getgenv().PreviousServers or C.getgenv().PreviousServers[1].GameId ~= game.GameId then
 					table.insert(C.getgenv().PreviousServers,1,{
 						PlaceId = game.PlaceId,
