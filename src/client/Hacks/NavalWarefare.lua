@@ -585,7 +585,7 @@ return function(C,Settings)
 							if instance.Name ~= "Bomb" then
 								return
 							end
-							if (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude > 90 then
+							if (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude > 180 then
 								print("GONE")
 								return
 							end
