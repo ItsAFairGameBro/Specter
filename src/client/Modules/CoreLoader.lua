@@ -190,9 +190,12 @@ return function(C, _SETTINGS)
 				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
 			end
 			--Extra Options Warning
-			for name, option in pairs(optionsUnused) do
-				warn(`{name}/{hackData.Shortcut}: {name} is set to {option} but that option no longer exists. It has been deleted for memory`)
-				enTbl[name] = nil -- Remove the option
+			for opName, option in pairs(optionsUnused) do
+				if opName == "En" or opName == "Keybind" then
+					continue
+				end
+				warn(`{name}/{hackData.Shortcut}: {opName} is set to {option} but that option no longer exists. It has been deleted for memory`)
+				enTbl[opName] = nil -- Remove the option
 			end
 			--Three Dots Button
 			local ViewSettingsVisible = true
