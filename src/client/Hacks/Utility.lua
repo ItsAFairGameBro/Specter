@@ -77,13 +77,10 @@ return function(C,Settings)
 				Update = function(self)
 					local KickedButton = C.UI.KickedButton
 
-					local errorCode = GS:GetErrorCode()
-					local errorMessage = GS:GetErrorMessage()
-
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
-						KickedButton.Text = ("%s (Error Code: %d)"):format(errorMessage, errorCode and errorCode.Value or -1)
+						KickedButton.Text = self.ErrorMessage.Text
 						KickedButton.Visible = true
 					end
 				end,
@@ -97,6 +94,20 @@ return function(C,Settings)
 						-- Debug.Traceback doesn't work for this:
 						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
 					end))
+					self.ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
+					if self.ErrorMessage then
+						warn(self.ErrorMessage.Text)
+						table.insert(self.Functs,self.ErrorMessage:GetPropertyChangedSignal("Text"):Connect(function()
+							local KickedButton = C.UI.KickedButton
+							
+							if KickedButton then
+								KickedButton.Text = self.ErrorMessage.Text
+							end
+						end))
+					else
+						warn("Error Message Not Found, Yielding Failed")
+					end
+					
 				end,
 			},
 			{
