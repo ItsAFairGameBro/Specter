@@ -2795,7 +2795,10 @@ return function(C, Settings)
 			local success2, result2 = C.API(HS,"JSONDecode",1,result)
 			if not success2 then
 				return success2, result2
+			elseif not result2.Success then
+				return false, result2.StatusMessage
 			end
+			result2 = result2.Body
 			Previous,Next = result2.previousPageCursor, result2.nextPageCursor
 			return true, result2.data
 		end
@@ -2811,7 +2814,7 @@ return function(C, Settings)
 				Cursor = Next
 				PageNum+=1
 			else
-				Cursor = Prev
+				Cursor = Previous
 				PageNum-=1
 			end
 		else
