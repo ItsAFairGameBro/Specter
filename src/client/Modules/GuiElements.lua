@@ -2788,7 +2788,7 @@ return function(C, Settings)
 			return true, C.getgenv().PreviousServers
 		end,
 		Game = function(Cursor)
-			local success, result = C.API(C.request,nil,1,{url=`https://games.roblox.com/v1/games/{game.PlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
+			local success, result = C.API(C.request,nil,1,{Url=`https://games.roblox.com/v1/games/{game.PlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
 			if not success then
 				return success, result
 			end
@@ -2818,7 +2818,7 @@ return function(C, Settings)
 			Previous,Next = nil,nil
 			PageNum = 1
 		end
-		local success, result = GetServers[tabName]((increment==true and Next) or (increment==false and Prev) or "")
+		local success, result = GetServers[tabName](Cursor)
 		if not success then
 			return
 		end
