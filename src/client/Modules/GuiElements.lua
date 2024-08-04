@@ -2791,17 +2791,19 @@ return function(C, Settings)
 			local success, result = C.API(C.request,nil,1,{Url=`https://games.roblox.com/v1/games/{game.PlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
 			if not success then
 				return success, result
+			elseif not result.Success then
+				return false, result.StatusMessage
 			end
-			local success2, result2 = C.API(HS,"JSONDecode",1,result)
+			local success2, result2 = C.API(HS,"JSONDecode",1,result.Body)
 			if not success2 then
 				return success2, result2
-			elseif not result2.Success then
-				return false, result2.StatusMessage
 			end
-			result2 = result2.Body
 			Previous,Next = result2.previousPageCursor, result2.nextPageCursor
 			return true, result2.data
-		end
+		end,
+		Friend = function()
+
+		end,
 	}
 
 	local function ActivateServers(tabName: string, increment: boolean | nil)
