@@ -719,9 +719,8 @@ return function(C,Settings)
 		if not C:SaveProfile() then-- Save Profile First!
 			return
 		end
-		--C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)
 		C.DebugMessage("Teleport",`Teleport Beggining for {JobId}...`)
-		TeleportService:TeleportToPlaceInstance(PlaceId,JobId,C.plr)
-		--TeleportService:TeleportToPlaceInstance()
+		C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)
+		--TeleportService:TeleportToPlaceInstance(PlaceId,JobId,C.plr)
 	end
 end
