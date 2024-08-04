@@ -74,15 +74,17 @@ return function(C,Settings)
 				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
-				Message = "Kick Message: %s",
+				Message = "Kick Message: %s (Error Code %i)",
 				Update = function(self,msg)
 					local KickedButton = C.UI.KickedButton
+
+					local errorCode = GS:GetErrorCode()
 
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
 						if msg then
-							KickedButton.Text = self.Message:format(msg)
+							KickedButton.Text = self.Message:format(msg,errorCode and errorCode.Value or -1)
 						end
 						KickedButton.Visible = true
 					end
