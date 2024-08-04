@@ -2904,7 +2904,7 @@ return function(C, Settings)
 				if JobId == game.JobId then
 					serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
 				else
-					serverClone.BackgroundColor3 = C.ComputeNameColor(RealIndex)
+					serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
 				end
 				C.ButtonClick(serverClone, function()
 					if JoinServerDeb then return end
