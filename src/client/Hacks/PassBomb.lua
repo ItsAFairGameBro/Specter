@@ -23,23 +23,27 @@ return function(C,Settings)
 				Shortcut = "AutoPassBomb",Functs={},Default=true,
                 DontActivate=true,
 				PassBomb = function(self)
-                    print("Passing")
 					local Bomb = C.char:WaitForChild("Bomb",5)
                     if Bomb then
-                        print("Bomb Found")
-                        while Bomb.Parent and Bomb.Parent == C.char do
+                        local OldLoc
+                        while Bomb.Parent and Bomb.Parent == C.char and self.RealEnabled do
                             local closestHead, dist = C.getClosest({noTeam=true})
                             if not closestHead then
                                 error("Nearest player failed: nobody found!")
                             end
                             local theirChar = closestHead.Parent
+                            if dist > 5 then
+                                C.DoTeleport(theirChar:GetPivot())
+                            end
                             local args = {
                                 [1] = theirChar,
                                 [2] = theirChar:WaitForChild("CollisionPart"),
                             }
                             Bomb.RemoteEvent:FireServer(unpack(args))
-                            print("sent to",theirChar)
                             RunS.RenderStepped:Wait()
+                        end
+                        if OldLoc then
+                            C.DoTeleport(OldLoc)
                         end
                     end
 				end,

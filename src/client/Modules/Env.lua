@@ -427,23 +427,23 @@ return function(C,Settings)
 
 
 		for i, v in pairs(PS.GetPlayers(PS)) do
-			if not C.CanTargetPlayer(v) then  print"1"  continue end
+			if not C.CanTargetPlayer(v) then continue end
 			local theirChar = v.Character
-			if not theirChar then  print"01"  continue end
+			if not theirChar then continue end
 			local isInGame,team
 			if C.isInGame then
 				isInGame,team = C.isInGame(theirChar)
-				if not isInGame then  print"2"  continue end
+				if not isInGame then continue end
 			else
 				team = v.Team
 			end
-			if data.noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then  print"3"  continue end
-			if not data.noTeam and team == C.plr.Team and #TS:GetChildren()>1 then  print"4"  continue end
+			if data.noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then continue end
+			if not data.noTeam and team == C.plr.Team and #TS:GetChildren()>1 then continue end
 			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
-			if not theirHumanoid or theirHumanoid.Health <= 0 then  print"5"  continue end
-			if data.notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then  print"6"  continue end
+			if not theirHumanoid or theirHumanoid.Health <= 0 then continue end
+			if data.notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then continue end
 			local theirHead = theirChar.FindFirstChild(theirChar,"Head")
-			if not theirHead then print"7"  continue end
+			if not theirHead then continue end
 
 			local d = (theirHead.Position - myHRPPos).Magnitude
 
