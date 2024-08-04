@@ -72,7 +72,7 @@ return function(C,Settings)
 		end
 		local profileName = C.getgenv().ProfileId
 		if not C.readfile or not C.writefile or profileName == "" then
-			C.DebugMessage("Save","Save Stopped, profileName: "..(profileName or "nil"))
+			C.DebugMessage("SaveSystem","Save Stopped, profileName: "..(profileName or "nil"))
 			return
 		end
 		local function internallySaveProfile()
@@ -141,7 +141,7 @@ return function(C,Settings)
 			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
-					C.AddNotification(`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
+					C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
 				end
 				if not C.isStudio then
 					C.getgenv().ProfileId = "Default"
@@ -155,13 +155,16 @@ return function(C,Settings)
 			end
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
+		C.DebugMessage("SaveSystem",`Result: {tostring(success)}; {tostring(result)}`)
 		if success then
 			C.getgenv().ProfileId = profileName
+			C.DebugMessage("SaveSystem",`Set: ProfileId to {profileName} aka {C.getgenv().ProfileId}`)
 			if not C.StartUp then
 				C:ReloadStates()
 			end
 		elseif not success then
-			C.AddNotification(`Profile Load Error`,`Loading {profileName} failed: {result}`)
+			C.AddNotification(`Profile Load Error`,`Loading Profile {profileName} failed: {result}`)
+			C.DebugMessage("SaveSystem",`Loading Profile {profileName} failed: {result}`)
 		end
 		return success, result
 	end
