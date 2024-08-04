@@ -71,7 +71,7 @@ return function(C,Settings)
 			{
 				Title = "NoKick UI",
 				Tooltip = "Hides the kick display a few seconds after you are kicked",
-				Layout = 100, Default = true,
+				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
 				Functs={},
 				Update = function(self)

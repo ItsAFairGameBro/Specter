@@ -161,6 +161,9 @@ return function(C, _SETTINGS)
 		-- Load Individual Hacks
 		for num, hackData in ipairs(hack.Tab) do
 			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
+			if hackData.NoStudio then
+				continue
+			end
 			C.hackData[name][hackData.Shortcut] = hackData
 			local ButtonEx = C.Examples.HackButtonEx:Clone()
 			hackData.Button = ButtonEx
