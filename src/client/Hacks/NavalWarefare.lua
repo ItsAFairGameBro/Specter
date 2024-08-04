@@ -585,10 +585,7 @@ return function(C,Settings)
 							if instance.Name ~= "Bomb" then
 								return
 							end
-							if (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude > 180 then
-								print("GONE")
-								return
-							end
+							local Spectate = (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude > 180
 							instance.CanTouch = false
 							task.wait(.4)
 							if instance.Parent then
@@ -606,8 +603,7 @@ return function(C,Settings)
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 								if closestBasePart then
-									print("Hit",closestBasePart.Parent.Name)
-									if self.EnTbl.Spectate then
+									if self.EnTbl.Spectate and Spectate then
 										deb+= 1 local saveDeb = deb
 										C.Spectate(closestBasePart)
 										task.delay(1,function()
