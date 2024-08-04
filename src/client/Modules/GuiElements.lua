@@ -2838,8 +2838,13 @@ return function(C, Settings)
 			if not success then
 				return success, result
 			end
-			for num, friendData in ipairs(result) do
-				friendData.JobId = friendData.GameId
+			for num = #result, 1, -1 do
+				local friendData = result[num]
+
+				friendData.JobId = friendData.GameId or friendData.JobId
+				if friendData.JobId == game.GameId then
+					result[num] = nil
+				end
 				friendData.GameId = nil
 			end
 			return true, result
