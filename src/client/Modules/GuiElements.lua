@@ -2842,7 +2842,7 @@ return function(C, Settings)
 				serverClone.SecondData.Text = listedData[2]
 				serverClone.TimeStamp.Text = listedData[3]
 				serverClone.LayoutOrder = index
-				serverClone.BackgroundColor3 = C.ComputeNameColor(data.JobId)
+				serverClone.BackgroundColor3 = C.ComputeNameColor(listedData[4])
 				C.ButtonClick(serverClone, function()
 					if JoinServerDeb then return end
 					if C.Prompt(`Join {listedData[1]}?`, `JobId: {listedData[4]}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
