@@ -38,39 +38,7 @@ local function Static(C,Settings)
 
 		return true, player.Team -- Player exists!
 	end
-	function C.getClosest(noForcefield:boolean,notSeated:boolean,location:Vector3)
-		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
-		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
-
-
-		local closest = nil;
-		local distance = math.huge;
-
-
-		for i, v in pairs(PS.GetPlayers(PS)) do
-			if not C.CanTargetPlayer(v) then continue end
-			local theirChar = v.Character
-			if not theirChar then continue end
-			local isInGame,team = C.isInGame(theirChar)
-			if not isInGame then continue end
-			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then continue end
-			if team == C.plr.Team then continue end
-			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
-			if not theirHumanoid or theirHumanoid.Health <= 0 then continue end
-			if notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then continue end
-			local theirHead = theirChar.FindFirstChild(theirChar,"Head")
-			if not theirHead then continue end
-
-			local d = (theirHead.Position - myHRPPos).Magnitude
-
-			if d < distance then
-				distance = d
-				closest = theirHead
-			end
-		end
-
-		return closest, distance
-	end
+	
 	function C.getClosestBase(location: Vector3)
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
 		if not myHRPPos then return end
