@@ -93,7 +93,7 @@ return function(C,Settings)
 				C.getgenv().PreviousServers = {}
 			end
 			if true then -- Private server detection, cannot join any other servers! EDIT: CANNOT ACCESS FROM CLIENT
-				if not C.getgenv().PreviousServers or C.getgenv().PreviousServers[1].GameId ~= game.GameId then
+				if #C.getgenv().PreviousServers == 0 or C.getgenv().PreviousServers[1].GameId ~= game.GameId then
 					table.insert(C.getgenv().PreviousServers,1,{
 						PlaceId = game.PlaceId,
 						JobId = game.JobId,
