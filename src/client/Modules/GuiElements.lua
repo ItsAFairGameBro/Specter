@@ -2834,7 +2834,7 @@ return function(C, Settings)
 				local listedData = {
 					`Server {index}`,
 					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`),
-					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.Ping and `{data.Ping} ping`),
+					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`),
 					data.JobId or data.id,
 				}
 				serverClone.Name = index
