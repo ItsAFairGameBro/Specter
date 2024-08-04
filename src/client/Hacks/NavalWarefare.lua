@@ -606,6 +606,7 @@ return function(C,Settings)
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 								if closestBasePart then
+									print("Hit",closestBasePart.Parent.Name)
 									if self.EnTbl.Spectate then
 										deb+= 1 local saveDeb = deb
 										C.Spectate(closestBasePart)
