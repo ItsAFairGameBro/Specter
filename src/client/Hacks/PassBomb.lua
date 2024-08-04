@@ -28,18 +28,20 @@ return function(C,Settings)
                         local OldLoc
                         while Bomb.Parent and Bomb.Parent == C.char and self.RealEnabled do
                             local closestHead, dist = C.getClosest({noTeam=true})
-                            if not closestHead then
-                                error("Nearest player failed: nobody found!")
+                            if closestHead then
+                                local theirChar = closestHead.Parent
+                                if dist > 5 then
+                                    if not OldLoc then
+                                        OldLoc = theirChar:GetPivot()
+                                    end
+                                    C.DoTeleport(theirChar:GetPivot())
+                                end
+                                local args = {
+                                    [1] = theirChar,
+                                    [2] = theirChar:WaitForChild("CollisionPart"),
+                                }
+                                Bomb.RemoteEvent:FireServer(unpack(args))
                             end
-                            local theirChar = closestHead.Parent
-                            if dist > 5 then
-                                C.DoTeleport(theirChar:GetPivot())
-                            end
-                            local args = {
-                                [1] = theirChar,
-                                [2] = theirChar:WaitForChild("CollisionPart"),
-                            }
-                            Bomb.RemoteEvent:FireServer(unpack(args))
                             RunS.RenderStepped:Wait()
                         end
                         if OldLoc then
@@ -57,10 +59,8 @@ return function(C,Settings)
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-                        print("Waiting FOr GotBombVal")
 						local BombVal = theirChar:WaitForChild("GotBombValue",10)
                         if not BombVal then
-                            print"Failed after 10s"
                             return
                         end
                         table.insert(self.Functs,BombVal.Changed:Connect(function(new)
