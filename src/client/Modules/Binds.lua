@@ -89,6 +89,8 @@ return function(C,Settings)
 		if gameProcessed then return end
 		if inputObject.KeyCode == Enum.KeyCode.S and UIS:IsKeyDown(Enum.KeyCode.LeftControl) then
 			C:SaveProfile()
+		elseif inputObject.KeyCode == Enum.KeyCode.Period and UIS:IsKeyDown(Enum.KeyCode.Period) then
+			C.ToggleServersVisiblity()
 		end
 	end))
 	

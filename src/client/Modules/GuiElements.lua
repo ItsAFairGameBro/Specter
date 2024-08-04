@@ -2528,6 +2528,13 @@ return function(C, Settings)
 		end
 	end
 
+	local Visible = true
+	function C.ToggleServersVisiblity()
+		Visible = not Visible
+		SecondaryHUD.Visible = Visible
+	end
+	C.ToggleServersVisiblity()
+
 	for num, button in ipairs(TabsSelection:GetChildren()) do
 		if button:IsA("TextButton") then
 			if button.Name ~= "Close" then
@@ -2535,9 +2542,7 @@ return function(C, Settings)
 					ActivateServers(button.Name)
 				end)
 			else
-				C.ButtonClick(button, function()
-					ServersFrame.Visible = false
-				end)
+				C.ButtonClick(button, C.ToggleServersVisiblity)
 			end
 		end
 	end

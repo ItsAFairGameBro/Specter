@@ -585,7 +585,7 @@ return function(C,Settings)
 							if instance.Name ~= "Bomb" then
 								return
 							end
-							local Spectate = (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude < 90
+							local Spectate = C.hrp and (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude < 90
 							instance.CanTouch = false
 							task.wait(.4)
 							if instance.Parent then
@@ -620,6 +620,8 @@ return function(C,Settings)
 										C.firetouchinterest(instance,closestBasePart,1)
 										task.wait()
 									end
+								else
+									instance.CanTouch = true
 								end
 							end
 						end))
