@@ -85,6 +85,7 @@ C.Debugs = {
 	Module = false,
 	Load = false,
 	SaveSystem = false,
+	Teleport = true,
 	Override = false,
 	Thread = false,
 	AntiCheat = false,
