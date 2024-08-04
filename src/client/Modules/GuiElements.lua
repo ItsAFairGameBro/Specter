@@ -2499,6 +2499,49 @@ return function(C, Settings)
 		C.UI.KickedButton:Destroy()
 		C.UI.KickedButton = nil
 	end)
+
+	--Load Servers
+	local SecondaryHUD = C.UI.SecondaryHUD
+	local ServersFrame = SecondaryHUD:WaitForChild("Servers")
+
+	local MainScroll = ServersFrame:WaitForChild("MainScroll")
+	local TabsSelection = ServersFrame:WaitForChild("TabsSelection")
+	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
+
+	local function ActivateServers(tabName: string)
+		C.ClearChildren(MainScroll)
+		if tabName == "Recent" then
+			local index = 0
+			for num, data in ipairs(C.getgenv().PreviousServers) do
+				if data.GameId == game.GameId then
+					index+=1
+					local serverClone = C.Examples.ServerEx:Clone()
+					serverClone.Name = index
+					serverClone.ServerTitle.Text = `Server {index}`
+					serverClone.SecondData.Text = `{data.Players}/{data.MaxPlayers} Players`
+					serverClone.TimeStamp.Text = `{C.FormatTimeFromUnix(data.Time)}`
+					serverClone.LayoutOrder = index
+					serverClone.BackgroundColor3 = C.ComputeNameColor(data.JobId)
+					serverClone.Parent = MainScroll
+				end
+			end
+		end
+	end
+
+	for num, button in ipairs(TabsSelection:GetChildren()) do
+		if button:IsA("TextButton") then
+			if button.Name ~= "Close" then
+				C.ButtonClick(button, function()
+					ActivateServers(button.Name)
+				end)
+			else
+				C.ButtonClick(button, function()
+					ServersFrame.Visible = false
+				end)
+			end
+		end
+	end
+	
 	
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("HackOptions")

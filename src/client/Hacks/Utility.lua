@@ -74,7 +74,7 @@ return function(C,Settings)
 				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
-				Message = "Kick Message: %s (Error Code %i)",
+				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
 				Update = function(self,msg)
 					local KickedButton = C.UI.KickedButton
 
@@ -95,6 +95,7 @@ return function(C,Settings)
 					end
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg)
 						if not msg or msg:len() == 0 then
+							task.delay(.5,GS.ClearError,GS)
 							return
 						end
 						

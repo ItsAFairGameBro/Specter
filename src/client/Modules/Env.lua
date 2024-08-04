@@ -6,6 +6,7 @@ local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
 local TS = game:GetService"Teams"
 local DS = game:GetService('Debris')
+local LS = game:GetService("LocalizationService")
 return function(C,Settings)
 	--Table Functions
 	function C.TblAdd(tbl,val)
@@ -634,5 +635,80 @@ return function(C,Settings)
 
 		-- Transform back to world space and return the point on the surface
 		return PartCF * clampedPoint
+	end
+
+	function C.ComputeNameColor(speaker)
+		local nameColors = {
+			Color3.new(253/255, 41/255, 67/255),
+			Color3.new(1/255, 162/255, 255/255),
+			Color3.new(2/255, 184/255, 87/255),
+			BrickColor.new("Bright violet").Color,
+			BrickColor.new("Bright orange").Color,
+			BrickColor.new("Bright yellow").Color,
+			BrickColor.new("Light reddish violet").Color,
+			BrickColor.new("Brick yellow").Color,
+		}
+	
+		local value = 0
+		for i = 1, #speaker do
+			local cValue = string.byte(speaker, i)
+			if ((#speaker - i + 1) % 4) >= 2 then cValue = -cValue end
+			value = value + cValue
+		end
+	
+		return nameColors[(value % #nameColors) + 1]
+	end
+
+
+	local TransformTimes={
+		[-24]="Tomorrow, %s",
+		[0]="Today, %s",
+		[24]="Yesterday, %s"
+	}
+	local TimeDurations={
+		{Type="Year",Duration=31536000},
+		{Type="Month",Duration=2551392},
+		{Type="Day",Duration=86400},
+		{Type="Hour",Duration=3600},
+		{Type="Min",Duration=60},
+		{Type="Sec",Duration=1},
+	}
+	function C.FormatTimeFromUnix(osTime,token)
+		local timeNeededTimeStamp	
+		if tonumber(osTime) then
+			timeNeededTimeStamp=DateTime.fromUnixTimestamp(osTime)
+		else
+			timeNeededTimeStamp=DateTime.fromIsoDate(osTime)
+		end
+		local theTimeNeededTbl=timeNeededTimeStamp:ToLocalTime()
+		local theCurrentTime=DateTime.now():ToLocalTime()
+		for minTime,identifier in pairs(TransformTimes) do
+			local generatedTime=DateTime.fromLocalTime(theCurrentTime.Year,theCurrentTime.Month,theCurrentTime.Day,12-minTime,0,0):ToLocalTime()
+			if generatedTime.Year==theTimeNeededTbl.Year and generatedTime.Month==theTimeNeededTbl.Month and generatedTime.Day==theTimeNeededTbl.Day then
+				return string.format(identifier,timeNeededTimeStamp:FormatLocalTime(token or "LT",LS.RobloxLocaleId))
+			end
+		end
+		local TimeString=timeNeededTimeStamp:FormatLocalTime(token or "LLL",LS.RobloxLocaleId)
+		if theCurrentTime.Year==theTimeNeededTbl.Year then
+			TimeString=TimeString:gsub(", "..theTimeNeededTbl.Year, "")
+		end
+		return TimeString
+	end
+	function C.GetFormattedTime(totalTime,shouldBeLowered,extraSettings)
+		extraSettings = extraSettings or {}
+		local carryDown = false
+		local Table = {}
+		for order,vals in pairs(TimeDurations) do
+			local counters = math.floor(totalTime/vals.Duration)
+			if counters>0 or (#Table==0 and order==#TimeDurations) or (carryDown and extraSettings.CarryDown) then--if it's the last one might as well put seconds...
+				table.insert(Table,counters.." "..(shouldBeLowered and vals.Type:lower() or vals.Type)..((counters~=1 or extraSettings.AlwaysPlural) and "s" or ""))
+				carryDown=true
+			end
+			totalTime-=vals.Duration*counters
+		end
+		if #Table>2 then
+			Table[#Table]="and "..Table[#Table]--adds the and to the last character of the list
+		end
+		return table.concat(Table,", ")
 	end
 end

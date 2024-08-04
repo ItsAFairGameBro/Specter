@@ -2,6 +2,7 @@ local CS = game:GetService("CollectionService")
 local HS = game:GetService("HttpService")
 local RunS = game:GetService("RunService")
 local TCS = game:GetService("TextChatService")
+local PS = game:GetService("Players")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
 	function C.API(service,method,tries,...)
@@ -88,7 +89,29 @@ return function(C,Settings)
 			CreateStoragePath(ProfileStoragePath)
 
 			--Store general settings
-			local EncodedSaveDict2 = HS:JSONEncode({Settings = C.enHacks.Settings})
+			if not C.getgenv().PreviousServers then
+				C.getgenv().PreviousServers = {}
+			end
+			if game.PrivateServerId == "" then -- Public server detection, cannot join any other servers!
+				if not C.getgenv().PreviousServers or C.getgenv().PreviousServers[1].GameId ~= game.GameId then
+					table.insert(C.getgenv().PreviousServers,1,{
+						PlaceId = game.PlaceId,
+						JobId = game.JobId,
+						GameId = game.GameId,
+						Time = os.clock(),
+						Players = #PS:GetPlayers(),
+						MaxPlayers = PS.MaxPlayers,
+					})
+				else
+					C.getgenv().PreviousServers[1].Time = os.clock() -- Update time
+					C.getgenv().PreviousServers[1].Players = #PS:GetPlayers() -- Update players
+				end
+			end
+			
+			local EncodedSaveDict2 = HS:JSONEncode({
+				Settings = C.enHacks.Settings,
+				Servers = C.getgenv().PreviousServers,
+			})
 			--General Storage Folder Link
 
 			--Save files
@@ -114,6 +137,7 @@ return function(C,Settings)
 				local rawFile2 = C.readfile(path2)
 				local decoded2 = HS:JSONDecode(rawFile2)
 				C.enHacks.Settings = decoded2.Settings
+				C.getgenv().PreviousServers = decoded2.Servers
 			end
 			if not C.isfile(path) then
 				if Settings.Deb.Save then
