@@ -103,6 +103,7 @@ return function(C, _SETTINGS)
 		AlreadyRefreshing = false
 	end
 	C.ButtonClick(RefreshButton,C.Refresh)
+	task.spawn(C.StartAutoSave,C)
 
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end

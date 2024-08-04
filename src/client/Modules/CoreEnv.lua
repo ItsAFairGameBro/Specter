@@ -66,11 +66,12 @@ return function(C,Settings)
 		end
 	end
 	function C:SaveProfile()
+		if self ~= C then
+			error("Invalid SaveProfile Call: must use `:` but only used `.`")
+		end
 		local profileName = C.getgenv().ProfileName
 		if not C.readfile or not C.writefile or profileName == "" then
-			if Settings.Deb.Save then
-				print("Save Stopped, profileName: "..tostring(profileName))
-			end
+			C.DebugMessage("Save","Save Stopped, profileName: "..tostring(profileName))
 			return
 		end
 		local function internallySaveProfile()
@@ -139,6 +140,13 @@ return function(C,Settings)
 			C.AddNotification(`Profile Load Error`,`Loading {profileName} failed: {result}`)
 		end
 		return success, result
+	end
+	function C:StartAutoSave()
+		task.wait(60)
+		while not C.Cleared do
+			C:SaveProfile()
+			task.wait(60)
+		end
 	end
 	--Chat
 	function C.CreateSysMessage(message,color,typeText)

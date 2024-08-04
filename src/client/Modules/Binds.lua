@@ -82,7 +82,7 @@ return function(C,Settings)
 	C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject,gameProcessed)
 		if gameProcessed then return end
 		if inputObject.KeyCode == Enum.KeyCode.S and UIS:IsKeyDown(Enum.KeyCode.LeftControl) then
-			C.SaveProfile()
+			C:SaveProfile()
 		end
 	end))
 	
