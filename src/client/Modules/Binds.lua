@@ -21,11 +21,17 @@ return function(C,Settings)
 			CAS:UnbindCoreAction(name)
 		end
 	end
+	local blacklistedCodes = {Enum.KeyCode.LeftControl,Enum.KeyCode.RightControl,Enum.KeyCode.LeftAlt,Enum.KeyCode.RightAlt,Enum.KeyCode.LeftShift,Enum.KeyCode.RightShift}
 	--Register Keybinds
 	function C.AddKeybind(key:string,tblHack:table)
 		C.RemoveKeybind(tblHack)
 		local function keyPressBind(actionName, inputState, inputObject)
 			if inputState == Enum.UserInputState.Begin and not C.IsBinding then
+				for num, keyCode in ipairs(blacklistedCodes) do
+					if UIS:IsKeyDown(keyCode) then
+						return -- cancel request
+					end
+				end
 				tblHack:SetValue(not tblHack.Enabled)
 			end
 		end
