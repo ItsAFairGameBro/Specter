@@ -576,6 +576,7 @@ return function(C,Settings)
 				Layout = 7, Functs = {},
 				Shortcut = "BombInstantHit",
 				BombThrowTime = {},
+				ComparePos = nil,
 				Activate = function(self, newValue)
 					-- Disconnect funct and set up childadded workspace event for the projectiles
 					if newValue then
@@ -584,7 +585,7 @@ return function(C,Settings)
 							if instance.Name ~= "Bomb" then
 								return
 							end
-							if (instance.Position - C.hrp.Position).Magnitude > 90 then
+							if (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude > 90 then
 								print("GONE")
 								return
 							end
@@ -939,6 +940,14 @@ return function(C,Settings)
 										if BombC.Value > 0 and WhileIn>.5 then
 											WhileIn = 0
 											C.RemoteEvent:FireServer("bomb")
+											local savePos = C.hrp.Position
+											local data = C.hackData.NavalWarefare.BombInstantHit
+											data.ComparePos = savePos
+											task.delay(.3,function()
+												if data.ComparePos == savePos then
+													data.ComparePos = nil
+												end
+											end)
 										end
 									elseif BombC.Value == 0 and not C.enHacks.NavalWarefare.PlaneRestock.En then
 										break
