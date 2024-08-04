@@ -175,7 +175,7 @@ return function(C,Settings)
             {
 				Title = "Get GameID",
 				Tooltip = "Sets the GameID to clipboard",
-				Layout = 7,Type="NoToggle",
+				Layout = 7,Type="NoToggle",NoStudio = true,
 				Shortcut = "SetGameToClipBoard",
 				Activate = function(self,newValue)
                     setclipboard(game.GameId)

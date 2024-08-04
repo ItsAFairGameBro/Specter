@@ -2786,7 +2786,6 @@ return function(C, Settings)
 						`Server {index}`,
 						`{data.Players}/{data.MaxPlayers} Players`,
 						`{C.FormatTimeFromUnix(data.Time)}`,
-
 					}
 					serverClone.Name = index
 					serverClone.ServerTitle.Text = listedData[1]
