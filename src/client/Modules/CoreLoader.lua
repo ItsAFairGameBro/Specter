@@ -182,9 +182,16 @@ return function(C, _SETTINGS)
 			end
 
 			--Options Activation
+			local optionsUnused = table.clone(enTbl)
 			for num, optionData in ipairs(hackData.Options or {}) do
 				optionData.Parent = hackData
+				optionsUnused[optionData.Shortcut] = nil
 				C.UI.Options[optionData.Type].new(ButtonEx,optionData)
+			end
+			--Extra Options Warning
+			for name, option in pairs(optionsUnused) do
+				warn(`{name}/{hackData.Shortcut}: {name} is set to {option} but that option no longer exists. It has been deleted for memory`)
+				enTbl[name] = nil -- Remove the option
 			end
 			--Three Dots Button
 			local ViewSettingsVisible = true
