@@ -203,24 +203,27 @@ local GuiTbl = {
 	UICorner_24 = Instance.new("UICorner"),
 	UIStroke_25 = Instance.new("UIStroke"),
 	ExtraLabel = Instance.new("TextLabel"),
+	NoneFoundLabel = Instance.new("TextLabel"),
 	UICorner_25 = Instance.new("UICorner"),
 	UIStroke_26 = Instance.new("UIStroke"),
-	PromptFrame = Instance.new("Frame"),
 	UICorner_26 = Instance.new("UICorner"),
 	UIStroke_27 = Instance.new("UIStroke"),
+	PromptFrame = Instance.new("Frame"),
+	UICorner_27 = Instance.new("UICorner"),
+	UIStroke_28 = Instance.new("UIStroke"),
 	PromptTitle = Instance.new("TextLabel"),
 	PromptDesc = Instance.new("TextLabel"),
 	PromptButtons = Instance.new("Frame"),
 	UIGridLayout_4 = Instance.new("UIGridLayout"),
 	Yes = Instance.new("TextButton"),
-	UIStroke_28 = Instance.new("UIStroke"),
-	UICorner_27 = Instance.new("UICorner"),
-	No = Instance.new("TextButton"),
 	UIStroke_29 = Instance.new("UIStroke"),
 	UICorner_28 = Instance.new("UICorner"),
-	Ok = Instance.new("TextButton"),
+	No = Instance.new("TextButton"),
 	UIStroke_30 = Instance.new("UIStroke"),
 	UICorner_29 = Instance.new("UICorner"),
+	Ok = Instance.new("TextButton"),
+	UIStroke_31 = Instance.new("UIStroke"),
+	UICorner_30 = Instance.new("UICorner"),
 }
 
 --Properties:
@@ -2119,11 +2122,34 @@ GuiTbl.ExtraLabel.TextSize = 14.000
 GuiTbl.ExtraLabel.TextStrokeTransparency = 0.000
 GuiTbl.ExtraLabel.TextWrapped = true
 
+GuiTbl.NoneFoundLabel.Name = "NoneFoundLabel"
+GuiTbl.NoneFoundLabel.Parent = GuiTbl.Servers
+GuiTbl.NoneFoundLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+GuiTbl.NoneFoundLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+GuiTbl.NoneFoundLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.NoneFoundLabel.BorderSizePixel = 0
+GuiTbl.NoneFoundLabel.Position = UDim2.new(0.649999976, 0, 0.479999989, 0)
+GuiTbl.NoneFoundLabel.Size = UDim2.new(0.600000024, 0, 0.699999988, 0)
+GuiTbl.NoneFoundLabel.ZIndex = 102
+GuiTbl.NoneFoundLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.NoneFoundLabel.Text = "There are no results for this category.\\nClick on the category again to refresh it."
+GuiTbl.NoneFoundLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.NoneFoundLabel.TextScaled = true
+GuiTbl.NoneFoundLabel.TextSize = 14.000
+GuiTbl.NoneFoundLabel.TextStrokeTransparency = 0.000
+GuiTbl.NoneFoundLabel.TextWrapped = true
+
 GuiTbl.UICorner_25.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_25.Parent = GuiTbl.SecondaryHUD
+GuiTbl.UICorner_25.Parent = GuiTbl.NoneFoundLabel
 
 GuiTbl.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_26.Parent = GuiTbl.SecondaryHUD
+GuiTbl.UIStroke_26.Parent = GuiTbl.NoneFoundLabel
+
+GuiTbl.UICorner_26.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_26.Parent = GuiTbl.SecondaryHUD
+
+GuiTbl.UIStroke_27.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_27.Parent = GuiTbl.SecondaryHUD
 
 GuiTbl.PromptFrame.Name = "PromptFrame"
 GuiTbl.PromptFrame.Parent = GuiTbl.SpecterGUI
@@ -2137,11 +2163,11 @@ GuiTbl.PromptFrame.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
 GuiTbl.PromptFrame.Visible = false
 GuiTbl.PromptFrame.ZIndex = 1000
 
-GuiTbl.UICorner_26.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_26.Parent = GuiTbl.PromptFrame
+GuiTbl.UICorner_27.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_27.Parent = GuiTbl.PromptFrame
 
-GuiTbl.UIStroke_27.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_27.Parent = GuiTbl.PromptFrame
+GuiTbl.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_28.Parent = GuiTbl.PromptFrame
 
 GuiTbl.PromptTitle.Name = "PromptTitle"
 GuiTbl.PromptTitle.Parent = GuiTbl.PromptFrame
@@ -2211,11 +2237,11 @@ GuiTbl.Yes.TextSize = 14.000
 GuiTbl.Yes.TextStrokeTransparency = 0.000
 GuiTbl.Yes.TextWrapped = true
 
-GuiTbl.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_28.Parent = GuiTbl.Yes
+GuiTbl.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_29.Parent = GuiTbl.Yes
 
-GuiTbl.UICorner_27.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_27.Parent = GuiTbl.Yes
+GuiTbl.UICorner_28.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_28.Parent = GuiTbl.Yes
 
 GuiTbl.No.Name = "No"
 GuiTbl.No.Parent = GuiTbl.PromptButtons
@@ -2233,11 +2259,11 @@ GuiTbl.No.TextSize = 14.000
 GuiTbl.No.TextStrokeTransparency = 0.000
 GuiTbl.No.TextWrapped = true
 
-GuiTbl.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_29.Parent = GuiTbl.No
+GuiTbl.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_30.Parent = GuiTbl.No
 
-GuiTbl.UICorner_28.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_28.Parent = GuiTbl.No
+GuiTbl.UICorner_29.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_29.Parent = GuiTbl.No
 
 GuiTbl.Ok.Name = "Ok"
 GuiTbl.Ok.Parent = GuiTbl.PromptButtons
@@ -2256,11 +2282,11 @@ GuiTbl.Ok.TextSize = 14.000
 GuiTbl.Ok.TextStrokeTransparency = 0.000
 GuiTbl.Ok.TextWrapped = true
 
-GuiTbl.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_30.Parent = GuiTbl.Ok
+GuiTbl.UIStroke_31.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_31.Parent = GuiTbl.Ok
 
-GuiTbl.UICorner_29.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_29.Parent = GuiTbl.Ok
+GuiTbl.UICorner_30.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_30.Parent = GuiTbl.Ok
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
