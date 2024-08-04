@@ -1767,6 +1767,7 @@ SecondaryHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 SecondaryHUD.BorderSizePixel = 0
 SecondaryHUD.Position = UDim2.new(0.5, 0, 0.5, 0)
 SecondaryHUD.Size = UDim2.new(0.5, 0, 0.5, 0)
+SecondaryHUD.Visible = false
 SecondaryHUD.ZIndex = 100
 
 Servers.Name = "Servers"
