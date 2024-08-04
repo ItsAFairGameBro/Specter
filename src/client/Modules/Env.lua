@@ -4,6 +4,7 @@ local PhysicsService = game:GetService("PhysicsService")
 local PS = game:GetService("Players")
 local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
+local TS = game:GetService"Teams"
 local DS = game:GetService('Debris')
 return function(C,Settings)
 	--Table Functions
@@ -436,7 +437,7 @@ return function(C,Settings)
 				team = v.Team
 			end
 			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then  print"3"  continue end
-			if team == C.plr.Team then  print"4"  continue end
+			if team == C.plr.Team and #TS:GetChildren()>0 then  print"4"  continue end
 			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
 			if not theirHumanoid or theirHumanoid.Health <= 0 then  print"5"  continue end
 			if notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then  print"6"  continue end
