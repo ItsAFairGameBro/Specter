@@ -97,13 +97,13 @@ if not Settings then
 end
 C.getgenv().C = C
 
-local PreDebugMessage = `[SpecterV2]: `
+local PreDebugMessage = `[SpecterV2/%s]: `
 function C.DebugMessage(type,message)
-	assert(C.Debugs[type]~=nil, `{PreDebugMessage}Message Type Not Found:\n{message}`)
+	assert(C.Debugs[type]~=nil, `{PreDebugMessage}Message Type Not Found: "{tostring(type)}" in an attempt to create message: "{message}"`)
 	if not C.Debugs[type] then
 		return false
 	end
-	print(`{PreDebugMessage}{message}`)
+	print(`{PreDebugMessage:format(type)}{message}`)
 	return true
 end
 
