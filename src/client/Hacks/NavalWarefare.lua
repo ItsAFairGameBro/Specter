@@ -579,17 +579,18 @@ return function(C,Settings)
 				Activate = function(self, newValue)
 					-- Disconnect funct and set up childadded workspace event for the projectiles
 					if newValue then
+						local deb = 0
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
 							if instance.Name ~= "Bomb" then
 								return
 							end
-							if (instance.Position - C.hrp.Position).Magnitude > 30 then
+							if (instance.Position - C.hrp.Position).Magnitude > 90 then
 								print("GONE")
 								return
 							end
 							instance.CanTouch = false
 							task.wait(.4)
-							if instance.Name == "Bomb" and instance.Parent then
+							if instance.Parent then
 								local nearestTbl = {}
 
 								if self.EnTbl.Base then
