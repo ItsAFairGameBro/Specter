@@ -73,7 +73,7 @@ return function(C,Settings)
 				Tooltip = "Hides the kick display a few seconds after you are kicked",
 				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
-				Functs={},
+				Functs={}, Threads={},
 				Update = function(self)
 					local KickedButton = C.UI.KickedButton
 
@@ -94,12 +94,14 @@ return function(C,Settings)
 						-- Debug.Traceback doesn't work for this:
 						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
 					end))
-					self.ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",5)
+
+					-- This will wait forever
+					self.ErrorMessage = C.StringWait(game:GetService("CoreGui"),"RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage",math.huge)
 					if self.ErrorMessage then
 						warn(self.ErrorMessage.Text)
 						table.insert(self.Functs,self.ErrorMessage:GetPropertyChangedSignal("Text"):Connect(function()
 							local KickedButton = C.UI.KickedButton
-							
+
 							if KickedButton then
 								KickedButton.Text = self.ErrorMessage.Text
 							end
