@@ -25,15 +25,19 @@ return function(C,Settings)
 				PassBomb = function(self)
 					local Bomb = C.char:WaitForChild("Bomb",5)
                     if Bomb then
-                        local closestPlr, closest
-                        local args = {
-                            [1] = game:GetService("Players").SuitedForBans8.Character,
-                            [2] = game:GetService("Players").SuitedForBans8.Character.CollisionPart
-                        }
                         while Bomb.Parent do
-                            
+                            local closestHead, dist = C.getClosest()
+                            if not closestHead then
+                                error("Nearest player failed: nobody found!")
+                            end
+                            local theirChar = closestHead.Parent
+                            local args = {
+                                [1] = theirChar,
+                                [2] = theirChar:WaitForChild("CollisionPart"),
+                            }
+                            Bomb.RemoteEvent:FireServer(unpack(args))
+                            RunS.RenderStepped:Wait()
                         end
-                        Bomb.RemoteEvent:FireServer(unpack(args))
                     end
 				end,
 				Activate = function(self,newValue,firstRun)
