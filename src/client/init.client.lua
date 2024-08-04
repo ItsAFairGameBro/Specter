@@ -93,7 +93,9 @@ C.Debugs = {
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then
-	Settings = {Deb = {Save = true}}
+	Settings = {
+		ServerSaveDeleteTime = 3600 * 24 -- Time before deletion
+	}
 	C.getgenv().SETTINGS = Settings
 end
 C.getgenv().C = C

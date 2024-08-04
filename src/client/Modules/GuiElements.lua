@@ -2,6 +2,7 @@ local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
 local RS = game:GetService("ReplicatedStorage")
 local RunS = game:GetService("RunService")
+local HS = game:GetService("HttpService")
 
 local function LoadCore(C,Settings)
 -- Gui to Lua
@@ -2419,7 +2420,7 @@ return function(C, Settings)
 	-- Instances:
 	local SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText = LoadCore(C)
 	if C.isStudio then
-		SpecterGUI.Name = "SpecterGUI" .. C.SaveIndex
+		SpecterGUI.Name = "SpecterGUI"
 	else
 		SpecterGUI.Name = C.GenerateGUID()
 	end
@@ -2776,45 +2777,98 @@ return function(C, Settings)
 	local TabsSelection = ServersFrame:WaitForChild("TabsSelection")
 	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
 	local ServersTL = ServersFrame:WaitForChild("ServersTitleLabel")
+	local PrevButton, NextButton = BottomButtons:WaitForChild("Previous"), BottomButtons:WaitForChild("Next")
 
 	local CurrentlySel
+	local PageNum,Previous,Next = 0, "", ""
 	local JoinServerDeb = false
 
-	local function ActivateServers(tabName: string)
+	local GetServers = {
+		Recent = function()
+			return true, C.getgenv().PreviousServers
+		end,
+		Game = function(Cursor)
+			local success, result = C.API(C.request,nil,1,{url=`https://games.roblox.com/v1/games/{game.PlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
+			if not success then
+				return success, result
+			end
+			local success2, result2 = C.API(HS,"JSONDecode",result)
+			if not success2 then
+				return success2, result2
+			end
+			Previous,Next = result2.previousPageCursor, result2.nextPageCursor
+			return true, result2.data
+		end
+	}
+
+	local function ActivateServers(tabName: string, increment: boolean | nil)
 		CurrentlySel = tabName
 		C.ClearChildren(MainScroll)
 		local index = 0
-		if tabName == "Recent" then
-			for num, data in ipairs(C.getgenv().PreviousServers) do
-				if data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId then
-					index+=1
-					local serverClone = C.Examples.ServerEx:Clone()
-					local listedData = {
-						`Server {index}`,
-						`{data.Players}/{data.MaxPlayers} Players`,
-						`{C.FormatTimeFromUnix(data.Time)}`,
-					}
-					serverClone.Name = index
-					serverClone.ServerTitle.Text = listedData[1]
-					serverClone.SecondData.Text = listedData[2]
-					serverClone.TimeStamp.Text = listedData[3]
-					serverClone.LayoutOrder = index
-					serverClone.BackgroundColor3 = C.ComputeNameColor(data.JobId)
-					C.ButtonClick(serverClone, function()
-						if JoinServerDeb then return end
-						if C.Prompt(`Join {listedData[1]}?`, `JobId: {data.JobId}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
-							C.ServerTeleport(data.PlaceId,data.JobId)
-						end
-					end)
-					serverClone.Parent = MainScroll
-				end
+		local Cursor = ""
+		if increment ~= nil then
+			if Cursor then
+				Cursor = Next
+				PageNum+=1
+			else
+				Cursor = Prev
+				PageNum-=1
+			end
+		else
+			Previous,Next = nil,nil
+			PageNum = 1
+		end
+		local success, result = GetServers[tabName]((increment==true and Next) or (increment==false and Prev) or "")
+		if not success then
+			return
+		end
+		for num, data in ipairs(result) do
+			if data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId) then
+				index+=1
+				local serverClone = C.Examples.ServerEx:Clone()
+				local listedData = {
+					`Server {index}`,
+					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`),
+					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.Ping and `{data.Ping} ping`),
+					data.JobId or data.id,
+				}
+				serverClone.Name = index
+				serverClone.ServerTitle.Text = listedData[1]
+				serverClone.SecondData.Text = listedData[2]
+				serverClone.TimeStamp.Text = listedData[3]
+				serverClone.LayoutOrder = index
+				serverClone.BackgroundColor3 = C.ComputeNameColor(data.JobId)
+				C.ButtonClick(serverClone, function()
+					if JoinServerDeb then return end
+					if C.Prompt(`Join {listedData[1]}?`, `JobId: {listedData[4]}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
+						C.ServerTeleport(data.PlaceId or game.PlaceId,listedData[4])
+					end
+				end)
+				serverClone.Parent = MainScroll
 			end
 		end
-		local hasArrows = tabName == "All"
+		local hasArrows = tabName == "Game" or false
+		local titleAfter = tabName == "Game" and index or `pg {PageNum}`
+
+		NextButton.BackgroundColor3 = Next and Color3.fromRGB(60, 255, 0) or Color3.fromRGB(170,170,170)
+		PreviousButton.BackgroundColor3 = Prev and Color3.fromRGB(255, 238, 0) or Color3.fromRGB(170,170,170)
+
 		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
 		BottomButtons.Visible = hasArrows
-		ServersTL.Text = `{tabName} SERVERS ({index})`
+		ServersTL.Text = `{tabName:upper()} SERVERS ({titleAfter})`
 	end
+	C.ButtonClick(NextButton, function()
+		if not Next then
+			return
+		end
+		ActivateServers(tabName,true)
+	end)
+	C.ButtonClick(PreviousButton, function()
+		if not Previous then
+			return
+		end
+		ActivateServers(tabName,false)
+	end)
 
 	local Visible = true
 	function C.ToggleServersVisiblity()

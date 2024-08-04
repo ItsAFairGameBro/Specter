@@ -98,7 +98,9 @@ return function(C,Settings)
 				--if #PreviousServers == 0 or PreviousServers[1].JobId ~= game.JobId or PreviousServers[1].PlaceId ~= game.PlaceId then
 				for index = #PreviousServers, 1, -1 do
 					local data = PreviousServers[index]
-					if data.JobId == game.JobId and data.PlaceId == game.PlaceId and data.GameId == game.GameId then
+					local shouldDestroy = (data.JobId == game.JobId and data.PlaceId == game.PlaceId and data.GameId == game.GameId)
+						or (os.time() - data.Time > Settings.ServerSaveDeleteTime)
+					if shouldDestroy then
 						table.remove(PreviousServers,index)
 					end
 				end
