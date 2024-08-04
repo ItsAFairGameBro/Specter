@@ -175,27 +175,31 @@ local UIStroke_19 = Instance.new("UIStroke")
 local Close = Instance.new("TextButton")
 local UICorner_19 = Instance.new("UICorner")
 local UIStroke_20 = Instance.new("UIStroke")
+local Friends = Instance.new("TextButton")
+local UICorner_20 = Instance.new("UICorner")
+local UIStroke_21 = Instance.new("UIStroke")
 local MainScroll = Instance.new("ScrollingFrame")
 local ServerEx = Instance.new("Frame")
 local ServerTitle = Instance.new("TextLabel")
 local TimeStamp = Instance.new("TextLabel")
 local SecondData = Instance.new("TextLabel")
-local UICorner_20 = Instance.new("UICorner")
-local UIStroke_21 = Instance.new("UIStroke")
+local UICorner_21 = Instance.new("UICorner")
+local UIStroke_22 = Instance.new("UIStroke")
 local UIGridLayout_2 = Instance.new("UIGridLayout")
 local BottomButtons = Instance.new("Frame")
 local Previous = Instance.new("TextButton")
-local UICorner_21 = Instance.new("UICorner")
-local UIStroke_22 = Instance.new("UIStroke")
-local UIGridLayout_3 = Instance.new("UIGridLayout")
-local Join = Instance.new("TextButton")
 local UICorner_22 = Instance.new("UICorner")
 local UIStroke_23 = Instance.new("UIStroke")
-local Next = Instance.new("TextButton")
+local UIGridLayout_3 = Instance.new("UIGridLayout")
+local Join = Instance.new("TextButton")
 local UICorner_23 = Instance.new("UICorner")
 local UIStroke_24 = Instance.new("UIStroke")
+local Next = Instance.new("TextButton")
 local UICorner_24 = Instance.new("UICorner")
 local UIStroke_25 = Instance.new("UIStroke")
+local ExtraLabel = Instance.new("TextLabel")
+local UICorner_25 = Instance.new("UICorner")
+local UIStroke_26 = Instance.new("UIStroke")
 
 --Properties:
 
@@ -1767,7 +1771,6 @@ SecondaryHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 SecondaryHUD.BorderSizePixel = 0
 SecondaryHUD.Position = UDim2.new(0.5, 0, 0.5, 0)
 SecondaryHUD.Size = UDim2.new(0.5, 0, 0.5, 0)
-SecondaryHUD.Visible = false
 SecondaryHUD.ZIndex = 100
 
 Servers.Name = "Servers"
@@ -1784,13 +1787,12 @@ UICorner_16.Parent = Servers
 
 ServersTitleLabel.Name = "ServersTitleLabel"
 ServersTitleLabel.Parent = Servers
-ServersTitleLabel.AnchorPoint = Vector2.new(0.5, 0)
 ServersTitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ServersTitleLabel.BackgroundTransparency = 1.000
 ServersTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ServersTitleLabel.BorderSizePixel = 0
-ServersTitleLabel.Position = UDim2.new(0.5, 0, 0, 0)
-ServersTitleLabel.Size = UDim2.new(0.899999976, 0, 0.100000001, 0)
+ServersTitleLabel.Position = UDim2.new(0.300000012, 0, 0, 0)
+ServersTitleLabel.Size = UDim2.new(0.699999988, 0, 0.100000001, 0)
 ServersTitleLabel.ZIndex = 102
 ServersTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 ServersTitleLabel.Text = "SERVERS"
@@ -1806,8 +1808,7 @@ TabsSelection.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TabsSelection.BackgroundTransparency = 1.000
 TabsSelection.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TabsSelection.BorderSizePixel = 0
-TabsSelection.Position = UDim2.new(0, 0, 0.100000001, 0)
-TabsSelection.Size = UDim2.new(0.300000012, 0, 0.899999976, 0)
+TabsSelection.Size = UDim2.new(0.300000012, 0, 1, 0)
 TabsSelection.ZIndex = 102
 
 FromGame.Name = "FromGame"
@@ -1834,8 +1835,8 @@ UIStroke_18.Parent = FromGame
 
 UIGridLayout.Parent = TabsSelection
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout.CellPadding = UDim2.new(0, 0, 0.166999996, 0)
-UIGridLayout.CellSize = UDim2.new(1, 0, 0.222000003, 0)
+UIGridLayout.CellPadding = UDim2.new(0, 0, 0.13333334, 0)
+UIGridLayout.CellSize = UDim2.new(1, 0, 0.150000006, 0)
 
 Recent.Name = "Recent"
 Recent.Parent = TabsSelection
@@ -1863,7 +1864,7 @@ Close.Parent = TabsSelection
 Close.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Close.BorderSizePixel = 0
-Close.LayoutOrder = 1
+Close.LayoutOrder = 2
 Close.Size = UDim2.new(0, 200, 0, 50)
 Close.ZIndex = 103
 Close.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
@@ -1880,22 +1881,43 @@ UICorner_19.Parent = Close
 UIStroke_20.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke_20.Parent = Close
 
+Friends.Name = "Friends"
+Friends.Parent = TabsSelection
+Friends.BackgroundColor3 = Color3.fromRGB(34, 255, 0)
+Friends.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Friends.BorderSizePixel = 0
+Friends.LayoutOrder = 1
+Friends.Size = UDim2.new(0, 200, 0, 50)
+Friends.ZIndex = 103
+Friends.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+Friends.Text = "Friends"
+Friends.TextColor3 = Color3.fromRGB(255, 255, 255)
+Friends.TextScaled = true
+Friends.TextSize = 14.000
+Friends.TextStrokeTransparency = 0.000
+Friends.TextWrapped = true
+
+UICorner_20.CornerRadius = UDim.new(0, 32)
+UICorner_20.Parent = Friends
+
+UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_21.Parent = Friends
+
 MainScroll.Name = "MainScroll"
 MainScroll.Parent = Servers
-MainScroll.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainScroll.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 MainScroll.BackgroundTransparency = 1.000
 MainScroll.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MainScroll.BorderSizePixel = 0
 MainScroll.LayoutOrder = -13
 MainScroll.Position = UDim2.new(0.299999952, 0, 0.100000001, 0)
 MainScroll.Size = UDim2.new(0.699999988, 0, 0.760000229, 0)
-MainScroll.ZIndex = 105
+MainScroll.ZIndex = 102
 MainScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 MainScroll.BottomImage = "rbxassetid://3062505976"
 MainScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 MainScroll.MidImage = "rbxassetid://3062506202"
 MainScroll.TopImage = "rbxassetid://3062506445"
-MainScroll.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 
 ServerEx.Name = "ServerEx"
 ServerEx:AddTag("RemoveOnDestroy")
@@ -1960,11 +1982,11 @@ SecondData.TextSize = 14.000
 SecondData.TextStrokeTransparency = 0.000
 SecondData.TextWrapped = true
 
-UICorner_20.CornerRadius = UDim.new(0, 32)
-UICorner_20.Parent = ServerEx
+UICorner_21.CornerRadius = UDim.new(0, 32)
+UICorner_21.Parent = ServerEx
 
-UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_21.Parent = ServerEx
+UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_22.Parent = ServerEx
 
 UIGridLayout_2.Parent = MainScroll
 UIGridLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -1999,11 +2021,11 @@ Previous.TextSize = 14.000
 Previous.TextStrokeTransparency = 0.000
 Previous.TextWrapped = true
 
-UICorner_21.CornerRadius = UDim.new(0, 32)
-UICorner_21.Parent = Previous
+UICorner_22.CornerRadius = UDim.new(0, 32)
+UICorner_22.Parent = Previous
 
-UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_22.Parent = Previous
+UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_23.Parent = Previous
 
 UIGridLayout_3.Parent = BottomButtons
 UIGridLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -2027,11 +2049,11 @@ Join.TextSize = 14.000
 Join.TextStrokeTransparency = 0.000
 Join.TextWrapped = true
 
-UICorner_22.CornerRadius = UDim.new(0, 32)
-UICorner_22.Parent = Join
+UICorner_23.CornerRadius = UDim.new(0, 32)
+UICorner_23.Parent = Join
 
-UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_23.Parent = Join
+UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_24.Parent = Join
 
 Next.Name = "Next"
 Next.Parent = BottomButtons
@@ -2049,17 +2071,35 @@ Next.TextSize = 14.000
 Next.TextStrokeTransparency = 0.000
 Next.TextWrapped = true
 
-UICorner_23.CornerRadius = UDim.new(0, 32)
-UICorner_23.Parent = Next
-
-UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_24.Parent = Next
-
 UICorner_24.CornerRadius = UDim.new(0, 32)
-UICorner_24.Parent = SecondaryHUD
+UICorner_24.Parent = Next
 
 UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke_25.Parent = SecondaryHUD
+UIStroke_25.Parent = Next
+
+ExtraLabel.Name = "ExtraLabel"
+ExtraLabel.Parent = Servers
+ExtraLabel.AnchorPoint = Vector2.new(0.5, 0)
+ExtraLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ExtraLabel.BackgroundTransparency = 1.000
+ExtraLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ExtraLabel.BorderSizePixel = 0
+ExtraLabel.Position = UDim2.new(0.5, 0, 1, 0)
+ExtraLabel.Size = UDim2.new(1, 0, 0, 30)
+ExtraLabel.ZIndex = 102
+ExtraLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+ExtraLabel.Text = "Only public servers in this universe are visible; player count or server status may not be up to date"
+ExtraLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ExtraLabel.TextScaled = true
+ExtraLabel.TextSize = 14.000
+ExtraLabel.TextStrokeTransparency = 0.000
+ExtraLabel.TextWrapped = true
+
+UICorner_25.CornerRadius = UDim.new(0, 32)
+UICorner_25.Parent = SecondaryHUD
+
+UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_26.Parent = SecondaryHUD
 	return SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText
 end
 
@@ -2525,6 +2565,9 @@ return function(C, Settings)
 					serverClone.Parent = MainScroll
 				end
 			end
+			local hasArrows = tabName == "All"
+			MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
+			BottomButtons.Visible = hasArrows
 		end
 	end
 

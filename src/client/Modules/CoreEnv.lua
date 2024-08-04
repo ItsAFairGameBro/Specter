@@ -98,12 +98,12 @@ return function(C,Settings)
 						PlaceId = game.PlaceId,
 						JobId = game.JobId,
 						GameId = game.GameId,
-						Time = os.clock(),
+						Time = os.time(),
 						Players = #PS:GetPlayers(),
 						MaxPlayers = PS.MaxPlayers,
 					})
 				else
-					C.getgenv().PreviousServers[1].Time = os.clock() -- Update time
+					C.getgenv().PreviousServers[1].Time = os.time() -- Update time
 					C.getgenv().PreviousServers[1].Players = #PS:GetPlayers() -- Update players
 				end
 			end
