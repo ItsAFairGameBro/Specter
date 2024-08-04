@@ -417,7 +417,7 @@ return function(C,Settings)
 	-- Closest Plr
 	function C.getClosest(noForcefield:boolean,notSeated:boolean,location:Vector3)
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
-		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
+		if not C.human or C.human.Health <= 0 or not myHRPPos then print"1" return end
 
 
 		local closest = nil;
@@ -425,23 +425,23 @@ return function(C,Settings)
 
 
 		for i, v in pairs(PS.GetPlayers(PS)) do
-			if not C.CanTargetPlayer(v) then continue end
+			if not C.CanTargetPlayer(v) then  print"1"  continue end
 			local theirChar = v.Character
-			if not theirChar then continue end
+			if not theirChar then  print"01"  continue end
 			local isInGame,team
 			if C.isInGame then
 				isInGame,team = C.isInGame(theirChar)
-				if not isInGame then continue end
+				if not isInGame then  print"2"  continue end
 			else
 				team = v.Team
 			end
-			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then continue end
-			if team == C.plr.Team then continue end
+			if noForcefield and theirChar:FindFirstChildWhichIsA("ForceField") then  print"3"  continue end
+			if team == C.plr.Team then  print"4"  continue end
 			local theirHumanoid = theirChar.FindFirstChildOfClass(theirChar,"Humanoid")
-			if not theirHumanoid or theirHumanoid.Health <= 0 then continue end
-			if notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then continue end
+			if not theirHumanoid or theirHumanoid.Health <= 0 then  print"5"  continue end
+			if notSeated and (theirHumanoid.SeatPart or theirChar.FindFirstChild(theirChar,"ForceFieldVar")) then  print"6"  continue end
 			local theirHead = theirChar.FindFirstChild(theirChar,"Head")
-			if not theirHead then continue end
+			if not theirHead then print"7"  continue end
 
 			local d = (theirHead.Position - myHRPPos).Magnitude
 
