@@ -424,18 +424,21 @@ return function(C,Settings)
         C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
         ChatBarUpdated()
         C.AddObjectConnection(chatBar,"FocusLostChatbar",chatBar.FocusLost:Connect(function(enterPressed)
-            ChatBarUpdated()
             local inputMsg = chatBar.Text
-            if enterPressed then
-                if inputMsg:sub(1,1)==";" or inputMsg:sub(1,1)=="/" then
-                    enterPressed = inputMsg:sub(1,1)=="/" -- only send the message if it's a /
-                    if not enterPressed then
-                        chatBar.Text = ""
-                        ClearSuggestions()
+            if not C.Cleared then
+                ChatBarUpdated()
+                if enterPressed then
+                    if inputMsg:sub(1,1)==";" or inputMsg:sub(1,1)=="/" then
+                        enterPressed = inputMsg:sub(1,1)=="/" -- only send the message if it's a /
+                        if not enterPressed then
+                            chatBar.Text = ""
+                            ClearSuggestions()
+                        end
+                        task.spawn(C.RunCommand,inputMsg,true)
                     end
-                    task.spawn(C.RunCommand,inputMsg,true)
                 end
             end
+            
             if not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     if connectionFunct.Function then

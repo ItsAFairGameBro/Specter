@@ -943,7 +943,7 @@ return function(C,Settings)
 											local savePos = C.hrp.Position
 											local data = C.hackData.NavalWarefare.BombInstantHit
 											data.ComparePos = savePos
-											task.delay(.3,function()
+											task.delay(.6,function()
 												if data.ComparePos == savePos then
 													data.ComparePos = nil
 												end
