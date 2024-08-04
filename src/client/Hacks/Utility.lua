@@ -74,7 +74,7 @@ return function(C,Settings)
 				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
-				Update = function(self)
+				Update = function(self,msg)
 					local KickedButton = C.UI.KickedButton
 
 					if KickedButton then
@@ -82,6 +82,8 @@ return function(C,Settings)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
 						if self.ErrorMessage then
 							KickedButton.Text = self.ErrorMessage.Text
+						else
+							KickedButton.Text = msg
 						end
 						KickedButton.Visible = true
 					end
@@ -90,10 +92,12 @@ return function(C,Settings)
 					if not newValue then
 						return
 					end
-					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(...)
-						print("Sent",...)
+					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg)
+						if not msg then
+							return
+						end
 						GS:ClearError()
-						self:Update()
+						self:Update(msg)
 						-- Debug.Traceback doesn't work for this:
 						print(("Client/Server Kick Has Occured (%.2f)"):format(time()))
 					end))
