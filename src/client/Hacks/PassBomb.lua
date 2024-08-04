@@ -23,9 +23,11 @@ return function(C,Settings)
 				Shortcut = "AutoPassBomb",Functs={},Default=true,
                 DontActivate=true,
 				PassBomb = function(self)
+                    print("Passing")
 					local Bomb = C.char:WaitForChild("Bomb",5)
                     if Bomb then
-                        while Bomb.Parent do
+                        print("Bomb Found")
+                        while Bomb.Parent and Bomb.Parent == C.char do
                             local closestHead, dist = C.getClosest()
                             if not closestHead then
                                 error("Nearest player failed: nobody found!")
@@ -36,6 +38,7 @@ return function(C,Settings)
                                 [2] = theirChar:WaitForChild("CollisionPart"),
                             }
                             Bomb.RemoteEvent:FireServer(unpack(args))
+                            print("sent to",theirChar)
                             RunS.RenderStepped:Wait()
                         end
                     end
@@ -51,8 +54,10 @@ return function(C,Settings)
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						local BombVal = C.char:WaitForChild("GotBombVal")
-                        table.insert(self.Functs,BombVal.Changed:Connect(function()
-                            self:PassBomb()
+                        table.insert(self.Functs,BombVal.Changed:Connect(function(new)
+                            if new then
+                                self:PassBomb()
+                            end
                         end))
                         if BombVal.value then
                             self:PassBomb()
