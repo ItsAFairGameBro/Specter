@@ -2795,7 +2795,6 @@ return function(C, Settings)
 				return false, result.StatusMessage
 			end
 			local success2, result2 = C.API(HS,"JSONDecode",1,result.Body)
-			print(result.Body)
 			if not success2 then
 				return success2, result2
 			end
@@ -2829,7 +2828,7 @@ return function(C, Settings)
 			return
 		end
 		for num, data in ipairs(result) do
-			if data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId) then
+			if tabName~="Recent" or (data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId)) then
 				index+=1
 				local serverClone = C.Examples.ServerEx:Clone()
 				local listedData = {
