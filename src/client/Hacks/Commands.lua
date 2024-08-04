@@ -535,9 +535,11 @@ return function(C,Settings)
                     end
                     local random = Rand:NextInteger(1,#ServerJobIds)
     
-                    TeleportS:TeleportToPlaceInstance(game.PlaceId,ServerJobIds[random],C.plr)
+                    --TeleportS:TeleportToPlaceInstance(game.PlaceId,ServerJobIds[random],C.plr)
+                    C.ServerTeleport(game.PlaceId,ServerJobIds[random])
                 elseif not args[1] or args[1]:len() == 0 then
-                    TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
+                    --TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
+                    C.ServerTeleport(game.PlaceId,game.JobId)
                 end
                 return true
             end,

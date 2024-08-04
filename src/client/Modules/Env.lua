@@ -2,6 +2,7 @@ local CAS = game:GetService("ContextActionService")
 local CS = game:GetService("CollectionService")
 local PhysicsService = game:GetService("PhysicsService")
 local PS = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
 local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
 local TS = game:GetService"Teams"
@@ -710,5 +711,14 @@ return function(C,Settings)
 			Table[#Table]="and "..Table[#Table]--adds the and to the last character of the list
 		end
 		return table.concat(Table,", ")
+	end
+	function C.ServerTeleport(PlaceId: number,JobId: number)
+		if C.Cleared then
+			return -- Nope! Don't teleport!
+		end
+		if not C:SaveProfile() then-- Save Profile First!
+			return
+		end
+		C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)
 	end
 end
