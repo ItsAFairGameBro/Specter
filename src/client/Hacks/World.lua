@@ -120,6 +120,12 @@ return function(C,Settings)
 					end
 					return false
 				end,
+				GetSearchInstance = function(self)
+					if game.GameId == 2733031763 then
+						return C.StringWait(workspace,"Bridge")
+					end
+					return workspace
+				end,
 				TouchTransmitter = function(self,instance)
 					local Parent = instance.Parent
 					local CanTouch = Parent.CanTouch
@@ -139,10 +145,9 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					local EnTbl = self.EnTbl
-                    for num, instance in ipairs(workspace:GetDescendants()) do
+                    for num, instance in ipairs(self:GetSearchInstance():GetDescendants()) do
 						for name, en in pairs(EnTbl) do
 							if instance:IsA(name) and en and not self:CheckForBlacklist(instance) then
-								print("Fired",name,instance.Parent.Name)
 								self[name](self,instance)
 							end
 						end
