@@ -30,7 +30,7 @@ local function RegisterFunctions()
 		local CanTouch1, CanTouch2 = part1.CanTouch, part2.CanTouch
 		part1.CanTouch, part2.CanTouch = true, true
 		if part1.Parent and part2.Parent then
-			if not number then
+			if number then
 				firetouchinterest(part1,part2,number)
 			else
 				firetouchinterest(part1,part2,0)
