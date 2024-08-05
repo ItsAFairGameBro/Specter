@@ -377,12 +377,13 @@ return function(C,Settings)
 												C.Spectate(closestBasePart.Parent)
 											end
 											--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
-											for s = 0, 1, 1 do
+											--[[for s = 0, 1, 1 do
 												C.firetouchinterest(instance,closestBasePart,0)
 												task.wait()
 												C.firetouchinterest(instance,closestBasePart,1)
 												task.wait()
-											end
+											end--]]
+											C.firetouchinterest(instance,closestBasePart)
 										end
 									end
 								end)
@@ -614,12 +615,13 @@ return function(C,Settings)
 									end
 									--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 									instance.CanTouch = true
-									for s = 0, 1, 1 do
+									--[[for s = 0, 1, 1 do
 										C.firetouchinterest(instance,closestBasePart,0)
 										task.wait()
 										C.firetouchinterest(instance,closestBasePart,1)
 										task.wait()
-									end
+									end--]]
+									C.firetouchinterest(instance,closestBasePart)
 								else
 									instance.CanTouch = true
 								end
@@ -794,6 +796,7 @@ return function(C,Settings)
 									Touching = not Touching
 									local PrimaryPart = C.char and C.char.PrimaryPart
 									if PrimaryPart then
+										--C.firetouchinterest(C.char.PrimaryPart, FlagPad, Touching and 0 or 1)
 										C.firetouchinterest(C.char.PrimaryPart, FlagPad, Touching and 0 or 1)
 									end
 									RunS.RenderStepped:Wait()

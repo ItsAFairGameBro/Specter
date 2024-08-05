@@ -155,7 +155,7 @@ return function(C,Settings)
 			{
 				Title = "ESP Touch Transmitters",
 				Tooltip = "Ability to toggle/activate touch transmitters",
-				Layout = 2,Default=true,Deb=0,
+				Layout = 2,Default=false,Deb=0,
 				Shortcut = "DisableTouchTransmitters", Instances = {}, Functs={},
 				TouchTransmitters={}, Threads = {},
 				GlobalTouchTransmitters={},
@@ -263,7 +263,7 @@ return function(C,Settings)
 
 									C.ResetPartProperty(parent,"CanTouch","DisableTouchTransmitters")
 									RunS.RenderStepped:Wait()
-									C.firetouchinterest(C.hrp,parent, toTouch)
+									C.firetouchinterest(C.hrp, parent, toTouch)
 									RunS.RenderStepped:Wait()
 
 									if TouchToggle.Parent then

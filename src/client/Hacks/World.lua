@@ -128,14 +128,9 @@ return function(C,Settings)
 				end,
 				TouchTransmitter = function(self,instance)
 					local Parent = instance.Parent
-					local CanTouch = Parent.CanTouch
-					Parent.CanTouch = true
 					if C.hrp then
-						C.firetouchinterest(C.hrp,Parent,0)
-						task.wait()
-						C.firetouchinterest(C.hrp,Parent,1)
+						C.firetouchinterest(C.hrp,Parent)
 					end
-					Parent.CanTouch = CanTouch
 				end,
 				ClickDetector = function(self,instance)
 					C.fireclickdetector(instance,C.Randomizer:NextNumber(2,3),"MouseClick")

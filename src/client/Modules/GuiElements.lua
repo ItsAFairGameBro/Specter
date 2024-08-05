@@ -2663,7 +2663,7 @@ return function(C, Settings)
 		return ActionClone
 	end
 
-	function C.SetActionPercentage(actionClone: ActionClone, percentage: float)
+	function C.SetActionPercentage(actionClone: Frame, percentage: number)
 		local Time = actionClone:WaitForChild("Time",5)
 		if Time then
 			local Display = ("%.2f%%"):format(percentage * 100)

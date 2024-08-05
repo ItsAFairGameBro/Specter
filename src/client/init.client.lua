@@ -27,9 +27,17 @@ local function RegisterFunctions()
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
 	C.firetouchinterest = isStudio and function() return end or function(part1,part2,number)
+		local CanTouch1, CanTouch2 = part1.CanTouch, part2.CanTouch
+		part1.CanTouch, part2.CanTouch = true, true
 		if part1.Parent and part2.Parent then
-			firetouchinterest(part1,part2,number)
+			if not number then
+				firetouchinterest(part1,part2,number)
+			else
+				firetouchinterest(part1,part2,0)
+				task.spawn(firetouchinterest,part1,part2,1)
+			end
 		end
+		part1.CanTouch, part2.CanTouch = CanTouch1, CanTouch2
 	end
 	C.fireclickdetector = isStudio and function() return end or fireclickdetector
 	function C.fireproximityprompt(ProximityPrompt, Amount, Skip)
@@ -53,6 +61,7 @@ local function RegisterFunctions()
 		end
 		ProximityPrompt.HoldDuration = HoldDuration
 	end
+	C.setclipboard = isStudio and function() return end setclipboard
 	C.getloadedmodules = isStudio and function() return {C.PlayerScripts.PlayerModule.ControlModule} end or getloadedmodules
 	C.request = not isStudio and request
 	C.isfolder = not isStudio and isfolder

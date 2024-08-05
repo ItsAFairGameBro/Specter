@@ -202,7 +202,7 @@ return function(C,Settings)
 	end
 
 	function C.comma_value(amount: number)
-		local formatted = amount
+		local k, formatted = nil, amount
 		while true do  
 		  formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
 		  if (k==0) then
