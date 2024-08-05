@@ -151,21 +151,21 @@ return function(C,Settings)
 						Title = "TouchInterest",
 						Tooltip = "Fire TouchInterests with your character's rootpart",
 						Layout = 1,Default = true,
-						Shortcut="TouchInterest",
+						Shortcut="TouchTransmitter",
 					},
 					{
 						Type = Types.Toggle,
 						Title = "ProximityPrompt",
-						Tooltip = "Fire ProximityPrompts",
+						Tooltip = "Fires all ProximityPrompts exactly once",
 						Layout = 2,Default = false,
 						Shortcut="ProximityPrompt",
 					},
 					{
 						Type = Types.Toggle,
-						Title = "ClickDetectors",
+						Title = "ClickDetector",
 						Tooltip = "Clicks on all ClickDetectors at the same time",
 						Layout = 3,Default = false,
-						Shortcut="ClickDetectors",
+						Shortcut="ClickDetector",
 					}
 				},
 			}
