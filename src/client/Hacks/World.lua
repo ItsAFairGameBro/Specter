@@ -109,7 +109,7 @@ return function(C,Settings)
 					}
 				},
 			},
-			{
+			FireElements={
 				Title = "Fire",Type="NoToggle",
 				Tooltip = "Fires TouchInterest, ProximityPrompt, ClickDetector",
 				Layout = 3,NoStudio=true,
