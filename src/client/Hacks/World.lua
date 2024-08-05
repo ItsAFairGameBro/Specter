@@ -142,6 +142,7 @@ return function(C,Settings)
                     for num, instance in ipairs(workspace:GetDescendants()) do
 						for name, en in pairs(EnTbl) do
 							if instance:IsA(name) and en and not self:CheckForBlacklist(instance) then
+								print("Fired",name,instance.Parent.Name)
 								self[name](self,instance)
 							end
 						end
