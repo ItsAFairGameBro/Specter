@@ -109,6 +109,65 @@ return function(C,Settings)
 					}
 				},
 			},
+			{
+				Title = "Fire",Type="NoToggle",
+				Tooltip = "Fires TouchInterest, ProximityPrompt, ClickDetector",
+				Layout = 2,NoStudio=true,
+				Shortcut = "FireElements",Threads={},
+				TouchTransmitter = function(self,instance)
+					local Parent = instance.Parent
+					local CanTouch = Parent.CanTouch
+					Parent.CanTouch = true
+					if C.hrp then
+						C.firetouchinterest(C.hrp,Parent,0)
+						task.wait()
+						C.firetouchinterest(C.hrp,Parent,1)
+					end
+					Parent.CanTouch = CanTouch
+				end,
+				ClickDetector = function(self,instance)
+					C.fireclickdetector(instance,C.Randomizer:NextNumber(2,3),"MouseClick")
+				end,
+				ProximityPrompt = function(self,instance)
+					C.fireproximityprompt(instance,1,true)
+				end,
+				Activate = function(self,newValue)
+					local EnTbl = self.EnTbl
+                    for num, instance in ipairs(workspace:GetDescendants()) do
+						for name, en in pairs(EnTbl) do
+							if instance:IsA(name) and en then
+								self[name](self,instance)
+							end
+						end
+						if num%100 == 0 then
+							RunS.RenderStepped:Wait()
+						end
+					end
+				end,
+				Options = {
+                    {
+						Type = Types.Toggle,
+						Title = "TouchInterest",
+						Tooltip = "Fire TouchInterests with your character's rootpart",
+						Layout = 1,Default = true,
+						Shortcut="TouchInterest",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "ProximityPrompt",
+						Tooltip = "Fire ProximityPrompts",
+						Layout = 2,Default = false,
+						Shortcut="ProximityPrompt",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "ClickDetectors",
+						Tooltip = "Clicks on all ClickDetectors at the same time",
+						Layout = 3,Default = false,
+						Shortcut="ClickDetectors",
+					}
+				},
+			}
 		}
 	}
 end

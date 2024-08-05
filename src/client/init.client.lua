@@ -32,6 +32,27 @@ local function RegisterFunctions()
 		end
 	end
 	C.fireclickdetector = isStudio and function() return end or fireclickdetector
+	function C.fireproximityprompt(ProximityPrompt, Amount, Skip)
+		assert(ProximityPrompt, "Argument #1 Missing or nil")
+		assert(typeof(ProximityPrompt) == "Instance" and ProximityPrompt:IsA("ProximityPrompt"), "Attempted to fire a Value that is not a ProximityPrompt")
+	
+		local HoldDuration = ProximityPrompt.HoldDuration
+		if Skip then
+			ProximityPrompt.HoldDuration = 0
+		end
+	
+		for i = 1, Amount or 1 do
+			ProximityPrompt:InputHoldBegin()
+			if Skip then
+				local Start = time()
+				repeat
+					RunS.Heartbeat:Wait()
+				until time() - Start > HoldDuration
+			end
+			ProximityPrompt:InputHoldEnd()
+		end
+		ProximityPrompt.HoldDuration = HoldDuration
+	end
 	C.getloadedmodules = isStudio and function() return {C.PlayerScripts.PlayerModule.ControlModule} end or getloadedmodules
 	C.request = not isStudio and request
 	C.isfolder = not isStudio and isfolder
@@ -80,6 +101,7 @@ C.preloadedModule = {}
 C.forcePropertyFuncts = {}
 C.BindedActions = {} -- key binds
 C.EventFunctions = {}
+C.Randomizer = Random.new()
 C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
