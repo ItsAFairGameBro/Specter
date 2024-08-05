@@ -112,7 +112,7 @@ return function(C,Settings)
 			{
 				Title = "Fire",Type="NoToggle",
 				Tooltip = "Fires TouchInterest, ProximityPrompt, ClickDetector",
-				Layout = 2,NoStudio=true,
+				Layout = 3,NoStudio=true,
 				Shortcut = "FireElements",Threads={},
 				TouchTransmitter = function(self,instance)
 					local Parent = instance.Parent
@@ -136,6 +136,7 @@ return function(C,Settings)
                     for num, instance in ipairs(workspace:GetDescendants()) do
 						for name, en in pairs(EnTbl) do
 							if instance:IsA(name) and en then
+								print("Fired",name,instance)
 								self[name](self,instance)
 							end
 						end
