@@ -114,6 +114,12 @@ return function(C,Settings)
 				Tooltip = "Fires TouchInterest, ProximityPrompt, ClickDetector",
 				Layout = 3,NoStudio=true,
 				Shortcut = "FireElements",Threads={},
+				CheckForBlacklist = function(self,instance)
+					if game.GameId == 2733031763 and instance.Parent.Name == "Floor" then
+						return true
+					end
+					return false
+				end,
 				TouchTransmitter = function(self,instance)
 					local Parent = instance.Parent
 					local CanTouch = Parent.CanTouch
@@ -135,8 +141,7 @@ return function(C,Settings)
 					local EnTbl = self.EnTbl
                     for num, instance in ipairs(workspace:GetDescendants()) do
 						for name, en in pairs(EnTbl) do
-							if instance:IsA(name) and en then
-								print("Fired",name,instance)
+							if instance:IsA(name) and en and not self:CheckForBlacklist(instance) then
 								self[name](self,instance)
 							end
 						end
