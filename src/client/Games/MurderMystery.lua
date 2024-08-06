@@ -156,23 +156,12 @@ return function(C,Settings)
 
                     for i = 0, 360, 360/12 do
                         local dir = getRaycastDirection(i)
-                        local hitResult, hitPosition = C.Raycast(charPosition, dir, options)
+                        local hitResult, hitPosition = C.Raycast(charPosition, dir + charPosition, options)
                         
-                        -- Check if we hit something
-                        if hitResult then
-                            local distance = (hitPosition - charPosition).Magnitude
-                            if distance > maxDistance then
-                                maxDistance = distance
-                                maxHitPosition = hitPosition
-                            end
-                        else
-                            -- If no hit, assume the ray goes the full distance
-                            local farPoint = charPosition + dir * options.distance
-                            local distance = (farPoint - charPosition).Magnitude
-                            if distance > maxDistance then
-                                maxDistance = distance
-                                maxHitPosition = farPoint
-                            end
+                        local distance = (hitPosition - charPosition).Magnitude
+                        if distance > maxDistance then
+                            maxDistance = distance
+                            maxHitPosition = hitPosition
                         end
                     end
 
