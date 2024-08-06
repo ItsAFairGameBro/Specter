@@ -440,6 +440,9 @@ return function(C,Settings)
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
 			C.VehicleTeleport(C.human.SeatPart.Parent,NewLocation)
 		elseif C.char then
+			if typeof(NewLocation) == "Vector3" then
+				NewLocation = C.char:GetPivot().Rotation * CFrame.new(NewLocation)
+			end
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
 			C.char:PivotTo(NewLocation)
 		end

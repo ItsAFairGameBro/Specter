@@ -132,6 +132,42 @@ return function(C,Settings)
 				Tooltip = "As the sheriff, kill the murderer",
 				Layout = 2,Type="NoToggle",
 				Shortcut = "SheriffWin", Threads={},
+                FindFurtherDistance = function()
+                    local options = {
+                        ignoreInvisibleWalls = false,
+                        ignoreUncollidable = true,
+                        ignoreList = {C.char},
+                        raycastFilterType = Enum.RaycastFilterType.Exclude,
+                        distance = 12, -- Set a large distance to find the maximum
+                    }
+
+                    local function getRaycastDirection(angle)
+                        -- Convert angle to radians
+                        local radians = math.rad(angle)
+                        -- Calculate the direction vector in the xz plane
+                        local direction = Vector3.new(math.cos(radians), 0, math.sin(radians))
+                        return direction
+                    end
+                    
+                    local theirChar = workspace:FindFirstChild("TheirCharacter") -- Replace with actual character reference
+                    local charPosition = theirChar:GetPivot().Position
+                    
+                    local maxDistance = 0
+                    local maxHitPosition = charPosition
+                    
+                    for i = 0, 360, 360/12 do
+                        local dir = getRaycastDirection(i) * options.distance
+                        local hitResult, hitPosition = C.Raycast(charPosition, dir, options)
+                    
+                        local distance = (hitPosition - charPosition).Magnitude
+                        if distance > maxDistance then
+                            maxDistance = distance
+                            maxHitPosition = hitPosition
+                        end
+                    end
+                    
+                    return maxHitPosition
+                end,
 				Activate = function(self,newValue)
                     C.RemoveAction(self.Shortcut)
                     if select(2,C.isInGame(C.char)) ~= "Sheriff" then
@@ -169,8 +205,9 @@ return function(C,Settings)
                                 if Gun.Parent ~= C.char then
                                     C.human:EquipTool(Gun)
                                 end
-                                local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
-                                C.DoTeleport(hitCF)
+                                --local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
+                                local raycast = self.FindFurtherDistance()
+                                C.DoTeleport(raycast)
                                 LastTeleport = os.clock()
                             end
                             if not LastClick or os.clock() - LastClick >= 1 then
@@ -304,6 +341,28 @@ return function(C,Settings)
                                 end
                             end
                         end
+                    end,
+                }
+            },
+            {
+				Title = "Bottom Part",
+				Tooltip = "Adds a part at the lowest point in the map",
+				Layout = 101, DontActivate = true,
+				Shortcut = "BottomPart", Functs = {}, Instance = {},
+				Activate = function(self,newValue)
+                    if C.Map then
+                        self.Events.MapAdded(self,C.Map)
+                    end
+                end,
+                Events = {
+                    MapAdded = function(self,map)
+                        local cf, size = map:GetBoundingBox()
+                        local inviPart = Instance.new("Part")
+                        inviPart.CFrame = cf - Vector3.new(0,size/2,0)
+                        inviPart.Size = Vector3.new(size.X,0.2,size.Z)
+                        inviPart.Anchored = true
+                        inviPart.Parent = map
+                        table.insert(self.Instances,inviPart)
                     end,
                 }
             },
