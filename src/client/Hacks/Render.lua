@@ -54,10 +54,10 @@ return function(C,Settings)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
 					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
-					print(theirInGame[1])
-					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or
-						((theirInGame[3]==nil and select(3,C.isInGame(camera.CameraSubject.Parent))==theirInGame[3]) or
-						(theirInGame[3]~=nil and C.isinGame(camera.CameraSubject.Parent)==theirInGame[1]))) then
+					local shouldRender = theirHumanoid~=camera.CameraSubject and (not C.isInGame or
+					((theirInGame[3]==nil and table.pack(C.isInGame(camera.CameraSubject.Parent))[3]==theirInGame[3]) or
+					(theirInGame[3]~=nil and C.isinGame(camera.CameraSubject.Parent)==theirInGame[1])))
+					if shouldRender then
 						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
 						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar,theirInGame)
 					else
