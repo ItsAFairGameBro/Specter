@@ -189,7 +189,7 @@ return function(C,Settings)
 					-- Adjust origin slightly to retry
 					origin = hitResult.Position:Lerp(origin,.01);
 					lastInstance = hitResult.Instance;
-					table.insert(rayParams.FilterDescendantsInstances, lastInstance);
+					rayParams:AddToFilter(lastInstance)
 				end
 			else
 				didHit = false
