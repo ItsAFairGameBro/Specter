@@ -193,6 +193,7 @@ return function(C,Settings)
                 end,
 				Activate = function(self,newValue)
                     self:Reset()
+                    print("AutOWin",newValue,C.GameInProgress)
                     if newValue and C.GameInProgress then
                         table.insert(self.Functs,C.plr.Backpack.ChildAdded:Connect(function(newChild)
                             if newChild.Name == "Gun" then
