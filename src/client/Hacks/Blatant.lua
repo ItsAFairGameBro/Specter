@@ -64,7 +64,7 @@ return function(C,Settings)
 			{
 				Title = "Fly",
 				Tooltip = "Allows you to fly on enable",
-				Layout = 1,
+				Layout = 1,DontActivate=true,
 				Shortcut = "Fly",Functs={},Instances={},Default=false,Keybind = "Z",
 				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
 				RunOnDestroy=function(self)
