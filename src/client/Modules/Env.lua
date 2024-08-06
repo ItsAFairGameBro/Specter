@@ -167,8 +167,7 @@ return function(C,Settings)
 	
 		local hitResult, hitPosition
 		local curDistance = distance
-		local maxIterations = 100  -- Set a limit to prevent infinite loops
-		local iterations = 0
+		local lastInstance  -- Set a limit to prevent infinite loops
 		
 		repeat
 			hitResult = workspace:Raycast(origin, direction * curDistance, rayParams)
@@ -178,27 +177,25 @@ return function(C,Settings)
 					hitPosition = hitResult.Position
 					didHit = true
 				else
-					-- Adjust origin slightly to retry
-					origin = hitResult.Position + direction * 0.01
-					curDistance -= hitResult.Distance
 	
-					-- Ensure curDistance is always positive
-					if curDistance <= 0 then
+					-- Ensure curDistance is always positive and that it didn't hit the same object
+					curDistance -= hitResult.Distance
+					if curDistance <= 0 or lastInstance == hitResult.Instance then
+						warn(`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
+						C.Prompt("Raycast Max Limit",`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
 						didHit = false
 						break
 					end
+					-- Adjust origin slightly to retry
+					origin = hitResult.Position:Lerp(origin,.01);
+					lastInstance = hitResult.Instance;
+					table.insert(rayParams.FilterDescendantsInstances, lastInstance);
 				end
 			else
 				didHit = false
 				break
 			end
 			
-			iterations = iterations + 1
-			if iterations >= maxIterations then
-				warn("Raycast reached maximum iteration limit")
-				C.Prompt("Raycast Max Limit",`The raycast reached the max iterations of {maxIterations}`)
-				break
-			end
 		until didHit
 		
 		if not hitPosition then
