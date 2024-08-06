@@ -33,6 +33,20 @@ local function Static(C, Settings)
     C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.VictoryScreen").OnClientEvent:Connect(function(...)
         C.GameInProgress = false
     end))
+
+    table.insert(C.EventFunctions,function()
+		local function MapAdded()
+            C.Map = workspace:WaitForChild("Normal")
+            C.FireEvent("MapAdded",nil,C.Map)
+            C.AddObjectConnection(C.Map,"MapRemoved",C.Map:Destroying(function()
+                C.FireEvent("MapRemoved",nil,C.Map)
+            end))
+        end
+        C.StringWait(RS,"Remotes.Gameplay.LoadingMap"):Connect(MapAdded)
+        if workspace:FindFirstChild("Normal") then
+            MapAdded()
+        end
+    end)
 end
 return function(C,Settings)
     Static(C,Settings)
@@ -136,6 +150,38 @@ return function(C,Settings)
 					
 				}
 			},
+            {
+				Title = "Disable Killbricks",
+				Tooltip = "Removes the killbricks in the map",
+				Layout = 100,
+				Shortcut = "DisableKillbricks",
+                Activate = function(self,newValue)
+                    self.Events.MapAdded(self)
+                end, 
+                Events = {
+                    MapAdded = function(self)
+                        print("Map added")
+                        if not C.Map then
+                            return
+                        end
+                        local GlitchParts = C.Map:WaitForChild("GlitchParts",5)
+                        if not GlitchParts then
+                            print("glitch parts not found")
+                            return
+                        end
+                        print('glitch parts found')
+                        for num, part in ipairs(GlitchParts:GetChildren()) do
+                            if part:IsA("BasePart") then
+                                if self.RealEnabled then
+                                    C.SetPartProperty(part,"CanTouch",self.Shortcut,false)
+                                else
+                                    C.ResetPartProperty(part,"CanTouch",self.Shortcut)
+                                end
+                            end
+                        end
+                    end,
+                }
+            },
         }
     }
 end
