@@ -4,7 +4,7 @@ local CS = game:GetService("CollectionService")
 local RS = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local function Static(C, Settings)
-    local RoundTimerPart = workspace:WaitForChild("RoundTimerPart")
+    C.RoundTimerPart = workspace:WaitForChild("RoundTimerPart")
     function C.isInGame(theirChar)
         if not theirChar then
             return false, "Lobby", false
@@ -16,7 +16,7 @@ local function Static(C, Settings)
 		if not player or not human or human:GetState() == Enum.HumanoidStateType.Dead or not C.GameInProgress then
 			return false, "Lobby", false--No player, no team!
 		end
-        local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 300
+        local defactoInGame = (theirChar:GetPivot().Position - C.RoundTimerPart.Position).Magnitude > 300
         local realInGame = player:GetAttribute("Alive")
         local hasGun = theirChar:FindFirstChild("Gun") or C.StringFind(player,"Backpack.Gun")
         local hasKnife = theirChar:FindFirstChild("Knife") or C.StringFind(player,"Backpack.Knife")
@@ -29,7 +29,20 @@ local function Static(C, Settings)
 
 		return defactoInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
 	end
-    
+    function C.GetMurderer()
+        for num, theirChar in ipairs(CS:GetTagged("Character")) do
+            if select(2,C.isInGame(theirChar)) == "Murderer" then
+                return PS:GetPlayerFromCharacter(theirChar), theirChar
+            end
+        end
+    end
+    function C.GetSherrif()
+        for num, theirChar in ipairs(CS:GetTagged("Character")) do
+            if select(2,C.isInGame(theirChar)) == "Sheriff" then
+                return PS:GetPlayerFromCharacter(theirChar), theirChar
+            end
+        end
+    end
 
     table.insert(C.EventFunctions,function()
 		local function MapAdded()
@@ -186,7 +199,13 @@ return function(C,Settings)
                     local actionClone = C.AddAction(info)
                     local Gun = C.StringFind(C.Map,"GunDrop")
                     while Gun and Gun.Parent == C.Map and select(2,C.isInGame(C.char)) == "Innocent" and info.Enabled do
-                        C.DoTeleport(Gun:GetPivot())
+                        local Murderer = C.GetMurderer():GetPivot().Position
+                        local Knife = Murderer and Murderer:FindFirstChild("Knife")
+                        --[[if not Knife or (Knife.Position - C.GetMurderer():GetPivot().Position).Magnitude < 5 then
+                            C.DoTeleport(Gun:GetPivot())
+                        else
+                            C.DoTeleport(C.RoundTimerPart:GetPivot()+Vector3.new(0,10000,0))
+                        end--]]
                         C.firetouchinterest(C.hrp,Gun)
                         RunService.RenderStepped:Wait()
                     end
