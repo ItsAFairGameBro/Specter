@@ -63,7 +63,11 @@ return function(C,Settings)
                         if theirChar == C.char then
                             continue--don't try and oof yourself, won't end well.
                         end
-                        while info.Enabled and C.isInGame(theirChar) do
+                        while info.Enabled do
+                            local inGame = table.pack(C.isInGame(theirChar))
+                            if not inGame[1] or not inGame[3] then
+                                break
+                            end
                             if Knife.Parent ~= C.char then
                                 C.human:EquipTool(Knife)
                             end
@@ -102,7 +106,11 @@ return function(C,Settings)
                         if theirChar == C.char then
                             continue--don't try and oof yourself, won't end well.
                         end
-                        while info.Enabled and select(2,C.isInGame(theirChar)) == "Murderer" do
+                        while info.Enabled do
+                            local inGame = table.pack(C.isInGame(theirChar))
+                            if not inGame[1] or inGame[2] ~= "Murderer" or not inGame[3] then
+                                break
+                            end
                             if Gun.Parent ~= C.char then
                                 C.human:EquipTool(Gun)
                             end
