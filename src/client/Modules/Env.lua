@@ -138,38 +138,41 @@ return function(C,Settings)
 	function C.Raycast(origin, direction, options)
 		options = options or {}
 		local distance = options.distance or 1
-
+	
 		rayParams.FilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude
 		rayParams.FilterDescendantsInstances = options.ignoreList or {}  -- List of instances to ignore
-
+	
 		local hitPart, hitPosition, hitNormal = nil, nil, nil
 		local didHit = false
-
+	
 		local function customFilter(instance)
 			if options.detectionFunction and options.detectionFunction(instance) then
 				return true
 			end
-
+	
 			if options.ignoreInvisibleWalls and instance.Transparency > .9 then
 				return false
 			end
-
-			if options.ignoreUncollidable and (not instance.CanCollide or not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,instance.CollisionGroup)) then
+	
+			if options.ignoreUncollidable and (not instance.CanCollide or not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup, instance.CollisionGroup)) then
 				return false
 			end
-
+	
 			if options.passFunction and options.passFunction(instance) then
 				return false
 			end
 		
 			return true
 		end
-		
+	
 		local hitResult, hitPosition
 		local curDistance = distance
+		local maxIterations = 100  -- Set a limit to prevent infinite loops
+		local iterations = 0
+		
 		repeat
 			hitResult = workspace:Raycast(origin, direction * curDistance, rayParams)
-
+	
 			if hitResult then
 				if customFilter(hitResult.Instance) then
 					hitPosition = hitResult.Position
@@ -178,18 +181,30 @@ return function(C,Settings)
 					-- Adjust origin slightly to retry
 					origin = hitResult.Position + direction * 0.01
 					curDistance -= hitResult.Distance
+	
+					-- Ensure curDistance is always positive
+					if curDistance <= 0 then
+						didHit = false
+						break
+					end
 				end
 			else
 				didHit = false
 				break
 			end
-
+			
+			iterations = iterations + 1
+			if iterations >= maxIterations then
+				warn("Raycast reached maximum iteration limit")
+				C.Prompt("Raycast Max Limit",`The raycast reached the max iterations of {maxIterations}`)
+				break
+			end
 		until didHit
 		
 		if not hitPosition then
 			hitPosition = origin + direction * distance
 		end
-
+	
 		return hitResult, hitPosition
 	end
 	
