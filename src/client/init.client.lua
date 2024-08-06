@@ -20,15 +20,26 @@ local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {f
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
 	if not enExecutor.firetouchinterest then
+		
 		firetouchinterest = function(part1,part2,number)--creates a fake touch function
-			task.spawn(function()
+			local thread
+			thread = task.spawn(function(dt)
+				print("using new touch detection")
 				C.SetPartProperty(part2,"CanCollide","firetouchinterest",false)
-				C.SetPartProperty(part2,"Transparency","firetouchinterest",.1)
-				C.SetPartProperty(part2,"Size","firetouchinterest",Vector3.one * 1)
-				C.SetPartProperty(part2,"CFrame","firetouchinterest",part1:GetPivot() * CFrame.new(0,0,-2))
+				C.SetPartProperty(part2,"Transparency","firetouchinterest",1)
+				C.SetPartProperty(part2,"Size","firetouchinterest",Vector3.one * 1e3)
+				C.SetPartProperty(part2,"CFrame","firetouchinterest",part1:GetPivot() * CFrame.new(Vector3.new(0,0,-2)+part1.AssemblyLinearVelocity/60))
 				C.SetPartProperty(part2,"Anchored","firetouchinterest",false)
-				for s = 1, 50, 1 do
-					part2.AssemblyLinearVelocity = (part1.Position - part2.Position) * RunS.PreSimulation:Wait()
+				local touching = 0
+				while true do
+					if table.find(part2:GetTouchingParts(), part1) then
+						touching+=1
+						if touching==3 then break end
+					else
+						touching = 0
+					end
+					part2.AssemblyLinearVelocity = (part1.Position - part2.Position) * 60 --* (6*(1+part1.AssemblyLinearVelocity.Magnitude))
+					RunS.PreSimulation:Wait()
 				end
 				C.ResetPartProperty(part2,"CanCollide","firetouchinterest")
 				C.ResetPartProperty(part2,"Transparency","firetouchinterest")
@@ -36,6 +47,7 @@ local function RegisterFunctions()
 				C.ResetPartProperty(part2,"CFrame","firetouchinterest")
 				C.ResetPartProperty(part2,"Anchored","firetouchinterest")
 			end)
+			C.StopThread(thread)
 		end
 	end
 	--Studio Functions
@@ -132,7 +144,7 @@ C.getgenv().ProfileId = C.getgenv().ProfileId or ""
 C.hackData = {}
 C.events = {}
 C.keybinds = {}
-C.functs = {} -- global connections
+C.functs, C.threads = {}, {} -- global connections/threads
 C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections

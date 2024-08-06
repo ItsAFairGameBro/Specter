@@ -240,6 +240,7 @@ return function(C,Settings)
 		C.Cleared = true
 
 		-- First, undo the connections
+		C.ClearThreadTbl(C.threads)
 		C.ClearFunctTbl(C.functs)
 
 		C.DebugMessage("Destroy",`Destroy 1`)

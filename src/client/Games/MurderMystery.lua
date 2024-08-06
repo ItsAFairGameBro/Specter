@@ -196,6 +196,7 @@ return function(C,Settings)
                     self:Reset()
                     print("AutOWin",newValue,C.GameInProgress)
                     if newValue and C.GameInProgress then
+                        local Backpack = C.StringWait(C.plr, "Backpack")
                         local function BackpackAdded(newChild)
                             if newChild.Name == "Gun" then
                                 C.AddOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
@@ -203,8 +204,12 @@ return function(C,Settings)
                                 C.AddOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                             end
                         end
-                        table.insert(self.Functs,C.plr.Backpack.ChildAdded:Connect(BackpackAdded))
-                        for num, item in ipairs(C.plr.Backpack:GetChildren()) do
+                        table.insert(self.Functs,Backpack.ChildAdded:Connect(BackpackAdded))
+                        table.insert(self.Functs,C.char.ChildAdded:Connect(BackpackAdded))
+                        for num, item in ipairs(Backpack:GetChildren()) do
+                            task.spawn(BackpackAdded,item)
+                        end
+                        for num, item in ipairs(C.char:GetChildren()) do
                             task.spawn(BackpackAdded,item)
                         end
                         local function MapAdded(newChild)
@@ -220,14 +225,14 @@ return function(C,Settings)
                 end,
                 Events = {
                     GameStatus = function(self,en)
-                        C.ReloadHack(self)
+                        task.spawn(C.ReloadHack,self)
                     end,
                 }
             },
             {
 				Title = "Disable Killbricks",
 				Tooltip = "Removes the killbricks in the map",
-				Layout = 100,
+				Layout = 100,Default=true,
 				Shortcut = "DisableKillbricks",
                 Activate = function(self,newValue)
                     self.Events.MapAdded(self)

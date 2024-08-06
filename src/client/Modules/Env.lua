@@ -55,6 +55,13 @@ return function(C,Settings)
 			functTbl[num] = nil
 		end
 	end
+
+	function C.ClearThreadTbl(threadTbl,isDict)
+		for num, thread in (isDict and pairs or ipairs)(threadTbl) do
+			C.StopThread(thread)
+			threadTbl[num] = nil
+		end
+	end
 	
 	function C.AddGlobalConnection(connection)
 		return connection, C.TblAdd(C.functs,connection)
@@ -72,6 +79,15 @@ return function(C,Settings)
 	function C.RemoveAllPlayerConnections(theirPlr)
 		C.ClearFunctTbl(C.playerfuncts[theirPlr])
 		C.playerfuncts[theirPlr] = nil
+	end
+
+	function C.AddGlobalThread(thread)
+		return thread, C.TblAdd(C.threads,thread)
+	end
+	function C.RemoveGlobalThread(thread)
+		local res = C.TblRemove(C.functs,thread)
+		C.StopThread(thread)
+		return res
 	end
 	
 	function C.AddObjectConnection(instance,key,connection)
@@ -544,10 +560,15 @@ return function(C,Settings)
 				C.forcePropertyFuncts[part] = {}
 			end
 			if not C.forcePropertyFuncts[part][propertyName] and not noFunction then
-				--print(part,propertyName,"Added!")
 				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
-					--print(part,propertyName,"Changed; SEt To", part:GetAttribute(requestAttrName))
-					part[propertyName] = part:GetAttribute(requestAttrName) -- get latest value
+					local new = part:GetAttribute(requestAttrName)
+					--[[local cur,new = part[propertyName], part:GetAttribute(requestAttrName)
+					if typeof(cur) == "CFrame" and (cur.LookVector-new.LookVector).Magnitude < 1 and (cur.Position-new.Position).Magnitude < 1 then
+						return
+					elseif typeof(cur) == "Vector3" and (cur-new).Magnitude < 1 then
+						return
+					end-]]
+					part[propertyName] = new -- get latest value
 				end)
 			end
 		end
@@ -690,8 +711,10 @@ return function(C,Settings)
 		for name, value in pairs(C.PlayerCoords) do
 			return -- stop if there's only one
 		end
-		C.DoTeleport(C.SavedPoso)
-		C.SavedPoso = nil -- reset it
+		if C.SavedPoso then
+			C.DoTeleport(C.SavedPoso)
+			C.SavedPoso = nil -- reset it
+		end
 	end
 
 

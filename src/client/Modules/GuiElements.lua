@@ -2705,7 +2705,6 @@ return function(C, Settings)
 		local Items = {}
 		for name, data in pairs(C.getgenv().ActionsList) do
 			if table.find(data.Tags,tagName) then
-				C.RemoveAction(name)
 				Items[name] = data
 			end
 		end
