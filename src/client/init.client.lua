@@ -148,11 +148,26 @@ function C.StringWait(start,path,timeout,seperationChar)
 	local current = start
 	local pathTbl = string.split(path,seperationChar)
 	for i,v in pairs(pathTbl) do
-		local next = current[timeout and timeout==0 and "FindFirstChild" or "WaitForChild"](current,v,timeout)
+		local next = current:WaitForChild(v,timeout)
 		if next then
 			current = next
 		else
-			warn("StringWait failed to find "..v.." in "..start:GetFullName())
+			warn("C.StringWait failed to find "..v.." in "..start:GetFullName())
+			return
+		end
+	end
+	return current
+end
+
+function C.StringFind(start,path,seperationChar,recursionEnabled)
+	local seperationChar = seperationChar or "."
+	local current = start
+	local pathTbl = string.split(path,seperationChar)
+	for i,v in pairs(pathTbl) do
+		local next = current:FindFirstChild(v,recursionEnabled)
+		if next then
+			current = next
+		else
 			return
 		end
 	end

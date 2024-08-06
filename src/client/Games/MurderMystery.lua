@@ -7,12 +7,12 @@ local function Static(C, Settings)
 		end
 		local player=PS:GetPlayerFromCharacter(theirChar)
 		if not player then
-			return false, "Lobby"--No player, no team!
+			return false, "Lobby", false--No player, no team!
 		end
         local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
         local realInGame = player:GetAttribute("Alive")
-        local hasGun = theirChar:FindFirstChild("Gun") or C.StringWait(player,"Backpack.Gun",0)
-        local hasKnife = theirChar:FindFirstChild("Knife") or C.StringWait(player,"Backpack.Knife",0)
+        local hasGun = theirChar:FindFirstChild("Gun") or C.StringFind(player,"Backpack.Gun",0)
+        local hasKnife = theirChar:FindFirstChild("Knife") or C.StringFind(player,"Backpack.Knife",0)
 
         if hasGun then
             return realInGame, "Sheriff", defactoInGame
@@ -29,8 +29,8 @@ return function(C,Settings)
 
     return {
         Category = {
-            Name = "NavalWarefare",
-            Title = "Naval Warefare",
+            Name = "MurderMystery",
+            Title = "Murder Mystery 2",
             Image = nil, -- Set Image to nil in order to get game image!
             Layout = 20,
         },
