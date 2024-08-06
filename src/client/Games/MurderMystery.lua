@@ -54,11 +54,11 @@ return function(C,Settings)
                         if C.isInGame(theirChar) then
                             while C.isInGame(theirChar) and info.Enabled do
                                 if Knife.Parent ~= C.char then
-                                    Knife:EquipTool()
+                                    C.human:EquipTool(Knife)
                                 end
                                 C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,2)) -- Behind 2 studs
                                 Knife:WaitForChild("Stab"):FireServer("Slash")
-                                actionClone.Time.Text = ""
+                                actionClone.Time.Text = `{theirChar.Name}`
                                 RunService.RenderStepped:Wait()
                             end
                         end
