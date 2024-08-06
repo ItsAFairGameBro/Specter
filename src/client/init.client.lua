@@ -168,7 +168,7 @@ function C.StringFind(start,path,seperationChar,recursionEnabled)
 		if next then
 			current = next
 		else
-			warn("C.StringFind failed to find "..v.." in "..next:GetFullName().." from "..start)
+			warn("C.StringFind failed to find "..v.." in "..current:GetFullName().." from "..start)
 			return
 		end
 	end
