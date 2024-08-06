@@ -256,7 +256,7 @@ return function(C,Settings)
                                 C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                             end
                         end
-                        workspace:WaitForChild("Normal"):WaitForChild("Map")
+                        workspace:WaitForChild("Normal")
                         table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
                         for num, item in ipairs(C.Map:GetChildren()) do
                             task.spawn(MapAdded,item)
