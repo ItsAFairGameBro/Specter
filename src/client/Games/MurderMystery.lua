@@ -152,7 +152,7 @@ return function(C,Settings)
                     
                     local charPosition = theirChar:GetPivot().Position
                     
-                    local maxDistance = 0
+                    local maxDistance = 100
                     local maxHitPosition = charPosition
                     
                     for i = 0, 360, 360/12 do
