@@ -184,7 +184,7 @@ return function(C,Settings)
             {
 				Title = "Auto Win",
 				Tooltip = "Combines Gun Pickup, Sheriff/Murderer Win to make you when whenever possible.",
-				Layout = 4, DontActivate = true,
+				Layout = 4, Default=true, DontActivate = true,
 				Shortcut = "AutoWin", Functs = {},
                 Reset = function(self)
                     C.RemoveOverride(C.hackData.MurdererWin,self.Shortcut)
