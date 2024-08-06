@@ -137,6 +137,7 @@ return function(C,Settings)
 	rayParams.IgnoreWater = true
 	function C.Raycast(origin, direction, options)
 		options = options or {}
+		local orgOrigin = origin -- save for later
 		local distance = options.distance or 1
 	
 		rayParams.FilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude
@@ -185,13 +186,16 @@ return function(C,Settings)
 							warn(`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
 							C.Prompt("Raycast Max Limit",`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
 						end
+						hitPosition = nil
 						didHit = false
 						break
 					end
 					-- Adjust origin slightly to retry
 					origin = hitResult.Position:Lerp(origin,.01);
 					lastInstance = hitResult.Instance;
-					rayParams:AddToFilter(lastInstance)
+					if rayParams.FilterType == Enum.RaycastFilterType.Exclude then
+						rayParams:AddToFilter(lastInstance)
+					end
 				end
 			else
 				didHit = false
@@ -201,7 +205,7 @@ return function(C,Settings)
 		until didHit
 		
 		if not hitPosition then
-			hitPosition = origin + direction * distance
+			hitPosition = orgOrigin + direction * distance
 		end
 	
 		return hitResult, hitPosition

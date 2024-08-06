@@ -24,7 +24,6 @@ local function RegisterFunctions()
 		firetouchinterest = function(part1,part2,number)--creates a fake touch function
 			local thread
 			thread = task.spawn(function(dt)
-				print("using new touch detection")
 				C.SetPartProperty(part2,"CanCollide","firetouchinterest",false)
 				C.SetPartProperty(part2,"Transparency","firetouchinterest",1)
 				C.SetPartProperty(part2,"Size","firetouchinterest",Vector3.one * 1e3)
