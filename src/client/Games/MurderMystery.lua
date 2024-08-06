@@ -51,16 +51,18 @@ return function(C,Settings)
                     local actionClone = C.AddAction(info)
                     local Knife = C.StringFind(C.plr,'Backpack.Knife') or C.StringFind(C.char,'Knife')
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
-                        if C.isInGame(theirChar) then
-                            while C.isInGame(theirChar) and info.Enabled do
-                                if Knife.Parent ~= C.char then
-                                    C.human:EquipTool(Knife)
-                                end
-                                C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,2)) -- Behind 2 studs
-                                Knife:WaitForChild("Stab"):FireServer("Slash")
-                                actionClone.Time.Text = `{theirChar.Name}`
-                                RunService.RenderStepped:Wait()
+                        while info.Enabled do
+                            local InGame = table.pack(C.isInGame(theirChar))
+                            if not InGame[1] or not InGame[4] then
+                                break
                             end
+                            if Knife.Parent ~= C.char then
+                                C.human:EquipTool(Knife)
+                            end
+                            C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,2)) -- Behind 2 studs
+                            Knife:WaitForChild("Stab"):FireServer("Slash")
+                            actionClone.Time.Text = `{theirChar.Name}`
+                            RunService.RenderStepped:Wait()
                         end
                     end
                     C.RemoveAction(info.Name)
