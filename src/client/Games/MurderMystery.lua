@@ -195,18 +195,26 @@ return function(C,Settings)
                     self:Reset()
                     print("AutOWin",newValue,C.GameInProgress)
                     if newValue and C.GameInProgress then
-                        table.insert(self.Functs,C.plr.Backpack.ChildAdded:Connect(function(newChild)
+                        local function BackpackAdded(newChild)
                             if newChild.Name == "Gun" then
                                 C.AddOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
                             elseif newChild.Name == "Knife" then
                                 C.AddOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                             end
-                        end))
-                        table.insert(self.Functs,C.Map.ChildAdded:Connect(function(newChild)
+                        end
+                        table.insert(self.Functs,C.plr.Backpack.ChildAdded:Connect(BackpackAdded))
+                        for num, item in ipairs(C.plr.Backpack:GetChildren()) do
+                            task.spawn(BackpackAdded,item)
+                        end
+                        local function MapAdded(newChild)
                             if newChild.Name == "Gun" then
                                 C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                             end
-                        end))
+                        end
+                        table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
+                        for num, item in ipairs(C.Map:GetChildren()) do
+                            task.spawn(MapAdded,item)
+                        end
                     end
                 end,
                 Events = {
