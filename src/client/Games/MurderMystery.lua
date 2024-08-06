@@ -172,8 +172,8 @@ return function(C,Settings)
                         C.firetouchinterest(C.hrp,Gun)
                         RunService.RenderStepped:Wait()
                     end
-                    C.LoadPlayerCoords(self.Shortcut)
                     C.RemoveAction(info.Name)
+                    C.LoadPlayerCoords(self.Shortcut)
                 end,
             },
             {

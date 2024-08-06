@@ -27,6 +27,9 @@ local function RegisterFunctions()
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
 	C.firetouchinterest = isStudio and function() return end or function(part1,part2,number)
+		if not firetouchinterest then
+			return
+		end
 		local CanTouch1, CanTouch2 = part1.CanTouch, part2.CanTouch
 		part1.CanTouch, part2.CanTouch = true, true
 		if part1.Parent and part2.Parent then
