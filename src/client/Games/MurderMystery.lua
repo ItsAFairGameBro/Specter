@@ -358,8 +358,11 @@ return function(C,Settings)
                     MapAdded = function(self,map)
                         local cf, size = map:GetBoundingBox()
                         local inviPart = Instance.new("Part")
+                        inviPart.TopSurface = Enum.SurfaceType.Smooth
+                        inviPart.BottomSurface = Enum.SurfaceType.Smooth
+                        inviPart.Color = Color3.fromRGB(255,255,255)
                         inviPart.CFrame = cf * CFrame.new(0,-size.Y/2,0)
-                        inviPart.Size = Vector3.new(size.X,0.2,size.Z)
+                        inviPart.Size = Vector3.new(size.X,0.2,size.Z) + 120 * 2 * Vector3.new(1,0,1)
                         inviPart.Anchored = true
                         inviPart.Parent = map
                         table.insert(self.Instances,inviPart)
