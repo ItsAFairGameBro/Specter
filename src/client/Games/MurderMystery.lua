@@ -56,10 +56,6 @@ return function(C,Settings)
                             continue--don't try and oof yourself, won't end well.
                         end
                         while info.Enabled and C.isInGame(theirChar) do
-                            local InGame = table.pack()
-                            if not InGame[1] or not InGame[3] then
-                                break
-                            end
                             if Knife.Parent ~= C.char then
                                 C.human:EquipTool(Knife)
                             end
