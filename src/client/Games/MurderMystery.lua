@@ -132,7 +132,7 @@ return function(C,Settings)
 				Tooltip = "As the sheriff, kill the murderer",
 				Layout = 2,Type="NoToggle",
 				Shortcut = "SheriffWin", Threads={},
-                function FindFurtherDistance(theirChar)
+                FindFurtherDistance=function(theirChar)
                     local options = {
                         ignoreInvisibleWalls = false,
                         ignoreUncollidable = true,
