@@ -58,11 +58,12 @@ return function(C,Settings)
             Image = nil, -- Set Image to nil in order to get game image!
             Layout = 20,
         },
+        --game:GetService("Workspace").Normal.GunDrop
         Tab = {
             {
 				Title = "Murderer Win",
 				Tooltip = "As the murderer, kill every single person",
-				Layout = 0,Type="NoToggle",
+				Layout = 1,Type="NoToggle",
 				Shortcut = "MurdererWin", Threads={},
 				Activate = function(self,newValue)
                     if select(2,C.isInGame(C.char)) ~= "Murderer" then
@@ -80,7 +81,7 @@ return function(C,Settings)
                         end
                         while info.Enabled do
                             local inGame = table.pack(C.isInGame(theirChar))
-                            if not inGame[1] or not inGame[3] then
+                            if not inGame[1] or not inGame[3] or inGame[2] == "Lobby" then
                                 break
                             end
                             if Knife.Parent ~= C.char then
@@ -107,7 +108,7 @@ return function(C,Settings)
             {
 				Title = "Sheriff Win",
 				Tooltip = "As the sheriff, kill the murderer",
-				Layout = 0,Type="NoToggle",
+				Layout = 2,Type="NoToggle",
 				Shortcut = "SheriffWin", Threads={},
 				Activate = function(self,newValue)
                     if select(2,C.isInGame(C.char)) ~= "Sheriff" then
@@ -150,6 +151,18 @@ return function(C,Settings)
 					
 				}
 			},
+            {
+				Title = "Gun Pickup",
+				Tooltip = "As an innocent, pick up the sherrif's gun",
+				Layout = 3,Type="NoToggle",
+				Shortcut = "GunPickup", Threads={},
+				Activate = function(self,newValue)
+                    if select(2,C.isInGame(C.char)) ~= "Innocent" then
+                        return "Not Innocent"
+                    end
+
+                end,
+            },
             {
 				Title = "Disable Killbricks",
 				Tooltip = "Removes the killbricks in the map",
