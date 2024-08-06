@@ -152,7 +152,7 @@ return function(C,Settings)
 
 							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)
 
-                            C.DoTeleport(CFrame.new(hitPosition,theirChar.Position))
+                            C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
                             if not LastClick or os.clock() - LastClick > 1 then
                                 task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position,"AH2")
