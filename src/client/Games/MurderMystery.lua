@@ -29,13 +29,7 @@ local function Static(C, Settings)
 
 		return defactoInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
 	end
-    C.GameInProgress = game:GetService("Workspace").RoundTimerPart.SurfaceGui.Timer.Text ~= "1s"
-    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.RoundStart").OnClientEvent:Connect(function(...)
-        C.GameInProgress = true
-    end))
-    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.VictoryScreen").OnClientEvent:Connect(function(...)
-        C.GameInProgress = false
-    end))
+    
 
     table.insert(C.EventFunctions,function()
 		local function MapAdded()
@@ -49,6 +43,17 @@ local function Static(C, Settings)
         if workspace:FindFirstChild("Normal") then
             MapAdded()
         end
+
+        C.GameInProgress = game:GetService("Workspace").RoundTimerPart.SurfaceGui.Timer.Text ~= "1s"
+        C.FireEvent("GameStatus",nil,C.GameInProgress)
+        C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.RoundStart").OnClientEvent:Connect(function(...)
+            C.GameInProgress = true
+            C.FireEvent("GameStatus",nil,C.GameInProgress)
+        end))
+        C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.VictoryScreen").OnClientEvent:Connect(function(...)
+            C.GameInProgress = false
+            C.FireEvent("GameStatus",nil,C.GameInProgress)
+        end))
     end)
 end
 return function(C,Settings)
@@ -175,6 +180,39 @@ return function(C,Settings)
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
                 end,
+            },
+            {
+				Title = "Auto Win",
+				Tooltip = "Combines Gun Pickup, Sheriff/Murderer Win to make you when whenever possible.",
+				Layout = 4, DontActivate = true,
+				Shortcut = "AutoWin", Functs = {},
+                Reset = function(self)
+                    C.RemoveOverride(C.hackData.MurdererWin,self.Shortcut)
+                    C.RemoveOverride(C.hackData.SheriffWin,self.Shortcut)
+                    C.RemoveOverride(C.hackData.GunPickup,self.Shortcut)
+                end,
+				Activate = function(self,newValue)
+                    self:Reset()
+                    if newValue and C.GameInProgress then
+                        table.insert(self.Functs,C.plr.Backpack.ChildAdded:Connect(function(newChild)
+                            if newChild.Name == "Gun" then
+                                C.AddOverride(C.hackData.SheriffWin,self.Shortcut)
+                            elseif newChild.Name == "Knife" then
+                                C.AddOverride(C.hackData.MurdererWin,self.Shortcut)
+                            end
+                        end))
+                        table.insert(self.Functs,C.Map.ChildAdded:Connect(function(newChild)
+                            if newChild.Name == "Gun" then
+                                C.AddOverride(C.hackData.GunPickup,self.Shortcut)
+                            end
+                        end))
+                    end
+                end,
+                Events = {
+                    GameStatus = function(self,en)
+                        C.ReloadHack(self)
+                    end,
+                }
             },
             {
 				Title = "Disable Killbricks",

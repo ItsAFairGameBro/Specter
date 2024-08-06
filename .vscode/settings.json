@@ -22,6 +22,7 @@
         "hookmetamethod",
         "hookmetamethod",
         "setscriptable",
-        "checkcaller"
+        "checkcaller",
+        "identifyexecutor"
     ]
 }

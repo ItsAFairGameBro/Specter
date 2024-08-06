@@ -16,7 +16,6 @@ local allDisabled = {
 }
 local executorName = not isStudio and identifyexecutor()
 local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=false}) or {firetouchinterest=true}
-print("ENEXEC",enExecutor.firetouchinterest)
 
 local function RegisterFunctions()
 	--Studio Functions
