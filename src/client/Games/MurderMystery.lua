@@ -199,7 +199,7 @@ return function(C,Settings)
                     local actionClone = C.AddAction(info)
                     local Gun = C.StringFind(C.Map,"GunDrop")
                     while Gun and Gun.Parent == C.Map and select(2,C.isInGame(C.char)) == "Innocent" and info.Enabled do
-                        local Murderer = C.GetMurderer():GetPivot().Position
+                        local MurdererPlr,Murderer = C.GetMurderer()
                         local Knife = Murderer and Murderer:FindFirstChild("Knife")
                         --[[if not Knife or (Knife.Position - C.GetMurderer():GetPivot().Position).Magnitude < 5 then
                             C.DoTeleport(Gun:GetPivot())
