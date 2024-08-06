@@ -153,7 +153,7 @@ return function(C,Settings)
                             if not inGame[1] or inGame[2] ~= "Murderer" or not inGame[3] then
                                 break
                             end
-                            local options = {
+                            --[[local options = {
 								ignoreInvisibleWalls = false,
 								ignoreUncollidable = true,
 								ignoreList = {C.char},  -- Example: ignore parts in this list
@@ -162,21 +162,18 @@ return function(C,Settings)
 							}
                             local dir = theirChar:GetPivot().Position - theirChar:GetPivot()*Vector3.new(0,0,5)
 
-							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)
+							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)--]]
 
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
-                            if not LastTeleport or os.clock() - LastTeleport >= .5 then
+                            if not LastTeleport or os.clock() - LastTeleport >= 0 then
                                 if Gun.Parent ~= C.char then
                                     C.human:EquipTool(Gun)
                                 end
-                                if (hitPosition - theirChar:GetPivot().Position).Magnitude > .1 then
-                                    C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
-                                else
-                                    warn("Not teleporting because too close to target")
-                                end
+                                local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
+                                C.DoTeleport(hitCF)
                                 LastTeleport = os.clock()
                             end
-                            if not LastClick or os.clock() - LastClick >= 1 then
+                            if not LastClick or os.clock() - LastClick >= 100 then
                                 task.spawn(function()
                                     RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
                                 end)
