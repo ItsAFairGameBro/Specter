@@ -187,23 +187,23 @@ return function(C,Settings)
 				Layout = 4, Default=true, DontActivate = true,
 				Shortcut = "AutoWin", Functs = {},
                 Reset = function(self)
-                    C.RemoveOverride(C.hackData.MurdererWin,self.Shortcut)
-                    C.RemoveOverride(C.hackData.SheriffWin,self.Shortcut)
-                    C.RemoveOverride(C.hackData.GunPickup,self.Shortcut)
+                    C.RemoveOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
+                    C.RemoveOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
+                    C.RemoveOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                 end,
 				Activate = function(self,newValue)
                     self:Reset()
                     if newValue and C.GameInProgress then
                         table.insert(self.Functs,C.plr.Backpack.ChildAdded:Connect(function(newChild)
                             if newChild.Name == "Gun" then
-                                C.AddOverride(C.hackData.SheriffWin,self.Shortcut)
+                                C.AddOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
                             elseif newChild.Name == "Knife" then
-                                C.AddOverride(C.hackData.MurdererWin,self.Shortcut)
+                                C.AddOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                             end
                         end))
                         table.insert(self.Functs,C.Map.ChildAdded:Connect(function(newChild)
                             if newChild.Name == "Gun" then
-                                C.AddOverride(C.hackData.GunPickup,self.Shortcut)
+                                C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                             end
                         end))
                     end
