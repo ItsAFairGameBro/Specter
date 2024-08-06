@@ -212,13 +212,16 @@ return function(C,Settings)
                             if not notConn then
                                 print("Registered",newChild)
                             end
+                            if newChild.Parent ~= C.plr:WaitForChild("Backpack") then
+                                return -- not backpack
+                            end
                             if newChild.Name == "Gun" then
                                 C.AddOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
                             elseif newChild.Name == "Knife" then
                                 C.AddOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                             end
                         end
-                        table.insert(self.Functs,Backpack.ChildAdded:Connect(BackpackAdded))
+                        table.insert(self.Functs,C.plr.DescendantAdded:Connect(BackpackAdded))
                         table.insert(self.Functs,C.char.ChildAdded:Connect(BackpackAdded))
                         for num, item in ipairs(Backpack:GetChildren()) do
                             task.spawn(BackpackAdded,item,true)
