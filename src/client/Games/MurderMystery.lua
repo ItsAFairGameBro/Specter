@@ -167,7 +167,7 @@ return function(C,Settings)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
                     local Gun = C.StringFind(workspace,"Normal.GunDrop")
-                    while Gun and Gun.Parent and select(2,C.isInGame(C.char)) == "Innocent" and info.Enabled do
+                    while Gun and Gun.Parent == C.Map and select(2,C.isInGame(C.char)) == "Innocent" and info.Enabled do
                         C.DoTeleport(Gun:GetPivot())
                         C.firetouchinterest(C.hrp,Gun)
                         RunService.RenderStepped:Wait()
