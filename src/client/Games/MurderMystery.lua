@@ -379,7 +379,7 @@ return function(C,Settings)
 
                         -- Set the size using the global size
                         inviPart.Anchored = true
-                        inviPart.Parent = C.Map
+                        inviPart.Parent = workspace
                         table.insert(self.Instances,inviPart)
                     end,
                 }
