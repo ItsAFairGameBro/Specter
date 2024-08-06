@@ -165,6 +165,7 @@ return function(C,Settings)
 				Layout = 3,Type="NoToggle",
 				Shortcut = "GunPickup", Threads={},
 				Activate = function(self,newValue)
+                    C.RemoveAction(self.Shortcut)
                     if select(2,C.isInGame(C.char)) ~= "Innocent" then
                         return "Not Innocent"
                     end
