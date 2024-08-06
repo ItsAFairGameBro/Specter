@@ -382,6 +382,7 @@ return function(C,Settings)
                         inviPart.Parent = workspace
                         table.insert(self.Instances,inviPart)
                     end,
+                    MapRemoved = C.ReloadHack,
                 }
             },
         }
