@@ -348,7 +348,7 @@ return function(C,Settings)
 				Title = "Bottom Part",
 				Tooltip = "Adds a part at the lowest point in the map",
 				Layout = 101, DontActivate = true,
-				Shortcut = "BottomPart", Functs = {}, Instance = {},
+				Shortcut = "BottomPart", Functs = {}, Instances = {},
 				Activate = function(self,newValue)
                     if C.Map then
                         self.Events.MapAdded(self,C.Map)
