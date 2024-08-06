@@ -106,7 +106,7 @@ return function(C,Settings)
 							local hitResult, hitPosition = C.Raycast(C.hrp.Position+Vector3.new(0,3,0),-Vector3.new(0,3,0),options)
 							
 		
-							if hitResult then						
+							if hitResult then
 								C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(0,math.rad(Orient.Y),0) + Vector3.new(0,C.getCharacterHeight(C.char)))
 							else
 								C.DoTeleport(CFrame.new(C.char:GetPivot().Position) * CFrame.Angles(0,math.rad(Orient.Y),0))
@@ -145,7 +145,7 @@ return function(C,Settings)
 						table.insert(self.Instances,bodyVel)
 					else
 						bodyForce = Instance.new("BodyForce")
-						bodyForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))						
+						bodyForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))					
 						bodyForce.Parent = C.hrp--]]
 						table.insert(self.Instances,bodyForce)
 					end
@@ -412,6 +412,7 @@ return function(C,Settings)
 						ignoreList = {C.char},  -- Example: ignore parts in this list
 						raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 						distance = self.EnTbl.Distance,  -- Retry up to 3 times
+						collisionGroup = C.hrp.CollisionGroup,
 						Type = screenToWorldRay.Direction,
 					}
 
