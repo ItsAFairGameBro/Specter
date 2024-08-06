@@ -13,7 +13,7 @@ local function Static(C, Settings)
 		if not player or not human or human:GetState() == Enum.HumanoidStateType.Dead or not C.GameInProgress then
 			return false, "Lobby", false--No player, no team!
 		end
-        local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
+        local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 300
         local realInGame = player:GetAttribute("Alive")
         local hasGun = theirChar:FindFirstChild("Gun") or C.StringFind(player,"Backpack.Gun")
         local hasKnife = theirChar:FindFirstChild("Knife") or C.StringFind(player,"Backpack.Knife")
@@ -81,7 +81,7 @@ return function(C,Settings)
                         end
                         while info.Enabled do
                             local inGame = table.pack(C.isInGame(theirChar))
-                            if not inGame[1] or not inGame[3] or inGame[2] == "Lobby" then
+                            if not inGame[1] or not inGame[3] then
                                 break
                             end
                             if Knife.Parent ~= C.char then
@@ -160,7 +160,7 @@ return function(C,Settings)
                     if select(2,C.isInGame(C.char)) ~= "Innocent" then
                         return "Not Innocent"
                     end
-
+                    
                 end,
             },
             {
