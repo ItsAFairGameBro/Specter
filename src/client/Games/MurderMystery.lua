@@ -115,7 +115,7 @@ return function(C,Settings)
                                 C.human:EquipTool(Gun)
                             end
                             C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,0.4)) -- Behind 2 studs
-                            if not LastClick or os.clock() - LastClick > 2 then
+                            if not LastClick or os.clock() - LastClick > .1 then
                                 print("Returns",C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction"):InvokeServer(1,theirChar:GetPivot().Position,"AH2"))
                                 LastClick = os.clock()
                             end
