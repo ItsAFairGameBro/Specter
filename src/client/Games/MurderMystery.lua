@@ -360,7 +360,8 @@ return function(C,Settings)
                         local inviPart = Instance.new("Part")
                         inviPart.TopSurface = Enum.SurfaceType.Smooth
                         inviPart.BottomSurface = Enum.SurfaceType.Smooth
-                        inviPart.Color = Color3.fromRGB()  -- Specify the desired color
+                        inviPart.Material = Enum.Material.Slate
+                        inviPart.Color = Color3.fromRGB(215,215,215)  -- Specify the desired color
 
                         -- Calculate the global size by applying the rotation part of the CFrame to the local size
                         local globalSize = (cf - cf.Position):VectorToWorldSpace(size)
