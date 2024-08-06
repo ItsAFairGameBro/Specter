@@ -153,9 +153,6 @@ return function(C,Settings)
                             if not inGame[1] or inGame[2] ~= "Murderer" or not inGame[3] then
                                 break
                             end
-                            if Gun.Parent ~= C.char then
-                                C.human:EquipTool(Gun)
-                            end
                             local options = {
 								ignoreInvisibleWalls = false,
 								ignoreUncollidable = true,
@@ -169,6 +166,9 @@ return function(C,Settings)
 
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
                             if not LastTeleport or os.clock() - LastTeleport >= .5 then
+                                if Gun.Parent ~= C.char then
+                                    C.human:EquipTool(Gun)
+                                end
                                 C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
                                 LastTeleport = os.clock()
                             end
@@ -180,6 +180,7 @@ return function(C,Settings)
                             RunService.RenderStepped:Wait()
                         end
                     end
+                    RunService.RenderStepped:Wait()
                     C.human:UnequipTools()
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
@@ -233,9 +234,6 @@ return function(C,Settings)
                     if newValue and C.GameInProgress then
                         local Backpack = C.StringWait(C.plr, "Backpack")
                         local function BackpackAdded(newChild,notConn)
-                            if not notConn then
-                                print("Registered",newChild)
-                            end
                             if newChild.Parent ~= C.plr:WaitForChild("Backpack") then
                                 return -- not backpack
                             end
