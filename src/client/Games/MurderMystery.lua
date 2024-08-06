@@ -10,7 +10,7 @@ local function Static(C, Settings)
 			theirChar = C.char
 		end
 		local player,human=PS:GetPlayerFromCharacter(theirChar), theirChar:FindFirstChild("Humanoid")
-		if not player or not human or human.Health <=0 or not C.GameInProgress then
+		if not player or not human or human:GetState() == Enum.HumanoidStateType.Dead or not C.GameInProgress then
 			return false, "Lobby", false--No player, no team!
 		end
         local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
@@ -24,7 +24,7 @@ local function Static(C, Settings)
             return realInGame, "Murderer", defactoInGame
         end
 
-		return realInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
+		return defactoInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
 	end
     C.GameInProgress = game:GetService("Workspace").RoundTimerPart.SurfaceGui.Timer.Text ~= "1s"
     C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.RoundStart").OnClientEvent:Connect(function(...)
