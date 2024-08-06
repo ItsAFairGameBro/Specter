@@ -148,7 +148,7 @@ function C.StringWait(start,path,timeout,seperationChar)
 	local current = start
 	local pathTbl = string.split(path,seperationChar)
 	for i,v in pairs(pathTbl) do
-		local next = current[timeout>0 and "WaitForChild" or "FindFirstChild"](current,v,timeout)
+		local next = current[timeout and timeout==0 and "FindFirstChild" or "WaitForChild"](current,v,timeout)
 		if next then
 			current = next
 		else
