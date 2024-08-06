@@ -678,7 +678,7 @@ return function(C,Settings)
 
 	function C.SavePlayerCoords(name:string)
 		if not C.SavedLoc then
-			C.SavedPoso = C.char:GetPviot()
+			C.SavedPoso = C.char:GetPivot()
 		end
 		C.PlayerCoords[name] = true
 	end
