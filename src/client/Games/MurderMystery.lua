@@ -170,7 +170,7 @@ return function(C,Settings)
                             C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
                             if not LastClick or os.clock() - LastClick > 1 then
-                                task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position,"AH2")
+                                task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
                                 LastClick = os.clock()
                             end
                             actionClone.Time.Text = `{theirChar.Name}`
