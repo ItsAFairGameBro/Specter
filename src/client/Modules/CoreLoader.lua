@@ -109,11 +109,12 @@ return function(C, _SETTINGS)
 
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end
-		local hack = C.LoadModule("Hacks/"..name)
+		local isGame = GameModule == name
+
+		local hack = C.LoadModule(isGame and name or "Hacks/"..name)
 		local category = hack.Category
 		local idName = category and category.Name or name
 
-		local isGame = GameModule == name
 
 		local visible = false
 		local enHackTab = C.enHacks[idName] or {}
