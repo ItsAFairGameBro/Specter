@@ -14,7 +14,7 @@ local C = {}
 local allDisabled = {
 	firetouchinterest = false,
 }
-local executorName = isStudio and identifyexecutor()
+local executorName = not isStudio and identifyexecutor()
 local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=false}) or {firetouchinterest=true}
 print("ENEXEC",enExecutor.firetouchinterest)
 
