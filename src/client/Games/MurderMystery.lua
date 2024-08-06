@@ -1,6 +1,7 @@
 local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
 local CS = game:GetService("CollectionService")
+local RS = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local function Static(C, Settings)
     local RoundTimerPart = workspace:WaitForChild("RoundTimerPart")
@@ -9,7 +10,7 @@ local function Static(C, Settings)
 			theirChar = C.char
 		end
 		local player,human=PS:GetPlayerFromCharacter(theirChar), theirChar:FindFirstChild("Humanoid")
-		if not player or not human or human.Health <=0 then
+		if not player or not human or human.Health <=0 or not C.GameInProgress then
 			return false, "Lobby", false--No player, no team!
 		end
         local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
@@ -25,7 +26,13 @@ local function Static(C, Settings)
 
 		return realInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
 	end
-
+    C.GameInProgress = game:GetService("Workspace").RoundTimerPart.SurfaceGui.Timer.Text ~= "1s"
+    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.RoundStart").OnRemoteEvent:Connect(function(...)
+        C.GameInProgress = true
+    end))
+    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.VictoryScreen").OnRemoteEvent:Connect(function(...)
+        C.GameInProgress = false
+    end))
 end
 return function(C,Settings)
     Static(C,Settings)
