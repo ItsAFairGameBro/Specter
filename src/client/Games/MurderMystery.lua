@@ -158,9 +158,9 @@ return function(C,Settings)
 								ignoreUncollidable = true,
 								ignoreList = {C.char},  -- Example: ignore parts in this list
 								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
-								distance = 12,  -- Retry up to 3 times
+								distance = 5,  -- Retry up to 3 times
 							}
-                            local dir = theirChar:GetPivot().Position - theirChar:GetPivot()*Vector3.new(0,0,-10)
+                            local dir = theirChar:GetPivot().Position - theirChar:GetPivot()*Vector3.new(0,0,5)
 
 							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)
 
@@ -171,10 +171,12 @@ return function(C,Settings)
                                 end
                                 if (hitPosition - theirChar:GetPivot().Position).Magnitude > .1 then
                                     C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
+                                else
+                                    warn("Not teleporting because too close to target")
                                 end
                                 LastTeleport = os.clock()
                             end
-                            if not LastClick or os.clock() - LastClick > 1 then
+                            if not LastClick or os.clock() - LastClick >= 1 then
                                 task.spawn(function()
                                     RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
                                 end)
@@ -183,6 +185,7 @@ return function(C,Settings)
                             actionClone.Time.Text = `{theirChar.Name}`
                             RunService.RenderStepped:Wait()
                         end
+                        task.wait()
                     end
                     RunService.RenderStepped:Wait()
                     C.human:UnequipTools()
