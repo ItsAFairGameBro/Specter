@@ -132,7 +132,7 @@ return function(C,Settings)
 				Tooltip = "As the sheriff, kill the murderer",
 				Layout = 2,Type="NoToggle",
 				Shortcut = "SheriffWin", Threads={},
-                FindFurtherDistance = function()
+                FindFurtherDistance = function(theirChar)
                     local options = {
                         ignoreInvisibleWalls = false,
                         ignoreUncollidable = true,
@@ -149,7 +149,6 @@ return function(C,Settings)
                         return direction
                     end
                     
-                    local theirChar = workspace:FindFirstChild("TheirCharacter") -- Replace with actual character reference
                     local charPosition = theirChar:GetPivot().Position
                     
                     local maxDistance = 0
@@ -206,7 +205,7 @@ return function(C,Settings)
                                     C.human:EquipTool(Gun)
                                 end
                                 --local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
-                                local raycast = self.FindFurtherDistance()
+                                local raycast = self.FindFurtherDistance(theirChar)
                                 C.DoTeleport(raycast)
                                 LastTeleport = os.clock()
                             end
@@ -350,7 +349,7 @@ return function(C,Settings)
 				Layout = 101, DontActivate = true,
 				Shortcut = "BottomPart", Functs = {}, Instances = {},
 				Activate = function(self,newValue)
-                    if C.Map then
+                    if C.Map and newValue then
                         self.Events.MapAdded(self,C.Map)
                     end
                 end,
