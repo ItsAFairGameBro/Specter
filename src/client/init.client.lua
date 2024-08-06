@@ -11,6 +11,12 @@ local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
 
 local C = {}
+local allDisabled = {
+	firetouchinterest = false,
+}
+local executorName = isStudio and identifyexecutor()
+local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=false}) or {firetouchinterest=true}
+print("ENEXEC",enExecutor.firetouchinterest)
 
 local function RegisterFunctions()
 	--Studio Functions
@@ -26,7 +32,7 @@ local function RegisterFunctions()
 	C.hookmetamethod = isStudio and function() return end or hookmetamethod
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
-	C.firetouchinterest = isStudio and function() return end or function(part1,part2,number)
+	C.firetouchinterest = not enExecutor.firetouchinterest and function() return end or function(part1,part2,number)
 		if not firetouchinterest then
 			return
 		end
