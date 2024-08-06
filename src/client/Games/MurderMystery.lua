@@ -84,7 +84,7 @@ return function(C,Settings)
                     C.human:UnequipTools()
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
-                    C.RemoveAction(C.hackData.Blatant.Noclip, self.Shortcut)
+                    C.RemoveOverride(C.hackData.Blatant.Noclip, self.Shortcut)
 				end,
 				Options = {
 					
@@ -130,7 +130,7 @@ return function(C,Settings)
                     C.human:UnequipTools()
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
-                    C.RemoveAction(C.hackData.Blatant.Noclip, self.Shortcut)
+                    C.RemoveOverride(C.hackData.Blatant.Noclip, self.Shortcut)
 				end,
 				Options = {
 					
