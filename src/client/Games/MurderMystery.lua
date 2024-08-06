@@ -186,19 +186,20 @@ return function(C,Settings)
                 end, 
                 Events = {
                     MapAdded = function(self)
-                        print("Map added")
                         if not C.Map then
                             return
                         end
                         local GlitchPoofs = C.Map:WaitForChild("GlitchProof",5)
                         if not GlitchPoofs then
-                            print("glitch parts not found")
                             return
                         end
-                        print('glitch parts found')
-                        for num, part in ipairs(GlitchPoofs:GetChildren()) do
+                        local list = GlitchPoofs:GetChildren()
+                        local Sensor = C.StringFind(C.Map,"Interactive.MetalDetector.Sensor")
+                        if Sensor then
+                            table.insert(list,Sensor)
+                        end
+                        for num, part in ipairs(list) do
                             if part:IsA("BasePart") then
-                                print"set"
                                 if self.RealEnabled then
                                     C.SetPartProperty(part,"CanTouch",self.Shortcut,false)
                                 else
