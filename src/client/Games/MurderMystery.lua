@@ -164,14 +164,15 @@ return function(C,Settings)
                         if not C.Map then
                             return
                         end
-                        local GlitchParts = C.Map:WaitForChild("GlitchParts",5)
-                        if not GlitchParts then
+                        local GlitchPoofs = C.Map:WaitForChild("GlitchProof",5)
+                        if not GlitchPoofs then
                             print("glitch parts not found")
                             return
                         end
                         print('glitch parts found')
-                        for num, part in ipairs(GlitchParts:GetChildren()) do
+                        for num, part in ipairs(GlitchPoofs:GetChildren()) do
                             if part:IsA("BasePart") then
+                                print"set"
                                 if self.RealEnabled then
                                     C.SetPartProperty(part,"CanTouch",self.Shortcut,false)
                                 else
