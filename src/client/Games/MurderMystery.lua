@@ -1,12 +1,15 @@
+local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
+local CS = game:GetService("CollectionService")
+local RunService = game:GetService("RunService")
 local function Static(C, Settings)
     local RoundTimerPart = workspace:WaitForChild("RoundTimerPart")
     function C.isInGame(theirChar)
 		if theirChar and theirChar.Name == "InviClone" then
 			theirChar = C.char
 		end
-		local player=PS:GetPlayerFromCharacter(theirChar)
-		if not player then
+		local player,human=PS:GetPlayerFromCharacter(theirChar), theirChar:FindFirstChild("Humanoid")
+		if not player or not human or human.Health <=0 then
 			return false, "Lobby", false--No player, no team!
 		end
         local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
@@ -35,7 +38,37 @@ return function(C,Settings)
             Layout = 20,
         },
         Tab = {
-            
+            {
+				Title = "Murderer Win",
+				Tooltip = "As the murderer, kill every single person",
+				Layout = 0,Type="NoToggle",
+				Shortcut = "MurdererWin", Threads={},
+				Activate = function(self,newValue)
+                    if select(2,C.isInGame(C.char)) ~= "Murderer" then
+                        return "Not Murderer"
+                    end
+                    local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
+                    local actionClone = C.AddAction(info)
+                    local Knife = C.StringFind(C.plr,'Backpack.Knife') or C.StringFind(C.char,'Knife')
+                    for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
+                        if C.isInGame(theirChar) then
+                            while C.isInGame(theirChar) and info.Enabled do
+                                if Knife.Parent ~= C.char then
+                                    Knife:EquipTool()
+                                end
+                                C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,2)) -- Behind 2 studs
+                                Knife:WaitForChild("Stab"):FireServer("Slash")
+                                actionClone.Time.Text = ""
+                                RunService.RenderStepped:Wait()
+                            end
+                        end
+                    end
+                    C.RemoveAction(info.Name)
+				end,
+				Options = {
+					
+				}
+			},
         }
     }
 end
