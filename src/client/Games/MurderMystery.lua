@@ -84,6 +84,45 @@ return function(C,Settings)
 					
 				}
 			},
+            {
+				Title = "Sheriff Win",
+				Tooltip = "As the sheriff, kill the murderer",
+				Layout = 0,Type="NoToggle",
+				Shortcut = "SheriffWin", Threads={},
+				Activate = function(self,newValue)
+                    if select(2,C.isInGame(C.char)) ~= "Sheriff" then
+                        return "Not Sheriff"
+                    end
+                    C.SavePlayerCoords(self.Shortcut)
+                    local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
+                    local actionClone = C.AddAction(info)
+                    local LastClick
+                    local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
+                    for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
+                        if theirChar == C.char then
+                            continue--don't try and oof yourself, won't end well.
+                        end
+                        while info.Enabled and select(2,C.isInGame(theirChar)) == "Murderer" do
+                            if Gun.Parent ~= C.char then
+                                C.human:EquipTool(Gun)
+                            end
+                            C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,0.4)) -- Behind 2 studs
+                            if not LastClick or os.clock() - LastClick > 2 then
+                                print("Gun Returns:",C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction"):InvokeServer(1,theirChar:GetPivot().Position,"AH2"))
+                                LastClick = os.clock()
+                            end
+                            actionClone.Time.Text = `{theirChar.Name}`
+                            RunService.RenderStepped:Wait()
+                        end
+                    end
+                    C.human:UnequipTools()
+                    C.RemoveAction(info.Name)
+                    C.LoadPlayerCoords(self.Shortcut)
+				end,
+				Options = {
+					
+				}
+			},
         }
     }
 end
