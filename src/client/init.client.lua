@@ -18,6 +18,24 @@ local executorName = not isStudio and identifyexecutor()
 local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=false}) or {firetouchinterest=true}
 
 local function RegisterFunctions()
+	local firetouchinterest = firetouchinterest
+	if not enExecutor.firetouchinterest then
+		firetouchinterest = function(part1,part2,number)--creates a fake touch function
+			task.spawn(function()
+				C.SetPartProperty(part2,"CanCollide","firetouchinterest",false)
+				C.SetPartProperty(part2,"Size","firetouchinterest",Vector3.one * 1)
+				C.SetPartProperty(part2,"CFrame","firetouchinterest",part1:GetPivot() * CFrame.new(0,0,-2))
+				C.SetPartProperty(part2,"Anchored","firetouchinterest",false)
+				for s = 1, 2, 1 do
+					part2.AssemblyLinearVelocity = (part1.Position - part2.Position) * RunS.PreSimulation:Wait()
+				end
+				C.ResetPartProperty(part2,"CanCollide","firetouchinterest")
+				C.ResetPartProperty(part2,"Size","firetouchinterest")
+				C.ResetPartProperty(part2,"CFrame","firetouchinterest")
+				C.ResetPartProperty(part2,"Anchored","firetouchinterest")
+			end)
+		end
+	end
 	--Studio Functions
 	C.checkcaller = isStudio and (function() return true end) or checkcaller
 	C.getconnections = isStudio and (function(signal) return {} end) or getconnections
@@ -31,7 +49,7 @@ local function RegisterFunctions()
 	C.hookmetamethod = isStudio and function() return end or hookmetamethod
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
-	C.firetouchinterest = not enExecutor.firetouchinterest and function() return end or function(part1,part2,number)
+	C.firetouchinterest = function(part1,part2,number)
 		if not firetouchinterest then
 			return
 		end
