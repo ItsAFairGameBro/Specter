@@ -23,13 +23,15 @@ local function RegisterFunctions()
 		firetouchinterest = function(part1,part2,number)--creates a fake touch function
 			task.spawn(function()
 				C.SetPartProperty(part2,"CanCollide","firetouchinterest",false)
+				C.SetPartProperty(part2,"Transparency","firetouchinterest",.1)
 				C.SetPartProperty(part2,"Size","firetouchinterest",Vector3.one * 1)
 				C.SetPartProperty(part2,"CFrame","firetouchinterest",part1:GetPivot() * CFrame.new(0,0,-2))
 				C.SetPartProperty(part2,"Anchored","firetouchinterest",false)
-				for s = 1, 2, 1 do
+				for s = 1, 50, 1 do
 					part2.AssemblyLinearVelocity = (part1.Position - part2.Position) * RunS.PreSimulation:Wait()
 				end
 				C.ResetPartProperty(part2,"CanCollide","firetouchinterest")
+				C.ResetPartProperty(part2,"Transparency","firetouchinterest")
 				C.ResetPartProperty(part2,"Size","firetouchinterest")
 				C.ResetPartProperty(part2,"CFrame","firetouchinterest")
 				C.ResetPartProperty(part2,"Anchored","firetouchinterest")
