@@ -141,7 +141,19 @@ return function(C,Settings)
                             if Gun.Parent ~= C.char then
                                 C.human:EquipTool(Gun)
                             end
-                            C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
+                            local options = {
+								ignoreInvisibleWalls = false,
+								ignoreUncollidable = true,
+								ignoreList = {C.char},  -- Example: ignore parts in this list
+								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
+								distance = 12,  -- Retry up to 3 times
+							}
+                            local dir = theirChar:GetPivot().Position - theirChar:GetPivot()*Vector3.new(0,0,-10)
+
+							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)
+
+                            C.DoTeleport(CFrame.new(hitPosition,theirChar.Position))
+                            --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
                             if not LastClick or os.clock() - LastClick > 1 then
                                 task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position,"AH2")
                                 LastClick = os.clock()
@@ -194,10 +206,12 @@ return function(C,Settings)
                 end,
 				Activate = function(self,newValue)
                     self:Reset()
-                    print("AutOWin",newValue,C.GameInProgress)
                     if newValue and C.GameInProgress then
                         local Backpack = C.StringWait(C.plr, "Backpack")
-                        local function BackpackAdded(newChild)
+                        local function BackpackAdded(newChild,notConn)
+                            if not notConn then
+                                print("Registered",newChild)
+                            end
                             if newChild.Name == "Gun" then
                                 C.AddOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
                             elseif newChild.Name == "Knife" then
@@ -207,10 +221,10 @@ return function(C,Settings)
                         table.insert(self.Functs,Backpack.ChildAdded:Connect(BackpackAdded))
                         table.insert(self.Functs,C.char.ChildAdded:Connect(BackpackAdded))
                         for num, item in ipairs(Backpack:GetChildren()) do
-                            task.spawn(BackpackAdded,item)
+                            task.spawn(BackpackAdded,item,true)
                         end
                         for num, item in ipairs(C.char:GetChildren()) do
-                            task.spawn(BackpackAdded,item)
+                            task.spawn(BackpackAdded,item,true)
                         end
                         local function MapAdded(newChild)
                             if newChild.Name == "GunDrop" then
