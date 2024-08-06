@@ -132,14 +132,14 @@ return function(C,Settings)
 				Tooltip = "As the sheriff, kill the murderer",
 				Layout = 2,Type="NoToggle",
 				Shortcut = "SheriffWin", Threads={},
-                FindFurtherDistance = function(theirChar)
+                function FindFurtherDistance(theirChar)
                     local options = {
                         ignoreInvisibleWalls = false,
                         ignoreUncollidable = true,
                         ignoreList = {C.char},
                         raycastFilterType = Enum.RaycastFilterType.Exclude,
                         collisionGroup = C.hrp.CollisionGroup,
-                        distance = 12, -- Set a large distance to find the maximum
+                        distance = 100 -- Set a large distance to find the maximum
                     }
 
                     local function getRaycastDirection(angle)
@@ -149,23 +149,33 @@ return function(C,Settings)
                         local direction = Vector3.new(math.cos(radians), 0, math.sin(radians))
                         return direction
                     end
-                    
+
                     local charPosition = theirChar:GetPivot().Position
-                    
-                    local maxDistance = 100
+                    local maxDistance = 0
                     local maxHitPosition = charPosition
-                    
+
                     for i = 0, 360, 360/12 do
                         local dir = getRaycastDirection(i)
                         local hitResult, hitPosition = C.Raycast(charPosition, dir, options)
-                    
-                        local distance = (hitPosition - charPosition).Magnitude
-                        if distance < maxDistance then
-                            maxDistance = distance
-                            maxHitPosition = hitPosition
+                        
+                        -- Check if we hit something
+                        if hitResult then
+                            local distance = (hitPosition - charPosition).Magnitude
+                            if distance > maxDistance then
+                                maxDistance = distance
+                                maxHitPosition = hitPosition
+                            end
+                        else
+                            -- If no hit, assume the ray goes the full distance
+                            local farPoint = charPosition + dir * options.distance
+                            local distance = (farPoint - charPosition).Magnitude
+                            if distance > maxDistance then
+                                maxDistance = distance
+                                maxHitPosition = farPoint
+                            end
                         end
                     end
-                    
+
                     return maxHitPosition
                 end,
 				Activate = function(self,newValue)
