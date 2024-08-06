@@ -220,9 +220,9 @@ return function(C,Settings)
 			if Type == "Murderer" then
 				return Color3.fromRGB(255)
 			elseif Type == "Sheriff" then
-				return Color3.fromRGB(0,255)
-			elseif Type == "Innocent" then
 				return Color3.fromRGB(0,0,255)
+			elseif Type == "Innocent" then
+				return Color3.fromRGB(0,255)
 			elseif Type == "Lobby" then
 				return Color3.fromRGB(255,255,255)
 			else--Give warning

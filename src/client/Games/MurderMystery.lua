@@ -6,6 +6,9 @@ local RunService = game:GetService("RunService")
 local function Static(C, Settings)
     local RoundTimerPart = workspace:WaitForChild("RoundTimerPart")
     function C.isInGame(theirChar)
+        if not theirChar then
+            return false, "Lobby", false
+        end
 		if theirChar and theirChar.Name == "InviClone" then
 			theirChar = C.char
 		end
