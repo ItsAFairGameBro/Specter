@@ -360,12 +360,28 @@ return function(C,Settings)
                         local inviPart = Instance.new("Part")
                         inviPart.TopSurface = Enum.SurfaceType.Smooth
                         inviPart.BottomSurface = Enum.SurfaceType.Smooth
-                        inviPart.Color = Color3.fromRGB()
-                        inviPart.CFrame = cf + Vector3.new(0,-size.Y/2,0)
-                        inviPart.Size = Vector3.new(size.X,0.2,size.Z) --+ 120 * 2 * Vector3.new(1,0,1)
+                        inviPart.Color = Color3.fromRGB(255, 255, 255)  -- Specify the desired color
+
+                        -- Calculate the extents of the bounding box in world space
+                        local extents = (cf - cf.Position) * size / 2
+
+                        -- Calculate the world-aligned size
+                        local worldSizeX = 2 * extents.X
+                        local worldSizeY = 2 * extents.Y
+                        local worldSizeZ = 2 * extents.Z
+
+                        -- Create a new CFrame that translates the bounding box center down by half its Y size in the world space
+                        local offsetCFrame = cf * CFrame.new(0, -worldSizeY / 2, 0)
+
+                        -- Apply this CFrame to the part
+                        inviPart.CFrame = offsetCFrame
+
+                        -- Set the size using the world-aligned size
+                        inviPart.Size = Vector3.new(worldSizeX, 0.2, worldSizeZ)
                         inviPart.Anchored = true
                         inviPart.Parent = map
-                        table.insert(self.Instances,inviPart)
+
+                        table.insert(self.Instances, inviPart)
                     end,
                 }
             },
