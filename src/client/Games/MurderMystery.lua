@@ -101,7 +101,7 @@ return function(C,Settings)
                         if theirChar == C.char then
                             continue--don't try and oof yourself, won't end well.
                         end
-                        while info.Enabled do
+                        while info.Enabled and select(2,C.isInGame(C.char)) == "Murderer" do
                             local inGame = table.pack(C.isInGame(theirChar))
                             if not inGame[1] or not inGame[3] then
                                 break
@@ -141,14 +141,14 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
-                    local LastClick = os.clock() - .7
+                    local LastClick, LastTeleport = os.clock() - .7, os.clock() - .5
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
                     local RemoteFunction = C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction")
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
                         if theirChar == C.char then
                             continue--don't try and oof yourself, won't end well.
                         end
-                        while info.Enabled do
+                        while info.Enabled and select(2,C.isInGame(C.char)) == "Sheriff" do
                             local inGame = table.pack(C.isInGame(theirChar))
                             if not inGame[1] or inGame[2] ~= "Murderer" or not inGame[3] then
                                 break
@@ -167,11 +167,14 @@ return function(C,Settings)
 
 							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)
 
-                            C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
+                            if not LastTeleport or os.clock() - LastTeleport >= .5 then
+                                C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
+                                LastTeleport = os.clock()
+                            end
                             if not LastClick or os.clock() - LastClick > 1 then
                                 task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
-                                LastClick = os.clock()
+                                LastClick = os.clock() 
                             end
                             actionClone.Time.Text = `{theirChar.Name}`
                             RunService.RenderStepped:Wait()
@@ -255,6 +258,7 @@ return function(C,Settings)
                                 C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                             end
                         end
+                        workspace:WaitForChild("Normal"):WaitForChild("Map")
                         table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
                         for num, item in ipairs(C.Map:GetChildren()) do
                             task.spawn(MapAdded,item)
