@@ -356,7 +356,7 @@ return function(C,Settings)
                 end,
                 Events = {
                     MapAdded = function(self,map)
-                        local cf, size = script.Parent.CFrame, script.Parent.Size
+                        local cf, size = map:GetBoundingBox()
                         local inviPart = Instance.new("Part")
                         inviPart.TopSurface = Enum.SurfaceType.Smooth
                         inviPart.BottomSurface = Enum.SurfaceType.Smooth
