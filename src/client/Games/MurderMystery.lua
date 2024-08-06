@@ -103,7 +103,7 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
-                    local LastClick = os.clock() - .5
+                    local LastClick = os.clock() - .7
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
                     local RemoteFunction = C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction")
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
