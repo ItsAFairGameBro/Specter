@@ -76,6 +76,7 @@ return function(C,Settings)
                             RunService.RenderStepped:Wait()
                         end
                     end
+                    C.human:UnequipTools()
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
 				end,

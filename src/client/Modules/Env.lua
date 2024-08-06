@@ -684,7 +684,7 @@ return function(C,Settings)
 	end
 
 	function C.LoadPlayerCoords(name:string)
-		C.PlayerCoords[name] = false
+		C.PlayerCoords[name] = nil
 		for name, value in pairs(C.PlayerCoords) do
 			return -- stop if there's only one
 		end
