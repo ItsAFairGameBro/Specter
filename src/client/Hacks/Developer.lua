@@ -182,7 +182,7 @@ return function(C,Settings)
                     for num, instance in ipairs(RS:GetDescendants()) do
                         if instance:IsA("RemoteEvent") then
                             table.insert(self.Functs,instance.OnClientEvent:Connect(function(...)
-                                print(`[RemoteEvent {instance:GetFullName()}]: returns {table.concat(table.pack(...),", ")}`)
+                                print(`[RemoteEvent {instance:GetFullName()}]: returns`,...)
                             end))
                         end
                     end
