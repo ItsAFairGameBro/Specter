@@ -108,7 +108,9 @@ return function(C,Settings)
                             end
                             C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,0.4)) -- Behind 2 studs
                             if not LastClick or os.clock() - LastClick > 2 then
-                                print("Gun Returns:",C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction"):InvokeServer(1,theirChar:GetPivot().Position,"AH2"))
+                                if C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction"):InvokeServer(1,theirChar:GetPivot().Position,"AH2") then
+                                    break
+                                end
                                 LastClick = os.clock()
                             end
                             actionClone.Time.Text = `{theirChar.Name}`
