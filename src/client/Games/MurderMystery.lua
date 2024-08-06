@@ -375,7 +375,7 @@ return function(C,Settings)
                         local offsetCFrame = positionOnlyCFrame * CFrame.new(0, -math.abs(globalSize.Y) / 2, 0)
 
                         -- Apply this CFrame to the part
-                        inviPart.CFrame = offsetCFrame - Vector3.new(0,inviPart.Size.Y/2,0)
+                        inviPart.CFrame = offsetCFrame - Vector3.new(0,inviPart.Size.Y/2 + 1e-3,0)
 
                         -- Set the size using the global size
                         inviPart.Anchored = true
