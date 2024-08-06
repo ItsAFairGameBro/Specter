@@ -53,7 +53,7 @@ return function(C,Settings)
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
                         while info.Enabled do
                             local InGame = table.pack(C.isInGame(theirChar))
-                            if not InGame[1] or not InGame[4] then
+                            if not InGame[1] or not InGame[3] then
                                 break
                             end
                             if Knife.Parent ~= C.char then
