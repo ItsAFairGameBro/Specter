@@ -356,7 +356,7 @@ return function(C,Settings)
                 end,
                 Events = {
                     MapAdded = function(self,map)
-                        local cf, size = map:WaitForChild("Spawns"):GetBoundingBox()
+                        local cf, size = (map:WaitForChild("Map",1e-3) or map:WaitForChild("Parts",1e-3)):GetBoundingBox()
                         local inviPart = Instance.new("Part")
                         inviPart.TopSurface = Enum.SurfaceType.Smooth
                         inviPart.BottomSurface = Enum.SurfaceType.Smooth
