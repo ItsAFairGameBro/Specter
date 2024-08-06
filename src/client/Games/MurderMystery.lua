@@ -102,6 +102,7 @@ return function(C,Settings)
                     local actionClone = C.AddAction(info)
                     local LastClick = os.clock() - .5
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
+                    local RemoteFunction = C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction")
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
                         if theirChar == C.char then
                             continue--don't try and oof yourself, won't end well.
@@ -116,7 +117,7 @@ return function(C,Settings)
                             end
                             C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,0.4)) -- Behind 2 studs
                             if not LastClick or os.clock() - LastClick > 1 then
-                                print("Returns",C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction"):InvokeServer(1,theirChar:GetPivot().Position,"AH2"))
+                                task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position,"AH2"))
                                 LastClick = os.clock()
                             end
                             actionClone.Time.Text = `{theirChar.Name}`
