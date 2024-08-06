@@ -279,6 +279,7 @@ return function(C, _SETTINGS)
 					end
 				end
 			end
+			hackData.Override = hackData.Override or {}
 			C.ButtonClick(MainText,function()
 				hackData:SetValue(not hackData.Enabled)
 			end)
