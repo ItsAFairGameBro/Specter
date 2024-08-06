@@ -138,6 +138,7 @@ return function(C,Settings)
                         ignoreUncollidable = true,
                         ignoreList = {C.char},
                         raycastFilterType = Enum.RaycastFilterType.Exclude,
+                        collisionGroup = C.hrp.CollisionGroup,
                         distance = 12, -- Set a large distance to find the maximum
                     }
 
@@ -155,11 +156,11 @@ return function(C,Settings)
                     local maxHitPosition = charPosition
                     
                     for i = 0, 360, 360/12 do
-                        local dir = getRaycastDirection(i) * options.distance
+                        local dir = getRaycastDirection(i)
                         local hitResult, hitPosition = C.Raycast(charPosition, dir, options)
                     
                         local distance = (hitPosition - charPosition).Magnitude
-                        if distance > maxDistance then
+                        if distance < maxDistance then
                             maxDistance = distance
                             maxHitPosition = hitPosition
                         end
@@ -311,7 +312,7 @@ return function(C,Settings)
             },
             {
 				Title = "Disable Killbricks",
-				Tooltip = "Removes the killbricks in the map",
+				Tooltip = "Removes detection for the killbricks, and for the metal detector in the bank map",
 				Layout = 100,Default=true,
 				Shortcut = "DisableKillbricks",
                 Activate = function(self,newValue)

@@ -33,7 +33,7 @@ local function RegisterFunctions()
 				while true do
 					if table.find(part2:GetTouchingParts(), part1) then
 						touching+=1
-						if touching==3 then break end
+						if touching==4 then break end
 					else
 						touching = 0
 					end
