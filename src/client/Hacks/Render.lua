@@ -53,7 +53,7 @@ return function(C,Settings)
 				RunCheck = function(self,instanceData)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
-					local theirInGame = not C.isInGame or table.pack(C.isInGame(theirChar))
+					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
 					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or
 						((theirInGame[3]==nil and select(3,C.isInGame(camera.CameraSubject.Parent))==theirInGame[3]) or
 						(theirInGame[3]~=nil and C.isinGame(camera.CameraSubject.Parent)==theirInGame[1]))) then
