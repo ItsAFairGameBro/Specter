@@ -289,6 +289,11 @@ return function(C,Settings)
 						return
 					end
 					C.human:ChangeState(Enum.HumanoidStateType.Swimming)
+					table.insert(self.Functs,C.human.StateChanged:Connect(function(old, new)
+						if old == Enum.HumanoidStateType.Swimming then
+							C.human:ChangeState(Enum.HumanoidStateType.Swimming)
+						end
+					end))
 					table.insert(self.Functs,RunS.PreSimulation:Connect(function(delta: number)
 						local swimForce = C.human.MoveDirection * Vector3.new(self.EnTbl.HorizontalMult,self.EnTbl.VerticalMult,self.EnTbl.HorizontalMult) * self.EnTbl.MoveSpeed
 						if self.EnTbl.WalkSpeed then
