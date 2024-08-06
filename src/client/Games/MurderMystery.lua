@@ -27,10 +27,10 @@ local function Static(C, Settings)
 		return realInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
 	end
     C.GameInProgress = game:GetService("Workspace").RoundTimerPart.SurfaceGui.Timer.Text ~= "1s"
-    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.RoundStart").OnRemoteEvent:Connect(function(...)
+    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.RoundStart").OnClientEvent:Connect(function(...)
         C.GameInProgress = true
     end))
-    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.VictoryScreen").OnRemoteEvent:Connect(function(...)
+    C.AddGlobalConnection(C.StringWait(RS,"Remotes.Gameplay.VictoryScreen").OnClientEvent:Connect(function(...)
         C.GameInProgress = false
     end))
 end
