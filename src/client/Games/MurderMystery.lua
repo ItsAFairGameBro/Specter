@@ -54,6 +54,7 @@ return function(C,Settings)
                     if select(2,C.isInGame(C.char)) ~= "Murderer" then
                         return "Not Murderer"
                     end
+                    C.AddOverride(C.hackData.Blatant.Noclip, self.Shortcut)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
@@ -83,6 +84,7 @@ return function(C,Settings)
                     C.human:UnequipTools()
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
+                    C.RemoveAction(C.hackData.Blatant.Noclip, self.Shortcut)
 				end,
 				Options = {
 					
@@ -97,6 +99,7 @@ return function(C,Settings)
                     if select(2,C.isInGame(C.char)) ~= "Sheriff" then
                         return "Not Sheriff"
                     end
+                    C.AddOverride(C.hackData.Blatant.Noclip, self.Shortcut)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
@@ -127,6 +130,7 @@ return function(C,Settings)
                     C.human:UnequipTools()
                     C.RemoveAction(info.Name)
                     C.LoadPlayerCoords(self.Shortcut)
+                    C.RemoveAction(C.hackData.Blatant.Noclip, self.Shortcut)
 				end,
 				Options = {
 					
