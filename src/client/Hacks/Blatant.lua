@@ -68,7 +68,7 @@ return function(C,Settings)
 				Shortcut = "Fly",Functs={},Instances={},Default=false,Keybind = "Z",
 				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
 				RunOnDestroy=function(self)
-					self:Activate(false)
+					self:SetValue(false)
 				end,
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
