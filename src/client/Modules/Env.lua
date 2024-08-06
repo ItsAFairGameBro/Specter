@@ -673,6 +673,25 @@ return function(C,Settings)
 		return nameColors[(value % #nameColors) + 1]
 	end
 
+	C.PlayerCoords = {}
+	C.SavedLoc = nil
+
+	function C.SavePlayerCoords(name:string)
+		if not C.SavedLoc then
+			C.SavedPoso = C.char:GetPviot()
+		end
+		C.PlayerCoords[name] = true
+	end
+
+	function C.LoadPlayerCoords(name:string)
+		C.PlayerCoords[name] = false
+		for name, value in pairs(C.PlayerCoords) do
+			return -- stop if there's only one
+		end
+		C.DoTeleport(C.SavedPoso)
+		C.SavedPoso = nil -- reset it
+	end
+
 
 	local TransformTimes={
 		[-24]="Tomorrow, %s",

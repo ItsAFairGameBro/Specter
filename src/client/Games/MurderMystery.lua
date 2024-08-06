@@ -47,12 +47,16 @@ return function(C,Settings)
                     if select(2,C.isInGame(C.char)) ~= "Murderer" then
                         return "Not Murderer"
                     end
+                    C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
                     local Knife = C.StringFind(C.plr,'Backpack.Knife') or C.StringFind(C.char,'Knife')
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
-                        while info.Enabled do
-                            local InGame = table.pack(C.isInGame(theirChar))
+                        if theirChar == C.char then
+                            continue--don't try and oof yourself, won't end well.
+                        end
+                        while info.Enabled and C.isInGame(theirChar) do
+                            local InGame = table.pack()
                             if not InGame[1] or not InGame[3] then
                                 break
                             end
@@ -66,6 +70,7 @@ return function(C,Settings)
                         end
                     end
                     C.RemoveAction(info.Name)
+                    C.LoadPlayerCoords(self.Shortcut)
 				end,
 				Options = {
 					
