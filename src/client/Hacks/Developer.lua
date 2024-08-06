@@ -1,5 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local SG = game:GetService("StarterGui")
+local RS = game:GetService("ReplicatedStorage")
 local PhysicsS = game:GetService"PhysicsService"
 return function(C,Settings)
 	return {
@@ -167,6 +168,24 @@ return function(C,Settings)
                     local Count = C.comma_value(loop(game))
                     
                     warn(("[Script Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
+				end,
+				Options = {
+					
+				}
+			},
+            {
+				Title = "RemoteEvent Tracker",
+				Tooltip = "Tracks remote events and their result",
+				Layout = 7,
+				Shortcut = "RemoteEventTracker",Functs={},
+				Activate = function(self,newValue)
+                    for num, instance in ipairs(RS:GetDescendants()) do
+                        if instance:IsA("RemoteEvent") then
+                            table.insert(self.Functs,instance.OnClientEvent:Connect(function(...)
+                                print(`[RemoteEvent {instance:GetFullName()}]: returns {table.concat(table.pack(...),", ")}`)
+                            end))
+                        end
+                    end
 				end,
 				Options = {
 					
