@@ -256,7 +256,7 @@ return function(C,Settings)
                             task.spawn(BackpackAdded,item,true)
                         end
                         local function MapAdded(newChild)
-                            if newChild.Name == "GunDrop" then
+                            if newChild.Name == "GunDrop" and newChild.Parent == C.Map then
                                 C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                             end
                         end
