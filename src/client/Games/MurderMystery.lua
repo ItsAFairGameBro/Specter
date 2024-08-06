@@ -100,7 +100,7 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
-                    local LastClick = os.clock() - 1.5
+                    local LastClick = os.clock() - .5
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
                         if theirChar == C.char then
@@ -115,7 +115,7 @@ return function(C,Settings)
                                 C.human:EquipTool(Gun)
                             end
                             C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,0.4)) -- Behind 2 studs
-                            if not LastClick or os.clock() - LastClick > .1 then
+                            if not LastClick or os.clock() - LastClick > 1 then
                                 print("Returns",C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction"):InvokeServer(1,theirChar:GetPivot().Position,"AH2"))
                                 LastClick = os.clock()
                             end
