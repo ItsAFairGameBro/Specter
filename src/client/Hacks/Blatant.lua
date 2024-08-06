@@ -79,7 +79,7 @@ return function(C,Settings)
 					end
 				end,
 				Activate = function(self,newValue)
-					if not C.human then return end--else task.wait(.1) end
+					--if not C.human then return end --else task.wait(.1) end
 					C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
 					
 					if not newValue then
@@ -196,7 +196,7 @@ return function(C,Settings)
 							--C.hrp.AssemblyAngularVelocity = Vector3.zero
 							--bodyVel.Velocity = Vector3.new(0,newVelocity.Y,0)
 						elseif SaveMode == "Velocity" then
-							C.hrp.AssemblyLinearVelocity = newVelocity-- + dt * workspace.Gravity * Vector3.new(0, 1, 0)--* CharacterMass * workspace.Gravity 
+							C.hrp.AssemblyLinearVelocity = newVelocity-- + dt * workspace.Gravity * Vector3.new(0, 1, 0)--* CharacterMass * workspace.Gravity
 							--bodyVel.Velocity = newVelocity.Y
 						end
 					end
@@ -274,9 +274,81 @@ return function(C,Settings)
 				}
 			},
 			{
+				Title = "Swim",
+				Tooltip = "Allows you to swim on enable",
+				Layout = 4,DontActivate=true,
+				Shortcut = "Swim",Functs={},
+				Activate = function(self,newValue)
+					if not C.human then
+						return
+					end
+					C.human:SetStateEnabled(Enum.HumanoidStateType.Jumping,not newValue)
+					C.human:SetStateEnabled(Enum.HumanoidStateType.GettingUp,not newValue)
+					if not newValue then
+						C.human:ChangeState(Enum.HumanoidStateType.GettingUp)
+						return
+					end
+					C.human:ChangeState(Enum.HumanoidStateType.Swimming)
+					table.insert(self.Functs,RunS.PreSimulation:Connect(function(delta: number)
+						local swimForce = C.human.MoveDirection * Vector3.new(self.EnTbl.HorizontalMult,self.EnTbl.VerticalMult,self.EnTbl.HorizontalMult) * self.EnTbl.MoveSpeed
+						if self.EnTbl.WalkSpeed then
+							swimForce *= (C.human.WalkSpeed / C.Defaults.WalkSpeed)
+						end
+						swimForce += Vector3.new(0,self.EnTbl.FloatSpeed,0)
+						C.hrp.AssemblyLinearVelocity = swimForce * (delta * 60)
+					end))
+				end,
+				Events = {
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+				},
+				Options = {
+					{
+						Type = Types.Slider,
+						Title = "Move Speed",
+						Tooltip = "How fast you swim through the air",
+						Layout = 1,Default=20,
+						Min=0,Max=200,Digits=1,
+						Shortcut="MoveSpeed",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Float Speed",
+						Tooltip = "How fast you go up",
+						Layout = 1,Default=4,
+						Min=-20,Max=20,Digits=0,
+						Shortcut="FloatSpeed",
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Use Walkspeed",
+						Tooltip = "Use Walkspeed in calculation",
+						Layout = 3,Default=false,
+						Shortcut="UseWalkspeed",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Horizontal Multiplier",
+						Tooltip = "How much faster you go horizontally (forward/left/right/back)",
+						Layout = 4,Default=1,
+						Min=0.1,Max=10,Digits=1,
+						Shortcut="HorizontalMult",
+					},
+					{
+						Type = Types.Slider,
+						Title = "Vertical Multiplier",
+						Tooltip = "How much faster you go vertically (up/down)",
+						Layout = 5,Default=1,
+						Min=0.1,Max=10,Digits=1,
+						Shortcut="VerticalMult",
+					},
+				}
+			},
+			{
 				Title = "Noclip",
 				Tooltip = "Allows your character to walk through walls",
-				Layout = 2,
+				Layout = 5,
 				Shortcut = "Noclip",Functs={},Default=false,Keybind = "R",
 				RunOnDestroy=function(self)
 					self:Activate(false)
@@ -317,7 +389,7 @@ return function(C,Settings)
 			{
 				Title = "Teleport",
 				Tooltip = "Teleports your character to where your mouse is",
-				Layout = 3, Type = "NoToggle",
+				Layout = 10, Type = "NoToggle",
 				Shortcut = "Teleport",Keybind = "T",
 				Activate = function(self,newValue)
 					if not C.char then

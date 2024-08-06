@@ -43,7 +43,7 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game✅`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
 		GameModule = ThisGameTbl.ModuleName
-		table.insert(ModulesToRun,GameModule)
+		table.insert(ModulesToRun,"Games/"..GameModule)
 	else
 		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game❌`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
