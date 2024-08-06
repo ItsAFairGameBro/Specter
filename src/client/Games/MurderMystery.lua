@@ -358,7 +358,7 @@ return function(C,Settings)
                     MapAdded = function(self,map)
                         local cf, size = map:GetBoundingBox()
                         local inviPart = Instance.new("Part")
-                        inviPart.CFrame = cf - Vector3.new(0,size/2,0)
+                        inviPart.CFrame = cf - Vector3.new(0,size.Y/2,0)
                         inviPart.Size = Vector3.new(size.X,0.2,size.Z)
                         inviPart.Anchored = true
                         inviPart.Parent = map
