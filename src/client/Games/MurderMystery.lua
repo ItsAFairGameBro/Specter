@@ -356,32 +356,31 @@ return function(C,Settings)
                 end,
                 Events = {
                     MapAdded = function(self,map)
-                        local cf, size = map:GetBoundingBox()
+                        local cf, size = script.Parent.CFrame, script.Parent.Size
                         local inviPart = Instance.new("Part")
                         inviPart.TopSurface = Enum.SurfaceType.Smooth
                         inviPart.BottomSurface = Enum.SurfaceType.Smooth
-                        inviPart.Color = Color3.fromRGB(255, 255, 255)  -- Specify the desired color
+                        inviPart.Color = Color3.fromRGB()  -- Specify the desired color
 
-                        -- Calculate the extents of the bounding box in world space
-                        local extents = (cf - cf.Position) * size / 2
+                        -- Calculate the global size by applying the rotation part of the CFrame to the local size
+                        local globalSize = (cf - cf.Position):VectorToWorldSpace(size)
 
-                        -- Calculate the world-aligned size
-                        local worldSizeX = 2 * extents.X
-                        local worldSizeY = 2 * extents.Y
-                        local worldSizeZ = 2 * extents.Z
+                        -- Create a new CFrame that only uses the position of the parent part's CFrame
+                        local positionOnlyCFrame = CFrame.new(cf.Position)
 
-                        -- Create a new CFrame that translates the bounding box center down by half its Y size in the world space
-                        local offsetCFrame = cf * CFrame.new(0, -worldSizeY / 2, 0)
+
+                        inviPart.Size = Vector3.new(math.abs(globalSize.X), 0.2, math.abs(globalSize.Z)) + 0 * 2 * Vector3.new(1, 0, 1)
+
+                        -- Adjust the CFrame to position the part correctly
+                        local offsetCFrame = positionOnlyCFrame * CFrame.new(0, -math.abs(globalSize.Y) / 2, 0)
 
                         -- Apply this CFrame to the part
-                        inviPart.CFrame = offsetCFrame
+                        inviPart.CFrame = offsetCFrame - Vector3.new(0,inviPart.Size.Y/2,0)
 
-                        -- Set the size using the world-aligned size
-                        inviPart.Size = Vector3.new(worldSizeX, 0.2, worldSizeZ)
+                        -- Set the size using the global size
                         inviPart.Anchored = true
-                        inviPart.Parent = map
-
-                        table.insert(self.Instances, inviPart)
+                        inviPart.Parent = C.Map
+                        table.insert(self.Instances,inviPart)
                     end,
                 }
             },
