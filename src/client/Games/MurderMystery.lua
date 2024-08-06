@@ -369,7 +369,7 @@ return function(C,Settings)
                         local positionOnlyCFrame = CFrame.new(cf.Position)
 
 
-                        inviPart.Size = Vector3.new(math.abs(globalSize.X), 0.2, math.abs(globalSize.Z)) + 60 * 2 * Vector3.new(1, 0, 1)
+                        inviPart.Size = Vector3.new(math.abs(globalSize.X), 0.2, math.abs(globalSize.Z)) + 300 * 2 * Vector3.new(1, 0, 1)
 
                         -- Adjust the CFrame to position the part correctly
                         local offsetCFrame = positionOnlyCFrame * CFrame.new(0, -math.abs(globalSize.Y) / 2, 0)
