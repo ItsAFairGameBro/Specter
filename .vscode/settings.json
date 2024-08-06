@@ -1,0 +1,27 @@
+{
+    "robloxLsp.diagnostics.globals": [
+        "hookfunction",
+        "getconnections",
+        "getrenv",
+        "getnamecallmethod",
+        "writefile",
+        "isfolder",
+        "request",
+        "setclipboard",
+        "firetouchinterest",
+        "gethui",
+        "newcclosure",
+        "fireclickdetector",
+        "getloadedmodules",
+        "getgenv",
+        "getcallingscript",
+        "getsenv",
+        "isfile",
+        "makefolder",
+        "readfile",
+        "hookmetamethod",
+        "hookmetamethod",
+        "setscriptable",
+        "checkcaller"
+    ]
+}

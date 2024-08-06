@@ -178,7 +178,7 @@ return function(C,Settings)
 				Layout = 7,Type="NoToggle",NoStudio = true,
 				Shortcut = "SetGameToClipBoard",
 				Activate = function(self,newValue)
-                    C.setclipboard(tostring(game.GameId))
+                    C.setclipboard(game.GameId)
 				end,
 				Options = {
 					

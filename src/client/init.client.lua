@@ -61,7 +61,9 @@ local function RegisterFunctions()
 		end
 		ProximityPrompt.HoldDuration = HoldDuration
 	end
-	C.setclipboard = isStudio and function() return end or setclipboard
+	C.setclipboard = isStudio and function() return end or function(input: string)
+		setclipboard(tostring(input))
+	end
 	C.getloadedmodules = isStudio and function() return {C.PlayerScripts.PlayerModule.ControlModule} end or getloadedmodules
 	C.request = not isStudio and request
 	C.isfolder = not isStudio and isfolder

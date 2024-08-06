@@ -1,22 +1,41 @@
 local PS = game:GetService("Players")
 local function Static(C, Settings)
+    local RoundTimerPart = workspace:WaitForChild("RoundTimerPart")
     function C.isInGame(theirChar)
 		if theirChar and theirChar.Name == "InviClone" then
 			theirChar = C.char
 		end
 		local player=PS:GetPlayerFromCharacter(theirChar)
 		if not player then
-			return false, "Neutral"--No player, no team!
+			return false, "Lobby"--No player, no team!
 		end
-		local PrimaryPart = theirChar.PrimaryPart
-		if not PrimaryPart or PrimaryPart.Position.Y < -103 then
-			return false, player.Team -- Player, but in lobby!
-		end
+        local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
+        local realInGame = player:GetAttribute("Alive")
+        local hasGun = theirChar:FindFirstChild("Gun") or C.StringWait(player,"Backpack.Gun",0)
+        local hasKnife = theirChar:FindFirstChild("Knife") or C.StringWait(player,"Backpack.Knife",0)
 
-		return true, player.Team -- Player exists!
+        if hasGun then
+            return realInGame, "Sheriff", defactoInGame
+        elseif hasKnife then
+            return realInGame, "Murderer", defactoInGame
+        end
+
+		return realInGame, (defactoInGame or realInGame) and "Innocent" or "Lobby", defactoInGame
 	end
 
 end
 return function(C,Settings)
-    
+    Static(C,Settings)
+
+    return {
+        Category = {
+            Name = "NavalWarefare",
+            Title = "Naval Warefare",
+            Image = nil, -- Set Image to nil in order to get game image!
+            Layout = 20,
+        },
+        Tab = {
+            
+        }
+    }
 end

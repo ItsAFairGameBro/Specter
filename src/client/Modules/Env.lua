@@ -212,12 +212,25 @@ return function(C,Settings)
 		return formatted	  
 	end
 
-	function C.GetPlayerNameTagColor(theirPlr,theirChar)
+	function C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
 		if theirPlr.Team then
 			return theirPlr.Team.TeamColor.Color
-		else
-			return Color3.fromRGB(0,0,255)
+		elseif theirIsInGame then
+			local Type = theirIsInGame[3]
+			if Type == "Murderer" then
+				return Color3.fromRGB(255)
+			elseif Type == "Sheriff" then
+				return Color3.fromRGB(0,255)
+			elseif Type == "Innocent" then
+				return Color3.fromRGB(0,0,255)
+			elseif Type == "Lobby" then
+				return Color3.fromRGB(255,255,255)
+			else--Give warning
+				warn(`[C.GetPlayerNameTagColor]: Invalid Type Detected: {tostring(Type)} for {tostring(theirPlr)}; reverting to blue`)
+			end
 		end
+		-- Apply default color
+		return Color3.fromRGB(0,0,255)
 	end
 
 	local savedFriendsCashe = {}

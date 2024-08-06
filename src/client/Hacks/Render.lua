@@ -18,12 +18,12 @@ return function(C,Settings)
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
 				Layout = 1,Default=true,Deb=0,
 				Shortcut = "PlayerHighlight", Instances = {}, Storage={},
-				UpdVisibility = function(self,robloxHighlight,enabled,theirPlr,theirChar)
+				UpdVisibility = function(self,robloxHighlight,enabled,theirPlr,theirChar,theirIsInGame)
 					--robloxHighlight.FillTransparency = enabled and 0 or 1
 					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
 					robloxHighlight.Enabled = enabled
 					if enabled then
-						robloxHighlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar)
+						robloxHighlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
@@ -53,9 +53,12 @@ return function(C,Settings)
 				RunCheck = function(self,instanceData)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
-					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or (C.isInGame(theirChar)==C.isInGame(camera.CameraSubject.Parent))) then
+					local theirIsInGame = not C.isInGame or {C.isInGame(camera.CameraSubject.Parent)}
+					if theirHumanoid~=camera.CameraSubject and (not C.isInGame or 
+						((theirIsInGame[3]==nil and select(3,C.isInGame(theirChar))==theirIsInGame[3]) or
+						(theirIsInGame[3]~=nil and C.isinGame(theirChar)==theirIsInGame[1]))) then
 						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
-						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar)
+						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar,theirIsInGame)
 					else
 						self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
 					end
