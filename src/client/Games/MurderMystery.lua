@@ -38,7 +38,7 @@ local function Static(C, Settings)
 		local function MapAdded()
             C.Map = workspace:WaitForChild("Normal")
             C.FireEvent("MapAdded",nil,C.Map)
-            C.AddObjectConnection(C.Map,"MapRemoved",C.Map:Destroying(function()
+            C.AddObjectConnection(C.Map,"MapRemoved",C.Map.Destroying:Connect(function()
                 C.FireEvent("MapRemoved",nil,C.Map)
             end))
         end
