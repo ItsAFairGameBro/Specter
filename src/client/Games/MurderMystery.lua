@@ -373,7 +373,7 @@ return function(C,Settings)
                         inviPart.Size = Vector3.new(math.abs(globalSize.X), 0.2, math.abs(globalSize.Z)) + 300 * 2 * Vector3.new(1, 0, 1)
 
                         -- Adjust the CFrame to position the part correctly
-                        local offsetCFrame = positionOnlyCFrame * CFrame.new(0, -math.abs(globalSize.Y) / 2, 0)
+                        local offsetCFrame = positionOnlyCFrame + Vector3.new(0, -math.abs(globalSize.Y) / 2, 0)
 
                         -- Apply this CFrame to the part
                         inviPart.CFrame = offsetCFrame - Vector3.new(0,inviPart.Size.Y/2 + 1e-3,0)
