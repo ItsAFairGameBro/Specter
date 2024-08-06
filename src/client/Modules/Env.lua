@@ -186,7 +186,6 @@ return function(C,Settings)
 							warn(`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
 							C.Prompt("Raycast Max Limit",`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
 						end
-						hitPosition = nil
 						didHit = false
 						break
 					end
@@ -204,11 +203,11 @@ return function(C,Settings)
 			
 		until didHit
 		
-		if not hitPosition then
+		if not didHit then
 			hitPosition = orgOrigin + direction * distance
 		end
 	
-		return hitResult, hitPosition
+		return didHit and hitResult, hitPosition
 	end
 	
 	function C.getCharacterHeight(model)
