@@ -171,7 +171,7 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
-                    local Gun = C.StringFind(workspace,"Normal.GunDrop")
+                    local Gun = C.StringFind(C.Map,"GunDrop")
                     while Gun and Gun.Parent == C.Map and select(2,C.isInGame(C.char)) == "Innocent" and info.Enabled do
                         C.DoTeleport(Gun:GetPivot())
                         C.firetouchinterest(C.hrp,Gun)
@@ -184,7 +184,7 @@ return function(C,Settings)
             {
 				Title = "Auto Win",
 				Tooltip = "Combines Gun Pickup, Sheriff/Murderer Win to make you when whenever possible.",
-				Layout = 4, Default=true, DontActivate = true,
+				Layout = 4, DontActivate = true,
 				Shortcut = "AutoWin", Functs = {},
                 Reset = function(self)
                     C.RemoveOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
@@ -207,7 +207,7 @@ return function(C,Settings)
                             task.spawn(BackpackAdded,item)
                         end
                         local function MapAdded(newChild)
-                            if newChild.Name == "Gun" then
+                            if newChild.Name == "GunDrop" then
                                 C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                             end
                         end

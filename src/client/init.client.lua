@@ -152,6 +152,7 @@ function C.DebugMessage(type,message)
 end
 
 function C.StringWait(start,path,timeout,seperationChar)
+	if not start then return end
 	local current = start
 	local pathTbl = path:split(seperationChar or ".")
 	for i,v in ipairs(pathTbl) do
@@ -167,6 +168,7 @@ function C.StringWait(start,path,timeout,seperationChar)
 end
 
 function C.StringFind(start,path,seperationChar,recursionEnabled)
+	if not start then return end
 	local current = start
 	local pathTbl = path:split(seperationChar or ".")
 	for i,v in ipairs(pathTbl) do
