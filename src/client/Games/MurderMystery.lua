@@ -42,7 +42,7 @@ local function Static(C, Settings)
                 C.FireEvent("MapRemoved",nil,C.Map)
             end))
         end
-        C.StringWait(RS,"Remotes.Gameplay.LoadingMap"):Connect(MapAdded)
+        C.StringWait(RS,"Remotes.Gameplay.LoadingMap").OnClientEvent:Connect(MapAdded)
         if workspace:FindFirstChild("Normal") then
             MapAdded()
         end
