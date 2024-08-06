@@ -169,12 +169,16 @@ return function(C,Settings)
                                 if Gun.Parent ~= C.char then
                                     C.human:EquipTool(Gun)
                                 end
-                                C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
+                                if (hitPosition - theirChar:GetPivot().Position).Magnitude > .1 then
+                                    C.DoTeleport(CFrame.new(hitPosition,theirChar:GetPivot().Position))
+                                end
                                 LastTeleport = os.clock()
                             end
                             if not LastClick or os.clock() - LastClick > 1 then
-                                task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
-                                LastClick = os.clock() 
+                                task.spawn(function()
+                                    RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
+                                end)
+                                LastClick = os.clock()
                             end
                             actionClone.Time.Text = `{theirChar.Name}`
                             RunService.RenderStepped:Wait()
