@@ -54,7 +54,8 @@ return function(C,Settings)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
 					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
-					local shouldRender = theirHumanoid~=camera.CameraSubject and (not C.isInGame or
+					print(theirInGame[3],C.isInGame(camera.CameraSubject.Parent),table.pack(C.isInGame(camera.CameraSubject.Parent))[3])
+					local shouldRender = theirHumanoid~=camera.CameraSubject and (not theirInGame or
 					((theirInGame[3]==nil and table.pack(C.isInGame(camera.CameraSubject.Parent))[3]==theirInGame[3]) or
 					(theirInGame[3]~=nil and C.isinGame(camera.CameraSubject.Parent)==theirInGame[1])))
 					if shouldRender then
