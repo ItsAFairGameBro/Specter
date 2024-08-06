@@ -378,8 +378,9 @@ return function(C,Settings)
 			object:SetAttribute(C.OriginalCollideName,org>0 and org or nil)
 		end
 	end--]]
-	-- Force Add Function, C.hackData[name][hackData.Shortcut]
+	-- C.AddOverride(C.hackData[name][hackData.Shortcut], self.Shortcut)
 	function C.AddOverride(hackTbl,name)
+		hackTbl.Override = hackTbl.Override or {}
 		local old = #hackTbl.Override
 		if C.TblAdd(hackTbl.Override,name) then
 			C.DebugMessage("Override",`Added marker "{name}" to override`)
@@ -391,6 +392,7 @@ return function(C,Settings)
 		end
 	end
 	function C.RemoveOverride(hackTbl,name)
+		hackTbl.Override = hackTbl.Override or {}
 		if C.TblRemove(hackTbl.Override,name) then
 			C.DebugMessage("Override",`Removed marker "{name}" from override`)
 			if #hackTbl.Override == 0 then
