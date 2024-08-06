@@ -50,6 +50,7 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
+                    local LastClick
                     local Knife = C.StringFind(C.plr,'Backpack.Knife') or C.StringFind(C.char,'Knife')
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
                         if theirChar == C.char then
@@ -60,7 +61,10 @@ return function(C,Settings)
                                 C.human:EquipTool(Knife)
                             end
                             C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,0,2)) -- Behind 2 studs
-                            Knife:WaitForChild("Stab"):FireServer("Slash")
+                            if not LastClick or os.clock() - LastClick > .5 then
+                                Knife:WaitForChild("Stab"):FireServer("Slash")
+                                LastClick = os.clock()
+                            end
                             actionClone.Time.Text = `{theirChar.Name}`
                             RunService.RenderStepped:Wait()
                         end
