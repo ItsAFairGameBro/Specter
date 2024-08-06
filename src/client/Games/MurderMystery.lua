@@ -118,7 +118,7 @@ return function(C,Settings)
                             if Gun.Parent ~= C.char then
                                 C.human:EquipTool(Gun)
                             end
-                            C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,-2,0.4)) -- Behind 2 studs
+                            C.DoTeleport(theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
                             if not LastClick or os.clock() - LastClick > 1 then
                                 task.spawn(RemoteFunction.InvokeServer,RemoteFunction,1,theirChar:GetPivot().Position,"AH2")
                                 LastClick = os.clock()
