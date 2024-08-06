@@ -144,15 +144,14 @@ function C.DebugMessage(type,message)
 end
 
 function C.StringWait(start,path,timeout,seperationChar)
-	local seperationChar = seperationChar or "."
 	local current = start
-	local pathTbl = string.split(path,seperationChar)
+	local pathTbl = path:split(seperationChar or ".")
 	for i,v in ipairs(pathTbl) do
 		local next = current:WaitForChild(v,timeout)
 		if next then
 			current = next
 		else
-			warn("C.StringWait failed to find "..v.." in "..next:GetFullName().." from "..start)
+			warn("C.StringWait failed to find "..v.." in "..next:GetFullName().." from "..tostring(start))
 			return
 		end
 	end
@@ -160,15 +159,14 @@ function C.StringWait(start,path,timeout,seperationChar)
 end
 
 function C.StringFind(start,path,seperationChar,recursionEnabled)
-	local seperationChar = seperationChar or "."
 	local current = start
-	local pathTbl = string.split(path,seperationChar)
+	local pathTbl = path:split(seperationChar or ".")
 	for i,v in ipairs(pathTbl) do
 		local next = current:FindFirstChild(v,recursionEnabled)
 		if next then
 			current = next
 		else
-			warn("C.StringFind failed to find "..v.." in "..current:GetFullName().." from "..start:GetFullName())
+			warn("C.StringFind failed to find "..v.." in "..current:GetFullName().." from "..tostring(start))
 			return
 		end
 	end

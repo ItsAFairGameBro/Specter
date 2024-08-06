@@ -11,8 +11,8 @@ local function Static(C, Settings)
 		end
         local defactoInGame = (theirChar:GetPivot().Position - RoundTimerPart.Position).Magnitude > 150
         local realInGame = player:GetAttribute("Alive")
-        local hasGun = theirChar:FindFirstChild("Gun") or C.StringFind(player,"Backpack.Gun",0)
-        local hasKnife = theirChar:FindFirstChild("Knife") or C.StringFind(player,"Backpack.Knife",0)
+        local hasGun = theirChar:FindFirstChild("Gun") or C.StringFind(player,"Backpack.Gun")
+        local hasKnife = theirChar:FindFirstChild("Knife") or C.StringFind(player,"Backpack.Knife")
 
         if hasGun then
             return realInGame, "Sheriff", defactoInGame
