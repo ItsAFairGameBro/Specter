@@ -140,7 +140,7 @@ return function(C,Settings)
 		local orgOrigin = origin -- save for later
 		local distance = options.distance or 1
 	
-		rayParams.CollisionGroup = origin.collisionGroup or ""
+		rayParams.CollisionGroup = options.collisionGroup or ""
 		rayParams.FilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude
 		rayParams.FilterDescendantsInstances = options.ignoreList or {}  -- List of instances to ignore
 	
