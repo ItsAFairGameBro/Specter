@@ -173,7 +173,7 @@ return function(C,Settings)
                                 C.DoTeleport(hitCF)
                                 LastTeleport = os.clock()
                             end
-                            if not LastClick or os.clock() - LastClick >= 100 then
+                            if not LastClick or os.clock() - LastClick >= 1 then
                                 task.spawn(function()
                                     RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
                                 end)
