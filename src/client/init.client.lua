@@ -156,10 +156,10 @@ C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
-	SaveSystem = false,
 	Teleport = false,
 	Override = false,
 	Thread = false,
+	SaveSystem = true,
 	AntiCheat = true,
 }
 
