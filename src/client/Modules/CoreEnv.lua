@@ -152,9 +152,7 @@ return function(C,Settings)
 				C.getgenv().PreviousServers = decoded2.Servers
 			end
 			if not C.isfile(path) then
-				if Settings.Deb.Save then
-					C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
-				end
+				C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
 				if not C.isStudio then
 					C.getgenv().ProfileId = "Default"
 				end
