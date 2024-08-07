@@ -283,7 +283,7 @@ return function(C,Settings)
                                 C.AddOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                             end
                         end
-                        table.insert(self.Functs,C.plr.DescendantAdded:Connect(BackpackAdded))
+                        table.insert(self.Functs,Backpack.ChildAdded:Connect(BackpackAdded))
                         table.insert(self.Functs,C.char.ChildAdded:Connect(BackpackAdded))
                         for num, item in ipairs(Backpack:GetChildren()) do
                             task.spawn(BackpackAdded,item,true)

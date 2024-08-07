@@ -28,6 +28,7 @@ return function(C,Settings)
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl,game.GameId) then
             if not cheatTbl.RunOnce or not C.getgenv()["AntiCheat"..num] then
+                C.DebugMessage("AntiCheat",`AntiCheat {num} Hooked`)
                 cheatTbl.Run(cheatTbl)
                 C.getgenv()["AntiCheat"..num] = true
             end

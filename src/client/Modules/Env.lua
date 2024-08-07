@@ -431,7 +431,7 @@ return function(C,Settings)
 			C.DebugMessage("Override",`Removed marker "{name}" from override`)
 			if #hackTbl.Override == 0 then
 				hackTbl.RealEnabled = hackTbl.Enabled
-				if not hackTbl.RealEnabled then
+				if not hackTbl.RealEnabled and hackTbl.Type ~= "NoToggle" then
 					C.DebugMessage("Override",`Removed function from override`)
 					C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 				end

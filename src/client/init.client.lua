@@ -160,7 +160,7 @@ C.Debugs = {All = false,
 	Teleport = false,
 	Override = false,
 	Thread = false,
-	AntiCheat = false,
+	AntiCheat = true,
 }
 
 local Settings = C.getgenv().SETTINGS
