@@ -130,6 +130,7 @@ return function(C,Settings)
 			C.writefile(FilePath2,EncodedSaveDict2)
 		end
 		local success, result = C.API(internallySaveProfile,nil,1)
+		C.DebugMessage("SaveSystem",`{tostring(success)}: {tostring(result)}`)
 		if not success then
 			C.AddNotification(`Profile Save Error`,`Saving {profileName} failed: {result}`)
 		end
