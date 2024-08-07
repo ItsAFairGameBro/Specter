@@ -23,6 +23,7 @@ return function(C,Settings)
             end,
             KeepGoing = false, RunOnce = true,
             GameIds = {1069466626},
+            PlaceIds = {},
         },
         {
             Run = function(self)
