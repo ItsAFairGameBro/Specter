@@ -132,7 +132,7 @@ return function(C,Settings)
 				Tooltip = "As the sheriff, kill the murderer",
 				Layout = 2,Type="NoToggle",
 				Shortcut = "SheriffWin", Threads={},
-                FindFurtherDistance=function(theirChar)
+                FindFurtherDistance=function(self,charPosition)
                     local options = {
                         ignoreInvisibleWalls = false,
                         ignoreUncollidable = true,
@@ -150,7 +150,6 @@ return function(C,Settings)
                         return direction
                     end
 
-                    local charPosition = theirChar:GetPivot().Position
                     local maxDistance = 0
                     local maxHitPosition = charPosition
 
@@ -205,7 +204,7 @@ return function(C,Settings)
                                     C.human:EquipTool(Gun)
                                 end
                                 --local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
-                                local raycast = self.FindFurtherDistance(theirChar)
+                                local raycast = self:FindFurtherDistance(theirChar:GetPivot().Position)
                                 C.DoTeleport(raycast)
                                 LastTeleport = os.clock()
                             end
@@ -346,7 +345,7 @@ return function(C,Settings)
             {
 				Title = "Bottom Part",
 				Tooltip = "Adds a part at the lowest point in the map",
-				Layout = 101, DontActivate = true,
+				Layout = 101, DontActivate = true, Default = true,
 				Shortcut = "BottomPart", Functs = {}, Instances = {},
 				Activate = function(self,newValue)
                     if C.Map and newValue then

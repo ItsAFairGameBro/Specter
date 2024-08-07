@@ -94,7 +94,7 @@ local function Static(C,Settings)
 	end
 	function C.VehicleTeleport(vehicle, loc, useCF)
 		if not useCF then
-			useCF = loc.Rotation * CFrame.new(loc.Position)
+			useCF = CFrame.new(loc.Position) * loc.Rotation
 		end
 		local HitCode = vehicle:FindFirstChild("HitCode")
 		if HitCode then

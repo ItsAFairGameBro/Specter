@@ -159,7 +159,7 @@ C.Debugs = {All = false,
 	Teleport = false,
 	Override = false,
 	Thread = false,
-	SaveSystem = true,
+	SaveSystem = false,
 	AntiCheat = true,
 }
 
@@ -305,4 +305,6 @@ if not C.isStudio then
 	end
 end
 
+--Load AntiCheat Immediately!
+C.LoadModule("AntiCheat")
 return C.LoadModule("CoreLoader")
