@@ -199,7 +199,7 @@ return function(C,Settings)
 							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)--]]
 
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
-                            if not LastTeleport or os.clock() - LastTeleport >= 0 then
+                            if not LastTeleport or os.clock() - LastTeleport >= .5 then
                                 if Gun.Parent ~= C.char then
                                     C.human:EquipTool(Gun)
                                 end
