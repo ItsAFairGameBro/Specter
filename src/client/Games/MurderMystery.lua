@@ -169,15 +169,16 @@ return function(C,Settings)
 				Activate = function(self,newValue,firstRun)
                     C.RemoveAction(self.Shortcut)
                     if firstRun then
-                        task.wait(3) -- Wait a few seconds in order to let GetTagged("Character") load
+                        task.wait(.5) -- Wait a bit for GetTagged("Character") load
                     end
                     if select(2,C.isInGame(C.char)) ~= "Sheriff" then
                         return "Not Sheriff"
                     end
                     C.AddOverride(C.hackData.Blatant.Noclip, self.Shortcut)
                     C.SavePlayerCoords(self.Shortcut)
-                    local info = {Name=self.Shortcut,Time="Firing..",Tags={"RemoveOnDestroy"}}
+                    local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
+                    actionClone.Time.Text = "Firing.."
                     local canShoot = true
                     local LastClick, LastTeleport = os.clock() - .7, os.clock() - .5
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
