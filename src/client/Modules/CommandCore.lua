@@ -5,6 +5,9 @@ local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
 local GS = game:GetService("GuiService")
 local CS = game:GetService("Chat")
+local OverrideChatGames = {
+    66654135 -- MM2
+}
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands
     if not C.savedCommands then
@@ -483,7 +486,7 @@ return function(C,Settings)
             end
         end))
     end
-    if CS.LoadDefaultChat then
+    if CS.LoadDefaultChat or table.find(OverrideChatGames,game.GameId) then
         if not hasNewChat then
             C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
                 registerNewChatBar()

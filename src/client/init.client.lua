@@ -129,7 +129,7 @@ local function RegisterFunctions()
 			warn("[Specter C.require]: Failed To Load Module "..tostring(ModuleScript)..": "..tostring(result))
 			C.yieldForeverFunct()
 		end
-		return success, result
+		return result
 	end
 	
 	--Important In-Game Functions
