@@ -190,11 +190,17 @@ return function(C,Settings)
                             end
 
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
-                            if not LastTeleport or os.clock() - LastTeleport >= .5 then
+                            if not LastTeleport or os.clock() - LastTeleport >= 0 then
                                 if Gun.Parent ~= C.char then
                                     C.human:EquipTool(Gun)
                                 end
-                                local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
+                                local hitCF = theirChar:GetPivot()
+                                local offset = theirChar.PrimaryPart.AssemblyLinearVelocity/50
+                                if offset.Magnitude < .1 then
+                                    hitCF *= CFrame.new(0,0,5) -- Go five backwards
+                                else
+                                    hitCF -= offset -- Otherwise go behind em
+                                end
                                 --local hitCF = self:FindFurtherDistance(theirChar:GetPivot().Position)
                                 C.DoTeleport(hitCF)
                                 LastTeleport = os.clock()
@@ -304,6 +310,7 @@ return function(C,Settings)
 				Title = "Unlock Emotes",
 				Tooltip = "Unlocks every emote in the game and is visible to all",
 				Layout = 90,Type="OneRun",
+                Default = true,
                 DontActivate = true, AlwaysFireEvents = true,
 				Shortcut = "UnlockEmotes",
                 DisableAttemptMsg = "Reset To Disable",
