@@ -75,12 +75,16 @@ return function(C,Settings)
 		if ShouldConnectEvent("CharRemoved",true) then
 			C.AddObjectConnection(theirChar,"CharRemoved",theirChar.AncestryChanged:Connect(function(oldParent, newParent)
 				if not newParent then
-					FireEvent("CharRemoved",isMe,theirPlr,theirChar)
 				end
 			end))
 		end
 		task.wait(0.1)
 		FireEvent("CharAdded",isMe,theirPlr,theirChar,wasAlreadyIn)
+	end
+	local function CharRemoving(theirChar)
+		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
+		local isMe = theirPlr == C.plr
+		FireEvent("CharRemoved",isMe,theirPlr,theirChar)
 	end
 	local function PlrAdded(theirPlr,wasAlreadyIn)
 		local isMe = theirPlr == C.plr
@@ -88,6 +92,9 @@ return function(C,Settings)
 			task.spawn(CharAdded,theirPlr.Character,true)
 		end
 		C.AddPlayerConnection(theirPlr,theirPlr.CharacterAdded:Connect(CharAdded))
+		if ShouldConnectEvent("CharRemoved",true) then
+			C.AddPlayerConnection(theirPlr,theirPlr.CharacterRemoving:Connect(CharRemoving))
+		end
 		FireEvent("PlayerAdded",isMe,theirPlr,wasAlreadyIn)
 		if (isMe and ShouldConnectEvent("MyTeamAdded")) or (isMe and ShouldConnectEvent("MyTeamRemoved")) or 
 			ShouldConnectEvent("TeamAdded") or ShouldConnectEvent("TeamRemoved") then
