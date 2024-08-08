@@ -51,6 +51,18 @@ return function(C,Settings)
 	end
 	function C.DoActivate(self,funct,...)
 		self:ClearData()
+		local header = "Hack/"..self.Parent.Category.Name.."/"..self.Shortcut
+		if self.Type == "OneRun" then
+			if not self.RealEnabled then
+				self:FlashLabel("Cannot Disable",Color3.fromRGB(255))
+				return
+			elseif not C.getgenv()[header] then
+				print("Not RUnning again")
+				-- Do nothing lol
+				return
+			end
+			C.getgenv()[header] = true
+		end
 		local Thread = task.spawn(funct,self,...)
 		if self.Threads then
 			table.insert(self.Threads,Thread)

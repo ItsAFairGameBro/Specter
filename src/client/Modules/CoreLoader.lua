@@ -240,6 +240,19 @@ return function(C, _SETTINGS)
 				end
 			end
 			local activatedDeb = 0
+			function hackData:FlashLabel(text,color)
+				activatedDeb+=1
+				local saveActivateDeb = activatedDeb
+				MainText.Text = text
+				MainText.TextColor3 = color
+				task.delay(1,function()
+					if activatedDeb ~= saveActivateDeb then
+						return
+					end
+					MainText.Text = hackData.Title
+					MainText.TextColor3 = Color3.fromRGB(255,255,255)
+				end)
+			end
 			function hackData:SetValue(value,started)
 				if value == hackData.Enabled or C.Cleared then
 					return--no change, don't bother!
@@ -247,17 +260,7 @@ return function(C, _SETTINGS)
 				if value and hackData.Type == "NoToggle" then
 					value = false
 					if not started then
-						activatedDeb+=1
-						local saveActivateDeb = activatedDeb
-						MainText.Text = "Activated!"
-						MainText.TextColor3 = Color3.fromRGB(0,255)
-						task.delay(1,function()
-							if activatedDeb ~= saveActivateDeb then
-								return
-							end
-							MainText.Text = hackData.Title
-							MainText.TextColor3 = Color3.fromRGB(255,255,255)
-						end)
+						hackData:FlashLabel("Activated!",Color3.fromRGB(0,255))
 					end
 				end
 				hackData.Enabled = value
