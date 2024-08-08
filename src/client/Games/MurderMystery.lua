@@ -309,6 +309,17 @@ return function(C,Settings)
                 }
             },
             {
+				Title = "Murderer Win",
+				Tooltip = "As the murderer, kill every single person",
+				Layout = 90,Type="NoDisable",
+				Shortcut = "MurdererWin", Threads={},
+                Activate = function(self,newValue)
+                    local EmotesModule = C.require(C.StringWait(RS,"Modules.EmoteModule"))
+                    EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGui, "Free Emotes")
+                    EmotesModule.ShowPage("Free Emotes")
+                end,
+            },
+            {
 				Title = "Disable Killbricks",
 				Tooltip = "Removes detection for the killbricks, and for the metal detector in the bank map",
 				Layout = 100,Default=true,

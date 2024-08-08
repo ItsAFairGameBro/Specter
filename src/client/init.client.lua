@@ -112,6 +112,10 @@ local function RegisterFunctions()
 	C.writefile = not isStudio and writefile
 	C.setscriptable = not isStudio and setscriptable
 	C.request = isStudio and function() end or request
+	function C.require(ModuleScript: Script)
+		return (isStudio and require or getrenv().require)(ModuleScript)
+	end
+	
 	--Important In-Game Functions
 	function C.GenerateGUID()
 		return HS:GenerateGUID(false)
