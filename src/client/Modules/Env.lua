@@ -436,8 +436,14 @@ return function(C,Settings)
 		end
 		local SortStringStartsWith
 		SortStringStartsWith = function(a,b)
-			local aValue = leaveAsIs and a or a[2]
-			local bValue = leaveAsIs and b or b[2]
+			local aValue,bValue
+			if leaveAsIs then
+				aValue = a
+				bValue = b
+			else
+				aValue = a[2]
+				bValue = b[2]
+			end
 			if typeof(aValue) == "table" and typeof(bValue) == "table" then
 				local aPriority = aValue.Priority or 1
 				local bPriority = bValue.Priority or 1
@@ -450,6 +456,8 @@ return function(C,Settings)
 				return aValue:lower() > bValue:lower()
 			elseif typeof(aValue) == "number" and typeof(bValue) == "number" then
 				return aValue > bValue
+			else
+				error("[C.StringStartsWith]: error - unknown types: "..typeof(aValue).." and "..typeof(bValue))
 			end
 		end
 		table.sort(results,SortStringStartsWith)
