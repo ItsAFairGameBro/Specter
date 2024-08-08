@@ -73,12 +73,10 @@ return function(C,Settings)
 					if not newValue then
 						return
 					end
-					if C.char then
-						for num, theirPlr in ipairs(PS:GetPlayers()) do
-							local theirChar = theirPlr.Character
-							if theirChar then
-								task.spawn(self.Events.CharAdded,self,theirPlr,theirChar)
-							end
+					for num, theirPlr in ipairs(PS:GetPlayers()) do
+						local theirChar = theirPlr.Character
+						if theirChar then
+							task.spawn(self.Events.CharAdded,self,theirPlr,theirChar)
 						end
 					end
 					local oldCameraSubject = workspace:WaitForChild("Camera").CameraSubject
