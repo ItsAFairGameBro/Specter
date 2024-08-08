@@ -398,7 +398,7 @@ return function(C,Settings)
                     ClearSuggestions()
                 end
             end
-            DidSet -= 1
+            DidSet = math.max(DidSet+1,0)
             if not chatBar or not isFocused then
                 return
             end
