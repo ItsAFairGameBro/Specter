@@ -210,17 +210,17 @@ return function(C,Settings)
 			if self.DropdownVisible then
 				DropdownCurrent = self
 				for num, name in ipairs(self.Selections) do
-					if name ~= self.Value then
-						local newDropdownEx = DropdownEx:Clone()
-						newDropdownEx.Text = name
-						newDropdownEx.Parent = self.Dropdown
-						newDropdownEx.Position = UDim2.fromScale(0,newDropdownEx.AbsoluteSize.Y*(num-1))
-						newDropdownEx.Parent = self.Dropdown
-						C.ButtonClick(newDropdownEx,function()
-							ToggleDropdown()
-							self:SetValue(name)
-						end)
-					end
+					--if name ~= self.Value then
+					local newDropdownEx = DropdownEx:Clone()
+					newDropdownEx.Text = name
+					newDropdownEx.LayoutOrder = name ~= self.Value and -1 or num
+					newDropdownEx.Position = UDim2.fromScale(0,newDropdownEx.AbsoluteSize.Y*(num-1))
+					newDropdownEx.Parent = self.Dropdown
+					C.ButtonClick(newDropdownEx,function()
+						ToggleDropdown()
+						self:SetValue(name)
+					end)
+					--end
 				end
 				local function UpdLoc()
 					if self.DropdownButton.AbsolutePosition.Y + self.Dropdown.AbsoluteSize.Y + self.DropdownButton.AbsoluteSize.Y 
