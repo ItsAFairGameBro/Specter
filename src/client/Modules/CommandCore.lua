@@ -204,7 +204,11 @@ return function(C,Settings)
         local DidSet = 0
         local Connections = {}
         local frameList, currentIndex = {}, 1
+        local LastPreferred
         local function ClearSuggestions()
+            if frameList[currentIndex] then
+                LastPreferred = frameList[currentIndex].Name
+            end
             C.ClearChildren(ChatAutoCompleteFrame)
             frameList, currentIndex = {}, 1
         end
@@ -288,6 +292,7 @@ return function(C,Settings)
                         else
                             return
                         end
+                        noLoop = true -- don't loop
                     end
                     if noLoop then
                         return
@@ -404,6 +409,11 @@ return function(C,Settings)
                         end
                     end
                     ClearSuggestions()
+                    for num, item in ipairs(options) do
+                        if item[1] == LastPreferred then
+                            currentIndex = num
+                        end
+                    end
                     for num, list in ipairs(options) do
                         local name, display = table.unpack(list)
                         local newClone = C.Examples.AutoCompleteEx:Clone()

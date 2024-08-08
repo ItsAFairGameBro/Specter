@@ -417,7 +417,7 @@ return function(C,Settings)
 		name = name:lower()
 		local closestMatch, results = math.huge, {}
 		for index, theirValue in pairs(tbl) do
-			local itsIndex = tostring((typeof(theirValue)=="table" and (theirValue.SortName or theirValue[1])) or (typeof(index)=="number" and theirValue) or index)
+			local itsIndex = tostring((typeof(theirValue)=="table" and (theirValue.SortName or theirValue[2] or theirValue[1])) or (typeof(index)=="number" and theirValue) or index)
 			local canPass = itsIndex:lower():sub(1,name:len()) == name
 			if not canPass then
 				itsIndex = (typeof(theirValue)=="Instance" and theirValue.ClassName=="Player" and theirValue.DisplayName) or itsIndex
