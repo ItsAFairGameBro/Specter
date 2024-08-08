@@ -1,3 +1,4 @@
+local DS = game:GetService("Debris")
 local function Static(C,Settings)
     local function yieldForeverFunct(...)
         C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
@@ -40,6 +41,35 @@ return function(C,Settings)
             KeepGoing = false, RunOnce = true,
             GameIds = {},
             PlaceIds = {352947107},
+        },
+        {
+            Run = function(self)
+                local localScript1 = C.StringWait(C.plr,"PlayerScripts.LocalScript",30)
+				local localScript2 = C.StringWait(C.plr,"PlayerScripts.LocalScript2",30)
+				if not localScript1 or not localScript2 then
+					return
+				end
+				for num, connection in ipairs(C.getconnections(localScript1.Changed)) do
+					connection:Disconnect()
+				end
+				local oldParent = localScript1.Parent
+				localScript1.Parent = nil
+				localScript2.Parent = nil
+				localScript1.Disabled = true
+				DS:AddItem(localScript1,3)
+				DS:AddItem(localScript2,3)
+				localScript1 = Instance.new("LocalScript")
+				localScript1.Parent = oldParent
+				localScript2 = Instance.new("LocalScript")
+				localScript2.Name = "LocalScript2"
+				localScript2.Parent = oldParent
+
+				Instance.new("Folder",localScript1).Name = "FakeDummy"
+				Instance.new("Folder",localScript2).Name = "FakeDummy"
+            end,
+            KeepGoing = false, RunOnce = true,
+            GameIds = {},
+            PlaceIds = {1962086868},
         }
     }
     for num, cheatTbl in ipairs(AntiCheat) do
