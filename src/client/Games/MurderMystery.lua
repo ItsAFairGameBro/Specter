@@ -312,27 +312,23 @@ return function(C,Settings)
 				Title = "Unlock Emotes",
 				Tooltip = "Unlocks every emote in the game and is visible to all",
 				Layout = 90,Type="OneRun",
-                DontActivate = true,
+                DontActivate = true, AlwaysFireEvents = true,
 				Shortcut = "UnlockEmotes",
                 DisableAttemptMsg = "Reset To Disable",
                 EmotePageName = "Free Emotes",
                 Activate = function(self,newValue)
                     local EmotesModule = C.require(C.StringWait(RS,"Modules.EmoteModule"))
-                    local FreeEmotesFrame = EmotesModule.EmoteGUI:FindFirstChild(self.EmotePageName)
-                    if FreeEmotesFrame then
-                        FreeEmotesFrame:Destroy()
-                    end
                     if newValue then
                         EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGUI, self.EmotePageName)
                         EmotesModule.ShowPage(self.EmotePageName)
-                    else
-                        EmotesModule.GenerateEmotes()
-                        EmotesModule.ShowPage("Roblox Emotes")
                     end
                 end,
                 Events = {
                     MyCharAdded = function(self,myPlr,myChar,firstRun)
-                        C.DoActivate(self,self.Activate,self.RealEnabled)
+                        C.getgenv()["Hack/"..self.Parent.Category.Name.."/"..self.Shortcut] = false
+                        if self.RealEnabled then
+                            C.DoActivate(self,self.Activate,self.RealEnabled)
+                        end
                     end,
                 }
             },
