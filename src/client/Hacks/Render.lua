@@ -93,7 +93,7 @@ return function(C,Settings)
 							self:RunCheck(NewStorage)
 						end
 					end))
-					while CanRun() do
+					while true do
 						for _, instanceData in pairs(self.Storage) do
 							self:RunCheck(instanceData)
 						end
