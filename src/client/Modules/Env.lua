@@ -436,6 +436,7 @@ return function(C,Settings)
 		end
 		local SortStringStartsWith
 		SortStringStartsWith = function(a,b)
+			print(a,b)
 			local aValue,bValue
 			if leaveAsIs then
 				aValue = a
