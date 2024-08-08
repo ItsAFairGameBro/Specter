@@ -2314,9 +2314,6 @@ return function(C, Settings)
 	function C.SetImage(imageButton,image)
 		imageButton.Image = image
 	end
-	local function ClampNoCrash(x, min, max)
-		return math.clamp(x, math.min(min,max), math.max(min, max))
-	end
 	local function CreateDraggable(frame: Frame)
 		local dragging
 		local dragInput
@@ -2357,8 +2354,8 @@ return function(C, Settings)
 			local maxY = screenHeight - (1 - anchorY) * frameHeight
 
 			-- Clamp the x and y positions
-			x = ClampNoCrash(x, minX, maxX)
-			y = ClampNoCrash(y, minY, maxY)
+			x = C.ClampNoCrash(x, minX, maxX)
+			y = C.ClampNoCrash(y, minY, maxY)
 
 			TS:Create(frame,TweenInfo.new(start and 0 or .07),{Position = UDim2.fromOffset(x, y)}):Play()
 		end

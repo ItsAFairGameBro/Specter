@@ -60,13 +60,23 @@ local function Static(C,Settings)
 		end
 		return selBase, maxDist
 	end
+	local function CanTargetOwner(model: Model)
+		local Owner = model:FindFirstChild("Owner")
+		if Owner and Owner.Value ~= "" then
+			local theirPlr = PS:FindFirstChild(Owner)
+			if theirPlr and not C.CanTargetPlayer(theirPlr) then
+				return false
+			end
+		end
+		return true
+	end
 	function C.getClosestShip(location: Vector3)
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
 		if not myHRPPos then return end
 
 		local selShip, maxDist = nil, math.huge
 		for num, ship  in pairs(C.Ships) do
-			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and ship.HP.Value > 0 then
+			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and ship.HP.Value > 0 and CanTargetOwner(ship) then
 				local MainBody = ship:WaitForChild("MainBody")
 				local d = (MainBody.Position - myHRPPos).Magnitude
 				if d < maxDist then
@@ -82,7 +92,7 @@ local function Static(C,Settings)
 
 		local selShip, maxDist = nil, math.huge
 		for num, plane  in pairs(C.Planes) do
-			if plane:FindFirstChild("Team") and plane.Team.Value ~= "" and plane.Team.Value ~= C.plr.Team.Name and plane.HP.Value > 0 then
+			if plane:FindFirstChild("Team") and plane.Team.Value ~= "" and plane.Team.Value ~= C.plr.Team.Name and plane.HP.Value > 0 and CanTargetOwner(plane) then
 				local MainBody = plane:WaitForChild("MainBody")
 				local d = (MainBody.Position - myHRPPos).Magnitude
 				if d < maxDist then

@@ -1,3 +1,5 @@
+local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+
 local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
 local CS = game:GetService("CollectionService")
@@ -181,6 +183,7 @@ return function(C,Settings)
                     actionClone.Time.Text = "Firing.."
                     local canShoot = true
                     local LastClick, LastTeleport = os.clock() - .7, os.clock() - .5
+                    local ShotDelay = 0
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
                     local RemoteFunction = C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction")
                     for num, theirChar in ipairs(CS:GetTagged("Character")) do -- loop through characters
@@ -216,8 +219,9 @@ return function(C,Settings)
                                 
                                 LastTeleport = os.clock()
                             end
-                            if canShoot and (not LastClick or os.clock() - LastClick >= 1) then
+                            if canShoot and (not LastClick or os.clock() - LastClick >= 1 + ShotDelay) then
                                 canShoot = false
+                                ShotDelay = C.Randomizer:NextNumber(C.GetMinMax(self.EnTbl.MinShotDelay,self.EnTbl.MaxShotDelay))
                                 task.spawn(function()
                                     RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
                                     canShoot = true
@@ -237,8 +241,21 @@ return function(C,Settings)
 				end,
 				Options = {
 					{
-                        Type="Slider"
-                    }
+						Type = Types.Slider,
+						Title = "Min Delay",
+						Tooltip = "How much ADDITIONAL minimum delay in between shots.",
+						Layout = 1,Default=0,
+						Min=0,Max=2,Digits=1,
+						Shortcut="MinShotDelay",
+					},
+                    {
+						Type = Types.Slider,
+						Title = "Max Delay",
+						Tooltip = "How much ADDITIONAL maximum delay in between shots.",
+						Layout = 2,Default=0,
+						Min=0,Max=2,Digits=1,
+						Shortcut="MaxShotDelay",
+					},
 				}
 			},
             {
@@ -279,6 +296,9 @@ return function(C,Settings)
                     C.RemoveOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                     C.RemoveOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
                     C.RemoveOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
+                    C.RemoveAction("MurdererWin")
+                    C.RemoveAction("SheriffWin")
+                    C.RemoveAction("GunPickup")
                 end,
 				Activate = function(self,newValue)
                     self:Reset()
@@ -288,9 +308,9 @@ return function(C,Settings)
                             if newChild.Parent ~= C.plr:WaitForChild("Backpack") then
                                 return -- not backpack
                             end
-                            if newChild.Name == "Gun" then
+                            if newChild.Name == "Gun" and self.EnTbl.SheriffWinEn then
                                 C.AddOverride(C.hackData.MurderMystery.SheriffWin,self.Shortcut)
-                            elseif newChild.Name == "Knife" then
+                            elseif newChild.Name == "Knife" and self.EnTbl.MurdererWinEn then
                                 C.AddOverride(C.hackData.MurderMystery.MurdererWin,self.Shortcut)
                             end
                         end
@@ -302,15 +322,17 @@ return function(C,Settings)
                         for num, item in ipairs(C.char:GetChildren()) do
                             task.spawn(BackpackAdded,item,true)
                         end
-                        local function MapAdded(newChild)
-                            if newChild.Name == "GunDrop" and newChild.Parent == C.Map then
-                                C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
+                        if self.EnTbl.GunPickupEn then
+                            local function MapAdded(newChild)
+                                if newChild.Name == "GunDrop" and newChild.Parent == C.Map then
+                                    C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
+                                end
                             end
-                        end
-                        workspace:WaitForChild("Normal")
-                        table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
-                        for num, item in ipairs(C.Map:GetChildren()) do
-                            task.spawn(MapAdded,item)
+                            workspace:WaitForChild("Normal")
+                            table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
+                            for num, item in ipairs(C.Map:GetChildren()) do
+                                task.spawn(MapAdded,item)
+                            end    
                         end
                     end
                 end,
@@ -318,6 +340,32 @@ return function(C,Settings)
                     GameStatus = function(self,en)
                         task.spawn(C.ReloadHack,self)
                     end,
+                },
+                Options = {
+                    {
+						Type = Types.Toggle,
+						Title = "Murderer Win",
+						Tooltip = "Whether or not Murderer Win activates automatically.",
+						Layout = 1,Default=true,
+						Shortcut="MurdererWinEn",
+                        Activate = C.ReloadHack,
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Sheriff Win",
+						Tooltip = "Whether or not Sheriff Win activates automatically.",
+						Layout = 2,Default=false,
+						Shortcut="SheriffWinEn",
+                        Activate = C.ReloadHack,
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Gun Pick Up",
+						Tooltip = "Whether or not Gun Pick-Up activates automatically.",
+						Layout = 3,Default=true,
+						Shortcut="GunPickupEn",
+                        Activate = C.ReloadHack,
+					},
                 }
             },
             {
