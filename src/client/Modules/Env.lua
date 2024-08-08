@@ -16,75 +16,74 @@ return function(C,Settings)
 		local function printInstances(...)
 			local printVal = ""
 			for num, val in pairs({...}) do
-				if num~=1 then
+				if num ~= 1 then
 					printVal ..= " "
 				end
 				local print4Instance = val
-				if typeof(print4Instance) == "Instance" then--"userdata" then
-					print4Instance = val.GetFullName(val)
+				if typeof(print4Instance) == "Instance" then
+					print4Instance = val:GetFullName()
 				end
 				printVal ..= tostring(print4Instance)
 			end
-			return (printVal)
+			return printVal
 		end
-		local function addToString(input,depth,noIndent)
+		
+		local function addToString(input, depth, noIndent)
 			local fullStr = ""
 			if not noIndent then
 				fullStr ..= "\n"
 			end
-			return fullStr .. string.rep("\t",depth) .. input
+			return fullStr .. string.rep("\t", depth) .. input
 		end
-		local function recurseLoopPrint(leftTbl,str,depth,index)
+		
+		local function recurseLoopPrint(leftTbl, str, depth, index)
 			index = (index or 0)
 			str = str or ""
 			depth = (depth or -1) + 1
-			
+		
 			local totalValues = #leftTbl
 			local isDict = totalValues <= 0
 			local addBrackets = not isDict
+		
 			for num, val in pairs(leftTbl) do
-				index+=1
-				
-				local isTable = typeof(val)=="table"
+				index += 1
+		
+				local isTable = typeof(val) == "table"
 				if isTable then
 					if depth ~= 0 then
-						str..=addToString(`{addBrackets and "[" or ""}{printInstances(num)}{addBrackets and "]" or ""}: {"{"}`,depth)
+						str ..= addToString((addBrackets and "[" or "") .. printInstances(num) .. (addBrackets and "]" or "") .. ": {", depth)
 					else
-						str..=addToString("{",depth,true)
+						str ..= addToString("{", depth, true)
 					end
-					str..=recurseLoopPrint(val,"",depth)
-					str..=addToString(`},`,depth)
+					str ..= (val == leftTbl and addToString("<self parent loop>", depth)) or recurseLoopPrint(val, "", depth, index)
+					str ..= addToString("},", depth)
 				else
 					if depth ~= 0 then
-						str..=`{addToString(`{addBrackets and "[" or ""}{printInstances(num)}{addBrackets and "]" or ""} = {printInstances(val)}`,depth,depth==0)},`
+						str ..= addToString((addBrackets and "[" or "") .. printInstances(num) .. (addBrackets and "]" or "") .. " = " .. printInstances(val), depth, depth == 0) .. ","
 					else
-						str..=`{addToString(printInstances(val),depth,depth==0)}{(not isDict and num~=totalValues) and ", " or ""}`
+						str ..= addToString(printInstances(val), depth, depth == 0) .. ((not isDict and num ~= totalValues) and ", " or "")
 					end
 				end
-				if index%40 == 0 then
+		
+				if index % 40 == 0 then
 					RunS.RenderStepped:Wait()
 				end
 			end
 			return str
 		end
+		
 		local DoPrefix = false
 		OldEnv.print1 = C.hookfunction(C.getrenv().print,function(...)
-			if C.checkcaller() then
-				return OldEnv.print1(...)
-			end
-			return OldEnv.print1(`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.print1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.warn1 = C.hookfunction(C.getrenv().warn, function(...)
-			if C.checkcaller() then
-				return OldEnv.warn1(...)
-			end
-			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.print2 = C.hookfunction(C.getgenv().print,function(...)
-			return OldEnv.print2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.print1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.warn2 = C.hookfunction(C.getgenv().warn, function(...)
-			return OldEnv.warn2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.warn1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		
 		C.getgenv().PrintEnvironment = true
@@ -428,7 +427,7 @@ return function(C,Settings)
 				canPass = Compare(itsIndex,name)--itsIndex:lower():sub(1,name:len()) == name
 			end
 			if canPass then
-				if itsIndex:len() < closestMatch or true then
+				if itsIndex:len() < closestMatch then
 					closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
 					table.insert(results,leaveAsIs and theirValue or {index,theirValue})
 				end

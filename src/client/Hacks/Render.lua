@@ -379,7 +379,7 @@ return function(C,Settings)
 					end
 				end,
 				Events={
-					CharAdded=function(self,theirPlr,theirChar,firstRun)
+					--[[CharAdded=function(self,theirPlr,theirChar,firstRun)
 						local theirHRP = theirChar:WaitForChild("HumanoidRootPart",30)-- wait for it to be loaded!
 						if not theirHRP then
 							return
@@ -389,7 +389,7 @@ return function(C,Settings)
 							task.wait(2.5)
 							self:Activate(self.RealEnabled)
 						end
-					end,
+					end,--]]
 				},
 				Options = {
 					{

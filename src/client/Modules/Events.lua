@@ -116,6 +116,14 @@ return function(C,Settings)
 		task.spawn(PlrAdded,theirPlr,true)
 	end
 
+	C.Camera = workspace.CurrentCamera
+	C.AddGlobalConnection(workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
+		local newCamera = workspace.CurrentCamera
+		if newCamera then
+			C.Camera = newCamera
+		end
+	end))
+
 	-- Connect other events
 	for num, eventFunct in ipairs(C.EventFunctions) do
 		eventFunct()
