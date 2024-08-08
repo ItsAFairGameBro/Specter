@@ -56,7 +56,7 @@ return function(C,Settings)
 			if not self.RealEnabled then
 				self:FlashLabel("Cannot Disable",Color3.fromRGB(255))
 				return
-			elseif not C.getgenv()[header] then
+			elseif C.getgenv()[header] then
 				print("Not RUnning again")
 				-- Do nothing lol
 				return
