@@ -54,7 +54,7 @@ return function(C,Settings)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
 					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
-					if theirHumanoid~=camera.CameraSubject and (not theirInGame or
+					if camera.CameraSubject and camera.CameraSubject.Parent and theirHumanoid~=camera.CameraSubject and (not theirInGame or
 					((theirInGame[3]==nil and select(3,C.isInGame(camera.CameraSubject.Parent))==theirInGame[3]) or
 					(theirInGame[3]~=nil and C.isInGame(camera.CameraSubject.Parent)==theirInGame[1]))) then
 						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
@@ -63,8 +63,13 @@ return function(C,Settings)
 						self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
 					end
 				end,
+				ClearStorage = function(self)
+					for theChar, data in pairs(self.Storage) do
+						self.Events.CharRemoved(self,nil,theChar) -- Fake cleanup!
+					end
+				end,
 				Activate = function(self,newValue)
-					self.Storage = {}
+					self:ClearStorage()
 					if not newValue then
 						return
 					end
@@ -80,6 +85,18 @@ return function(C,Settings)
 							end
 						end
 					end
+					local oldCameraSubject = workspace:WaitForChild("Camera").CameraSubject
+					table.insert(self.Functs,workspace:WaitForChild("Camera"):GetPropertyChangedSignal("CameraSubject"):Connect(function()
+						local OldStorage = self.Storage[oldCameraSubject and oldCameraSubject.Parent or nil]
+						oldCameraSubject = workspace.Camera.CameraSubject
+						local NewStorage = self.Storage[oldCameraSubject and oldCameraSubject.Parent or nil]
+						if OldStorage then
+							self:RunCheck(OldStorage)
+						end
+						if NewStorage then
+							self:RunCheck(NewStorage)
+						end
+					end))
 					while CanRun() do
 						for _, instanceData in pairs(self.Storage) do
 							self:RunCheck(instanceData)
@@ -104,21 +121,16 @@ return function(C,Settings)
 							return
 						end
 						local StorageTbl = {theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP}
-						table.insert(self.Storage,StorageTbl)
+						self.Storage[theirChar] = StorageTbl
 						self:RunCheck(StorageTbl)
 					end,
 					CharRemoved = function(self,thePlr,theChar)
-						for s = #self.Storage, 1, -1 do
-							local instanceData = self.Storage[s]
+						local instanceData = self.Storage[theChar]
+						if instanceData then
 							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
-							if theirChar == theChar then
-								table.remove(self.Storage,s)
-								C.TblRemove(self.Instances,robloxHighlight)
-								robloxHighlight:Destroy()
-								break
-							elseif s == 1 then
-								--warn(tostring(thePlr) .. " does not have a valid highlight to remove!")
-							end
+							self.Storage[theChar] = nil
+							C.TblRemove(self.Instances,robloxHighlight)
+							robloxHighlight:Destroy()
 						end
 					end,
 				},
