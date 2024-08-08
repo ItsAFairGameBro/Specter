@@ -16,8 +16,8 @@ return function(C,Settings)
 			{
 				Title = "ESP Player Highlight",
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
-				Layout = 1,Default=true,Deb=0,
-				Shortcut = "PlayerHighlight", Instances = {}, Storage={},
+				Layout = 1,Default=true,
+				Shortcut = "PlayerHighlight", Threads={}, Functs={}, Instances = {}, Storage={},
 				UpdVisibility = function(self,robloxHighlight,enabled,theirPlr,theirChar,theirIsInGame)
 					--robloxHighlight.FillTransparency = enabled and 0 or 1
 					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
@@ -72,10 +72,6 @@ return function(C,Settings)
 					self:ClearStorage()
 					if not newValue then
 						return
-					end
-					self.Deb = self.Deb + 1 local saveDeb = self.Deb
-					local function CanRun()
-						return saveDeb == self.Deb and not C.Cleared
 					end
 					if C.char then
 						for num, theirPlr in ipairs(PS:GetPlayers()) do
