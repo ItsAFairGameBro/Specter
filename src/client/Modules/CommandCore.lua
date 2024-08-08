@@ -315,8 +315,8 @@ return function(C,Settings)
                         chatBar.CursorPosition = chatBar.Text:len() + 1
                     end
                 end
-                table.insert(Connections,C.AddGlobalConnection(UIS.InputBegan:Connect(ConnectedFunct)))
-                table.insert(Connections,C.AddGlobalConnection(UIS.InputEnded:Connect(InputEnded)))
+                table.insert(Connections,1,C.AddGlobalConnection(UIS.InputBegan:Connect(ConnectedFunct)))
+                table.insert(Connections,1,C.AddGlobalConnection(UIS.InputEnded:Connect(InputEnded)))
                 HighlightLayout(currentIndex) -- Make sure it's visible!
             elseif Connections then
                 for num, conn in ipairs(Connections) do
