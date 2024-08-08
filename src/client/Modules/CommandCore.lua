@@ -216,7 +216,7 @@ return function(C,Settings)
             local setTo = C.savedCommands[index] or ""
             lastText = setTo
             RunS.RenderStepped:Wait()
-            DidSet += 2
+            DidSet += 3
 			chatBar.Text = setTo
             ClearSuggestions()
 			chatBar.CursorPosition = setTo:len() + 1
