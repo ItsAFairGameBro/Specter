@@ -312,11 +312,18 @@ return function(C,Settings)
 				Title = "Unlock Emotes",
 				Tooltip = "Unlocks every emote in the game and is visible to all",
 				Layout = 90,Type="NoDisable",
-				Shortcut = "UnlockEmotes", Threads={},
+				Shortcut = "UnlockEmotes",
+                WasEnabled = false,
                 Activate = function(self,newValue)
                     local EmotesModule = C.require(C.StringWait(RS,"Modules.EmoteModule"))
-                    EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGUI, "Free Emotes")
-                    EmotesModule.ShowPage("Free Emotes")
+                    if newValue then
+                        EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGUI, "Free Emotes")
+                        EmotesModule.ShowPage("Free Emotes")
+                        self.WasEnabled = true
+                    elseif self.WasEnabled then
+                        EmotesModule.GeneratePage({}, EmotesModule.EmoteGUI, "Free Emotes")
+                        EmotesModule.ShowPage("Roblox Emotes")
+                    end
                 end,
             },
             {
