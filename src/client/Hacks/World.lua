@@ -320,7 +320,7 @@ local PlayerState = {} do
 		end
 		if C.PlayerGui then
 			for _, gui in pairs(C.PlayerGui:GetChildren()) do
-				if gui:IsA("ScreenGui") and gui ~= C.GUI then
+				if gui:IsA("ScreenGui") and gui ~= C.GUI and (FREECAM_SETTINGS.HideCoreUI or gui.Name~="Chat") then
 					C.SetPartProperty(gui,"Enabled","Freecam",false)
 				end
 			end
