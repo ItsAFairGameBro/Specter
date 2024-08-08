@@ -16,8 +16,8 @@ return function(C,Settings)
 				success, result = pcall(service,...)
 			end
 			if not success then
-				C.AddNotification("API Failed",`{tostring(method)} from service {tostring(service)} has failed!\nTries: {tries<0 and "inf" or tries}`)
-				warn(debug.traceback(`{tostring(method)} from service {tostring(service)} has failed! Tries: {tries<0 and "inf" or tries}`))
+				C.AddNotification("API Failed",`{tostring(method)} from service {tostring(service)} has failed: {tostring(result)}!\nTries: {tries<0 and "inf" or tries}`)
+				warn(debug.traceback(`{tostring(method)} from service {tostring(service or "")} has failed: {tostring(result)}! Tries: {tries<0 and "inf" or tries}`))
 			end
 			tries -= 1
 		end

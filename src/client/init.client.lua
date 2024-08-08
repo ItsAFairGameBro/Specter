@@ -49,6 +49,10 @@ local function RegisterFunctions()
 			C.StopThread(thread)
 		end
 	end
+	--Generic Functions
+	function C.yieldForeverFunct()
+		game:WaitForChild("SuckMyPPOrYoureGay",math.huge)
+	end
 	--Studio Functions
 	C.checkcaller = isStudio and (function() return true end) or checkcaller
 	C.getconnections = isStudio and (function(signal) return {} end) or getconnections
@@ -112,8 +116,20 @@ local function RegisterFunctions()
 	C.writefile = not isStudio and writefile
 	C.setscriptable = not isStudio and setscriptable
 	C.request = isStudio and function() end or request
+	local requireFunctsToRun = isStudio and {require} or {getrenv().require,require,getsenv}
 	function C.require(ModuleScript: Script)
-		return select(2,C.API(isStudio and require or getrenv().require,nil,100,ModuleScript))
+		local success, result
+		for num, funct in ipairs(requireFunctsToRun) do
+			success, result = pcall(funct,ModuleScript)
+			if result ~= "Cannot require a non-RobloxScript module from a RobloxScript" then
+				break
+			end
+		end
+		if not success then
+			warn("[Specter C.require]: Failed To Load Module "..tostring(ModuleScript)..": "..tostring(result))
+			C.yieldForeverFunct()
+		end
+		return success, result
 	end
 	
 	--Important In-Game Functions
