@@ -175,6 +175,7 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     local info = {Name=self.Shortcut,Tags={"RemoveOnDestroy"}}
                     local actionClone = C.AddAction(info)
+                    local canShoot = true
                     local LastClick, LastTeleport = os.clock() - .7, os.clock() - .5
                     local Gun = C.StringFind(C.plr,'Backpack.Gun') or C.StringFind(C.char,'Gun')
                     local RemoteFunction = C.StringWait(Gun,"KnifeLocal.CreateBeam.RemoteFunction")
@@ -187,30 +188,21 @@ return function(C,Settings)
                             if not inGame[1] or inGame[2] ~= "Murderer" or not inGame[3] then
                                 break
                             end
-                            --[[local options = {
-								ignoreInvisibleWalls = false,
-								ignoreUncollidable = true,
-								ignoreList = {C.char},  -- Example: ignore parts in this list
-								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
-								distance = 5,  -- Retry up to 3 times
-							}
-                            local dir = theirChar:GetPivot().Position - theirChar:GetPivot()*Vector3.new(0,0,5)
-
-							local hitResult, hitPosition = C.Raycast(theirChar:GetPivot().Position,dir,options)--]]
 
                             --theirChar:GetPivot() * CFrame.new(0,-0,0.4)) -- Behind 2 studs
                             if not LastTeleport or os.clock() - LastTeleport >= .5 then
                                 if Gun.Parent ~= C.char then
                                     C.human:EquipTool(Gun)
                                 end
-                                --local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
-                                local raycast = self:FindFurtherDistance(theirChar:GetPivot().Position)
-                                C.DoTeleport(raycast)
+                                local hitCF = theirChar:GetPivot() * CFrame.new(0,0,5)
+                                --local hitCF = self:FindFurtherDistance(theirChar:GetPivot().Position)
+                                C.DoTeleport(hitCF)
                                 LastTeleport = os.clock()
                             end
-                            if not LastClick or os.clock() - LastClick >= 1 then
+                            if canShoot and (not LastClick or os.clock() - LastClick >= 1) then
                                 task.spawn(function()
                                     RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
+                                    canShoot = true
                                 end)
                                 LastClick = os.clock()
                             end
