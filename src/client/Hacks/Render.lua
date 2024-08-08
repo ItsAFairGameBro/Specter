@@ -14,16 +14,19 @@ return function(C,Settings)
 		},
 		Tab = {
 			{
-				Title = "ESP Player Highlight",
+				Title = "ESP Players",
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
 				Layout = 1,Default=true,
 				Shortcut = "PlayerHighlight", Threads={}, Functs={}, Instances = {}, Storage={},
-				UpdVisibility = function(self,robloxHighlight,enabled,theirPlr,theirChar,theirIsInGame)
+				UpdVisibility = function(self,instances,enabled,theirPlr,theirChar,theirIsInGame)
 					--robloxHighlight.FillTransparency = enabled and 0 or 1
 					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
-					robloxHighlight.Enabled = enabled
-					if enabled then
-						robloxHighlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
+					local NameTag, Highlight = instances[1], instances[2]
+					NameTag.Enabled = (self.EnTbl.NameTagVisible=="No Line Of Sight" and enabled) or self.EnTbl.NameTagVisible=="Always"
+					Highlight.Enabled = (self.EnTbl.HighlightVisible=="No Line Of Sight" and enabled) or self.EnTbl.HighlightVisible=="Always"
+					if NameTag.Enabled or Highlight.Enabled then
+						Highlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
+						NameTag:WaitForChild("Username").TextColor3 = Highlight.FillColor
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
@@ -52,15 +55,19 @@ return function(C,Settings)
 				end,
 				RunCheck = function(self,instanceData)
 					local camera = workspace.CurrentCamera
-					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
+					local theirPlr,theirChar,instances,theirHumanoid,HRP = table.unpack(instanceData)
 					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
 					if (not camera.CameraSubject or not camera.CameraSubject.Parent) or (theirHumanoid~=camera.CameraSubject and (not theirInGame or
 					((theirInGame[3]==nil and select(3,C.isInGame(camera.CameraSubject.Parent))==theirInGame[3]) or
 					(theirInGame[3]~=nil and C.isInGame(camera.CameraSubject.Parent)==theirInGame[1])))) then
-						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
-						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar,theirInGame)
+						local isInRange
+						-- Only run when needed
+						if self.EnTbl.NameTagVisible=="No Line Of Sight" or self.EnTbl.HighlightVisible=="No Line Of Sight" then
+							isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
+						end
+						self:UpdVisibility(instances,not isInRange,theirPlr,theirChar,theirInGame)
 					else
-						self:UpdVisibility(robloxHighlight,false,theirPlr,theirChar)
+						self:UpdVisibility(instances,false,theirPlr,theirChar)
 					end
 				end,
 				ClearStorage = function(self)
@@ -109,6 +116,11 @@ return function(C,Settings)
 						robloxHighlight.Adornee = theirChar
 						robloxHighlight:AddTag("RemoveOnDestroy")
 						robloxHighlight.Parent = C.GUI
+						local nameTag = C.Examples.NameTagEx:Clone()
+						nameTag:WaitForChild("Username").Text = theirPlr.Name
+						nameTag.Parent = C.GUI
+						nameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
+						table.insert(self.Instances,nameTag)
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
 						local camera = workspace.CurrentCamera
@@ -116,23 +128,41 @@ return function(C,Settings)
 						if not HRP then
 							return
 						end
-						local StorageTbl = {theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP}
+						local StorageTbl = {theirPlr,theirChar,{nameTag,robloxHighlight},theirHumanoid,HRP}
 						self.Storage[theirChar] = StorageTbl
 						self:RunCheck(StorageTbl)
 					end,
 					CharRemoved = function(self,thePlr,theChar)
 						local instanceData = self.Storage[theChar]
 						if instanceData then
-							local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
+							local theirPlr,theirChar,instances,theirHumanoid,HRP = table.unpack(instanceData)
 							self.Storage[theChar] = nil
-							C.TblRemove(self.Instances,robloxHighlight)
-							robloxHighlight:Destroy()
+							for num, instance in ipairs(instances) do
+								C.TblRemove(self.Instances,instance)
+								instance:Destroy()
+							end
 						else
 							warn(`InstanceData not found for {theChar} but its being removed!`)
 						end
 					end,
 				},
 				Options = {
+					{
+						Type = Types.Dropdown,
+						Title = "NameTags",
+						Tooltip = "When NameTags are displayed",
+						Layout = -2,Default="Always",
+						Selections = {"Always","No Line Of Sight","Never"},
+						Shortcut="NameTagVisible",
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Highlight",
+						Tooltip = "When NameTags are displayed",
+						Layout = -1,Default="No Line Of Sight",
+						Selections = {"Always","No Line Of Sight","Never"},
+						Shortcut="HighlightVisible",
+					},
 					{
 						Type = Types.Slider,
 						Title = "Raycast Update Time*",
