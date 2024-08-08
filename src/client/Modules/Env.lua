@@ -435,10 +435,9 @@ return function(C,Settings)
 			end
 		end
 		local SortStringStartsWith
-		SortStringStartsWith = function(a,b)
-			print(a,b)
+		SortStringStartsWith = function(a,b,noLeaveAsIs)
 			local aValue,bValue
-			if leaveAsIs then
+			if leaveAsIs or noLeaveAsIs then
 				aValue = a
 				bValue = b
 			else
@@ -452,7 +451,7 @@ return function(C,Settings)
 					return aPriority > bPriority
 				end
 				
-				return SortStringStartsWith(aValue[1],bValue[1])
+				return SortStringStartsWith(aValue[1],bValue[1],true)
 			elseif typeof(aValue) == "string" and typeof(bValue) == "string" then
 				return aValue:lower() > bValue:lower()
 			elseif typeof(aValue) == "number" and typeof(bValue) == "number" then

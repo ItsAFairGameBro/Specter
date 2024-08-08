@@ -60,10 +60,12 @@ return function(C,Settings)
 					C.ClearFunctTbl(self.Functs)
 				end,
 				Activate = function(self,newValue)
-					if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-						self:SlashPressedOld()
-					else
-						C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
+					if SG:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
+						if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+							self:SlashPressedOld()
+						else
+							C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
+						end	
 					end
 				end,
                 Events = {},
