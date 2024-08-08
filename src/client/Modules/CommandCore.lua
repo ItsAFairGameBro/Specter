@@ -359,7 +359,7 @@ return function(C,Settings)
             if DidSet <= 0 then
                 if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
                     if doubleSpaces > 0 and chatBar.Text ~= newInput then
-                        print("Upd",doubleSpaces,moreSpaces)
+                        --print("Upd",doubleSpaces,moreSpaces)
                         chatBar.Text = newInput
                     end
                     Words = newInput:sub(2):split(" ")
