@@ -422,10 +422,10 @@ return function(C,Settings)
 		local closestMatch, results = math.huge, {}
 		for index, theirValue in pairs(tbl) do
 			local itsIndex = tostring((typeof(theirValue)=="table" and (theirValue.SortName or theirValue[2] or theirValue[1])) or (typeof(index)=="number" and theirValue) or index)
-			local canPass = Compare(name,itsIndex)--itsIndex:lower():sub(1,name:len()) == name
+			local canPass = Compare(itsIndex,name)--itsIndex:lower():sub(1,name:len()) == name
 			if not canPass then
 				itsIndex = (typeof(theirValue)=="Instance" and theirValue.ClassName=="Player" and theirValue.DisplayName) or itsIndex
-				canPass = Compare(name,itsIndex)--itsIndex:lower():sub(1,name:len()) == name
+				canPass = Compare(itsIndex,name)--itsIndex:lower():sub(1,name:len()) == name
 			end
 			if canPass then
 				if itsIndex:len() < closestMatch or true then
