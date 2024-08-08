@@ -4,6 +4,7 @@ local RunS = game:GetService("RunService")
 local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
 local GS = game:GetService("GuiService")
+local CS = game:GetService("Chat")
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands
     if not C.savedCommands then
@@ -482,12 +483,16 @@ return function(C,Settings)
             end
         end))
     end
-    if not hasNewChat then
-        C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
-            registerNewChatBar()
-        end))
+    if CS.LoadDefaultChat then
+        if not hasNewChat then
+            C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
+                registerNewChatBar()
+            end))
+        end
+        task.spawn(registerNewChatBar,nil,true) -- do it on another thread
+    else
+        warn("[Specter Chat]: Chat cannot be loaded in custom games; commands may not work.")
     end
-    registerNewChatBar(nil,true)
 
     for num, commandTbl in pairs(C.CommandFunctions) do
         commandTbl.Parent = C.CommandFunctions
