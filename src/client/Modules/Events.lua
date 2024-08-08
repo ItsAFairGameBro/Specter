@@ -92,9 +92,9 @@ return function(C,Settings)
 			task.spawn(CharAdded,theirPlr.Character,true)
 		end
 		C.AddPlayerConnection(theirPlr,theirPlr.CharacterAdded:Connect(CharAdded))
-		if ShouldConnectEvent("CharRemoved",true) then
-			C.AddPlayerConnection(theirPlr,theirPlr.CharacterRemoving:Connect(CharRemoving))
-		end
+		--if ShouldConnectEvent("CharRemoved",true) then
+		C.AddPlayerConnection(theirPlr,theirPlr.CharacterRemoving:Connect(CharRemoving))
+		--end
 		FireEvent("PlayerAdded",isMe,theirPlr,wasAlreadyIn)
 		if (isMe and ShouldConnectEvent("MyTeamAdded")) or (isMe and ShouldConnectEvent("MyTeamRemoved")) or 
 			ShouldConnectEvent("TeamAdded") or ShouldConnectEvent("TeamRemoved") then

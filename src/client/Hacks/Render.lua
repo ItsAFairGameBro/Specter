@@ -110,7 +110,6 @@ return function(C,Settings)
 							self:RunCheck(instanceData)
 						end
 						task.wait(self.EnTbl.UpdateTime)
-						print("Looped Render")
 					end
 				end,
 				Events = {
