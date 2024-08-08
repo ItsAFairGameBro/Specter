@@ -202,7 +202,7 @@ return function(C,Settings)
         local lastUpd = -5
         local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
         local DidSet = 0
-        local Connection
+        local Connections = {}
         local frameList, currentIndex = {}, 1
         local function ClearSuggestions()
             C.ClearChildren(ChatAutoCompleteFrame)
@@ -307,11 +307,22 @@ return function(C,Settings)
                         task.wait(waitTime)
                     end
                 end
-                Connection = C.AddGlobalConnection(UIS.InputBegan:Connect(ConnectedFunct))
+                local function InputEnded(inputObject,gameProcessed)
+                    if not gameProcessed then
+                        return
+                    end
+                    if inputObject.KeyCode == Enum.KeyCode.PageDown or inputObject.KeyCode == Enum.KeyCode.PageUp then
+                        chatBar.CursorPosition = chatBar.Text:len() + 1
+                    end
+                end
+                table.insert(Connections,C.AddGlobalConnection(UIS.InputBegan:Connect(ConnectedFunct)))
+                table.insert(Connections,C.AddGlobalConnection(UIS.InputEnded:Connect()))
                 HighlightLayout(currentIndex) -- Make sure it's visible!
-            elseif Connection then
-                C.RemoveGlobalConnection(Connection)
-                Connection = nil
+            elseif Connections then
+                for num, conn in ipairs(Connections) do
+                    C.RemoveGlobalConnection(conn)
+                end
+                Connections = {}
             end
         end
         -- Function to determine the current word and its index
