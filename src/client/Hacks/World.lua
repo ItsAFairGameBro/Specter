@@ -362,23 +362,30 @@ local PlayerState = {} do
 			end
 		end
 
-		C.Camera.FieldOfView = cameraFieldOfView
-		cameraFieldOfView = nil
-
-		C.Camera.CameraType = cameraType
-		cameraType = nil
-
-		C.Camera.CFrame = cameraCFrame
-		cameraCFrame = nil
-
-		C.Camera.Focus = cameraFocus
-		cameraFocus = nil
-
-		UIS.MouseIconEnabled = mouseIconEnabled
-		mouseIconEnabled = nil
-
-		UIS.MouseBehavior = mouseBehavior
-		mouseBehavior = nil
+		if cameraFieldOfView then
+			C.Camera.FieldOfView = cameraFieldOfView
+			cameraFieldOfView = nil	
+		end
+		if cameraType then
+			C.Camera.CameraType = cameraType
+			cameraType = nil
+		end
+		if cameraCFrame then
+			C.Camera.CFrame = cameraCFrame
+			cameraCFrame = nil
+		end
+		if cameraFocus then
+			C.Camera.Focus = cameraFocus
+			cameraFocus = nil
+		end
+		if mouseIconEnabled then
+			UIS.MouseIconEnabled = mouseIconEnabled
+			mouseIconEnabled = nil
+		end
+		if mouseBehavior then
+			UIS.MouseBehavior = mouseBehavior
+			mouseBehavior = nil	
+		end
 	end
 end
 
