@@ -260,7 +260,8 @@ return function(C,Settings)
                 local Deb = 0
                 local ConnectedFunct
                 function ConnectedFunct(inputObject, gameProcessed, noLoop)
-                    if #frameList > 0 and not UIS:IsKeyDown(Enum.KeyCode.LeftShift) and not UIS:IsKeyDown(Enum.KeyCode.LeftControl) then
+                    local doContinue = false
+                    if #frameList > 0 then
                         if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.Insert then
                             HighlightLayout(currentIndex - 1)
                         elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.Delete then
@@ -273,9 +274,11 @@ return function(C,Settings)
                             chatBar.Text = table.concat(Words, " ")
                             chatBar.CursorPosition = chatBar.Text:len() + 1
                         else
-                            return
+                            doContinue = true
+                            noLoop = true
                         end
-                    else
+                    end
+                    if doContinue then
                         if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.PageUp then
                             goToSaved(1)
                         elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.PageDown then
