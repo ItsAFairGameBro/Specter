@@ -54,9 +54,9 @@ return function(C,Settings)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,robloxHighlight,theirHumanoid,HRP = table.unpack(instanceData)
 					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
-					if camera.CameraSubject and camera.CameraSubject.Parent and theirHumanoid~=camera.CameraSubject and (not theirInGame or
+					if (not camera.CameraSubject or not camera.CameraSubject.Parent) or (theirHumanoid~=camera.CameraSubject and (not theirInGame or
 					((theirInGame[3]==nil and select(3,C.isInGame(camera.CameraSubject.Parent))==theirInGame[3]) or
-					(theirInGame[3]~=nil and C.isInGame(camera.CameraSubject.Parent)==theirInGame[1]))) then
+					(theirInGame[3]~=nil and C.isInGame(camera.CameraSubject.Parent)==theirInGame[1])))) then
 						local isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
 						self:UpdVisibility(robloxHighlight,not isInRange,theirPlr,theirChar,theirInGame)
 					else
