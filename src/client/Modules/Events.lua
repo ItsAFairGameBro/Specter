@@ -115,7 +115,6 @@ return function(C,Settings)
 	for num, theirPlr in ipairs(PS:GetPlayers()) do
 		task.spawn(PlrAdded,theirPlr,true)
 	end
-
 	C.Camera = workspace.CurrentCamera
 	C.AddGlobalConnection(workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
 		local newCamera = workspace.CurrentCamera
