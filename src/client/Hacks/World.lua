@@ -573,6 +573,7 @@ return function(C_new,Settings)
 					FREECAM_SETTINGS = self.EnTbl
 					if newValue then
 						self:Activate(false) -- Disable it to re-enable!
+						task.wait()
 						local cameraCFrame = C.Camera.CFrame
 						cameraRot = Vector2.new(cameraCFrame:toEulerAnglesYXZ())
 						cameraPos = cameraCFrame.Position
