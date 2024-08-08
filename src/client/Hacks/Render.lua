@@ -18,12 +18,12 @@ return function(C,Settings)
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
 				Layout = 1,Default=true,
 				Shortcut = "PlayerHighlight", Threads={}, Functs={}, Instances = {}, Storage={},
-				UpdVisibility = function(self,instances,enabled,theirPlr,theirChar,theirHumanoid: Humanoid,theirIsInGame)
+				UpdVisibility = function(self,instances,hasCameraSbj,enabled,theirPlr,theirChar,theirHumanoid: Humanoid,theirIsInGame)
 					--robloxHighlight.FillTransparency = enabled and 0 or 1
 					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
 					local NameTag, Highlight = instances[1], instances[2]
-					NameTag.Enabled = (self.EnTbl.NameTagVisible=="No Line Of Sight" and enabled) or self.EnTbl.NameTagVisible=="Always"
-					Highlight.Enabled = (self.EnTbl.HighlightVisible=="No Line Of Sight" and enabled) or self.EnTbl.HighlightVisible=="Always"
+					NameTag.Enabled = hasCameraSbj and ((self.EnTbl.NameTagVisible=="No Line Of Sight" and enabled) or self.EnTbl.NameTagVisible=="Always")
+					Highlight.Enabled = hasCameraSbj and ((self.EnTbl.HighlightVisible=="No Line Of Sight" and enabled) or self.EnTbl.HighlightVisible=="Always")
 					if NameTag.Enabled or Highlight.Enabled then
 						Highlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
 						NameTag:WaitForChild("Username").TextColor3 = Highlight.FillColor
@@ -68,9 +68,9 @@ return function(C,Settings)
 						if self.EnTbl.NameTagVisible=="No Line Of Sight" or self.EnTbl.HighlightVisible=="No Line Of Sight" then
 							isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
 						end
-						self:UpdVisibility(instances,not isInRange,theirPlr,theirChar,theirHumanoid,theirInGame)
+						self:UpdVisibility(instances,true,not isInRange,theirPlr,theirChar,theirHumanoid,theirInGame)
 					else
-						self:UpdVisibility(instances,false,theirPlr,theirChar,theirHumanoid)
+						self:UpdVisibility(instances,false,false,theirPlr,theirChar,theirHumanoid)
 					end
 				end,
 				ClearStorage = function(self)
