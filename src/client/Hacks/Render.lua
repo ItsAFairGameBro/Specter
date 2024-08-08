@@ -18,7 +18,7 @@ return function(C,Settings)
 				Tooltip = "Highlights users' characters when they are not visible on the screen",
 				Layout = 1,Default=true,
 				Shortcut = "PlayerHighlight", Threads={}, Functs={}, Instances = {}, Storage={},
-				UpdVisibility = function(self,instances,enabled,theirPlr,theirChar,theirIsInGame)
+				UpdVisibility = function(self,instances,enabled,theirPlr,theirChar,theirHumanoid: Humanoid,theirIsInGame)
 					--robloxHighlight.FillTransparency = enabled and 0 or 1
 					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
 					local NameTag, Highlight = instances[1], instances[2]
@@ -27,6 +27,9 @@ return function(C,Settings)
 					if NameTag.Enabled or Highlight.Enabled then
 						Highlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
 						NameTag:WaitForChild("Username").TextColor3 = Highlight.FillColor
+					end
+					if theirHumanoid then
+						theirHumanoid.DisplayDistanceType = NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or Enum.HumanoidDisplayDistanceType.Subject
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
@@ -65,9 +68,9 @@ return function(C,Settings)
 						if self.EnTbl.NameTagVisible=="No Line Of Sight" or self.EnTbl.HighlightVisible=="No Line Of Sight" then
 							isInRange = self:checkIfInRange(camera,theirPlr,theirChar,HRP)
 						end
-						self:UpdVisibility(instances,not isInRange,theirPlr,theirChar,theirInGame)
+						self:UpdVisibility(instances,not isInRange,theirPlr,theirChar,theirHumanoid,theirInGame)
 					else
-						self:UpdVisibility(instances,false,theirPlr,theirChar)
+						self:UpdVisibility(instances,false,theirPlr,theirChar,theirHumanoid)
 					end
 				end,
 				ClearStorage = function(self)
