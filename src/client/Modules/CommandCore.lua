@@ -134,6 +134,7 @@ return function(C,Settings)
                     task.spawn(yieldFunction)
                 end
             end
+            
         elseif inputCommand~="c" and inputCommand~="whisper" and inputCommand~="mute" and inputCommand~="block" and inputCommand~="unblock"
             and inputCommand~="unmute" and inputCommand~="e" then
             C.CreateSysMessage(`Command Not Found: {inputCommand}`)

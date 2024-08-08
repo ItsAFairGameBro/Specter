@@ -412,7 +412,7 @@ return function(C,Settings)
 	end
 	
 	local function Compare(start,needle)
-		return start:lower():find(needle:lower()) ~= nil
+		return start:lower():find(needle:lower(),1,true) ~= nil
 	end
 	function C.StringStartsWith(tbl,name,override,leaveAsIs)
 		if name == "" and not override then
@@ -435,7 +435,21 @@ return function(C,Settings)
 			end
 		end
 		return results;
-	end	
+	end
+	local MAGIC_CHARS = {'$', '%', '^', '*', '(', ')', '.', '[', ']', '+', '-', '?'}
+	function C.EscapeForStringLibrary(str: string): string
+		local cStr = ""
+		local char
+		for i = 1, string.len(str) do
+			char = string.sub(str, i, i)
+			if table.find(MAGIC_CHARS, char) then
+				cStr ..= "%" .. char
+			else
+				cStr ..= char
+			end
+		end
+		return cStr
+	end
 		
 	local UserCache = {}
 	function C.GetUserNameAndId(identification: string|number)
