@@ -411,8 +411,9 @@ return function(C,Settings)
 	end
 	
 	local function Compare(start,needle)
-		return start:lower():find(C.EscapeForStringLibrary(needle:lower())) ~= nil
+		return start:lower():find(C.EscapeForStringLibrary(needle)) ~= nil
 	end
+	
 	function C.StringStartsWith(tbl,name,override,leaveAsIs)
 		if name == "" and not override then
 			return {}
@@ -427,12 +428,31 @@ return function(C,Settings)
 				canPass = Compare(itsIndex,name)--itsIndex:lower():sub(1,name:len()) == name
 			end
 			if canPass then
-				if itsIndex:len() < closestMatch then
-					closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
-					table.insert(results,leaveAsIs and theirValue or {index,theirValue})
-				end
+				--if itsIndex:len() < closestMatch then
+				--	closestMatch = itsIndex:len() / (typeof(theirValue)=="table" and theirValue.Priority or 1)
+				table.insert(results,leaveAsIs and theirValue or {index,theirValue})
+				--end
 			end
 		end
+		local SortStringStartsWith
+		SortStringStartsWith = function(a,b)
+			local aValue = leaveAsIs and a or a[2]
+			local bValue = leaveAsIs and b or b[2]
+			if typeof(aValue) == "table" and typeof(bValue) == "table" then
+				local aPriority = aValue.Priority or 1
+				local bPriority = bValue.Priority or 1
+				if aPriority ~= bPriority then
+					return aPriority > bPriority
+				end
+				
+				return SortStringStartsWith(aValue[1],bValue[1])
+			elseif typeof(aValue) == "string" and typeof(bValue) == "string" then
+				return aValue:lower() > bValue:lower()
+			elseif typeof(aValue) == "number" and typeof(bValue) == "number" then
+				return aValue > bValue
+			end
+		end
+		table.sort(results,SortStringStartsWith)
 		return results;
 	end
 	local MAGIC_CHARS = {'$', '%', '^', '*', '(', ')', '.', '[', ']', '+', '-', '?'}
