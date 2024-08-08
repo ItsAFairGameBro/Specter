@@ -201,7 +201,7 @@ return function(C,Settings)
         local lastText
         local lastUpd = -5
         local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
-        local DidSet
+        local DidSet = 0
         local Connection
         local frameList, currentIndex = {}, 1
         local function ClearSuggestions()
@@ -216,7 +216,7 @@ return function(C,Settings)
             local setTo = C.savedCommands[index] or ""
             lastText = setTo
             RunS.RenderStepped:Wait()
-            DidSet = true
+            DidSet += 2
 			chatBar.Text = setTo
             ClearSuggestions()
 			chatBar.CursorPosition = setTo:len() + 1
@@ -319,7 +319,7 @@ return function(C,Settings)
             return "", 0 -- Default return if something goes wrong
         end
         local function textUpd()
-            if not DidSet then
+            if DidSet <= 0 then
                 index = 0
             end
             local newInputFirst, doubleSpaces = chatBar.Text:gsub("\t","")
@@ -327,7 +327,7 @@ return function(C,Settings)
             doubleSpaces += moreSpaces
             local newLength = newInput:len()
             --Load suggestions
-            if not DidSet then
+            if DidSet <= 0 then
                 if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
                     if doubleSpaces > 0 and chatBar.Text ~= newInput then
                         print("Upd",doubleSpaces,moreSpaces)
@@ -398,7 +398,7 @@ return function(C,Settings)
                     ClearSuggestions()
                 end
             end
-            DidSet = false
+            DidSet -= 1
             if not chatBar or not isFocused then
                 return
             end
