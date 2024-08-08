@@ -277,6 +277,8 @@ return function(C,Settings)
                             doContinue = true
                             noLoop = true
                         end
+                    else
+                        doContinue = true
                     end
                     if doContinue then
                         if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.PageUp then
