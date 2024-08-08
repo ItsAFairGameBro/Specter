@@ -26,7 +26,9 @@ return function(C,Settings)
 					Highlight.Enabled = hasCameraSbj and ((self.EnTbl.HighlightVisible=="No Line Of Sight" and enabled) or self.EnTbl.HighlightVisible=="Always")
 					if NameTag.Enabled or Highlight.Enabled then
 						Highlight.FillColor = C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)
-						NameTag:WaitForChild("Username").TextColor3 = Highlight.FillColor
+						if NameTag:FindFirstChild("Username") then
+							NameTag.Username.TextColor3 = Highlight.FillColor
+						end
 					end
 					if theirHumanoid then
 						theirHumanoid.DisplayDistanceType = NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or Enum.HumanoidDisplayDistanceType.Subject
@@ -157,6 +159,7 @@ return function(C,Settings)
 						Layout = -2,Default="Always",
 						Selections = {"Always","No Line Of Sight","Never"},
 						Shortcut="NameTagVisible",
+						Activate = C.ReloadHack,
 					},
 					{
 						Type = Types.Dropdown,
@@ -165,6 +168,7 @@ return function(C,Settings)
 						Layout = -1,Default="No Line Of Sight",
 						Selections = {"Always","No Line Of Sight","Never"},
 						Shortcut="HighlightVisible",
+						Activate = C.ReloadHack,
 					},
 					{
 						Type = Types.Slider,

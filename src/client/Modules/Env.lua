@@ -235,8 +235,10 @@ return function(C,Settings)
 			if options.ignoreInvisibleWalls and instance.Transparency > .9 then
 				return false
 			end
-	
-			if options.ignoreUncollidable and (not instance.CanCollide or not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup, instance.CollisionGroup)) then
+
+			local MyCollisionGroup = C.hrp and C.hrp.CollisionGroup
+			if options.ignoreUncollidable and MyCollisionGroup
+				and (not instance.CanCollide or not PhysicsService:CollisionGroupsAreCollidable(MyCollisionGroup, instance.CollisionGroup)) then
 				return false
 			end
 	
@@ -337,7 +339,7 @@ return function(C,Settings)
 				return Color3.fromRGB(0,0,255)
 			elseif Type == "Innocent" then
 				return Color3.fromRGB(0,255)
-			elseif Type == "Lobby" then
+			elseif Type == "Lobby" or Type == "Neutral" then
 				return Color3.fromRGB(255,255,255)
 			else--Give warning
 				warn(`[C.GetPlayerNameTagColor]: Invalid Type Detected: {tostring(Type)} for {tostring(theirPlr)}; reverting to blue`)
