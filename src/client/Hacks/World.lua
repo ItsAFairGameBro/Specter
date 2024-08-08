@@ -308,7 +308,7 @@ local PlayerState = {} do
 
 	function PlayerState.Push()
 		if FREECAM_SETTINGS.HideCoreUI then
-			print("Disabling Core UI")
+			print("Disabling Core UI",FREECAM_SETTINGS)
 			for name in pairs(coreGuis) do
 				coreGuis[name] = SG:GetCoreGuiEnabled(Enum.CoreGuiType[name])
 				SG:SetCoreGuiEnabled(Enum.CoreGuiType[name], false)
