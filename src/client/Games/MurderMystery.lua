@@ -312,7 +312,9 @@ return function(C,Settings)
 				Title = "Unlock Emotes",
 				Tooltip = "Unlocks every emote in the game and is visible to all",
 				Layout = 90,Type="OneRun",
+                DontActivate = true,
 				Shortcut = "UnlockEmotes",
+                DisableAttemptMsg = "Reset To Disable",
                 EmotePageName = "Free Emotes",
                 Activate = function(self,newValue)
                     local EmotesModule = C.require(C.StringWait(RS,"Modules.EmoteModule"))
@@ -328,6 +330,11 @@ return function(C,Settings)
                         EmotesModule.ShowPage("Roblox Emotes")
                     end
                 end,
+                Events = {
+                    MyCharAdded = function(self,myPlr,myChar,firstRun)
+                        C.DoActivate(self,self.Activate,self.RealEnabled)
+                    end,
+                }
             },
             {
 				Title = "Disable Killbricks",

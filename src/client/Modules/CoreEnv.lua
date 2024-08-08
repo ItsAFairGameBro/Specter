@@ -54,7 +54,7 @@ return function(C,Settings)
 		local header = "Hack/"..self.Parent.Category.Name.."/"..self.Shortcut
 		if self.Type == "OneRun" then
 			if not self.RealEnabled then
-				self:FlashLabel("Cannot Disable",Color3.fromRGB(255))
+				self:FlashLabel(self.DisableAttemptMsg or "Cannot Disable",Color3.fromRGB(255))
 				return
 			elseif C.getgenv()[header] then
 				-- Do nothing lol
