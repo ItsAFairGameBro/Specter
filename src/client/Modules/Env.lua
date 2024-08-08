@@ -68,22 +68,22 @@ return function(C,Settings)
 			return str
 		end
 		local DoPrefix = false
-		OldEnv.print1 = C.hookfunction(getrenv().print,function(...)
+		OldEnv.print1 = C.hookfunction(C.getrenv().print,function(...)
 			if C.checkcaller() then
 				return OldEnv.print1(...)
 			end
 			return OldEnv.print1(`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
 		end)
-		OldEnv.warn1 = C.hookfunction(getrenv().warn, function(...)
+		OldEnv.warn1 = C.hookfunction(C.getrenv().warn, function(...)
 			if C.checkcaller() then
 				return OldEnv.warn1(...)
 			end
 			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
 		end)
-		OldEnv.print2 = C.hookfunction(getgenv().print,function(...)
+		OldEnv.print2 = C.hookfunction(C.getgenv().print,function(...)
 			return OldEnv.print2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
-		OldEnv.warn2 = C.hookfunction(getgenv().warn, function(...)
+		OldEnv.warn2 = C.hookfunction(C.getgenv().warn, function(...)
 			return OldEnv.warn2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		
