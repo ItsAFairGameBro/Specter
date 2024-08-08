@@ -417,7 +417,7 @@ return function(C,Settings)
                     for num, list in ipairs(options) do
                         local name, display = table.unpack(list)
                         local newClone = C.Examples.AutoCompleteEx:Clone()
-                        newClone.BackgroundColor3 = num==1 and Color3.fromRGB(0,255) or Color3.fromRGB(255)
+                        newClone.BackgroundColor3 = num==currentIndex and Color3.fromRGB(0,255) or Color3.fromRGB(255)
                         newClone.AutoCompleteTitleLabel.Text = display
                         newClone.Name = name
                         newClone.Parent = ChatAutoCompleteFrame
