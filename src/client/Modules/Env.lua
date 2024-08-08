@@ -8,7 +8,86 @@ local RS = game:GetService"ReplicatedStorage"
 local TS = game:GetService"Teams"
 local DS = game:GetService('Debris')
 local LS = game:GetService("LocalizationService")
+local RunS = game:GetService("RunService")
 return function(C,Settings)
+	--Print Environment
+	if not C.getgenv().PrintEnvironment then
+		local OldEnv = {}
+		local function printInstances(...)
+			local printVal = ""
+			for num, val in pairs({...}) do
+				if num~=1 then
+					printVal ..= " "
+				end
+				local print4Instance = val
+				if typeof(print4Instance) == "Instance" then--"userdata" then
+					print4Instance = val.GetFullName(val)
+				end
+				printVal ..= tostring(print4Instance)
+			end
+			return (printVal)
+		end
+		local function addToString(input,depth,noIndent)
+			local fullStr = ""
+			if not noIndent then
+				fullStr ..= "\n"
+			end
+			return fullStr .. string.rep("\t",depth) .. input
+		end
+		local function recurseLoopPrint(leftTbl,str,depth,index)
+			index = (index or 0)
+			str = str or ""
+			depth = (depth or -1) + 1
+			
+			local totalValues = #leftTbl
+			local isDict = totalValues <= 0
+			local addBrackets = not isDict
+			for num, val in pairs(leftTbl) do
+				index+=1
+				
+				local isTable = typeof(val)=="table"
+				if isTable then
+					if depth ~= 0 then
+						str..=addToString(`{addBrackets and "[" or ""}{printInstances(num)}{addBrackets and "]" or ""}: {"{"}`,depth)
+					else
+						str..=addToString("{",depth,true)
+					end
+					str..=recurseLoopPrint(val,"",depth)
+					str..=addToString(`},`,depth)
+				else
+					if depth ~= 0 then
+						str..=`{addToString(`{addBrackets and "[" or ""}{printInstances(num)}{addBrackets and "]" or ""} = {printInstances(val)}`,depth,depth==0)},`
+					else
+						str..=`{addToString(printInstances(val),depth,depth==0)}{(not isDict and num~=totalValues) and ", " or ""}`
+					end
+				end
+				if index%40 == 0 then
+					RunS.RenderStepped:Wait()
+				end
+			end
+			return str
+		end
+		OldEnv.print1 = C.hookfunction(getrenv().print,function(...)
+			if C.checkcaller() then
+				return OldEnv.print1(...)
+			end
+			return OldEnv.print1("[GAME]: " .. recurseLoopPrint({...}))
+		end)
+		OldEnv.warn1 = C.hookfunction(getrenv().warn, function(...)
+			if C.checkcaller() then
+				return OldEnv.warn1(...)
+			end
+			return OldEnv.warn1("[GAME]:" .. recurseLoopPrint({...}))
+		end)
+		OldEnv.print2 = C.hookfunction(getgenv().print,function(...)
+			return OldEnv.print2("[HACK]: " .. recurseLoopPrint({...}))
+		end)
+		OldEnv.warn2 = C.hookfunction(getgenv().warn, function(...)
+			return OldEnv.warn2("[HACK]: " .. recurseLoopPrint({...}))
+		end)
+		
+		C.getgenv().PrintEnvironment = true
+	end
 	--Table Functions
 	function C.TblAdd(tbl,val)
 		local key = table.find(tbl,val)
