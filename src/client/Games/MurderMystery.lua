@@ -202,10 +202,18 @@ return function(C,Settings)
                                     hitCF -= offset -- Otherwise go behind em
                                 end
                                 --local hitCF = self:FindFurtherDistance(theirChar:GetPivot().Position)
+                                if not canShoot then
+                                    hitCF += Vector3.new(0,1,0) * 100
+                                end
                                 C.DoTeleport(hitCF)
+                                if canShoot then
+                                    task.wait(C.plr:GetNetworkPing() * 2)
+                                end
+                                
                                 LastTeleport = os.clock()
                             end
                             if canShoot and (not LastClick or os.clock() - LastClick >= 1) then
+                                canShoot = false
                                 task.spawn(function()
                                     RemoteFunction:InvokeServer(1,theirChar:GetPivot().Position+theirChar.PrimaryPart.AssemblyLinearVelocity/50,"AH2")
                                     canShoot = true
