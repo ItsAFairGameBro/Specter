@@ -316,7 +316,7 @@ return function(C,Settings)
                     end
                 end
                 table.insert(Connections,C.AddGlobalConnection(UIS.InputBegan:Connect(ConnectedFunct)))
-                table.insert(Connections,C.AddGlobalConnection(UIS.InputEnded:Connect()))
+                table.insert(Connections,C.AddGlobalConnection(UIS.InputEnded:Connect(InputEnded)))
                 HighlightLayout(currentIndex) -- Make sure it's visible!
             elseif Connections then
                 for num, conn in ipairs(Connections) do
