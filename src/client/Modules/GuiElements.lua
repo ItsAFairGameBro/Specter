@@ -2639,19 +2639,22 @@ return function(C, Settings)
 		C.getgenv().ActionsList[info.Name] = info
 		ActionClone.Parent = ActionsList
 		if info.Time then
+			local TimeTextLabel = ActionClone:WaitForChild("Time")
 			if typeof(info.Time) == "number" then
 				task.spawn(function()
 					for s = info.Time, 1, -1 do
 						if not ActionClone.Parent then
 							return
 						end
-						ActionClone.Time.Text = s
+						TimeTextLabel.Text = s
 						task.wait(1)
 					end
 					if StopEvent.Parent then
 						StopEvent:Fire()
 					end
 				end)
+			elseif typeof(info.Time) == "string" then
+				TimeTextLabel.Text = info.Time
 			else
 				task.spawn(info.Time,ActionClone,info)
 			end
