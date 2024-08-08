@@ -303,16 +303,8 @@ local PlayerState = {} do
 	local cameraFocus
 	local cameraCFrame
 	local cameraFieldOfView
-	local coreGuis = {
-		Backpack = false,
-		Chat = false,
-		Health = false,
-		PlayerList = false,
-	}
-	local setCores = {
-		BadgesNotificationsActive = false,
-		PointsNotificationsActive = false,
-	}
+	local coreGuis = {}
+	local setCores = {}
 
 	function PlayerState.Push()
 		if FREECAM_SETTINGS.HideCoreUI then
