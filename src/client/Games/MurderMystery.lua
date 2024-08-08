@@ -322,13 +322,13 @@ return function(C,Settings)
                         for num, item in ipairs(C.char:GetChildren()) do
                             task.spawn(BackpackAdded,item,true)
                         end
-                        if self.EnTbl.GunPickupEn then
+                        if self.EnTbl.GunPickupEn and C.Map then
                             local function MapAdded(newChild)
                                 if newChild.Name == "GunDrop" and newChild.Parent == C.Map then
                                     C.AddOverride(C.hackData.MurderMystery.GunPickup,self.Shortcut)
                                 end
                             end
-                            workspace:WaitForChild("Normal")
+                            workspace:WaitForChild("Normal",math.huge)
                             table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
                             for num, item in ipairs(C.Map:GetChildren()) do
                                 task.spawn(MapAdded,item)
