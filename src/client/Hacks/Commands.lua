@@ -635,7 +635,9 @@ return function(C,Settings)
                                 local theirChar = thisPlr.Character
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 local theirPrim = theirChar and theirChar.PrimaryPart
-                                self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
+                                if self.ActionFrame:FindFirstChild("Time") then
+                                    self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
+                                end
                                 C.Spectate(theirChar)
                                 if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
                                     break

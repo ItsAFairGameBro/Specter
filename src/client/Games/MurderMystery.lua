@@ -236,7 +236,9 @@ return function(C,Settings)
                     C.RemoveOverride(C.hackData.Blatant.Noclip, self.Shortcut)
 				end,
 				Options = {
-					
+					{
+                        Type="Slider"
+                    }
 				}
 			},
             {
