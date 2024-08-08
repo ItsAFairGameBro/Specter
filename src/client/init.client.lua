@@ -113,7 +113,7 @@ local function RegisterFunctions()
 	C.setscriptable = not isStudio and setscriptable
 	C.request = isStudio and function() end or request
 	function C.require(ModuleScript: Script)
-		return (isStudio and require or getrenv().require)(ModuleScript)
+		return select(2,C.API(isStudio and require or getrenv().require,nil,100,ModuleScript))
 	end
 	
 	--Important In-Game Functions
