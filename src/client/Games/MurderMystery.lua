@@ -309,13 +309,13 @@ return function(C,Settings)
                 }
             },
             {
-				Title = "Murderer Win",
-				Tooltip = "As the murderer, kill every single person",
+				Title = "Unlock Emotes",
+				Tooltip = "Unlocks every emote in the game and is visible to all",
 				Layout = 90,Type="NoDisable",
-				Shortcut = "MurdererWin", Threads={},
+				Shortcut = "UnlockEmotes", Threads={},
                 Activate = function(self,newValue)
                     local EmotesModule = C.require(C.StringWait(RS,"Modules.EmoteModule"))
-                    EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGui, "Free Emotes")
+                    EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGUI, "Free Emotes")
                     EmotesModule.ShowPage("Free Emotes")
                 end,
             },
