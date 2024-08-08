@@ -324,6 +324,7 @@ return function(C,Settings)
                         EmotesModule.GeneratePage({"headless", "zombie", "zen", "ninja", "floss", "dab", "sit"}, EmotesModule.EmoteGUI, self.EmotePageName)
                         EmotesModule.ShowPage(self.EmotePageName)
                     else
+                        EmotesModule.GenerateEmotes()
                         EmotesModule.ShowPage("Roblox Emotes")
                     end
                 end,
