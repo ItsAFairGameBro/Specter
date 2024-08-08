@@ -311,7 +311,7 @@ return function(C,Settings)
             {
 				Title = "Unlock Emotes",
 				Tooltip = "Unlocks every emote in the game and is visible to all",
-				Layout = 90,Type="NoDisable",
+				Layout = 90,Type="OneRun",
 				Shortcut = "UnlockEmotes",
                 EmotePageName = "Free Emotes",
                 Activate = function(self,newValue)
