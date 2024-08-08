@@ -169,7 +169,7 @@ return function(C,Settings)
 				Activate = function(self,newValue,firstRun)
                     C.RemoveAction(self.Shortcut)
                     if firstRun then
-                        task.wait(.5) -- Wait a bit for GetTagged("Character") load
+                        task.wait(1.5) -- Wait a bit for GetTagged("Character") load
                     end
                     if select(2,C.isInGame(C.char)) ~= "Sheriff" then
                         return "Not Sheriff"
