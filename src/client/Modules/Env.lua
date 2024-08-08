@@ -412,7 +412,7 @@ return function(C,Settings)
 	end
 	
 	local function Compare(start,needle)
-		return start:lower():find(needle:lower(),1,true) ~= nil
+		return start:lower():find(C.EscapeForStringLibrary(needle:lower())) ~= nil
 	end
 	function C.StringStartsWith(tbl,name,override,leaveAsIs)
 		if name == "" and not override then
