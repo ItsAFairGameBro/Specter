@@ -30,6 +30,15 @@ return function(C,Settings)
                 return true,"Successful"
             end,
         },--]]
+        ["freecam"]={
+            Parameters={},
+            AfterTxt="%s",
+            RequiresRefresh=true,
+            Run=function(args)
+                C.hackData.World.Freecam:SetValue(not C.hackData.World.Freecam.RealEnabled)
+                return true
+            end,
+        },
         ["spectate"]={
             Parameters={{Type="Player"}},
             AfterTxt="%s",
@@ -41,7 +50,7 @@ return function(C,Settings)
         },
         ["morph"]={
             Parameters={{Type="Players",SupportsNew = true}},
-            AfterTxt=" to %s%s",
+            AfterTxt=" to %s%s",Priority=3,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
                 local success, desc
@@ -394,6 +403,7 @@ return function(C,Settings)
         ["follow"]={
             Parameters={{Type="Player"},{Type="Number",Min=-100,Max=100,Default=5}},
             AfterTxt="",
+            Priority=3,
             isFollowing=-1,
             ForcePlayAnimations={},
             MyPlayingAnimations={},
