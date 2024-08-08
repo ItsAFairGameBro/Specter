@@ -214,9 +214,11 @@ return function(C,Settings)
             index = math.clamp(index,0,#C.savedCommands+1)
 
             local setTo = C.savedCommands[index] or ""
+            local setCursor = chatBar.CursorPosition
             lastText = setTo
             RunS.RenderStepped:Wait()
-            DidSet += 3
+            DidSet += 0
+            chatBar.CursorPosition = setCursor
 			chatBar.Text = setTo
             ClearSuggestions()
 			chatBar.CursorPosition = setTo:len() + 1
@@ -274,9 +276,9 @@ return function(C,Settings)
                             return
                         end
                     else
-                        if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.Insert then
+                        if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.PageUp then
                             goToSaved(1)
-                        elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.Delete then
+                        elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.PageDown then
                             goToSaved(-1)
                         else
                             return

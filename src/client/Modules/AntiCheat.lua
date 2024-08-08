@@ -7,6 +7,7 @@ local function Static(C,Settings)
     end
     return yieldForeverFunct
 end
+-- https://apis.roblox.com/universes/v1/places/1962086868/universe
 return function(C,Settings)
     local yieldForeverFunct = Static(C,Settings)
     -- Here's where the anti cheat stuff is done
@@ -68,8 +69,8 @@ return function(C,Settings)
 				Instance.new("Folder",localScript2).Name = "FakeDummy"
             end,
             KeepGoing = false, RunOnce = true,
-            GameIds = {},
-            PlaceIds = {1962086868},
+            GameIds = {703124385},
+            PlaceIds = {},
         }
     }
     for num, cheatTbl in ipairs(AntiCheat) do
