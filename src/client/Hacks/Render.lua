@@ -86,11 +86,13 @@ return function(C,Settings)
 						local OldStorage = self.Storage[oldCameraSubject and oldCameraSubject.Parent or nil]
 						oldCameraSubject = workspace.Camera.CameraSubject
 						local NewStorage = self.Storage[oldCameraSubject and oldCameraSubject.Parent or nil]
-						if OldStorage then
-							self:RunCheck(OldStorage)
-						end
+						
 						if NewStorage then
 							self:RunCheck(NewStorage)
+						end
+						RunS.RenderStepped:Wait()
+						if OldStorage then
+							self:RunCheck(OldStorage)
 						end
 					end))
 					while true do
