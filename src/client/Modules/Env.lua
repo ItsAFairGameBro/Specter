@@ -450,8 +450,11 @@ return function(C,Settings)
 				if aPriority ~= bPriority then
 					return aPriority > bPriority
 				end
-				
-				return SortStringStartsWith(aValue[1],bValue[1],true)
+				if leaveAsIs then
+					return SortStringStartsWith(aValue[1],bValue[1],true)
+				else
+					return C.GetDictLength(aValue) > C.GetDictLength(bValue)
+				end
 			elseif typeof(aValue) == "string" and typeof(bValue) == "string" then
 				return aValue:lower() > bValue:lower()
 			elseif typeof(aValue) == "number" and typeof(bValue) == "number" then
