@@ -129,6 +129,8 @@ return function(C,Settings)
 							self.Storage[theChar] = nil
 							C.TblRemove(self.Instances,robloxHighlight)
 							robloxHighlight:Destroy()
+						else
+							warn(`InstanceData not found for {theChar} but its being removed!`)
 						end
 					end,
 				},
