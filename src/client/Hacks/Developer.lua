@@ -2,6 +2,7 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Text
 local SG = game:GetService("StarterGui")
 local RS = game:GetService("ReplicatedStorage")
 local PhysicsS = game:GetService"PhysicsService"
+local UIS = game:GetService("UserInputService")
 return function(C,Settings)
 	return {
 		Category = {
@@ -174,9 +175,48 @@ return function(C,Settings)
 				}
 			},
             {
+				Title = "Check Events",
+				Tooltip = "Prints events in a table format to the console",
+				Layout = 7,Type="NoToggle",NoStudio = true,
+				Shortcut = "CheckEvents",
+                EventsToCheck = {
+                    [UIS] = {
+                        "TouchEnded",
+                        "TouchLongPress",
+                        "TouchMoved",
+                        "TouchPan",
+                        "TouchPinch",
+                        "TouchRotate",
+                        "TouchStarted",
+                        "TouchSwipe",
+                        "TouchTap",
+                        "TouchTapInWorld"
+                    }
+                },
+				Activate = function(self,newValue)
+                    local tbl = {}
+                    for instance, connections in pairs(self.EventsToCheck) do
+                        local curTbl1 = {}
+                        for num, connName in ipairs(connections) do
+                            local curTbl2 = {}
+                            for num2, connection in ipairs(C.getconnections(instance[connName])) do
+                                curTbl2 = {
+                                    Enabled=connection.Enabled,
+                                    ForeignState=connection.ForeignState,
+                                    LuaConnection=connection.LuaConnection,
+                                }
+                            end
+                            curTbl1[connName] = curTbl2
+                        end
+                        tbl[instance] = curTbl1
+                    end
+                    print("Client Connections:",tbl)
+				end,
+			},
+            {
 				Title = "RemoteEvent Tracker",
 				Tooltip = "Tracks remote events and their result",
-				Layout = 7,
+				Layout = 9,
 				Shortcut = "RemoteEventTracker",Functs={},
 				Activate = function(self,newValue)
                     for num, instance in ipairs(RS:GetDescendants()) do
@@ -194,7 +234,7 @@ return function(C,Settings)
             {
 				Title = "Get GameID",
 				Tooltip = "Sets the GameID to clipboard",
-				Layout = 7,Type="NoToggle",NoStudio = true,
+				Layout = 10,Type="NoToggle",NoStudio = true,
 				Shortcut = "SetGameToClipBoard",
 				Activate = function(self,newValue)
                     C.setclipboard(game.GameId)
