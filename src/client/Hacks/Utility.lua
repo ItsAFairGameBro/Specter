@@ -112,12 +112,15 @@ return function(C,Settings)
 						--if NC:FindFirstChild("ClientReplicator") then
 						--	return -- We are still in the game!
 						--end
+						msg = GS:GetErrorMessage()
+						print("Called:",msg)
 						if not msg or msg:len() == 0 then
 							task.delay(.5,GS.ClearError,GS)
 							return
 						end
 						self:Update(msg)
 					end))
+					self:Update()
 				end,
 			},
 			{
