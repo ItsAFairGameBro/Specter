@@ -84,7 +84,7 @@ return function(C,Settings)
 					local errorCode = GS:GetErrorCode()
 					errorCode = errorCode and errorCode.Value or -1
 
-					print("ERROR CODE:",errorCode,typeof(errorCode))
+					print("ERROR CODE:",errorCode)
 
 					if errorCode ~= 267 then
 						return false
@@ -101,6 +101,7 @@ return function(C,Settings)
 					-- Debug.Traceback doesn't work for this:
 					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
 					task.delay(1,GS.ClearError,GS)
+					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 					return true
 				end,
 				Activate = function(self,newValue)
@@ -112,9 +113,6 @@ return function(C,Settings)
 						--if NC:FindFirstChild("ClientReplicator") then
 						--	return -- We are still in the game!
 						--end
-						if msg2 then
-							print("Msg2",msg2)
-						end
 						self:Update(msg)
 					end))
 					self:Update(GS:GetErrorMessage())
