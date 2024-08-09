@@ -108,6 +108,7 @@ local function RegisterFunctions()
 		setclipboard(tostring(input))
 	end
 	C.getloadedmodules = isStudio and function() return {C.PlayerScripts.PlayerModule.ControlModule} end or getloadedmodules
+	C.getrunningscripts = isStudio and function () return {} end or getrunningscripts
 	C.request = not isStudio and request
 	C.isfolder = not isStudio and isfolder
 	C.readfile = not isStudio and readfile

@@ -23,6 +23,7 @@
         "hookmetamethod",
         "setscriptable",
         "checkcaller",
-        "identifyexecutor"
+        "identifyexecutor",
+        "getrunningscripts"
     ]
 }
