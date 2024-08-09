@@ -78,7 +78,7 @@ return function(C,Settings)
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
 				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
-				Update = function(self,msg)
+				Update = function(self,errorMessage)
 					local KickedButton = C.UI.KickedButton
 
 					local errorCode = GS:GetErrorCode()
@@ -93,13 +93,13 @@ return function(C,Settings)
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
-						if msg then
-							KickedButton.Text = self.Message:format(msg,errorCode)
+						if errorMessage then
+							KickedButton.Text = self.Message:format(errorMessage,errorCode)
 						end
 						KickedButton.Visible = true
 					end
 					-- Debug.Traceback doesn't work for this:
-					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
+					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
 					task.delay(1,GS.ClearError,GS)
 					return true
 				end,
@@ -107,20 +107,17 @@ return function(C,Settings)
 					if not newValue then
 						return
 					end
-					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
+					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg,msg2)
 						--task.wait(.5)
 						--if NC:FindFirstChild("ClientReplicator") then
 						--	return -- We are still in the game!
 						--end
-						local msg = GS:GetErrorMessage()
-						print("Called:",msg,msg=="")
-						if msg ~= "" then
-							task.delay(5,GS.ClearError,GS)
-							return
+						if msg2 then
+							print("Msg2",msg2)
 						end
 						self:Update(msg)
 					end))
-					self:Update()
+					self:Update(GS:GetErrorMessage())
 				end,
 			},
 			{
