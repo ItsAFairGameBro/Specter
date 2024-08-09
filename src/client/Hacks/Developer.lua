@@ -181,7 +181,7 @@ return function(C,Settings)
 				Shortcut = "CheckEvents",
                 EventsToCheck = {
                     [UIS] = {
-                        "TouchEnded",
+                        --[["TouchEnded",
                         "TouchLongPress",
                         "TouchMoved",
                         "TouchPan",
@@ -189,7 +189,7 @@ return function(C,Settings)
                         "TouchRotate",
                         "TouchStarted",
                         "TouchSwipe",
-                        "TouchTap",
+                        "TouchTap",--]]
                         "TouchTapInWorld"
                     }
                 },
@@ -207,7 +207,6 @@ return function(C,Settings)
                                 })
                             end
                             curTbl1[connName] = curTbl2
-                            task.wait(2)
                         end
                         tbl[instance] = curTbl1
                     end
