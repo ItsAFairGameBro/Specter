@@ -82,6 +82,7 @@ return function(C,Settings)
 					local KickedButton = C.UI.KickedButton
 
 					local errorCode = GS:GetErrorCode()
+					errorCode = errorCode and errorCode.Value or -1
 
 					print("ERROR CODE:",errorCode,typeof(errorCode))
 
@@ -93,7 +94,7 @@ return function(C,Settings)
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
 						if msg then
-							KickedButton.Text = self.Message:format(msg,errorCode and errorCode.Value or -1)
+							KickedButton.Text = self.Message:format(msg,errorCode)
 						end
 						KickedButton.Visible = true
 					end
