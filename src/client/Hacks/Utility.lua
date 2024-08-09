@@ -107,15 +107,15 @@ return function(C,Settings)
 					if not newValue then
 						return
 					end
-					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg)
+					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function()
 						--task.wait(.5)
 						--if NC:FindFirstChild("ClientReplicator") then
 						--	return -- We are still in the game!
 						--end
-						msg = GS:GetErrorMessage()
-						print("Called:",msg)
-						if not msg or msg:len() == 0 then
-							task.delay(.5,GS.ClearError,GS)
+						local msg = GS:GetErrorMessage()
+						print("Called:",msg,msg=="")
+						if msg ~= "" then
+							task.delay(5,GS.ClearError,GS)
 							return
 						end
 						self:Update(msg)
