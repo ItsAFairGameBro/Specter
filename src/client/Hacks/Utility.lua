@@ -113,7 +113,7 @@ return function(C,Settings)
 						--	return -- We are still in the game!
 						--end
 						if not msg or msg:len() == 0 then
-							task.spawn(GS.ClearError,GS)
+							--task.spawn(GS.ClearError,GS)
 							return
 						end
 						self:Update(msg)
