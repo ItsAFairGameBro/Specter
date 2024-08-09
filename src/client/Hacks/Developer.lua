@@ -180,11 +180,13 @@ return function(C,Settings)
 				Layout = 5,Type="NoToggle",
 				Shortcut = "FindNilScripts",
 				Activate = function(self,newValue)
-                    for num, scr in ipairs(C.getrunningscripts()) do
-                        if scr.Parent == workspace or scr.Parent == nil then
-                            print(`[{scr:GetFullName()}]`)
+                    pcall(function()
+                        for num, scr in ipairs(C.getrunningscripts()) do
+                            if scr.Parent == workspace or scr.Parent == nil then
+                                print(scr)
+                            end
                         end
-                    end
+                    end)
 				end,
 				Options = {
 					
