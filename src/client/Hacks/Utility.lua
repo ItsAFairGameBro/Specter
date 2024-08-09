@@ -115,6 +115,7 @@ return function(C,Settings)
 							task.spawn(GS.ClearError,GS)
 							return
 						end
+						self:Update(msg)
 					end))
 				end,
 			},
