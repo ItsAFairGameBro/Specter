@@ -1,5 +1,6 @@
 local DS = game:GetService("Debris")
 local SC = game:GetService("ScriptContext")
+local LS = game:GetService("LogService")
 local function Static(C,Settings)
     local function yieldForeverFunct(...)
         C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
@@ -78,7 +79,13 @@ return function(C,Settings)
                 for num, data in ipairs(C.getconnections(SC.Error)) do
                     if data.LuaConnection then
                         data:Disconnect()
-                        C.DebugMessage("AntiCheat",`Disabled Lua Conn {num}`)
+                        C.DebugMessage("AntiCheat",`Disabled SC.Error {num}`)
+                    end
+                end
+                for num, data in ipairs(C.getconnections(LS.MessageOut)) do
+                    if data.LuaConnection then
+                        data:Disconnect()
+                        C.DebugMessage("AntiCheat",`Disabled LS.MessageOut {num}`)
                     end
                 end
             end,
