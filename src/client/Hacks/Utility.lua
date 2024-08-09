@@ -83,6 +83,8 @@ return function(C,Settings)
 
 					local errorCode = GS:GetErrorCode()
 
+					print("ERROR CODE:",errorCode,typeof(errorCode))
+
 					if errorCode ~= 267 then
 						return false
 					end
@@ -114,6 +116,7 @@ return function(C,Settings)
 							task.spawn(GS.ClearError,GS)
 							return
 						end
+						task.spawn(GS.ClearError,GS)
 						self:Update(msg)
 					end))
 				end,
