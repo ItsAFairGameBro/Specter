@@ -130,7 +130,7 @@ return function(C,Settings)
 				}
 			},
             {
-				Title = "Find Scripts",
+				Title = "Find Game Scripts",
 				Tooltip = "Finds all the scripts in Player object and character",
 				Layout = 6,Type="NoToggle",
 				Shortcut = "FindAllScripts",
@@ -175,6 +175,22 @@ return function(C,Settings)
 				}
 			},
             {
+				Title = "Find Nil Scripts",
+				Tooltip = "Finds scripts parented to nil",
+				Layout = 5,Type="NoToggle",
+				Shortcut = "FindNilScripts",
+				Activate = function(self,newValue)
+                    for num, scr in ipairs(C.getrunningscripts()) do
+                        if scr.Parent == workspace or scr.Parent == nil then
+                            print(`[{scr:GetFullName()}]`)
+                        end
+                    end
+				end,
+				Options = {
+					
+				}
+			},
+            {
 				Title = "Check Events",
 				Tooltip = "Prints events in a table format to the console",
 				Layout = 7,Type="NoToggle",NoStudio = true,
@@ -212,24 +228,6 @@ return function(C,Settings)
                     end
                     print("Client Connections:",tbl)
 				end,
-			},
-            {
-				Title = "RemoteEvent Tracker",
-				Tooltip = "Tracks remote events and their result",
-				Layout = 9,
-				Shortcut = "RemoteEventTracker",Functs={},
-				Activate = function(self,newValue)
-                    for num, instance in ipairs(RS:GetDescendants()) do
-                        if instance:IsA("RemoteEvent") then
-                            table.insert(self.Functs,instance.OnClientEvent:Connect(function(...)
-                                print(`[RemoteEvent {instance:GetFullName()}]: returns`,...)
-                            end))
-                        end
-                    end
-				end,
-				Options = {
-					
-				}
 			},
             {
 				Title = "Get GameID",
