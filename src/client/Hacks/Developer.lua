@@ -207,6 +207,7 @@ return function(C,Settings)
                                 })
                             end
                             curTbl1[connName] = curTbl2
+                            task.wait(2)
                         end
                         tbl[instance] = curTbl1
                     end
