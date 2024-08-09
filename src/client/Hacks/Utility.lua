@@ -101,7 +101,7 @@ return function(C,Settings)
 					-- Debug.Traceback doesn't work for this:
 					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
 					--task.delay(1,GS.ClearError,GS)
-					GS:ClearError()
+					task.spawn(GS.ClearError,GS)
 					return true
 				end,
 				Activate = function(self,newValue)
