@@ -188,8 +188,8 @@ return function(C,Settings)
                         "TouchPinch",
                         "TouchRotate",
                         "TouchStarted",
-                        "TouchSwipe",
-                        "TouchTap",--]]
+                        "TouchSwipe",--]]
+                        "TouchTap",
                         "TouchTapInWorld"
                     }
                 },
