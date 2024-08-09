@@ -83,6 +83,10 @@ return function(C,Settings)
 
 					local errorCode = GS:GetErrorCode()
 
+					if errorCode ~= 267 then
+						return false
+					end
+
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
@@ -91,26 +95,26 @@ return function(C,Settings)
 						end
 						KickedButton.Visible = true
 					end
+					self:Update(msg)
+					-- Debug.Traceback doesn't work for this:
+					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
+					--task.delay(1,GS.ClearError,GS)
+					GS:ClearError()
+					return true
 				end,
 				Activate = function(self,newValue)
 					if not newValue then
 						return
 					end
 					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg)
-						task.wait(.5)
-						if NC:FindFirstChild("ClientReplicator") then
-							return -- We are still in the game!
-						end
+						--task.wait(.5)
+						--if NC:FindFirstChild("ClientReplicator") then
+						--	return -- We are still in the game!
+						--end
 						if not msg or msg:len() == 0 then
 							task.spawn(GS.ClearError,GS)
 							return
 						end
-						
-						self:Update(msg)
-						-- Debug.Traceback doesn't work for this:
-						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), msg))
-						--task.delay(1,GS.ClearError,GS)
-						GS:ClearError()
 					end))
 				end,
 			},
