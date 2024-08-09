@@ -84,9 +84,10 @@ return function(C,Settings)
 					local errorCode = GS:GetErrorCode()
 					errorCode = errorCode and errorCode.Value or -1
 
-					print("ERROR CODE:",errorCode)
-
 					if errorCode ~= 267 then
+						if errorCode ~= 0 then
+							print("[Utility.NoKick]: Unknown Error Code:",errorCode)
+						end
 						return false
 					end
 
@@ -98,6 +99,9 @@ return function(C,Settings)
 						end
 						KickedButton.Visible = true
 					end
+					-- pcall(function()
+						--print(#getconnections(game:GetService("ScriptContext").Error))
+				--end)
 					-- Debug.Traceback doesn't work for this:
 					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
 					task.delay(1,GS.ClearError,GS)
