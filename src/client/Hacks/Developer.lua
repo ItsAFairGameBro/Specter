@@ -200,11 +200,11 @@ return function(C,Settings)
                         for num, connName in ipairs(connections) do
                             local curTbl2 = {}
                             for num2, connection in ipairs(C.getconnections(instance[connName])) do
-                                curTbl2 = {
-                                    Enabled=connection.Enabled,
-                                    ForeignState=connection.ForeignState,
-                                    LuaConnection=connection.LuaConnection,
-                                }
+                                table.insert(curTbl2, {imhere=true,
+                                    --Enabled=connection.Enabled,
+                                    --ForeignState=connection.ForeignState,
+                                    --LuaConnection=connection.LuaConnection,
+                                })
                             end
                             curTbl1[connName] = curTbl2
                         end
