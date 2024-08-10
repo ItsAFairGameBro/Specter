@@ -151,7 +151,7 @@ return function (C,Settings)
                                 return "Override", args
                             else
                                 print("did nothing")
-                                return--do nothing lol, don't kill yaself!
+                                return "Cancel"--do nothing lol, don't kill yaself!
                             end
                         end
                         return -- do not change!
