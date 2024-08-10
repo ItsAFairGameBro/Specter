@@ -103,8 +103,8 @@ return function(C,Settings)
                             C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1)}`)
                         end
                         return "Cancel"
-                    else
-                        --print("Pass",self,arg1,...)
+                    elseif theirScript.Name == "BAC_" then
+                        print("Pass",self,arg1,...)
                         return
                     end
                 end)
