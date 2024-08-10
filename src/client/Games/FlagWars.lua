@@ -130,12 +130,13 @@ return function (C,Settings)
 				Layout = 4, Instances = {}, Functs={},
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
-                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(newSc,method,self,args)
+                    local tblPack = table.pack
+                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(newSc,method,self,arg1,arg2,arg3)
                         local event = self
                         if tostring(event) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest()
                             if ClosestHead then
-                                local dataTbl = args[2]
+                                local dataTbl = arg2
                                 dataTbl["part"] = ClosestHead
                                 dataTbl["h"] = ClosestHead
     
@@ -148,7 +149,7 @@ return function (C,Settings)
     
                                 --dataTbl[""] = ClosestHead
                                 --print("DataTbl",dataTbl)
-                                return "Override", args
+                                return "Override", tblPack(arg1,arg2,arg3)
                             else
                                 print("did nothing")
                                 return "Cancel"--do nothing lol, don't kill yaself!
