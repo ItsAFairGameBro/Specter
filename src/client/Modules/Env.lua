@@ -49,7 +49,7 @@ return function(C,Settings)
 			for num, val in pairs(leftTbl) do
 				if not isDict and num < totalValues-30 then
 					if not warnings.MaxLimit then
-						str=addToString("(Maximum Limit Of 30; Only Displaying Last Values)",depth,true).."\n"..str
+						str ..= addToString("(Maximum Limit Of 30; Only Displaying Last Values)",depth)
 						warnings.MaxLimit = true
 					end
 					continue
