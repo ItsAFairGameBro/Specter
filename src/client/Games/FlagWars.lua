@@ -20,21 +20,21 @@ return function (C,Settings)
 				Layout = 0, Instances = {}, Functs={},
 				Shortcut = "WeaponStats",Default=true,
                 NewInstance = function(self,newTool)
-                    local function SetStat(config,instance,newValue,doInsert)
-                        local val = config:FindFirstChild(instance)
+                    local function SetStat(config,name,newValue,doInsert)
+                        local val = config:FindFirstChild(name)
                         if not val and doInsert then
-                            instance = Instance.new((typeof(newValue)=="string" and "StringValue")
+                            val = Instance.new((typeof(newValue)=="string" and "StringValue")
                                 or (typeof(newValue)=="boolean" and "BoolValue")
                                 or (typeof(newValue)=="number" and "NumberValue"), workspace)
-                            instance.Name = instance
-                            table.insert(self.Instances,instance)
+                            val.Name = name
+                            table.insert(self.Instances,val)
                         else
                             return
                         end
                         if self.RealEnabled then
-                            C.SetPartProperty(instance,"Value","WeaponStats",newValue)
+                            C.SetPartProperty(val,"Value","WeaponStats",newValue)
                         else
-                            C.ResetPartProperty(instance,"Value","WeaponStats")
+                            C.ResetPartProperty(val,"Value","WeaponStats")
                         end
                     end
                     local config = newTool:FindFirstChild("Configuration")
