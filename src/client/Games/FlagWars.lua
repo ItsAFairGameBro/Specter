@@ -132,10 +132,8 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(newSc,method,self,args)
                         local event = self
-                        print(tostring(event))
                         if tostring(event) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest()
-                            print("CLosest",ClosestHead)
                             if ClosestHead then
                                 local dataTbl = args[2]
                                 dataTbl["part"] = ClosestHead
@@ -152,7 +150,7 @@ return function (C,Settings)
                                 --print("DataTbl",dataTbl)
                                 return "Override", args
                             else
-                                --print("did nothing")
+                                print("did nothing")
                                 return--do nothing lol, don't kill yaself!
                             end
                         end
