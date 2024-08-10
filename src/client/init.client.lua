@@ -337,7 +337,7 @@ function C.yieldForeverFunct()
 	game:WaitForChild("SuckieMyPeePee And POOO pOOO",math.huge)
 end
 function C.HookNamecall(name,methods,runFunct)
-	if C.isStudio or (not C.getgenv().NamecallHooks or methods) then
+	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
 		return
 	end
     if not C.getgenv().NamecallHooks then
@@ -351,16 +351,12 @@ function C.HookNamecall(name,methods,runFunct)
             -- Check if the caller is not a local script
             if not checkcaller() and self.Name ~= "CharacterSoundEvent" then
                 -- Get the method being called
-				print("Unknown Call!")
                 local method = lower(getnamecallmethod())
                 local theirScript = getcallingscript()
                 -- Block FireServer or InvokeServer methods
                 for name, list in pairs(myHooks) do
-					print("List",list)
                     if tblFind(list[1],method) then -- Authorization
-						print("Running")
                         local operation,returnData = list[2](theirScript,method,self,...)
-						print("Result:",operation)
                         if operation then
                             if operation == "Override" then
                                 return tblUnpack(returnData)
