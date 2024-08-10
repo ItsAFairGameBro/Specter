@@ -194,7 +194,7 @@ return function(C,Settings)
 				}
 			},
             {
-                Title = "Get Place Ids",
+                Title = "Get Place Ids",Type="NoToggle",
                 Tooltip = "Prints place ids for the current game",
                 Shortcut = "GetPlaceIds",
                 Activate = function(self,newValue)
@@ -203,14 +203,16 @@ return function(C,Settings)
 
                     while true do
                         for _, place in placePages:GetCurrentPage() do
-                            print("Name:", place.Name)
-                            print("PlaceId:", place.PlaceId)
+                            print({
+                                Name = place.Name,
+                                PlaceId=place.PlaceId
+                            })
                         end
                         if placePages.IsFinished then
                             break
                         end
                         placePages:AdvanceToNextPageAsync()
-                    end      
+                    end
                 end
             },
             {
