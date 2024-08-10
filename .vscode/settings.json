@@ -24,6 +24,7 @@
         "setscriptable",
         "checkcaller",
         "identifyexecutor",
-        "getrunningscripts"
+        "getrunningscripts",
+        "getinstances"
     ]
 }

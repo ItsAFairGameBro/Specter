@@ -131,6 +131,21 @@ return function(C,Settings)
 				}
 			},
             {
+				Title = "Print Remote Event Spy",
+				Tooltip = "Prints all INCOMING messages from remote events to the console.",
+				Layout = 12,Functs={},
+				Shortcut = "PrintRemoteSpy",
+                Activate = function(self,newValue)
+                    for num, event in ipairs(C.getinstances()) do
+                        if event:IsA("RemoteEvent") then
+                            table.insert(self.Functs,event.OnClientEvent:Connect(function(...)
+                                print(`[Remote Event Spy]: {event:GetFullName()}`,...)
+                            end))
+                        end
+                    end
+                end,
+            },
+            {
 				Title = "Find Game Scripts",
 				Tooltip = "Finds all the scripts in Player object and character",
 				Layout = 6,Type="NoToggle",
