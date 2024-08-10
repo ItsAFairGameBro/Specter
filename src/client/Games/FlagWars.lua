@@ -151,7 +151,6 @@ return function (C,Settings)
                                 --print("DataTbl",dataTbl)
                                 return "Override", tblPack(arg1,arg2,arg3)
                             else
-                                print("did nothing")
                                 return "Cancel"--do nothing lol, don't kill yaself!
                             end
                         end
