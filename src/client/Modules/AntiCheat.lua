@@ -104,7 +104,7 @@ return function(C,Settings)
                         end
                         return "Cancel"
                     else
-                        print("Pass",self,...)
+                        print("Pass",self,arg1,...)
                         return
                     end
                 end)
