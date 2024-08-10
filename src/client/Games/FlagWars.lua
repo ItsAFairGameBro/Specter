@@ -28,19 +28,21 @@ return function (C,Settings)
                                 or (typeof(newValue)=="number" and "NumberValue"), workspace)
                             val.Name = name
                             table.insert(self.Instances,val)
-                        else
+                        elseif not val then
                             return
                         end
                         if self.RealEnabled then
-                            C.SetPartProperty(val,"Value","WeaponStats",newValue)
+                            C.SetPartProperty(val,"Value",self.Shortcut,newValue,true)
                         else
-                            C.ResetPartProperty(val,"Value","WeaponStats")
+                            C.ResetPartProperty(val,"Value",self.Shortcut)
                         end
                     end
                     local config = newTool:WaitForChild("Configuration",10)
                     if not config or not newTool:IsA("Tool") then
+                        print("No COnfig or tool",config,newTool)
                         return
                     end
+                    print("COnfig")
                     SetStat(config,"RecoilMin",0)
                     SetStat(config,"RecoilMax",0)
                     SetStat(config,"RecoilDecay",0)
