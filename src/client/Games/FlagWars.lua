@@ -20,12 +20,16 @@ return function (C,Settings)
 				Layout = 0, Instances = {}, Functs={},
 				Shortcut = "WeaponStats",Default=true,
                 NewInstance = function(self,newTool)
+                    local config = newTool:WaitForChild("Configuration",10)
+                    if not config or not newTool:IsA("Tool") then
+                        return
+                    end
                     local function SetStat(config,name,newValue,doInsert)
                         local val = config:FindFirstChild(name)
                         if not val and doInsert then
                             val = Instance.new((typeof(newValue)=="string" and "StringValue")
                                 or (typeof(newValue)=="boolean" and "BoolValue")
-                                or (typeof(newValue)=="number" and "NumberValue"), workspace)
+                                or (typeof(newValue)=="number" and "NumberValue"), config)
                             val.Name = name
                             table.insert(self.Instances,val)
                         elseif not val then
@@ -37,12 +41,6 @@ return function (C,Settings)
                             C.ResetPartProperty(val,"Value",self.Shortcut)
                         end
                     end
-                    local config = newTool:WaitForChild("Configuration",10)
-                    if not config or not newTool:IsA("Tool") then
-                        print("No COnfig or tool",config,newTool)
-                        return
-                    end
-                    print("COnfig")
                     SetStat(config,"RecoilMin",0)
                     SetStat(config,"RecoilMax",0)
                     SetStat(config,"RecoilDecay",0)
