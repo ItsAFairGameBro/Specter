@@ -324,6 +324,9 @@ if not C.isStudio then
 			loaded += 1
 		end)
 	end
+	while loaded < #ModulesToPreload do
+		RunS.RenderStepped:Wait()
+	end
 end
 
 --Load hooks immediately
@@ -378,7 +381,4 @@ end
 
 --Load AntiCheat Immediately!
 C.LoadModule("AntiCheat")
-while loaded < #ModulesToPreload do
-	RunS.RenderStepped:Wait()
-end
 return C.LoadModule("CoreLoader")
