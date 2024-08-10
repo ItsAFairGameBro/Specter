@@ -337,6 +337,9 @@ function C.yieldForeverFunct()
 	game:WaitForChild("SuckieMyPeePee And POOO pOOO",math.huge)
 end
 function C.HookNamecall(name,methods,runFunct)
+	if C.isStudio or (not C.getgenv().NamecallHooks or methods) then
+		return
+	end
     if not C.getgenv().NamecallHooks then
         -- Hook the namecall function
         local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack

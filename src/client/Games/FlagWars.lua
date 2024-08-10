@@ -18,7 +18,7 @@ return function (C,Settings)
 				Title = "Weapon Stats",
 				Tooltip = "Creates infinite ammo, firerate, and accuracy hack; re-equip on enable/disable",
 				Layout = 0, Instances = {}, Functs={},
-				Shortcut = "WeaponStats",Default=true,
+				Shortcut = "WeaponStats",Default=true, DontActivate=true,
                 NewInstance = function(self,newTool)
                     local config = newTool:WaitForChild("Configuration",10)
                     if not config or not newTool:IsA("Tool") then
@@ -51,14 +51,17 @@ return function (C,Settings)
                     SetStat(config,"Cooldown",0)
                     SetStat(config,"SwingCooldown",0)
                     SetStat(config,"HitRate",0)
-                    --SetStat(config,"HasScope",false)
 
                     SetStat(config,"FireMode","Automatic",true)
                     SetStat(config.Parent,"CurrentAmmo",69)
-                    --SetStat(config,"AmmoCapacity",69)
                 end,
 				Activate = function(self,newValue)
-                    for num, tool in ipairs(C.plr:WaitForChild("Backpack"):GetChildren()) do
+                    local toolsToLoop = C.plr:WaitForChild("Backpack"):GetChildren()
+                    local curTool = C.char:FindFirstChildWhichIsA("Tool")
+                    if curTool then
+                        table.insert(toolsToLoop,curTool)
+                    end
+                    for num, tool in ipairs(toolsToLoop) do
                         task.spawn(self.NewInstance,self,tool)
                     end
                 end,
@@ -70,7 +73,13 @@ return function (C,Settings)
                         task.delay(.5,self.Activate,self)
 					end,
                 },
-            }
+            },
+            {
+				Title = "Weapon Stats",
+				Tooltip = "Creates infinite ammo, firerate, and accuracy hack; re-equip on enable/disable",
+				Layout = 0, Instances = {}, Functs={},
+				Shortcut = "WeaponStats",Default=true,
+            },
         },
     }
 end
