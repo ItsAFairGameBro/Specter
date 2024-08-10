@@ -342,6 +342,7 @@ function C.HookNamecall(name,methods,runFunct)
 	end
     if not C.getgenv().NamecallHooks then
         -- Hook the namecall function
+		local checkcaller = C.checkcaller
         local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
 
 		myHooks = {}
