@@ -309,6 +309,7 @@ function C.LoadModule(moduleName: string)
 	return Mod
 end
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
+local loaded = 0
 if not C.isStudio then
 	local loaded = 0
 	for num, module in ipairs(ModulesToPreload) do
@@ -323,11 +324,61 @@ if not C.isStudio then
 			loaded += 1
 		end)
 	end
-	while loaded < #ModulesToPreload do
-		RunS.RenderStepped:Wait()
-	end
+end
+
+--Load hooks immediately
+local originalNamecall = nil
+local getgenv = getgenv
+local myHooks
+function C.yieldForeverFunct()
+	game:WaitForChild("SuckieMyPeePee And POOO pOOO",math.huge)
+end
+function C.HookNamecall(name,methods,runFunct)
+    if not C.getgenv().NamecallHooks then
+        -- Hook the namecall function
+        local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
+
+		myHooks = {}
+        C.getgenv().NamecallHooks = myHooks
+        originalNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+            -- Check if the caller is not a local script
+            if not checkcaller() and self.Name ~= "CharacterSoundEvent" then
+                -- Get the method being called
+                local method = lower(getnamecallmethod())
+                local theirScript = getcallingscript()
+                -- Block FireServer or InvokeServer methods
+                for name, list in pairs(myHooks) do
+                    if tblFind(list[1],method) then -- Authorization
+                        local operation,returnData = list[2](theirScript,method,self,...)
+                        if operation then
+                            if operation == "Override" then
+                                return tblUnpack(returnData)
+                            elseif operation == "Cancel" then
+                                return
+                            elseif operation == "Yield" then
+                                return C.yieldForeverFunct()
+                            else
+                                warn(`[C.HookNameCall]: Unknown Operation for {name}: {operation}`)
+                            end
+                        end
+                    end
+                end
+            end
+
+            -- If the caller is a local script, call the original namecall method
+            return originalNamecall(self, ...)
+        end)--]]
+    end
+    if methods then
+        getgenv().NamecallHooks[name] = {methods,runFunct}
+    else
+        getgenv().NamecallHooks[name] = nil
+    end
 end
 
 --Load AntiCheat Immediately!
 C.LoadModule("AntiCheat")
+while loaded < #ModulesToPreload do
+	RunS.RenderStepped:Wait()
+end
 return C.LoadModule("CoreLoader")

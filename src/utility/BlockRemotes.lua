@@ -42,12 +42,16 @@ end)
 -- Store the original namecall method
 local originalNamecall = nil
 local getgenv = getgenv
+local myHooks
 
 local function HookNamecall(name,methods,runFunct)
     if not getgenv().NamecallHooks then
-        getgenv().NamecallHooks = {}
         -- Hook the namecall function
+        local getgenv = getgenv
         local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
+
+        getgenv().NamecallHooks = {}
+        myHooks = getgenv().NamecallHooks
         originalNamecall = hookmetamethod(game, "__namecall", function(self, ...)
             -- Check if the caller is not a local script
             if not checkcaller() and self.Name ~= "CharacterSoundEvent" then
@@ -55,15 +59,15 @@ local function HookNamecall(name,methods,runFunct)
                 local method = lower(getnamecallmethod())
                 local theirScript = getcallingscript()
                 -- Block FireServer or InvokeServer methods
-                for name, list in pairs(getgenv().NamecallHooks) do
-                    if tblFind(list[2],method) then -- Authorization
-                        local operation,returnData = runFunct(theirScript,method,self,...)
+                for name, list in pairs(myHooks) do
+                    if tblFind(list[1],method) then -- Authorization
+                        local operation,returnData = list[2](theirScript,method,self,...)
                         if operation then
                             if operation == "Override" then
                                 print("Overridden")
                                 return tblUnpack(returnData)
                             elseif operation == "Cancel" then
-                                print("Cancelled!")
+                                print("Cancelled!",theirScript,self,...)
                                 return
                             elseif operation == "Yield" then
                                 return yieldForeverFunct()
@@ -72,7 +76,7 @@ local function HookNamecall(name,methods,runFunct)
                             end
                         end
                         
-                        warn(`Blocked a {method} from {self.Name}: {theirScript}. Args:`,...)
+                        warn(`Continuing a {method} from {self.Name}: {theirScript}. Args:`,...)
                     end
                 end
             end
@@ -81,8 +85,8 @@ local function HookNamecall(name,methods,runFunct)
             return originalNamecall(self, ...)
         end)--]]
     end
-    if runFunct or #methods==0 then
-        getgenv().NamecallHooks[name] = {runFunct,methods}
+    if methods then
+        getgenv().NamecallHooks[name] = {methods,runFunct}
     else
         getgenv().NamecallHooks[name] = nil
     end

@@ -92,7 +92,7 @@ return function(C,Settings)
             KeepGoing = true, RunOnce = true,
             GameIds = {3150475059},
             PlaceIds = {},
-        }
+        },
     }
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then
