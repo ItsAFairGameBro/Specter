@@ -1,6 +1,7 @@
 local DS = game:GetService("Debris")
 local SC = game:GetService("ScriptContext")
 local LS = game:GetService("LogService")
+local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
     local function yieldForeverFunct(...)
         C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
@@ -95,6 +96,7 @@ return function(C,Settings)
         },
         {
             Run = function(self)
+                local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
                 if (not theirScript.Parent or theirScript.Name == "BAC_") and (typeof(arg1) ~= "table" and (arg1[1]~=arg1)) and arg1 ~= 0 then--(arg1[1]~=arg1)) then --and arg1 ~= 0 then
                         if typeof(arg1) == "table" then
@@ -114,16 +116,13 @@ return function(C,Settings)
                         if arg1 == 0 then
                             return -- Run it
                         else
-                            print("CANCELLING TWO WITH ",method,self,":",#{...}+1)
-                            local args = {
-                                [1] = "A-1",
-                                [2] = "RSSERV MTHD"
-                            }
+                            local args = {...}
+                            print("CANCELLING TWO WITH ",method,self,":",#args+1,args[1])
                             
-                            game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(unpack(args))
+                            task.defer(NewMessage.FireServer,NewMessage,"A-1","RSSERV MTHD")
                             local tbl = {}
                             tbl[1] = tbl
-                            game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(tbl)
+                            task.defer(NewMessage.FireServer,NewMessage,tbl)
                         end
                         return "Cancel"
                     end
