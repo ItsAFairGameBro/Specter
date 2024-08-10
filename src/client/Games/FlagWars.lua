@@ -125,9 +125,43 @@ return function (C,Settings)
                 end
             },
             {
+				Title = "Hit Hack",
+				Tooltip = "Hits the closest user",
+				Layout = 4, Instances = {}, Functs={},
+				Shortcut = "ClosestHit",Default=true,
+                Activate = function(self,newValue)
+                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(method,args)
+                        local event = args[1]
+                        if tostring(event) == "WeaponHit" then
+                            local ClosestHead, Distance = C.getClosest()
+                            if ClosestHead then
+                                local dataTbl = args[3]
+                                dataTbl["part"] = ClosestHead
+                                dataTbl["h"] = ClosestHead
+    
+                                --[[dataTbl["p"] = ClosestHead.Position
+                                dataTbl["d"] = Distance
+                                dataTbl["m"] = ClosestHead.Material
+                                dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
+                                dataTbl["maxDist"] = Distance + .3
+                                dataTbl["t"] = 1--]]
+    
+                                --dataTbl[""] = ClosestHead
+                                --print("DataTbl",dataTbl)
+                                return "Override", args
+                            else
+                                --print("did nothing")
+                                return true--do nothing lol, don't kill yaself!
+                            end
+                        end
+                        return false -- do not change!
+                    end)
+                end
+            },
+            {
 				Title = "Disable Killwall",
 				Tooltip = "Disables SOME Kill bricks!",
-				Layout = 2,Functs={},
+				Layout = 20,Functs={},
 				Shortcut = "NoKillBricks",Default=true,
                 NewInMap = function(self,part)
                     if part:IsA("BasePart") and part:FindFirstChildWhichIsA("TouchTransmitter") then
@@ -148,6 +182,7 @@ return function (C,Settings)
                     end))
                 end,
             },
+            
         },
     }
 end
