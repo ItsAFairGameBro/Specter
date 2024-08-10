@@ -151,6 +151,7 @@ else
 		Username = C.plr.Name,DisplayName = C.plr.DisplayName, AutoJumpEnabled = SP.AutoJumpEnabled}
 	C.getgenv().Defaults = C.Defaults
 end
+C.HighestNumber = 2^63-1 -- Largest integer possible
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
 task.spawn(function()
 	C.PlayerScripts = C.plr:WaitForChild("PlayerScripts",100)
@@ -336,10 +337,10 @@ local originalNamecall = nil
 local getgenv = getgenv
 local myHooks
 function C.yieldForeverFunct()
-	game:WaitForChild("SuckieMyPeePee And POOO pOOO",math.huge)
+	task.wait(C.HighestNumber)
 end
 function C.HookNamecall(name,methods,runFunct)
-	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
+	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) or true then
 		return
 	end
     if not C.getgenv().NamecallHooks then
@@ -365,7 +366,9 @@ function C.HookNamecall(name,methods,runFunct)
                             elseif operation == "Cancel" then
                                 return
                             elseif operation == "Yield" then
-                                return C.yieldForeverFunct()
+                                task.defer(C.yieldForeverFunct)
+								warn("[C.HookNameCall:] YIELDING COMPLETE!?")
+								return
                             else
                                 warn(`[C.HookNameCall]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
                             end
