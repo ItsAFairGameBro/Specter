@@ -153,10 +153,10 @@ return function (C,Settings)
                                 return "Override", args
                             else
                                 --print("did nothing")
-                                return true--do nothing lol, don't kill yaself!
+                                return--do nothing lol, don't kill yaself!
                             end
                         end
-                        return false -- do not change!
+                        return -- do not change!
                     end)
                 end
             },
