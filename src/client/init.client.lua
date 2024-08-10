@@ -349,7 +349,7 @@ function C.HookNamecall(name,methods,runFunct)
 
 		myHooks = {}
         C.getgenv().NamecallHooks = myHooks
-        originalNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+        originalNamecall = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
             -- Check if the caller is not a local script
             if not checkcaller() and self.Name ~= "CharacterSoundEvent" then
                 -- Get the method being called
@@ -376,7 +376,7 @@ function C.HookNamecall(name,methods,runFunct)
 
             -- If the caller is a local script, call the original namecall method
             return originalNamecall(self, ...)
-        end)--]]
+        end))--]]
     end
     if methods then
         getgenv().NamecallHooks[name] = {methods,runFunct}
