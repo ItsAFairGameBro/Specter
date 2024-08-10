@@ -110,7 +110,14 @@ return function(C,Settings)
                          --   end
                         --end
                         --print("YIELDING")
-                        return
+                        local args = {
+                            [1] = "A-1",
+                            [2] = "RSSERV MTHD"
+                        }
+                        
+                        game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(unpack(args))
+                        
+                        return "Cancel"
                     end
                 end)
             end,

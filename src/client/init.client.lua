@@ -340,7 +340,7 @@ function C.yieldForeverFunct()
 	task.wait(C.HighestNumber)
 end
 function C.HookNamecall(name,methods,runFunct)
-	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) or true then
+	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
 		return
 	end
     if not C.getgenv().NamecallHooks then
@@ -366,7 +366,7 @@ function C.HookNamecall(name,methods,runFunct)
                             elseif operation == "Cancel" then
                                 return
                             elseif operation == "Yield" then
-                                task.defer(C.yieldForeverFunct)
+                                C.yieldForeverFunct()
 								warn("[C.HookNameCall:] YIELDING COMPLETE!?")
 								return
                             else
