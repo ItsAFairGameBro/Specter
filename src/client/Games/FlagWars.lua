@@ -130,12 +130,14 @@ return function (C,Settings)
 				Layout = 4, Instances = {}, Functs={},
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
-                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(method,args)
-                        local event = args[1]
+                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(newSc,method,self,args)
+                        local event = self
+                        print(tostring(event))
                         if tostring(event) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest()
+                            print("CLosest",ClosestHead)
                             if ClosestHead then
-                                local dataTbl = args[3]
+                                local dataTbl = args[2]
                                 dataTbl["part"] = ClosestHead
                                 dataTbl["h"] = ClosestHead
     
