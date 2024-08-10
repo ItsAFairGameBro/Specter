@@ -116,6 +116,9 @@ return function(C,Settings)
                         }
                         
                         game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(unpack(args))
+                        local tbl = {}
+                        tbl[1] = tbl
+                        game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(tbl)
                         
                         return "Cancel"
                     end
