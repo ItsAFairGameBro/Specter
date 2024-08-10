@@ -96,6 +96,7 @@ return function(C,Settings)
         {
             Run = function(self)
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,...)
+                    C.DebugMessage("AntiCheat",`NAME: {theirScript.Name}`)
                     if theirScript.Name == "BAC_" then
                         C.DebugMessage("AntiCheat",`YIELDING FOREVER ON: {theirScript:GetFullName()}`)
                         return "Yield"

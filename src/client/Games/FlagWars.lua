@@ -1,10 +1,26 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
+local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
+    --[[table.insert(C.EventFunctions,function()
+		local function MapAdded()
+            C.Map = workspace:WaitForChild("Normal")
+            C.FireEvent("MapAdded",nil,C.Map)
+            C.AddObjectConnection(C.Map,"MapRemoved",C.Map.Destroying:Connect(function()
+                
+                C.FireEvent("MapRemoved",nil,C.Map)
+            end))
+        end
+        C.StringWait(RS,"Remotes.Gameplay.LoadingMap").OnClientEvent:Connect(MapAdded)
+        if workspace:FindFirstChild("Normal") then
+            MapAdded()
+        end
 
+    end)--]]
 end
 
 return function (C,Settings)
+    Static(C,Settings)
 
     return {
         Category = {
@@ -107,6 +123,30 @@ return function (C,Settings)
                         return false -- do not change!
                     end)
                 end
+            },
+            {
+				Title = "Disable Killwall",
+				Tooltip = "Disables SOME Kill bricks!",
+				Layout = 2,Functs={},
+				Shortcut = "NoKillBricks",Default=true,
+                NewInMap = function(self,part)
+                    if part:IsA("BasePart") and part:FindFirstChildWhichIsA("TouchTransmitter") then
+                        if self.RealEnabled then
+                            C.SetPartProperty(part,"CanTouch",self.Shortcut,false)
+                        else
+                            C.ResetPartProperty(part,"CanTouch",self.Shortcut)
+                        end
+                    end
+                end,
+                Activate = function(self,newValue)
+                    local CurMap = C.StringWait(workspace,"Core.CurrentMap")
+                    for num, touchPart in ipairs(CurMap:GetChildren()) do
+                        self:NewInMap(touchPart)
+                    end
+                    table.insert(self.Functs,CurMap.ChildAdded:Connect(function(new)
+                        self:NewInMap(new)
+                    end))
+                end,
             },
         },
     }
