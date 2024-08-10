@@ -107,7 +107,7 @@ return function(C,Settings)
                     end
                 end)
             end,
-            KeepGoing = false, RunOnce = true,
+            KeepGoing = false, RunOnce = false,
             GameIds = {1160789089}, PlaceIds = {},
         },
     }
