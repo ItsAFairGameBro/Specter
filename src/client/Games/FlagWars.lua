@@ -37,7 +37,7 @@ return function (C,Settings)
                             C.ResetPartProperty(val,"Value","WeaponStats")
                         end
                     end
-                    local config = newTool:FindFirstChild("Configuration")
+                    local config = newTool:WaitForChild("Configuration",10)
                     if not config or not newTool:IsA("Tool") then
                         return
                     end
@@ -59,7 +59,7 @@ return function (C,Settings)
                 end,
 				Activate = function(self,newValue)
                     for num, tool in ipairs(C.plr:WaitForChild("Backpack"):GetChildren()) do
-                        self:NewInstance(tool)
+                        task.spawn(self.NewInstance,self,tool)
                     end
                 end,
                 Events = {
