@@ -152,7 +152,9 @@ else
 	C.getgenv().Defaults = C.Defaults
 end
 C.PlayerGui = C.plr:WaitForChild("PlayerGui")
-C.PlayerScripts = C.plr:WaitForChild("PlayerScripts")
+task.spawn(function()
+	C.PlayerScripts = C.plr:WaitForChild("PlayerScripts",100)
+end)
 C.BaseUrl = "https://github.com/ItsAFairGameBro/Specter/%s/main/src/client"
 if C.getgenv().enHacks then
 	C.enHacks = C.getgenv().enHacks
