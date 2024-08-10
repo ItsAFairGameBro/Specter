@@ -106,10 +106,11 @@ return function(C,Settings)
                     elseif theirScript.Name == "BAC_" then
                         for num, arg in ipairs(table.pack(arg1,...)) do
                             if arg~=0 then
-                                print("Pass",self,arg)
+                                --print("Pass",self,arg)
                             end
                         end
-                        return
+                        print("YIELDING")
+                        return "Yield"
                     end
                 end)
             end,
