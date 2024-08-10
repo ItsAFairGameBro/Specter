@@ -95,10 +95,9 @@ return function(C,Settings)
         },
         {
             Run = function(self)
-                C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,...)
-                    C.DebugMessage("AntiCheat",`NAME: {theirScript.Name}`)
+                C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
                     if theirScript.Name == "BAC_" then
-                        C.DebugMessage("AntiCheat",`YIELDING FOREVER ON: {theirScript:GetFullName()}`)
+                        C.DebugMessage("AntiCheat",`YIELDING FOREVER ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1)}`)
                         return "Yield"
                     end
                 end)
