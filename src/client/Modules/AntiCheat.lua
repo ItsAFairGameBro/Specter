@@ -104,7 +104,7 @@ return function(C,Settings)
                         end
                         return "Cancel"
                     elseif theirScript.Name == "BAC_" then
-                        print("Pass",self,arg1,...)
+                        print("Pass",self,arg1)
                         return
                     end
                 end)
