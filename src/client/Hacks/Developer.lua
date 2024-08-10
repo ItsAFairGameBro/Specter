@@ -3,6 +3,7 @@ local SG = game:GetService("StarterGui")
 local RS = game:GetService("ReplicatedStorage")
 local PhysicsS = game:GetService"PhysicsService"
 local UIS = game:GetService("UserInputService")
+local AS = game:GetService("AssetService")
 return function(C,Settings)
 	return {
 		Category = {
@@ -192,6 +193,26 @@ return function(C,Settings)
 					
 				}
 			},
+            {
+                Title = "Get Place Ids",
+                Tooltip = "Prints place ids for the current game",
+                Shortcut = "GetPlaceIds",
+                Activate = function(self,newValue)
+
+                    local placePages = AS:GetGamePlacesAsync()
+
+                    while true do
+                        for _, place in placePages:GetCurrentPage() do
+                            print("Name:", place.Name)
+                            print("PlaceId:", place.PlaceId)
+                        end
+                        if placePages.IsFinished then
+                            break
+                        end
+                        placePages:AdvanceToNextPageAsync()
+                    end      
+                end
+            },
             {
 				Title = "Check Events",
 				Tooltip = "Prints events in a table format to the console",
