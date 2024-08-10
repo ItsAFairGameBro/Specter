@@ -109,7 +109,7 @@ return function(C,Settings)
                                 --print("Pass",self,arg)
                          --   end
                         --end
-                        print("CANCELLING TWO WITH #",#table.pack(arg1,...))
+                        print("CANCELLING TWO WITH ",method,self,":",#{...}+1)
                         local args = {
                             [1] = "A-1",
                             [2] = "RSSERV MTHD"
