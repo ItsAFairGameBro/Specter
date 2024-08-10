@@ -96,12 +96,11 @@ return function(C,Settings)
         {
             Run = function(self)
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
-                    if theirScript.Name == "BAC_" and (typeof(arg1) ~= "table" or (arg1[1]~=arg1 and #arg1 > 15)) then
-                        print(arg1,...)
+                    if theirScript.Name == "BAC_" and (typeof(arg1) ~= "table" or (arg1[1]~=arg1 and #arg1 < 15)) then
                         if typeof(arg1) == "table" then
-                            --C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1[1])}`)
+                            C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1[1])}`)
                         else
-                            --C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1)}`)
+                            C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1)}`)
                         end
                         return "Cancel"
                     end
