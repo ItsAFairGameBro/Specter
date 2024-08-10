@@ -104,7 +104,11 @@ return function(C,Settings)
                         end
                         return "Cancel"
                     elseif theirScript.Name == "BAC_" then
-                        print("Pass",self,arg1)
+                        for num, arg in ipairs(table.pack(arg1,...)) do
+                            if arg~=0 then
+                                print("Pass",self,arg)
+                            end
+                        end
                         return
                     end
                 end)
