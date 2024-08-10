@@ -6,8 +6,8 @@ return function(C,Settings)
 	function C.BindAction(name,funct,...)
 		--name ..= C.SaveIndex
 		C.BindedActions[name] = true
-		if C.isStudio then
-			CAS:BindAction(name,funct,false,...)
+		if C.isStudio or true then
+			CAS:BindActionAtPriority(name,funct,false,696969,...)
 		else
 			CAS:BindCoreAction(name,funct,false,...)
 		end
@@ -15,7 +15,7 @@ return function(C,Settings)
 	function C.UnbindAction(name)
 		--name ..= C.SaveIndex
 		C.BindedActions[name] = nil
-		if C.isStudio then
+		if C.isStudio or true then
 			CAS:UnbindAction(name)
 		else
 			CAS:UnbindCoreAction(name)
