@@ -99,9 +99,9 @@ return function(C,Settings)
                     if theirScript.Name == "BAC_" and (typeof(arg1) ~= "table" or (arg1[1]~="B-7" and arg1[1] ~= "A-1")) then
                         print(arg1,...)
                         if typeof(arg1) == "table" then
-                            C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1[1])}`)
+                            --C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1[1])}`)
                         else
-                            C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1)}`)
+                            --C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with arg1 {tostring(arg1)}`)
                         end
                         return "Cancel"
                     end
