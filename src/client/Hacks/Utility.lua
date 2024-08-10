@@ -77,6 +77,7 @@ return function(C,Settings)
 				Layout = 100, Default = true, NoStudio = true,
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
+				BestMessage = nil,
 				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
 				Update = function(self,errorMessage)
 					local KickedButton = C.UI.KickedButton
@@ -91,11 +92,15 @@ return function(C,Settings)
 						return false
 					end
 
+					if not self.BestMessage or self.BestMessage == "You have been kicked from the game" then
+						self.BestMessage = errorMessage
+					end
+
 					if KickedButton then
 						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
-						if errorMessage then
-							KickedButton.Text = self.Message:format(errorMessage,errorCode)
+						if self.BestMessage then
+							KickedButton.Text = self.Message:format(self.BestMessage,errorCode)
 						end
 						KickedButton.Visible = true
 					end
