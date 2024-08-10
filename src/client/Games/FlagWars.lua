@@ -64,7 +64,7 @@ return function (C,Settings)
                 end,
                 Events = {
                     MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-                        table.insert(self.Functs,theirPlr:WaitForChild("Backpack"):Connect(function(newTool)
+                        table.insert(self.Functs,theirPlr:WaitForChild("Backpack").ChildAdded:Connect(function(newTool)
                             self:NewInstance(newTool)
                         end))
                         task.delay(.5,self.Activate,self)
