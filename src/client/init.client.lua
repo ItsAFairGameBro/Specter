@@ -19,7 +19,7 @@ local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {f
 
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
-	if not enExecutor.firetouchinterest then
+	if not enExecutor.firetouchinterest or not firetouchinterest then
 		
 		firetouchinterest = function(part1,part2,number)--creates a fake touch function
 			local thread
@@ -95,10 +95,10 @@ local function RegisterFunctions()
 		for i = 1, Amount or 1 do
 			ProximityPrompt:InputHoldBegin()
 			if Skip then
-				local Start = time()
+				local Start = os.clock()
 				repeat
 					RunS.Heartbeat:Wait()
-				until time() - Start > HoldDuration
+				until os.clock() - Start > HoldDuration
 			end
 			ProximityPrompt:InputHoldEnd()
 		end
@@ -338,13 +338,17 @@ local originalNamecall = nil
 local getgenv = getgenv
 local myHooks
 function C.yieldForeverFunct()
-	task.wait(C.HighestNumber)
+	--task.wait(C.HighestNumber)
+	while true do
+		coroutine.yield()--Yields the thread forever
+	end
 end
 function C.HookNamecall(name,methods,runFunct)
 	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
 		return
 	end
     if not C.getgenv().NamecallHooks then
+		warn("STARTING HOOKNAMECALL (should only happen once)")
         -- Hook the namecall function
 		local checkcaller = C.checkcaller
         local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack

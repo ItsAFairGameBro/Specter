@@ -109,17 +109,22 @@ return function(C,Settings)
                                 --print("Pass",self,arg)
                          --   end
                         --end
-                        print("CANCELLING TWO WITH ",method,self,":",#{...}+1)
-                        local args = {
-                            [1] = "A-1",
-                            [2] = "RSSERV MTHD"
-                        }
                         
-                        game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(unpack(args))
-                        local tbl = {}
-                        tbl[1] = tbl
-                        game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(tbl)
                         
+                        if arg1 == 0 then
+                            return -- Run it
+                        else
+                            print("CANCELLING TWO WITH ",method,self,":",#{...}+1)
+                            local args = {
+                                [1] = "A-1",
+                                [2] = "RSSERV MTHD"
+                            }
+                            
+                            game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(unpack(args))
+                            local tbl = {}
+                            tbl[1] = tbl
+                            game:GetService("ReplicatedStorage").Events.AntiCheatRemotes.NewMessage:FireServer(tbl)
+                        end
                         return "Cancel"
                     end
                 end)
