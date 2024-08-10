@@ -93,6 +93,18 @@ return function(C,Settings)
             GameIds = {3150475059},
             PlaceIds = {},
         },
+        {
+            Run = function(self)
+                C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,...)
+                    if theirScript.Name == "BAC_" then
+                        C.DebugMessage("AntiCheat",`YIELDING FOREVER ON: {theirScript:GetFullName()}`)
+                        return "Yield"
+                    end
+                end)
+            end,
+            KeepGoing = false, RunOnce = true,
+            GameIds = {1160789089}, PlaceIds = {},
+        },
     }
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then

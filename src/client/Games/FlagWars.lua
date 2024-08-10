@@ -75,10 +75,10 @@ return function (C,Settings)
                 },
             },
             {
-				Title = "Weapon Stats",
-				Tooltip = "Creates infinite ammo, firerate, and accuracy hack; re-equip on enable/disable",
-				Layout = 0, Instances = {}, Functs={},
-				Shortcut = "WeaponStats",Default=true,
+				Title = "Close Hit",
+				Tooltip = "Hits the closest user",
+				Layout = 1, Instances = {}, Functs={},
+				Shortcut = "ClosestHit",Default=true,
             },
         },
     }
