@@ -36,7 +36,8 @@ return function(C,Settings)
 			return fullStr .. string.rep("\t", depth) .. input
 		end
 		
-		local function recurseLoopPrint(leftTbl, str, depth, index)
+		local function recurseLoopPrint(leftTbl, str, depth, index, warnings)
+			warnings = warnings or {}
 			index = (index or 0)
 			str = str or ""
 			depth = (depth or -1) + 1
@@ -46,6 +47,13 @@ return function(C,Settings)
 			local addBrackets = not isDict
 		
 			for num, val in pairs(leftTbl) do
+				if not isDict and num < totalValues-30 then
+					if not warnings.MaxLimit then
+						addToString("(Maximum Limit Of 30; Only Displaying Last Values)",depth)
+						warnings.MaxLimit = true
+					end
+					continue
+				end
 				index += 1
 		
 				local isTable = typeof(val) == "table"
@@ -55,7 +63,7 @@ return function(C,Settings)
 					else
 						str ..= addToString("{", depth, true)
 					end
-					str ..= (val == leftTbl and addToString("<self parent loop>", depth)) or recurseLoopPrint(val, "", depth, index)
+					str ..= (val == leftTbl and addToString("<self parent loop>", depth)) or recurseLoopPrint(val, "", depth, index, warnings)
 					str ..= addToString("},", depth)
 				else
 					if depth ~= 0 then
