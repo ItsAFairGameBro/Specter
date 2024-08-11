@@ -408,7 +408,7 @@ function C.HookMethod(hook, name, runFunct, methods)
             end
 			return OriginFunct(self,...)
 		end
-        OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(game, hook, (CallFunction)))
+        OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(game, hook, C.newcclosure(CallFunction)))
 			or (HookType == "hookfunction" and C.hookfunction(hook, (CallFunction)))
 	end
 	if runFunct then
