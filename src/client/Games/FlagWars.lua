@@ -130,8 +130,9 @@ return function (C,Settings)
 				Layout = 4, Instances = {}, Functs={},
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
+                    local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblPack = table.pack
-                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(newSc,method,self,arg1,arg2,arg3)
+                    C.HookNamecall(self.Shortcut,event.FireServer,newValue and function(newSc,method,self,arg1,arg2,arg3)
                         local event = self
                         if tostring(event) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest()

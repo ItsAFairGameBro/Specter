@@ -336,7 +336,6 @@ end
 --Load hooks immediately
 local originalNamecall = nil
 local getgenv = getgenv
-local myHooks
 function C.yieldForeverFunct()
 	--task.wait(C.HighestNumber)
 	while true do
@@ -344,6 +343,7 @@ function C.yieldForeverFunct()
 	end
 end
 function C.HookNamecall(name,methods,runFunct)
+	error"SHOULDN't be running"
 	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
 		return
 	end
@@ -353,7 +353,7 @@ function C.HookNamecall(name,methods,runFunct)
 		local checkcaller = C.checkcaller
         local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
 
-		myHooks = {}
+		local myHooks = {}
         C.getgenv().NamecallHooks = myHooks
         originalNamecall = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
             -- Check if the caller is not a local script
@@ -387,9 +387,56 @@ function C.HookNamecall(name,methods,runFunct)
         end))--]]
     end
     if methods then
-        getgenv().NamecallHooks[name] = {methods,runFunct}
+        C.getgenv().NamecallHooks[name] = {methods,runFunct}
     else
-        getgenv().NamecallHooks[name] = nil
+        C.getgenv().NamecallHooks[name] = nil
+    end
+end
+function C.HookFunction(name,orgFunct,runFunct)
+	C.getgenv().FunctionHooks = C.getgenv().FunctionHooks or {}
+	if C.isStudio or (not C.getgenv().FunctionHooks[orgFunct] and not runFunct) then
+		return
+	end
+    if not C.getgenv().FunctionHooks[orgFunct] then
+		warn("STARTING FUNCTIONCALL FOR FUNCT (should only happen once per function)")
+        -- Hook the namecall function
+		local checkcaller = C.checkcaller
+        local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
+
+		local myHooks = {}
+        C.getgenv().FunctionHooks[orgFunct] = myHooks
+        originalNamecall = C.hookfunction(orgFunct, function(self, ...)
+            -- Check if the caller is not a local script
+            if not checkcaller() then
+                -- Get the method being called
+                local theirScript = getcallingscript()
+                -- Block FireServer or InvokeServer methods
+                for name, list in pairs(myHooks) do
+					local operation,returnData = list[1](theirScript,self,...)
+					if operation then
+						if operation == "Override" then
+							return tblUnpack(returnData)
+						elseif operation == "Cancel" then
+							return
+						elseif operation == "Yield" then
+							C.yieldForeverFunct()
+							warn("[C.HookFunction:] YIELDING COMPLETE!?")
+							return
+						else
+							warn(`[C.HookFunction]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
+						end
+                    end
+                end
+            end
+
+            -- If the caller is a local script, call the original namecall method
+            return originalNamecall(self, ...)
+        end)--]]
+    end
+    if runFunct then
+        C.getgenv().FunctionHooks[orgFunct][name] = {runFunct}
+    else
+        C.getgenv().FunctionHooks[orgFunct][name] = nil
     end
 end
 

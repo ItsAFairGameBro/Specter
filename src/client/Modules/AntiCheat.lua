@@ -96,8 +96,6 @@ return function(C,Settings)
         },
         {
             Run = function(self)
-                task.wait(30-time())
-                print("Thirty Seconds Starting...")
                 local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
                     if true then
@@ -131,7 +129,7 @@ return function(C,Settings)
                 end)
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {1160789089}, PlaceIds = {},
+            GameIds = {},PlaceIds={},--{1160789089}, PlaceIds = {},
         },
     }
     for num, cheatTbl in ipairs(AntiCheat) do
