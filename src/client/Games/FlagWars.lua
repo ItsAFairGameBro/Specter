@@ -105,6 +105,7 @@ return function (C,Settings)
                             local ClosestHead, Distance = game.Players.SuitedForBans9.Character.Head,0 --C.getClosest()
                             if ClosestHead then
                                 --local dataTbl = arg2
+                                arg2 = table.clone(arg2)
                                 arg2["part"] = ClosestHead
                                 arg2["h"] = ClosestHead
 
