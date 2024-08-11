@@ -47,7 +47,7 @@ return function(C,Settings)
 			local addBrackets = not isDict
 		
 			for num, val in pairs(leftTbl) do
-				if not isDict and num < totalValues-30 then
+				if totalValues > 0 and num < totalValues-30 then
 					if not warnings.MaxLimit then
 						str ..= addToString("(Maximum Limit Of 30; Only Displaying Last Values)",depth)
 						warnings.MaxLimit = true
