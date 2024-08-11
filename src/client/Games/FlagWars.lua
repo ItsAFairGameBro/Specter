@@ -99,7 +99,7 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblPack = table.pack
-                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
                             if ClosestHead then--and Distance < 50 then
@@ -117,9 +117,7 @@ return function (C,Settings)
 
                                 --dataTbl[""] = ClosestHead
 
-                                task.delay(1,print,ClosestHead)
-
-                                return "Override", tblPack(arg1,arg2)
+                                return "Override", tblPack(arg1,arg2,...)
                             else
                                 task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
