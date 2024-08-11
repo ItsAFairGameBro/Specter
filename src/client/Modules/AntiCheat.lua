@@ -96,6 +96,7 @@ return function(C,Settings)
         },
         {
             Run = function(self)
+                task.wait(10 - time())
                 --[[local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
                     if true then
@@ -130,7 +131,7 @@ return function(C,Settings)
 
                 C.HookMethod(getrenv().task.spawn,"AntiCheat5", (function(theirScript,method,funct,...)
                     local Args = table.pack(...)
-                    if not theirScript.Parent then
+                    if not theirScript.Parent or theirScript.Name == "BAC_" then
                         print("YIELDING ON ",theirScript,"!")
                         return "Yield"
                     end
@@ -138,7 +139,7 @@ return function(C,Settings)
                 C.HookMethod("__namecall","AntiCheat5",function(theirScript,method,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
-                        print("BLOCKING NAMECALL",theirScript,self,...)
+                        print("BLOCKING NAMECALL",theirScript,self)
                         return "Cancel"
                     end
                 end,{"fireserver"})
