@@ -386,7 +386,8 @@ function C.HookMethod(hook, name, runFunct, methods)
 								if hook == "__index" then
 									print("Returning Special C.yieldForeverFunct")
 									return function()
-										coroutine.yield()
+										print("Running Special yieldForever")
+										while true do coroutine.yield() end
 									end
 								else
 									return C.yieldForeverFunct()
