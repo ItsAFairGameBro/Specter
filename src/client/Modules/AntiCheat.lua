@@ -96,9 +96,11 @@ return function(C,Settings)
         },
         {
             Run = function(self)
+                task.wait(30-time())
+                print("Thirty Seconds Starting...")
                 local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
-                if (not theirScript.Parent or theirScript.Name == "BAC_") and (typeof(arg1) ~= "table" and (arg1[1]~=arg1)) and arg1 ~= 0 then--(arg1[1]~=arg1)) then --and arg1 ~= 0 then
+                    if (not theirScript.Parent or theirScript.Name == "BAC_") and (typeof(arg1) ~= "table" and (arg1[1]~=arg1)) and arg1 ~= 0 then--(arg1[1]~=arg1)) then --and arg1 ~= 0 then
                         if typeof(arg1) == "table" then
                             --C.DebugMessage("AntiCheat",`CANCELLING ON: {theirScript:GetFullName()} because it tried sending method {self.Name} with table arg1 index 1={tostring(arg1[1])}`)
                         else
@@ -116,13 +118,10 @@ return function(C,Settings)
                         if arg1 == 0 then
                             return -- Run it
                         else
-                            local args = {...}
-                            print("CANCELLING TWO WITH ",method,self,":",#args+1,args[1])
+                            local argCount = (arg1~=nil and 1 or 0) + #({...})
+                            print("CANCELLING TWO WITH ",method,self,"argcount:",argCount,"arg1:",arg1[1])
                             
                             task.defer(NewMessage.FireServer,NewMessage,"A-1","RSSERV MTHD")
-                            local tbl = {}
-                            tbl[1] = tbl
-                            task.defer(NewMessage.FireServer,NewMessage,tbl)
                         end
                         return "Cancel"
                     end

@@ -94,6 +94,7 @@ return function(C,Settings)
 
 					if not self.BestMessage or self.BestMessage == "You have been kicked from the game" then
 						self.BestMessage = errorMessage
+						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
 					end
 
 					if KickedButton then
@@ -108,7 +109,6 @@ return function(C,Settings)
 						--print(#getconnections(game:GetService("ScriptContext").Error))
 				--end)
 					-- Debug.Traceback doesn't work for this:
-					print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
 					task.delay(1,GS.ClearError,GS)
 					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 					return true
