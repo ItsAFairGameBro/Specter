@@ -139,14 +139,14 @@ return function(C,Settings)
                 C.HookMethod("__namecall","AntiCheat5",function(theirScript,method,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
-                        print("BLOCKING NAMECALL",theirScript,self)
-                        return "Cancel"
+                        print("YIELDING NAMECALL",theirScript,self)
+                        return "Yield"
                     end
                 end,{"fireserver"})
                 C.HookMethod("__index","AntiCheat5",function(theirScript,index,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
-                        print("BLOCKING INDEXCALL",theirScript,self,index)
+                        print("YIELDING INDEXCALL",theirScript,self,index)
                         return "Yield"
                     end
                 end,{"fireserver"})
