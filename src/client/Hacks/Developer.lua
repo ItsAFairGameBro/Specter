@@ -214,6 +214,7 @@ return function(C,Settings)
             {
                 Title = "Get Place Ids",Type="NoToggle",
                 Tooltip = "Prints place ids for the current game",
+                Layout=6,
                 Shortcut = "GetPlaceIds",
                 Activate = function(self,newValue)
 
