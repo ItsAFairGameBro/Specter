@@ -131,21 +131,21 @@ return function(C,Settings)
                 C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", (function(theirScript,method,funct,...)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
-                        print("YIELDING ON ",theirScript,"!")
+                        task.spawn(C.DebugMessage,"AntiCheat",`TASK SPAWN YIELD ON SCR: {theirScript:GetFullName()}!`)
                         return "Yield"
                     end
                 end))
                 C.HookMethod("__namecall","AntiCheat5",function(theirScript,method,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
-                        print("YIELDING NAMECALL",theirScript,self)
+                        task.spawn(C.DebugMessage,"AntiCheat",`YIELDING NAMECALL FOR SCR: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()}`)
                         return "Yield"
                     end
                 end,{"fireserver"})
                 C.HookMethod("__index","AntiCheat5",function(theirScript,index,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
-                        print("YIELDING INDEXCALL",theirScript,self,index)
+                        task.spawn(C.DebugMessage,"AntiCheat",`YIELDING INDEXCALL: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()} INDEX: {index}`)
                         return "Yield"
                     end
                 end,{"fireserver"})
