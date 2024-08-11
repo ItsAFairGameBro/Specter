@@ -378,8 +378,10 @@ function C.HookMethod(hook, name, runFunct, methods)
                     if not list[2] or tblFind(list[2],method) then -- Authorization
                         local operation,returnData = list[3](theirScript,method,self,...)
                         if operation then
-                            if operation == "Override" then
+                            if operation == "Spoof" then
                                 return tblUnpack(returnData)
+							elseif operation == "Override" then
+								return OriginFunct(tblUnpack(returnData))
                             elseif operation == "Cancel" then
                                 return -- Cancelled
                             elseif operation == "Yield" then
