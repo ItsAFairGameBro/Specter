@@ -241,6 +241,12 @@ return function(C,Settings)
 		
 		return success, result
 	end
+	--Destroy Handler
+	function C.ClearTagTraces(tagName:string)
+		for num, tagInstance in ipairs(CS:GetTagged(tagName)) do
+			tagInstance:RemoveTag(tagName)
+		end
+	end
 	--Destroy Function
 	function C:Destroy()
 		assert(C==self, "C is not the called function")
@@ -277,8 +283,9 @@ return function(C,Settings)
 				if hackTbl.ClearData then -- This function is empty when the game has not loaded!
 					hackTbl:ClearData()
 				end
+				local ShouldDoRunOnDestroy = hackTbl.RunOnDestroy and hackTbl.RealEnabled
 				hackTbl.Enabled, hackTbl.RealEnabled = false, false -- disable their enabled states!
-				if hackTbl.RunOnDestroy and hackTbl.RealEnabled then
+				if ShouldDoRunOnDestroy then
 					RunOnDestroy(hackTbl,"HackTBL: " .. hackTbl.Shortcut)
 				end
 			end

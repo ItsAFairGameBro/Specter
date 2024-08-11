@@ -257,7 +257,8 @@ return function(C,Settings)
 					end
 				end,
 				RunOnDestroy=function(self)
-					self:UndoTransmitters(self.RealEnabled,true)
+					C.ClearTagTraces("TouchDisabled")
+					print("Tags Cleared!")
 				end,
 				ApplyTransmitters=function(self,instance)
 					if instance:IsA("TouchTransmitter") and instance.Parent and instance.Parent.Parent then
