@@ -99,29 +99,32 @@ return function (C,Settings)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblPack = table.pack
                     C.HookFunction(self.Shortcut,event.FireServer,newValue and function(newSc,self,arg1,arg2,arg3)
-                        print("Run",self)
-                        local event = self
-                        local ClosestHead, Distance = C.getClosest()
-                        if ClosestHead then
-                            local dataTbl = arg2
-                            dataTbl["part"] = ClosestHead
-                            dataTbl["h"] = ClosestHead
+                        if event.Name == "WeaponHit" then
+                            print("Run",self)
+                            local event = self
+                            local ClosestHead, Distance = C.getClosest()
+                            if ClosestHead then
+                                local dataTbl = arg2
+                                dataTbl["part"] = ClosestHead
+                                dataTbl["h"] = ClosestHead
 
-                            --[[dataTbl["p"] = ClosestHead.Position
-                            dataTbl["d"] = Distance
-                            dataTbl["m"] = ClosestHead.Material
-                            dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
-                            dataTbl["maxDist"] = Distance + .3
-                            dataTbl["t"] = 1--]]
+                                --[[dataTbl["p"] = ClosestHead.Position
+                                dataTbl["d"] = Distance
+                                dataTbl["m"] = ClosestHead.Material
+                                dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
+                                dataTbl["maxDist"] = Distance + .3
+                                dataTbl["t"] = 1--]]
 
-                            --dataTbl[""] = ClosestHead
-                            --print("DataTbl",dataTbl)
-                            print("Override")
-                            return "Override", tblPack(arg1,arg2,arg3)
-                        else
-                            print("Cancel")
-                            return "Cancel"--do nothing lol, don't kill yaself!
+                                --dataTbl[""] = ClosestHead
+                                --print("DataTbl",dataTbl)
+                                print("Override")
+                                return "Override", tblPack(arg1,arg2,arg3)
+                            else
+                                print("Cancel")
+                                return "Cancel"--do nothing lol, don't kill yaself!
+                            end
                         end
+                        
                     end)
                 end
             },
