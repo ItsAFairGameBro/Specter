@@ -382,6 +382,7 @@ function C.HookMethod(hook, name, runFunct, methods)
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
 							elseif operation == "Override" then
+								task.delay(.5,print,returnData)
 								return OriginFunct(self,tblUnpack(returnData))
 							elseif operation == "FireSeperate" then
 								return task.delay(.1,self[method],self,tblUnpack(returnData))
