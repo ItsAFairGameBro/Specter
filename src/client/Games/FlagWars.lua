@@ -103,6 +103,7 @@ return function (C,Settings)
                         if tostring(self) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
                             if ClosestHead then--and Distance < 50 then
+                                arg2 = table.clone(arg2)
                                 arg2["part"] = ClosestHead
                                 arg2["p"] = ClosestHead.Position
                                 arg2["h"] = ClosestHead
