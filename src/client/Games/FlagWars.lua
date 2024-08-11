@@ -52,6 +52,7 @@ return function (C,Settings)
                             return
                         end
                         if self.RealEnabled then
+                            print("Set",name)
                             C.SetPartProperty(val,"Value",self.Shortcut,newValue,true)
                         else
                             C.ResetPartProperty(val,"Value",self.Shortcut)
