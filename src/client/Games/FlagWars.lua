@@ -42,7 +42,7 @@ return function (C,Settings)
                     end
                     local function SetStat(config,name,newValue,doInsert)
                         local val = config:FindFirstChild(name)
-                        if not val and doInsert then
+                        if not val and doInsert and self.RealEnabled then
                             val = Instance.new((typeof(newValue)=="string" and "StringValue")
                                 or (typeof(newValue)=="boolean" and "BoolValue")
                                 or (typeof(newValue)=="number" and "NumberValue"), config)
