@@ -96,7 +96,6 @@ return function(C,Settings)
         },
         {
             Run = function(self)
-                task.wait(10 - time())
                 --[[local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
                     if true then

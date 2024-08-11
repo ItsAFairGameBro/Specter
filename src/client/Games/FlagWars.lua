@@ -96,12 +96,9 @@ return function (C,Settings)
 				Layout = 4, Instances = {}, Functs={},
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
-                    if true then
-                        return
-                    end
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblPack = table.pack
-                    C.HookFunction(self.Shortcut,event.FireServer,newValue and function(newSc,self,arg1,arg2,arg3)
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,arg3)
                         if tostring(self) == "WeaponHit" then
                             print("HitHack","Run",self)
                             local event = self
@@ -128,7 +125,7 @@ return function (C,Settings)
                             end
                         end
                         
-                    end)
+                    end,{"fireserver"})
                 end
             },
             {
