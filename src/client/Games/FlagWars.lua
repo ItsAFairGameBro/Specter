@@ -122,7 +122,7 @@ return function (C,Settings)
                                     firstPrint = true
                                     print(arg2)
                                 end
-                                print("Override",ClosestHead)
+                                print("Override",tblPack(self,arg1,arg2,arg3))
                                 return "Override", tblPack(self,arg1,arg2,arg3)
                             else
                                 print("Cancel")
