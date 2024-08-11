@@ -147,7 +147,7 @@ return function(C,Settings)
                         end
                     end
                     C.HookMethod("__namecall",self.Shortcut,function(theirScript,method,self,...)
-                        print(`[Outbound Remote Spy]: {theirScript} on {self.Name}:{method}({tostring(...)})`)
+                        print(`[Outbound Remote Spy]: "{theirScript}" on {self.Name}:{method}() w/ args:`,...)
                     end,{"fireserver","invokeserver"})
                 end,
             },
