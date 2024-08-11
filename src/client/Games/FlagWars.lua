@@ -119,7 +119,7 @@ return function (C,Settings)
 
                                 --task.delay(.1,self.FireServer,self,arg1,arg2,...)
 
-                                return "Override", arg1,arg2,...
+                                return "Override", {arg1,arg2,...}
                             else
                                 task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
