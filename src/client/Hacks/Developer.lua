@@ -136,20 +136,35 @@ return function(C,Settings)
 				Layout = 12,Functs={},
 				Shortcut = "PrintRemoteSpy",
                 Activate = function(self,newValue)
-                    if not newValue then
-                        return--get outta here
-                    end
-                    for num, event in ipairs(C.getinstances()) do
-                        if event:IsA("RemoteEvent") then
-                            table.insert(self.Functs,event.OnClientEvent:Connect(function(...)
-                                print(`[Inbound Remote Spy]: {event:GetFullName()}`,...)
-                            end))
+                    if newValue and self.EnTbl.Inbound then
+                        for num, event in ipairs(C.getinstances()) do
+                            if event:IsA("RemoteEvent") then
+                                table.insert(self.Functs,event.OnClientEvent:Connect(function(...)
+                                    print(`[Inbound Remote Spy]: {event:GetFullName()}`,...)
+                                end))
+                            end
                         end
                     end
-                    C.HookMethod("__namecall",self.Shortcut,function(theirScript,method,self,...)
+                    C.HookMethod("__namecall",self.Shortcut,newValue and self.EnTbl.Outbound and function(theirScript,method,self,...)
                         print(`[Outbound Remote Spy]: "{theirScript}" on {self.Name}:{method}() w/ args:`,...)
                     end,{"fireserver","invokeserver"})
                 end,
+                Options = {
+                    {
+						Type = Types.Toggle,
+						Title = "Inbound",
+						Tooltip = "Tracks all requests coming TO the client (RemoteEvents)! Warning: DOES NOT TRACK REMOTE FUNCTIONS",
+						Layout = 1,Default=true,
+						Shortcut="Inbound",
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Outbound",
+						Tooltip = "Tracks all requests going TO the server (RemoteEvents/RemoteFunctions)!",
+						Layout = 2,Default=true,
+						Shortcut="Outbound",
+					},
+                },
             },
             {
 				Title = "Find Game Scripts",

@@ -2,7 +2,22 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="Use
 
 local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
-    --[[table.insert(C.EventFunctions,function()
+    function C.getClosestDirt(location: Vector3)
+        local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
+        if not myHRPPos then return end
+    
+        local selDirt, maxDist = nil, math.huge
+        for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
+            if part:IsA("BasePart") then
+                local d = (part.Position - myHRPPos).Magnitude
+                if d < maxDist then
+                    selDirt, maxDist = part, d
+                end
+            end
+        end
+        return selDirt, maxDist
+    end
+    table.insert(C.EventFunctions,function()
 		local function MapAdded()
             C.Map = workspace:WaitForChild("Normal")
             C.FireEvent("MapAdded",nil,C.Map)
