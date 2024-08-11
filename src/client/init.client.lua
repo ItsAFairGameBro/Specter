@@ -341,8 +341,66 @@ function C.yieldForeverFunct()
 	while true do
 		coroutine.yield()--Yields the thread forever
 	end
+
+	warn(debug.traceback(`YIELDING COMPLETE!? THIS IS NOT SUPPOSED TO HAPPEN. PLEASE CHECCK C.yieldForeverFunct`))
 end
-function C.HookNamecall(name,methods,runFunct)
+C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
+function C.HookMethod(hook, name, runFunct, methods)
+	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
+		return
+	end
+	if not C.getgenv().SavedHookData[hook] then
+		-- Hook the namecall function
+		local checkcaller = C.checkcaller
+		local gsub = string.gsub
+		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
+
+		local myHooks = {}
+		C.getgenv().SavedHookData[hook] = myHooks
+
+		local HookType = (typeof(hook)=="string" and "hookmetamethod") or
+			(typeof(hook)=="function" and "hookfunction")
+
+		assert(hookfunction,`[C.HookMethod]: Unknown HookType: {hook}!`)
+
+		local OriginFunct
+		local function CallFunction(self,...)
+			 -- Check if the caller is not a local script
+			 if not checkcaller() then
+                -- Get the method being called
+                local method = HookType=="__namecall" and gsub(lower(getnamecallmethod()), "\000.*", "") or ... -- Remove trailing characters, so no shananigans
+                local theirScript = getcallingscript()
+                -- Block FireServer or InvokeServer methods
+                for name, list in pairs(myHooks) do
+                    if not list[2] or tblFind(list[2],method) then -- Authorization
+                        local operation,returnData = list[3](theirScript,method,self,...)
+                        if operation then
+                            if operation == "Override" then
+                                return tblUnpack(returnData)
+                            elseif operation == "Cancel" then
+                                return
+                            elseif operation == "Yield" then
+                                C.yieldForeverFunct()
+								return
+                            else
+                                warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
+                            end
+                        end
+                    end
+                end
+            end
+			return OriginFunct(self,...)
+		end
+        OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(game, hook, newcclosure(CallFunction)))
+			or (HookType == "hookfunction" and C.hookfunction(hook, newcclosure(CallFunction)))
+	end
+	if runFunct then
+		C.getgenv().SavedHookData[hook][name] = {name,methods,runFunct}
+	else
+		C.getgenv().SavedHookData[hook][name] = nil
+	end
+end
+--[[function C.HookNamecall(name,methods,runFunct)
 	error"SHOULDN't be running"
 	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
 		return
@@ -384,7 +442,7 @@ function C.HookNamecall(name,methods,runFunct)
 
             -- If the caller is a local script, call the original namecall method
             return originalNamecall(self, ...)
-        end))--]]
+        end))
     end
     if methods then
         C.getgenv().NamecallHooks[name] = {methods,runFunct}
@@ -431,14 +489,14 @@ function C.HookFunction(name,orgFunct,runFunct)
 
             -- If the caller is a local script, call the original namecall method
             return originalNamecall(self, ...)
-        end)--]]
+        end)
     end
     if runFunct then
         C.getgenv().FunctionHooks[orgFunct][name] = {runFunct}
     else
         C.getgenv().FunctionHooks[orgFunct][name] = nil
     end
-end
+end--]]
 
 --Load AntiCheat Immediately!
 C.LoadModule("AntiCheat")

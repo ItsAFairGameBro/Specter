@@ -96,7 +96,7 @@ return function(C,Settings)
         },
         {
             Run = function(self)
-                local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
+                --[[local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
                     if true then
                         return
@@ -126,7 +126,29 @@ return function(C,Settings)
                         end
                         return "Cancel"
                     end
-                end)
+                end)--]]
+
+                C.HookMethod(getrenv().task.spawn,"AntiCheat5", (function(theirScript,method,funct,...)
+                    local Args = table.pack(...)
+                    if not theirScript.Parent then
+                        print("YIELDING ON ",theirScript,"!")
+                        return "Yield"
+                    end
+                end))
+                C.HookMethod("__namecall","AntiCheat5",function(theirScript,method,self,...)
+                        local MySelf = tostring(self)
+                        if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
+                            print("BLOCKING NAMECALL",theirScript,self,...)
+                            return "Cancel"
+                        end
+                end,{"fireserver"})
+                C.HookMethod("__index","AntiCheat5",function(theirScript,index,self,...)
+                    local MySelf = tostring(self)
+                    if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
+                        print("BLOCKING INDEXCALL",theirScript,self,index)
+                        return "Yield"
+                    end
+                end,{"fireserver"})
             end,
             KeepGoing = false, RunOnce = false,
             GameIds = {},PlaceIds={},--{1160789089}, PlaceIds = {},
@@ -139,8 +161,6 @@ return function(C,Settings)
                     print(self,debug.traceback(),Returns)
                     return table.unpack(Returns)
                 end)
-
-
 
                 local Old = getrenv().pcall
                 getrenv().pcall = function(self,...)
