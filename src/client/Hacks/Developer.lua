@@ -136,6 +136,9 @@ return function(C,Settings)
 				Layout = 12,Functs={},
 				Shortcut = "PrintRemoteSpy",
                 Activate = function(self,newValue)
+                    if not newValue then
+                        return--get outta here
+                    end
                     for num, event in ipairs(C.getinstances()) do
                         if event:IsA("RemoteEvent") then
                             table.insert(self.Functs,event.OnClientEvent:Connect(function(...)

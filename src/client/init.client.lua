@@ -62,7 +62,7 @@ local function RegisterFunctions()
 	C.loadstring = isStudio and function() return function() end end or loadstring
 	C.getnamecallmethod = isStudio and (function() return "" end) or getnamecallmethod
 	C.getcallingscript = isStudio and (function() return nil end) or getcallingscript
-	C.hookfunction = isStudio and function() return end or hookfunction
+	C.hookfunction = isStudio and function(a,b) return C.checkcaller end or hookfunction
 	C.hookmetamethod = isStudio and function() return end or hookmetamethod
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
@@ -351,7 +351,7 @@ function C.HookNamecall(name,methods,runFunct)
 		warn("STARTING HOOKNAMECALL (should only happen once)")
         -- Hook the namecall function
 		local checkcaller = C.checkcaller
-        local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
+        local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
 
 		local myHooks = {}
         C.getgenv().NamecallHooks = myHooks
@@ -401,7 +401,7 @@ function C.HookFunction(name,orgFunct,runFunct)
 		warn("STARTING FUNCTIONCALL FOR FUNCT (should only happen once per function)")
         -- Hook the namecall function
 		local checkcaller = C.checkcaller
-        local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
+        local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
 
 		local myHooks = {}
         C.getgenv().FunctionHooks[orgFunct] = myHooks

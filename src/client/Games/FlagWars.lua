@@ -91,40 +91,6 @@ return function (C,Settings)
                 },
             },
             {
-				Title = "Close Hit",
-				Tooltip = "Hits the closest user",
-				Layout = 1, Instances = {}, Functs={},
-				Shortcut = "ClosestHit",Default=true,
-                Activate = function(self,newValue)
-                    C.HookNamecall(self.Shortcut,newValue and {"fireserver"},function(method,args)
-                        local event = args[1]
-                        if tostring(event) == "WeaponHit" then
-                            local ClosestHead, Distance = C.getClosest()
-                            if ClosestHead then
-                                local dataTbl = args[3]
-                                dataTbl["part"] = ClosestHead
-                                dataTbl["h"] = ClosestHead
-    
-                                --[[dataTbl["p"] = ClosestHead.Position
-                                dataTbl["d"] = Distance
-                                dataTbl["m"] = ClosestHead.Material
-                                dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
-                                dataTbl["maxDist"] = Distance + .3
-                                dataTbl["t"] = 1--]]
-    
-                                --dataTbl[""] = ClosestHead
-                                --print("DataTbl",dataTbl)
-                                return "Override", args
-                            else
-                                --print("did nothing")
-                                return true--do nothing lol, don't kill yaself!
-                            end
-                        end
-                        return false -- do not change!
-                    end)
-                end
-            },
-            {
 				Title = "Hit Hack",
 				Tooltip = "Hits the closest user",
 				Layout = 4, Instances = {}, Functs={},
@@ -132,30 +98,29 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblPack = table.pack
-                    C.HookNamecall(self.Shortcut,event.FireServer,newValue and function(newSc,method,self,arg1,arg2,arg3)
+                    C.HookFunction(self.Shortcut,event.FireServer,newValue and function(newSc,self,arg1,arg2,arg3)
                         local event = self
-                        if tostring(event) == "WeaponHit" then
-                            local ClosestHead, Distance = C.getClosest()
-                            if ClosestHead then
-                                local dataTbl = arg2
-                                dataTbl["part"] = ClosestHead
-                                dataTbl["h"] = ClosestHead
-    
-                                --[[dataTbl["p"] = ClosestHead.Position
-                                dataTbl["d"] = Distance
-                                dataTbl["m"] = ClosestHead.Material
-                                dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
-                                dataTbl["maxDist"] = Distance + .3
-                                dataTbl["t"] = 1--]]
-    
-                                --dataTbl[""] = ClosestHead
-                                --print("DataTbl",dataTbl)
-                                return "Override", tblPack(arg1,arg2,arg3)
-                            else
-                                return "Cancel"--do nothing lol, don't kill yaself!
-                            end
+                        local ClosestHead, Distance = C.getClosest()
+                        if ClosestHead then
+                            local dataTbl = arg2
+                            dataTbl["part"] = ClosestHead
+                            dataTbl["h"] = ClosestHead
+
+                            --[[dataTbl["p"] = ClosestHead.Position
+                            dataTbl["d"] = Distance
+                            dataTbl["m"] = ClosestHead.Material
+                            dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
+                            dataTbl["maxDist"] = Distance + .3
+                            dataTbl["t"] = 1--]]
+
+                            --dataTbl[""] = ClosestHead
+                            --print("DataTbl",dataTbl)
+                            print("Override")
+                            return "Override", tblPack(arg1,arg2,arg3)
+                        else
+                            print("Cancel")
+                            return "Cancel"--do nothing lol, don't kill yaself!
                         end
-                        return -- do not change!
                     end)
                 end
             },
