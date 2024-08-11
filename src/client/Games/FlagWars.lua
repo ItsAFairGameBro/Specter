@@ -101,8 +101,8 @@ return function (C,Settings)
                     local tblPack = table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
                         if tostring(self) == "WeaponHit" then
-                            local ClosestHead, Distance = game.Players.SuitedForBans9.Character.Head,0
-                            if ClosestHead then
+                            local ClosestHead, Distance = C.getClosest()
+                            if ClosestHead and Distance < 50 then
                                 arg2["part"] = ClosestHead
                                 arg2["h"] = ClosestHead
 
