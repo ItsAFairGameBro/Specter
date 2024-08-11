@@ -98,7 +98,7 @@ return function (C,Settings)
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
-                    local firstPrint = false
+                    local firstPrint = true
                     local tblPack = table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
                         if tostring(self) == "WeaponHit" then
@@ -122,7 +122,6 @@ return function (C,Settings)
                                     firstPrint = true
                                     print(arg2)
                                 end
-                                print("Override",tblPack(arg1,arg2))
                                 return "Override", tblPack(arg1,arg2)
                             else
                                 print("Cancel")
