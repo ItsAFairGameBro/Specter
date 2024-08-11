@@ -117,9 +117,9 @@ return function (C,Settings)
 
                                 --dataTbl[""] = ClosestHead
 
-                                task.delay(.1,self.FireServer,self,arg1,arg2,...)
+                                --task.delay(.1,self.FireServer,self,arg1,arg2,...)
 
-                                return "Cancel"--, tblPack(arg1,arg2,...)
+                                return "FireSeperate", tblPack(arg1,arg2,...)
                             else
                                 task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!

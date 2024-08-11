@@ -383,6 +383,8 @@ function C.HookMethod(hook, name, runFunct, methods)
                                 return tblUnpack(returnData)
 							elseif operation == "Override" then
 								return OriginFunct(self,tblUnpack(returnData))
+							elseif operation == "FireSeperate" then
+								return task.delay(.1,self[method],self,tblUnpack(returnData))
                             elseif operation == "Cancel" then
                                 return -- Cancelled
                             elseif operation == "Yield" then
