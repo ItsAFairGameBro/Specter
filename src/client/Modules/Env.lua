@@ -717,10 +717,10 @@ return function(C,Settings)
 				C.forcePropertyFuncts[part] = {}
 			end
 			if not C.forcePropertyFuncts[part][propertyName] and not noFunction then
-				print("Added Function",part)
+				--print("Added Function",part)
 				C.forcePropertyFuncts[part][propertyName] = part:GetPropertyChangedSignal(propertyName):Connect(function()
 					local new = part:GetAttribute(requestAttrName)
-					print(part,propertyName,"Changed","SEt to",new)
+					--print(part,propertyName,"Changed","SEt to",new)
 					--[[local cur,new = part[propertyName], part:GetAttribute(requestAttrName)
 					if typeof(cur) == "CFrame" and (cur.LookVector-new.LookVector).Magnitude < 1 and (cur.Position-new.Position).Magnitude < 1 then
 						return

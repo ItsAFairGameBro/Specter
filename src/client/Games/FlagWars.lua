@@ -51,10 +51,11 @@ return function (C,Settings)
                         elseif not val then
                             return
                         end
+                        C.ResetPartProperty(val,"Value",self.Shortcut)
                         if self.RealEnabled then
-                            C.SetPartProperty(val,"Value",self.Shortcut,newValue,true)
-                        else
-                            C.ResetPartProperty(val,"Value",self.Shortcut)
+                            C.SetPartProperty(val,"Value",self.Shortcut,newValue)
+                        --else
+                            --C.ResetPartProperty(val,"Value",self.Shortcut)
                         end
                     end
                     SetStat(config,"RecoilMin",0)
