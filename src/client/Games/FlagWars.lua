@@ -101,9 +101,10 @@ return function (C,Settings)
                     local tblPack = table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
                         if tostring(self) == "WeaponHit" then
-                            local ClosestHead, Distance = C.getClosest(nil,arg2["hit"])
+                            local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
                             if ClosestHead and Distance < 50 then
                                 arg2["part"] = ClosestHead
+                                arg2["p"] = ClosestHead.Position
                                 arg2["h"] = ClosestHead
 
                                 --[[dataTbl["p"] = ClosestHead.Position

@@ -609,7 +609,7 @@ return function(C,Settings)
 	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean},location:Vector3)
 		data = data or {}
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
-		if not C.human or C.human.Health <= 0 or not myHRPPos then print"1" return end
+		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
 
 
 		local closest = nil;
