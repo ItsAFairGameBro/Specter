@@ -245,9 +245,9 @@ return function(C,Settings)
 						self.GlobalTouchTransmitters[parent] = nil
 					end
 				end,
-				UndoTransmitters=function(self,saveEn)
+				UndoTransmitters=function(self,saveEn,clearOverride)
 					for index = #self.TouchTransmitters,1,-1 do
-						if saveEn ~= self.RealEnabled and not C.Cleared then
+						if (saveEn ~= self.RealEnabled or C.Cleared) and not clearOverride then
 							return
 						end
 						self:UndoTransmitter(index)
@@ -257,7 +257,7 @@ return function(C,Settings)
 					end
 				end,
 				RunOnDestroy=function(self)
-					self:UndoTransmitters()
+					self:UndoTransmitters(self.RealEnabled,true)
 				end,
 				ApplyTransmitters=function(self,instance)
 					if instance:IsA("TouchTransmitter") and instance.Parent and instance.Parent.Parent then

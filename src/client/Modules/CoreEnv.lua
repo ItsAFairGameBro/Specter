@@ -293,7 +293,7 @@ return function(C,Settings)
 		C.DebugMessage("Destroy",`Destroy 2`)
 
 		for instance, propertiesTbl in pairs(C.forcePropertyFuncts) do
-			for attr, val in ipairs(instance:GetAttributes()) do
+			for attr, val in pairs(instance:GetAttributes()) do
 				if attr:find("_Request_") or attr:find("_RequestCount") then
 					--do nothing, it will be cleared
 				elseif attr:find("_OriginalValue") then
