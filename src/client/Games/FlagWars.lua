@@ -100,7 +100,7 @@ return function (C,Settings)
                     local tblPack = table.pack
                     C.HookFunction(self.Shortcut,event.FireServer,newValue and function(newSc,self,arg1,arg2,arg3)
                         if tostring(event) == "WeaponHit" then
-                            print("Run",self)
+                            print("HitHack","Run",self)
                             local event = self
                             local ClosestHead, Distance = C.getClosest()
                             if ClosestHead then
