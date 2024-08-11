@@ -101,7 +101,7 @@ return function (C,Settings)
                     local tblPack = table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
                         if tostring(self) == "WeaponHit" then
-                            local ClosestHead, Distance = C.getClosest()
+                            local ClosestHead, Distance = C.getClosest(nil,arg2["hit"])
                             if ClosestHead and Distance < 50 then
                                 arg2["part"] = ClosestHead
                                 arg2["h"] = ClosestHead
@@ -115,8 +115,11 @@ return function (C,Settings)
 
                                 --dataTbl[""] = ClosestHead
 
+                                task.defer(print,arg2)
+
                                 return "Override", tblPack(arg1,arg2)
                             else
+                                task.defer(print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
                             end
                         end
