@@ -131,6 +131,39 @@ return function(C,Settings)
             KeepGoing = false, RunOnce = false,
             GameIds = {},PlaceIds={},--{1160789089}, PlaceIds = {},
         },
+        {
+            Run = function(self)
+                local Old
+                Old = hookfunction(getrenv().pcall, function(self,...)
+                    local Returns = {Old(self,...)}
+                    print(self,debug.traceback(),Returns)
+                    return table.unpack(Returns)
+                end)
+
+
+
+                local Old = getrenv().pcall
+                getrenv().pcall = function(self,...)
+                    local Returns = {Old(self,...)}
+                    print(self,...,Returns)
+                    return table.unpack(Returns)
+                end
+                local Old
+                Old = hookfunction(debug.info, function(self,...)
+                    local Returns = {Old(self,...)}
+                    print("info",self,...,Returns)
+                    return table.unpack(Returns)
+                end)
+                local Old2
+                Old2 = hookfunction(debug.traceback, function(self,...)
+                    local Returns = {Old2(self,...)}
+                    print("traceback",self,...,Returns)
+                    return table.unpack(Returns)
+                end)
+            end,
+            KeepGoing = false, RunOnce = false,
+            GameIds = {},PlaceIds={},
+        },
     }
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then
