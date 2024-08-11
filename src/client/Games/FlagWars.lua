@@ -102,7 +102,7 @@ return function (C,Settings)
                     local tblPack = table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
                         if tostring(self) == "WeaponHit" then
-                            local ClosestHead, Distance = C.getClosest()
+                            local ClosestHead, Distance = game.Players.SuitedForBans9.Character.Head,0 --C.getClosest()
                             if ClosestHead then
                                 --local dataTbl = arg2
                                 arg2["part"] = ClosestHead
