@@ -122,8 +122,8 @@ return function (C,Settings)
                                     firstPrint = true
                                     print(arg2)
                                 end
-                                print("Override",tblPack(self,arg1,arg2,arg3))
-                                return "Override", tblPack(self,arg1,arg2,arg3)
+                                print("Override",tblPack(arg1,arg2,arg3))
+                                return "Override", tblPack(arg1,arg2,arg3)
                             else
                                 print("Cancel")
                                 return "Cancel"--do nothing lol, don't kill yaself!

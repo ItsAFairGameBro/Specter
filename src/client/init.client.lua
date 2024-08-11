@@ -381,7 +381,8 @@ function C.HookMethod(hook, name, runFunct, methods)
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
 							elseif operation == "Override" then
-								return OriginFunct(tblUnpack(returnData))
+								print("Overriding Arguments")
+								return OriginFunct(self,tblUnpack(returnData))
                             elseif operation == "Cancel" then
                                 return -- Cancelled
                             elseif operation == "Yield" then
