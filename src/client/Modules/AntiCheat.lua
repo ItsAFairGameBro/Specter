@@ -129,7 +129,7 @@ return function(C,Settings)
                     end
                 end)--]]
 
-                C.HookMethod(getrenv().task.spawn,"AntiCheat5", (function(theirScript,method,funct,...)
+                C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", (function(theirScript,method,funct,...)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
                         print("YIELDING ON ",theirScript,"!")
