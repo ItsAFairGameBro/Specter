@@ -353,7 +353,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
 		local checkcaller = C.checkcaller
-		local gsub = string.gsub
+		local gsub,tblRemove = string.gsub, table.remove
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,table.unpack
 
 		local myHooks = {}
@@ -377,7 +377,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                 -- Block FireServer or InvokeServer methods
                 for name, list in pairs(myHooks) do
                     if not list[2] or tblFind(list[2],method) then -- Authorization
-                        local operation,returnData = list[3](theirScript,method,self,...)
+                        local returnData = tblPack(list[3](theirScript,method,self,...))
+						local operation = returnData[1]
+						tblRemove(returnData,1)
                         if operation then
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
