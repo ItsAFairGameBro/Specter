@@ -383,7 +383,12 @@ function C.HookMethod(hook, name, runFunct, methods)
                             elseif operation == "Cancel" then
                                 return -- Cancelled
                             elseif operation == "Yield" then
-                                return C.yieldForeverFunct()
+								if hook == "__index" then
+									print("Returning Special C.yieldForeverFunct")
+									return C.yieldForeverFunct
+								else
+									return C.yieldForeverFunct()
+								end
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
                             end
