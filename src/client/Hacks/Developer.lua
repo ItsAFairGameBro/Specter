@@ -132,7 +132,7 @@ return function(C,Settings)
 			},
             {
 				Title = "Print Remote Event Spy",
-				Tooltip = "Prints all INCOMING messages from remote events to the console.",
+				Tooltip = "Prints all messages from remote events to the console.",
 				Layout = 12,Functs={},
 				Shortcut = "PrintRemoteSpy",
                 Activate = function(self,newValue)
@@ -142,10 +142,13 @@ return function(C,Settings)
                     for num, event in ipairs(C.getinstances()) do
                         if event:IsA("RemoteEvent") then
                             table.insert(self.Functs,event.OnClientEvent:Connect(function(...)
-                                print(`[Remote Event Spy]: {event:GetFullName()}`,...)
+                                print(`[Inbound Remote Spy]: {event:GetFullName()}`,...)
                             end))
                         end
                     end
+                    C.HookMethod("__namecall",self.Shortcut,function(theirScript,method,self,...)
+                        print(`[Outbound Remote Spy]: {theirScript} on {self.Name}:{method}({tostring(...)})`)
+                    end,{"fireserver","invokeserver"})
                 end,
             },
             {
