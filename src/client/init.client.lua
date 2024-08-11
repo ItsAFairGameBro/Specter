@@ -378,10 +378,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                             if operation == "Override" then
                                 return tblUnpack(returnData)
                             elseif operation == "Cancel" then
-                                return
+                                return -- Cancelled
                             elseif operation == "Yield" then
-                                C.yieldForeverFunct()
-								return
+                                return C.yieldForeverFunct()
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
                             end
