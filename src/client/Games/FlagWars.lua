@@ -120,7 +120,7 @@ return function (C,Settings)
 
 
                                 -- Fake the signal into firing, meanwhile firing our own
-                                task.delay(.1,self.FireServer,self,arg1,arg2,...)
+                                task.spawn(self.FireServer,self,arg1,arg2,...)
 
                                 return "Cancel"
                             else
