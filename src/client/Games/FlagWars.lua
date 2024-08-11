@@ -99,7 +99,7 @@ return function (C,Settings)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblPack = table.pack
                     C.HookFunction(self.Shortcut,event.FireServer,newValue and function(newSc,self,arg1,arg2,arg3)
-                        if tostring(event) == "WeaponHit" then
+                        if tostring(self) == "WeaponHit" then
                             print("HitHack","Run",self)
                             local event = self
                             local ClosestHead, Distance = C.getClosest()
