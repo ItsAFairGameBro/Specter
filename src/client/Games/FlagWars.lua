@@ -98,12 +98,17 @@ return function (C,Settings)
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
+                    local firstPrint = false
                     local tblPack = table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,arg3)
                         if tostring(self) == "WeaponHit" then
                             local event = self
                             local ClosestHead, Distance = C.getClosest()
                             if ClosestHead then
+                                if not firstPrint then
+                                    firstPrint = true
+                                    print(arg2)
+                                end
                                 local dataTbl = arg2
                                 dataTbl["part"] = ClosestHead
                                 dataTbl["h"] = ClosestHead
@@ -118,7 +123,7 @@ return function (C,Settings)
                                 --dataTbl[""] = ClosestHead
                                 --print("DataTbl",dataTbl)
                                 print("Override")
-                                return "Override", tblPack(self,arg1,arg2,arg3)
+                                return "Override", tblPack(self,arg1,dataTbl,arg3)
                             else
                                 print("Cancel")
                                 return "Cancel"--do nothing lol, don't kill yaself!
