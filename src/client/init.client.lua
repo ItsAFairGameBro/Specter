@@ -368,7 +368,10 @@ function C.HookMethod(hook, name, runFunct, methods)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() then
                 -- Get the method being called
-                local method = gsub(lower(getnamecallmethod() or ...), "\000.*", "") -- Remove trailing characters, so no shananigans
+				local method = getnamecallmethod() or ...
+				if method then
+					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
+				end
                 local theirScript = getcallingscript()
                 -- Block FireServer or InvokeServer methods
                 for name, list in pairs(myHooks) do
@@ -390,8 +393,8 @@ function C.HookMethod(hook, name, runFunct, methods)
             end
 			return OriginFunct(self,...)
 		end
-        OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(game, hook, newcclosure(CallFunction)))
-			or (HookType == "hookfunction" and C.hookfunction(hook, newcclosure(CallFunction)))
+        OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(game, hook, (CallFunction)))
+			or (HookType == "hookfunction" and C.hookfunction(hook, (CallFunction)))
 	end
 	if runFunct then
 		C.getgenv().SavedHookData[hook][name] = {name,methods,runFunct}
