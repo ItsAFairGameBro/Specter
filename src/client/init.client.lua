@@ -368,7 +368,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() then
                 -- Get the method being called
-                local method = HookType=="__namecall" and gsub(lower(getnamecallmethod()), "\000.*", "") or ... -- Remove trailing characters, so no shananigans
+                local method = HookType=="hookmetamethod" and gsub(lower(getnamecallmethod()), "\000.*", "") or ... -- Remove trailing characters, so no shananigans
                 local theirScript = getcallingscript()
                 -- Block FireServer or InvokeServer methods
                 for name, list in pairs(myHooks) do
