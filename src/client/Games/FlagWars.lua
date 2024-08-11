@@ -98,12 +98,13 @@ return function (C,Settings)
 				Shortcut = "ClosestHit",Default=true,
                 Activate = function(self,newValue)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
-                    local tblPack = table.pack
+                    local tblClone, tblPack = table.clone, table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
                             if ClosestHead then--and Distance < 50 then
-                                arg2 = table.clone(arg2)
+                                -- Table Clone: Security Prevention
+                                arg2 = tblClone(arg2)
                                 arg2["part"] = ClosestHead
                                 arg2["p"] = ClosestHead.Position
                                 arg2["h"] = ClosestHead
@@ -117,9 +118,11 @@ return function (C,Settings)
 
                                 --dataTbl[""] = ClosestHead
 
-                                --task.delay(.1,self.FireServer,self,arg1,arg2,...)
 
-                                return "Override", {arg1,arg2,...}
+                                -- Fake the signal into firing, meanwhile firing our own
+                                task.delay(.1,self.FireServer,self,arg1,arg2,...)
+
+                                return "Cancel"
                             else
                                 task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
