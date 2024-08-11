@@ -381,8 +381,12 @@ function C.HookMethod(hook, name, runFunct, methods)
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
 							elseif operation == "Override" then
-								print("Overriding Arguments")
-								return OriginFunct(self,tblUnpack(returnData))
+								local Args = tblPack(...)
+								local ClosestHead, Distance = C.getClosest()
+								Args[2]["part"] = ClosestHead
+                                Args[2]["h"] = ClosestHead
+								print("Overriding Arguments",ClosestHead)
+								return OriginFunct(self,tblUnpack(Args))
                             elseif operation == "Cancel" then
                                 return -- Cancelled
                             elseif operation == "Yield" then

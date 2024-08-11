@@ -100,9 +100,8 @@ return function (C,Settings)
                     local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local firstPrint = false
                     local tblPack = table.pack
-                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,arg3)
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2)
                         if tostring(self) == "WeaponHit" then
-                            local event = self
                             local ClosestHead, Distance = C.getClosest()
                             if ClosestHead then
                                 --local dataTbl = arg2
@@ -122,8 +121,8 @@ return function (C,Settings)
                                     firstPrint = true
                                     print(arg2)
                                 end
-                                print("Override",tblPack(arg1,arg2,arg3))
-                                return "Override", tblPack(arg1,arg2,arg3)
+                                print("Override",tblPack(arg1,arg2))
+                                return "Override", tblPack(arg1,arg2)
                             else
                                 print("Cancel")
                                 return "Cancel"--do nothing lol, don't kill yaself!
