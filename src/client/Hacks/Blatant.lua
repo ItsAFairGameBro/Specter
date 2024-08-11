@@ -39,6 +39,9 @@ return function(C,Settings)
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 16 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
+								if C.hrp.AssemblyAngularVelocity.Magnitude < .5 then
+									C.hrp.AssemblyAngularVelocity += Vector3.new(0,1,0)
+								end
 							end
 						elseif (C.isInGame and C.isInGame(C.char)) then
 							task.wait(.5)
