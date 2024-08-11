@@ -17,7 +17,7 @@ local function Static(C,Settings)
         end
         return selDirt, maxDist
     end
-    table.insert(C.EventFunctions,function()
+    --[[table.insert(C.EventFunctions,function()
 		local function MapAdded()
             C.Map = workspace:WaitForChild("Normal")
             C.FireEvent("MapAdded",nil,C.Map)
