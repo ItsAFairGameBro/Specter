@@ -337,12 +337,13 @@ end
 local originalNamecall = nil
 local getgenv = getgenv
 function C.yieldForeverFunct()
-	--task.wait(C.HighestNumber)
-	while true do
-		coroutine.yield()--Yields the thread forever
-	end
+	task.wait(C.HighestNumber)
+	--while true do
+	--	coroutine.yield()--Yields the thread forever
+	--end
 
 	warn(debug.traceback(`YIELDING COMPLETE!? THIS IS NOT SUPPOSED TO HAPPEN. PLEASE CHECCK C.yieldForeverFunct`))
+	C.yieldForeverFunct() -- Run it again sucker!
 end
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 function C.HookMethod(hook, name, runFunct, methods)
