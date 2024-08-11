@@ -124,7 +124,7 @@ return function (C,Settings)
 
                                 return "Cancel"
                             else
-                                task.delay(1,print,"Canceled; none found")
+                                --task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
                             end
                         end
@@ -156,6 +156,15 @@ return function (C,Settings)
                     end))
                 end,
             },
+
+            --[[
+                local args = {
+                    [1] = "Shovel",
+                    [2] = workspace.Core.CurrentDirt.Chunk4.dirt
+                }
+
+                game:GetService("ReplicatedStorage").Events.Dig:FireServer(unpack(args))
+            ]]
             
         },
     }
