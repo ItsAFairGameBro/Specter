@@ -154,20 +154,27 @@ return function (C,Settings)
 				Tooltip = "Automatically digs nearby dirt near you; must have Shovel equipped",
 				Layout = 10,Threads={},DontActivate = true,
 				Shortcut = "AutoBore",Default=true,
+                Run = function(self)
+                    local DigEvent = C.StringWait(RS,"Events.Dig")
+
+                    while true do
+                        local dirt, distance = C.getClosestDirt()
+                        if dirt and distance < 50 then
+                            --for s = 1, 10, 1 do
+                            DigEvent:FireServer("Shovel",dirt)
+                            --end
+                        end
+                        RunS.PreRender:Wait()
+                    end
+                end,
                 Activate = function(self,newValue)
                     if not newValue then
                         return--stop it!
                     end
-                    local DigEvent = C.StringWait(RS,"Events.Dig")
-                    while true do
-                        local dirt, distance = C.getClosestDirt()
-                        if dirt and distance < 50 then
-                            for s = 1, 10, 1 do
-                                DigEvent:FireServer("Shovel",dirt)
-                            end
-                        end
-                        RunS.PreRender:Wait()
+                    for s = 1, 10, 1 do
+                        table.insert(self.Threads,task.spawn(self.Run,self))
                     end
+                    self:Run()
                 end,
                 Events = {
                     MyCharAdded=function(self,theirPlr,theirChar,firstRun)
