@@ -111,12 +111,11 @@ return function (C,Settings)
                 },
             },
             {
-				Title = "Hit Hack",
+				Title = "Gun Hit",
 				Tooltip = "Hits the closest user",
-				Layout = 4, Instances = {}, Functs={},
-				Shortcut = "ClosestHit",Default=true,
+				Layout = 4,
+				Shortcut = "GunHit",Default=true,
                 Activate = function(self,newValue)
-                    local event = C.StringWait(RS,"WeaponsSystem.Network.WeaponHit")
                     local tblClone, tblPack = table.clone, table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
@@ -145,6 +144,36 @@ return function (C,Settings)
                             else
                                 --task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
+                            end
+                        end
+                        
+                    end,{"fireserver"})
+                end
+            },
+            {
+				Title = "Sword Hit",
+				Tooltip = "Hits the closest user",
+				Layout = 5,
+				Shortcut = "SwordHit",Default=true,
+                Activate = function(self,newValue)
+                    local tblClone, tblPack = table.clone, table.pack
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
+                        if tostring(self) == "ClientCast-Replication" then
+                            local ClosestHead, Distance = C.getClosest(nil,arg2.Position)
+                            if ClosestHead then--and Distance < 50 then
+                                arg1 = ClosestHead.Parent.Humanoid
+                                -- Table Clone: Security Prevention
+                                arg2 = tblClone(arg2)
+                                arg2["Instance"] = ClosestHead
+                                arg2["p"] = ClosestHead.Position
+                                arg2["h"] = ClosestHead
+
+                                -- Fake the signal into firing, meanwhile firing our own
+                                task.spawn(self.FireServer,self,arg1,arg2,...)
+
+                                return "Cancel"
+                            else
+                                -- Doesn't matter, do nothing!
                             end
                         end
                         
