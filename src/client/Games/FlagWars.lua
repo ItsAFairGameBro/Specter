@@ -7,12 +7,13 @@ local function Static(C,Settings)
         local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
         if not myHRPPos then return end
     
-        local selDirt, maxDist, closestAngle = nil, 2, 360
+        local selDirt, maxDist, closestAngle = nil, 22, 360
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
                 local angle = math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))
-                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y)) and angle < closestAngle then
+                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y)) 
+                    and (angle < closestAngle) and d < 22 then
                     selDirt, maxDist = part, d
                 end
             end
