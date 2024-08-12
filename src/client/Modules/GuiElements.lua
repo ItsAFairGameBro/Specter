@@ -229,6 +229,11 @@ local GuiTbl = {
 	Distance = Instance.new("TextLabel"),
 	ExpandingBar = Instance.new("Frame"),
 	AmtFinished = Instance.new("Frame"),
+	VisibilityButton = Instance.new("Frame"),
+	UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint"),
+	UICorner_31 = Instance.new("UICorner"),
+	VisibilityButton_2 = Instance.new("ImageLabel"),
+	UICorner_32 = Instance.new("UICorner"),
 }
 
 --Properties:
@@ -2351,6 +2356,43 @@ GuiTbl.AmtFinished.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.AmtFinished.BackgroundTransparency = 0.100
 GuiTbl.AmtFinished.BorderColor3 = Color3.fromRGB(27, 42, 53)
 GuiTbl.AmtFinished.Size = UDim2.new(0, 0, 1, 0)
+
+GuiTbl.VisibilityButton.Name = "VisibilityButton"
+GuiTbl.VisibilityButton.Parent = GuiTbl.SpecterGUI
+C.UI.VisibilityButton = GuiTbl.VisibilityButton
+GuiTbl.VisibilityButton.Active = true
+GuiTbl.VisibilityButton.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
+GuiTbl.VisibilityButton.BackgroundTransparency = 0.250
+GuiTbl.VisibilityButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.VisibilityButton.BorderSizePixel = 0
+GuiTbl.VisibilityButton.Position = UDim2.new(0.699999988, 0, 0.800000012, 0)
+GuiTbl.VisibilityButton.Selectable = true
+GuiTbl.VisibilityButton.Size = UDim2.new(0.0850000009, 0, 0.0850000009, 0)
+GuiTbl.VisibilityButton.ZIndex = 101
+
+GuiTbl.UIAspectRatioConstraint.Parent = GuiTbl.VisibilityButton
+
+GuiTbl.UICorner_31.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_31.Parent = GuiTbl.VisibilityButton
+
+GuiTbl.VisibilityButton_2.Name = "VisibilityButton"
+GuiTbl.VisibilityButton_2.Parent = GuiTbl.VisibilityButton
+GuiTbl.VisibilityButton_2.Active = true
+GuiTbl.VisibilityButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
+GuiTbl.VisibilityButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.VisibilityButton_2.BackgroundTransparency = 1.000
+GuiTbl.VisibilityButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.VisibilityButton_2.BorderSizePixel = 0
+GuiTbl.VisibilityButton_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+GuiTbl.VisibilityButton_2.Selectable = true
+GuiTbl.VisibilityButton_2.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
+GuiTbl.VisibilityButton_2.ZIndex = 102
+C.SetImage(GuiTbl.VisibilityButton_2,"rbxassetid://18416048326")
+GuiTbl.VisibilityButton_2.ImageTransparency = 0.360
+GuiTbl.VisibilityButton_2.ScaleType = Enum.ScaleType.Fit
+
+GuiTbl.UICorner_32.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_32.Parent = GuiTbl.VisibilityButton_2
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
@@ -2378,7 +2420,7 @@ return function(C, Settings)
 	function C.SetImage(imageButton,image)
 		imageButton.Image = image
 	end
-	local function CreateDraggable(frame: Frame)
+	local function CreateDraggable(frame: Frame, dragInstance: Frame)
 		local dragging
 		local dragInput
 		local dragStart
@@ -2424,7 +2466,7 @@ return function(C, Settings)
 			TS:Create(frame,TweenInfo.new(start and 0 or .07),{Position = UDim2.fromOffset(x, y)}):Play()
 		end
 
-		C.AddGlobalConnection(frame.HeaderTab.InputBegan:Connect(function(input)
+		C.AddGlobalConnection(dragInstance.InputBegan:Connect(function(input)
 			if (input.UserInputType == Enum.UserInputType.MouseButton1 
 				or input.UserInputType == Enum.UserInputType.Touch)
 				and not BlockStartDragging then
@@ -2447,7 +2489,7 @@ return function(C, Settings)
 			end
 		end))
 
-		C.AddGlobalConnection(frame.HeaderTab.InputChanged:Connect(function(input)
+		C.AddGlobalConnection(dragInstance.InputChanged:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 				if C.UI.DisableDrag then
 					return
@@ -2481,7 +2523,7 @@ return function(C, Settings)
 		--UIListLayout
 		local UIListLayout = ScrollTab and ScrollTab:WaitForChild("UIListLayout")
 		--Draggable
-		local UpdateBounds = CreateDraggable(TabEx)
+		local UpdateBounds = CreateDraggable(TabEx,TabEx:WaitForChild("HeaderTab"))
 		-- Tab Resizing
 		local function UpdateTabSize()
 			if ScrollTab then
@@ -3048,4 +3090,5 @@ return function(C, Settings)
 
 	ActionsFrame.Position = UDim2.fromOffset(0, C.GUI.AbsoluteSize.Y * 3)
 	C.MakeDraggableTab(ActionsFrame, true)
+	CreateDraggable(C.UI.VisibilityButton,C.UI.VisibilityButton)
 end

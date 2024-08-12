@@ -340,7 +340,7 @@ local debFunct, traceback, tskWait, coroYield = C.DebugMessage, debug.traceback,
 local tskDefer = task.defer
 local yieldForeverFunct
 function yieldForeverFunct()
-	tskDefer(debFunct,"AntiCheat","Yielding Forever")
+	tskDefer(debFunct,"AntiCheat",traceback("Yielding Forever"))
 	--tskWait(highestNum)
 	--while true do
 	coroYield()--Yields the thread forever

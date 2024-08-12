@@ -83,6 +83,9 @@ return function(C,Settings)
 		end
 	end
 	C.BindAction("hackopen",ToggleOpenHUDKeyPress,Enum.KeyCode.RightShift)
+	C.ButtonClick(C.UI.VisibilityButton,function()
+		C.SetHUDVis(not C.UI.HUDEn)
+	end)
 	C.SetHUDVis(false,true)
 	
 	--Save keypress
