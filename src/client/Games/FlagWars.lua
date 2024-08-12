@@ -2,18 +2,18 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="Use
 
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
+local absoluteMaximumDirtDistance = 20
 local function Static(C,Settings)
     function C.getClosestDirt(location: Vector3)
         local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
         if not myHRPPos then return end
-    
-        local selDirt, maxDist, closestAngle = nil, 22, 360
+        local selDirt, maxDist, closestAngle = nil, absoluteMaximumDirtDistance, 360
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
                 local angle = math.round(math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))/10)*10
                 if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y))
-                    and (angle < closestAngle) and d < 22 then
+                    and (angle < closestAngle) and d < absoluteMaximumDirtDistance then
                     selDirt, maxDist, closestAngle = part, d, angle
                 end
             end
@@ -162,7 +162,7 @@ return function (C,Settings)
 
                     while true do
                         local dirt, distance = C.getClosestDirt()
-                        if dirt and distance < 25 then
+                        if dirt and distance < absoluteMaximumDirtDistance then
                             --warn("Distance",tostring(distance))
                             for s = 1, 10, 1 do
                                 task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
