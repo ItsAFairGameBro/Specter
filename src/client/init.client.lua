@@ -378,7 +378,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				if theirScript.Name == "BAC_" then
+				if tostring(theirScript) == "BAC_" then
 					if hook == "__index" then
 						return yieldForeverFunct -- Return the function to run forever haha!!
 					else
