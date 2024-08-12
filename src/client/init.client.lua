@@ -15,7 +15,7 @@ local allDisabled = {
 	firetouchinterest = false,
 }
 local executorName = not isStudio and identifyexecutor()
-local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=false}) or {firetouchinterest=true}
+local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=true}) or {firetouchinterest=true}
 
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
