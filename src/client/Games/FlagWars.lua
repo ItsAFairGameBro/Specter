@@ -159,14 +159,12 @@ return function (C,Settings)
                     local tblClone, tblPack = table.clone, table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,arg3,...)
                         if tostring(self) == "ClientCast-Replication" then
-                            local ClosestHead, Distance = C.getClosest(nil,arg2.Position)
+                            local ClosestHead, Distance = C.getClosest(nil,arg3.Position)
                             if ClosestHead then--and Distance < 50 then
                                 arg2 = ClosestHead.Parent.Humanoid
                                 -- Table Clone: Security Prevention
                                 arg3 = tblClone(arg3)
                                 arg3["Instance"] = ClosestHead
-                                arg3["p"] = ClosestHead.Position
-                                arg3["h"] = ClosestHead
 
                                 -- Fake the signal into firing, meanwhile firing our own
                                 task.spawn(self.FireServer,self,arg1,arg2,arg3,...)
