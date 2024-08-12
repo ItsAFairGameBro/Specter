@@ -18,7 +18,6 @@ local function Static(C,Settings)
                 end
             end
         end
-        warn(closestAngle)
         return selDirt, maxDist
     end
     -- Map Added is lowkey just team added -.-
@@ -168,7 +167,7 @@ return function (C,Settings)
                                 task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
                             end
                         end
-                        RunS.PreRender:Wait()
+                        RunS.RenderStepped:Wait()
                     end
                 end,
                 Activate = function(self,newValue)
