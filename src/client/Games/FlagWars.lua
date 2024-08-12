@@ -11,7 +11,7 @@ local function Static(C,Settings)
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
-                local angle = math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))
+                local angle = math.round(math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))/10)*10
                 if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y))
                     and (angle < closestAngle) and d < 22 then
                     selDirt, maxDist, closestAngle = part, d, angle
