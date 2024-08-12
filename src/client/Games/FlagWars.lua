@@ -113,7 +113,7 @@ return function (C,Settings)
             {
 				Title = "Gun Hit",
 				Tooltip = "Hits the closest user",
-				Layout = 4,
+				Layout = 4,AlwaysActivate=true,
 				Shortcut = "GunHit",Default=true,
                 Activate = function(self,newValue)
                     local tblClone, tblPack = table.clone, table.pack

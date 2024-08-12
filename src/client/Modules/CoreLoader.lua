@@ -350,7 +350,7 @@ return function(C, _SETTINGS)
 	if C.Cleared then return end
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
-			if data.RealEnabled and data.Activate and not data.DontActivate then
+			if (data.RealEnabled or data.AlwaysActivate) and data.Activate and not data.DontActivate then
 				task.spawn(data.Activate,data,data.RealEnabled, true)
 			end
 		end
