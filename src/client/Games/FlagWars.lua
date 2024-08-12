@@ -200,7 +200,9 @@ return function (C,Settings)
                     end))
                 end,
                 Events = {
-                    MyTeamAdded = C.DoActivate,
+                    MyTeamAdded = function(self,theirPlr,newTeamName)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
                 }
             },
             
