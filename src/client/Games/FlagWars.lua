@@ -117,7 +117,7 @@ return function (C,Settings)
 				Shortcut = "GunHit",Default=true,
                 Activate = function(self,newValue)
                     local tblClone, tblPack = table.clone, table.pack
-                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
+                    C.HookMethod("__namecall",self.Shortcut,function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
                             if newValue then
                                 local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
