@@ -119,36 +119,43 @@ return function (C,Settings)
                     local tblClone, tblPack = table.clone, table.pack
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
-                            local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
-                            if ClosestHead then--and Distance < 50 then
-                                -- Table Clone: Security Prevention
-                                arg2 = tblClone(arg2)
-                                arg2["part"] = ClosestHead
-                                arg2["p"] = ClosestHead.Position
-                                arg2["h"] = ClosestHead
+                            if newValue then
+                                local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
+                                if ClosestHead then--and Distance < 50 then
+                                    -- Table Clone: Security Prevention
+                                    arg2 = tblClone(arg2)
+                                    arg2["part"] = ClosestHead
+                                    arg2["p"] = ClosestHead.Position
+                                    arg2["h"] = ClosestHead
 
-                                --[[dataTbl["p"] = ClosestHead.Position
-                                dataTbl["d"] = Distance
-                                dataTbl["m"] = ClosestHead.Material
-                                dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
-                                dataTbl["maxDist"] = Distance + .3
-                                dataTbl["t"] = 1--]]
+                                    --[[dataTbl["p"] = ClosestHead.Position
+                                    dataTbl["d"] = Distance
+                                    dataTbl["m"] = ClosestHead.Material
+                                    dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
+                                    dataTbl["maxDist"] = Distance + .3
+                                    dataTbl["t"] = 1--]]
 
-                                --dataTbl[""] = ClosestHead
-
-
-                                -- Fake the signal into firing, meanwhile firing our own
-                                task.spawn(self.FireServer,self,arg1,arg2,...)
-
-                                return "Cancel"
-                            else
-                                --task.delay(1,print,"Canceled; none found")
-                                return "Cancel"--do nothing lol, don't kill yaself!
+                                elseif self.EnTbl.NoSelfKill then
+                                    --task.delay(1,print,"Canceled; none found")
+                                    return "Cancel"--do nothing lol, don't kill yaself!
+                                end
                             end
+                            -- Fake the signal into firing, meanwhile firing our own
+                            task.spawn(self.FireServer,self,arg1,arg2,...)
+                            return "Cancel"
                         end
                         
                     end,{"fireserver"})
-                end
+                end,
+                Options = {
+                    {
+						Type = Types.Toggle,
+						Title = "No Self Kill",
+						Tooltip = "Disabling hitting yourself with explosive weapons",
+						Layout = 1,Default=true,
+						Shortcut="NoSelfKill",
+					},
+                },
             },
             {
 				Title = "Sword Hit",
