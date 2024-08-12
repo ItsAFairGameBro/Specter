@@ -157,19 +157,19 @@ return function (C,Settings)
 				Shortcut = "SwordHit",Default=true,
                 Activate = function(self,newValue)
                     local tblClone, tblPack = table.clone, table.pack
-                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,arg3,...)
                         if tostring(self) == "ClientCast-Replication" then
                             local ClosestHead, Distance = C.getClosest(nil,arg2.Position)
                             if ClosestHead then--and Distance < 50 then
-                                arg1 = ClosestHead.Parent.Humanoid
+                                arg2 = ClosestHead.Parent.Humanoid
                                 -- Table Clone: Security Prevention
-                                arg2 = tblClone(arg2)
-                                arg2["Instance"] = ClosestHead
-                                arg2["p"] = ClosestHead.Position
-                                arg2["h"] = ClosestHead
+                                arg3 = tblClone(arg3)
+                                arg3["Instance"] = ClosestHead
+                                arg3["p"] = ClosestHead.Position
+                                arg3["h"] = ClosestHead
 
                                 -- Fake the signal into firing, meanwhile firing our own
-                                task.spawn(self.FireServer,self,arg1,arg2,...)
+                                task.spawn(self.FireServer,self,arg1,arg2,arg3,...)
 
                                 return "Cancel"
                             else
