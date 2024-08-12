@@ -12,12 +12,13 @@ local function Static(C,Settings)
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
                 local angle = math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))
-                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y)) 
+                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y))
                     and (angle < closestAngle) and d < 22 then
                     selDirt, maxDist = part, d
                 end
             end
         end
+        warn(closestAngle)
         return selDirt, maxDist
     end
     -- Map Added is lowkey just team added -.-
