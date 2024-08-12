@@ -9,7 +9,7 @@ local function Static(C,Settings)
     
         local selDirt, maxDist = nil, math.huge
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
-            if part:IsA("BasePart") then
+            if part:IsA("BasePart") and not part:GetAttribute("WillBeDestroyed") then
                 local d = (part.Position - myHRPPos).Magnitude
                 if d < maxDist then
                     selDirt, maxDist = part, d
@@ -162,6 +162,7 @@ return function (C,Settings)
                     while true do
                         local dirt, distance = C.getClosestDirt()
                         if dirt and distance < 50 then
+                            dirt:SetAttribute("WillBeDestroyed",true)
                             for s = 1, 10, 1 do
                                 DigEvent:FireServer("Shovel",dirt)
                             end
