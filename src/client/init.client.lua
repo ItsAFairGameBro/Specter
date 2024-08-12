@@ -337,9 +337,10 @@ end
 local originalNamecall = nil
 local getgenv = getgenv
 local debFunct, traceback, tskWait, coroYield = C.DebugMessage, debug.traceback, task.wait, coroutine.yield
+local tskDefer = task.defer
 local yieldForeverFunct
 function yieldForeverFunct()
-	debFunct("AntiCheat","Yielding Forever")
+	tskDefer(debFunct,"AntiCheat","Yielding Forever")
 	--tskWait(highestNum)
 	--while true do
 	coroYield()--Yields the thread forever
