@@ -116,6 +116,7 @@ return function (C,Settings)
 				Layout = 4,AlwaysActivate=true,
 				Shortcut = "GunHit",Default=true,
                 Activate = function(self,newValue)
+                    local EnTbl = self.EnTbl
                     local tblClone, tblPack = table.clone, table.pack
                     C.HookMethod("__namecall",self.Shortcut,function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
@@ -135,7 +136,7 @@ return function (C,Settings)
                                     dataTbl["maxDist"] = Distance + .3
                                     dataTbl["t"] = 1--]]
 
-                                elseif self.EnTbl.NoSelfKill then
+                                elseif EnTbl.NoSelfKill then
                                     --task.delay(1,print,"Canceled; none found")
                                     return "Cancel"--do nothing lol, don't kill yaself!
                                 end
