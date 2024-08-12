@@ -336,12 +336,13 @@ end
 --Load hooks immediately
 local originalNamecall = nil
 local getgenv = getgenv
-local traceback, tskWait, highestNum = debug.traceback, task.wait, C.HighestNumber
+local debFunct, traceback, tskWait, coroYield = C.DebugMessage, debug.traceback, task.wait, coroutine.yield
 local yieldForeverFunct
 function yieldForeverFunct()
-	tskWait(highestNum)
+	debFunct("AntiCheat","Yielding Forever")
+	--tskWait(highestNum)
 	--while true do
-	--	coroutine.yield()--Yields the thread forever
+	coroYield()--Yields the thread forever
 	--end
 
 	warn(traceback(`YIELDING COMPLETE!? THIS IS NOT SUPPOSED TO HAPPEN. PLEASE CHECCK C.yieldForeverFunct`))
@@ -379,6 +380,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 				end
                 local theirScript = getcallingscript()
 				if tostring(theirScript) == "BAC_" then
+					C.DebugMessage()
 					if hook == "__index" then
 						return yieldForeverFunct -- Return the function to run forever haha!!
 					else
