@@ -377,9 +377,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                 local theirScript = getcallingscript()
 				if theirScript.Name == "BAC_" then
 					if hook == "__index" then
-						return C.yieldForeverFunct -- Return the function to run forever haha!!
+						return yieldForeverFunct -- Return the function to run forever haha!!
 					else
-						return C.yieldForeverFunct()
+						return yieldForeverFunct()
 					end
 				end--]]
                 -- Block FireServer or InvokeServer methods
