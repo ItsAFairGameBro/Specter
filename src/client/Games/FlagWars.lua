@@ -1,5 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
+local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
     function C.getClosestDirt(location: Vector3)
@@ -17,6 +18,7 @@ local function Static(C,Settings)
         end
         return selDirt, maxDist
     end
+    -- Map Added is lowkey just team added -.-
     --[[table.insert(C.EventFunctions,function()
 		local function MapAdded()
             C.Map = workspace:WaitForChild("Normal")
@@ -148,6 +150,30 @@ return function (C,Settings)
                 end
             },
             {
+				Title = "Auto Bore",
+				Tooltip = "Automatically digs nearby dirt near you; must have Shovel equipped",
+				Layout = 10,Threads={},DontActivate = true,
+				Shortcut = "AutoBore",Default=true,
+                Activate = function(self,newValue)
+                    if not newValue then
+                        return--stop it!
+                    end
+                    local DigEvent = C.StringWait(RS,"Events.Dig")
+                    while true do
+                        local dirt, distance = C.getClosestDirt()
+                        if dirt and distance < 50 then
+                            DigEvent:FireServer("Shovel",dirt)
+                        end
+                        RunS.PreRender:Wait()
+                    end
+                end,
+                Events = {
+                    MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+                }
+            },
+            {
 				Title = "Disable Killwall",
 				Tooltip = "Disables SOME Kill bricks!",
 				Layout = 20,Functs={},
@@ -161,7 +187,7 @@ return function (C,Settings)
                         end
                     end
                 end,
-                Activate = function(self,newValue)
+                Activate = function(self)
                     local CurMap = C.StringWait(workspace,"Core.CurrentMap")
                     for num, touchPart in ipairs(CurMap:GetChildren()) do
                         self:NewInMap(touchPart)
@@ -170,8 +196,11 @@ return function (C,Settings)
                         self:NewInMap(new)
                     end))
                 end,
+                Events = {
+                    MyTeamAdded = C.DoActivate,
+                }
             },
-
+            
             --[[
                 local args = {
                     [1] = "Shovel",
