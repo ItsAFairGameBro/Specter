@@ -178,7 +178,7 @@ C.BindedActions = {} -- key binds
 C.EventFunctions = {}
 C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
-C.Debugs = {All = true,
+C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
