@@ -604,7 +604,20 @@ return function(C,Settings)
 			C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
 		end
 	end
-
+	-- Degree calculation
+	function C.AngleOffFromCFrame(cframe: CFrame, point: Vector3)
+		-- Get the forward vector of the CFrame (this is the lookVector)
+		local forwardVector = cframe.LookVector
+		-- Get the vector from the CFrame's position to the point
+		local toPointVector = (point - cframe.Position).Unit
+		-- Calculate the dot product between the forward vector and the vector to the point
+		local dotProduct = forwardVector:Dot(toPointVector)
+		-- Get the angle between the two vectors in radians
+		local angleInRadians = math.acos(dotProduct)
+		-- Convert the angle to degrees
+		local angleInDegrees = math.deg(angleInRadians)
+		return angleInDegrees
+	end	
 	-- Closest Plr
 	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean},location:Vector3)
 		data = data or {}

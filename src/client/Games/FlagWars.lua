@@ -7,11 +7,12 @@ local function Static(C,Settings)
         local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
         if not myHRPPos then return end
     
-        local selDirt, maxDist = nil, 100
+        local selDirt, maxDist, closestAngle = nil, 2, 360
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
-                if ((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y) then
+                local angle = math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))
+                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y)) and angle < closestAngle then
                     selDirt, maxDist = part, d
                 end
             end
@@ -159,8 +160,8 @@ return function (C,Settings)
 
                     while true do
                         local dirt, distance = C.getClosestDirt()
-                        if dirt and distance < 100 then
-                            warn("Distance",tostring(distance))
+                        if dirt and distance < 25 then
+                            --warn("Distance",tostring(distance))
                             for s = 1, 10, 1 do
                                 task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
                             end
