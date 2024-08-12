@@ -161,6 +161,7 @@ return function (C,Settings)
                     while true do
                         local dirt, distance = C.getClosestDirt()
                         if dirt and distance < 50 then
+                            print("Distance",distance)
                             for s = 1, 10, 1 do
                                 task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
                             end
