@@ -128,27 +128,27 @@ return function(C,Settings)
                     end
                 end)--]]
 
-                C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", (function(theirScript,method,funct,...)
+                C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", C.newcclosure(function(theirScript,method,funct,...)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
                         task.spawn(C.DebugMessage,"AntiCheat",`TASK SPAWN YIELD ON SCR: {theirScript:GetFullName()}!`)
                         return "Yield"
                     end
                 end))
-                C.HookMethod("__namecall","AntiCheat5",function(theirScript,method,self,...)
+                C.HookMethod("__namecall","AntiCheat5",C.newcclosure(function(theirScript,method,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
                         task.spawn(C.DebugMessage,"AntiCheat",`YIELDING NAMECALL FOR SCR: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()}`)
                         return "Yield"
                     end
-                end,{"fireserver"})
-                C.HookMethod("__index","AntiCheat5",function(theirScript,index,self,...)
+                end),{"fireserver"})
+                C.HookMethod("__index","AntiCheat5",C.newcclosure(function(theirScript,index,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
                         task.spawn(C.DebugMessage,"AntiCheat",`YIELDING INDEXCALL: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()} INDEX: {index}`)
                         return "Yield"
                     end
-                end,{"fireserver"})
+                end),{"fireserver"})
             end,
             KeepGoing = false, RunOnce = false,
             GameIds = {1160789089},PlaceIds={},
@@ -156,30 +156,30 @@ return function(C,Settings)
         {
             Run = function(self)
                 local Old
-                Old = hookfunction(getrenv().pcall, function(self,...)
+                Old = hookfunction(getrenv().pcall, C.newcclosure(function(self,...)
                     local Returns = {Old(self,...)}
                     print(self,debug.traceback(),Returns)
                     return table.unpack(Returns)
-                end)
+                end))
 
                 local Old = getrenv().pcall
-                getrenv().pcall = function(self,...)
+                getrenv().pcall = C.newcclosure(function(self,...)
                     local Returns = {Old(self,...)}
                     print(self,...,Returns)
                     return table.unpack(Returns)
-                end
+                end)
                 local Old
-                Old = hookfunction(debug.info, function(self,...)
+                Old = hookfunction(debug.info, C.newcclosure(function(self,...)
                     local Returns = {Old(self,...)}
                     print("info",self,...,Returns)
                     return table.unpack(Returns)
-                end)
+                end))
                 local Old2
-                Old2 = hookfunction(debug.traceback, function(self,...)
+                Old2 = hookfunction(debug.traceback, C.newcclosure(function(self,...)
                     local Returns = {Old2(self,...)}
                     print("traceback",self,...,Returns)
                     return table.unpack(Returns)
-                end)
+                end))
             end,
             KeepGoing = false, RunOnce = false,
             GameIds = {},PlaceIds={},
