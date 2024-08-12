@@ -160,9 +160,9 @@ return function (C,Settings)
                     while true do
                         local dirt, distance = C.getClosestDirt()
                         if dirt and distance < 50 then
-                            --for s = 1, 10, 1 do
-                            DigEvent:FireServer("Shovel",dirt)
-                            --end
+                            for s = 1, 10, 1 do
+                                task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
+                            end
                         end
                         RunS.PreRender:Wait()
                     end
@@ -171,9 +171,9 @@ return function (C,Settings)
                     if not newValue then
                         return--stop it!
                     end
-                    for s = 1, 10, 1 do
-                        table.insert(self.Threads,task.spawn(self.Run,self))
-                    end
+                    --for s = 1, 10, 1 do
+                    --    table.insert(self.Threads,task.spawn(self.Run,self))
+                    --end
                     self:Run()
                 end,
                 Events = {
