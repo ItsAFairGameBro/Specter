@@ -352,7 +352,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 	end
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
-		local checkcaller = C.checkcaller
+		local checkcaller, yieldForeverFunct = C.checkcaller, C.yieldForeverFunct
 		local gsub = string.gsub
 		local getVal, setVal = rawget, rawset
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
@@ -375,13 +375,13 @@ function C.HookMethod(hook, name, runFunct, methods)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				if theirScript.Name == "BAC_" then
+				--[[if theirScript.Name == "BAC_" then
 					if hook == "__index" then
 						return C.yieldForeverFunct -- Return the function to run forever haha!!
 					else
 						return C.yieldForeverFunct()
 					end
-				end
+				end--]]
                 -- Block FireServer or InvokeServer methods
                 for name, list in pairs(myHooks) do
 					local indexes = getVal(list,2)
@@ -398,9 +398,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                                 return -- Cancelled
                             elseif operation == "Yield" then
 								if hook == "__index" then
-									return C.yieldForeverFunct -- Return the function to run forever haha!!
+									return yieldForeverFunct -- Return the function to run forever haha!!
 								else
-									return C.yieldForeverFunct()
+									return yieldForeverFunct()
 								end
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
