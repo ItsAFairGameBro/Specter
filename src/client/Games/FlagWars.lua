@@ -16,6 +16,7 @@ local function Static(C,Settings)
                 end
             end
         end
+        print(maxDist)
         return selDirt, maxDist
     end
     -- Map Added is lowkey just team added -.-
