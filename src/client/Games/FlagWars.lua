@@ -12,7 +12,7 @@ local function Static(C,Settings)
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
                 local angle = math.round(math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))/10)*10
-                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y)) then
+                if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y)) 
                         and (angle < closestAngle) and d < absoluteMaximumDirtDistance then
                     selDirt, maxDist, closestAngle = part, d, angle
                 end
