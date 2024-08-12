@@ -336,15 +336,18 @@ end
 --Load hooks immediately
 local originalNamecall = nil
 local getgenv = getgenv
-function C.yieldForeverFunct()
-	task.wait(C.HighestNumber)
+local traceback, tskWait, highestNum = debug.traceback, task.wait, C.HighestNumber
+local yieldForeverFunct
+function yieldForeverFunct()
+	tskWait(highestNum)
 	--while true do
 	--	coroutine.yield()--Yields the thread forever
 	--end
 
-	warn(debug.traceback(`YIELDING COMPLETE!? THIS IS NOT SUPPOSED TO HAPPEN. PLEASE CHECCK C.yieldForeverFunct`))
-	C.yieldForeverFunct() -- Run it again sucker!
+	warn(traceback(`YIELDING COMPLETE!? THIS IS NOT SUPPOSED TO HAPPEN. PLEASE CHECCK C.yieldForeverFunct`))
+	yieldForeverFunct() -- Run it again sucker!
 end
+C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 function C.HookMethod(hook, name, runFunct, methods)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
@@ -352,7 +355,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 	end
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
-		local checkcaller, yieldForeverFunct = C.checkcaller, C.yieldForeverFunct
+		local checkcaller = C.checkcaller
 		local gsub = string.gsub
 		local getVal, setVal = rawget, rawset
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
