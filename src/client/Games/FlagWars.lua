@@ -7,7 +7,7 @@ local function Static(C,Settings)
         local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
         if not myHRPPos then return end
     
-        local selDirt, maxDist = nil, math.huge
+        local selDirt, maxDist = nil, 12
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
@@ -16,7 +16,6 @@ local function Static(C,Settings)
                 end
             end
         end
-        print(maxDist)
         return selDirt, maxDist
     end
     -- Map Added is lowkey just team added -.-
@@ -160,7 +159,7 @@ return function (C,Settings)
 
                     while true do
                         local dirt, distance = C.getClosestDirt()
-                        if dirt and distance < 50 then
+                        if dirt and distance < 22 then
                             warn("Distance",tostring(distance))
                             for s = 1, 10, 1 do
                                 task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
