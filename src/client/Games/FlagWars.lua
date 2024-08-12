@@ -118,16 +118,17 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     local EnTbl = self.EnTbl
                     local tblClone, tblPack = table.clone, table.pack
+                    local getVal, setVal = rawget, rawset
                     C.HookMethod("__namecall",self.Shortcut,function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
                             if newValue then
-                                local ClosestHead, Distance = C.getClosest(nil,arg2["p"])
+                                local ClosestHead, Distance = C.getClosest(nil,getVal(arg2,"p"))
                                 if ClosestHead then--and Distance < 50 then
                                     -- Table Clone: Security Prevention
                                     arg2 = tblClone(arg2)
-                                    arg2["part"] = ClosestHead
-                                    arg2["p"] = ClosestHead.Position
-                                    arg2["h"] = ClosestHead
+                                    setVal(arg2,"part",ClosestHead)
+                                    setVal(arg2,"p",ClosestHead.Position)
+                                    setVal(arg2,"h",ClosestHead)
 
                                     --[[dataTbl["p"] = ClosestHead.Position
                                     dataTbl["d"] = Distance
@@ -135,15 +136,15 @@ return function (C,Settings)
                                     dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
                                     dataTbl["maxDist"] = Distance + .3
                                     dataTbl["t"] = 1--]]
-
+                                    return "Override", tblPack(arg1,arg2,...)
                                 elseif EnTbl.NoSelfKill then
                                     --task.delay(1,print,"Canceled; none found")
                                     return "Cancel"--do nothing lol, don't kill yaself!
                                 end
                             end
                             -- Fake the signal into firing, meanwhile firing our own
-                            task.spawn(self.FireServer,self,arg1,arg2,...)
-                            return "Cancel"
+                            --task.spawn(self.FireServer,self,arg1,arg2,...)
+                            return-- "Cancel"
                         end
                         
                     end,{"fireserver"})
