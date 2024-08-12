@@ -11,7 +11,7 @@ local function Static(C,Settings)
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
-                if d < maxDist or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y) then
+                if ((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y) then
                     selDirt, maxDist = part, d
                 end
             end
