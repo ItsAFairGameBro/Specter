@@ -14,7 +14,7 @@ local function Static(C,Settings)
                 local angle = math.abs(C.AngleOffFromCFrame(C.hrp:GetPivot(),part.Position))
                 if (((not selDirt or part.Position.Y - 0.5 < selDirt.Position.Y) and d < maxDist) or (selDirt and part.Position.Y+0.5 < selDirt.Position.Y))
                     and (angle < closestAngle) and d < 22 then
-                    selDirt, maxDist = part, d
+                    selDirt, maxDist, closestAngle = part, d, angle
                 end
             end
         end
