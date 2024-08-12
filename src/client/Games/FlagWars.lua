@@ -7,7 +7,7 @@ local function Static(C,Settings)
         local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
         if not myHRPPos then return end
     
-        local selDirt, maxDist = nil, 12
+        local selDirt, maxDist = nil, 10
         for num, part in pairs(workspace.Core.CurrentDirt:GetDescendants()) do
             if part:IsA("BasePart") then
                 local d = (part.Position - myHRPPos).Magnitude
