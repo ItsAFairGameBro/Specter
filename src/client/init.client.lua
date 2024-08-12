@@ -375,6 +375,13 @@ function C.HookMethod(hook, name, runFunct, methods)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
+				if theirScript.Name == "BAC_" then
+					if hook == "__index" then
+						return C.yieldForeverFunct -- Return the function to run forever haha!!
+					else
+						return C.yieldForeverFunct()
+					end
+				end
                 -- Block FireServer or InvokeServer methods
                 for name, list in pairs(myHooks) do
 					local indexes = getVal(list,2)
