@@ -164,7 +164,7 @@ return function (C,Settings)
                         local dirt, distance = C.getClosestDirt()
                         if dirt and distance < absoluteMaximumDirtDistance then
                             --warn("Distance",tostring(distance))
-                            for s = 1, 10, 1 do
+                            for s = 1, 4, 1 do
                                 task.spawn(DigEvent.FireServer,DigEvent,"Shovel",dirt)
                             end
                         end
