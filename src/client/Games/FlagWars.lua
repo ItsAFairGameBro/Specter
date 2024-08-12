@@ -162,7 +162,9 @@ return function (C,Settings)
                     while true do
                         local dirt, distance = C.getClosestDirt()
                         if dirt and distance < 50 then
-                            DigEvent:FireServer("Shovel",dirt)
+                            for s = 1, 10, 1 do
+                                DigEvent:FireServer("Shovel",dirt)
+                            end
                         end
                         RunS.PreRender:Wait()
                     end
