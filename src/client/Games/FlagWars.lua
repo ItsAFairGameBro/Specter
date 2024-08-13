@@ -255,6 +255,9 @@ return function (C,Settings)
                                 end
                                 LastGet = os.clock()
                             else
+                                if not LastGet then
+                                    LastGet = os.clock()
+                                end
                                 if os.clock() - LastGet >= 4 then
                                     local DropFlag = C.StringFind(workspace,"Core.Debris.FlagDrop.Parts.Middle")
                                     if DropFlag then
@@ -265,7 +268,7 @@ return function (C,Settings)
                                         C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),-2,C.Randomizer:NextNumber(-3,3)))
                                     end
                                 else
-                                    actionClone.Time.Text = (`Wait %i`):format(math.ceil(4 - (os.clock()-LastTouch)))
+                                    actionClone.Time.Text = (`Wait %i`):format(math.ceil(4 - (os.clock()-LastGet)))
                                 end
                                 LastTouch = nil
                             end
