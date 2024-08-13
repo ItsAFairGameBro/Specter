@@ -163,11 +163,11 @@ return function(C, _SETTINGS)
 
 		-- Load Individual Hacks
 		for num, hackData in pairs(hack.Tab) do
-			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
-			assert(typeof(hackData.Layout)=="number",`{hackData.Title} from {name} has invalid .Layout property!`)
 			if not hackData or (C.isStudio and hackData.NoStudio) then
 				continue
 			end
+			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
+			assert(typeof(hackData.Layout)=="number",`{hackData.Title} from {name} has invalid .Layout property!`)
 			C.hackData[name][hackData.Shortcut] = hackData
 			local ButtonEx = C.Examples.HackButtonEx:Clone()
 			hackData.Button = ButtonEx
