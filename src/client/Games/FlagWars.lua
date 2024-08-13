@@ -250,11 +250,11 @@ return function (C,Settings)
                                     C.DoTeleport(AllyFlag.Position + TeleportOffset)
                                     actionClone.Time.Text = "Capturing"
                                 else
-                                    C.DoTeleport(EnemyFlag.Position + TempOffset)
+                                    C.DoTeleport(EnemyFlag.Position + TempOffset + Vector3.new(C.Randomizer:NextNumber(-2,2),0,C.Randomizer:NextNumber(-2,2)))
                                 end
                             else
                                 actionClone.Time.Text = "Getting Flag"
-                                C.DoTeleport(EnemyFlag.Position + TeleportOffset)
+                                C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-2,2),0,C.Randomizer:NextNumber(-2,2)))
                                 LastTouch = nil
                             end
                         end
