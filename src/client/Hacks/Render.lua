@@ -470,6 +470,7 @@ return function(C,Settings)
 					end
 					while true do
 						TL.Text = ("%i"):format(1/RunS.RenderStepped:Wait())
+						task.wait(1/3)
 					end
 				end,
 			},
