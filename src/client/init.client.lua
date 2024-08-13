@@ -374,12 +374,18 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local function CallFunction(self,...)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() then
+				print("Ran")
                 -- Get the method being called
-				local method = getnamecallmethod() or ...
+				local method
+				if HookType=="hookmetamethod" then
+					method = getnamecallmethod()
+				else
+					method = ...
+				end
 				if method and getType(method) == "string" then
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
-                local theirScript = getcallingscript()
+                local theirScript = not source and getcallingscript()
 				--[[if theirScript and theirScript.Name == "BAC_" then
 					if hook == "__index" then
 						tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
