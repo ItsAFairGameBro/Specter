@@ -143,7 +143,7 @@ return function (C,Settings)
                                 dataTbl['n'] = -(ClosestHead.Position - C.char.PrimaryPart.Position).Unit
                                 dataTbl["maxDist"] = Distance + .3
                                 dataTbl["t"] = 1--]]
-                                return "Override", tblPack(arg1,arg2,...)
+                                return "Override", tblPack(self,arg1,arg2,...)
                             elseif rawget(EnTbl,"NoSelfKill") then
                                 --task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
