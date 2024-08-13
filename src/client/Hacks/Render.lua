@@ -469,7 +469,7 @@ return function(C,Settings)
 						return
 					end
 					while true do
-						TL.Text = ("%i"):format(math.max(60,1/RunS.RenderStepped:Wait()))
+						TL.Text = ("%i"):format(math.min(60,1/RunS.RenderStepped:Wait()))
 						task.wait(2/3)
 					end
 				end,
