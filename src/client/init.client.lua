@@ -337,7 +337,7 @@ end
 local originalNamecall = nil
 local getgenv = getgenv
 local debFunct, traceback, tskWait, coroYield = C.DebugMessage, debug.traceback, task.wait, coroutine.yield
-local tskSpawn = task.spawn
+local tskSpawn, tskDelay = task.spawn, task.delay
 local yieldForeverFunct
 function yieldForeverFunct()
 	tskSpawn(debFunct,"AntiCheat",traceback("Yielding Forever"))
@@ -395,7 +395,12 @@ function C.HookMethod(hook, name, runFunct, methods)
                 for name, list in pairs(myHooks) do
 					local indexes = getVal(list,2)
                     if not indexes or tblFind(indexes,method) then -- Authorization
+						local isRunning = true
+						tskDelay(3, function()
+							warn(`[C.{HookType}]: Function is taking a long time to run with id = {name}`)
+						end)
                         local operation,returnData = getVal(list,3)(theirScript,method,self,...)
+						isRunning = false
                         if operation then
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
