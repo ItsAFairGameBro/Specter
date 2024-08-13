@@ -221,7 +221,7 @@ return function (C,Settings)
 				Title = "Loop Capture",
 				Tooltip = "Captures the flag the fastest possible",
 				Layout = 15,Functs={},Threads={},
-				Shortcut = "LoopCature",Default=true,
+				Shortcut = "LoopCature",Default=true,DontActivate=true,
                 Activate = function(self,newValue)
                     C.RemoveAction(self.Shortcut)
                     C.LoadPlayerCoords(self.Shortcut)
@@ -239,22 +239,24 @@ return function (C,Settings)
                     local TempOffset = Vector3.new(0,30,0)
                     local LastTouch
                     while true do
-                        local HasFlag = C.char:FindFirstChild("Flag")
-                        if HasFlag then
-                            if not LastTouch then
-                                LastTouch = os.clock()
-                                actionClone.Time.Text = "Waiting"
-                            elseif os.clock()-LastTouch <= 0 then
-                                C.DoTeleport(AllyFlag.Position)
-                                task.spawn(self.Activate,self)
-                                actionClone.Time.Text = "Capturing"
+                        if C.char then
+                            local HasFlag = C.char:FindFirstChild("Flag")
+                            if HasFlag then
+                                if not LastTouch then
+                                    LastTouch = os.clock()
+                                    actionClone.Time.Text = "Waiting"
+                                elseif os.clock()-LastTouch <= 0 then
+                                    C.DoTeleport(AllyFlag.Position)
+                                    task.spawn(self.Activate,self)
+                                    actionClone.Time.Text = "Capturing"
+                                else
+                                    C.DoTeleport(EnemyFlag.Position + TempOffset)
+                                end
                             else
-                                C.DoTeleport(EnemyFlag.Position + TempOffset)
+                                actionClone.Time.Text = "Getting Flag"
+                                C.DoTeleport(EnemyFlag.Position)
+                                LastTouch = nil
                             end
-                        else
-                            actionClone.Time.Text = "Getting Flag"
-                            C.DoTeleport(EnemyFlag.Position)
-                            LastTouch = nil
                         end
                         RunS.PreSimulation:Wait()
                     end
