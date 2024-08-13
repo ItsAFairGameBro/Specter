@@ -236,23 +236,23 @@ return function (C,Settings)
                     end}
                     local actionClone = C.AddAction(info)
                     C.SavePlayerCoords(self.Shortcut)
-                    --local TempOffset
+                    local TempOffset = Vector3.new(0,30,0)
                     local LastTouch
                     while true do
                         local HasFlag = C.char:FindFirstChild("Flag")
                         if HasFlag then
-                            actionClone.Time.Text = "Waiting..."
                             if not LastTouch then
                                 LastTouch = os.clock()
+                                actionClone.Time.Text = "Waiting"
                             elseif os.clock()-LastTouch <= 0 then
-                                C.SavePlayerCoords(self.Shortcut)
                                 C.DoTeleport(AllyFlag.Position)
                                 task.spawn(self.Activate,self)
+                                actionClone.Time.Text = "Capturing"
                             else
-                                C.LoadPlayerCoords(self.Shortcut)
+                                C.DoTeleport(EnemyFlag.Position + TempOffset)
                             end
                         else
-                            actionClone.Time.Text = "Getting Flag..."
+                            actionClone.Time.Text = "Getting Flag"
                             C.DoTeleport(EnemyFlag.Position)
                             LastTouch = nil
                         end
