@@ -228,7 +228,7 @@ return function (C,Settings)
                         return
                     end
                     local EnemyTeam = C.plr.Team == "Team Blue" and "Team Red" or "Team Blue"
-                    local AllyFlag = game:GetService("Workspace").Core.Flags[C.plr.Name].Base
+                    local AllyFlag = game:GetService("Workspace").Core.Flags[C.plr.Team.Name].Base
                     local EnemyFlag = game:GetService("Workspace").Core.Flags[EnemyTeam].Base
                     local info = {Name=self.Shortcut,Title="Loop Capture",Tags={"RemoveOnDestroy"},Stop=function()
                         self:Activate(false)
