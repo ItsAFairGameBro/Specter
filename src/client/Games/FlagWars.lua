@@ -154,7 +154,7 @@ return function (C,Settings)
 					},
                 },
             },
-            {
+            false and {
 				Title = "Sword Hit",
 				Tooltip = "Hits the closest user",
 				Layout = 5,
