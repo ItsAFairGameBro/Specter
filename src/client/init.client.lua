@@ -436,6 +436,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		if HookType == "hookfunction" and typeof(hook) == "string" and source then -- we'll do this the old way then!
 			OriginFunct = rawget(source,hook)
 			rawset(source,hook,CallFunction)
+			print("Origin",OriginFunct,hook,source)
 		else
 			OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
 				or (HookType == "hookfunction" and C.hookfunction(hook, (CallFunction)))
