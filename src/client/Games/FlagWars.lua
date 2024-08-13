@@ -236,15 +236,17 @@ return function (C,Settings)
                     end}
                     local actionClone = C.AddAction(info)
                     C.SavePlayerCoords(self.Shortcut)
+                    --local TempOffset
                     local LastTouch
                     while true do
                         local HasFlag = C.char:FindFirstChild("Flag")
                         if HasFlag then
                             if not LastTouch then
                                 LastTouch = os.clock()
-                            elseif os.clock()-LastTouch < 5 then
+                            elseif os.clock()-LastTouch <= 0 then
                                 C.SavePlayerCoords(self.Shortcut)
                                 C.DoTeleport(AllyFlag.Position)
+                                task.spawn(self.Activate,self)
                             else
                                 C.LoadPlayerCoords(self.Shortcut)
                             end
