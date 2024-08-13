@@ -259,10 +259,20 @@ return function (C,Settings)
                                     LastGet = os.clock()
                                 end
                                 if os.clock() - LastGet >= 3 then
-                                    local DropFlag = C.StringFind(workspace,"Core.Debris.FlagDrop.Parts.Middle")
-                                    if DropFlag then
+                                    local Debris = C.StringFind(workspace,"Core.Debris")
+                                    local EnemyDropMiddle
+                                    for num, flag in ipairs(Debris and Debris:GetChildren() or {}) do
+                                        if flag.Name == "FlagDrop" then
+                                            local DropMiddle = C.StringFind(flag,"Parts.Middle")
+                                            local DropTL = C.StringFind(flag,"DropCount.Time")
+                                            if DropMiddle and (DropTL.TextColor3.R*255 > .8 and C.plr.Team.Name=="Team Blue") or (DropTL.TextColor3.B > .8 and C.plr.Name=="Team Red") then
+                                                EnemyDropMiddle = DropMiddle
+                                            end
+                                        end
+                                    end
+                                    if EnemyDropMiddle then
                                         actionClone.Time.Text = "Pick Up"
-                                        C.DoTeleport(DropFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-2,4),C.Randomizer:NextNumber(-1,1)))
+                                        C.DoTeleport(EnemyDropMiddle.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-2,4),C.Randomizer:NextNumber(-1,1)))
                                     else
                                         actionClone.Time.Text = "Base Steal"
                                         C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),C.Randomizer:NextNumber(-2,4),C.Randomizer:NextNumber(-3,3)))
