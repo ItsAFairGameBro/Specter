@@ -457,21 +457,21 @@ return function(C,Settings)
 					},--]]
 				}
 			},
-		},
-		{
-			Title = "Frame Rate",
-			Tooltip = "Displays frame rate at the top right corner of your screen",
-			Layout = 20,Default=true,
-			Shortcut = "FrameRate", Threads = {},
-			Activate = function(self,newValue)
-				if not newValue then
-					return
-				end
-				local TL = C.UI.FrameRate
-				while true do
-					TL.Text = ("%i"):format(1/RunS.RenderStepped:Wait())
-				end
-			end,
-		},
+			{
+				Title = "Frame Rate",
+				Tooltip = "Displays frame rate at the top right corner of your screen",
+				Layout = 20,Default=true,
+				Shortcut = "FrameRate", Threads = {},
+				Activate = function(self,newValue)
+					if not newValue then
+						return
+					end
+					local TL = C.UI.FrameRate
+					while true do
+						TL.Text = ("%i"):format(1/RunS.RenderStepped:Wait())
+					end
+				end,
+			},
+		}
 	}
 end
