@@ -117,13 +117,14 @@ return function (C,Settings)
 				Shortcut = "GunHit",Default=true,
                 Activate = function(self,newValue)
                     local EnTbl = self.EnTbl
-                    local tblClone, tblPack = table.clone, table.pack
+                    local tblClone, tblPack, tskSpawn = table.clone, table.pack, task.spawn
                     local getVal, setVal = rawget, rawset
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "WeaponHit" then
                             local ClosestHead, Distance = C.getClosest(nil,getVal(arg2,"p"))
                             if ClosestHead then--and Distance < 50 then
                                 -- Table Clone: Security Prevention
+                                tskSpawn(print,arg2)
                                 arg2 = tblClone(arg2)
                                 setVal(arg2,"part",ClosestHead)
                                 setVal(arg2,"p",ClosestHead.Position)
@@ -150,6 +151,13 @@ return function (C,Settings)
 						Title = "No Self Kill",
 						Tooltip = "Disabling hitting yourself with explosive weapons",
 						Layout = 1,Default=true,
+						Shortcut="NoSelfKill",
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "(Experimental) Override All",
+						Tooltip = "Overrides ALL aspects, not just the target. This includes direction, unit vector, distance, and time.",
+						Layout = 2,Default=false,
 						Shortcut="NoSelfKill",
 					},
                 },
