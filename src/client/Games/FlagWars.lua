@@ -247,14 +247,14 @@ return function (C,Settings)
                                     LastTouch = os.clock()
                                     actionClone.Time.Text = "Waiting"
                                 elseif os.clock()-LastTouch >= 6 then
-                                    C.DoTeleport(AllyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),-.5,C.Randomizer:NextNumber(-3,3)))
+                                    C.DoTeleport(AllyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),-2,C.Randomizer:NextNumber(-3,3)))
                                     actionClone.Time.Text = "Capturing"
                                 else
                                     C.DoTeleport(EnemyFlag.Position + TempOffset)
                                 end
                             else
                                 actionClone.Time.Text = "Getting Flag"
-                                C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),-.5,C.Randomizer:NextNumber(-3,3)))
+                                C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),-2,C.Randomizer:NextNumber(-3,3)))
                                 LastTouch = nil
                             end
                         end
