@@ -165,7 +165,7 @@ return function(C, _SETTINGS)
 		for num, hackData in pairs(hack.Tab) do
 			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
 			assert(typeof(hackData.Layout)=="number",`{hackData.Title} from {name} has invalid .Layout property!`)
-			if C.isStudio and hackData.NoStudio then
+			if not hackData or (C.isStudio and hackData.NoStudio) then
 				continue
 			end
 			C.hackData[name][hackData.Shortcut] = hackData
