@@ -122,7 +122,7 @@ return function(C,Settings)
                     
                     warn("[Attribute Search] Search Beggining...")
 
-                    local Count = C.comma_value(loop(game))
+                    local Count = C.comma_value(loop(game:GetService("ReplicatedStorage").Modules.DataService))
                     
                     warn(("[Attribute Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
 				end,
