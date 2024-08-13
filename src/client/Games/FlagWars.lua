@@ -232,11 +232,11 @@ return function (C,Settings)
                     local AllyFlag = game:GetService("Workspace").Core.Flags[C.plr.Team.Name].Base
                     local EnemyFlag = game:GetService("Workspace").Core.Flags[EnemyTeam].Base
                     local info = {Name=self.Shortcut,Title="Loop Capture",Tags={"RemoveOnDestroy"},Stop=function()
-                        self:Activate(false)
+                        self:SetValue(false)
                     end}
                     local actionClone = C.AddAction(info)
                     C.SavePlayerCoords(self.Shortcut)
-                    local TempOffset = Vector3.new(0,30,0)
+                    local TempOffset = Vector3.new(0,-50,0)
                     local LastTouch
                     while true do
                         if C.char then
