@@ -240,7 +240,9 @@ return function (C,Settings)
                     while true do
                         local HasFlag = C.char:FindFirstChild("Flag")
                         if HasFlag then
-                            if LastTouch and os.clock()-LastTouch < 5 then
+                            if not LastTouch then
+                                LastTouch = os.clock()
+                            elseif os.clock()-LastTouch < 5 then
                                 C.SavePlayerCoords(self.Shortcut)
                                 C.DoTeleport(AllyFlag.Position)
                             else
