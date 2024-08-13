@@ -178,7 +178,7 @@ C.BindedActions = {} -- key binds
 C.EventFunctions = {}
 C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
-C.Debugs = {All = true,
+C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
@@ -351,7 +351,6 @@ function yieldForeverFunct()
 end
 C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
-local IsAlreadyCaller = false
 function C.HookMethod(hook, name, runFunct, methods)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
@@ -374,9 +373,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 		local OriginFunct
 		local function CallFunction(self,...)
 			 -- Check if the caller is not a local script
-			 if not checkcaller() and not IsAlreadyCaller then
-				-- Just in case to prevent loops:
-				IsAlreadyCaller = true
+			 if not checkcaller() then
                 -- Get the method being called
 				local method = getnamecallmethod() or ...
 				if method and getType(method) == "string" then
@@ -400,7 +397,6 @@ function C.HookMethod(hook, name, runFunct, methods)
                     if not indexes or tblFind(indexes,method) then -- Authorization
                         local operation,returnData = getVal(list,3)(theirScript,method,self,...)
                         if operation then
-							IsAlreadyCaller = false
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
 							elseif operation == "Override" then
@@ -417,12 +413,10 @@ function C.HookMethod(hook, name, runFunct, methods)
 								end
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
-								IsAlreadyCaller = true
                             end
                         end
                     end
                 end
-				IsAlreadyCaller = false
             end
 			return OriginFunct(self,...)
 		end
