@@ -351,6 +351,7 @@ function yieldForeverFunct()
 end
 C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
+local IsAlreadyCaller = false
 function C.HookMethod(hook, name, runFunct, methods)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
@@ -358,7 +359,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
 		local checkcaller = C.checkcaller
-		local gsub = string.gsub
+		local gsub,getType = string.gsub, typeof
 		local getVal, setVal = rawget, rawset
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
 
@@ -373,10 +374,12 @@ function C.HookMethod(hook, name, runFunct, methods)
 		local OriginFunct
 		local function CallFunction(self,...)
 			 -- Check if the caller is not a local script
-			 if not checkcaller() then
+			 if not checkcaller() and not IsAlreadyCaller then
+				-- Just in case to prevent loops:
+				IsAlreadyCaller = true
                 -- Get the method being called
 				local method = getnamecallmethod() or ...
-				if method then
+				if method and getType(method) == "string" then
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
@@ -397,6 +400,7 @@ function C.HookMethod(hook, name, runFunct, methods)
                     if not indexes or tblFind(indexes,method) then -- Authorization
                         local operation,returnData = getVal(list,3)(theirScript,method,self,...)
                         if operation then
+							IsAlreadyCaller = false
                             if operation == "Spoof" then
                                 return tblUnpack(returnData)
 							elseif operation == "Override" then
@@ -413,10 +417,12 @@ function C.HookMethod(hook, name, runFunct, methods)
 								end
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
+								IsAlreadyCaller = true
                             end
                         end
                     end
                 end
+				IsAlreadyCaller = false
             end
 			return OriginFunct(self,...)
 		end
