@@ -382,9 +382,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                 local theirScript = getcallingscript()
 				if tostring(theirScript) == "BAC_" then
 					if hook == "__index" then
-						return yieldForeverFunct -- Return the function to run forever haha!!
+						return coroYield -- Return the function to run forever haha!!
 					else
-						return yieldForeverFunct()
+						return coroYield()
 					end
 				end--]]
                 -- Block FireServer or InvokeServer methods
@@ -403,9 +403,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                                 return -- Cancelled
                             elseif operation == "Yield" then
 								if hook == "__index" then
-									return yieldForeverFunct -- Return the function to run forever haha!!
+									return coroYield -- Return the function to run forever haha!!
 								else
-									return yieldForeverFunct()
+									return coroYield()
 								end
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
