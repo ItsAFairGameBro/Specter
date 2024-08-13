@@ -129,6 +129,13 @@ return function (C,Settings)
                                 setVal(arg2,"part",ClosestHead)
                                 setVal(arg2,"p",ClosestHead.Position)
                                 setVal(arg2,"h",ClosestHead)
+                                if rawget(EnTbl,"SetALLTargets") then
+                                    setVal(arg2,"m",ClosestHead.Material)
+                                    setVal(arg2,"t",rawget(arg2,"t")*3)
+                                    setVal(arg2,"d",rawget(arg2,"d")*3)
+                                    setVal(arg2,"maxDist",rawget(arg2,"maxDist")*3)
+                                end
+                                
 
                                 --[[dataTbl["p"] = ClosestHead.Position
                                 dataTbl["d"] = Distance
@@ -137,7 +144,7 @@ return function (C,Settings)
                                 dataTbl["maxDist"] = Distance + .3
                                 dataTbl["t"] = 1--]]
                                 return "Override", tblPack(arg1,arg2,...)
-                            elseif EnTbl.NoSelfKill then
+                            elseif rawget(EnTbl,"NoSelfKill") then
                                 --task.delay(1,print,"Canceled; none found")
                                 return "Cancel"--do nothing lol, don't kill yaself!
                             end
@@ -155,10 +162,10 @@ return function (C,Settings)
 					},
                     {
 						Type = Types.Toggle,
-						Title = "(Experimental) Override All",
-						Tooltip = "Overrides ALL aspects, not just the target. This includes direction, unit vector, distance, and time.",
-						Layout = 2,Default=false,
-						Shortcut="NoSelfKill",
+						Title = "(Experimental) Set All",
+						Tooltip = "Sets ALL aspects, not just the target. This includes direction, unit vector, distance, and time.",
+						Layout = 2,Default=true,
+						Shortcut="SetALLTargets",
 					},
                 },
             },
