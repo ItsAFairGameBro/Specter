@@ -40,7 +40,7 @@ return function(C,Settings)
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
 								if self.EnTbl.UpdateOthers and C.hrp.AssemblyAngularVelocity.Magnitude < .5 then
-									C.hrp.AssemblyAngularVelocity += Vector3.new(0,1,0)
+									C.hrp.AssemblyAngularVelocity += Vector3.new(0,3,0)
 								end
 							end
 						elseif (C.isInGame and C.isInGame(C.char)) then
