@@ -469,8 +469,8 @@ return function(C,Settings)
 						return
 					end
 					while true do
-						TL.Text = ("%i"):format(1/RunS.RenderStepped:Wait())
-						task.wait(1/3)
+						TL.Text = ("%i"):format(math.max(60,1/RunS.RenderStepped:Wait()))
+						task.wait(2/3)
 					end
 				end,
 			},
