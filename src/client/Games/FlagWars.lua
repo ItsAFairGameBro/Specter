@@ -236,7 +236,8 @@ return function (C,Settings)
                     end}
                     local actionClone = C.AddAction(info)
                     C.SavePlayerCoords(self.Shortcut)
-                    local TempOffset = Vector3.new(0,-50,0)
+                    local TeleportOffset = Vector3.new(0,2,0)
+                    local TempOffset = Vector3.new(0,-30,0)
                     local LastTouch
                     while true do
                         if C.char then
@@ -246,14 +247,14 @@ return function (C,Settings)
                                     LastTouch = os.clock()
                                     actionClone.Time.Text = "Waiting"
                                 elseif os.clock()-LastTouch >= 7 then
-                                    C.DoTeleport(AllyFlag.Position)
+                                    C.DoTeleport(AllyFlag.Position + TeleportOffset)
                                     actionClone.Time.Text = "Capturing"
                                 else
                                     C.DoTeleport(EnemyFlag.Position + TempOffset)
                                 end
                             else
                                 actionClone.Time.Text = "Getting Flag"
-                                C.DoTeleport(EnemyFlag.Position)
+                                C.DoTeleport(EnemyFlag.Position + TeleportOffset)
                                 LastTouch = nil
                             end
                         end
