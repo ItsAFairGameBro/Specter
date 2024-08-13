@@ -124,7 +124,7 @@ return function (C,Settings)
                             local ClosestHead, Distance = C.getClosest(nil,getVal(arg2,"p"))
                             if ClosestHead then--and Distance < 50 then
                                 -- Table Clone: Security Prevention
-                                tskSpawn(print,arg2)
+                                --tskSpawn(print,arg2)
                                 arg2 = tblClone(arg2)
                                 setVal(arg2,"part",ClosestHead)
                                 setVal(arg2,"p",ClosestHead.Position)
@@ -200,7 +200,7 @@ return function (C,Settings)
             },
             {
 				Title = "Auto Bore",
-				Tooltip = "Automatically digs nearby dirt near you; must have Shovel equipped",
+				Tooltip = "Automatically digs nearby dirt near you",
 				Layout = 10,Threads={},DontActivate = true,
 				Shortcut = "AutoBore",Default=true,
                 Run = function(self)
