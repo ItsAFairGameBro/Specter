@@ -97,6 +97,13 @@ return function(C,Settings)
 		C.getgenv().PrintEnvironment = true
 	end
 	--Table Functions
+	function C.TblFind(tbl,val)
+		for key, val2 in pairs(tbl) do
+			if val2 == val then
+				return key
+			end
+		end
+	end
 	function C.TblAdd(tbl,val)
 		local key = table.find(tbl,val)
 		if not key then
