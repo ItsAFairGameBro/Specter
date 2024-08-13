@@ -218,6 +218,33 @@ return function (C,Settings)
                 }
             },
             {
+				Title = "Loop Capture",
+				Tooltip = "Captures the flag the fastest possible",
+				Layout = 15,Functs={},Threads={},
+				Shortcut = "LoopCature",Default=true,
+                Activate = function(self,newValue)
+                    C.RemoveAction(self.Shortcut)
+                    if not newValue then
+                        return
+                    end
+                    local EnemyTeam = C.plr.Team == "Team Blue" and "Team Red" or "Team Blue"
+                    local AllyFlag = game:GetService("Workspace").Core.Flags[C.plr.Name].Base
+                    local EnemyFlag = game:GetService("Workspace").Core.Flags[EnemyTeam].Base
+                    local info = {Name=self.Shortcut,Title="Loop Capture",Tags={"RemoveOnDestroy"},Stop=function()
+                        self:Activate(false)
+                    end}
+                    local actionClone = C.AddAction(info)
+                    --while true do
+                        
+                    --end
+                end,
+                Events = {
+                    MyTeamAdded = function(self,theirPlr,newTeamName)
+						C.DoActivate(self,self.Activate,self.RealEnabled)
+					end,
+                }
+            },
+            {
 				Title = "Disable Killwall",
 				Tooltip = "Disables SOME Kill bricks!",
 				Layout = 20,Functs={},

@@ -382,9 +382,13 @@ function C.HookMethod(hook, name, runFunct, methods)
                 local theirScript = getcallingscript()
 				if tostring(theirScript) == "BAC_" then
 					if hook == "__index" then
+						tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 						return coroYield -- Return the function to run forever haha!!
 					else
-						return coroYield()
+						tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {theirScript.Name}`)
+						coroYield()
+						error("coroutine thread was attempting to be resumed for script "..theirScript.Name)
+						return
 					end
 				end--]]
                 -- Block FireServer or InvokeServer methods
@@ -403,9 +407,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                                 return -- Cancelled
                             elseif operation == "Yield" then
 								if hook == "__index" then
-									return coroYield -- Return the function to run forever haha!!
+									return yieldForeverFunct -- Return the function to run forever haha!!
 								else
-									return coroYield()
+									return yieldForeverFunct()
 								end
                             else
                                 warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
