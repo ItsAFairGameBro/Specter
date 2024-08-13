@@ -397,7 +397,9 @@ function C.HookMethod(hook, name, runFunct, methods)
                     if not indexes or tblFind(indexes,method) then -- Authorization
 						local isRunning = true
 						tskDelay(3, function()
-							warn(`[C.{HookType}]: Function is taking a long time to run with id = {name}`)
+							if isRunning then
+								warn(`[C.{HookType}]: Function is taking a long time to run with id = {name}`)
+							end
 						end)
                         local operation,returnData = getVal(list,3)(theirScript,method,self,...)
 						isRunning = false
