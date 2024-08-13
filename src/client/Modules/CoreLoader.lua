@@ -153,7 +153,7 @@ return function(C, _SETTINGS)
 			end
 			TabEx.Name = category.Name
 			TabEx.Parent = C.UI.TabsFrame
-			TabEx.ZIndex = CategoryEx.LayoutOrder
+			TabEx.ZIndex = CategoryEx.LayoutOrder + 100
 			C.UI.Tabs[category.Name] = TabEx
 			
 			task.spawn(C.MakeDraggableTab,TabEx,true)

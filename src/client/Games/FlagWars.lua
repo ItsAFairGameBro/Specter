@@ -180,7 +180,6 @@ return function (C,Settings)
                         if tostring(self) == "ClientCast-Replication" then
                             local ClosestHead, Distance = C.getClosest(nil,arg3.Position)
                             if ClosestHead then--and Distance < 50 then
-                                arg2 = ClosestHead.Parent.Humanoid
                                 -- Table Clone: Security Prevention
                                 arg3 = tblClone(arg3)
                                 arg3["Instance"] = ClosestHead
@@ -280,7 +279,7 @@ return function (C,Settings)
                                         if flag.Name == "FlagDrop" then
                                             local DropMiddle = C.StringFind(flag,"Parts.Middle")
                                             local DropTL = C.StringFind(flag,"DropCount.Time")
-                                            if DropMiddle and (DropTL.TextColor3.R*255 > .8 and C.plr.Team.Name=="Team Blue") or (DropTL.TextColor3.B > .8 and C.plr.Name=="Team Red") then
+                                            if DropMiddle and (DropTL.TextColor3.R*255 > .8 and EnemyTeam=="Team Red") or (DropTL.TextColor3.B > .8 and EnemyTeam=="Team Blue") then
                                                 EnemyDropMiddle = DropMiddle
                                             end
                                         end

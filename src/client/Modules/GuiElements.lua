@@ -251,6 +251,7 @@ GuiTbl.MainHUD.BackgroundTransparency = 1.000
 GuiTbl.MainHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.MainHUD.BorderSizePixel = 0
 GuiTbl.MainHUD.Size = UDim2.new(1, 0, 1, 0)
+GuiTbl.MainHUD.ZIndex = -999
 
 GuiTbl.DropdownFrame.Name = "DropdownFrame"
 GuiTbl.DropdownFrame.Parent = GuiTbl.MainHUD
@@ -324,7 +325,6 @@ GuiTbl.CategoryEx.Size = UDim2.new(1, 0, 0, 40)
 
 GuiTbl.Image.Name = "Image"
 GuiTbl.Image.Parent = GuiTbl.CategoryEx
-GuiTbl.Image.Active = true
 GuiTbl.Image.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.Image.BackgroundTransparency = 1.000
 GuiTbl.Image.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -335,7 +335,6 @@ GuiTbl.Image.ScaleType = Enum.ScaleType.Fit
 
 GuiTbl.Text.Name = "Text"
 GuiTbl.Text.Parent = GuiTbl.CategoryEx
-GuiTbl.Text.Active = true
 GuiTbl.Text.AnchorPoint = Vector2.new(0, 0.5)
 GuiTbl.Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.Text.BackgroundTransparency = 1.000
@@ -353,7 +352,6 @@ GuiTbl.Text.TextXAlignment = Enum.TextXAlignment.Left
 
 GuiTbl.Arrow.Name = "Arrow"
 GuiTbl.Arrow.Parent = GuiTbl.CategoryEx
-GuiTbl.Arrow.Active = true
 GuiTbl.Arrow.AnchorPoint = Vector2.new(0, 0.5)
 GuiTbl.Arrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.Arrow.BackgroundTransparency = 1.000
@@ -668,6 +666,7 @@ GuiTbl.TabEx.ZIndex = -14
 
 GuiTbl.HeaderTab_2.Name = "HeaderTab"
 GuiTbl.HeaderTab_2.Parent = GuiTbl.TabEx
+GuiTbl.HeaderTab_2.Active = true
 GuiTbl.HeaderTab_2.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 GuiTbl.HeaderTab_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.HeaderTab_2.BorderSizePixel = 0
@@ -2377,7 +2376,6 @@ GuiTbl.UICorner_31.Parent = GuiTbl.VisibilityButton
 
 GuiTbl.VisibilityButton_2.Name = "VisibilityButton"
 GuiTbl.VisibilityButton_2.Parent = GuiTbl.VisibilityButton
-GuiTbl.VisibilityButton_2.Active = true
 GuiTbl.VisibilityButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
 GuiTbl.VisibilityButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.VisibilityButton_2.BackgroundTransparency = 1.000
