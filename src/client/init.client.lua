@@ -398,7 +398,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 						local isRunning = true
 						tskDelay(3, function()
 							if isRunning then
-								warn(`[C.{HookType}]: Function is taking a long time to run with id = {name}`)
+								warn(`[C.{HookType}]: Hook is taking a >3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
 							end
 						end)
                         local operation,returnData = getVal(list,3)(theirScript,method,self,...)
@@ -419,7 +419,7 @@ function C.HookMethod(hook, name, runFunct, methods)
 									return yieldForeverFunct()
 								end
                             else
-                                warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Remote Run!`)
+                                warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Function Run!`)
                             end
                         end
                     end
