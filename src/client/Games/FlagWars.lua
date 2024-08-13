@@ -236,10 +236,22 @@ return function (C,Settings)
                     end}
                     local actionClone = C.AddAction(info)
                     C.SavePlayerCoords(self.Shortcut)
-                    C.DoTeleport(EnemyFlag.Position)
-                    --while true do
-                        
-                    --end
+                    local LastTouch
+                    while true do
+                        local HasFlag = C.char:FindFirstChild("Flag")
+                        if HasFlag then
+                            if LastTouch and os.clock()-LastTouch < 5 then
+                                C.SavePlayerCoords(self.Shortcut)
+                                C.DoTeleport(AllyFlag.Position)
+                            else
+                                C.LoadPlayerCoords(self.Shortcut)
+                            end
+                        else
+                            C.DoTeleport(EnemyFlag.Position)
+                            LastTouch = nil
+                        end
+                        RunS.PreSimulation:Wait()
+                    end
                 end,
                 Events = {
                     MyTeamAdded = function(self,theirPlr,newTeamName)
