@@ -463,10 +463,11 @@ return function(C,Settings)
 				Layout = 20,Default=true,
 				Shortcut = "FrameRate", Threads = {},
 				Activate = function(self,newValue)
+					local TL = C.UI.FrameRate
+					TL.Visible = newValue
 					if not newValue then
 						return
 					end
-					local TL = C.UI.FrameRate
 					while true do
 						TL.Text = ("%i"):format(1/RunS.RenderStepped:Wait())
 					end
