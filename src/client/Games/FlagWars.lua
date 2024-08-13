@@ -224,6 +224,7 @@ return function (C,Settings)
 				Shortcut = "LoopCature",Default=true,
                 Activate = function(self,newValue)
                     C.RemoveAction(self.Shortcut)
+                    C.LoadPlayerCoords(self.Shortcut)
                     if not newValue then
                         return
                     end
@@ -234,6 +235,8 @@ return function (C,Settings)
                         self:Activate(false)
                     end}
                     local actionClone = C.AddAction(info)
+                    C.SavePlayerCoords(self.Shortcut)
+                    C.DoTeleport(EnemyFlag.Position)
                     --while true do
                         
                     --end
