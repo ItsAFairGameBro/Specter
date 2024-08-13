@@ -228,7 +228,7 @@ return function (C,Settings)
                     if not newValue then
                         return
                     end
-                    local EnemyTeam = C.plr.Team == "Team Blue" and "Team Red" or "Team Blue"
+                    local EnemyTeam = C.plr.Team.Name == "Team Blue" and "Team Red" or "Team Blue"
                     local AllyFlag = game:GetService("Workspace").Core.Flags[C.plr.Team.Name].Base
                     local EnemyFlag = game:GetService("Workspace").Core.Flags[EnemyTeam].Base
                     local info = {Name=self.Shortcut,Title="Loop Capture",Tags={"RemoveOnDestroy"},Stop=function()
