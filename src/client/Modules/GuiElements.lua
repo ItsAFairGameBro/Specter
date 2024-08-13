@@ -234,6 +234,7 @@ local GuiTbl = {
 	UICorner_31 = Instance.new("UICorner"),
 	VisibilityButton_2 = Instance.new("ImageLabel"),
 	UICorner_32 = Instance.new("UICorner"),
+	FrameRate = Instance.new("TextLabel"),
 }
 
 --Properties:
@@ -651,7 +652,7 @@ GuiTbl.TabsFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.TabsFrame.BorderSizePixel = 0
 GuiTbl.TabsFrame.LayoutOrder = -15
 GuiTbl.TabsFrame.Size = UDim2.new(1, 0, 1, 0)
-GuiTbl.TabsFrame.ZIndex = -15
+GuiTbl.TabsFrame.ZIndex = -650
 
 GuiTbl.TabEx.Name = "TabEx"
 GuiTbl.TabEx:AddTag("RemoveOnDestroy")
@@ -2391,6 +2392,23 @@ GuiTbl.VisibilityButton_2.ScaleType = Enum.ScaleType.Fit
 
 GuiTbl.UICorner_32.CornerRadius = UDim.new(1, 0)
 GuiTbl.UICorner_32.Parent = GuiTbl.VisibilityButton_2
+
+GuiTbl.FrameRate.Name = "FrameRate"
+GuiTbl.FrameRate.Parent = GuiTbl.SpecterGUI
+C.UI.FrameRate = GuiTbl.FrameRate
+GuiTbl.FrameRate.AnchorPoint = Vector2.new(1, 0)
+GuiTbl.FrameRate.BackgroundColor3 = Color3.fromRGB(255, 163, 3)
+GuiTbl.FrameRate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.FrameRate.BorderSizePixel = 0
+GuiTbl.FrameRate.Position = UDim2.new(1, -10, 0, 10)
+GuiTbl.FrameRate.Size = UDim2.new(0, 23, 0, 23)
+GuiTbl.FrameRate.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.FrameRate.Text = "60"
+GuiTbl.FrameRate.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.FrameRate.TextScaled = true
+GuiTbl.FrameRate.TextSize = 21
+GuiTbl.FrameRate.TextStrokeTransparency = 0.000
+GuiTbl.FrameRate.TextWrapped = true
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
