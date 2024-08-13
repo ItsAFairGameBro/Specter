@@ -237,7 +237,7 @@ return function (C,Settings)
                     local actionClone = C.AddAction(info)
                     C.SavePlayerCoords(self.Shortcut)
                     local TeleportOffset = Vector3.new(0,2,0)
-                    local TempOffset = Vector3.new(0,-30,0)
+                    local TempOffset = Vector3.new(0,-44,0)
                     local LastTouch
                     local LastGet = os.clock()
                     while true do
@@ -247,7 +247,7 @@ return function (C,Settings)
                                 if not LastTouch then
                                     LastTouch = os.clock()
                                 elseif os.clock()-LastTouch >= 7 then
-                                    C.DoTeleport(AllyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-3,3)))
+                                    C.DoTeleport(AllyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),C.Randomizer:NextNumber(-1,-0),C.Randomizer:NextNumber(-3,3)))
                                     actionClone.Time.Text = "Capturing"
                                 else
                                     C.DoTeleport(EnemyFlag.Position + TempOffset)
@@ -258,14 +258,14 @@ return function (C,Settings)
                                 if not LastGet then
                                     LastGet = os.clock()
                                 end
-                                if os.clock() - LastGet >= 4 then
+                                if os.clock() - LastGet >= 3 then
                                     local DropFlag = C.StringFind(workspace,"Core.Debris.FlagDrop.Parts.Middle")
                                     if DropFlag then
                                         actionClone.Time.Text = "Pick Up"
-                                        C.DoTeleport(DropFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-1,1)))
+                                        C.DoTeleport(DropFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-1,0),C.Randomizer:NextNumber(-1,1)))
                                     else
                                         actionClone.Time.Text = "Base Steal"
-                                        C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),C.Randomizer:NextNumber(-1,1),C.Randomizer:NextNumber(-3,3)))
+                                        C.DoTeleport(EnemyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),C.Randomizer:NextNumber(-1,0),C.Randomizer:NextNumber(-3,3)))
                                     end
                                 else
                                     actionClone.Time.Text = (`Wait %i`):format(math.ceil(4 - (os.clock()-LastGet)))
