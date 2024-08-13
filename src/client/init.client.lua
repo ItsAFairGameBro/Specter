@@ -351,6 +351,7 @@ function yieldForeverFunct()
 end
 C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
+local MetaMethods = {"__index","__namecall","__newindex"}
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
@@ -365,8 +366,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local myHooks = {}
 		C.getgenv().SavedHookData[hook] = myHooks
 
-		local HookType = (typeof(hook)=="string" and "hookmetamethod") or
-			(typeof(hook)=="function" and "hookfunction")
+		local HookType = ((source or typeof(hook)=="function") and "hookfunction")
+			or (typeof(hook)=="string" and "hookmetamethod")
+			
 
 		assert(hookfunction,`[C.HookMethod]: Unknown HookType: {hook}!`)
 
