@@ -247,7 +247,6 @@ return function (C,Settings)
                                     actionClone.Time.Text = "Waiting"
                                 elseif os.clock()-LastTouch >= 7 then
                                     C.DoTeleport(AllyFlag.Position)
-                                    task.spawn(self.Activate,self)
                                     actionClone.Time.Text = "Capturing"
                                 else
                                     C.DoTeleport(EnemyFlag.Position + TempOffset)
