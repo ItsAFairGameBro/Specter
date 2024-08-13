@@ -250,7 +250,7 @@ return function (C,Settings)
                                     actionClone.Time.Text = "Capturing"
                                 else
                                     C.DoTeleport(EnemyFlag.Position + TempOffset)
-                                    actionClone.Time.Text = (`Waiting %0f`):format(7 - (os.clock()-LastTouch))
+                                    actionClone.Time.Text = (`Waiting %i`):format(math.upper(7 - (os.clock()-LastTouch)))
                                 end
                             else
                                 actionClone.Time.Text = "Getting Flag"
