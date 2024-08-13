@@ -340,7 +340,7 @@ local debFunct, traceback, tskWait, coroYield = C.DebugMessage, debug.traceback,
 local tskSpawn = task.spawn
 local yieldForeverFunct
 function yieldForeverFunct()
-	spawn(debFunct,"AntiCheat",traceback("Yielding Forever"))
+	tskSpawn(debFunct,"AntiCheat",traceback("Yielding Forever"))
 	--tskWait(highestNum)
 	--while true do
 	coroYield()--Yields the thread forever
@@ -381,7 +381,6 @@ function C.HookMethod(hook, name, runFunct, methods)
 				end
                 local theirScript = getcallingscript()
 				if tostring(theirScript) == "BAC_" then
-					C.DebugMessage()
 					if hook == "__index" then
 						return yieldForeverFunct -- Return the function to run forever haha!!
 					else
