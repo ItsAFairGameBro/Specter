@@ -63,7 +63,16 @@ return function(C,Settings)
 					else
 						str ..= addToString("{", depth, true)
 					end
-					str ..= (val == leftTbl and addToString("<self parent loop>", depth)) or recurseLoopPrint(val, "", depth, index, warnings)
+					if depth >= 5 then
+						if not warnings.MaxDepth then
+							str ..= addToString("(Maximum Depth Of 5)",depth)
+							warnings.MaxDepth = true
+						end
+					elseif val == leftTbl then
+						str ..= addToString("<self parent loop>",depth)
+					else
+						str ..= recurseLoopPrint(val, "", depth, index, warnings)
+					end
 					str ..= addToString("},", depth)
 				else
 					if depth ~= 0 then
