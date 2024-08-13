@@ -246,7 +246,7 @@ return function (C,Settings)
                                 if not LastTouch then
                                     LastTouch = os.clock()
                                     actionClone.Time.Text = "Waiting"
-                                elseif os.clock()-LastTouch >= 5 then
+                                elseif os.clock()-LastTouch >= 6 then
                                     C.DoTeleport(AllyFlag.Position + TeleportOffset + Vector3.new(C.Randomizer:NextNumber(-3,3),0,C.Randomizer:NextNumber(-3,3)))
                                     actionClone.Time.Text = "Capturing"
                                 else
