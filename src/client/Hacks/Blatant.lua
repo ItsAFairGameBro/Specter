@@ -39,7 +39,7 @@ return function(C,Settings)
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 16 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
-								if C.hrp.AssemblyAngularVelocity.Magnitude < .5 then
+								if self.EnTbl.UpdateOthers and C.hrp.AssemblyAngularVelocity.Magnitude < .5 then
 									C.hrp.AssemblyAngularVelocity += Vector3.new(0,1,0)
 								end
 							end
@@ -62,6 +62,15 @@ return function(C,Settings)
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
+				},
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "NoMove Update",
+						Tooltip = "Updates for other players when you're not moving",
+						Layout = 1,Default=true,
+						Shortcut="UpdateOthers",
+					},
 				},
 			},
 			{
