@@ -875,7 +875,7 @@ return function(C,Settings)
 	C.SavedLoc = nil
 
 	function C.SavePlayerCoords(name:string)
-		if not C.SavedLoc then
+		if not C.SavedLoc and C.char then
 			C.SavedPoso = C.char:GetPivot()
 		end
 		C.PlayerCoords[name] = true

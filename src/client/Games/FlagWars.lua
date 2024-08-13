@@ -225,7 +225,7 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     C.RemoveAction(self.Shortcut)
                     C.LoadPlayerCoords(self.Shortcut)
-                    if not newValue then
+                    if not newValue or C.plr.Team.Name == "Neutral" then
                         return
                     end
                     local EnemyTeam = C.plr.Team.Name == "Team Blue" and "Team Red" or "Team Blue"
@@ -241,6 +241,7 @@ return function (C,Settings)
                     while true do
                         local HasFlag = C.char:FindFirstChild("Flag")
                         if HasFlag then
+                            actionClone.Time.Text = "Waiting..."
                             if not LastTouch then
                                 LastTouch = os.clock()
                             elseif os.clock()-LastTouch <= 0 then
@@ -251,6 +252,7 @@ return function (C,Settings)
                                 C.LoadPlayerCoords(self.Shortcut)
                             end
                         else
+                            actionClone.Time.Text = "Getting Flag..."
                             C.DoTeleport(EnemyFlag.Position)
                             LastTouch = nil
                         end
