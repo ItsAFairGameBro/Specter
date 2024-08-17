@@ -191,7 +191,7 @@ return function(C,Settings)
                 local hashtable = getupvalue(getupvalue(DataService.InvokeServer, 5),3)
                 local remotes = {}
                 for i,v in pairs(getreg()) do
-                    if type(v) == "function" and getinfo(v).name == "remoteAdded" then 
+                    if type(v) == "function" and getinfo(v).name == "remoteAdded" then
                         remotefunc = v
                     end
                 end
@@ -199,7 +199,7 @@ return function(C,Settings)
                     remotes[v:gsub("F_", "")] = hashtable[i] --some remotes start with F_ cuz gay
                 end
                 for name, remote in pairs(remotes) do
-                    remote.Name = name
+                    --remote.Name = name
                 end
             end,
             KeepGoing = false, RunOnce = false,

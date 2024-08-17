@@ -27,6 +27,7 @@
         "getrunningscripts",
         "getinstances",
         "getupvalue",
-        "getreg"
+        "getreg",
+        "getinfo"
     ]
 }
