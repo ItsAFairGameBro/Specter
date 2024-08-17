@@ -135,7 +135,7 @@ return function(C,Settings)
 				Tooltip = "Prints all messages from remote events to the console.",
 				Layout = 12,Functs={},
 				Shortcut = "PrintRemoteSpy",
-                IgnoreList = {[88070565] = {"FloorPos","LookDir"}},
+                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir"}},
                 Activate = function(self,newValue)
                     if newValue and self.EnTbl.Inbound then
                         for num, event in ipairs(C.getinstances()) do
@@ -147,8 +147,9 @@ return function(C,Settings)
                         end
                     end
                     local IgnoreList = self.IgnoreList[game.GameId] or {}
+                    local TblFind = C.TblFind
                     C.HookMethod("__namecall",self.Shortcut,newValue and self.EnTbl.Outbound and function(theirScript,method,self,...)
-                        if not rawget(IgnoreList,self.Name) then
+                        if not TblFind(IgnoreList,self.Name) then
                             print(`[Outbound Remote Spy]: "{theirScript}" on {self.Name}:{method}() w/ args:`,...)
                         end
                     end,{"fireserver","invokeserver"})
