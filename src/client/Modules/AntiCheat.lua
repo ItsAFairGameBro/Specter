@@ -184,6 +184,27 @@ return function(C,Settings)
             KeepGoing = false, RunOnce = false,
             GameIds = {},PlaceIds={},
         },
+        {
+            Run = function(self)
+                local DataService = require(game:GetService("ReplicatedStorage").Modules.DataService)
+                local remotefunc
+                local hashtable = getupvalue(getupvalue(DataService.InvokeServer, 5),3)
+                local remotes = {}
+                for i,v in pairs(getreg()) do
+                    if type(v) == "function" and getinfo(v).name == "remoteAdded" then 
+                        remotefunc = v
+                    end
+                end
+                for i,v in pairs(getupvalue(getupvalue(remotefunc,2),1)) do
+                    remotes[v:gsub("F_", "")] = hashtable[i] --some remotes start with F_ cuz gay
+                end
+                for name, remote in pairs(remotes) do
+                    remote.Name = name
+                end
+            end,
+            KeepGoing = false, RunOnce = false,
+            GameIds = {88070565},PlaceIds={},
+        },
     }
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then

@@ -25,6 +25,8 @@
         "checkcaller",
         "identifyexecutor",
         "getrunningscripts",
-        "getinstances"
+        "getinstances",
+        "getupvalue",
+        "getreg"
     ]
 }
