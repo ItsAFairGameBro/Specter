@@ -151,8 +151,8 @@ return function(C,Settings)
                     C.HookMethod("__namecall",self.Shortcut,newValue and self.EnTbl.Outbound and function(theirScript,method,self,...)
                         local RemoteNames = rawget(C,"RemoteNames")
                         local MyRemoteName = rawget(RemoteNames,self.Name) or self.Name
-                        if not TblFind(IgnoreList,self.Name) then
-                            print(`[Outbound Remote Spy]: "{theirScript}" on {self.Name}:{method}() w/ args:`,...)
+                        if not TblFind(IgnoreList,MyRemoteName) then
+                            print(`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ args:`,...)
                         end
                     end,{"fireserver","invokeserver"})
                 end,
