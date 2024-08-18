@@ -13,7 +13,7 @@ return function(C,Settings)
 			{
 				Title = "Target Blacklist",Shortcut="NoTargetFriends",
 				Tooltip = "Modules that attack other players do not attack a selected list of \"friends\"",
-				Layout = 1,
+				Layout = 1, Default = true,
 				Activate = function(self, enabled, firstRun)
 					--[[if not enabled then
 						C.friends = {}
@@ -47,7 +47,7 @@ return function(C,Settings)
 			{
 				Title = "Main Account",Shortcut="MainAccount",
 				Tooltip = "Input your main account and it will be",
-				Layout = 2,
+				Layout = 2, Default = true,
 				Events = {},
 				Options = {
 					{

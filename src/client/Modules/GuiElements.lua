@@ -252,7 +252,7 @@ GuiTbl.MainHUD.BackgroundTransparency = 1.000
 GuiTbl.MainHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.MainHUD.BorderSizePixel = 0
 GuiTbl.MainHUD.Size = UDim2.new(1, 0, 1, 0)
-GuiTbl.MainHUD.ZIndex = -999
+GuiTbl.MainHUD.ZIndex = -9999
 
 GuiTbl.DropdownFrame.Name = "DropdownFrame"
 GuiTbl.DropdownFrame.Parent = GuiTbl.MainHUD
@@ -652,7 +652,7 @@ GuiTbl.TabsFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.TabsFrame.BorderSizePixel = 0
 GuiTbl.TabsFrame.LayoutOrder = -15
 GuiTbl.TabsFrame.Size = UDim2.new(1, 0, 1, 0)
-GuiTbl.TabsFrame.ZIndex = -650
+GuiTbl.TabsFrame.ZIndex = -12500
 
 GuiTbl.TabEx.Name = "TabEx"
 GuiTbl.TabEx:AddTag("RemoveOnDestroy")

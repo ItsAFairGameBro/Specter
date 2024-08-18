@@ -10,7 +10,7 @@ return function(C,Settings)
 			Name = "Developer",
 			Title = "Developer",
 			Image = 11860859170,
-			Layout = 12,
+			Layout = 8,
             AfterMisc = true,
 		},
 		Tab = {
