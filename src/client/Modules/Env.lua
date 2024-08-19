@@ -752,7 +752,7 @@ return function(C,Settings)
 					if new == nil then
 						return -- do nothing, probably reloading!
 					end
-					--print(part,propertyName,"Changed","SEt to",new)
+					print(part,propertyName,"Changed","SEt to",new)
 					--[[local cur,new = part[propertyName], part:GetAttribute(requestAttrName)
 					if typeof(cur) == "CFrame" and (cur.LookVector-new.LookVector).Magnitude < 1 and (cur.Position-new.Position).Magnitude < 1 then
 						return
