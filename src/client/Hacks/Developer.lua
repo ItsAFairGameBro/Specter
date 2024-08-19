@@ -135,7 +135,7 @@ return function(C,Settings)
 				Tooltip = "Prints all messages from remote events to the console.",
 				Layout = 12,Functs={},
 				Shortcut = "PrintRemoteSpy",
-                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir"}},
+                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime"}},
                 Activate = function(self,newValue)
                     if newValue and self.EnTbl.Inbound then
                         for num, event in ipairs(C.getinstances()) do
