@@ -119,7 +119,7 @@ return function(C, _SETTINGS)
 		end
 		local AdditionalOffset = 0
 		AdditionalOffset += (ButtonEx.KeybindButton.Visible and ButtonEx.Size.X.Scale or 0)
-		AdditionalOffset += (ButtonEx.HackExpand.Visible and ButtonEx.HackExpand.X.Scale or 0)
+		AdditionalOffset += (ButtonEx.HackExpand.Visible and ButtonEx.HackExpand.Size.X.Scale or 0)
 		ButtonEx.HackText.Size = UDim2.new(0.65 + AdditionalOffset, 0, 0, 40)
 	end
 
