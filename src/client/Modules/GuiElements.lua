@@ -793,7 +793,7 @@ GuiTbl.HackExpand.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.HackExpand.BackgroundTransparency = 1.000
 GuiTbl.HackExpand.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.HackExpand.BorderSizePixel = 0
-GuiTbl.HackExpand.Position = UDim2.new(1, 0, 0, 20)
+GuiTbl.HackExpand.Position = UDim2.new(0.990999997, 0, 0, 20)
 GuiTbl.HackExpand.Selectable = false
 GuiTbl.HackExpand.Size = UDim2.new(0, 31, 0, 40)
 GuiTbl.HackExpand.ZIndex = 3
@@ -1358,7 +1358,7 @@ GuiTbl.KeybindButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.KeybindButton.BorderSizePixel = 0
 GuiTbl.KeybindButton.Position = UDim2.new(0.841303527, 0, 0, 20)
 GuiTbl.KeybindButton.Selectable = false
-GuiTbl.KeybindButton.Size = UDim2.new(0, 34, 0, 40)
+GuiTbl.KeybindButton.Size = UDim2.new(0.150000006, 0, 0, 40)
 GuiTbl.KeybindButton.ZIndex = 3
 C.SetImage(GuiTbl.KeybindButton,"rbxassetid://6884453656")
 GuiTbl.KeybindButton.ScaleType = Enum.ScaleType.Fit
