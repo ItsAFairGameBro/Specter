@@ -29,6 +29,7 @@ return function (C,Settings)
                     end
                     local MainGUI = C.PlayerGui:WaitForChild("MainGUI")
                     table.insert(self.Functs,MainGUI.ChildAdded:Connect(function(child)
+                        print("NewChild",child)
                         if child.Name == "DefaultButton" then
                             print("Found")
                             task.wait(1)
