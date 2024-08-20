@@ -44,7 +44,7 @@ return function (C,Settings)
                                 theirPlr:GetAttributeChangedSignal("_tag"):Wait()
                             end
                         end
-                        if tag < 0 or tag > 2 then
+                        if (tag < 0 or tag > 2) and (tag<19 or tag>21) then
                             C.plr:Kick(`[KickOnStaff]: You were kicked because {theirPlr.Name} is in the game and has the tag rank of {tag}`)
                         end
                     end
