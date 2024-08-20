@@ -328,6 +328,16 @@ return function(C,Settings)
 			C.ClearFunctTbl(dict,true)
 		end
 
+		for instance, signalData in pairs(C.PartConnections) do
+			for signal, data in pairs(signalData) do
+				for key, enabled in pairs(data) do
+					if key ~= "Value" then
+						C.EnableInstanceConnections(instance,signal,key)
+					end
+				end
+			end
+		end
+
 		C.DebugMessage("Destroy",`Destroy 3`)
 
 		-- Then, destroy everything

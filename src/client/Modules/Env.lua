@@ -809,7 +809,6 @@ return function(C,Settings)
 		end
 	end
 
-	C.PartConnections = {}
 	function C.InternallySetConnections(signal,enabled)
 		for _, connection in ipairs(C.getconnections(signal)) do
 			if not connection.ForeignState then
