@@ -118,7 +118,7 @@ local function RegisterFunctions()
 		[Enum.KeyCode.LeftAlt] = "0xA4",
 		[Enum.KeyCode.RightAlt] = "0xA5",
 		[Enum.KeyCode.Escape] = "0x1B",
-		[Enum.KeyCode.Enter] = "0x0D",
+		[Enum.KeyCode.Return] = "0x0D",
 		[Enum.KeyCode.Backspace] = "0x08",
 		[Enum.KeyCode.Tab] = "0x09",
 		-- Add more mappings as needed
@@ -139,7 +139,6 @@ local function RegisterFunctions()
 		else
 			warn("KeyCode not mapped: " .. tostring(keyCode))
 		end
-		
 	end
 	C.fireclickdetector = isStudio and function() return end or fireclickdetector
 	function C.firesignal(Signal, ...)
