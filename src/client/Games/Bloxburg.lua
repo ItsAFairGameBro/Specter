@@ -30,9 +30,9 @@ return function (C,Settings)
                     local MainGUI = C.PlayerGui:WaitForChild("MainGUI")
                     table.insert(self.Functs,MainGUI.ChildAdded:Connect(function(child)
                         if child.Name == "DefaultButton" then
-                            task.wait(1)
+                            task.wait(0.5)
+                            C.firesignal(child.InputEnded,{UserInputType = Enum.UserInputType.Touch})
                             warn("Fired")
-                            C.firesignal(child.MouseButton1Up)
                         end
                     end))
                 end,
