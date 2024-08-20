@@ -21,7 +21,7 @@ return function (C,Settings)
             {
 				Title = "Kick On Staff",
 				Tooltip = "Kicks you out of the game if a staff is detected in your game",
-				Layout = 0, Threads = {},
+				Layout = 20, Threads = {},
 				Shortcut = "KickOnStaff",Default=true, DontActivate=true,
 				Activate = function(self,newValue)
                     if not newValue then
@@ -29,7 +29,7 @@ return function (C,Settings)
                     end
                     for num, theirPlr in ipairs(Players:GetPlayers()) do
                         if theirPlr ~= C.plr then
-                            self.Events.PlayerAdded(self,theirPlr,false)
+                            self.Events.OthersPlayerAdded(self,theirPlr,false)
                         end
                     end
                 end,
