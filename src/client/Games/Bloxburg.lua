@@ -39,7 +39,7 @@ return function (C,Settings)
                         while true do
                             tag = theirPlr:GetAttribute("_tag")
                             if tag then
-                                return
+                                break
                             else
                                 theirPlr:GetAttributeChangedSignal("_tag"):Wait()
                             end
