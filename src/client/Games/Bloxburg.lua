@@ -22,7 +22,7 @@ return function (C,Settings)
 				Title = "Kick On Staff",
 				Tooltip = "Kicks you out of the game if a staff is detected in your game",
 				Layout = 20, Threads = {},
-				Shortcut = "KickOnStaff",Default=true, DontActivate=true,
+				Shortcut = "KickOnStaff",DontActivate=true,
 				Activate = function(self,newValue)
                     if not newValue then
                         return
