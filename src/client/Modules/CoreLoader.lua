@@ -106,6 +106,23 @@ return function(C, _SETTINGS)
 	C.ButtonClick(RefreshButton,C.Refresh)
 	task.spawn(C.StartAutoSave,C)
 
+	local ListOfElements = {}
+	local function UpdateTextSize(ButtonEx,setUp: boolean)
+		if setUp then
+			table.insert(ListOfElements,ButtonEx)
+		end
+		ButtonEx.KeybindButton.Visible = UIS.KeyboardEnabled
+		if ButtonEx.KeybindButton.Visible and not ButtonEx.HackExpand.Visible then
+			ButtonEx.KeybindButton.Position = UDim2.new(0.991, 0, 0, 20)
+		else
+			ButtonEx.KeybindButton.Position = UDim2.new(0.841, 0, 0, 20)
+		end
+		local AdditionalOffset = 0
+		AdditionalOffset += (ButtonEx.KeybindButton.Visible and ButtonEx.Size.X.Scale or 0)
+		AdditionalOffset += (ButtonEx.HackExpand.Visible and ButtonEx.HackExpand.X.Scale or 0)
+		ButtonEx.HackText.Size = UDim2.new(0.65 + AdditionalOffset, 0, 0, 40)
+	end
+
 	for num, name in ipairs(ModulesToRun) do
 		if C.Cleared then return end
 		local isGame = GameModule == name
@@ -334,7 +351,7 @@ return function(C, _SETTINGS)
 				C.ButtonClick(KeybindButton,KeybindClick)
 			else
 				KeybindButton.Visible = false
-				MainText.Size = UDim2.new(MainText.Size.X.Scale,KeybindButton.AbsoluteSize.X,0,MainText.Size.Y.Offset)
+				--MainText.Size = UDim2.new(MainText.Size.X.Scale,KeybindButton.AbsoluteSize.X,0,MainText.Size.Y.Offset)
 			end
 
 			C.BindEvents(hackData)
@@ -343,6 +360,8 @@ return function(C, _SETTINGS)
 			if hackData.Tooltip then
 				C.TooltipSetUp(MainText,hackData.Tooltip)
 			end
+
+			UpdateTextSize(ButtonEx,true)
 			
 			ButtonEx.Parent = ScrollTab
 		end
@@ -365,6 +384,11 @@ return function(C, _SETTINGS)
 			instance.ZIndex -= instance.ZIndex * 2
 		end
 	end
+	C.AddGlobalConnection(UIS:GetPropertyChangedSignal("KeyboardEnabled"):Connect(function()
+		for num, ListButtonEx in ipairs(ListOfElements) do
+			UpdateTextSize(ListButtonEx)
+		end
+	end))
 	if C.Cleared then return end
 
 	--Load Commands

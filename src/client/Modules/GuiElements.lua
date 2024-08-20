@@ -1365,7 +1365,6 @@ GuiTbl.KeybindButton.ScaleType = Enum.ScaleType.Fit
 
 GuiTbl.BindedKey.Name = "BindedKey"
 GuiTbl.BindedKey.Parent = GuiTbl.KeybindButton
-GuiTbl.BindedKey.Active = true
 GuiTbl.BindedKey.AnchorPoint = Vector2.new(0.5, 0.5)
 GuiTbl.BindedKey.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.BindedKey.BackgroundTransparency = 1.000
