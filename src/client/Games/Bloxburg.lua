@@ -19,6 +19,25 @@ return function (C,Settings)
         },
         Tab = {
             {
+				Title = "Auto Cook",
+				Tooltip = "Automatically pushes the buttons that pop up when you cook",
+				Layout = 20, Functs = {}, Default=true,
+				Shortcut = "AutoCook",DontActivate=true,
+				Activate = function(self,newValue)
+                    if not newValue then
+                        return
+                    end
+                    local MainGUI = C.PlayerGui:WaitForChild("MainGUI")
+                    table.insert(self.Functs,MainGUI.ChildAdded:Connect(function(child)
+                        if child.Name == "DefaultButton" then
+                            print("Found")
+                            task.wait(1)
+                            firesignal(child.MouseButton1Up)
+                        end
+                    end))
+                end,
+            },
+            {
 				Title = "Kick On Staff",
 				Tooltip = "Kicks you out of the game if a staff is detected in your game",
 				Layout = 20, Threads = {},
@@ -50,6 +69,7 @@ return function (C,Settings)
                     end
                 },
             },
+            
         }
     }
 end
