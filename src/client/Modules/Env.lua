@@ -809,8 +809,60 @@ return function(C,Settings)
 		end
 	end
 
+	C.PartConnections = {}
+	function C.InternallySetConnections(signal,enabled)
+		for _, connection in ipairs(C.getconnections(signal)) do
+			if not connection.ForeignState then
+				connection[enabled and "Enable" or "Disable"](connection)
+			else
+				print("Stopping from disabling foreignstate connection")
+			end
+		end
+	end
+	--Function to set instance connection
+	function C.DisableInstanceConnections(instance,name,key)
+		assert(key~="Value",`Unable to assign {instance.Name} the key {key} because {key} is a protected value!`)
+		local signal = instance[name]
+		local instanceData = C.PartConnections[instance]
+		if not instanceData then
+			instanceData = {}
+			C.PartConnections[instance] = instanceData
+		end
+		if not instanceData[signal] then
+			instanceData[signal] = {Value = 0}
+			C.InternallySetConnections(signal,false)
+		end
+		if not instanceData[signal][key] then
+			instanceData[signal][key] = true
+			instanceData[signal].Value += 1
+		end
+	end
+	function C.EnableInstanceConnections(instance,name,key)
+		local signal = instance[name]
+		local instanceData = C.PartConnections[instance]
+		if not instanceData then
+			return
+		end
+		if not instanceData[signal] then
+			return
+		end
+		if instanceData[signal][key] then
+			instanceData[signal][key] = nil
+			instanceData[signal].Value -= 1
+		end
+		if instanceData[signal].Value > 0 then
+			return
+		end
+		C.InternallySetConnections(signal,true)
+		instanceData[signal] = nil -- clear the signal data
+		if C.GetDictLength(instanceData) <= 0 then -- if its empty
+			-- then clear the cache!
+			C.PartConnections[instance] = nil
+		end
+	end
+
 	function C.IsInBox(PartCF:CFrame,PartSize:Vector3,Point:Vector3)
-		local Transform = PartCF:pointToObjectSpace(Point) -- Transform into local space
+		local Transform = PartCF:PointToObjectSpace(Point) -- Transform into local space
 		local HalfSize = PartSize * 0.5
 
 		return math.abs(Transform.x) <= HalfSize.x and

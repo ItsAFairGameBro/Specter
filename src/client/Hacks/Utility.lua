@@ -20,12 +20,9 @@ return function(C,Settings)
 			{
 				Title = "Anti Afk",
 				Tooltip = "Prevents you from being idle kicked after 20m",
-				Layout = 100,
+				Layout = 100, NoStudio = true,
 				Shortcut = "AntiAfk",Functs={},Default=true,
                 Update = function()
-					if C.isStudio then
-						return
-					end
 					VU:CaptureController()
                     VU:ClickButton2(Vector2.new())
                 end,
@@ -34,9 +31,23 @@ return function(C,Settings)
                         return
                     end
                     table.insert(self.Functs, C.plr.Idled:Connect(self.Update))
+					if self.EnTbl.GameProtection then
+						C.DisableInstanceConnections(C.plr,"Idled",self.Shortcut)
+					else
+						C.EnableInstanceConnections(C.plr,"Idled",self.Shortcut)
+					end
 				end,
                 Events = {},
-				Options = {},
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Game Protection",
+						Tooltip = "Prevents game scripts from accessing the Player.Idled connection",
+						Layout = 3,Default=true,
+						Shortcut="GameProtection",
+						Activate = C.ReloadHack,
+					},
+				},
 			},
 			{
 				Title = "Chat",Type="NoToggle",
