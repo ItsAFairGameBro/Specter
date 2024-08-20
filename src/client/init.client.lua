@@ -6,6 +6,7 @@ local HS = game:GetService("HttpService")
 local CG = game:GetService("CoreGui")
 local HS = game:GetService("HttpService")
 local SP = game:GetService("StarterPlayer")
+local VirtualUser = game:GetService("VirtualUser")
 
 local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
@@ -81,6 +82,64 @@ local function RegisterFunctions()
 			end
 		end
 		part1.CanTouch, part2.CanTouch = CanTouch1, CanTouch2
+	end
+	local keyCodeMap = {
+		[Enum.KeyCode.A] = "0x41",
+		[Enum.KeyCode.B] = "0x42",
+		[Enum.KeyCode.C] = "0x43",
+		[Enum.KeyCode.D] = "0x44",
+		[Enum.KeyCode.E] = "0x45",
+		[Enum.KeyCode.F] = "0x46",
+		[Enum.KeyCode.G] = "0x47",
+		[Enum.KeyCode.H] = "0x48",
+		[Enum.KeyCode.I] = "0x49",
+		[Enum.KeyCode.J] = "0x4A",
+		[Enum.KeyCode.K] = "0x4B",
+		[Enum.KeyCode.L] = "0x4C",
+		[Enum.KeyCode.M] = "0x4D",
+		[Enum.KeyCode.N] = "0x4E",
+		[Enum.KeyCode.O] = "0x4F",
+		[Enum.KeyCode.P] = "0x50",
+		[Enum.KeyCode.Q] = "0x51",
+		[Enum.KeyCode.R] = "0x52",
+		[Enum.KeyCode.S] = "0x53",
+		[Enum.KeyCode.T] = "0x54",
+		[Enum.KeyCode.U] = "0x55",
+		[Enum.KeyCode.V] = "0x56",
+		[Enum.KeyCode.W] = "0x57",
+		[Enum.KeyCode.X] = "0x58",
+		[Enum.KeyCode.Y] = "0x59",
+		[Enum.KeyCode.Z] = "0x5A",
+		[Enum.KeyCode.Space] = "0x20",
+		[Enum.KeyCode.LeftShift] = "0xA0",
+		[Enum.KeyCode.RightShift] = "0xA1",
+		[Enum.KeyCode.LeftControl] = "0xA2",
+		[Enum.KeyCode.RightControl] = "0xA3",
+		[Enum.KeyCode.LeftAlt] = "0xA4",
+		[Enum.KeyCode.RightAlt] = "0xA5",
+		[Enum.KeyCode.Escape] = "0x1B",
+		[Enum.KeyCode.Enter] = "0x0D",
+		[Enum.KeyCode.Backspace] = "0x08",
+		[Enum.KeyCode.Tab] = "0x09",
+		-- Add more mappings as needed
+	}	
+	function C.firekey(keyCode: Enum.KeyCode,enabled: boolean | nil)
+		local virtualKeyCode = keyCodeMap[keyCode]
+    
+		if virtualKeyCode then
+			if enabled then
+				VirtualUser:SetKeyDown(virtualKeyCode)
+			elseif enabled == false then
+				VirtualUser:SetKeyUp(virtualKeyCode)
+			else
+				VirtualUser:SetKeyDown(virtualKeyCode)
+				RunS.RenderStepped:Wait()
+				VirtualUser:SetKeyUp(virtualKeyCode)
+			end
+		else
+			warn("KeyCode not mapped: " .. tostring(keyCode))
+		end
+		
 	end
 	C.fireclickdetector = isStudio and function() return end or fireclickdetector
 	function C.firesignal(Signal, ...)

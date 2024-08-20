@@ -32,8 +32,7 @@ return function (C,Settings)
                         if child.Name == "DefaultButton" then
                             task.wait(1.5)
                             C.firesignal(child.InputEnded,{UserInputType = Enum.UserInputType.Touch})
-                            warn("Fired",#C.getconnections(child.InputBegan),#C.getconnections(child.InputChanged),#C.getconnections(child.InputEnded),
-                                    #C.getconnections(child.MouseButton1Down),#C.getconnections(child.MouseButton1Up))
+                            warn("Fired",#C.getconnections(child.Activated))
                         end
                     end))
                 end,
