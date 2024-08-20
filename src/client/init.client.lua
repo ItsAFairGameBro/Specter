@@ -83,6 +83,18 @@ local function RegisterFunctions()
 		part1.CanTouch, part2.CanTouch = CanTouch1, CanTouch2
 	end
 	C.fireclickdetector = isStudio and function() return end or fireclickdetector
+	function C.firesignal(Signal, ...)
+		for num, mySignal in ipairs(C.getconnections(Signal)) do
+			local Enabled = mySignal.Enable
+			if not Enabled then
+				mySignal:Enable()
+			end
+			mySignal:Fire(...)
+			if not Enabled then
+				mySignal:Disable()
+			end
+		end
+	end
 	function C.fireproximityprompt(ProximityPrompt, Amount, Skip)
 		assert(ProximityPrompt, "Argument #1 Missing or nil")
 		assert(typeof(ProximityPrompt) == "Instance" and ProximityPrompt:IsA("ProximityPrompt"), "Attempted to fire a Value that is not a ProximityPrompt")

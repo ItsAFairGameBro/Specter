@@ -22,18 +22,17 @@ return function (C,Settings)
 				Title = "Auto Cook",
 				Tooltip = "Automatically pushes the buttons that pop up when you cook",
 				Layout = 20, Functs = {}, Default=true,
-				Shortcut = "AutoCook",DontActivate=true,
+				Shortcut = "AutoCook",
 				Activate = function(self,newValue)
                     if not newValue then
                         return
                     end
                     local MainGUI = C.PlayerGui:WaitForChild("MainGUI")
                     table.insert(self.Functs,MainGUI.ChildAdded:Connect(function(child)
-                        print("NewChild",child)
                         if child.Name == "DefaultButton" then
-                            print("Found")
                             task.wait(1)
-                            firesignal(child.MouseButton1Up)
+                            warn("Fired")
+                            C.firesignal(child.MouseButton1Up)
                         end
                     end))
                 end,
