@@ -404,16 +404,26 @@ return function(C,Settings)
 
 	table.insert(C.getgenv().Instances,C.SaveIndex)
 	C.DebugMessage("Load",`Waiting To Load Starting`)
+	local isWaiting = true
+	task.delay(7,function()
+		if not C.Cleared and isWaiting then
+			C.getgenv().DestroyEvent:Fire(true)
+		end
+	end)
 	while #C.getgenv().Instances>1 do
 		if C.Cleared then
 			return
 		end
 		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instance(s)`)
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
-		C.getgenv().DestroyEvent.Event:Wait()
+		if C.getgenv().DestroyEvent.Event:Wait() == true then
+			warn("Time out occured! Starting execution...")
+			break
+		end
 		if #C.getgenv().Instances>1 then
 			C.DebugMessage("Load",`Still waiting for instances to be deleted!`)
 		end
 	end
 	C.DebugMessage("Load",`Waiting To Load Finished`)
+	isWaiting = false
 end
