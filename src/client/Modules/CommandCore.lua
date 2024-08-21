@@ -499,7 +499,9 @@ return function(C,Settings)
     else
         warn("[Specter Chat]: Chat cannot be loaded in custom games; commands may not work.")
     end
-
+    if C.Cleared then
+        return
+    end
     for num, commandTbl in pairs(C.CommandFunctions) do
         commandTbl.Parent = C.CommandFunctions
         C.BindEvents(commandTbl)
