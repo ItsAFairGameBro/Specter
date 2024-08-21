@@ -262,6 +262,9 @@ return function(C,Settings)
         end
         local Words,CurrentWordIndex
         local function ChatBarUpdated()
+            if C.Cleared then
+                return
+            end
             local Inset = GS:GetGuiInset().Y
             isFocused = chatBar:IsFocused()
             ChatAutoCompleteFrame.Visible = isFocused
