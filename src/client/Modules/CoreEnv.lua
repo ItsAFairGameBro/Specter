@@ -385,6 +385,13 @@ return function(C,Settings)
 		C.getgenv().Instances = {}
 	end
 
+	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
+		if C.SaveIndex == SaveIndex then
+			return -- our signal sent this!
+		end
+		C:Destroy()
+	end))
+
 	C.SaveIndex = (C.getgenv().SpecterIndex or 0)+1
 	C.getgenv().SpecterIndex = C.SaveIndex
 
@@ -393,12 +400,6 @@ return function(C,Settings)
 		C.getgenv().CreateEvent = Instance.new("BindableEvent")
 		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
 	end
-	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
-		if C.SaveIndex == SaveIndex then
-			return -- our signal sent this!
-		end
-		C:Destroy()
-	end))
 	C.DebugMessage("Load",`Waiting To Load Starting`)
 	while #C.getgenv().Instances>1 do
 		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instances`)
@@ -408,6 +409,5 @@ return function(C,Settings)
 			C.DebugMessage("Load",`Still waiting for instances to be deleted!`)
 		end
 	end
-	task.wait(.5)
 	C.DebugMessage("Load",`Waiting To Load Finished`)
 end
