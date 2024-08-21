@@ -31,8 +31,8 @@ return function (C,Settings)
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") then
                             task.wait(.5)
-                            child:Fire(true)
-                            print("FIRE")
+                            child:Fire()
+                            print("FIRE2")
                         end
                     end))
                 end,
