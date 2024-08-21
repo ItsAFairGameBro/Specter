@@ -385,6 +385,11 @@ return function(C,Settings)
 		C.getgenv().Instances = {}
 	end
 
+	if not C.getgenv().CreateEvent then
+		C.getgenv().CreateEvent = Instance.new("BindableEvent")
+		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
+	end
+
 	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
 		if C.SaveIndex == SaveIndex then
 			return -- our signal sent this!
@@ -396,10 +401,6 @@ return function(C,Settings)
 	C.getgenv().SpecterIndex = C.SaveIndex
 
 	table.insert(C.getgenv().Instances,C.SaveIndex)
-	if not C.getgenv().CreateEvent then
-		C.getgenv().CreateEvent = Instance.new("BindableEvent")
-		C.getgenv().DestroyEvent = Instance.new("BindableEvent")
-	end
 	C.DebugMessage("Load",`Waiting To Load Starting`)
 	while #C.getgenv().Instances>1 do
 		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instances`)
