@@ -338,8 +338,6 @@ return function(C,Settings)
 			end
 		end
 
-		C.DebugMessage("Destroy",`Destroy 3`)
-
 		-- Then, destroy everything
 		RunS:UnbindFromRenderStep("Follow"..C.SaveIndex)
 		RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
@@ -356,6 +354,8 @@ return function(C,Settings)
 			C.GUI = nil
 		end
 
+		C.DebugMessage("Destroy",`Destroy 3 / Waiting For RemoveOnDestroyIndex: {RemoveOnDestroyIndex}`)
+
 		while RemoveOnDestroyIndex > 0 do
 			task.wait() -- Wait while being destroyed
 		end
@@ -364,6 +364,8 @@ return function(C,Settings)
 		RunS.RenderStepped:Wait()
 		C.getgenv().DestroyEvent:Fire()
 		
+		C.DebugMessage("Destroy",`Destroy Success`)
+
 		if C.isStudio then
 			script.Parent.Parent:Destroy()
 		end
