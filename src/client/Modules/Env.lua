@@ -336,7 +336,7 @@ return function(C,Settings)
 		local newPart=C.Examples.TestPartEx:Clone()
 		newPart.Position=position
 		newPart.Parent=workspace.Camera
-		newPart:AddTag("RemoveOnDestroy")
+		C.AddGlobalInstance(newPart)
 		DS:AddItem(newPart,timer or 5)
 	end
 

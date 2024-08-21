@@ -210,7 +210,7 @@ return function(C,Settings)
 		--RunFunc((Function)func, (Table)args, (Number)timeout)
 	
 		local bindableEvent = Instance.new("BindableEvent")
-		bindableEvent:AddTag("RemoveOnDestroy")
+		C.AddGlobalInstance(bindableEvent)
 		local response
 		local success = false
 	

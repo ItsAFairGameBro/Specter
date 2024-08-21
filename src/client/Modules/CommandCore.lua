@@ -159,7 +159,7 @@ return function(C,Settings)
             mySendButton.Parent = sendButton.Parent
             mySendButton.Visible = true
             mySendButton.Name = "MySendButton"
-            mySendButton:AddTag("RemoveOnDestroy")
+            C.AddGlobalInstance(mySendButton)
             sendTheMessage = function(message,dontSetTB)
                 message = typeof(message)=="string" and message or chatBar.Text
                 if message == "" then
