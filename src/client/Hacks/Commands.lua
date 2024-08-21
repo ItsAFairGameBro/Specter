@@ -134,12 +134,12 @@ return function(C,Settings)
     
                 newHuman.Name = "FakeHuman"
                 newHuman.Parent = targetChar
-                newHuman:AddTag("RemoveOnDestroy")
+                C.AddGlobalInstance(newHuman)
                 local Instances2Restore = {}
                 for num, accessory in ipairs(targetChar:GetDescendants()) do
                     if C.CommandFunctions.morph.RestoreInstances[accessory.Name] then
                         accessory.Parent = workspace
-                        accessory:AddTag("RemoveOnDestroy")
+                        C.AddGlobalInstance(accessory)
                         table.insert(Instances2Restore,accessory)
                     elseif accessory:IsA("Accessory") or accessory:IsA("Pants") or accessory:IsA("Shirt") or accessory:IsA("ShirtGraphic") then
                         accessory:Destroy()
@@ -183,7 +183,7 @@ return function(C,Settings)
                 for num, instance in ipairs(Instances2Restore) do
                     if instance.Parent then
                         instance.Parent = targetChar
-                        instance:RemoveTag("RemoveOnDestroy")
+                        C.RemoveGlobalInstance(instance)
                     end
                 end
                 newHuman.Parent = nil

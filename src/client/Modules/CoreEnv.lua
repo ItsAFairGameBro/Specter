@@ -366,7 +366,7 @@ return function(C,Settings)
 			theTime+=task.wait() -- Wait while being destroyed
 			if theTime > 10 then
 				warn(`It's been 10 seconds bro and I'm still waiting on RemoveOnDestroy functions: {RemoveOnDestroyIndex}`,ThingsToRemove)
-				RemoveOnDestroyIndex = false
+				theTime = 0
 			end
 		end
 		

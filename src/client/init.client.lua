@@ -239,6 +239,7 @@ C.hackData = {}
 C.events = {}
 C.keybinds = {}
 C.functs, C.threads = {}, {} -- global connections/threads
+C.instances = {} -- global instances
 C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
@@ -310,6 +311,14 @@ function C.StringFind(start,path,seperationChar,recursionEnabled)
 		end
 	end
 	return current
+end
+
+function C.AddGlobalInstance(instance)
+	table.insert(C.instances,instance)
+end
+
+function C.RemoveGlobalInstance(instance)
+	return C.TblRemove(C.instances,instance)
 end
 
 function C.RunLink(githubLink,gitType,name)

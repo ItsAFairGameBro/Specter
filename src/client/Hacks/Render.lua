@@ -119,7 +119,6 @@ return function(C,Settings)
 						robloxHighlight.OutlineTransparency,robloxHighlight.FillTransparency = 1, 0
 						robloxHighlight.OutlineColor = Color3.fromRGB()
 						robloxHighlight.Adornee = theirChar
-						robloxHighlight:AddTag("RemoveOnDestroy")
 						robloxHighlight.Parent = C.GUI
 						local nameTag = C.Examples.NameTagEx:Clone()
 						nameTag:WaitForChild("Username").Text = theirPlr.Name
@@ -274,7 +273,7 @@ return function(C,Settings)
 							TouchToggle.Adornee=parent
 							TouchToggle.ExtentsOffsetWorldSpace = Vector3.new(0, 0, 0)
 							TouchToggle.Enabled = true
-							CS:AddTag(TouchToggle,"RemoveOnDestroy")
+							table.insert(self.Instances,TouchToggle)
 							CS:AddTag(parent,"TouchDisabled")
 
 							if Type=="Part" then

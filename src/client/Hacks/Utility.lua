@@ -152,9 +152,13 @@ return function(C,Settings)
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
 					--Fix Keyboard
 					if EnTbl.FixKeyboard then
-						local tb = Instance.new("TextBox")
-						tb:AddTag("RemoveOnDestroy")
+						local tb = Instance.new("TextBox",C.PlayerGui)
 						tb:CaptureFocus()
+						RunS.RenderStepped:Wait()
+						if tb:IsFocused() then
+							tb:ReleaseFocus()
+						end
+						-- Remove next frame to allow for smooth transition!
 						DS:AddItem(tb,0)
 					end
 					--Lock Camera Orientation
