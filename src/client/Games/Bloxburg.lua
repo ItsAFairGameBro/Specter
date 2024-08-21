@@ -27,14 +27,20 @@ return function (C,Settings)
                     if not newValue then
                         return
                     end
+                    local MainGui = C.StringWait(C.PlayerGui,"MainGUI")
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
-                        if child:IsA("BindableEvent") then
+                        if child:IsA("BindableEvent") and child.Name == "Event" then
                             task.wait(self.EnTbl.Delay)
+                            if not MainGui:FindFirstChild("DefaultButton") then
+                                print("NOT FOUND: DEFUALTBUTOTN")
+                                return
+                            end
                             child:Fire()
+                        else
+                            print("Not RUn",child,child.ClassName)
                         end
                     end))
-                    local MainGui = C.StringWait(C.PlayerGui,"MainGUI")
                     if self.EnTbl.HideButtons then
                         table.insert(self.Functs,MainGui.ChildAdded:Connect(function(child)
                             if child.Name == "DefaultButton" then
