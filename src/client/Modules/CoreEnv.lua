@@ -403,6 +403,9 @@ return function(C,Settings)
 	table.insert(C.getgenv().Instances,C.SaveIndex)
 	C.DebugMessage("Load",`Waiting To Load Starting`)
 	while #C.getgenv().Instances>1 do
+		if C.Cleared then
+			return
+		end
 		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instances`)
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
