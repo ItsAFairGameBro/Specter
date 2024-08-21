@@ -55,8 +55,8 @@ return function (C,Settings)
 						Type = Types.Slider,
 						Title = "Delay",
 						Tooltip = "Delays the completion of the event so that you aren't detected and don't automatically get charcoal!",
-						Layout = 0,Default=0.065,
-						Min=0.06,Max=0.085,Digits=3,
+						Layout = 0,Default=0.1,
+						Min=0.085,Max=0.15,Digits=3,
 						Shortcut="Delay",
 					},
                     {
