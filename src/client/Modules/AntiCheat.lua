@@ -206,7 +206,7 @@ return function(C,Settings)
             GameIds = {88070565},PlaceIds={},
         },
     }
-    if not NC:FindFirstAncestorWhichIsA("ClientReplicator") then
+    if not NC:FindFirstChildWhichIsA("ClientReplicator") then
         C.DebugMessage("AntiCheat",`AntiCheat Not Running Because Of Game Disconnect!`)
         return
     end
