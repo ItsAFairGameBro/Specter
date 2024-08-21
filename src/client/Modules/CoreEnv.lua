@@ -265,7 +265,8 @@ return function(C,Settings)
 		local ThingsToRemove = {}
 
 		local function RunOnDestroy(hackTbl,name)
-			ThingsToRemove[hackTbl.Shortcut] = true
+			local Identification = hackTbl.Shortcut
+			ThingsToRemove[Identification] = true
 			RemoveOnDestroyIndex += 1
 			task.spawn(function()
 				local Done = false
@@ -275,7 +276,7 @@ return function(C,Settings)
 					end
 				end)
 				hackTbl:RunOnDestroy()
-				ThingsToRemove[hackTbl.Shortcut] = nil
+				ThingsToRemove[Identification] = nil
 				RemoveOnDestroyIndex -= 1
 				Done = true
 			end)

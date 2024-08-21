@@ -505,7 +505,8 @@ return function(C,Settings)
     if C.Cleared then
         return
     end
-    for num, commandTbl in pairs(C.CommandFunctions) do
+    for shortcut, commandTbl in pairs(C.CommandFunctions) do
+        commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
         C.BindEvents(commandTbl)
     end
