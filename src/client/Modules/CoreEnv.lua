@@ -254,6 +254,7 @@ return function(C,Settings)
 		C.DebugMessage("Destroy",`Destroy Start`)
 		-- It is cleared
 		C.Cleared = true
+		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
 
 		-- First, undo the connections
 		C.ClearThreadTbl(C.threads)
@@ -370,7 +371,7 @@ return function(C,Settings)
 			end
 		end
 		
-		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
+		
 		RunS.RenderStepped:Wait()
 		C.getgenv().DestroyEvent:Fire()
 		
