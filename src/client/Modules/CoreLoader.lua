@@ -173,7 +173,7 @@ return function(C, _SETTINGS)
 			TabEx.Parent = C.UI.TabsFrame
 			TabEx.ZIndex = CategoryEx.LayoutOrder + 100
 
-			--if C.Cleared then return end
+			if C.Cleared then return end
 			
 			C.UI.Tabs[category.Name] = TabEx
 			
