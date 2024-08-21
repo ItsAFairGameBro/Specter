@@ -408,5 +408,6 @@ return function(C,Settings)
 			C.DebugMessage("Load",`Still waiting for instances to be deleted!`)
 		end
 	end
+	task.wait(.5)
 	C.DebugMessage("Load",`Waiting To Load Finished`)
 end
