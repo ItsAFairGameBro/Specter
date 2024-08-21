@@ -262,8 +262,10 @@ return function(C,Settings)
 		C.DebugMessage("Destroy",`Destroy 1`)
 
 		local RemoveOnDestroyIndex = 0
+		local ThingsToRemove = {}
 
 		local function RunOnDestroy(hackTbl,name)
+			ThingsToRemove[hackTbl.Shortcut] = true
 			RemoveOnDestroyIndex += 1
 			task.spawn(function()
 				local Done = false
@@ -273,6 +275,7 @@ return function(C,Settings)
 					end
 				end)
 				hackTbl:RunOnDestroy()
+				ThingsToRemove[hackTbl.Shortcut] = nil
 				RemoveOnDestroyIndex -= 1
 				Done = true
 			end)
@@ -356,8 +359,14 @@ return function(C,Settings)
 
 		C.DebugMessage("Destroy",`Destroy 3 / Waiting For RemoveOnDestroyIndex: {RemoveOnDestroyIndex}`)
 
+		local theTime = 0
+
 		while RemoveOnDestroyIndex > 0 do
-			task.wait() -- Wait while being destroyed
+			theTime+=task.wait() -- Wait while being destroyed
+			if theTime > 10 then
+				warn(`It's been 10 seconds bro and I'm still waiting on RemoveOnDestroy functions: {RemoveOnDestroyIndex}`,ThingsToRemove)
+				RemoveOnDestroyIndex = false
+			end
 		end
 		
 		C.TblRemove(C.getgenv().Instances,C.SaveIndex or -1)
