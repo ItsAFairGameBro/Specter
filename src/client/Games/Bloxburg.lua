@@ -30,7 +30,7 @@ return function (C,Settings)
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") then
-                            task.wait(.05)
+                            task.wait(.075)
                             child:Fire()
                             print("FIRE4")
                         end
