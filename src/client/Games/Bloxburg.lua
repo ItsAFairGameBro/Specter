@@ -32,7 +32,7 @@ return function (C,Settings)
                         if child:IsA("BindableEvent") then
                             task.wait()
                             child:Fire()
-                            print("FIRE2")
+                            print("FIRE#3")
                         end
                     end))
                 end,
