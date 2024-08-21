@@ -56,7 +56,7 @@ return function (C,Settings)
 						Title = "Delay",
 						Tooltip = "Delays the completion of the event so that you aren't detected and don't automatically get charcoal!",
 						Layout = 0,Default=0.1,
-						Min=0.085,Max=0.15,Digits=3,
+						Min=0.085,Max=0.5,Digits=3,
 						Shortcut="Delay",
 					},
                     {
