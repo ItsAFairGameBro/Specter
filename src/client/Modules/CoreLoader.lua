@@ -33,7 +33,7 @@ return function(C, _SETTINGS)
 	C.LoadModule("Binds")
 	--Load Current Profile, But Only If We're The First
 	--Load Category Buttons & Tabs
-	C.UI.Tabs = {}
+	--C.UI.Tabs = {}
 	local HeaderTab,ButtonsTab,SettingsTab = C.UI.CategoriesFrame:WaitForChild("HeaderTab"),
 		C.UI.CategoriesFrame:WaitForChild("Buttons"),C.UI.CategoriesFrame:WaitForChild("Settings")
 	local ThisGameTbl = GamesWithModules[game.GameId]
@@ -175,7 +175,7 @@ return function(C, _SETTINGS)
 
 			if C.Cleared then return end
 			
-			C.UI.Tabs[category.Name] = TabEx
+			--C.UI.Tabs[category.Name] = TabEx
 			
 			task.spawn(C.MakeDraggableTab,TabEx,true)
 		else

@@ -69,7 +69,6 @@ return function (C,Settings)
                     end
                 },
             },
-            
         }
     }
 end
