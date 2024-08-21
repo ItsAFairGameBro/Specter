@@ -124,7 +124,7 @@ return function(C, _SETTINGS)
 		ButtonEx.HackText.Size = UDim2.new(0.65 + AdditionalOffset, 0, 0, 40)
 	end
 
-	for num, name in ipairs(ModulesToRun) do
+	for num, name in ipairs(ModulesToRun or {}) do
 		if C.Cleared then return end
 		local isGame = GameModule == name
 

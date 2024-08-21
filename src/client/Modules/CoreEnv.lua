@@ -391,6 +391,7 @@ return function(C,Settings)
 	end
 
 	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
+		C.DebugMessage("Destroy",`Destroy Called: {SaveIndex}`)
 		if C.SaveIndex == SaveIndex then
 			return -- our signal sent this!
 		end
@@ -406,7 +407,7 @@ return function(C,Settings)
 		if C.Cleared then
 			return
 		end
-		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instances`)
+		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instance(s)`)
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
 		if #C.getgenv().Instances>1 then
