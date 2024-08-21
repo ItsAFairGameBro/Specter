@@ -27,15 +27,15 @@ return function(C,Settings)
                     VU:ClickButton2(Vector2.new())
                 end,
 				Activate = function(self,newValue)
-                    if not newValue then
-                        return
-                    end
-                    table.insert(self.Functs, C.plr.Idled:Connect(self.Update))
-					if self.EnTbl.GameProtection then
+					if self.EnTbl.GameProtection and newValue then
 						C.DisableInstanceConnections(C.plr,"Idled",self.Shortcut)
 					else
 						C.EnableInstanceConnections(C.plr,"Idled",self.Shortcut)
 					end
+                    if not newValue then
+                        return
+                    end
+					table.insert(self.Functs, C.plr.Idled:Connect(self.Update))
 				end,
                 Events = {},
 				Options = {
