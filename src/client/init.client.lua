@@ -270,8 +270,8 @@ if not Settings then
 end
 C.getgenv().C = C
 
-local PreDebugMessage = `[SpecterV2/%s]: `
 function C.DebugMessage(type,message)
+	local PreDebugMessage = `[{C.SaveIndex or "Unreg"}/%s]: `
 	assert(C.Debugs[type]~=nil, `{PreDebugMessage}Message Type Not Found: "{tostring(type)}" in an attempt to create message: "{message}"`)
 	if not C.Debugs[type] and not C.Debugs.All then
 		return false

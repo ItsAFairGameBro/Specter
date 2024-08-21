@@ -401,7 +401,7 @@ return function(C,Settings)
 	end))
 	C.DebugMessage("Load",`Waiting To Load Starting`)
 	while #C.getgenv().Instances>1 do
-		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances} Instances`)
+		C.DebugMessage("Load",`Waiting for destruction because SaveIndex={C.getgenv().Instances[1]}; {#C.getgenv().Instances-1} Extra Instances`)
 		task.spawn(C.getgenv().CreateEvent.Fire,C.getgenv().CreateEvent,C.SaveIndex)
 		C.getgenv().DestroyEvent.Event:Wait()
 		if #C.getgenv().Instances>1 then
