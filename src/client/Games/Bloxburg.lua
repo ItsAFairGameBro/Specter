@@ -31,7 +31,7 @@ return function (C,Settings)
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") and child.Name == "Event" then
-                            task.wait(self.EnTbl.Delay + math.random(0,1) - 0.15)
+                            task.wait(C.Randomizer:NextNumber(self.EnTbl.MinDelay,self.EnTbl.MaxDelay))
                             if not MainGui:FindFirstChild("DefaultButton") then
                                 print("NOT FOUND: DEFUALTBUTOTN")
                                 return
@@ -50,14 +50,21 @@ return function (C,Settings)
                     end
                 end,
                 Options = {
-                    
                     {
 						Type = Types.Slider,
-						Title = "Delay",
+						Title = "Min Delay",
 						Tooltip = "Delays the completion of the event so that you aren't detected and don't automatically get charcoal!",
-						Layout = 0,Default=0.1,
-						Min=0.085,Max=0.5,Digits=3,
-						Shortcut="Delay",
+						Layout = 0,Default=0.065,
+						Min=0.06,Max=0.08,Digits=3,
+						Shortcut="MinDelay",
+					},
+                    {
+						Type = Types.Slider,
+						Title = "Max Delay",
+						Tooltip = "Randomize the completion",
+						Layout = 1,Default=0.08,
+						Min=0.06,Max=0.08,Digits=3,
+						Shortcut="MaxDelay",
 					},
                     {
 						Type = Types.Toggle,
