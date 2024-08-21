@@ -27,12 +27,12 @@ return function (C,Settings)
                     if not newValue then
                         return
                     end
-                    local MainGUI = C.PlayerGui:WaitForChild("MainGUI")
-                    table.insert(self.Functs,MainGUI.ChildAdded:Connect(function(child)
-                        if child.Name == "DefaultButton" then
-                            task.wait(1.5)
-                            C.firesignal(child.InputEnded,{UserInputType = Enum.UserInputType.Touch})
-                            warn("Fired",#C.getconnections(child.Activated))
+                    local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
+                    table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
+                        if child:IsA("BindableEvent") then
+                            task.wait(.5)
+                            child:Fire(true)
+                            print("FIRE")
                         end
                     end))
                 end,

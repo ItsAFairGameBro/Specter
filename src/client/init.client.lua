@@ -250,7 +250,7 @@ C.EventFunctions = {}
 C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
 C.PartConnections = {}
-C.Debugs = {All = true,
+C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
