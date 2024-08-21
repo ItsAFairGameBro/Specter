@@ -2,6 +2,8 @@ local DS = game:GetService("Debris")
 local SC = game:GetService("ScriptContext")
 local LS = game:GetService("LogService")
 local RS = game:GetService("ReplicatedStorage")
+local NC = game:GetService("NetworkClient")
+
 local function Static(C,Settings)
     local function yieldForeverFunct(...)
         C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
@@ -204,6 +206,10 @@ return function(C,Settings)
             GameIds = {88070565},PlaceIds={},
         },
     }
+    if NC:FindFirstAncestorWhichIsA("ClientReplicator") then
+        C.DebugMessage("AntiCheat",`AntiCheat Not Running Because Of Game Disconnect!`)
+        return
+    end
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then
             if not cheatTbl.RunOnce or not C.getgenv()["AntiCheat"..num] then
