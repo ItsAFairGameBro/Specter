@@ -20,7 +20,7 @@ return function (C,Settings)
         Tab = {
             {
 				Title = "Auto Cook",
-				Tooltip = "Automatically pushes the buttons that pop up when you cook. Disable if you get charcoal instead of food for no reason.",
+				Tooltip = "Automatically pushes the buttons that pop up when you cook.\nCheck delay setting if you get charcoal instead of food for no reason.",
 				Layout = 19, Functs = {}, Default=true,
 				Shortcut = "AutoCook",
 				Activate = function(self,newValue)
@@ -30,12 +30,38 @@ return function (C,Settings)
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") then
-                            task.wait(.065)
+                            task.wait(self.EnTbl.Delay)
                             child:Fire()
-                            print("FIRE4")
                         end
                     end))
+                    local MainGui = C.StringWait(C.PlayerGui,"MainGUI")
+                    if self.EnTbl.HideButtons then
+                        table.insert(self.Functs,MainGui.ChildAdded:Connect(function(child)
+                            if child.Name == "DefaultButton" then
+                                child.Visible = false
+                            end
+                        end))
+                    end
                 end,
+                Options = {
+                    
+                    {
+						Type = Types.Slider,
+						Title = "Delay",
+						Tooltip = "Delays the completion of the event so that you aren't detected and don't automatically get charcoal!",
+						Layout = 0,Default=0.065,
+						Min=0.06,Max=0.085,Digits=3,
+						Shortcut="Delay",
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Hide Buttons",
+						Tooltip = "Prevents the annoying buttons from appearing that tell you to tap/press a key",
+						Layout = 1,Default=true,
+						Shortcut="HideButtons",
+						Activate = C.ReloadHack,
+					},
+                }
             },
             {
 				Title = "Kick On Staff",
