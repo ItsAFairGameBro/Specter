@@ -31,7 +31,7 @@ return function (C,Settings)
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") and child.Name == "Event" then
-                            task.wait(self.EnTbl.Delay + math.random(0,1) - 0.5)
+                            task.wait(self.EnTbl.Delay + math.random(0,1) - 0.15)
                             if not MainGui:FindFirstChild("DefaultButton") then
                                 print("NOT FOUND: DEFUALTBUTOTN")
                                 return
