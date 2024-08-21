@@ -20,8 +20,8 @@ return function (C,Settings)
         Tab = {
             {
 				Title = "Auto Cook",
-				Tooltip = "Automatically pushes the buttons that pop up when you cook",
-				Layout = 20, Functs = {}, Default=true,
+				Tooltip = "Automatically pushes the buttons that pop up when you cook. Disable if you get charcoal instead of food for no reason.",
+				Layout = 19, Functs = {}, Default=true,
 				Shortcut = "AutoCook",
 				Activate = function(self,newValue)
                     if not newValue then
@@ -30,7 +30,7 @@ return function (C,Settings)
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") then
-                            task.wait(.055)
+                            task.wait(.065)
                             child:Fire()
                             print("FIRE4")
                         end
