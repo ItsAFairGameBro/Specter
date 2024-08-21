@@ -331,8 +331,8 @@ return function(C,Settings)
 		for instance, signalData in pairs(C.PartConnections) do
 			for signal, data in pairs(signalData) do
 				for key, enabled in pairs(data) do
-					if key ~= "Value" then
-						C.EnableInstanceConnections(instance,signal,key)
+					if key ~= "Value" and key ~= "Name" then
+						C.EnableInstanceConnections(instance,data.Name,key)
 					end
 				end
 			end

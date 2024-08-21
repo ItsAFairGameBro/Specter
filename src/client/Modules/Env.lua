@@ -820,7 +820,7 @@ return function(C,Settings)
 	end
 	--Function to set instance connection
 	function C.DisableInstanceConnections(instance,name,key)
-		assert(key~="Value",`Unable to assign {instance.Name} the key {key} because {key} is a protected value!`)
+		assert(key~="Value" and key~="Name",`Unable to assign {instance.Name} the key {key} because {key} is a protected value!`)
 		local signal = instance[name]
 		local instanceData = C.PartConnections[instance]
 		if not instanceData then
@@ -828,7 +828,7 @@ return function(C,Settings)
 			C.PartConnections[instance] = instanceData
 		end
 		if not instanceData[signal] then
-			instanceData[signal] = {Value = 0}
+			instanceData[signal] = {Value = 0,Name = name}
 			C.InternallySetConnections(signal,false)
 		end
 		if not instanceData[signal][key] then
