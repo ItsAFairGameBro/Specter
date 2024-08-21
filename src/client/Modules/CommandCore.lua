@@ -207,6 +207,9 @@ return function(C,Settings)
         end
         local lastText
         local lastUpd = -5
+        if C.Cleared then
+            return
+        end
         local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
         local DidSet = 0
         local Connections = {}

@@ -265,7 +265,7 @@ return function(C,Settings)
 		local ThingsToRemove = {}
 
 		local function RunOnDestroy(hackTbl,name)
-			local Identification = hackTbl.Shortcut
+			local Identification = hackTbl.Shortcut or "cmd_unk"
 			ThingsToRemove[Identification] = true
 			RemoveOnDestroyIndex += 1
 			task.spawn(function()
