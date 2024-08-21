@@ -391,7 +391,7 @@ return function(C,Settings)
 	end
 
 	C.AddGlobalConnection(C.getgenv().CreateEvent.Event:Connect(function(SaveIndex)
-		C.DebugMessage("Destroy",`Destroy Called: {SaveIndex}`)
+		C.DebugMessage("Destroy",`Destroy Called: {tostring(SaveIndex==C.SaveIndex)}`)
 		if C.SaveIndex == SaveIndex then
 			return -- our signal sent this!
 		end
