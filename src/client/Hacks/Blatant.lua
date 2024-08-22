@@ -76,7 +76,7 @@ return function(C,Settings)
 					},
 					{
 						Type = Types.Dropdown,
-						Title = "Active",
+						Title = "Active",Default="Camera On Character",
 						Tooltip = "Only runs when this condition is true.",
 						Selections={"Always","Camera On Character"},
 						Layout = 2,Default=true,
