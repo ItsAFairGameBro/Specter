@@ -875,7 +875,7 @@ return function(C,Settings)
 		local HalfSize = PartSize * 0.5
 
 		return math.abs(Transform.X) <= HalfSize.X and
-			(not TwoDim or math.abs(Transform.Y) <= HalfSize.Y) and
+			(TwoDim or math.abs(Transform.Y) <= HalfSize.Y) and
 			math.abs(Transform.Z) <= HalfSize.Z
 	end
 	function C.ClosestPointOnPart(PartCF, PartSize, Point)
