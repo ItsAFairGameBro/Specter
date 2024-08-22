@@ -2795,9 +2795,10 @@ return function(C, Settings)
 					local WholeTime = (os.clock() - LastPing) / (percentage - LastPercentage)
 					local TimeLeft = (1 - percentage) * WholeTime
 					Display ..= (" (%.0f seconds)"):format(TimeLeft)
+				else
+					actionClone:SetAttribute("LastPing", os.clock())
+					actionClone:SetAttribute("LastPercentage",percentage)
 				end
-				actionClone:SetAttribute("LastPing", os.clock())
-				actionClone:SetAttribute("LastPercentage",percentage)
 				Time.Text = Display
 			end
 		end
