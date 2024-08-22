@@ -149,18 +149,11 @@ return function(C,Settings)
 					end
 				end,
 				Activate = function(self,newValue,firstRun)
-					local EnTbl = self.RealEnabled and self.EnTbl or {}
-					--Fix Keyboard
-					if EnTbl.FixKeyboard then
-						local tb = Instance.new("TextBox",C.PlayerGui)
-						tb:CaptureFocus()
-						RunS.RenderStepped:Wait()
-						if tb:IsFocused() then
-							tb:ReleaseFocus()
-						end
-						-- Remove next frame to allow for smooth transition!
-						DS:AddItem(tb,0)
+					if firstRun then
+						task.wait(2)
 					end
+					local EnTbl = self.RealEnabled and self.EnTbl or {}
+					
 					--Lock Camera Orientation
 					local LastCameraSubjectChangeSignal, LastCamera
 					local function UpdateCamera()
@@ -213,6 +206,18 @@ return function(C,Settings)
 						end
 						table.insert(self.Functs,C.PlayerGui.ChildAdded:Connect(GUIAdded))
 						GUIAdded()
+					end
+
+					--Fix Keyboard
+					if EnTbl.FixKeyboard then
+						local tb = Instance.new("TextBox",C.PlayerGui)
+						tb:CaptureFocus()
+						RunS.RenderStepped:Wait()
+						if tb:IsFocused() then
+							tb:ReleaseFocus()
+						end
+						-- Remove next frame to allow for smooth transition!
+						DS:AddItem(tb,0)
 					end
 				end,
                 Events = {
