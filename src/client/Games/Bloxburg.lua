@@ -71,7 +71,7 @@ return function (C,Settings)
                     end
                     for num, val in ipairs(C.MoodData:GetChildren()) do
                         table.insert(self.Functs,val:GetPropertyChangedSignal("Value"):Connect(function()
-                            if not C.HasAction(self.Shortcut) and self:CanBoostMood() then
+                            if not C.GetAction(self.Shortcut) and self:CanBoostMood() then
                                 table.insert(self.Threads,task.spawn(self.BoostMood,self))
                             end
                         end))
