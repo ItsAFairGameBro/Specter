@@ -71,6 +71,7 @@ local function Static(C,Settings)
             print(enabled,attachment)
             C.Attachment = enabled and C.StringFind(C.char,"HumanoidRootPart.AttachWeld") or nil
         end))
+        print("C.Attachment",C.Attachment)
     end)
 
     --[[task.delay(2,function()
