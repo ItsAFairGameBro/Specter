@@ -150,8 +150,9 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue,firstRun)
 					if firstRun then
-						task.wait(2)
+						task.wait(20)
 					end
+					
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
 					
 					--Lock Camera Orientation
