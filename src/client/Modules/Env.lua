@@ -110,10 +110,11 @@ return function(C,Settings)
 		local Old = C.getgenv().hookfunction
 		C.getgenv().hookfunction = function(orgFunct,newFunct)
 			if orgFunct == C.getgenv().print or newFunct == C.getgenv().warn or orgFunct == C.getrenv().print or newFunct == C.getrenv().warn then
-				return
+				warn("Blocked",orgFunct)
+				return orgFunct
 			end
 			return Old(orgFunct,newFunct)
-		end
+		end--]]
 		C.getgenv().PrintEnvironment = true
 	end
 	--Table Functions
