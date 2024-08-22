@@ -4,7 +4,9 @@ local Players = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
-    
+    function C.isInGame(theirChar)
+        return theirChar:GetPivot().Y > 0
+    end
 end
 
 return function (C,Settings)
@@ -32,13 +34,13 @@ return function (C,Settings)
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") and child.Name == "Event" then
                             task.wait(C.Randomizer:NextNumber(self.EnTbl.MinDelay,self.EnTbl.MaxDelay))
-                            if not MainGui:FindFirstChild("DefaultButton") then
+                            --[[if not MainGui:FindFirstChild("DefaultButton") then
                                 print("NOT FOUND: DEFUALTBUTOTN")
                                 return
-                            end
+                            end--]]
                             child:Fire(true)
-                        else
-                            print("Not RUn",child,child.ClassName)
+                        --else
+                            --print("Not RUn",child,child.ClassName)
                         end
                     end))
                     if self.EnTbl.HideButtons then
