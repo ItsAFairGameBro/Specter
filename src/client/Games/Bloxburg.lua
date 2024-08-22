@@ -53,7 +53,7 @@ local function Static(C,Settings)
         end
         return object, nearest
     end
-    print("CLOSEST",C.GetClosestObject(C.GetPlot(),"Shower"))
+    print("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
 end
 
 return function (C,Settings)
