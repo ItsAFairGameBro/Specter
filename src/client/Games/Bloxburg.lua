@@ -112,33 +112,33 @@ return function (C,Settings)
                 MoodBoostFunctions = {
                     Hygiene = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Shower")
-                        if Object and (Distance > 1000 or C.Attachment) then
+                        if Object and (Distance > 10000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,5,0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,C.getHumanoidHeight(C.human),0))
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
                     end,
                     Energy = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Comfort")
-                        if Object and (Distance > 1000 or C.Attachment) then
+                        if Object and (Distance > 10000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,5,0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,C.getHumanoidHeight(C.human),0))
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
                     end,
                     Fun = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"TV")
-                        if Object and (Distance > 1000 or C.Attachment) then
+                        if Object and (Distance > 10000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,5,0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getHumanoidHeight(C.human),0))
                         else
                             if not Object.ObjectData.IsOn.Value then
                                 -- Turn on the TV
@@ -222,13 +222,14 @@ return function (C,Settings)
                     if not newValue then
                         return
                     end
-                    for num, val in ipairs(C.MoodData:GetChildren()) do
+                    --[[for num, val in ipairs(C.MoodData:GetChildren()) do
                         table.insert(self.Functs,val:GetPropertyChangedSignal("Value"):Connect(function()
+                            print("Value:",val)
                             if not C.GetAction(self.Shortcut) and self:CanBoostMood() then
                                 table.insert(self.Threads,task.spawn(self.BoostMood,self))
                             end
                         end))
-                    end
+                    end--]]
                     if self:CanBoostMood() then
                         self:BoostMood()
                     end
