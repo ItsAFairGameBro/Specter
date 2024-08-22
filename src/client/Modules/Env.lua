@@ -480,7 +480,8 @@ return function(C,Settings)
 				aValue = a[2]
 				bValue = b[2]
 			end
-			if typeof(aValue) == "table" and typeof(bValue) == "table" then
+			local aType, bType = typeof(aValue), typeof(bValue)
+			if aType == "table" and bType == "table" then
 				local aPriority = aValue.Priority or 1
 				local bPriority = bValue.Priority or 1
 				if aPriority ~= bPriority then
@@ -491,9 +492,10 @@ return function(C,Settings)
 				else
 					return C.GetDictLength(aValue) > C.GetDictLength(bValue)
 				end
-			elseif typeof(aValue) == "string" and typeof(bValue) == "string" then
+			elseif aType == "string" and bType == "string" then
 				return aValue:lower() > bValue:lower()
-			elseif typeof(aValue) == "number" and typeof(bValue) == "number" then
+			elseif (aType == "number" and bType == "number")
+				or (aType == "function" and bType == "function") then
 				return aValue > bValue
 			else
 				error("[C.StringStartsWith]: error - unknown types: "..typeof(aValue).." and "..typeof(bValue))

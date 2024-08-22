@@ -156,6 +156,7 @@ return function(C,Settings)
                         if not TblFind(IgnoreList,MyRemoteName) then
                             task.spawn(print,`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ path {debug.traceback()}; args:`,...)
                         end
+                        require(game:GetService("Players").SuitedForBans12.PlayerScripts.Modules.CharacterHandler)["_attachedEvent"].Event:Connect(function(...) warn("attach",...) end) warn("Hook")
                     end,{"fireserver","invokeserver"})
                 end,
                 Options = {

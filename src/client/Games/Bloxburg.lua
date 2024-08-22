@@ -13,6 +13,15 @@ local function Static(C,Settings)
         .ShowLoading()
         .HideLoading()
     ]]
+    C.CharacterHandler = C.require(MyGameModules:WaitForChild("CharacterHandler"))
+    --[[
+        .Attached -> Signal Event
+        .CharacterChanged -> Signal Event
+        .FloorMaterial -> Enum.Material
+        .FloorHit -> BasePart
+        .Detach()
+        :SendDetach()
+    ]]
     local RS_Modules = C.StringWait(RS,"Modules")
     local ItemService = C.require(RS_Modules:WaitForChild("ItemService"))
     --[[
@@ -56,6 +65,10 @@ local function Static(C,Settings)
     function C.FireServer(name,...)
         C.RemoteObjects[name]:FireServer(...)
     end
+    C.AddGlobalConnection(C.CharacterHandler.Attached:Connect(function(enabled,attachment)
+        print(enabled,attachment)
+    end))
+
     --[[task.delay(2,function()
         warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
     end)--]]
