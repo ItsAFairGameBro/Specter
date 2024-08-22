@@ -826,7 +826,7 @@ return function(C,Settings)
 			if not connection.ForeignState then
 				connection[enabled and "Enable" or "Disable"](connection)
 			else
-				print("Stopping from disabling foreignstate connection")
+				print("Stopping from " .. enabled and "enabling" or "disabling" .. " foreignstate connection")
 			end
 		end
 	end
@@ -872,13 +872,13 @@ return function(C,Settings)
 		end
 	end
 
-	function C.IsInBox(PartCF:CFrame,PartSize:Vector3,Point:Vector3)
+	function C.IsInBox(PartCF:CFrame,PartSize:Vector3,Point:Vector3,TwoDim:boolean)
 		local Transform = PartCF:PointToObjectSpace(Point) -- Transform into local space
 		local HalfSize = PartSize * 0.5
 
-		return math.abs(Transform.x) <= HalfSize.x and
-			math.abs(Transform.y) <= HalfSize.y and
-			math.abs(Transform.z) <= HalfSize.z
+		return math.abs(Transform.X) <= HalfSize.X and
+			(not TwoDim or math.abs(Transform.Y) <= HalfSize.Y) and
+			math.abs(Transform.Z) <= HalfSize.Z
 	end
 	function C.ClosestPointOnPart(PartCF, PartSize, Point)
 		local Transform = PartCF:pointToObjectSpace(Point) -- Transform into local space

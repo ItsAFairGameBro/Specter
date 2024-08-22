@@ -9,7 +9,13 @@ local function Static(C,Settings)
         return InGame, InGame and "Runner" or "Lobby"
     end
     function C.GetPlot(theirChar)
-        
+        local Plots = game:GetService("Workspace").Plots
+        for num, Plot in ipairs(Plots:GetChildren()) do
+            local Ground = C.StringWait(Plot,"_LODModel.Ground")
+            if Ground and C.IsInBox(Ground.CFrame,Ground.Size,C.char:GetPivot().Position,true) then
+                return Plot
+            end
+        end
     end
 end
 
@@ -37,7 +43,7 @@ return function (C,Settings)
                     local HotbarModule = C.StringWait(C.PlayerScripts,"Modules.HotbarUI")
                     table.insert(self.Functs,HotbarModule.ChildAdded:Connect(function(child)
                         if child:IsA("BindableEvent") and child.Name == "Event" then
-                            task.wait(C.Randomizer:NextNumber(self.EnTbl.MinDelay,self.EnTbl.MaxDelay))
+                            task.wait(C.Randomizer:NextNumber(C.GetMinMax(self.EnTbl.MinDelay,self.EnTbl.MaxDelay)))
                             --[[if not MainGui:FindFirstChild("DefaultButton") then
                                 print("NOT FOUND: DEFUALTBUTOTN")
                                 return
@@ -108,7 +114,7 @@ return function (C,Settings)
                                 theirPlr:GetAttributeChangedSignal("_tag"):Wait()
                             end
                         end
-                        if (tag < 0 or tag > 2) and (tag<19 or tag>21) then
+                        if (tag<19 or tag>21) then--(tag < 0 or tag > 2) and (tag<19 or tag>21) then
                             C.plr:Kick(`[KickOnStaff]: You were kicked because {theirPlr.Name} is in the game and has the tag rank of {tag}`)
                         end
                     end
