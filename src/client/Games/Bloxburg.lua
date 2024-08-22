@@ -15,20 +15,45 @@ local function Static(C,Settings)
     ]]
     local RS_Modules = C.StringWait(RS,"Modules")
     local ItemService = C.require(RS_Modules:WaitForChild("ItemService"))
+    --[[
+        :GetItemFromObject(OBJECT) -> data {}
+    ]]
     C.ItemService = ItemService
     function C.isInGame(theirChar)
         local InGame = theirChar:GetPivot().Y > 0 and not C.LoadingModule.IsLoadingAny()
         return InGame, InGame and "Runner" or "Lobby"
     end
     function C.GetPlot(theirChar)
+        theirChar = theirChar or C.char
         local Plots = game:GetService("Workspace").Plots
         for num, Plot in ipairs(Plots:GetChildren()) do
             local Ground = C.StringWait(Plot,"_LODModel.Ground")
-            if Ground and C.IsInBox(Ground.CFrame,Ground.Size,C.char:GetPivot().Position,true) then
+            if Ground and C.IsInBox(Ground.CFrame,Ground.Size,theirChar:GetPivot().Position,true) then
                 return Plot
             end
         end
     end
+    function C.GetClosestObject(Plot,Type)
+        local Objects = Plot and C.StringFind(Plot,"House.Objects")
+        if not Objects then
+            return
+        end
+        local object, nearest = nil, 500
+        for num, object in ipairs(Objects:GetChildren()) do
+            local ObjectModel = object:FindFirstChild("ObjectModel")
+            if ObjectModel then
+                local Data = C.ItemService:GetItemFromObject(object)
+                if Data and table.find(Data.Types,Type) then
+                    local dist = (ObjectModel:GetPivot().Position - C.char:GetPivot().Position).Magnitude
+                    if dist < nearest then
+                        object, nearest = object,dist
+                    end
+                end
+            end
+        end
+        return object, nearest
+    end
+    print("CLOSEST",C.GetClosestObject(C.GetPlot(),"Shower"))
 end
 
 return function (C,Settings)
@@ -48,13 +73,20 @@ return function (C,Settings)
 				Layout = 18, Functs = {}, Threads = {}, Default=true,
 				Shortcut = "MoodBoost",
                 BoostMood = function(self)
-                    local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"}}
+                    local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
+                        if requested then
+                            self:SetValue(false)
+                        end
+                    end}
                     local actionClone = C.AddAction(info)
-                    while true do
+                    while self:CanBoostMood() do
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end
                         task.wait(1)
+                    end
+                    if info.Enabled then
+                        C.RemoveAction(self.Shortcut)
                     end
                 end,
                 CanBoostMood = function(self)
