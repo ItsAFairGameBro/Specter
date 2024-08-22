@@ -112,14 +112,8 @@ return function (C,Settings)
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end
-                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
-                        if Distance > 10 then
-                            C.FireServer("Detach")
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
-                        else
-                            C.FireServer("Interact",{Target=Object,Path=1})
-                        end
-                        C.SetActionPercentage(actionClone,C.MoodData.Hygiene/100)
+                        self.MoodBoostFunctions.Hygiene(self)
+                        C.SetActionPercentage(actionClone,C.MoodData.Hygiene.Value/100)
                         task.wait(1/2)
                     end
                     if info.Enabled then
