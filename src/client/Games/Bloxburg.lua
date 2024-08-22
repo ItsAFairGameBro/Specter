@@ -180,6 +180,7 @@ return function (C,Settings)
                         end
                         local Plot = C.GetPlot()
                         if not Plot then
+                            actionClone.Time.Text = "Teleporting"
                             -- HotbarUI Yields, so no wait
                             C.HotbarUI:ToHouse()
                         else

@@ -2804,14 +2804,14 @@ return function(C, Settings)
 	end
 	
 	function C.GetAction(name)
-		local actionInstance = ActionsList:FindFirstChild(name)
+		local actionInstance = ActionsList.FindFirstChild(ActionsList,name)
 		if actionInstance then
 			return actionInstance
 		end
 	end
 	
 	function C.RemoveAction(name)
-		local actionInstance = ActionsList:FindFirstChild(name)
+		local actionInstance = ActionsList.FindFirstChild(ActionsList,name)
 		if actionInstance then
 			local event = actionInstance:FindFirstChild("StopEvent")
 			if event then
