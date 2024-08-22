@@ -165,7 +165,7 @@ return function (C,Settings)
                 BoostMood = function(self)
                     local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
-                            self:SetValue(false)
+                            C.DoActivate(self,self.Activate,false)
                         end
                     end}
                     local MoodName,MoodValue
