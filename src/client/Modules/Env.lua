@@ -94,7 +94,7 @@ return function(C,Settings)
 			return Old
 		end
 		
-		--[[local DoPrefix = false
+		local DoPrefix = false
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
 			return OldEnv.print1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
@@ -102,13 +102,13 @@ return function(C,Settings)
 			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
-			return OldEnv.print1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.print2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
-			return OldEnv.warn1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.warn2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		
-		task.delay(3,function()
+		--[[task.delay(3,function()
 			print"Hookfunction Hook"
 			C.getgenv().hookfunction = function(orgFunct,newFunct)
 				--if orgFunct == C.getgenv().print or orgFunct == C.getgenv().warn or orgFunct == C.getrenv().print or orgFunct == C.getrenv().warn

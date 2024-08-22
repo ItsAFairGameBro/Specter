@@ -68,10 +68,8 @@ local function Static(C,Settings)
     table.insert(C.EventFunctions,function()
         C.Attachment = C.StringFind(C.char,"HumanoidRootPart.AttachWeld")
         C.AddGlobalConnection(C.CharacterHandler.Attached:Connect(function(enabled,attachment)
-            print(enabled,attachment)
             C.Attachment = enabled and C.StringFind(C.char,"HumanoidRootPart.AttachWeld") or nil
         end))
-        print("C.Attachment",C.Attachment)
     end)
 
     --[[task.delay(2,function()
@@ -98,8 +96,32 @@ return function (C,Settings)
                 MoodBoostFunctions = {
                     Hygiene = function(self)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
-                        if Distance > 10 then
-                            C.FireServer("Detach")
+                        if Distance > 10 or C.Attachment then
+                            if C.Attachment then
+                                C.FireServer("Detach")
+                            end
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                        else
+                            C.FireServer("Interact",{Target=Object,Path=1})
+                        end
+                    end,
+                    Energy = function(self)
+                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        if Distance > 10 or C.Attachment then
+                            if C.Attachment then
+                                C.FireServer("Detach")
+                            end
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                        else
+                            C.FireServer("Interact",{Target=Object,Path=1})
+                        end
+                    end,
+                    Fun = function(self)
+                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        if Distance > 10 or C.Attachment then
+                            if C.Attachment then
+                                C.FireServer("Detach")
+                            end
                             C.DoTeleport(Object.ObjectModel:GetPivot().Position)
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
@@ -113,12 +135,28 @@ return function (C,Settings)
                         end
                     end}
                     local actionClone = C.AddAction(info)
-                    while self:CanBoostMood() do
+                    while true do
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end
-                        self.MoodBoostFunctions.Hygiene(self)
-                        C.SetActionPercentage(actionClone,C.MoodData.Hygiene.Value/100)
+                        local values2Fix = {}
+                        for num, val in ipairs(C.MoodData:GetChildren()) do
+                            if val.Value < 95 then
+                                table.insert(values2Fix,val)
+                            end
+                        end
+                        table.sort(values2Fix,function(a,b)
+                            return a.Value > b.Value
+                        end)
+                        local MoodValue = values2Fix[1]
+                        if MoodValue then
+                            local MoodName = values2Fix[1].Name
+                            print("Now doing",MoodName)
+                            self.MoodBoostFunctions[MoodName](self)
+                            C.SetActionPercentage(actionClone,MoodValue.Value/100)
+                        else
+                            break
+                        end
                         task.wait(1/2)
                     end
                     if info.Enabled then
