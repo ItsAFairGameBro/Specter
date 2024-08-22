@@ -4,8 +4,20 @@ local Players = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
+    C.Stats = C.StringWait(RS,"Stats."..C.plr.Name)
+    C.MoodData = C.StringWait(C.Stats,"MoodData")
+    local MyGameModules = C.StringWait(C.plr,"PlayerScripts.Modules")
+    C.LoadingModule = C.require(MyGameModules:WaitForChild("LoadingHandler"))
+    --[[
+        .IsLoadingAny() -> boolean
+        .ShowLoading()
+        .HideLoading()
+    ]]
+    local RS_Modules = C.StringWait(RS,"Modules")
+    local ItemService = C.require(RS_Modules:WaitForChild("ItemService"))
+    C.ItemService = ItemService
     function C.isInGame(theirChar)
-        local InGame = theirChar:GetPivot().Y > 0
+        local InGame = theirChar:GetPivot().Y > 0 and not C.LoadingModule.IsLoadingAny()
         return InGame, InGame and "Runner" or "Lobby"
     end
     function C.GetPlot(theirChar)
@@ -30,6 +42,45 @@ return function (C,Settings)
             Layout = 20,
         },
         Tab = {
+            {
+				Title = "Mood Boost",
+				Tooltip = "Automatically boost moods when your moods get low",
+				Layout = 18, Functs = {}, Threads = {}, Default=true,
+				Shortcut = "MoodBoost",
+                BoostMood = function(self)
+                    local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"}}
+                    local actionClone = C.AddAction(info)
+                    while true do
+                        while C.LoadingModule.IsLoadingAny() do
+                            task.wait(1)
+                        end
+                        task.wait(1)
+                    end
+                end,
+                CanBoostMood = function(self)
+                    for num, val in ipairs(C.MoodData:GetChildren()) do
+                        if val.Value < 70 then
+                            return true
+                        end
+                    end
+                end,
+				Activate = function(self,newValue)
+                    C.RemoveAction(self.Shortcut)
+                    if not newValue then
+                        return
+                    end
+                    for num, val in ipairs(C.MoodData:GetChildren()) do
+                        table.insert(self.Functs,val:GetPropertyChangedSignal("Value"):Connect(function()
+                            if not C.HasAction(self.Shortcut) and self:CanBoostMood() then
+                                table.insert(self.Threads,task.spawn(self.BoostMood,self))
+                            end
+                        end))
+                    end
+                    if self:CanBoostMood() then
+                        self:BoostMood()
+                    end
+                end,
+            },
             {
 				Title = "Auto Cook",
 				Tooltip = "Automatically pushes the buttons that pop up when you cook.\nCheck delay setting if you get charcoal instead of food for no reason.",

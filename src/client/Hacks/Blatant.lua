@@ -34,6 +34,9 @@ return function(C,Settings)
 						C.LastLoc = C.char:GetPivot()
 					end))
 					local function TeleportDetected()
+						if C.camera.CameraType ~= Enum.CameraType.Custom and self.EnTbl.Active == "Camera On Character" then
+							return
+						end
 						newInput = C.char:GetPivot()
 						if self.BlockTeleports then
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 16 then
@@ -70,6 +73,14 @@ return function(C,Settings)
 						Tooltip = "Updates for other players when you're not moving",
 						Layout = 1,Default=true,
 						Shortcut="UpdateOthers",
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Active",
+						Tooltip = "Only runs when this condition is true.",
+						Selections={"Always","Camera On Character"},
+						Layout = 2,Default=true,
+						Shortcut="Active",
 					},
 				},
 			},
