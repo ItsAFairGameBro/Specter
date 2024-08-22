@@ -38,7 +38,7 @@ local function Static(C,Settings)
         if not Objects then
             return
         end
-        local object, nearest = nil, 500
+        local bestObj, nearest = nil, 500
         for num, object in ipairs(Objects:GetChildren()) do
             local ObjectModel = object:FindFirstChild("ObjectModel")
             if ObjectModel then
@@ -46,12 +46,12 @@ local function Static(C,Settings)
                 if Data and table.find(Data.Types,Type) then
                     local dist = (ObjectModel:GetPivot().Position - C.char:GetPivot().Position).Magnitude
                     if dist < nearest then
-                        object, nearest = object,dist
+                        bestObj, nearest = object,dist
                     end
                 end
             end
         end
-        return object, nearest
+        return bestObj, nearest
     end
     task.delay(2,function()
         warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
