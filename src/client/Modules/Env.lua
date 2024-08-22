@@ -109,7 +109,8 @@ return function(C,Settings)
 		end)
 		local Old = C.getgenv().hookfunction
 		C.getgenv().hookfunction = function(orgFunct,newFunct)
-			if orgFunct == C.getgenv().print or newFunct == C.getgenv().warn or orgFunct == C.getrenv().print or newFunct == C.getrenv().warn then
+			if orgFunct == C.getgenv().print or orgFunct == C.getgenv().warn or orgFunct == C.getrenv().print or orgFunct == C.getrenv().warn
+				or orgFunct == print or orgFunct == warn then
 				warn("Blocked",orgFunct)
 				return orgFunct
 			end
