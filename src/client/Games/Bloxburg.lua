@@ -112,7 +112,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,5,0))
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
@@ -123,7 +123,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,5,0))
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
@@ -134,7 +134,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6))
+                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,5,0))
                         else
                             if not Object.ObjectData.IsOn.Value then
                                 -- Turn on the TV
