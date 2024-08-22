@@ -826,7 +826,7 @@ return function(C,Settings)
 			if not connection.ForeignState then
 				connection[enabled and "Enable" or "Disable"](connection)
 			else
-				print("Stopping from " .. enabled and "enabling" or "disabling" .. " foreignstate connection")
+				print(`Stopping from {enabled and "enabling" or "disabling"} foreignstate connection`)
 			end
 		end
 	end
