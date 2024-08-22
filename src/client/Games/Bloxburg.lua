@@ -27,7 +27,7 @@ local function Static(C,Settings)
         theirChar = theirChar or C.char
         local Plots = game:GetService("Workspace").Plots
         for num, Plot in ipairs(Plots:GetChildren()) do
-            local Ground = C.StringWait(Plot,"_LODModel.Ground")
+            local Ground = C.StringFind(Plot,"_LODModel.Ground") or C.StringFind(Plot,"Ground")
             if Ground and C.IsInBox(Ground.CFrame,Ground.Size,theirChar:GetPivot().Position,true) then
                 return Plot
             end
