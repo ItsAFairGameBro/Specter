@@ -27,7 +27,7 @@ local function Static(C,Settings)
     --[[
         :GetItemFromObject(OBJECT) -> data {}
 
-        print(getgenv().C.ItemService:GetItemFromObject(game:GetService("Workspace").Plots["Plot_SuitedForBans12"].House.Objects["Basic Shower"]))
+        print(getgenv().C.ItemService:GetItemFromObject())
     ]]
     C.ItemService = ItemService
     function C.isInGame(theirChar)
@@ -50,7 +50,7 @@ local function Static(C,Settings)
             return
         end
         local bestObj, nearest = nil, 500
-        for num, object in ipairs(Objects:GetChildren()) do
+        local function DoSort(object)
             local ObjectModel = object:FindFirstChild("ObjectModel")
             if ObjectModel then
                 local Data = C.ItemService:GetItemFromObject(object)
@@ -62,6 +62,16 @@ local function Static(C,Settings)
                 end
             end
         end
+        local function DoLoop(loopObject)
+            for num, object in ipairs(loopObject:GetChildren()) do
+                DoSort(object)
+                local ItemHolder = object:FindFirstChild("ItemHolder")
+                if ItemHolder then
+                    DoLoop(ItemHolder)
+                end
+            end
+        end
+        DoLoop(Objects)
         return bestObj, nearest
     end
     function C.FireServer(name,...)
@@ -108,7 +118,7 @@ return function (C,Settings)
                         end
                     end,
                     Energy = function(self)
-                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Comfort")
                         if Distance > 10 or C.Attachment then
                             if C.Attachment then
                                 C.FireServer("Detach")
@@ -119,14 +129,36 @@ return function (C,Settings)
                         end
                     end,
                     Fun = function(self)
-                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"TV")
                         if Distance > 10 or C.Attachment then
                             if C.Attachment then
                                 C.FireServer("Detach")
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6))
                         else
-                            C.FireServer("Interact",{Target=Object,Path=1})
+                            if not Object.ObjectData.IsOn.Value then
+                                -- Turn on the TV
+                                C.FireServer("Interact",{Target=Object,Path=1})
+                                print("Turn on")
+                            else
+                                -- Check to see if we're watching
+                                local isWatching = false
+                                for num, attachVal in ipairs(Object:GetChildren()) do
+                                    if attachVal.Name == "_attachOccupied" then
+                                        if attachVal:IsA("ObjectValue") and attachVal.Value == C.plr then
+                                            isWatching = true
+                                            break
+                                        end
+                                    end
+                                end
+                                if not isWatching then
+                                    -- Watch the TV
+                                    C.FireServer("Interact",{Target=Object,Path=2})
+                                    print("Not Watching")
+                                else
+                                    print("Watching")
+                                end
+                            end
                         end
                     end,
                 },
