@@ -53,9 +53,9 @@ local function Static(C,Settings)
         end
         return bestObj, nearest
     end
-    task.delay(2,function()
+    --[[task.delay(2,function()
         warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
-    end)
+    end)--]]
 end
 
 return function (C,Settings)
@@ -85,6 +85,8 @@ return function (C,Settings)
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end
+                       -- local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        --C.DoTeleport(Object.ObjectModel.)
                         task.wait(1)
                     end
                     if info.Enabled then
