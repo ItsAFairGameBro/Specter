@@ -135,7 +135,7 @@ return function(C,Settings)
 				Tooltip = "Prints all messages from remote events to the console.",
 				Layout = 12,Functs={},
 				Shortcut = "PrintRemoteSpy",
-                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime"}},
+                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime","CheckOwnsAsset","GetIKTargets","FirstPlayerExperience_IsFirstTime"}},
                 Activate = function(self,newValue)
                     if newValue and self.EnTbl.Inbound then
                         for num, event in ipairs(C.getinstances()) do
@@ -308,9 +308,6 @@ return function(C,Settings)
 				Activate = function(self,newValue)
                     C.setclipboard(game.GameId)
 				end,
-				Options = {
-					
-				}
 			},
 		}
 	}
