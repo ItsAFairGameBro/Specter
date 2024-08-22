@@ -183,7 +183,7 @@ return function (C,Settings)
                         table.sort(values2Fix,function(a,b)
                             return a.Value > b.Value
                         end)
-                        if not table.find(MoodValue,values2Fix) then
+                        if not MoodValue or not table.find(values2Fix,MoodValue) then
                             if values2Fix[1] then
                                 MoodValue = values2Fix[1]
                                 MoodName = values2Fix[1].Name
