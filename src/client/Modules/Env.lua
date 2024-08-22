@@ -824,6 +824,7 @@ return function(C,Settings)
 	function C.InternallySetConnections(signal,enabled)
 		for _, connection in ipairs(C.getconnections(signal)) do
 			if not connection.ForeignState then
+				print(enabled and "Enable" or "Disable")
 				connection[enabled and "Enable" or "Disable"](connection)
 			else
 				print(`Stopping from {enabled and "enabling" or "disabling"} foreignstate connection`)
