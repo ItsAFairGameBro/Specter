@@ -366,6 +366,7 @@ return function(C,Settings)
 				return Color3.fromRGB(255,255,255)
 			else--Give warning
 				warn(`[C.GetPlayerNameTagColor]: Invalid Type Detected: {tostring(Type)} for {tostring(theirPlr)}; reverting to blue`)
+				return Color3.fromRGB(0,0,255)
 			end
 		end
 		-- Apply default color
