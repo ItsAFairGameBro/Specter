@@ -26,6 +26,8 @@ local function Static(C,Settings)
     local ItemService = C.require(RS_Modules:WaitForChild("ItemService"))
     --[[
         :GetItemFromObject(OBJECT) -> data {}
+
+        print(getgenv().C.ItemService:GetItemFromObject(game:GetService("Workspace").Plots["Plot_SuitedForBans12"].House.Objects["Basic Shower"]))
     ]]
     C.ItemService = ItemService
     function C.isInGame(theirChar)
