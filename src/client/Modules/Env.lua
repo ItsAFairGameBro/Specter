@@ -824,10 +824,7 @@ return function(C,Settings)
 	function C.InternallySetConnections(signal,enabled)
 		for _, connection in ipairs(C.getconnections(signal)) do
 			if not connection.ForeignState then
-				print(enabled and "Enable" or "Disable")
 				connection[enabled and "Enable" or "Disable"](connection)
-			else
-				print(`Stopping from {enabled and "enabling" or "disabling"} foreignstate connection`)
 			end
 		end
 	end
@@ -853,11 +850,9 @@ return function(C,Settings)
 		local signal = instance[name]
 		local instanceData = C.PartConnections[instance]
 		if not instanceData then
-			print(1)
 			return
 		end
 		if not instanceData[name] then
-			print(instanceData)
 			return
 		end
 		if instanceData[name][key] then
@@ -865,10 +860,8 @@ return function(C,Settings)
 			instanceData[name].Value -= 1
 		end
 		if instanceData[name].Value > 0 then
-			print(3)
 			return
 		end
-		print('stop')
 		C.InternallySetConnections(signal,true)
 		instanceData[name] = nil -- clear the signal data
 		if C.GetDictLength(instanceData) <= 0 then -- if its empty
