@@ -79,7 +79,7 @@ return function(C,Settings)
 						Title = "Active",Default="Camera On Character",
 						Tooltip = "Only runs when this condition is true.",
 						Selections={"Always","Camera On Character"},
-						Layout = 2,Default=true,
+						Layout = 2,
 						Shortcut="Active",
 					},
 				},
