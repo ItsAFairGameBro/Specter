@@ -108,7 +108,7 @@ return function (C,Settings)
                 MoodBoostFunctions = {
                     Hygiene = function(self)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
-                        if Distance > 10 or C.Attachment then
+                        if Object and (Distance > 1000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -119,7 +119,7 @@ return function (C,Settings)
                     end,
                     Energy = function(self)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"Comfort")
-                        if Distance > 10 or C.Attachment then
+                        if Object and (Distance > 1000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -130,7 +130,7 @@ return function (C,Settings)
                     end,
                     Fun = function(self)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"TV")
-                        if Distance > 10 or C.Attachment then
+                        if Object and (Distance > 1000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
