@@ -168,6 +168,7 @@ return function (C,Settings)
                             self:SetValue(false)
                         end
                     end}
+                    local MoodName,MoodValue
                     local actionClone = C.AddAction(info)
                     while true do
                         while C.LoadingModule.IsLoadingAny() do
@@ -182,15 +183,16 @@ return function (C,Settings)
                         table.sort(values2Fix,function(a,b)
                             return a.Value > b.Value
                         end)
-                        local MoodValue = values2Fix[1]
-                        if MoodValue then
-                            local MoodName = values2Fix[1].Name
-                            print("Now doing",MoodName)
-                            self.MoodBoostFunctions[MoodName](self)
-                            C.SetActionPercentage(actionClone,MoodValue.Value/100)
-                        else
-                            break
+                        if not table.find(MoodValue,values2Fix) then
+                            if values2Fix[1] then
+                                MoodValue = values2Fix[1]
+                                MoodName = values2Fix[1].Name
+                            else
+                                break
+                            end
                         end
+                        self.MoodBoostFunctions[MoodName](self)
+                        C.SetActionPercentage(actionClone,MoodValue.Value/100)
                         task.wait(1/2)
                     end
                     if info.Enabled then
