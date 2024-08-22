@@ -857,7 +857,7 @@ return function(C,Settings)
 			return
 		end
 		if not instanceData[signal] then
-			print(2)
+			print(instanceData)
 			return
 		end
 		if instanceData[signal][key] then
