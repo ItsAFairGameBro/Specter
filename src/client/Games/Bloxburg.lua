@@ -65,9 +65,13 @@ local function Static(C,Settings)
     function C.FireServer(name,...)
         C.RemoteObjects[name]:FireServer(...)
     end
-    C.AddGlobalConnection(C.CharacterHandler.Attached:Connect(function(enabled,attachment)
-        print(enabled,attachment)
-    end))
+    table.insert(C.EventFunctions,function()
+        C.Attachment = C.StringFind(C.char,"HumanoidRootPart.AttachWeld")
+        C.AddGlobalConnection(C.CharacterHandler.Attached:Connect(function(enabled,attachment)
+            print(enabled,attachment)
+            C.Attachment = enabled and C.StringFind(C.char,"HumanoidRootPart.AttachWeld") or nil
+        end))
+    end)
 
     --[[task.delay(2,function()
         warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
