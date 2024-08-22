@@ -154,7 +154,7 @@ return function(C,Settings)
                         local RemoteNames = rawget(C,"RemoteNames")
                         local MyRemoteName = rawget(RemoteNames,self) or self.Name
                         if not TblFind(IgnoreList,MyRemoteName) then
-                            task.spawn(print,`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ args:`,...)
+                            task.spawn(print,`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ path {debug.traceback()}; args:`,...)
                         end
                     end,{"fireserver","invokeserver"})
                 end,

@@ -77,6 +77,17 @@ return function (C,Settings)
 				Tooltip = "Automatically boost moods when your moods get low",
 				Layout = 18, Functs = {}, Threads = {}, Default=true,
 				Shortcut = "MoodBoost",
+                MoodBoostFunctions = {
+                    Hygiene = function(self)
+                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        if Distance > 10 then
+                            C.FireServer("Detach")
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                        else
+                            C.FireServer("Interact",{Target=Object,Path=1})
+                        end
+                    end,
+                },
                 BoostMood = function(self)
                     local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
@@ -90,12 +101,13 @@ return function (C,Settings)
                         end
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
                         if Distance > 10 then
+                            C.FireServer("Detach")
                             C.DoTeleport(Object.ObjectModel:GetPivot().Position)
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
-                        --
-                        task.wait(1)
+                        C.SetActionPercentage(actionClone,C.MoodData.Hygiene/100)
+                        task.wait(1/2)
                     end
                     if info.Enabled then
                         C.RemoveAction(self.Shortcut)
