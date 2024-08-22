@@ -840,13 +840,13 @@ return function(C,Settings)
 			instanceData = {}
 			C.PartConnections[instance] = instanceData
 		end
-		if not instanceData[signal] then
-			instanceData[signal] = {Value = 0,Name = name}
+		if not instanceData[name] then
+			instanceData[name] = {Value = 0,Name = name}
 			C.InternallySetConnections(signal,false)
 		end
-		if not instanceData[signal][key] then
-			instanceData[signal][key] = true
-			instanceData[signal].Value += 1
+		if not instanceData[name][key] then
+			instanceData[name][key] = true
+			instanceData[name].Value += 1
 		end
 	end
 	function C.EnableInstanceConnections(instance,name,key)
@@ -856,21 +856,21 @@ return function(C,Settings)
 			print(1)
 			return
 		end
-		if not instanceData[signal] then
+		if not instanceData[name] then
 			print(instanceData)
 			return
 		end
-		if instanceData[signal][key] then
-			instanceData[signal][key] = nil
-			instanceData[signal].Value -= 1
+		if instanceData[name][key] then
+			instanceData[name][key] = nil
+			instanceData[name].Value -= 1
 		end
-		if instanceData[signal].Value > 0 then
+		if instanceData[name].Value > 0 then
 			print(3)
 			return
 		end
 		print('stop')
 		C.InternallySetConnections(signal,true)
-		instanceData[signal] = nil -- clear the signal data
+		instanceData[name] = nil -- clear the signal data
 		if C.GetDictLength(instanceData) <= 0 then -- if its empty
 			-- then clear the cache!
 			C.PartConnections[instance] = nil
