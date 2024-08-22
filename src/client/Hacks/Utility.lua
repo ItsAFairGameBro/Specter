@@ -28,8 +28,10 @@ return function(C,Settings)
                 end,
 				Activate = function(self,newValue)
 					if self.EnTbl.GameProtection and newValue then
+						print("Eenabling")
 						C.DisableInstanceConnections(C.plr,"Idled",self.Shortcut)
 					else
+						print("DIsabling")
 						C.EnableInstanceConnections(C.plr,"Idled",self.Shortcut)
 					end
                     if not newValue then

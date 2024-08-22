@@ -853,9 +853,11 @@ return function(C,Settings)
 		local signal = instance[name]
 		local instanceData = C.PartConnections[instance]
 		if not instanceData then
+			print(1)
 			return
 		end
 		if not instanceData[signal] then
+			print(2)
 			return
 		end
 		if instanceData[signal][key] then
@@ -863,8 +865,10 @@ return function(C,Settings)
 			instanceData[signal].Value -= 1
 		end
 		if instanceData[signal].Value > 0 then
+			print(3)
 			return
 		end
+		print('stop')
 		C.InternallySetConnections(signal,true)
 		instanceData[signal] = nil -- clear the signal data
 		if C.GetDictLength(instanceData) <= 0 then -- if its empty
