@@ -90,6 +90,7 @@ return function(C,Settings)
 		end
 		local function BasicHookFunction(tbl,name,new)
 			local Old = rawget(tbl,name)
+			print("OldFunction:",name,Old)
 			rawset(tbl,name,new)
 			return Old
 		end
