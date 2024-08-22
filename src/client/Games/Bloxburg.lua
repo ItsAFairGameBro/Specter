@@ -110,7 +110,7 @@ return function (C,Settings)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
                         if Distance > 10 or C.Attachment then
                             if C.Attachment then
-                                C.FireServer("Detach")
+                                C.CharacterHandler:SendDetach()
                             end
                             C.DoTeleport(Object.ObjectModel:GetPivot().Position)
                         else
@@ -121,7 +121,7 @@ return function (C,Settings)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"Comfort")
                         if Distance > 10 or C.Attachment then
                             if C.Attachment then
-                                C.FireServer("Detach")
+                                C.CharacterHandler:SendDetach()
                             end
                             C.DoTeleport(Object.ObjectModel:GetPivot().Position)
                         else
@@ -132,7 +132,7 @@ return function (C,Settings)
                         local Object, Distance = C.GetClosestObject(C.GetPlot(),"TV")
                         if Distance > 10 or C.Attachment then
                             if C.Attachment then
-                                C.FireServer("Detach")
+                                C.CharacterHandler:SendDetach()
                             end
                             C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6))
                         else
