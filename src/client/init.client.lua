@@ -431,6 +431,7 @@ function yieldForeverFunct()
 end
 C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
+C.getgenv().realhookfunction = C.getgenv().realhookfunction or C.getgenv().hookfunction
 local MetaMethods = {"__index","__namecall","__newindex"}
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
@@ -519,7 +520,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			print("Origin",OriginFunct,hook,source)
 		else
 			OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-				or (HookType == "hookfunction" and C.hookfunction(hook, (CallFunction)))
+				or (HookType == "hookfunction" and C.getgenv().realhookfunction(hook, (CallFunction)))
 		end
 	end
 	if runFunct then
