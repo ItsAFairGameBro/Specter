@@ -191,7 +191,7 @@ return function(C,Settings)
                 local DataService = require(game:GetService("ReplicatedStorage").Modules.DataService)
                 local remotefunc
                 local hashtable = getupvalue(getupvalue(DataService.InvokeServer, 5),3)
-                local remoteNames = {}
+                local remoteNames, remoteObjects = {}, {}
                 for i,v in pairs(getreg()) do
                     if type(v) == "function" and getinfo(v).name == "remoteAdded" then
                         remotefunc = v
@@ -199,8 +199,10 @@ return function(C,Settings)
                 end
                 for i,v in pairs(getupvalue(getupvalue(remotefunc,2),1)) do
                     remoteNames[hashtable[i]] = v:gsub("F_", "") --some remotes start with F_ cuz gay
+                    remoteObjects[v:gsub("F_","")] = hashtable[i]
                 end
                 C.RemoteNames = remoteNames
+                C.RemoteObjects = remoteObjects
             end,
             KeepGoing = false, RunOnce = false,
             GameIds = {88070565},PlaceIds={},

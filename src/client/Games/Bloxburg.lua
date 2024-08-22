@@ -53,6 +53,9 @@ local function Static(C,Settings)
         end
         return bestObj, nearest
     end
+    function C.FireServer(name,...)
+        C.RemoteObjects[name]:FireServer(...)
+    end
     --[[task.delay(2,function()
         warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
     end)--]]
@@ -85,8 +88,13 @@ return function (C,Settings)
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end
-                       -- local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
-                        --C.DoTeleport(Object.ObjectModel.)
+                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                        if Distance > 10 then
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position)
+                        else
+                            C.FireServer("Interact",{Target=Object,Path=1})
+                        end
+                        --
                         task.wait(1)
                     end
                     if info.Enabled then
