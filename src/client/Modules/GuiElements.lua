@@ -270,7 +270,7 @@ GuiTbl.UIListLayout.Parent = GuiTbl.DropdownFrame
 GuiTbl.UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
 GuiTbl.DropdownButtonEx.Name = "DropdownButtonEx"
-GuiTbl.DropdownButtonEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.DropdownButtonEx)
 C.Examples.DropdownButtonEx = GuiTbl.DropdownButtonEx
 GuiTbl.DropdownButtonEx.AnchorPoint = Vector2.new(1, 0.5)
 GuiTbl.DropdownButtonEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
@@ -315,7 +315,7 @@ GuiTbl.Buttons.Position = UDim2.new(0, 0, 0, 40)
 GuiTbl.Buttons.Size = UDim2.new(1, 0, 0, 0)
 
 GuiTbl.CategoryEx.Name = "CategoryEx"
-GuiTbl.CategoryEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.CategoryEx)
 C.Examples.CategoryEx = GuiTbl.CategoryEx
 GuiTbl.CategoryEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.CategoryEx.BackgroundTransparency = 1.000
@@ -655,7 +655,7 @@ GuiTbl.TabsFrame.Size = UDim2.new(1, 0, 1, 0)
 GuiTbl.TabsFrame.ZIndex = -12500
 
 GuiTbl.TabEx.Name = "TabEx"
-GuiTbl.TabEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.TabEx)
 C.Examples.TabEx = GuiTbl.TabEx
 GuiTbl.TabEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
 GuiTbl.TabEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -756,7 +756,7 @@ GuiTbl.UIListLayout_5.Parent = GuiTbl.ScrollTab_2
 GuiTbl.UIListLayout_5.SortOrder = Enum.SortOrder.LayoutOrder
 
 GuiTbl.HackButtonEx.Name = "HackButtonEx"
-GuiTbl.HackButtonEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.HackButtonEx)
 C.Examples.HackButtonEx = GuiTbl.HackButtonEx
 GuiTbl.HackButtonEx.AutomaticSize = Enum.AutomaticSize.Y
 GuiTbl.HackButtonEx.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
@@ -793,9 +793,9 @@ GuiTbl.HackExpand.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.HackExpand.BackgroundTransparency = 1.000
 GuiTbl.HackExpand.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.HackExpand.BorderSizePixel = 0
-GuiTbl.HackExpand.Position = UDim2.new(0.990999997, 0, 0, 20)
+GuiTbl.HackExpand.Position = UDim2.new(1, 0, 0, 20)
 GuiTbl.HackExpand.Selectable = false
-GuiTbl.HackExpand.Size = UDim2.new(0, 31, 0, 40)
+GuiTbl.HackExpand.Size = UDim2.new(0.150000006, 0, 0, 40)
 GuiTbl.HackExpand.ZIndex = 3
 C.SetImage(GuiTbl.HackExpand,"rbxassetid://12809025337")
 GuiTbl.HackExpand.ScaleType = Enum.ScaleType.Fit
@@ -816,7 +816,7 @@ GuiTbl.UIListLayout_6.SortOrder = Enum.SortOrder.LayoutOrder
 GuiTbl.UIListLayout_6.Padding = UDim.new(0, 1)
 
 GuiTbl.ToggleEx.Name = "ToggleEx"
-GuiTbl.ToggleEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.ToggleEx)
 C.Examples.ToggleEx = GuiTbl.ToggleEx
 GuiTbl.ToggleEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
 GuiTbl.ToggleEx.BackgroundTransparency = 1.000
@@ -884,7 +884,7 @@ GuiTbl.UIStroke_3.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 GuiTbl.UIStroke_3.Parent = GuiTbl.ToggleEx
 
 GuiTbl.SliderEx.Name = "SliderEx"
-GuiTbl.SliderEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.SliderEx)
 C.Examples.SliderEx = GuiTbl.SliderEx
 GuiTbl.SliderEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
 GuiTbl.SliderEx.BackgroundTransparency = 1.000
@@ -1035,7 +1035,7 @@ GuiTbl.UIStroke_4.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 GuiTbl.UIStroke_4.Parent = GuiTbl.SliderEx
 
 GuiTbl.DropdownEx.Name = "DropdownEx"
-GuiTbl.DropdownEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.DropdownEx)
 C.Examples.DropdownEx = GuiTbl.DropdownEx
 GuiTbl.DropdownEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
 GuiTbl.DropdownEx.BackgroundTransparency = 1.000
@@ -1089,7 +1089,7 @@ GuiTbl.UIStroke_6.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 GuiTbl.UIStroke_6.Parent = GuiTbl.DropdownButton
 
 GuiTbl.UserListEx.Name = "UserListEx"
-GuiTbl.UserListEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.UserListEx)
 C.Examples.UserListEx = GuiTbl.UserListEx
 GuiTbl.UserListEx.AutomaticSize = Enum.AutomaticSize.Y
 GuiTbl.UserListEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
@@ -1157,7 +1157,7 @@ GuiTbl.UIListLayout_7.HorizontalAlignment = Enum.HorizontalAlignment.Center
 GuiTbl.UIListLayout_7.SortOrder = Enum.SortOrder.LayoutOrder
 
 GuiTbl.OneListEx.Name = "OneListEx"
-GuiTbl.OneListEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.OneListEx)
 C.Examples.OneListEx = GuiTbl.OneListEx
 GuiTbl.OneListEx.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 GuiTbl.OneListEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1249,7 +1249,7 @@ GuiTbl.LimitTL.TextWrapped = true
 GuiTbl.LimitTL.TextXAlignment = Enum.TextXAlignment.Left
 
 GuiTbl.TextboxEx.Name = "TextboxEx"
-GuiTbl.TextboxEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.TextboxEx)
 C.Examples.TextboxEx = GuiTbl.TextboxEx
 GuiTbl.TextboxEx.AutomaticSize = Enum.AutomaticSize.Y
 GuiTbl.TextboxEx.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
@@ -1456,7 +1456,7 @@ GuiTbl.Notifications.BorderSizePixel = 0
 GuiTbl.Notifications.Size = UDim2.new(1, 0, 1, 0)
 
 GuiTbl.NotificationEx.Name = "NotificationEx"
-GuiTbl.NotificationEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.NotificationEx)
 C.Examples.NotificationEx = GuiTbl.NotificationEx
 GuiTbl.NotificationEx.AnchorPoint = Vector2.new(1, 1)
 GuiTbl.NotificationEx.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -1548,7 +1548,7 @@ GuiTbl.ChatAutoComplete.AutomaticCanvasSize = Enum.AutomaticSize.Y
 GuiTbl.ChatAutoComplete.CanvasSize = UDim2.new(0, 0, 0, 0)
 
 GuiTbl.AutoCompleteEx.Name = "AutoCompleteEx"
-GuiTbl.AutoCompleteEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.AutoCompleteEx)
 C.Examples.AutoCompleteEx = GuiTbl.AutoCompleteEx
 GuiTbl.AutoCompleteEx.BackgroundColor3 = Color3.fromRGB(55, 255, 0)
 GuiTbl.AutoCompleteEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1679,7 +1679,7 @@ GuiTbl.UIListLayout_9.Parent = GuiTbl.ScrollTab_3
 GuiTbl.UIListLayout_9.SortOrder = Enum.SortOrder.LayoutOrder
 
 GuiTbl.ActionsEx.Name = "ActionsEx"
-GuiTbl.ActionsEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.ActionsEx)
 C.Examples.ActionsEx = GuiTbl.ActionsEx
 GuiTbl.ActionsEx.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.ActionsEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1753,7 +1753,7 @@ GuiTbl.UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Co
 GuiTbl.UIGradient_6.Parent = GuiTbl.ActionsEx
 
 GuiTbl.ToggleTagEx.Name = "ToggleTagEx"
-GuiTbl.ToggleTagEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.ToggleTagEx)
 C.Examples.ToggleTagEx = GuiTbl.ToggleTagEx
 GuiTbl.ToggleTagEx.Enabled = false
 GuiTbl.ToggleTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -1955,7 +1955,7 @@ GuiTbl.MainScroll.MidImage = "rbxassetid://3062506202"
 GuiTbl.MainScroll.TopImage = "rbxassetid://3062506445"
 
 GuiTbl.ServerEx.Name = "ServerEx"
-GuiTbl.ServerEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.ServerEx)
 C.Examples.ServerEx = GuiTbl.ServerEx
 GuiTbl.ServerEx.Active = true
 GuiTbl.ServerEx.BackgroundColor3 = Color3.fromRGB(255, 81, 0)
@@ -2298,7 +2298,7 @@ GuiTbl.UICorner_30.CornerRadius = UDim.new(0, 32)
 GuiTbl.UICorner_30.Parent = GuiTbl.Ok
 
 GuiTbl.NameTagEx.Name = "NameTagEx"
-GuiTbl.NameTagEx:AddTag("RemoveOnDestroy")
+C.AddGlobalInstance(GuiTbl.NameTagEx)
 C.Examples.NameTagEx = GuiTbl.NameTagEx
 GuiTbl.NameTagEx.Enabled = false
 GuiTbl.NameTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
