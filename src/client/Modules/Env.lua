@@ -108,16 +108,19 @@ return function(C,Settings)
 			return OldEnv.warn1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		local Old = C.getgenv().hookfunction
-		C.getgenv().hookfunction = function(orgFunct,newFunct)
-			if orgFunct == C.getgenv().print or orgFunct == C.getgenv().warn or orgFunct == C.getrenv().print or orgFunct == C.getrenv().warn
-				or orgFunct == print or orgFunct == warn then
-				warn("Blocked",orgFunct)
-				return orgFunct
-			end
-			print(orgFunct)
-			game:WaitForChild("EPFJOEQWJFOQWJFDWQOKRODLKWQikoQWJIKEOQWIK")
-			return Old(orgFunct,newFunct)
-		end--]]
+		task.delay(3,function()
+			print"Hookfunction Hook"
+			C.getgenv().hookfunction = function(orgFunct,newFunct)
+				if orgFunct == C.getgenv().print or orgFunct == C.getgenv().warn or orgFunct == C.getrenv().print or orgFunct == C.getrenv().warn
+					or orgFunct == print or orgFunct == warn then
+					warn("Blocked",orgFunct)
+					return orgFunct
+				end
+				print(orgFunct)
+				game:WaitForChild("EPFJOEQWJFOQWJFDWQOKRODLKWQikoQWJIKEOQWIK")
+				return Old(orgFunct,newFunct)
+			end--]]
+		end)
 		C.getgenv().PrintEnvironment = true
 	end
 	--Table Functions
