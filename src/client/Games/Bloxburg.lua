@@ -8,6 +8,9 @@ local function Static(C,Settings)
         local InGame = theirChar:GetPivot().Y > 0
         return InGame, InGame and "Runner" or "Lobby"
     end
+    function C.GetPlot(theirChar)
+        
+    end
 end
 
 return function (C,Settings)
