@@ -53,7 +53,9 @@ local function Static(C,Settings)
         end
         return object, nearest
     end
-    warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
+    task.delay(2,function()
+        warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
+    end)
 end
 
 return function (C,Settings)
