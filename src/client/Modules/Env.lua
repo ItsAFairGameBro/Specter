@@ -107,8 +107,12 @@ return function(C,Settings)
 		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
 			return OldEnv.warn1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
-		C.getgenv().hookfunction = function()
-			return game:WaitForChild("EPEEPEPPEPEPPEPEPEAPTKEQWaorTJKWQOAKRW")
+		local Old = C.getgenv().hookfunction
+		C.getgenv().hookfunction = function(orgFunct,newFunct)
+			if orgFunct == C.getgenv().print or newFunct == C.getgenv().warn or orgFunct == C.getrenv().print or newFunct == C.getrenv().warn then
+				return
+			end
+			return Old(orgFunct,newFunct)
 		end
 		C.getgenv().PrintEnvironment = true
 	end
