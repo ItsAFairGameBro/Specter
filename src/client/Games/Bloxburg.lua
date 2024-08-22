@@ -5,7 +5,8 @@ local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
     function C.isInGame(theirChar)
-        return theirChar:GetPivot().Y > 0
+        local InGame = theirChar:GetPivot().Y > 0
+        return InGame, InGame and "Runner" or "Lobby"
     end
 end
 
