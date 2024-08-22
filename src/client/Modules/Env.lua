@@ -94,7 +94,7 @@ return function(C,Settings)
 			return Old
 		end
 		
-		local DoPrefix = false
+		--[[local DoPrefix = false
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
 			return OldEnv.print1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
@@ -121,8 +121,8 @@ return function(C,Settings)
 				--print(orgFunct)
 				--game:WaitForChild("EPFJOEQWJFOQWJFDWQOKRODLKWQikoQWJIKEOQWIK")
 				return C.getgenv().realhookfunction(orgFunct,newFunct)
-			end--]]
-		end)
+			end
+		end)--]]
 		C.getgenv().PrintEnvironment = true
 	end
 	--Table Functions
