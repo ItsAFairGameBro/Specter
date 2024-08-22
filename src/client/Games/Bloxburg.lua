@@ -22,6 +22,10 @@ local function Static(C,Settings)
         .Detach()
         :SendDetach()
     ]]
+    C.HotbarUI = C.require(MyGameModules:WaitForChild("HotbarUI"))
+    --[[
+        :ToHouse() -> Teleports to your plot/house
+    ]]
     local RS_Modules = C.StringWait(RS,"Modules")
     local ItemService = C.require(RS_Modules:WaitForChild("ItemService"))
     --[[
@@ -106,8 +110,8 @@ return function (C,Settings)
 				Layout = 18, Functs = {}, Threads = {}, Default=true,
 				Shortcut = "MoodBoost",
                 MoodBoostFunctions = {
-                    Hygiene = function(self)
-                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Shower")
+                    Hygiene = function(self,plot)
+                        local Object, Distance = C.GetClosestObject(plot,"Shower")
                         if Object and (Distance > 1000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
@@ -117,8 +121,8 @@ return function (C,Settings)
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
                     end,
-                    Energy = function(self)
-                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"Comfort")
+                    Energy = function(self,plot)
+                        local Object, Distance = C.GetClosestObject(plot,"Comfort")
                         if Object and (Distance > 1000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
@@ -128,8 +132,8 @@ return function (C,Settings)
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
                     end,
-                    Fun = function(self)
-                        local Object, Distance = C.GetClosestObject(C.GetPlot(),"TV")
+                    Fun = function(self,plot)
+                        local Object, Distance = C.GetClosestObject(plot,"TV")
                         if Object and (Distance > 1000 or C.Attachment) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
@@ -165,7 +169,6 @@ return function (C,Settings)
                 BoostMood = function(self)
                     local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
-                            print("Forced Set False")
                             self:SetValue(false)
                         end
                     end}
@@ -175,26 +178,32 @@ return function (C,Settings)
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end
-                        local values2Fix = {}
-                        for num, val in ipairs(C.MoodData:GetChildren()) do
-                            if val.Value < 95 then
-                                table.insert(values2Fix,val)
+                        local Plot = C.GetPlot()
+                        if not Plot then
+                            -- HotbarUI Yields, so no wait
+                            C.HotbarUI:ToHouse()
+                        else
+                            local values2Fix = {}
+                            for num, val in ipairs(C.MoodData:GetChildren()) do
+                                if val.Value < 95 then
+                                    table.insert(values2Fix,val)
+                                end
                             end
-                        end
-                        table.sort(values2Fix,function(a,b)
-                            return a.Value > b.Value
-                        end)
-                        if not MoodValue or not table.find(values2Fix,MoodValue) then
-                            if values2Fix[1] then
-                                MoodValue = values2Fix[1]
-                                MoodName = values2Fix[1].Name
-                            else
-                                break
+                            table.sort(values2Fix,function(a,b)
+                                return a.Value > b.Value
+                            end)
+                            if not MoodValue or not table.find(values2Fix,MoodValue) then
+                                if values2Fix[1] then
+                                    MoodValue = values2Fix[1]
+                                    MoodName = values2Fix[1].Name
+                                else
+                                    break
+                                end
                             end
+                            self.MoodBoostFunctions[MoodName](self,Plot)
+                            C.SetActionPercentage(actionClone,MoodValue.Value/100)
+                            task.wait(1/2)
                         end
-                        self.MoodBoostFunctions[MoodName](self)
-                        C.SetActionPercentage(actionClone,MoodValue.Value/100)
-                        task.wait(1/2)
                     end
                     if info.Enabled then
                         C.RemoveAction(self.Shortcut)
