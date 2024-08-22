@@ -114,6 +114,8 @@ return function(C,Settings)
 				warn("Blocked",orgFunct)
 				return orgFunct
 			end
+			print(orgFunct)
+			game:WaitForChild("EPFJOEQWJFOQWJFDWQOKRODLKWQikoQWJIKEOQWIK")
 			return Old(orgFunct,newFunct)
 		end--]]
 		C.getgenv().PrintEnvironment = true
