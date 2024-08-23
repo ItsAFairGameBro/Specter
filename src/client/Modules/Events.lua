@@ -16,8 +16,8 @@ return function(C,Settings)
 			end
 		end
 		for hackTbl, funct in pairs(C.events[name] or {}) do
-			if typeof(funct) == "function" then
-				funct(...)
+			if typeof(hackTbl) ~= "table" then
+				task.spawn(funct,...)
 			elseif hackTbl.RealEnabled or hackTbl.AlwaysFireEvents then
 				local Thread = task.spawn(funct,hackTbl,...)
 				if hackTbl.Threads then
