@@ -120,7 +120,10 @@ return function (C,Settings)
                 MoodBoostFunctions = {
                     Hygiene = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Shower")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1)) then
+                            return
+                        end
+                        if Object and (Distance > 10000) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -131,7 +134,10 @@ return function (C,Settings)
                     end,
                     Energy = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Comfort")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1)) then
+                            return
+                        end
+                        if Object and (Distance > 10000) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -142,7 +148,10 @@ return function (C,Settings)
                     end,
                     Fun = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"TV")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1)) then
+                            return
+                        end
+                        if Object and (Distance > 10000) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -171,7 +180,10 @@ return function (C,Settings)
                     end,
                     Hunger = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Sink")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1)) then
+                            return
+                        end
+                        if Object and (Distance > 10000) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -210,7 +222,7 @@ return function (C,Settings)
                                 end
                             end
                             table.sort(values2Fix,function(a,b)
-                                return a.Value > b.Value
+                                return a.Value < b.Value
                             end)
                             if not MoodValue or not table.find(values2Fix,MoodValue) then
                                 if values2Fix[1] then
