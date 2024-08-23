@@ -40,10 +40,10 @@ local function Static(C,Settings)
     end
     function C.GetPlot(theirChar)
         theirChar = theirChar or C.char
-        local Plots = game:GetService("Workspace").Plots
+        local Plots = workspace:WaitForChild("Plots")
         for num, Plot in ipairs(Plots:GetChildren()) do
             local Ground = C.StringFind(Plot,"_LODModel.Ground") or C.StringFind(Plot,"Ground")
-            if Ground and C.IsInBox(Ground.CFrame,Ground.Size,theirChar:GetPivot().Position,true) then
+            if Ground and C.IsInBox(Ground.CFrame,Ground.Size + 6 * 2 *Vector3.new(1,0,1),theirChar:GetPivot().Position,true) then
                 return Plot
             end
         end
@@ -120,7 +120,7 @@ return function (C,Settings)
                 MoodBoostFunctions = {
                     Hygiene = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Shower")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (Distance > 10000 or (C.Attachment and not Object:IsAncestorOf(C.Attachment.Part1))) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -131,7 +131,7 @@ return function (C,Settings)
                     end,
                     Energy = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"Comfort")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (Distance > 10000 or (C.Attachment and not Object:IsAncestorOf(C.Attachment.Part1))) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -142,7 +142,7 @@ return function (C,Settings)
                     end,
                     Fun = function(self,plot)
                         local Object, Distance = C.GetClosestObject(plot,"TV")
-                        if Object and (Distance > 10000 or (C.Attachment and Object:IsAncestorOf(C.Attachment.Part1))) then
+                        if Object and (Distance > 10000 or (C.Attachment and not Object:IsAncestorOf(C.Attachment.Part1))) then
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
@@ -151,7 +151,6 @@ return function (C,Settings)
                             if not Object.ObjectData.IsOn.Value then
                                 -- Turn on the TV
                                 C.FireServer("Interact",{Target=Object,Path=1})
-                                print("Turn on")
                             else
                                 -- Check to see if we're watching
                                 local isWatching = Object:IsAncestorOf(C.CharFocus)--[[false
@@ -163,14 +162,25 @@ return function (C,Settings)
                                         end
                                     end
                                 end--]]
-                                print("CharFocus",C.CharFocus)
                                 if not isWatching then
                                     -- Watch the TV
                                     C.FireServer("Interact",{Target=Object,Path=2})
-                                    print("Not Watching")
-                                else
-                                    print("Watching")
                                 end
+                            end
+                        end
+                    end,
+                    Hunger = function(self,plot)
+                        local Object, Distance = C.GetClosestObject(plot,"Sink")
+                        if Object and (Distance > 10000 or (C.Attachment and not Object:IsAncestorOf(C.Attachment.Part1))) then
+                            if C.Attachment then
+                                C.CharacterHandler:SendDetach()
+                            end
+                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getHumanoidHeight(C.human),0))
+                        else
+                            if C.HotbarUI.Hotbar.EquipData and table.find(C.HotbarUI.Hotbar.EquipData.Types,"Food") and C.HotbarUI.Hotbar.EquipData.HoldFunction then
+                                C.HotbarUI.Hotbar:DoEquipAction()
+                            else
+                                C.FireServer("Interact",{Target=Object,Path=3})
                             end
                         end
                     end,
@@ -206,6 +216,7 @@ return function (C,Settings)
                                 if values2Fix[1] then
                                     MoodValue = values2Fix[1]
                                     MoodName = values2Fix[1].Name
+                                    actionClone.Title.Text = "Boosting " .. MoodName
                                 else
                                     break
                                 end
@@ -217,6 +228,9 @@ return function (C,Settings)
                     end
                     if info.Enabled then
                         C.RemoveAction(self.Shortcut)
+                        if C.Attachment then
+                            C.CharacterHandler:SendDetach()
+                        end
                     end
                 end,
                 CanBoostMood = function(self)
