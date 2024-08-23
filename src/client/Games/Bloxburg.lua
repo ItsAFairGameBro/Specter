@@ -163,6 +163,7 @@ return function (C,Settings)
                                         end
                                     end
                                 end--]]
+                                print("CharFocus",C.CharFocus)
                                 if not isWatching then
                                     -- Watch the TV
                                     C.FireServer("Interact",{Target=Object,Path=2})
