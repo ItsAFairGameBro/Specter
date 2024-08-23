@@ -193,7 +193,9 @@ return function (C,Settings)
                             if C.HotbarUI.Hotbar.EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
                                 and table.find(C.HotbarUI.Hotbar.EquipData.ItemData.Types,"Food") and C.HotbarUI.Hotbar.EquipData.HoldFunction then
                                 C.HotbarUI.Hotbar:DoEquipAction()
+                                print("Run")
                             elseif not Object.ObjectData.IsOn.Value then
+                                print("Water")
                                 C.FireServer("Interact",{Target=Object,Path=3})
                             end
                         end
