@@ -179,7 +179,7 @@ return function (C,Settings)
                         else
                             if C.HotbarUI.Hotbar.EquipData and table.find(C.HotbarUI.Hotbar.EquipData.Types,"Food") and C.HotbarUI.Hotbar.EquipData.HoldFunction then
                                 C.HotbarUI.Hotbar:DoEquipAction()
-                            else
+                            elseif not Object.ObjectData.IsOn.Value then
                                 C.FireServer("Interact",{Target=Object,Path=3})
                             end
                         end
