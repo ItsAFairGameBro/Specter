@@ -86,6 +86,14 @@ local function Static(C,Settings)
         C.AddGlobalConnection(C.CharacterHandler.Attached:Connect(function(enabled,attachment)
             C.Attachment = enabled and C.StringFind(C.char,"HumanoidRootPart.AttachWeld") or nil
         end))
+        C.events["MyCharAdded"] = C.events["MyCharAdded"] or {}
+        C.events["MyCharAdded"]["GameFunct"] = function(theirPlr,theirChar,firstRun)
+            C.CharFocusValue = C.StringWait(theirChar,"HumanoidRootPart.CharFocus")
+            C.CharFocus = C.CharFocusValue.Value
+            C.AddObjectConnection(C.CharFocusValue,"BloxburgCharFocus",C.CharFocusValue:GetPropertyChangedSignal("Value"):Connect(function()
+                C.CharFocus = C.CharFocusValue.Value
+            end))
+        end
     end)
 
     --[[task.delay(2,function()
@@ -146,7 +154,7 @@ return function (C,Settings)
                                 print("Turn on")
                             else
                                 -- Check to see if we're watching
-                                local isWatching = false
+                                local isWatching = Object:IsAncestorOf(C.CharFocus)--[[false
                                 for num, attachVal in ipairs(Object:GetChildren()) do
                                     if attachVal.Name == "_attachOccupied" then
                                         if attachVal:IsA("ObjectValue") and attachVal.Value == C.plr then
@@ -154,7 +162,7 @@ return function (C,Settings)
                                             break
                                         end
                                     end
-                                end
+                                end--]]
                                 if not isWatching then
                                     -- Watch the TV
                                     C.FireServer("Interact",{Target=Object,Path=2})

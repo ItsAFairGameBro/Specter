@@ -16,7 +16,9 @@ return function(C,Settings)
 			end
 		end
 		for hackTbl, funct in pairs(C.events[name] or {}) do
-			if hackTbl.RealEnabled or hackTbl.AlwaysFireEvents then
+			if typeof(funct) == "function" then
+				funct(...)
+			elseif hackTbl.RealEnabled or hackTbl.AlwaysFireEvents then
 				local Thread = task.spawn(funct,hackTbl,...)
 				if hackTbl.Threads then
 					table.insert(hackTbl.Threads,Thread)
@@ -110,6 +112,12 @@ return function(C,Settings)
 	local function PlrRemoving(theirPlr)
 		C.RemoveAllPlayerConnections(theirPlr)
 	end
+	-- Connect other events
+	for num, eventFunct in ipairs(C.EventFunctions) do
+		eventFunct()
+	end
+	C.EventFunctions = nil
+
 	C.AddGlobalConnection(PS.PlayerAdded:Connect(PlrAdded))
 	C.AddGlobalConnection(PS.PlayerRemoving:Connect(PlrRemoving))
 	for num, theirPlr in ipairs(PS:GetPlayers()) do
@@ -123,9 +131,4 @@ return function(C,Settings)
 		end
 	end))
 
-	-- Connect other events
-	for num, eventFunct in ipairs(C.EventFunctions) do
-		eventFunct()
-	end
-	C.EventFunctions = nil
 end
