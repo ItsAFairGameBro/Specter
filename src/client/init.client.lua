@@ -514,14 +514,14 @@ function C.HookMethod(hook, name, runFunct, methods, source)
             end
 			return OriginFunct(self,...)
 		end
-		if HookType == "hookfunction" and typeof(hook) == "string" and source then -- we'll do this the old way then!
+		--[[if HookType == "hookfunction" and typeof(hook) == "string" and source then -- we'll do this the old way then!
 			OriginFunct = rawget(source,hook)
 			rawset(source,hook,CallFunction)
 			print("Origin",OriginFunct,hook,source)
-		else
+		else--]]
 			OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
 				or (HookType == "hookfunction" and C.getgenv().realhookfunction(hook, (CallFunction)))
-		end
+		--end
 	end
 	if runFunct then
 		C.getgenv().SavedHookData[hook][name] = {name,methods,runFunct}
