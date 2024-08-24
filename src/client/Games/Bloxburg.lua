@@ -137,20 +137,20 @@ return function (C,Settings)
                                 if ItemData.Name == "Fishing Rod" then
                                     local Title = EquipData.Title:gsub("%a_","")--Some start with I_ because gay!
                                     if Title == "Cast" then
-                                        actionClone.Title.Text = "Casting"
+                                        actionClone.Time.Text = "Casting"
                                         print("Casting")
                                         task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                     elseif Title == "Pull" then
                                         if EquipData.Object.Pos.Value.Y <= 7.7 then
-                                            actionClone.Title.Text = "Pulling"
+                                            actionClone.Time.Text = "Pulling"
                                             print("Pull")
                                             task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                         else
-                                            actionClone.Title.Text = "Waiting"
+                                            actionClone.Time.Text = "Waiting"
                                             print("Wait")
                                         end
                                     else
-                                        actionClone.Title.Text = ""
+                                        actionClone.Time.Text = ""
                                         print("Processing")
                                     end
                                 end
