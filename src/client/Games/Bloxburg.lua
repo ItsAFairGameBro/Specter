@@ -79,6 +79,10 @@ local function Static(C,Settings)
         DoLoop(Objects)
         return bestObj, nearest
     end
+    function C.IsBusy()
+        return C.LoadingModule.IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value
+            or C.MainGui:WaitForChild("MainMenu").Visible
+    end
     function C.FireServer(name,...)
         C.RemoteObjects[name]:FireServer(...)
     end
@@ -113,6 +117,33 @@ return function (C,Settings)
             Layout = 20,
         },
         Tab = {
+            {
+				Title = "Auto Job",
+				Tooltip = "Automatically does the selected job.",
+				Layout = 19, Functs = {}, Threads = {}, Default=true,
+				Shortcut = "AutoJob",
+				Activate = function(self,newValue)
+                    while true do
+                        while C.IsBusy() do
+                            task.wait(1)
+                        end
+                        while C.char and not C.IsBusy() and C.Stats.Job.Value ~= "HutFisherman" do
+                            
+                            task.wait(.5)
+                        end
+                    end
+                end,
+                Options = {
+                    {
+                        Type = Types.Dropdown,
+                        Title = "Job",
+                        Tooltip = "Job that it performs automatically. Note that they are limited",
+                        Options = {
+
+                        },
+                    }
+                },
+            },
             {
 				Title = "Mood Boost",
 				Tooltip = "Automatically boost moods when your moods get low",
@@ -213,8 +244,7 @@ return function (C,Settings)
                     local MoodName,MoodValue
                     local actionClone = C.AddAction(info)
                     while true do
-                        while C.LoadingModule.IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value
-                            or C.MainGui:WaitForChild("MainMenu").Visible do
+                        while C.IsBusy() do
                             task.wait(1)
                         end
                         local Plot = C.GetPlot()
@@ -362,7 +392,7 @@ return function (C,Settings)
                                 theirPlr:GetAttributeChangedSignal("_tag"):Wait()
                             end
                         end
-                        if (tag<19 or tag>21) then--(tag < 0 or tag > 2) and (tag<19 or tag>21) then
+                        if (tag<19 or tag>21) and tag ~= 2 then--(tag < 0 or tag > 2) and (tag<19 or tag>21) then
                             C.plr:Kick(`[KickOnStaff]: You were kicked because {theirPlr.Name} is in the game and has the tag rank of {tag}`)
                         end
                     end
