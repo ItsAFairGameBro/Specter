@@ -141,7 +141,7 @@ return function (C,Settings)
                                         C.HotbarUI.Hotbar:DoEquipAction()
                                         print("Casting")
                                     elseif Title == "Pull" then
-                                        if EquipData.Object.Pos.Y <= 7.7 then
+                                        if EquipData.Object.Pos.Value.Y <= 7.7 then
                                             actionClone.Title.Text = "Pulling"
                                             print("Pull")
                                             C.HotbarUI.Hotbar:DoEquipAction()
