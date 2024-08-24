@@ -190,14 +190,16 @@ return function (C,Settings)
                             end
                             C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getHumanoidHeight(C.char),0))
                         else
-                            print(C.HotbarUI.Hotbar.EquipData)
+                            --print(C.HotbarUI.Hotbar.EquipData)
                             if C.HotbarUI.Hotbar.EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
                                 and table.find(C.HotbarUI.Hotbar.EquipData.ItemData.Types,"Food") and C.HotbarUI.Hotbar.EquipData.HoldFunction then
                                 C.HotbarUI.Hotbar:DoEquipAction()
                                 print("Run")
                             elseif not Object.ObjectData.IsOn.Value then
-                                print("Water")
+                                print("Water",Object)
                                 C.FireServer("Interact",{Target=Object,Path=3})
+                            else
+                                print("Nothing?")
                             end
                         end
                     end,
