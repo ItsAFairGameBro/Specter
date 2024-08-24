@@ -467,7 +467,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				--[[if theirScript and theirScript.Name == "BAC_" then
+				if theirScript and theirScript.Name == "BAC_" then
 					if hook == "__index" then
 						tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 						return coroYield -- Return the function to run forever haha!!
@@ -520,7 +520,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			print("Origin",OriginFunct,hook,source)
 		else--]]
 			OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-				or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
+				or (HookType == "hookfunction" and C.getgenv().realhookfunction(hook, (CallFunction)))
 		--end
 	end
 	if runFunct then
