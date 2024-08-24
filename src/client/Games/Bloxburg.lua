@@ -198,7 +198,7 @@ return function (C,Settings)
                                 botData.BotFunct(self,actionClone)
                             end
                         end
-                        task.wait(.5)
+                        task.wait(.25)
                     end
                     C.RemoveAction(self.Shortcut)
                 end,

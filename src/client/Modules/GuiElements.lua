@@ -2757,8 +2757,8 @@ return function(C, Settings)
 		end)
 		C.getgenv().ActionsList[info.Name] = info
 		ActionClone.Parent = ActionsList
+		local TimeTextLabel = ActionClone:WaitForChild("Time")
 		if info.Time then
-			local TimeTextLabel = ActionClone:WaitForChild("Time")
 			if typeof(info.Time) == "number" then
 				task.spawn(function()
 					for s = info.Time, 1, -1 do
@@ -2778,6 +2778,7 @@ return function(C, Settings)
 				task.spawn(info.Time,ActionClone,info)
 			end
 		else
+			TimeTextLabel.Text = "Starting"
 			--Probably utilized elsewhere!
 		end
 		info.Enabled = true
