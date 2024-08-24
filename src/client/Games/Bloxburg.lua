@@ -131,6 +131,26 @@ return function (C,Settings)
                     HutFisherman = {
                         Location = {CFrame = CFrame.new(1080,12.5,1097,-1,0,-.15,0), Size = Vector3.new(10,1,2)},
                         BotFunct = function(self,actionClone)
+                            local EquipData = C.HotbarUI.Hotbar.EquipData
+                            local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
+                            if EquipData and ItemData then
+                                if ItemData.Name == "Fishing Rod" then
+                                    local Title = EquipData.Title:gsub("%a_","")--Some start with I_ because gay!
+                                    if Title == "Cast" then
+                                        C.HotbarUI.Hotbar:DoEquipAction()
+                                        print("Casting")
+                                    elseif Title == "Pull" then
+                                        if EquipData.Object.Pos.Y <= 7.7 then
+                                            print("Pull")
+                                            C.HotbarUI.Hotbar:DoEquipAction()
+                                        else
+                                            print("Wait")
+                                        end
+                                    else
+                                        print("Processing")
+                                    end
+                                end
+                            end
                             
                         end,
                     },
