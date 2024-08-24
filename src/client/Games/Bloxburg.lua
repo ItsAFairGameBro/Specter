@@ -27,6 +27,11 @@ local function Static(C,Settings)
     --[[
         :ToHouse() -> Teleports to your plot/house
     ]]
+    C.JobHandler = C.require(MyGameModules:WaitForChild("JobHandler"))
+    --[[
+        :CanStartWorking((string) JOB_NAME) -> returns true/false, (table) module, (table) reward
+        :GoToJob((string) JOB_NAME)
+    ]]
     local RS_Modules = C.StringWait(RS,"Modules")
     local ItemService = C.require(RS_Modules:WaitForChild("ItemService"))
     --[[
@@ -122,16 +127,47 @@ return function (C,Settings)
 				Tooltip = "Automatically does the selected job.",
 				Layout = 19, Functs = {}, Threads = {}, Default=true,
 				Shortcut = "AutoJob",
-				Activate = function(self,newValue)
+                BotData = {
+                    HutFisherman = {
+                        Location = {CFrame = CFrame.new(), Size = Vector3.new()},
+                        BotFunct = function(self)
+                            
+                        end,
+                    },
+                },
+                JobRunner = function(self,jobName)
+                    local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
+                        if requested then
+                            self:SetValue(false)
+                        end
+                    end}
+                    local botData = self.BotData[jobName]
+                    local jobHandler = C.JobHandler
+                    local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
+                    local actionClone = C.AddAction(info)
                     while true do
                         while C.IsBusy() do
                             task.wait(1)
                         end
-                        while C.char and not C.IsBusy() and C.Stats.Job.Value ~= "HutFisherman" do
-                            
+                        while C.char and not C.IsBusy() and jobHandler:CanStartWorking(jobName,jobModule) and jobHandler:GetJob() ~= jobName do
+                            jobHandler:GoToWork(jobName)
                             task.wait(.5)
                         end
+                        if jobHandler:GetJob() == jobName then
+                            if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
+                                C.DoTeleport(C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
+                            else
+                                botData.BotFunct(self)
+                            end
+                        end
+                        task.wait(.5)
                     end
+                end,
+				Activate = function(self,newValue)
+                    if not newValue then
+                        return
+                    end
+                    self:JobRunner(self.EnTbl.SelJob:gsub(" ",""))
                 end,
                 Options = {
                     {
@@ -139,7 +175,7 @@ return function (C,Settings)
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
-						Shortcut="Hut Fisherman",
+						Shortcut="SelJob",
 						Activate = C.ReloadHack
 					},
                 },
@@ -392,7 +428,7 @@ return function (C,Settings)
                                 theirPlr:GetAttributeChangedSignal("_tag"):Wait()
                             end
                         end
-                        if (tag<19 or tag>21) and tag ~= 2 then--(tag < 0 or tag > 2) and (tag<19 or tag>21) then
+                        if (tag<19 or tag>21) and tag ~= 2 and tag ~= 14 then--(tag < 0 or tag > 2) and (tag<19 or tag>21) then
                             C.plr:Kick(`[KickOnStaff]: You were kicked because {theirPlr.Name} is in the game and has the tag rank of {tag}`)
                         end
                     end

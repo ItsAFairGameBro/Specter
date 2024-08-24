@@ -335,6 +335,7 @@ return function(C,Settings)
 	
 		return didHit and hitResult, hitPosition
 	end
+
 	
 	function C.getCharacterHeight(model)
 		local Humanoid=model:WaitForChild("Humanoid")
@@ -935,6 +936,18 @@ return function(C,Settings)
 
 		-- Transform back to world space and return the point on the surface
 		return PartCF * clampedPoint
+	end
+	function C.RandomPointOnPart(cframe,size)
+		-- Generate a random point within the part's bounds in local space
+		local randomX = C.Randomizer:NextNumber(0,1) * size.X - size.X / 2
+		local randomY = C.Randomizer:NextNumber(0,1) * size.Y - size.Y / 2
+		local randomZ = C.Randomizer:NextNumber(0,1) * size.Z - size.Z / 2
+		local localPoint = Vector3.new(randomX, randomY, randomZ)
+
+		-- Convert the local point to world space
+		local worldPoint = cframe:PointToWorldSpace(localPoint)
+
+		return worldPoint
 	end
 
 	function C.ComputeNameColor(speaker)
