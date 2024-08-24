@@ -6,6 +6,7 @@ local RS = game:GetService("ReplicatedStorage")
 local function Static(C,Settings)
     C.Stats = C.StringWait(RS,"Stats."..C.plr.Name)
     C.MoodData = C.StringWait(C.Stats,"MoodData")
+    C.MainGui = C.StringWait(C.PlayerGui,"MainGUI")
     local MyGameModules = C.StringWait(C.plr,"PlayerScripts.Modules")
     C.LoadingModule = C.require(MyGameModules:WaitForChild("LoadingHandler"))
     --[[
@@ -209,8 +210,8 @@ return function (C,Settings)
                     end}
                     local MoodName,MoodValue
                     local actionClone = C.AddAction(info)
-                    while false do
-                        while C.LoadingModule.IsLoadingAny() do
+                    while true do
+                        while C.LoadingModule.IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value do
                             task.wait(1)
                         end
                         local Plot = C.GetPlot()
