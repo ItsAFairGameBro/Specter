@@ -138,13 +138,13 @@ return function (C,Settings)
                                     local Title = EquipData.Title:gsub("%a_","")--Some start with I_ because gay!
                                     if Title == "Cast" then
                                         actionClone.Title.Text = "Casting"
-                                        C.HotbarUI.Hotbar:DoEquipAction()
                                         print("Casting")
+                                        task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                     elseif Title == "Pull" then
                                         if EquipData.Object.Pos.Value.Y <= 7.7 then
                                             actionClone.Title.Text = "Pulling"
                                             print("Pull")
-                                            C.HotbarUI.Hotbar:DoEquipAction()
+                                            task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                         else
                                             actionClone.Title.Text = "Waiting"
                                             print("Wait")
@@ -172,6 +172,9 @@ return function (C,Settings)
                     local actionClone
                     while true do
                         while C.IsBusy() do
+                            if actionClone then
+                                actionClone.Time.Text = "Busy"
+                            end
                             task.wait(1)
                         end
                         actionClone = actionClone or C.AddAction(info)
