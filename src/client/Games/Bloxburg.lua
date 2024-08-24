@@ -209,7 +209,7 @@ return function (C,Settings)
                     end}
                     local MoodName,MoodValue
                     local actionClone = C.AddAction(info)
-                    while true do
+                    while false do
                         while C.LoadingModule.IsLoadingAny() do
                             task.wait(1)
                         end

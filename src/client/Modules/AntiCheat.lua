@@ -205,7 +205,7 @@ return function(C,Settings)
                 C.RemoteObjects = remoteObjects
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {880705650},PlaceIds={},
+            GameIds = {88070565},PlaceIds={},
         },
     }
     if not NC:FindFirstChildWhichIsA("ClientReplicator") then
