@@ -210,8 +210,9 @@ return function (C,Settings)
                     end}
                     local MoodName,MoodValue
                     local actionClone = C.AddAction(info)
-                    while false do
-                        while C.LoadingModule.IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value do
+                    while true do
+                        while C.LoadingModule.IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value
+                            or C.MainGui:WaitForChild("MainMenu").Visible do
                             task.wait(1)
                         end
                         local Plot = C.GetPlot()
