@@ -467,7 +467,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				if theirScript and theirScript.Name == "BAC_" then
+				if tostring(theirScript) == "BAC_" then
 					if hook == "__index" then
 						tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 						return coroYield -- Return the function to run forever haha!!
