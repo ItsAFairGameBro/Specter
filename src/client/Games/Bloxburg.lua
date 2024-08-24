@@ -193,7 +193,8 @@ return function (C,Settings)
                         if jobHandler:GetJob() == jobName then
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 actionClone.Time.Text = "Going To Station"
-                                C.DoTeleport(C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
+                                
+                                C.DoTeleport(botData.Location.Rotation * C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                             else
                                 botData.BotFunct(self,actionClone)
                             end
