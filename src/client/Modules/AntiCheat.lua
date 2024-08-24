@@ -153,7 +153,7 @@ return function(C,Settings)
                 end),{"fireserver"})
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {11607890890},PlaceIds={},
+            GameIds = {},PlaceIds={}--{1160789089},PlaceIds={},
         },
         {
             Run = function(self)
