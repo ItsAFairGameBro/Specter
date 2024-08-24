@@ -151,7 +151,7 @@ return function(C,Settings)
                     local IgnoreList = self.IgnoreList[game.GameId] or {}
                     local TblFind = C.TblFind
                     C.HookMethod("__namecall",self.Shortcut,newValue and self.EnTbl.Outbound and function(theirScript,method,self,...)
-                        local RemoteNames = rawget(C,"RemoteNames")
+                        local RemoteNames = rawget(C,"RemoteNames") or {}
                         local MyRemoteName = rawget(RemoteNames,self) or self.Name
                         if not TblFind(IgnoreList,MyRemoteName) then
                             task.spawn(print,`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ path {debug.traceback()}; args:`,...)
