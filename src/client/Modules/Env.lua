@@ -657,7 +657,26 @@ return function(C,Settings)
 		-- Convert the angle to degrees
 		local angleInDegrees = math.deg(angleInRadians)
 		return angleInDegrees
-	end	
+	end
+	function C.AngleOffFrom2CFrames(cframe1, cframe2)
+		-- Extract the look vectors (direction) from both CFrames
+		local lookVector1 = cframe1.LookVector
+		local lookVector2 = cframe2.LookVector
+	
+		-- Calculate the dot product of the two look vectors
+		local dotProduct = lookVector1:Dot(lookVector2)
+	
+		-- Clamp the dot product to avoid numerical inaccuracies
+		dotProduct = math.clamp(dotProduct, -1, 1)
+	
+		-- Calculate the angle between the two vectors in radians
+		local angleInRadians = math.acos(dotProduct)
+	
+		-- Convert the angle to degrees if needed
+		local angleInDegrees = math.deg(angleInRadians)
+	
+		return angleInDegrees
+	end
 	-- Closest Plr
 	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean},location:Vector3)
 		data = data or {}

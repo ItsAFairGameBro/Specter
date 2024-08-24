@@ -134,6 +134,9 @@ return function (C,Settings)
                         BotFunct = function(self,actionClone)
                             local EquipData = C.HotbarUI.Hotbar.EquipData
                             local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
+                            if C.AngleOffFrom2CFrames(C.char:GetPivot(),self.Location.CFrame) > 30 then
+                                return "Teleport"
+                            end
                             if EquipData and ItemData then
                                 if ItemData.Name == "Fishing Rod" then
                                     local Title = EquipData.Title
@@ -152,10 +155,11 @@ return function (C,Settings)
                                         else
                                             actionClone.Time.Text = ""
                                         end
+                                        return true
                                     end
                                 end
                             end
-                            
+                            return false
                         end,
                     },
                 },
@@ -170,6 +174,11 @@ return function (C,Settings)
                         end
                     end}
                     local actionClone = C.AddAction(info)
+                    local function TeleportToStation()
+                        actionClone.Time.Text = "Going To Station"
+                                
+                        C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
+                    end
                     while info.Enabled do
                         while C.IsBusy() do
                             if info.Enabled then
@@ -193,11 +202,12 @@ return function (C,Settings)
                         local curJob = jobHandler:GetJob()
                         if jobHandler:GetJob() == jobName then
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
-                                actionClone.Time.Text = "Going To Station"
-                                
-                                C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
+                                TeleportToStation()
                             else
-                                botData.BotFunct(self,actionClone)
+                                local Return = botData:BotFunct(actionClone)
+                                if Return == "Teleport" then
+                                    TeleportToStation()
+                                end
                             end
                         end
                         task.wait(.25)
