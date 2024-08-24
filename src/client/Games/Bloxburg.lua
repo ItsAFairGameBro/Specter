@@ -86,7 +86,7 @@ local function Static(C,Settings)
         return bestObj, nearest
     end
     function C.IsBusy()
-        return C.LoadingModule.IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value
+        return C.LoadingModule:IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value
             or C.MainGui:WaitForChild("MainMenu").Visible
     end
     function C.FireServer(name,...)
@@ -169,7 +169,7 @@ return function (C,Settings)
                             task.spawn(self.SetValue,self,false)
                         end
                     end}
-                    local actionClone
+                    local actionClone = C.AddAction(info)
                     while info.Enabled do
                         while C.IsBusy() do
                             if info.Enabled then
