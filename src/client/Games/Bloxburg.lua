@@ -135,23 +135,26 @@ return function (C,Settings)
                             local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
                             if EquipData and ItemData then
                                 if ItemData.Name == "Fishing Rod" then
-                                    local Title = EquipData.Title:gsub("%a_","")--Some start with I_ because gay!
-                                    if Title == "Cast" then
-                                        actionClone.Time.Text = "Casting"
-                                        print("Casting")
-                                        task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
-                                    elseif Title == "Pull" then
-                                        if EquipData.Object.Pos.Value.Y <= 7.7 then
-                                            actionClone.Time.Text = "Pulling"
-                                            print("Pull")
+                                    local Title = EquipData.Title
+                                    if Title then
+                                        Title = Title:gsub("%a_","")--Some start with I_ because gay!
+                                        if Title == "Cast" then
+                                            actionClone.Time.Text = "Casting"
+                                            print("Casting")
                                             task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
+                                        elseif Title == "Pull" then
+                                            if EquipData.Object.Pos.Value.Y <= 7.7 then
+                                                actionClone.Time.Text = "Pulling"
+                                                print("Pull")
+                                                task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
+                                            else
+                                                actionClone.Time.Text = "Waiting"
+                                                print("Wait")
+                                            end
                                         else
-                                            actionClone.Time.Text = "Waiting"
-                                            print("Wait")
+                                            actionClone.Time.Text = ""
+                                            print("Processing")
                                         end
-                                    else
-                                        actionClone.Time.Text = ""
-                                        print("Processing")
                                     end
                                 end
                             end
