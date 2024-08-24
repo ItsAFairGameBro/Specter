@@ -2816,7 +2816,7 @@ return function(C, Settings)
 		if actionInstance then
 			local event = actionInstance:FindFirstChild("StopEvent")
 			if event then
-				event:Fire()
+				event:Fire(false)
 			end
 		end
 		if C.getgenv().ActionsList[name] then

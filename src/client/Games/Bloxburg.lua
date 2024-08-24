@@ -129,34 +129,35 @@ return function (C,Settings)
 				Shortcut = "AutoJob",
                 BotData = {
                     HutFisherman = {
-                        Location = {CFrame = CFrame.new(), Size = Vector3.new()},
+                        Location = {CFrame = CFrame.new(1080,12.5,1097,-1,0,-.15,0), Size = Vector3.new(10,1,2)},
                         BotFunct = function(self,actionClone)
                             
                         end,
                     },
                 },
                 JobRunner = function(self,jobName)
-                    local info = {Name=self.Shortcut,Title="Auto Job",Tags={"RemoveOnDestroy"},Stop=function(requested)
-                        if requested then
-                            self:SetValue(false)
-                        end
-                    end}
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
+
+                    local info = {Name=self.Shortcut,Title="Auto Job: "..jobName,Tags={"RemoveOnDestroy"},Stop=function(requested)
+                        if requested then
+                            task.spawn(self.SetValue,self,false)
+                        end
+                    end}
                     local actionClone = C.AddAction(info)
                     while true do
                         while C.IsBusy() do
                             task.wait(1)
                         end
                         while C.char and not C.IsBusy() and jobHandler:CanStartWorking(jobName,jobModule) and jobHandler:GetJob() ~= jobName do
-                            actionClone.Title.Text = "Going To Work"
+                            actionClone.Time.Text = "Going To Work"
                             jobHandler:GoToWork(jobName)
                             task.wait(.5)
                         end
                         if jobHandler:GetJob() == jobName then
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
-                                actionClone.Title.Text = "Going To Station"
+                                actionClone.Time.Text = "Going To Station"
                                 C.DoTeleport(C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                             else
                                 botData.BotFunct(self,actionClone)
@@ -164,8 +165,10 @@ return function (C,Settings)
                         end
                         task.wait(.5)
                     end
+                    C.RemoveAction(self.Shortcut)
                 end,
 				Activate = function(self,newValue)
+                    C.RemoveAction(self.Shortcut)
                     if not newValue then
                         return
                     end
@@ -276,7 +279,7 @@ return function (C,Settings)
                 BoostMood = function(self)
                     local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
-                            self:SetValue(false)
+                            task.spawn(self.SetValue,self,false)
                         end
                     end}
                     local MoodName,MoodValue
