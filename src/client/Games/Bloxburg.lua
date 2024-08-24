@@ -20,6 +20,7 @@ local function Static(C,Settings)
         .CharacterChanged -> Signal Event
         .FloorMaterial -> Enum.Material
         .FloorHit -> BasePart
+        .TriggerFaint() -> (faints user)
         .Detach()
         :SendDetach()
     ]]
@@ -129,7 +130,7 @@ return function (C,Settings)
 				Shortcut = "AutoJob",
                 BotData = {
                     HutFisherman = {
-                        Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(180),0), Size = Vector3.new(10,1,2)},
+                        Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(180),0), Size = Vector3.new(20,1,2)},
                         BotFunct = function(self,actionClone)
                             local EquipData = C.HotbarUI.Hotbar.EquipData
                             local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
@@ -169,15 +170,18 @@ return function (C,Settings)
                         end
                     end}
                     local actionClone
-                    while true do
+                    while info.Enabled do
                         while C.IsBusy() do
-                            if actionClone then
+                            if info.Enabled then
                                 actionClone.Time.Text = "Busy"
                             end
                             task.wait(1)
                         end
                         actionClone = actionClone or C.AddAction(info)
-                        while C.char and not C.IsBusy() and jobHandler:GetJob() ~= jobName do
+                        while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName or (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500) do
+                            if jobHandler:GetJob() then
+                                jobHandler:StopWorking()
+                            end
                             if jobHandler:CanStartWorking(jobName,jobModule) then
                                 actionClone.Time.Text = "Going To Work"
                                 jobHandler:GoToWork(jobName)
@@ -186,6 +190,7 @@ return function (C,Settings)
                             end
                             task.wait(.5)
                         end
+                        local curJob = jobHandler:GetJob()
                         if jobHandler:GetJob() == jobName then
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 actionClone.Time.Text = "Going To Station"
@@ -316,7 +321,7 @@ return function (C,Settings)
                     end}
                     local MoodName,MoodValue
                     local actionClone = C.AddAction(info)
-                    while true do
+                    while info.Enabled do
                         while C.IsBusy() do
                             task.wait(1)
                         end
