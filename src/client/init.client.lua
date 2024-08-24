@@ -485,7 +485,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 						local isRunning = true
 						tskDelay(3, function()
 							if isRunning then
-								warn(`[C.{HookType}]: Hook is taking a >3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
+								warn(`[C.{HookType}]: Hook is taking > 3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
 							end
 						end)
                         local operation,returnData = getVal(list,3)(theirScript,method,self,...)
@@ -520,7 +520,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			print("Origin",OriginFunct,hook,source)
 		else--]]
 			OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-				or (HookType == "hookfunction" and C.getgenv().realhookfunction(hook, (CallFunction)))
+				or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
 		--end
 	end
 	if runFunct then
