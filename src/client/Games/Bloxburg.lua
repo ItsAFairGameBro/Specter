@@ -129,7 +129,7 @@ return function (C,Settings)
 				Shortcut = "AutoJob",
                 BotData = {
                     HutFisherman = {
-                        Location = {CFrame = CFrame.new(1080,12.5,1097), Size = Vector3.new(10,1,2)},
+                        Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(90),0), Size = Vector3.new(10,1,2)},
                         BotFunct = function(self,actionClone)
                             local EquipData = C.HotbarUI.Hotbar.EquipData
                             local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
