@@ -153,7 +153,7 @@ return function(C,Settings)
                 end),{"fireserver"})
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {},PlaceIds={}--{1160789089},PlaceIds={},
+            GameIds = {1160789089},PlaceIds={}
         },
         {
             Run = function(self)
@@ -205,7 +205,7 @@ return function(C,Settings)
                 C.RemoteObjects = remoteObjects
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {88070565},PlaceIds={},
+            GameIds = {880705650},PlaceIds={},
         },
     }
     if not NC:FindFirstChildWhichIsA("ClientReplicator") then
