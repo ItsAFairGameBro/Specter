@@ -137,16 +137,20 @@ return function (C,Settings)
                                 if ItemData.Name == "Fishing Rod" then
                                     local Title = EquipData.Title:gsub("%a_","")--Some start with I_ because gay!
                                     if Title == "Cast" then
+                                        actionClone.Title.Text = "Casting"
                                         C.HotbarUI.Hotbar:DoEquipAction()
                                         print("Casting")
                                     elseif Title == "Pull" then
                                         if EquipData.Object.Pos.Y <= 7.7 then
+                                            actionClone.Title.Text = "Pulling"
                                             print("Pull")
                                             C.HotbarUI.Hotbar:DoEquipAction()
                                         else
+                                            actionClone.Title.Text = "Waiting"
                                             print("Wait")
                                         end
                                     else
+                                        actionClone.Title.Text = ""
                                         print("Processing")
                                     end
                                 end
@@ -165,14 +169,19 @@ return function (C,Settings)
                             task.spawn(self.SetValue,self,false)
                         end
                     end}
-                    local actionClone = C.AddAction(info)
+                    local actionClone
                     while true do
                         while C.IsBusy() do
                             task.wait(1)
                         end
-                        while C.char and not C.IsBusy() and jobHandler:CanStartWorking(jobName,jobModule) and jobHandler:GetJob() ~= jobName do
-                            actionClone.Time.Text = "Going To Work"
-                            jobHandler:GoToWork(jobName)
+                        actionClone = actionClone or C.AddAction(info)
+                        while C.char and not C.IsBusy() and jobHandler:GetJob() ~= jobName do
+                            if jobHandler:CanStartWorking(jobName,jobModule) then
+                                actionClone.Time.Text = "Going To Work"
+                                jobHandler:GoToWork(jobName)
+                            else
+                                actionClone.Time.Text = "Waiting"
+                            end
                             task.wait(.5)
                         end
                         if jobHandler:GetJob() == jobName then
