@@ -129,7 +129,7 @@ return function (C,Settings)
 				Shortcut = "AutoJob",
                 BotData = {
                     HutFisherman = {
-                        Location = {CFrame = CFrame.new(1080,12.5,1097,-1,0,-.15,0), Size = Vector3.new(10,1,2)},
+                        Location = {CFrame = CFrame.new(1080,12.5,1097), Size = Vector3.new(10,1,2)},
                         BotFunct = function(self,actionClone)
                             local EquipData = C.HotbarUI.Hotbar.EquipData
                             local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
@@ -140,20 +140,16 @@ return function (C,Settings)
                                         Title = Title:gsub("%a_","")--Some start with I_ because gay!
                                         if Title == "Cast" then
                                             actionClone.Time.Text = "Casting"
-                                            print("Casting")
                                             task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                         elseif Title == "Pull" then
                                             if EquipData.Object.Pos.Value.Y <= 7.7 then
                                                 actionClone.Time.Text = "Pulling"
-                                                print("Pull")
                                                 task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                             else
                                                 actionClone.Time.Text = "Waiting"
-                                                print("Wait")
                                             end
                                         else
                                             actionClone.Time.Text = ""
-                                            print("Processing")
                                         end
                                     end
                                 end
