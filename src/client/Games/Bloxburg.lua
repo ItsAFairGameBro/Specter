@@ -135,13 +135,13 @@ return function (C,Settings)
                 end,
                 Options = {
                     {
-                        Type = Types.Dropdown,
-                        Title = "Job",
-                        Tooltip = "Job that it performs automatically. Note that they are limited",
-                        Options = {
-
-                        },
-                    }
+						Type = Types.Dropdown, Selections = {"Hut Fisherman"},
+						Title = "Job",
+						Tooltip = "Which job the autofarm does. Some may be unavilable",
+						Layout = 1,
+						Shortcut="Hut Fisherman",
+						Activate = C.ReloadHack
+					},
                 },
             },
             {

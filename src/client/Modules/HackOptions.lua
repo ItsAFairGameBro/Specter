@@ -177,7 +177,9 @@ return function(C,Settings)
 
 	function DropdownTbl.new(parent, options)
 		assert(options.Selections,"Selections is missing")
-		assert(table.find(options.Selections,options.Default),"Default Selection is Missing")
+		-- Pick first one!
+		options.Default = options.Default or options.Selections[1]
+		--assert(table.find(options.Selections,options.Default),"Default Selection is Missing")
 
 		local self, newFrame, default = DoCombined(DropdownTbl, "Dropdown", parent, options)
 		
