@@ -130,13 +130,13 @@ return function (C,Settings)
                 BotData = {
                     HutFisherman = {
                         Location = {CFrame = CFrame.new(), Size = Vector3.new()},
-                        BotFunct = function(self)
+                        BotFunct = function(self,actionClone)
                             
                         end,
                     },
                 },
                 JobRunner = function(self,jobName)
-                    local info = {Name=self.Shortcut,Title="Boosting Mood",Tags={"RemoveOnDestroy"},Stop=function(requested)
+                    local info = {Name=self.Shortcut,Title="Auto Job",Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
                             self:SetValue(false)
                         end
@@ -150,14 +150,16 @@ return function (C,Settings)
                             task.wait(1)
                         end
                         while C.char and not C.IsBusy() and jobHandler:CanStartWorking(jobName,jobModule) and jobHandler:GetJob() ~= jobName do
+                            actionClone.Title.Text = "Going To Work"
                             jobHandler:GoToWork(jobName)
                             task.wait(.5)
                         end
                         if jobHandler:GetJob() == jobName then
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
+                                actionClone.Title.Text = "Going To Station"
                                 C.DoTeleport(C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                             else
-                                botData.BotFunct(self)
+                                botData.BotFunct(self,actionClone)
                             end
                         end
                         task.wait(.5)
