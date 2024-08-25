@@ -254,7 +254,7 @@ return function (C,Settings)
                                     end
                                     return "Wait", 0
                                 else
-                                    C.RemoteObjects["TakeNewBag"]:FireServer(myWorkstation)
+                                    C.RemoteObjects["TakeNewBag"]:FireServer({Workstation=myWorkstation})
                                     actionClone.Time.Text = "Getting Bag"
                                     return "Wait", 0
                                 end
