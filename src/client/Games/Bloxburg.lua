@@ -236,6 +236,7 @@ return function (C,Settings)
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
                             if myWorkstation.BagsLeft.Value <= 0 then
+                                self.Timer = 0
                                 local BagCrate = model.Crates.BagCrate
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
                                     C.human:MoveTo(BagCrate:GetPivot().Position)
@@ -255,7 +256,6 @@ return function (C,Settings)
                                         actionClone.Time.Text = "Restocking (1/2)"
                                     end
                                 end
-                                self.Timer = 0
                             elseif #myWorkstation.DroppedFood:GetChildren() > 0 then
                                 self.Timer = 0
                                 local curBagCount = 0
@@ -275,11 +275,11 @@ return function (C,Settings)
                                             break
                                         end
                                     end
-                                    return "Wait", 0
+                                    --return "Wait", 0
                                 else
                                     C.RemoteObjects["TakeNewBag"]:FireServer({Workstation=myWorkstation})
                                     actionClone.Time.Text = "Getting Bag"
-                                    return "Wait", 0.2
+                                    --return "Wait", 0.2
                                 end
                             else
                                 local hasAtLeastOneBag = false
@@ -295,7 +295,7 @@ return function (C,Settings)
                                         actionClone.Time.Text = "Finishing"
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
                                     else
-                                        actionClone.Time.Text = "More Item Wait "..self.Timer
+                                        actionClone.Time.Text = "More Item Wait "..self.Timer .. "/10"
                                     end
                                 else
                                     actionClone.Time.Text = "First Item Wait"
@@ -305,7 +305,6 @@ return function (C,Settings)
                         end,
                     },
                 },
-                Timer = 0,
                 GetClosestWorkstation = function(self,botData,jobModule)
                     local WData = botData.Workstations
                     local Workstations = C.StringWait(jobModule.Model,WData.Path)
@@ -327,7 +326,7 @@ return function (C,Settings)
                     end
                 end,
                 JobRunner = function(self,jobName)
-                    C.CanMoveOutOfPosition = false
+                    C.CanMoveOutOfPosition, self.Timer = false, 0
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
