@@ -34,7 +34,7 @@ return function(C,Settings)
 						C.LastLoc = C.char:GetPivot()
 					end))
 					local function TeleportDetected()
-						if C.camera.CameraType ~= Enum.CameraType.Custom and self.EnTbl.Active == "Camera On Character" then
+						if C.Camera.CameraType ~= Enum.CameraType.Custom and self.EnTbl.Active == "Camera On Character" then
 							return
 						end
 						newInput = C.char:GetPivot()
@@ -481,10 +481,10 @@ return function(C,Settings)
 				}
 			},
 			{
-				Title = "Walkspeed",
+				Title = "WalkSpeed",
 				Tooltip = "Changes your walkspeed to the set value",
 				Layout = 97,
-				Shortcut = "Walkspeed",Functs={},
+				Shortcut = "WalkSpeed",Functs={},
 				SetProperty = function(self)
 					local toSet = self.RealEnabled and self.EnTbl.Speed or C.Defaults.WalkSpeed
 					if C.human and math.abs(C.human.WalkSpeed - toSet) > 1e-3 then
