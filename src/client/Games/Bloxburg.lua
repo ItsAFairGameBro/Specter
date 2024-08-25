@@ -236,9 +236,9 @@ return function (C,Settings)
                             if #myWorkstation.DroppedFood:GetChildren() > 0 then
                                 local curBagCount = 0
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
-                                    local curCount = #bag:GetChildren() - 1 -- One instance in the Mesh instance!
+                                    local curCount = #bag:GetChildren() -- One instance in the Mesh instance!
                                     print(bag.Transparency,#bag:GetChildren())
-                                    if bag.Transparency < 1e-3 and curCount < 3 then
+                                    if bag.Transparency < 1e-3 and curCount <= 3 then
                                         curBagCount = curCount
                                         break
                                     end
