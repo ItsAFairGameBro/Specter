@@ -191,12 +191,12 @@ return function (C,Settings)
                                 end
                                 if closest then
                                     if closestDist < 10 then
-                                        C.human:MoveTo(closest:GetPivot().Position)
                                         actionClone.Time.Text = "Firing"
                                         C.RemoteObjects["TakeFoodCrate"]:FireServer({Object=closest})
-                                        return true
                                     else
                                         actionClone.Time.Text = "Walking"
+                                        C.human:MoveTo(closest:GetPivot().Position)
+                                        return true
                                     end
                                 else
                                     actionClone.Time.Text = "No Resupply Crates"
@@ -211,12 +211,12 @@ return function (C,Settings)
                                 end
                                 if closest2 then
                                     if closestDist2 < 10 then
-                                        C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,-3))
                                         actionClone.Time.Text = "Firing2"
                                         C.RemoteObjects["RestockShelf"]:FireServer({Shelf = closest2})
-                                        return true
                                     else
+                                        C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,-3))
                                         actionClone.Time.Text = "Walking2"
+                                        return true
                                     end
                                 else
                                     actionClone.Time.Text = "No Empty Shelves"
