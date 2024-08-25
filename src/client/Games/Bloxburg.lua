@@ -241,10 +241,9 @@ return function (C,Settings)
                             end
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
                             if myWorkstation.BagsLeft.Value <= 0 then
-                                self.Timer = 0
                                 local BagCrate = model.Crates.BagCrate
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
-                                    C.human:MoveTo(BagCrate:GetPivot() * Vector3.new(-3,0,0))
+                                    C.human:MoveTo(BagCrate:GetPivot() * Vector3.new(3,0,0))
                                     if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
                                         actionClone.Time.Text = "New Bags (2/2)"
                                         C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
@@ -262,7 +261,6 @@ return function (C,Settings)
                                     end
                                 end
                             elseif #myWorkstation.DroppedFood:GetChildren() > 0 then
-                                self.Timer = 0
                                 local curBagCount = 0
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
                                     local curCount = #bag:GetChildren() -- One instance in the Mesh instance!
@@ -297,18 +295,16 @@ return function (C,Settings)
                                     end
                                 end
                                 if hasAtLeastOneItem then
-                                    self.Timer = (self.Timer or 0) + 1
-                                    if self.Timer > 1000
-                                        or (myWorkstation.CustomerTarget_2.Position - Customer:GetPivot().Position).Magnitude < 3 then
+                                    --self.Timer = (self.Timer or 0) + 1
+                                    if (myWorkstation.CustomerTarget_2.Position - Customer:GetPivot().Position).Magnitude < 3 then
                                         actionClone.Time.Text = "Finishing"
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
-                                        self.Timer = 0
+                                        myWorkstation.Occupied.Value = nil
                                     else
                                         actionClone.Time.Text = "More Item Wait "..self.Timer .. "/10"
                                     end
                                 else
                                     actionClone.Time.Text = "First Item Wait"
-                                    self.Timer = 0
                                 end
                             end
                         end,
@@ -335,7 +331,7 @@ return function (C,Settings)
                     end
                 end,
                 JobRunner = function(self,jobName)
-                    C.CanMoveOutOfPosition, self.Timer = false, 0
+                    C.CanMoveOutOfPosition = false
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
