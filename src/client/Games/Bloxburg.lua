@@ -272,7 +272,7 @@ return function (C,Settings)
                                             actionClone.Time.Text = "Scanning "..instance.Name
                                             C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
                                         else
-                                            actionClone.Time = "Finish Scan"
+                                            actionClone.Time.Text = "Finish Scan"
                                             break
                                         end
                                     end
