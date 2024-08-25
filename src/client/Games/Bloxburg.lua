@@ -89,6 +89,19 @@ local function Static(C,Settings)
         return C.LoadingModule:IsLoadingAny() or not C.MainGui:WaitForChild("IsLoaded").Value
             or C.MainGui:WaitForChild("MainMenu").Visible
     end
+    function C.GetWorkstation(Workstations)
+        --game:GetService("Workspace").Environment.Locations.Supermarket.CashierWorkstations
+        local curObj, closestDist = nil, math.huge
+        for num, workstation in ipairs(Workstations:GetChildren()) do
+            if workstation.Name == "Workstation" and not workstation.InUse.Value then
+                local myDist = (C.hrp:GetPivot().Position - workstation:GetPivot().Position)
+                if myDist < closestDist then
+                    curObj, closestDist = workstation,myDist
+                end
+            end
+        end
+        return curObj,closestDist
+    end
     function C.FireServer(name,...)
         C.RemoteObjects[name]:FireServer(...)
     end
@@ -162,7 +175,9 @@ return function (C,Settings)
                             return false
                         end,
                     },
-
+                    GroceryCashier = {
+                        Location = {Workstations = C.StringWait(workspace,"Environment.Locations.Supermarket.CashierWorkstations"),Part="Scanner",PartOffset=Vector3.new(0,-1,-3)}
+                    }
                 },
                 JobRunner = function(self,jobName)
                     local botData = self.BotData[jobName]
@@ -177,7 +192,7 @@ return function (C,Settings)
                     local actionClone = C.AddAction(info)
                     local function TeleportToStation()
                         actionClone.Time.Text = "Going To Station"
-                                
+                        
                         C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                     end
                     while info.Enabled do
@@ -409,9 +424,7 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     if newValue and not self.OldFaintFunct then
                         self.OldFaintFunct = rawget(C.CharacterHandler,"TriggerFaint")
-                        rawset(C.CharacterHandler,"TriggerFaint",function()
-                            print("Sucks to suck")
-                        end)
+                        rawset(C.CharacterHandler,"TriggerFaint",C.yieldForeverFunct)
                     elseif not newValue and self.OldFaintFunct then
                         rawset(C.CharacterHandler,"TriggerFaint",self.OldFaintFunct)
                         self.OldFaintFunct = nil
