@@ -231,7 +231,7 @@ return function (C,Settings)
                         end,
                     },
                     SupermarketCashier = {
-                        Overrides = {{"Noclip"}},Part = "Floor",
+                        Overrides = {{"Noclip"}},
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
