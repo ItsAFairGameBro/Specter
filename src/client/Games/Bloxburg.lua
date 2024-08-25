@@ -286,7 +286,7 @@ return function (C,Settings)
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
                             else
-                                local Return = botData:BotFunct(jobHandler.Model,actionClone)
+                                local Return = botData:BotFunct(jobModule.Model,actionClone)
                                 if Return == "Teleport" then
                                     TeleportToStation()
                                 end
