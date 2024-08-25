@@ -162,6 +162,7 @@ return function (C,Settings)
                             return false
                         end,
                     },
+
                 },
                 JobRunner = function(self,jobName)
                     local botData = self.BotData[jobName]
@@ -235,7 +236,7 @@ return function (C,Settings)
             {
 				Title = "Mood Boost",
 				Tooltip = "Automatically boost moods when your moods get low",
-				Layout = 18, Functs = {}, Threads = {}, Default=true,
+				Layout = 16, Functs = {}, Threads = {}, Default=true,
 				Shortcut = "MoodBoost",
                 MoodBoostFunctions = {
                     Hygiene = function(self,plot)
@@ -393,6 +394,27 @@ return function (C,Settings)
                     end--]]
                     if self:CanBoostMood() then
                         self:BoostMood()
+                    end
+                end,
+            },
+            {
+				Title = "Anti Faint",
+				Tooltip = "Prevents you from being teleported when you faint",
+				Layout = 18, Functs = {}, Threads = {}, Default=true,
+                OldFaintFunct = nil,
+				Shortcut = "AntiFaint",
+                RunOnDestroy = function(self)
+                    self:Activate(false)
+                end,
+                Activate = function(self,newValue)
+                    if newValue and not self.OldFaintFunct then
+                        self.OldFaintFunct = rawget(C.CharacterHandler,"TriggerFaint")
+                        rawset(C.CharacterHandler,"TriggerFaint",function()
+                            print("Sucks to suck")
+                        end)
+                    elseif not newValue and self.OldFaintFunct then
+                        rawset(C.CharacterHandler,"TriggerFaint",self.OldFaintFunct)
+                        self.OldFaintFunct = nil
                     end
                 end,
             },
