@@ -234,17 +234,17 @@ return function (C,Settings)
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             if myWorkstation.BagsLeft.Value <= 0 then
+                                self.Timer = 0
                                 actionClone.Time.Text = "New Bags"
                                 C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Creates.BagCrate})
                                 task.wait(.3)
                                 actionClone.Time.Text = "Restocking"
                                 C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
                             elseif #myWorkstation.DroppedFood:GetChildren() > 0 then
+                                self.Timer = 0
                                 local curBagCount = 0
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
                                     local curCount = #bag:GetChildren() -- One instance in the Mesh instance!
-                                    --print(bag.Transparency,#bag:GetChildren())
-                                    hasAtLeastOneBag = bag.Transparency < 1e-3 or hasAtLeastOneBag
                                     if bag.Transparency < 1e-3 and curCount <= 3 then
                                         curBagCount = curCount
                                         break
@@ -265,7 +265,7 @@ return function (C,Settings)
                                     actionClone.Time.Text = "Getting Bag"
                                     return "Wait", 0.2
                                 end
-                            elseif hasAtLeastOneBag then
+                            else
                                 local hasAtLeastOneBag = false
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
                                     if bag.Transparency < 1e-3 then
@@ -274,15 +274,22 @@ return function (C,Settings)
                                     end
                                 end
                                 if hasAtLeastOneBag then
-                                    actionClone.Time.Text = "Finishing"
-                                    C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})    
+                                    self.Timer += 1
+                                    if self.Timer > 10 then
+                                        actionClone.Time.Text = "Finishing"
+                                        C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})  
+                                    else
+                                        actionClone.Time.Text = "More Item Wait"
+                                    end
                                 else
-                                    actionClone.Time.Text = "Waiting"
+                                    actionClone.Time.Text = "First Item Wait"
+                                    self.Timer = 0
                                 end
                             end
                         end,
                     },
                 },
+                Timer = 0,
                 GetClosestWorkstation = function(self,botData,jobModule)
                     local WData = botData.Workstations
                     local Workstations = C.StringWait(jobModule.Model,WData.Path)
