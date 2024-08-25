@@ -230,6 +230,7 @@ return function (C,Settings)
                     }--]]
                 },
                 JobRunner = function(self,jobName)
+                    local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
@@ -238,7 +239,7 @@ return function (C,Settings)
                         botData.Location = {CFrame = jobModule.AreaBlock.CFrame, Size = jobModule.AreaBlock.Size}
                     end
 
-                    local info = {Name=self.Shortcut,Title="Auto Job: "..jobName,Tags={"RemoveOnDestroy"},Stop=function(requested)
+                    local info = {Name=self.Shortcut,Title="Job: "..displayJobName,Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
                             task.spawn(self.SetValue,self,false)
                         end
