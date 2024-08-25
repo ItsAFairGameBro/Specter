@@ -237,7 +237,7 @@ return function (C,Settings)
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
                             if myWorkstation.BagsLeft.Value <= 0 then
                                 local BagCrate = model.Crates.BagCrate
-                                if not C.HotbarUI.EquipData or C.HotbarUI.EquipData.Name ~= "BFF Bags" then
+                                if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
                                     C.human:MoveTo(BagCrate:GetPivot().Position)
                                     if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
                                         actionClone.Time.Text = "New Bags"
