@@ -276,17 +276,17 @@ return function (C,Settings)
                                         if num - 1 <= 3 - curBagCount then
                                             actionClone.Time.Text = "Scanning "..instance.Name
                                             C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
-                                            task.wait()
+                                            --task.wait()
                                         else
                                             actionClone.Time.Text = "Finish Scan"
                                             break
                                         end
                                     end
-                                    --return "Wait", 0
+                                    return "Wait", 0
                                 else
                                     C.RemoteObjects["TakeNewBag"]:FireServer({Workstation=myWorkstation})
                                     actionClone.Time.Text = "Getting Bag"
-                                    --return "Wait", 0.2
+                                    return "Wait", 0
                                 end
                             else
                                 local hasAtLeastOneBag = false
