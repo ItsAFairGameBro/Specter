@@ -244,6 +244,7 @@ return function (C,Settings)
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
                                     local curCount = #bag:GetChildren() -- One instance in the Mesh instance!
                                     --print(bag.Transparency,#bag:GetChildren())
+                                    hasAtLeastOneBag = bag.Transparency < 1e-3 or hasAtLeastOneBag
                                     if bag.Transparency < 1e-3 and curCount <= 3 then
                                         curBagCount = curCount
                                         break
@@ -264,9 +265,20 @@ return function (C,Settings)
                                     actionClone.Time.Text = "Getting Bag"
                                     return "Wait", 0.2
                                 end
-                            else
-                                actionClone.Time.Text = "Finishing"
-                                C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
+                            elseif hasAtLeastOneBag then
+                                local hasAtLeastOneBag = false
+                                for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
+                                    if bag.Transparency < 1e-3 then
+                                        hasAtLeastOneBag = true
+                                        break
+                                    end
+                                end
+                                if hasAtLeastOneBag then
+                                    actionClone.Time.Text = "Finishing"
+                                    C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})    
+                                else
+                                    actionClone.Time.Text = "Waiting"
+                                end
                             end
                         end,
                     },
