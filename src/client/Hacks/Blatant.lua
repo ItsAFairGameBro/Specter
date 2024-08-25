@@ -397,6 +397,11 @@ return function(C,Settings)
 					if not C.char then
 						return
 					end
+					if newValue and not self.EnTbl.EnClimbing then
+						C.human:SetHumanoidStateEnabled(Enum.HumanoidStateType.Climbing,false)
+					else
+						C.human:SetHumanoidStateEnabled(Enum.HumanoidStateType.Climbing,true)
+					end
 					self.Update(newValue)
 					if not newValue then
 						return
@@ -417,7 +422,7 @@ return function(C,Settings)
 						Title = "Enable Climbing",
 						Tooltip = "Allows you to climb ladders while still noclipping.\nThis may mess with ",
 						Layout = 3,Default=false,
-						Shortcut="UseWalkspeed",
+						Shortcut="EnClimbing",
 					},
 				}
 			},

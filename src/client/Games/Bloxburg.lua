@@ -248,7 +248,7 @@ return function (C,Settings)
                         if requested then
                             task.spawn(self.SetValue,self,false)
                         end
-                        for num, data in ipairs(botData.Overrides) do
+                        for num, data in ipairs(botData.Overrides or {}) do
                             C.RemoveOverride(C.hackData.Blatant[data[1]],self.Shortcut)
                         end
                     end}
