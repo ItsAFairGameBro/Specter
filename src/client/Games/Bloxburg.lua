@@ -265,7 +265,8 @@ return function (C,Settings)
                                     return "Wait", 0.2
                                 end
                             else
-                                actionClone.Time.Text = "No Food"
+                                actionClone.Time.Text = "Finishing"
+                                C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
                             end
                         end,
                     },
