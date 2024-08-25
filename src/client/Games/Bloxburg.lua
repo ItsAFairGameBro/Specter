@@ -175,9 +175,9 @@ return function (C,Settings)
                             return false
                         end,
                     },
-                    GroceryCashier = {
+                    --[[GroceryCashier = {
                         Location = {Workstations = C.StringWait(workspace,"Environment.Locations.Supermarket.CashierWorkstations"),Part="Scanner",PartOffset=Vector3.new(0,-1,-3)}
-                    }
+                    }--]]
                 },
                 JobRunner = function(self,jobName)
                     local botData = self.BotData[jobName]
