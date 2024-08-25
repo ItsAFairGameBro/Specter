@@ -397,10 +397,12 @@ return function(C,Settings)
 					if not C.char then
 						return
 					end
-					if newValue and not self.EnTbl.EnClimbing then
-						C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
-					else
-						C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
+					if C.human then
+						if newValue and not self.EnTbl.EnClimbing then
+							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
+						else
+							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
+						end
 					end
 					self.Update(newValue)
 					if not newValue then

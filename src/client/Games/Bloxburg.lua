@@ -27,6 +27,7 @@ local function Static(C,Settings)
     C.HotbarUI = C.require(MyGameModules:WaitForChild("HotbarUI"))
     --[[
         :ToHouse() -> Teleports to your plot/house
+        :ToPlot((Player) PlayersPlot)
     ]]
     C.JobHandler = C.require(MyGameModules:WaitForChild("JobHandler"))
     --[[
@@ -229,10 +230,53 @@ return function (C,Settings)
                             C.human:MoveTo(C.char:GetPivot().Position)
                         end,
                     },
-                    --[[GroceryCashier = {
-                        Location = {Workstations = C.StringWait(workspace,"Environment.Locations.Supermarket.CashierWorkstations"),Part="Scanner",PartOffset=Vector3.new(0,-1,-3)}
-                    }--]]
+                    GroceryCashier = {
+                        Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
+                        BotFunct = function(self, model, actionClone, myWorkstation)
+                            if #myWorkstation.DroppedFood:GetChildren() > 0 then
+                                local curBagCount = 0
+                                for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
+                                    local curCount = #bag:GetChildren() - 1 -- One instance in the Mesh instance!
+                                    if bag.Transparency < 1e-3 and #bag:GetChildren() - 1 < 3 then
+                                        curBagCount = curCount
+                                        break
+                                    end
+                                end
+                                if curBagCount > 0 then
+                                    for num, instance in ipairs(myWorkstation.DroppedFood:GetChildren()) do
+                                        if num <= 3 - curBagCount then
+                                            C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
+                                        else
+                                            break
+                                        end
+                                    end
+                                else
+                                    C.RemoteObjects["TakeNewBag"]:FireServer(myWorkstation)
+                                end
+                            end
+                        end,
+                    },
                 },
+                GetClosestWorkstation = function(self,botData,jobModule)
+                    local WData = botData.Workstations
+                    local Workstations = C.StringWait(jobModule.Model,WData.Path)
+
+                    local closest,closestDist = nil,math.huge
+                    for num, workstation in ipairs(Workstations:GetChildren()) do
+                        if workstation.InUse.Value == nil or workstation.InUse.Value == C.plr then
+                            local curDist = (workstation:GetPivot().Position - C.char:GetPivot().Position).Magnitude
+                            if curDist < closestDist then
+                                closest, closestDist = workstation, curDist
+                            end
+                        end
+                    end
+                    if closest then
+                        C.DoTeleport(closest:GetBoundingBox().Position)
+                        return true, closest, closestDist
+                    else
+                        return false, "Not Found"
+                    end
+                end,
                 JobRunner = function(self,jobName)
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
@@ -254,6 +298,7 @@ return function (C,Settings)
                     end}
                     local lastCurJob
                     local actionClone = C.AddAction(info)
+                    local myWorkstation
                     local function TeleportToStation()
                         actionClone.Time.Text = "Going To Station"
                         
@@ -289,10 +334,16 @@ return function (C,Settings)
                                     C.AddOverride(C.hackData.Blatant[data[1]],self.Shortcut)
                                 end
                             end
-                            if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
+                            if botData.Location and not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
+                            elseif botData.Workstations and (not myWorkstation or not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true)) then
+                                Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
+                                if Return then
+                                    myWorkstation = Return2
+                                    Return = "Wait"
+                                end
                             else
-                                Return, Return2 = botData:BotFunct(jobModule.Model,actionClone)
+                                Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation)
                                 if Return == "Teleport" then
                                     TeleportToStation()
                                 end
@@ -315,7 +366,7 @@ return function (C,Settings)
                 end,
                 Options = {
                     {
-						Type = Types.Dropdown, Selections = {"Hut Fisherman","Supermarket Stocker"},
+						Type = Types.Dropdown, Selections = {"Hut Fisherman","Supermarket Stocker","Grocery Cashier"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
@@ -402,6 +453,7 @@ return function (C,Settings)
                             C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getHumanoidHeight(C.char),0))
                         else
                             --print(C.HotbarUI.Hotbar.EquipData)
+                            --MeshId == "rbxassetid://485263557"
                             if C.HotbarUI.Hotbar.EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
                                 and table.find(C.HotbarUI.Hotbar.EquipData.ItemData.Types,"Food") and C.HotbarUI.Hotbar.EquipData.HoldFunction then
                                 C.HotbarUI.Hotbar:DoEquipAction()
@@ -500,7 +552,13 @@ return function (C,Settings)
                 Activate = function(self,newValue)
                     if newValue and not self.OldFaintFunct then
                         self.OldFaintFunct = rawget(C.CharacterHandler,"TriggerFaint")
-                        rawset(C.CharacterHandler,"TriggerFaint",C.yieldForeverFunct)
+                        rawset(C.CharacterHandler,"TriggerFaint",function()
+                            for num, animationTrack in ipairs(C.human:WaitForChild("Animator"):GetPlayingAnimationTracks()) do
+                                if animationTrack.Animation.AnimationId == "rbxassetid://14689212702" then
+                                    animationTrack:Stop(0)
+                                end
+                            end
+                        end)
                     elseif not newValue and self.OldFaintFunct then
                         rawset(C.CharacterHandler,"TriggerFaint",self.OldFaintFunct)
                         self.OldFaintFunct = nil
