@@ -234,12 +234,17 @@ return function (C,Settings)
                         Overrides = {{"Noclip"}},Part="Floor",ProximityOnly=true,
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
+                            local Customer = myWorkstation.Occupied.Value
+                            if not Customer then
+                                actionClone.Time.Text = "Waiting For Customer"
+                                return
+                            end
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
                             if myWorkstation.BagsLeft.Value <= 0 then
                                 self.Timer = 0
                                 local BagCrate = model.Crates.BagCrate
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
-                                    C.human:MoveTo(BagCrate:GetPivot().Position)
+                                    C.human:MoveTo(BagCrate:GetPivot() * Vector3.new(0,0,-3))
                                     if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
                                         actionClone.Time.Text = "New Bags (2/2)"
                                         C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
@@ -293,9 +298,11 @@ return function (C,Settings)
                                 end
                                 if hasAtLeastOneBag then
                                     self.Timer += 1
-                                    if self.Timer > 10 then
+                                    if self.Timer > 10
+                                        or (myWorkstation.CustomerTarget_2.Position - Customer:GetPivot().Position).Magnitude < 3 then
                                         actionClone.Time.Text = "Finishing"
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
+                                        self.Timer = 0
                                     else
                                         actionClone.Time.Text = "More Item Wait "..self.Timer .. "/10"
                                     end
