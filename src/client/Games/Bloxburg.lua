@@ -234,7 +234,6 @@ return function (C,Settings)
                         Overrides = {{"Noclip"}},Part="Floor",ProximityOnly=true,
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
-                            print("bot")
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
                             if myWorkstation.BagsLeft.Value <= 0 then
                                 self.Timer = 0
@@ -273,6 +272,7 @@ return function (C,Settings)
                                             actionClone.Time.Text = "Scanning "..instance.Name
                                             C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
                                         else
+                                            actionClone.Time = "Finish Scan"
                                             break
                                         end
                                     end
