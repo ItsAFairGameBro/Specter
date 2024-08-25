@@ -240,16 +240,19 @@ return function (C,Settings)
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
                                     C.human:MoveTo(BagCrate:GetPivot().Position)
                                     if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
-                                        actionClone.Time.Text = "New Bags"
+                                        actionClone.Time.Text = "New Bags (2/2)"
                                         C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
+                                    else
+                                        actionClone.Time.Text = "New Bags (1/2)"
                                     end
                                 else
                                     if (myWorkstation:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
-                                        actionClone.Time.Text = "Restocking"
+                                        actionClone.Time.Text = "Restocking (2/2)"
                                         C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
                                         C.human:MoveTo(C.char:GetPivot().Position)
                                     else
                                         C.human:MoveTo(myWorkstation:GetPivot().Position)
+                                        actionClone.Time.Text = "Restocking (1/2)"
                                     end
                                 end
                                 self.Timer = 0
