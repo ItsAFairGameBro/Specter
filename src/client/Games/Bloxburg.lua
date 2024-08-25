@@ -282,7 +282,7 @@ return function (C,Settings)
                         end
                         local curJob = jobHandler:GetJob()
                         local Return,Return2
-                        if jobHandler:GetJob() == jobName and info.Enabled then
+                        if jobHandler:GetJob() == jobName then
                             if lastCurJob ~= jobName then
                                 lastCurJob = jobName
                                 for num, data in ipairs(botData.Overrides or {}) do
