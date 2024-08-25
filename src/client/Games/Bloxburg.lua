@@ -317,8 +317,8 @@ return function (C,Settings)
                             local CurrentCustomer, ClosestDist = nil, math.huge
                             for num, cust in ipairs(model.CustomerTargets:GetChildren()) do
                                 local MyCust = cust.Occupied.Value
-                                if MyCust and not cust.InUse.Value then
-                                    local MyDist = (MyCust:GetPivot().Position - C.char:GetPivot()).Magnitude
+                                if MyCust and (not cust.InUse.Value or cust.InUse.Value == C.plr) then
+                                    local MyDist = (MyCust:GetPivot().Position - C.char:GetPivot().Position).Magnitude
                                     if (MyDist < ClosestDist) then
                                         CurrentCustomer, ClosestDist = MyCust, MyDist
                                     end
