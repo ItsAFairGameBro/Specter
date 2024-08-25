@@ -176,7 +176,7 @@ return function (C,Settings)
                         end,
                     },
                     SupermarketStocker = {
-                        Overrides = {{"Noclip"},{"WalkSpeed"}},
+                        Overrides = {{"Noclip"},{"WalkSpeed"}},AreaBlock = true,
                         BotFunct = function(self,model,actionClone)
                             -- Has a Food Crate
                             if not C.HotbarUI.Hotbar or C.HotbarUI.Hotbar.EquipData.Name ~= "Food Crate" then
@@ -233,6 +233,10 @@ return function (C,Settings)
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
+                    
+                    if botData.AreaBlock then
+                        botData.Location = {CFrame = jobHandler.AreaBlock.CFrame, Size = jobHandler.AreaBlock.Size}
+                    end
 
                     local info = {Name=self.Shortcut,Title="Auto Job: "..jobName,Tags={"RemoveOnDestroy"},Stop=function(requested)
                         if requested then
@@ -257,7 +261,8 @@ return function (C,Settings)
                             task.wait(1)
                         end
                         actionClone = actionClone or C.AddAction(info)
-                        while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName or (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500) do
+                        while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName 
+                            or (botData.Location and botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500) do
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
                             end

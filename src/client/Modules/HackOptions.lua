@@ -220,7 +220,9 @@ return function(C,Settings)
 					newDropdownEx.Parent = self.Dropdown
 					C.ButtonClick(newDropdownEx,function()
 						ToggleDropdown()
-						self:SetValue(name)
+						if name ~= self.Value then
+							self:SetValue(name)
+						end
 					end)
 					--end
 				end
