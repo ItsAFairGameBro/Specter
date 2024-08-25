@@ -176,7 +176,7 @@ return function (C,Settings)
                         end,
                     },
                     SupermarketStocker = {
-                        Overrides = {{"Noclip"},{"Walkspeed"}},AreaBlock = true,
+                        Overrides = {{"Noclip"},{"Walkspeed"}},Part = "Floor",
                         BotFunct = function(self,model,actionClone)
                             -- Has a Food Crate
                             if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Food Crate" then
@@ -235,8 +235,9 @@ return function (C,Settings)
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
                     
-                    if botData.AreaBlock then
-                        botData.Location = {CFrame = jobModule.AreaBlock.CFrame, Size = jobModule.AreaBlock.Size}
+                    if botData.Part then
+                        local instance = jobModule.Model:WaitForChild(botData.Part)
+                        botData.Location = {CFrame = instance.CFrame, Size = instance.Size}
                     end
 
                     local info = {Name=self.Shortcut,Title="Job: "..displayJobName,Tags={"RemoveOnDestroy"},Stop=function(requested)

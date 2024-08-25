@@ -531,8 +531,9 @@ return function(C,Settings)
 				Layout = 98,
 				Shortcut = "JumpPower",Functs={},
 				SetProperty = function(self)
-					if C.human then
-						C.human.JumpPower = self.RealEnabled and self.EnTbl.Jump or C.Defaults.JumpPower
+					local toSet = self.RealEnabled and self.EnTbl.Jump or C.Defaults.JumpPower
+					if C.human and math.abs(C.human.JumpPower - toSet) > 1e-3 then
+						C.human.JumpPower = toSet
 					end
 				end,
 				Activate = function(self,newValue)
