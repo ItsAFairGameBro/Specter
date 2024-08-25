@@ -301,10 +301,12 @@ return function (C,Settings)
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
                                         myWorkstation.Occupied.Value = nil
                                     else
-                                        actionClone.Time.Text = "More Item Wait"
+                                        actionClone.Time.Text = "Item Wait"
+                                        return "Wait", 0
                                     end
                                 else
                                     actionClone.Time.Text = "First Item Wait"
+                                    return "Wait", 0
                                 end
                             end
                         end,
