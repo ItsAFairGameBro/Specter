@@ -328,7 +328,7 @@ return function (C,Settings)
                                 actionClone.Time.Text = ""
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ice Cream Cup" then
                                     actionClone.Time.Text = "Getting Cup"
-                                    C.RemoteObjects["TakeIceCreamCup"]:FireServer()
+                                    C.RemoteObjects["TakeIceCreamCup"]:FireServer({})
                                 else
                                     --local Order = CurrentCustomer.Order
                                     --Order.
