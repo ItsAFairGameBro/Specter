@@ -236,7 +236,7 @@ return function (C,Settings)
                             if myWorkstation.BagsLeft.Value <= 0 then
                                 self.Timer = 0
                                 actionClone.Time.Text = "New Bags"
-                                C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Creates.BagCrate})
+                                C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
                                 task.wait(.3)
                                 actionClone.Time.Text = "Restocking"
                                 C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
@@ -277,7 +277,7 @@ return function (C,Settings)
                                     self.Timer += 1
                                     if self.Timer > 10 then
                                         actionClone.Time.Text = "Finishing"
-                                        C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})  
+                                        C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
                                     else
                                         actionClone.Time.Text = "More Item Wait"
                                     end
