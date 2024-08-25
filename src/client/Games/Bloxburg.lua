@@ -218,7 +218,7 @@ return function (C,Settings)
                                         C.human:MoveTo(C.char:GetPivot().Position)
                                         return "Wait", 0
                                     else
-                                        C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,-3))
+                                        C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,3))
                                         actionClone.Time.Text = "Walking2"
                                         return true
                                     end
