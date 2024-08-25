@@ -231,7 +231,7 @@ return function (C,Settings)
                         end,
                     },
                     SupermarketCashier = {
-                        Overrides = {{"Noclip"}},
+                        Overrides = {{"Noclip"}},Part="Floor",ProximityOnly=true,
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
@@ -359,7 +359,7 @@ return function (C,Settings)
                             task.wait(1)
                         end
                         actionClone = actionClone or C.AddAction(info)
-                        while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName
+                        while C.char and not C.IsBusy() and ((jobHandler:GetJob() ~= jobName or botData.ProximityOnly)
                             or (botData.Location and (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500)) do
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
