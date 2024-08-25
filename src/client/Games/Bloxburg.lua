@@ -353,7 +353,7 @@ return function (C,Settings)
                     end
                     while info.Enabled do
                         while C.IsBusy() do
-                            if info.Enabled then
+                            if actionClone and actionClone:FindFirstChild("Time") then
                                 actionClone.Time.Text = "Busy"
                             end
                             task.wait(1)
