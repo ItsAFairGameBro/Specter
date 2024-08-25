@@ -486,8 +486,9 @@ return function(C,Settings)
 				Layout = 97,
 				Shortcut = "Walkspeed",Functs={},
 				SetProperty = function(self)
-					if C.human then
-						C.human.WalkSpeed = self.RealEnabled and self.EnTbl.Speed or C.Defaults.WalkSpeed
+					local toSet = self.RealEnabled and self.EnTbl.Speed or C.Defaults.WalkSpeed
+					if C.human and math.abs(C.human.WalkSpeed - toSet) > 1e-3 then
+						C.human.WalkSpeed = toSet
 					end
 				end,
 				Activate = function(self,newValue)
