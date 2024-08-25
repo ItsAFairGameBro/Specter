@@ -230,7 +230,7 @@ return function (C,Settings)
                             C.human:MoveTo(C.char:GetPivot().Position)
                         end,
                     },
-                    GroceryCashier = {
+                    SupermarketCashier = {
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             if #myWorkstation.DroppedFood:GetChildren() > 0 then
@@ -366,7 +366,7 @@ return function (C,Settings)
                 end,
                 Options = {
                     {
-						Type = Types.Dropdown, Selections = {"Hut Fisherman","Supermarket Stocker","Grocery Cashier"},
+						Type = Types.Dropdown, Selections = {"Hut Fisherman","Supermarket Stocker","Supermarket Cashier"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
