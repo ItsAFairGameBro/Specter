@@ -286,7 +286,7 @@ return function (C,Settings)
                                 else
                                     C.RemoteObjects["TakeNewBag"]:FireServer({Workstation=myWorkstation})
                                     actionClone.Time.Text = "Getting Bag"
-                                    return "Wait", 0.05
+                                    return "Wait", 0.15
                                 end
                             else
                                 local hasAtLeastOneBag = false
