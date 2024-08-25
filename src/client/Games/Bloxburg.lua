@@ -311,6 +311,34 @@ return function (C,Settings)
                             end
                         end,
                     },
+                    BensIceCreamSeller = {
+                        Part = "Floor",
+                        BotFunct = function(self,model,actionClone)
+                            local CurrentCustomer, ClosestDist = nil, math.huge
+                            for num, cust in ipairs(model.CustomerTargets:GetChildren()) do
+                                local MyCust = cust.Occupied.Value
+                                if MyCust and not cust.InUse.Value then
+                                    local MyDist = (MyCust:GetPivot().Position - C.char:GetPivot()).Magnitude
+                                    if (MyDist < ClosestDist) then
+                                        CurrentCustomer, ClosestDist = MyCust, MyDist
+                                    end
+                                end
+                            end
+                            if CurrentCustomer then
+                                actionClone.Time.Text = ""
+                                if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ice Cream Cup" then
+                                    actionClone.Time.Text = "Getting Cup"
+                                    C.RemoteObjects["TakeIceCreamCup"]:FireServer()
+                                else
+                                    --local Order = CurrentCustomer.Order
+                                    --Order.
+                                end
+                            else
+                                C.human:MoveTo(model.Window:GetPivot() * Vector3.new(0,0,-3))
+                                actionClone.Time.Text = "Waiting For Customer"
+                            end
+                        end,
+                    },
                 },
                 GetClosestWorkstation = function(self,botData,jobModule)
                     local WData = botData.Workstations
@@ -428,7 +456,8 @@ return function (C,Settings)
                 end,
                 Options = {
                     {
-						Type = Types.Dropdown, Selections = {"Hut Fisherman","Supermarket Stocker","Supermarket Cashier"},
+						Type = Types.Dropdown,
+                        Selections = {"Hut Fisherman","Supermarket Stocker","Supermarket Cashier","Bens Ice Cream Seller"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
