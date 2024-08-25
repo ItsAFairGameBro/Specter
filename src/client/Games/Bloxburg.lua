@@ -235,7 +235,7 @@ return function (C,Settings)
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
                     
                     if botData.AreaBlock then
-                        botData.Location = {CFrame = jobHandler.AreaBlock.CFrame, Size = jobHandler.AreaBlock.Size}
+                        botData.Location = {CFrame = jobModule.AreaBlock.CFrame, Size = jobModule.AreaBlock.Size}
                     end
 
                     local info = {Name=self.Shortcut,Title="Auto Job: "..jobName,Tags={"RemoveOnDestroy"},Stop=function(requested)
@@ -261,7 +261,7 @@ return function (C,Settings)
                             task.wait(1)
                         end
                         actionClone = actionClone or C.AddAction(info)
-                        while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName 
+                        while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName
                             or (botData.Location and botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500) do
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
