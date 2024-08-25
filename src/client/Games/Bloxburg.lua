@@ -244,7 +244,7 @@ return function (C,Settings)
                                 self.Timer = 0
                                 local BagCrate = model.Crates.BagCrate
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
-                                    C.human:MoveTo(BagCrate:GetPivot() * Vector3.new(0,0,-3))
+                                    C.human:MoveTo(BagCrate:GetPivot() * Vector3.new(-3,0,0))
                                     if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
                                         actionClone.Time.Text = "New Bags (2/2)"
                                         C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
@@ -289,16 +289,16 @@ return function (C,Settings)
                                     return "Wait", 0.15
                                 end
                             else
-                                local hasAtLeastOneBag = false
+                                local hasAtLeastOneItem = false
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
-                                    if bag.Transparency < 1e-3 then
-                                        hasAtLeastOneBag = true
+                                    if bag.Transparency < 1e-3 and #bag:GetChildren() > 1 then
+                                        hasAtLeastOneItem = true
                                         break
                                     end
                                 end
-                                if hasAtLeastOneBag then
+                                if hasAtLeastOneItem then
                                     self.Timer = (self.Timer or 0) + 1
-                                    if self.Timer > 10
+                                    if self.Timer > 1000
                                         or (myWorkstation.CustomerTarget_2.Position - Customer:GetPivot().Position).Magnitude < 3 then
                                         actionClone.Time.Text = "Finishing"
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
