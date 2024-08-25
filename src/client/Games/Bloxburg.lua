@@ -245,14 +245,20 @@ return function (C,Settings)
                                 if curBagCount > 0 then
                                     for num, instance in ipairs(myWorkstation.DroppedFood:GetChildren()) do
                                         if num <= 3 - curBagCount then
+                                            actionClone.Time.Text = "Scanning "..instance.Name
                                             C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
                                         else
                                             break
                                         end
                                     end
+                                    return "Wait", 0
                                 else
                                     C.RemoteObjects["TakeNewBag"]:FireServer(myWorkstation)
+                                    actionClone.Time.Text = "Getting Bag"
+                                    return "Wait", 0
                                 end
+                            else
+                                actionClone.Time.Text = "No Food"
                             end
                         end,
                     },
