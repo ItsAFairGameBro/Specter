@@ -278,7 +278,7 @@ return function (C,Settings)
                         end
                     end
                     if closest then
-                        C.DoTeleport(closest:GetBoundingBox().Position)
+                        --C.DoTeleport(closest:GetBoundingBox().Position)
                         return true, closest, closestDist
                     else
                         return false, "Not Found"
@@ -343,6 +343,7 @@ return function (C,Settings)
                             end
                             if botData.Location and not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
+                                Return, Return2 = "Wait", 0
                             elseif botData.Workstations and (not myWorkstation or not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true)) then
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
@@ -353,6 +354,7 @@ return function (C,Settings)
                                 Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation)
                                 if Return == "Teleport" then
                                     TeleportToStation()
+                                    Return, Return2 = "Wait", 0
                                 end
                             end
                         end
