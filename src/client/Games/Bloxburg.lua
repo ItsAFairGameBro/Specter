@@ -340,7 +340,7 @@ return function (C,Settings)
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
                                     myWorkstation = Return2
-                                    Return = "Wait"
+                                    Return, Return2 = "Wait", 0
                                 end
                             else
                                 Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation)
