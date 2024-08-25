@@ -282,10 +282,10 @@ return function (C,Settings)
                         end
                         local curJob = jobHandler:GetJob()
                         local Return,Return2
-                        if jobHandler:GetJob() == jobName then
+                        if jobHandler:GetJob() == jobName and info.Enabled then
                             if lastCurJob ~= jobName then
                                 lastCurJob = jobName
-                                for num, data in ipairs(botData.Overrides) do
+                                for num, data in ipairs(botData.Overrides or {}) do
                                     C.AddOverride(C.hackData.Blatant[data[1]],self.Shortcut)
                                 end
                             end

@@ -412,7 +412,13 @@ return function(C,Settings)
 					end,
 				},
 				Options = {
-					
+					{
+						Type = Types.Toggle,
+						Title = "Enable Climbing",
+						Tooltip = "Allows you to climb ladders while still noclipping.\nThis may mess with ",
+						Layout = 3,Default=false,
+						Shortcut="UseWalkspeed",
+					},
 				}
 			},
 			{
