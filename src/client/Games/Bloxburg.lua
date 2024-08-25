@@ -237,7 +237,7 @@ return function (C,Settings)
                                 local curBagCount = 0
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
                                     local curCount = #bag:GetChildren() -- One instance in the Mesh instance!
-                                    print(bag.Transparency,#bag:GetChildren())
+                                    --print(bag.Transparency,#bag:GetChildren())
                                     if bag.Transparency < 1e-3 and curCount <= 3 then
                                         curBagCount = curCount
                                         break
