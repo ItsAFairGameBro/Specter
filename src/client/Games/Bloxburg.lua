@@ -239,7 +239,7 @@ return function (C,Settings)
                                 local BagCrate = model.Crates.BagCrate
                                 if not C.HotbarUI.EquipData or C.HotbarUI.EquipData.Name ~= "BFF Bags" then
                                     C.human:MoveTo(BagCrate:GetPivot().Position)
-                                    if (model.Crates.BagCrate:GetPivot() - C.char:GetPivot()).Magnitude < 10 then
+                                    if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
                                         actionClone.Time.Text = "New Bags"
                                         C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
                                     end
