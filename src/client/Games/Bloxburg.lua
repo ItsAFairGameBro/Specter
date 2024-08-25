@@ -388,10 +388,10 @@ return function (C,Settings)
                                 not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true))) then
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
+                                    myWorkstation = Return2
                                     if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true) then
                                         C.DoTeleport(myWorkstation:GetBoundingBox().Position)
                                     end
-                                    myWorkstation = Return2
                                     Return, Return2 = "Wait", 0
                                 end
                             else
