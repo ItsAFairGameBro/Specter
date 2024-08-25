@@ -203,7 +203,7 @@ return function (C,Settings)
                                 end
                             else -- Has No Food Crate
                                 local closest2, closestDist2 = nil, math.huge
-                                for num, shelve in ipairs(model:WaitForChild("Shelves")) do
+                                for num, shelve in ipairs(model:WaitForChild("Shelves"):GetChildren()) do
                                     local curDist = (shelve:GetPivot().Position - C.char:GetPivot().Position).Magnitude
                                     if shelve:WaitForChild("IsEmpty").Value and curDist < closestDist2 then
                                         closest2,closestDist2 = shelve, curDist
