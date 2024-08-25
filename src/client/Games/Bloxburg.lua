@@ -233,7 +233,13 @@ return function (C,Settings)
                     SupermarketCashier = {
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
-                            if #myWorkstation.DroppedFood:GetChildren() > 0 then
+                            if myWorkstation.BagsLeft.Value <= 0 then
+                                actionClone.Time.Text = "New Bags"
+                                C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Creates.BagCrate})
+                                task.wait(.3)
+                                actionClone.Time.Text = "Restocking"
+                                C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
+                            elseif #myWorkstation.DroppedFood:GetChildren() > 0 then
                                 local curBagCount = 0
                                 for num, bag in ipairs(myWorkstation.Bags:GetChildren()) do
                                     local curCount = #bag:GetChildren() -- One instance in the Mesh instance!
@@ -256,7 +262,7 @@ return function (C,Settings)
                                 else
                                     C.RemoteObjects["TakeNewBag"]:FireServer({Workstation=myWorkstation})
                                     actionClone.Time.Text = "Getting Bag"
-                                    return "Wait", 0
+                                    return "Wait", 0.2
                                 end
                             else
                                 actionClone.Time.Text = "No Food"
