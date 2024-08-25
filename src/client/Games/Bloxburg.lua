@@ -143,8 +143,8 @@ return function (C,Settings)
 				Shortcut = "AutoJob",
                 BotData = {
                     HutFisherman = {
-                        Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(180),0), Size = Vector3.new(20,1,2)},
-                        BotFunct = function(self,actionClone)
+                        Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(180),0), Size = Vector3.new(20,1,6)},
+                        BotFunct = function(self,model,actionClone)
                             local EquipData = C.HotbarUI.Hotbar.EquipData
                             local ItemData = EquipData and C.HotbarUI.Hotbar.EquipData.ItemData
                             if C.AngleOffFrom2CFrames(C.char:GetPivot(),self.Location.CFrame) > 30 then
@@ -175,6 +175,56 @@ return function (C,Settings)
                             return false
                         end,
                     },
+                    SupermarketStocker = {
+                        Overrides = {{"Noclip"},{"WalkSpeed"}},
+                        BotFunct = function(self,model,actionClone)
+                            -- Has a Food Crate
+                            if not C.HotbarUI.Hotbar or C.HotbarUI.Hotbar.EquipData.Name ~= "Food Crate" then
+                                local closest,closestDist = nil, math.huge
+                                for num, crate in ipairs(model:WaitForChild("Crate"):GetChildren()) do
+                                    if crate.Name == "Crate" then
+                                        local curDist = (crate:GetPivot().Position - C.char:GetPivot().Position).Magnitude
+                                        if curDist < closestDist then
+                                            closest,closestDist = crate, curDist
+                                        end
+                                    end
+                                end
+                                if closest then
+                                    if closestDist < 10 then
+                                        C.human:MoveTo(closest:GetPivot().Position)
+                                        actionClone.Time.Text = "Firing"
+                                        C.RemoteObjects["TakeFoodCrate"]:FireServer({Object=closest})
+                                        return true
+                                    else
+                                        actionClone.Time.Text = "Walking"
+                                    end
+                                else
+                                    actionClone.Time.Text = "No Resupply Crates"
+                                end
+                            else -- Has No Food Crate
+                                local closest2, closestDist2 = nil, math.huge
+                                for num, shelve in ipairs(model:WaitForChild("Shelves")) do
+                                    local curDist = (shelve:GetPivot().Position - C.char:GetPivot().Position).Magnitude
+                                    if shelve:WaitForChild("IsEmpty").Value and curDist < closestDist2 then
+                                        closest2,closestDist2 = shelve, curDist
+                                    end
+                                end
+                                if closest2 then
+                                    if closestDist2 < 10 then
+                                        C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,-3))
+                                        actionClone.Time.Text = "Firing2"
+                                        C.RemoteObjects["RestockShelf"]:FireServer({Shelf = closest2})
+                                        return true
+                                    else
+                                        actionClone.Time.Text = "Walking2"
+                                    end
+                                else
+                                    actionClone.Time.Text = "No Empty Shelves"
+                                end
+                            end
+                            C.human:MoveTo(C.char:GetPivot().Position)
+                        end,
+                    },
                     --[[GroceryCashier = {
                         Location = {Workstations = C.StringWait(workspace,"Environment.Locations.Supermarket.CashierWorkstations"),Part="Scanner",PartOffset=Vector3.new(0,-1,-3)}
                     }--]]
@@ -188,7 +238,11 @@ return function (C,Settings)
                         if requested then
                             task.spawn(self.SetValue,self,false)
                         end
+                        for num, data in ipairs(botData.Overrides) do
+                            C.RemoveOverride(C.hackData.Blatant[data[1]],self.Shortcut)
+                        end
                     end}
+                    local lastCurJob
                     local actionClone = C.AddAction(info)
                     local function TeleportToStation()
                         actionClone.Time.Text = "Going To Station"
@@ -217,10 +271,16 @@ return function (C,Settings)
                         end
                         local curJob = jobHandler:GetJob()
                         if jobHandler:GetJob() == jobName then
+                            if lastCurJob ~= jobName then
+                                lastCurJob = jobName
+                                for num, data in ipairs(botData.Overrides) do
+                                    C.AddOverride(C.hackData.Blatant[data[1]],self.Shortcut)
+                                end
+                            end
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
                             else
-                                local Return = botData:BotFunct(actionClone)
+                                local Return = botData:BotFunct(jobHandler.Model,actionClone)
                                 if Return == "Teleport" then
                                     TeleportToStation()
                                 end
