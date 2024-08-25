@@ -313,7 +313,7 @@ return function (C,Settings)
                         end
                         actionClone = actionClone or C.AddAction(info)
                         while C.char and not C.IsBusy() and (jobHandler:GetJob() ~= jobName
-                            or (botData.Location and botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500) do
+                            or (botData.Location and (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500)) do
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
                             end
