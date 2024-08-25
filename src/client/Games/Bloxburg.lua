@@ -231,15 +231,28 @@ return function (C,Settings)
                         end,
                     },
                     SupermarketCashier = {
+                        Overrides = {{"Noclip"}},Part = "Floor",
                         Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
+                            C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
                             if myWorkstation.BagsLeft.Value <= 0 then
+                                local BagCrate = model.Crates.BagCrate
+                                if not C.HotbarUI.EquipData or C.HotbarUI.EquipData.Name ~= "BFF Bags" then
+                                    C.human:MoveTo(BagCrate:GetPivot().Position)
+                                    if (model.Crates.BagCrate:GetPivot() - C.char:GetPivot()).Magnitude < 10 then
+                                        actionClone.Time.Text = "New Bags"
+                                        C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
+                                    end
+                                else
+                                    if (myWorkstation:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
+                                        actionClone.Time.Text = "Restocking"
+                                        C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
+                                        C.human:MoveTo(C.char:GetPivot().Position)
+                                    else
+                                        C.human:MoveTo(myWorkstation:GetPivot().Position)
+                                    end
+                                end
                                 self.Timer = 0
-                                actionClone.Time.Text = "New Bags"
-                                C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
-                                task.wait(.3)
-                                actionClone.Time.Text = "Restocking"
-                                C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
                             elseif #myWorkstation.DroppedFood:GetChildren() > 0 then
                                 self.Timer = 0
                                 local curBagCount = 0
@@ -311,13 +324,14 @@ return function (C,Settings)
                     end
                 end,
                 JobRunner = function(self,jobName)
+                    C.CanMoveOutOfPosition = false
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
                     
                     if botData.Part then
-                        local instance = jobModule.Model:WaitForChild(botData.Part)
+                        local instance = C.StringWait(jobModule.Model,botData.Part)
                         botData.Location = {CFrame = instance.CFrame, Size = instance.Size}
                     end
 
@@ -367,12 +381,16 @@ return function (C,Settings)
                                     C.AddOverride(C.hackData.Blatant[data[1]],self.Shortcut)
                                 end
                             end
-                            if botData.Location and not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
+                            if botData.Location and not C.CanMoveOutOfPosition and not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
                                 Return, Return2 = "Wait", 0
-                            elseif botData.Workstations and (not myWorkstation or not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true)) then
+                            elseif botData.Workstations and (not myWorkstation or (not C.CanMoveOutOfPosition and 
+                                not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true))) then
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
+                                    if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true) then
+                                        C.DoTeleport(myWorkstation:GetBoundingBox().Position)
+                                    end
                                     myWorkstation = Return2
                                     Return, Return2 = "Wait", 0
                                 end
