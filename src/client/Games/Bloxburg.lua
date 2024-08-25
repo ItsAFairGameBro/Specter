@@ -193,6 +193,8 @@ return function (C,Settings)
                                     if closestDist < 10 then
                                         actionClone.Time.Text = "Firing"
                                         C.RemoteObjects["TakeFoodCrate"]:FireServer({Object=closest})
+                                        C.human:MoveTo(C.char:GetPivot().Position)
+                                        return "Wait", 0
                                     else
                                         actionClone.Time.Text = "Walking"
                                         C.human:MoveTo(closest:GetPivot().Position)
@@ -213,6 +215,8 @@ return function (C,Settings)
                                     if closestDist2 < 10 then
                                         actionClone.Time.Text = "Firing2"
                                         C.RemoteObjects["RestockShelf"]:FireServer({Shelf = closest2})
+                                        C.human:MoveTo(C.char:GetPivot().Position)
+                                        return "Wait", 0
                                     else
                                         C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,-3))
                                         actionClone.Time.Text = "Walking2"
@@ -277,6 +281,7 @@ return function (C,Settings)
                             task.wait(.5)
                         end
                         local curJob = jobHandler:GetJob()
+                        local Return,Return2
                         if jobHandler:GetJob() == jobName then
                             if lastCurJob ~= jobName then
                                 lastCurJob = jobName
@@ -287,13 +292,17 @@ return function (C,Settings)
                             if not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
                             else
-                                local Return = botData:BotFunct(jobModule.Model,actionClone)
+                                Return, Return2 = botData:BotFunct(jobModule.Model,actionClone)
                                 if Return == "Teleport" then
                                     TeleportToStation()
                                 end
                             end
                         end
-                        task.wait(.25)
+                        if Return == "Wait" then
+                            task.wait(Return2)
+                        else
+                            task.wait(.25)
+                        end
                     end
                     C.RemoveAction(self.Shortcut)
                 end,
