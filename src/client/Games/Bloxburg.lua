@@ -271,6 +271,7 @@ return function (C,Settings)
                                         if num <= 3 - curBagCount then
                                             actionClone.Time.Text = "Scanning "..instance.Name
                                             C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
+                                            task.wait()
                                         else
                                             actionClone.Time.Text = "Finish Scan"
                                             break
