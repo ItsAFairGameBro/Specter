@@ -299,7 +299,7 @@ return function (C,Settings)
                 end,
                 Options = {
                     {
-						Type = Types.Dropdown, Selections = {"Hut Fisherman"},
+						Type = Types.Dropdown, Selections = {"Hut Fisherman","Supermarket Stocker"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
