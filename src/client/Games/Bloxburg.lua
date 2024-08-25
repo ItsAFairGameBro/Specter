@@ -297,7 +297,7 @@ return function (C,Settings)
                                     end
                                 end
                                 if hasAtLeastOneBag then
-                                    self.Timer += 1
+                                    self.Timer = (self.Timer or 0) + 1
                                     if self.Timer > 10
                                         or (myWorkstation.CustomerTarget_2.Position - Customer:GetPivot().Position).Magnitude < 3 then
                                         actionClone.Time.Text = "Finishing"
