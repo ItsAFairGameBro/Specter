@@ -176,7 +176,7 @@ return function (C,Settings)
                         end,
                     },
                     SupermarketStocker = {
-                        Overrides = {{"Noclip"},{"WalkSpeed"}},AreaBlock = true,
+                        Overrides = {{"Noclip"},{"Walkspeed"}},AreaBlock = true,
                         BotFunct = function(self,model,actionClone)
                             -- Has a Food Crate
                             if not C.HotbarUI.Hotbar or C.HotbarUI.Hotbar.EquipData.Name ~= "Food Crate" then
