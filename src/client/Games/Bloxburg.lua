@@ -511,16 +511,16 @@ return function (C,Settings)
                             if Order and false then
                                 actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
                             elseif self.Completed then
-                                self:GetObject({myWorkstation},"JobCompleted","Workstation")
+                                self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
                                 self.IgnoreCustomer = Customer
                                 self.Completed = false
                                 return
                             elseif Order:FindFirstChild("Color") then
                                 -- It's a coloring one!
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Spray Painter" then
-                                    self:GetObject({C.StringWait("PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
+                                    self.Parent:WalkAndFire({C.StringWait("PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
                                 else
-                                    self:GetObject({myWorkstation},"FixBike","Workstation")
+                                    self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                                 return "Wait", 0
                             elseif Order:FindFirstChild("Wheels") then
@@ -528,28 +528,28 @@ return function (C,Settings)
                                     or not Vehicle.BackWheel:FindFirstChild(Order.Wheels.Value) and "Back" or "Completed"
                                 if Wheel2Replace ~= "Completed" then
                                     if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Motorcycle Wheel" then
-                                        self:GetObject({C.StringWait("TireRacks."..Order.Wheels.Value)},"TakeWheel","Object")
+                                        self.Parent:WalkAndFire({C.StringWait("TireRacks."..Order.Wheels.Value)},"TakeWheel","Object")
                                     else
                                         local beforeTbl = {}
                                         if Wheel2Replace == "Front" then
                                             beforeTbl.Front = true
                                         end
-                                        self:GetObject({myWorkstation},"FixBike","Workstation",beforeTbl)
+                                        self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation",beforeTbl)
                                     end
                                 end
                                 self.Completed = Wheel2Replace == "Completed"
                             elseif Order:FindFirstChild("Oil") then
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Oil Can" then
-                                    self:GetObject(C.StringWait("OilCans"):GetChildren(),"TakeOil","Object")
+                                    self.Parent:WalkAndFire(C.StringWait("OilCans"):GetChildren(),"TakeOil","Object")
                                 else
-                                    self:GetObject({myWorkstation},"FixBike","Workstation")
+                                    self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                             end
                             return "Wait", 0
                         end,
                     },
                 },
-                GetObject = function(self,possibilities,event,formatName,tbl)
+                WalkAndFire = function(self,possibilities,event,formatName,tbl)
                     local closest, closestDist = nil, math.huge
                     for num, instance in ipairs(possibilities) do
                         local curDist = (instance:GetPivot() - C.char:GetPivot()).Magnitude
@@ -595,6 +595,7 @@ return function (C,Settings)
                     self.SendTime, self.MoveTime, self.Completed = nil, nil, nil
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
+                    botData.Parent = self
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
                     
