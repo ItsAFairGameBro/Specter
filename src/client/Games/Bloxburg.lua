@@ -381,8 +381,14 @@ return function (C,Settings)
                                 if HasValid then
                                     C.human:MoveTo(Vector3.new(932,13.72,1047))
                                     actionClone.Time.Text = "Waiting For Next"
+                                    self.MoveTime = nil
                                 else
-                                    C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
+                                    if not self.MoveTime then
+                                        self.MoveTime = os.clock() + 1
+                                    elseif os.clock() >= self.MoveTime then
+                                        C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
+                                        self.MoveTime = nil
+                                    end
                                     actionClone.Time.Text = "Waiting For First Customer"
                                 end
                             end
@@ -410,7 +416,7 @@ return function (C,Settings)
                     end
                 end,
                 JobRunner = function(self,jobName)
-                    C.CanMoveOutOfPosition = false
+                    C.CanMoveOutOfPosition, self.Timer = false, 0
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
