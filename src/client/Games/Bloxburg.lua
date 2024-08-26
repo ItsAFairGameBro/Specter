@@ -347,6 +347,7 @@ return function (C,Settings)
                                             Ball = Cup.Ball2,
                                             Taste = Order.Flavor2.Value,
                                         })
+                                        print(Cup.Ball2,Order.Flavor2.Value)
                                     elseif Order.Topping.Value ~= "" and not Cup.Ball1:FindFirstChild("Sprinkles") then
                                         actionClone.Time.Text = "Topping"
                                         C.RemoteObjects["AddIceCreamTopping"]:FireServer({
