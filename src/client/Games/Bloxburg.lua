@@ -458,13 +458,15 @@ return function (C,Settings)
                         Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Customer = myWorkstation.Occupied.Value
-                            if Customer ~= self.Customer then
+                            if Customer ~= self.IgnoreCustomer then
                                 self.SendTime = nil
-                                self.Customer = Customer
+                            else
+                                actionClone.Time.Text = "Waiting For Next"
+                                return "Wait", 0
                             end
                             if not Customer then
                                 actionClone.Time.Text = "Waiting For Customer"
-                                return
+                                return "Wait", 0
                             end
                             local Order = Customer.Order
                             if not self.SendTime then
@@ -475,9 +477,7 @@ return function (C,Settings)
                                 C.RemoteObjects.JobCompleted:FireServer(
                                     {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
                                 )
-                                if myWorkstation.Occupied.Value == Customer then
-                                    myWorkstation.Occupied.Value = nil
-                                end
+                                self.IgnoreCustomer = Customer
                             else
                                 actionClone.Time.Text = ("Waiting %.1f"):format(self.SendTime - os.clock())
                                 return "Wait", 0
