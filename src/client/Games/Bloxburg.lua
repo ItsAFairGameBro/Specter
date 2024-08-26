@@ -458,8 +458,11 @@ return function (C,Settings)
                         Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Customer = myWorkstation.Occupied.Value
-                            if Customer ~= self.CustomerToIgnore then
-                                self.SendTime = nil
+                            if Customer ~= self.IgnoreCustomer then
+                                if self.Customer ~= Customer then
+                                    self.SendTime = nil
+                                    self.Customer = Customer
+                                end
                             else
                                 actionClone.Time.Text = "Waiting For Next"
                                 return "Wait", 0
@@ -477,7 +480,7 @@ return function (C,Settings)
                                 C.RemoteObjects.JobCompleted:FireServer(
                                     {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
                                 )
-                                --self.CustomerToIgnore = Customer
+                                self.IgnoreCustomer = Customer
                             else
                                 actionClone.Time.Text = ("Waiting %.1f"):format(self.SendTime - os.clock())
                                 return "Wait", 0
@@ -577,7 +580,7 @@ return function (C,Settings)
                                     Return, Return2 = "Wait", 0
                                 end
                             else
-                                actionClone.Time.Text = "Run"
+                                --actionClone.Time.Text = "Run"
                                 Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation)
                                 if Return == "Teleport" then
                                     TeleportToStation()
