@@ -492,7 +492,7 @@ return function (C,Settings)
                     },
                     MikesMechanic = {
                         Overrides = {{"Noclip"}},ProximityOnly=true,
-                        Workstations = {Path="MechanicWorkstations",PartOffset=Vector3.new(3,-1,0),Size=10},
+                        Workstations = {Path="MechanicWorkstations",PartOffset=Vector3.new(3,0,3),Size=100},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Customer = myWorkstation.Occupied.Value
                             if Customer ~= self.IgnoreCustomer then
