@@ -318,8 +318,9 @@ return function (C,Settings)
                             for num, cust in ipairs(model.CustomerTargets:GetChildren()) do
                                 local MyCust = cust.Occupied.Value
                                 if MyCust and (not cust.InUse.Value or cust.InUse.Value == C.plr) then
+                                    local Icon = C.StringFind(MyCust,"Head.ChatBubble.Body.IconFrame")
                                     local MyDist = (MyCust:GetPivot().Position - C.char:GetPivot().Position).Magnitude
-                                    if (MyDist < ClosestDist) then
+                                    if (MyDist < ClosestDist) and Icon and Icon.Visible then
                                         StaticCust, CurrentCustomer, ClosestDist = cust, MyCust, MyDist
                                     end
                                 end
@@ -356,7 +357,7 @@ return function (C,Settings)
                                         if (C.char:GetPivot().Position - CurrentCustomer:GetPivot().Position).Magnitude < 10 then
                                             C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
                                             actionClone.Time.Text = "Firing"
-                                            return "Wait",0.5
+                                            return "Wait",0
                                         else
                                             actionClone.Time.Text = "Delivering"
                                             C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
