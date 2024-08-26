@@ -339,7 +339,7 @@ return function (C,Settings)
                                 end
                             else
                                 local PizzaTbls = {{}}
-                                actionClone.Time.Text = Order.Name
+                                actionClone.Time.Text = Order.Value
                             end
                         end,
                     },
