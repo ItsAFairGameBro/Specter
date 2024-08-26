@@ -528,8 +528,8 @@ return function (C,Settings)
                                 end
                                 return "Wait", 0
                             elseif Order:FindFirstChild("Wheels") then
-                                local Wheel2Replace = not Vehicle.FrontWheel:FindFirstChild(Order.Wheels.Value) and "Front"
-                                    or not Vehicle.BackWheel:FindFirstChild(Order.Wheels.Value) and "Back" or "Completed"
+                                local Wheel2Replace = (not Vehicle.FrontWheel:GetAttribute("Replaced") and "FrontWheel")
+                                    or (not Vehicle.BackWheel:GetAttribute("Replaced") and "BackWheel") or "Completed"
                                 if Wheel2Replace ~= "Completed" then
                                     if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Motorcycle Wheel" then
                                         actionClone.Time.Text = "Getting Wheels"
@@ -538,10 +538,14 @@ return function (C,Settings)
                                     else
                                         actionClone.Time.Text = "Fixing Wheels"
                                         local beforeTbl = {}
-                                        if Wheel2Replace == "Front" then
+                                        if Wheel2Replace == "FrontWheel" then
                                             beforeTbl.Front = true
                                         end
                                         self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation",beforeTbl)
+                                        if self.Completed then
+                                            self.Completed = false
+                                            Vehicle[Wheel2Replace]:SetAttribute("Replaced",true)
+                                        end
                                     end
                                 end
                                 self.Completed = Wheel2Replace == "Completed"
