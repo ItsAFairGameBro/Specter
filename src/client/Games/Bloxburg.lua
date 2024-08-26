@@ -457,6 +457,7 @@ return function (C,Settings)
                         Overrides = {{"Noclip"}},ProximityOnly=true,
                         Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
+                            local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
                             local Customer = myWorkstation.Occupied.Value
                             if Customer ~= self.IgnoreCustomer then
                                 if self.Customer ~= Customer then
@@ -467,13 +468,13 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Next"
                                 return "Wait", 0
                             end
-                            if not Customer then
+                            if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 1 then
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return "Wait", 0
                             end
                             local Order = Customer.Order
                             if not self.SendTime then
-                                self.SendTime = os.clock() + C.Randomizer:NextNumber(1.5,2)
+                                self.SendTime = os.clock() + C.Randomizer:NextNumber(0.5,1)
                             elseif os.clock() >= self.SendTime then
                                 self.SendTime = nil
                                 actionClone.Time.Text = "Spoofing"
