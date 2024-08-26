@@ -374,17 +374,17 @@ return function (C,Settings)
                                         --end
                                     end
                                 end
-                                
+                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
+                                    C.human:MoveTo(Vector3.new(932,13.72,1047))
+                                end
                             else
                                 if HasValid then
+                                    C.human:MoveTo(Vector3.new(932,13.72,1047))
                                     actionClone.Time.Text = "Waiting For Next"
                                 else
                                     C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
                                     actionClone.Time.Text = "Waiting For First Customer"
                                 end
-                            end
-                            if HasValid and (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
-                                C.human:MoveTo(Vector3.new(932,13.72,1047))
                             end
                         end,
                     },
