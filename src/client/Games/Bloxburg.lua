@@ -376,7 +376,7 @@ return function (C,Settings)
                                     end
                                 end
                                 local IceCreamLoc = Vector3.new(932,13.72,1047) -- Vector3.new(932,13.72,1047)
-                                if (IceCreamLoc - C.char:GetPivot().Position).Magnitude > 1.2 then
+                                if (IceCreamLoc - C.char:GetPivot().Position).Magnitude > 0.2 then
                                     C.human:MoveTo(IceCreamLoc)
                                 end
                             else
