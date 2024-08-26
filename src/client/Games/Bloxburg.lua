@@ -644,7 +644,7 @@ return function (C,Settings)
 						Type = Types.Dropdown,
                         Selections = {"Hut Fisherman","Supermarket Stocker",
                             "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker",
-                            "StylezHairdresser"},
+                            "StylezHairdresser","Mikes Mechanics"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
