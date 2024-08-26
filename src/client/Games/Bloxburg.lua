@@ -508,7 +508,7 @@ return function (C,Settings)
                                 return "Wait", 0
                             end
                             local Order,Vehicle = Customer.Order, Customer.Vehicle
-                            if Order then
+                            if Order and false then
                                 actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
                             elseif self.Completed then
                                 self:GetObject({myWorkstation},"JobCompleted","Workstation")
