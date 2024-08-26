@@ -462,10 +462,12 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return
                             end
+                            wait(2)
                             local Order = Customer.Order
                             C.RemoteObjects.JobCompleted:FireServer(
                                 {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
                             )
+                            actionClone.Time.Text = "Spoofing"
                         end,
                     },
                 },
