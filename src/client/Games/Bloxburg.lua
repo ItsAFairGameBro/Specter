@@ -535,7 +535,7 @@ return function (C,Settings)
                                 TeleportToStation()
                                 Return, Return2 = "Wait", 0
                             elseif botData.Workstations and (not myWorkstation or (not C.CanMoveOutOfPosition and 
-                                not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true))) then
+                                not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize()+Vector3.new(10,10,10),C.char:GetPivot().Position,true))) then
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
                                     myWorkstation = Return2
