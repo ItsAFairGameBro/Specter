@@ -325,7 +325,7 @@ return function (C,Settings)
                                 end
                             end
                             if CurrentCustomer then
-                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 12 then
+                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
                                     C.DoTeleport(Vector3.new(932,13.72,1047))
                                 end
                                 actionClone.Time.Text = ""
@@ -358,9 +358,9 @@ return function (C,Settings)
                                     else
                                         actionClone.Time.Text = "Finishing"
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
-                                        if StaticCust.Occupied.Value == CurrentCustomer then
-                                            StaticCust.Occupied.Value = nil
-                                        end
+                                        --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
+                                            --StaticCust.Occupied.Value = nil
+                                        --end
                                     end
                                 end
                             else
