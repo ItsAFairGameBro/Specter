@@ -313,7 +313,7 @@ return function (C,Settings)
                     },
                     PizzaPlanetBaker = {
                         Overrides = {{"Noclip"}},ProximityOnly=true,
-                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(3,-1,0)},
+                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(3,-1,0),Size=10},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Order = myWorkstation.Order
                             C.CanMoveOutOfPosition = Order.IngredientsLeft.Value <= 0
@@ -455,7 +455,7 @@ return function (C,Settings)
                     },
                     StylezHairdresser = {
                         Overrides = {{"Noclip"}},ProximityOnly=true,
-                        Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0)},
+                        Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0),Size=10},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
                             local Customer = myWorkstation.Occupied.Value
@@ -490,6 +490,37 @@ return function (C,Settings)
                             return "Wait", 0
                         end,
                     },
+                    MikesMechanics = {
+                        Overrides = {{"Noclip"}},ProximityOnly=true,
+                        Workstations = {Path="MechanicWorkstations",PartOffset=Vector3.new(3,-1,0),Size=10},
+                        BotFunct = function(self, model, actionClone, myWorkstation)
+                            local Customer = myWorkstation.Occupied.Value
+                            if Customer ~= self.IgnoreCustomer then
+                                if self.Customer ~= Customer then
+                                    self.Customer = Customer
+                                end
+                            else
+                                actionClone.Time.Text = "Waiting For Next"
+                                return "Wait", 0
+                            end
+                            if not Customer or (Customer:GetPivot().Position - myWorkstation.CustomerTarget.Position).Magnitude > 1 then
+                                actionClone.Time.Text = "Waiting For Customer"
+                                return "Wait", 0
+                            end
+                            local Order = Customer.Order
+                            if Order then
+                                actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
+                            elseif false then
+                                actionClone.Time.Text = "Firing"
+                                C.RemoteObjects.JobCompleted:FireServer(
+                                    {Workstation=myWorkstation}
+                                )
+                                self.IgnoreCustomer = Customer
+                                return
+                            end
+                            return "Wait", 0
+                        end,
+                    },
                 },
                 GetClosestWorkstation = function(self,botData,jobModule)
                     local WData = botData.Workstations
@@ -513,6 +544,7 @@ return function (C,Settings)
                 end,
                 JobRunner = function(self,jobName)
                     C.CanMoveOutOfPosition, self.Timer = false, 0
+                    self.SendTime, self.MoveTime = nil, nil
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
@@ -572,14 +604,15 @@ return function (C,Settings)
                             if botData.Location and not C.CanMoveOutOfPosition and not C.IsInBox(botData.Location.CFrame,botData.Location.Size,C.char:GetPivot().Position,true) then
                                 TeleportToStation()
                                 Return, Return2 = "Wait", 0
-                            elseif botData.Workstations and (not myWorkstation or (not C.CanMoveOutOfPosition and 
-                                not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize()+Vector3.new(10,10,10),C.char:GetPivot().Position,true))) then
+                            elseif botData.Workstations and (not myWorkstation or (not C.CanMoveOutOfPosition and
+                                (not myWorkstation.Occupied or not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize()+Vector3.new(botData.Size,botData.Size,botData.Size),
+                                    C.char:GetPivot().Position,true)))) then
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
                                     myWorkstation = Return2
-                                    --if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true) then
-                                    C.DoTeleport(myWorkstation:GetBoundingBox() * botData.Workstations.PartOffset)
-                                    --end
+                                    if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true) then
+                                        C.DoTeleport(myWorkstation:GetBoundingBox() * botData.Workstations.PartOffset)
+                                    end
                                     Return, Return2 = "Wait", 0
                                 end
                             else
