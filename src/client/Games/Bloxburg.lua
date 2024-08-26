@@ -507,21 +507,69 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return "Wait", 0
                             end
-                            local Order = Customer.Order
+                            local Order,Vehicle = Customer.Order, Customer.Vehicle
                             if Order then
                                 actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
-                            elseif false then
-                                actionClone.Time.Text = "Firing"
-                                C.RemoteObjects.JobCompleted:FireServer(
-                                    {Workstation=myWorkstation}
-                                )
+                            elseif self.Completed then
+                                self:GetObject({myWorkstation},"JobCompleted","Workstation")
                                 self.IgnoreCustomer = Customer
+                                self.Completed = false
                                 return
+                            elseif Order:FindFirstChild("Color") then
+                                -- It's a coloring one!
+                                if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Spray Painter" then
+                                    self:GetObject({C.StringWait("PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
+                                else
+                                    self:GetObject({myWorkstation},"FixBike","Workstation")
+                                end
+                                return "Wait", 0
+                            elseif Order:FindFirstChild("Wheels") then
+                                local Wheel2Replace = not Vehicle.FrontWheel:FindFirstChild(Order.Wheels.Value) and "Front"
+                                    or not Vehicle.BackWheel:FindFirstChild(Order.Wheels.Value) and "Back" or "Completed"
+                                if Wheel2Replace ~= "Completed" then
+                                    if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Motorcycle Wheel" then
+                                        self:GetObject({C.StringWait("TireRacks."..Order.Wheels.Value)},"TakeWheel","Object")
+                                    else
+                                        local beforeTbl = {}
+                                        if Wheel2Replace == "Front" then
+                                            beforeTbl.Front = true
+                                        end
+                                        self:GetObject({myWorkstation},"FixBike","Workstation",beforeTbl)
+                                    end
+                                end
+                                self.Completed = Wheel2Replace == "Completed"
+                            elseif Order:FindFirstChild("Oil") then
+                                if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Oil Can" then
+                                    self:GetObject(C.StringWait("OilCans"):GetChildren(),"TakeOil","Object")
+                                else
+                                    self:GetObject({myWorkstation},"FixBike","Workstation")
+                                end
                             end
                             return "Wait", 0
                         end,
                     },
                 },
+                GetObject = function(self,possibilities,event,formatName,tbl)
+                    local closest, closestDist = nil, math.huge
+                    for num, instance in ipairs(possibilities) do
+                        local curDist = (instance:GetPivot() - C.char:GetPivot()).Magnitude
+                        if curDist < closestDist then
+                            closest, closestDist = instance, curDist
+                        end
+                    end
+                    if closest then
+                        C.human:MoveTo(closest:GetPivot().Position)
+                        if closestDist < 10 then
+                            tbl = tbl or {}
+                            tbl[formatName]=closest
+                            C.RemoteObjects[event]:FireServer(tbl)
+                        end
+                        self.Completed=true
+                        return true
+                    else
+                        warn("None found out of event",event,possibilities)
+                    end
+                end,
                 GetClosestWorkstation = function(self,botData,jobModule)
                     local WData = botData.Workstations
                     local Workstations = C.StringWait(jobModule.Model,WData.Path)
@@ -544,7 +592,7 @@ return function (C,Settings)
                 end,
                 JobRunner = function(self,jobName)
                     C.CanMoveOutOfPosition, self.Timer = false, 0
-                    self.SendTime, self.MoveTime = nil, nil
+                    self.SendTime, self.MoveTime, self.Completed = nil, nil, nil
                     local displayJobName = jobName:gsub("%a+ ","")
                     local botData = self.BotData[jobName]
                     local jobHandler = C.JobHandler
