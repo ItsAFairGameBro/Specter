@@ -311,6 +311,38 @@ return function (C,Settings)
                             end
                         end,
                     },
+                    PizzaPlanetBaker = {
+                        Overrides = {{"Noclip"}},ProximityOnly=true,
+                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(0,-1,-3)},
+                        BotFunct = function(self, model, actionClone, myWorkstation)
+                            local Order = myWorkstation.Order
+                            C.CanMoveOutOfPosition = Order.IngredientsLeft.Value <= 0
+                            if myWorkstation.IngredientsLeft.Value <= 0 then
+                                local IngrCrate = model.IngredientCrates.Crate
+                                if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ingredient Crate" then
+                                    C.human:MoveTo(IngrCrate:GetPivot() * Vector3.new(3,0,0))
+                                    if (IngrCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
+                                        actionClone.Time.Text = "Get Crate (2/2)"
+                                        C.RemoteObjects["TakeIngredientCrate"]:FireServer({Object = IngrCrate})
+                                    else
+                                        actionClone.Time.Text = "Get Crate (1/2)"
+                                    end
+                                else
+                                    if (myWorkstation:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
+                                        actionClone.Time.Text = "Restock (2/2)"
+                                        C.RemoteObjects["RestockIngredients"]:FireServer({Workstation = myWorkstation})
+                                        C.human:MoveTo(C.char:GetPivot().Position)
+                                    else
+                                        C.human:MoveTo(myWorkstation:GetPivot().Position)
+                                        actionClone.Time.Text = "Restock (1/2)"
+                                    end
+                                end
+                            else
+                                local PizzaTbls = {{}}
+                                actionClone.Time.Text = Order.Name
+                            end
+                        end,
+                    },
                     BensIceCreamSeller = {
                         Part = "Floor",
                         BotFunct = function(self,model,actionClone)
@@ -517,7 +549,8 @@ return function (C,Settings)
                 Options = {
                     {
 						Type = Types.Dropdown,
-                        Selections = {"Hut Fisherman","Supermarket Stocker","Supermarket Cashier","Bens Ice Cream Seller"},
+                        Selections = {"Hut Fisherman","Supermarket Stocker",
+                            "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
