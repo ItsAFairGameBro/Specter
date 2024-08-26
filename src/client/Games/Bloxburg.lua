@@ -509,7 +509,7 @@ return function (C,Settings)
                                 return "Wait", 0
                             end
                             local Order,Vehicle = Customer.Order, Customer.Vehicle
-                            if self.Completed and false then
+                            if self.Completed then
                                 actionClone.Time.Text = "Completed"
                                 self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
                                 --self.IgnoreCustomer = Customer
