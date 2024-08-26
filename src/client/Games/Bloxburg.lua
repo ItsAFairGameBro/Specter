@@ -325,7 +325,7 @@ return function (C,Settings)
                                 end
                             end
                             if CurrentCustomer then
-                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
+                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 12 then
                                     C.DoTeleport(Vector3.new(932,13.72,1047))
                                 end
                                 actionClone.Time.Text = ""
@@ -362,7 +362,7 @@ return function (C,Settings)
                                     end
                                 end
                             else
-                                C.human:MoveTo(model.Window:GetPivot() * Vector3.new(-3,0,0))
+                                C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
                                 actionClone.Time.Text = "Waiting For Customer"
                             end
                         end,
