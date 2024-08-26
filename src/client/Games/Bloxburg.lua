@@ -314,27 +314,54 @@ return function (C,Settings)
                     BensIceCreamSeller = {
                         Part = "Floor",
                         BotFunct = function(self,model,actionClone)
-                            local CurrentCustomer, ClosestDist = nil, math.huge
+                            local StaticCust, CurrentCustomer, ClosestDist = nil, math.huge
                             for num, cust in ipairs(model.CustomerTargets:GetChildren()) do
                                 local MyCust = cust.Occupied.Value
                                 if MyCust and (not cust.InUse.Value or cust.InUse.Value == C.plr) then
                                     local MyDist = (MyCust:GetPivot().Position - C.char:GetPivot().Position).Magnitude
                                     if (MyDist < ClosestDist) then
-                                        CurrentCustomer, ClosestDist = MyCust, MyDist
+                                        StaticCust, CurrentCustomer, ClosestDist = cust, MyCust, MyDist
                                     end
                                 end
                             end
                             if CurrentCustomer then
+                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
+                                    C.DoTeleport(Vector3.new(932,13.72,1047))
+                                end
                                 actionClone.Time.Text = ""
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ice Cream Cup" then
                                     actionClone.Time.Text = "Getting Cup"
                                     C.RemoteObjects["TakeIceCreamCup"]:FireServer({})
                                 else
-                                    --local Order = CurrentCustomer.Order
-                                    --Order.
+                                    local Cup = C.HotbarUI.Hotbar.EquipData.Object
+                                    local Order = CurrentCustomer.Order
+                                    if Order.Flavor1.Value ~= "" and Cup.Ball1.Transparency == 1 then
+                                        actionClone.Time.Text = "Flavor 1"
+                                        C.RemoteObjects["AddIceCreamScoop"]:FireServer({
+                                            Ball = Cup.Ball1,
+                                            Taste = Order.Flavor1.Value,
+                                        })
+                                    elseif Order.Flavor2.Value ~= "" and Cup.Ball2.Transparency == 1 then
+                                        actionClone.Time.Text = "Flavor 2"
+                                        C.RemoteObjects["AddIceCreamScoop"]:FireServer({
+                                            Ball = Cup.Ball2,
+                                            Taste = Order.Flavor2.Value,
+                                        })
+                                    elseif Order.Topping.Value ~= "" and not Cup.Ball1:FindFirstChild("Sprinkles") then
+                                        actionClone.Time.Text = "Topping"
+                                        C.RemoteObjects["AddIceCreamTopping"]:FireServer({
+                                            Taste = Order.Topping.Value
+                                        })
+                                    else
+                                        actionClone.Time.Text = "Finishing"
+                                        C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
+                                        if StaticCust.Occupied.Value == CurrentCustomer then
+                                            StaticCust.Occupied.Value = nil
+                                        end
+                                    end
                                 end
                             else
-                                C.human:MoveTo(model.Window:GetPivot() * Vector3.new(0,0,-3))
+                                C.human:MoveTo(model.Window:GetPivot() * Vector3.new(-3,0,0))
                                 actionClone.Time.Text = "Waiting For Customer"
                             end
                         end,
