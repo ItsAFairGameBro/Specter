@@ -503,7 +503,7 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Next"
                                 return "Wait", 0
                             end
-                            if not Customer or (Customer:GetPivot().Position - myWorkstation.CustomerTarget.Position).Magnitude > 1 then
+                            if not Customer or (Customer:GetPivot().Position - myWorkstation.CustomerTarget.Position).Magnitude > 2 then
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return "Wait", 0
                             end
