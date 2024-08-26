@@ -317,7 +317,7 @@ return function (C,Settings)
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Order = myWorkstation.Order
                             C.CanMoveOutOfPosition = Order.IngredientsLeft.Value <= 0
-                            if Order.IngredientsLeft.Value <= 0 and false then
+                            if Order.IngredientsLeft.Value <= 0 then
                                 local IngrCrate = model.IngredientCrates.Crate
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ingredient Crate" then
                                     C.human:MoveTo(IngrCrate:GetPivot() * Vector3.new(3,0,0))
