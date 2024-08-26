@@ -468,7 +468,7 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Next"
                                 return "Wait", 0
                             end
-                            if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 0.35 then
+                            if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 0.7 then
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return "Wait", 0
                             end
