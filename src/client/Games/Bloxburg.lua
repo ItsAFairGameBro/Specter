@@ -474,7 +474,7 @@ return function (C,Settings)
                             end
                             local Order = Customer.Order
                             if not self.SendTime then
-                                self.SendTime = os.clock() + C.Randomizer:NextNumber(0.1,0.2) -- Run it on next call!
+                                self.SendTime = os.clock() + C.Randomizer:NextNumber(0.15,0.25) -- Run it on next call!
                             elseif os.clock() >= self.SendTime then
                                 self.SendTime = nil
                                 actionClone.Time.Text = "Spoofing"
