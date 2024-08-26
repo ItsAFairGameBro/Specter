@@ -454,7 +454,7 @@ return function (C,Settings)
                         end,
                     },
                     StylezHairdresser = {
-                        Overrides = {{"Noclip"}},ProximityOnly=true,
+                        Overrides = {{"Noclip"}},Part="Roof",ProximityOnly=true,
                         Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0),Size=10},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
@@ -676,7 +676,7 @@ return function (C,Settings)
                                 if Return then
                                     myWorkstation = Return2
                                     if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize()+Vector3.new(botData.Size,botData.Size,botData.Size),C.char:GetPivot().Position,true) then
-                                        --C.DoTeleport(myWorkstation:GetBoundingBox() * botData.Workstations.PartOffset)
+                                        C.DoTeleport(myWorkstation:GetBoundingBox() * botData.Workstations.PartOffset)
                                     end
                                     Return, Return2 = "Wait", 0
                                 end
@@ -709,7 +709,7 @@ return function (C,Settings)
 						Type = Types.Dropdown,
                         Selections = {"Hut Fisherman","Supermarket Stocker",
                             "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker",
-                            "StylezHairdresser","Mikes Mechanic"},
+                            "Stylez Hairdresser","Mikes Mechanic"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
