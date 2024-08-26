@@ -363,7 +363,7 @@ return function (C,Settings)
                                     end
                                 end
                                 if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
-                                    C.DoTeleport(Vector3.new(932,13.72,1047))
+                                    C.human:MoveTo(Vector3.new(932,13.72,1047))
                                 end
                             else
                                 C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
