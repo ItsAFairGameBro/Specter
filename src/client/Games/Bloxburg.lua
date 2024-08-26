@@ -232,7 +232,7 @@ return function (C,Settings)
                     },
                     SupermarketCashier = {
                         Overrides = {{"Noclip"}},Part="Floor",ProximityOnly=true,
-                        Workstations = {Path="CashierWorkstations",Part="Scanner",PartOffset=Vector3.new(0,-1,-3)},
+                        Workstations = {Path="CashierWorkstations",PartOffset=Vector3.new(0,0,0)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Customer = myWorkstation.Occupied.Value
                             if not Customer then
@@ -313,7 +313,7 @@ return function (C,Settings)
                     },
                     PizzaPlanetBaker = {
                         Overrides = {{"Noclip"}},ProximityOnly=true,
-                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(3,-1,-3)},
+                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(3,-1,0)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Order = myWorkstation.Order
                             C.CanMoveOutOfPosition = Order.IngredientsLeft.Value <= 0
@@ -337,9 +337,30 @@ return function (C,Settings)
                                         actionClone.Time.Text = "Restock (1/2)"
                                     end
                                 end
+                            elseif Order.Value == "true" then
+                                actionClone.Time.Text = "Waiting"
                             else
-                                local PizzaTbls = {{}}
-                                actionClone.Time.Text = Order.Value
+                                local PizzaTbls = {
+                                    ["Cheese"]={false},
+                                    ["Pepperoni"]={"Pepperoni"},
+                                    ["Vegetable"]={"Vegetable"},
+                                    ["Ham"]={"Ham"},
+                                }
+                                local myTbl = PizzaTbls[Order.Value]
+                                if not myTbl then
+                                    actionClone.Time.Text = "Order: "..Order.Value .. " (UNKNOWN)"
+                                else
+                                    actionClone.Time.Text = "Order: "..Order.Value
+                                    local endResult = {true,true,true}
+                                    table.insert(endResult,myTbl[1])
+                                    for s = 1, 4 do
+                                        if s ~= 4 or myTbl[1] then
+                                            C.RemoteObjects.UseWorkstation:FireServer({Workstation=myWorkstation})
+                                            task.wait()
+                                        end
+                                    end
+                                    C.RemoteObjects.JobCompleted:FireServer({Order=endResult,Workstation=myWorkstation})
+                                end
                             end
                         end,
                     },
@@ -519,7 +540,7 @@ return function (C,Settings)
                                 if Return then
                                     myWorkstation = Return2
                                     if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true) then
-                                        C.DoTeleport(myWorkstation:GetBoundingBox().Position)
+                                        C.DoTeleport(myWorkstation:GetBoundingBox() * botData.Workstations.PartOffset)
                                     end
                                     Return, Return2 = "Wait", 0
                                 end
