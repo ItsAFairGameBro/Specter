@@ -563,6 +563,7 @@ return function (C,Settings)
                             tbl = tbl or {}
                             tbl[formatName]=closest
                             C.RemoteObjects[event]:FireServer(tbl)
+                            print("Firing",event,tbl)
                         end
                         self.Completed=true
                         return true
