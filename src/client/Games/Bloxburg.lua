@@ -362,6 +362,7 @@ return function (C,Settings)
                                     C.RemoteObjects.JobCompleted:FireServer({Order=endResult,Workstation=myWorkstation})
                                 end
                             end
+                            return "Wait", 0
                         end,
                     },
                     BensIceCreamSeller = {
