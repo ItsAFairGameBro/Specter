@@ -462,7 +462,7 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return
                             end
-                            wait(3)
+                            task.wait(C.Randomizer:NextNumber(2.5,3))
                             local Order = Customer.Order
                             C.RemoteObjects.JobCompleted:FireServer(
                                 {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
