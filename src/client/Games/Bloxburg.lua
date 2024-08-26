@@ -473,9 +473,9 @@ return function (C,Settings)
                                 return "Wait", 0
                             end
                             local Order = Customer.Order
-                            if not self.SendTime and false then
-                                self.SendTime = os.clock() + C.Randomizer:NextNumber(0.1,0.2)
-                            elseif true or os.clock() >= self.SendTime then
+                            if not self.SendTime then
+                                self.SendTime = os.clock() + C.Randomizer:NextNumber(0,0)
+                            elseif os.clock() >= self.SendTime then
                                 self.SendTime = nil
                                 actionClone.Time.Text = "Spoofing"
                                 C.RemoteObjects.JobCompleted:FireServer(
