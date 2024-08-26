@@ -500,8 +500,8 @@ return function (C,Settings)
                                     self.Customer = Customer
                                 end
                             else
-                                actionClone.Time.Text = "Waiting For Next"
-                                return "Wait", 0
+                                --actionClone.Time.Text = "Waiting For Next"
+                                --return "Wait", 0
                             end
                             if not Customer or (Customer:GetPivot().Position - myWorkstation.CustomerTarget.Position).Magnitude > 2 then
                                 actionClone.Time.Text = "Waiting For Customer"
