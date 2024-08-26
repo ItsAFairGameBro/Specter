@@ -509,9 +509,7 @@ return function (C,Settings)
                                 return "Wait", 0
                             end
                             local Order,Vehicle = Customer.Order, Customer.Vehicle
-                            if Order and false then
-                                actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
-                            elseif self.Completed and false then
+                            if self.Completed and false then
                                 actionClone.Time.Text = "Completed"
                                 self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
                                 --self.IgnoreCustomer = Customer
@@ -549,7 +547,7 @@ return function (C,Settings)
                                         end
                                     end
                                 else
-                                    actionClone.Time.Text = "Completion"
+                                    actionClone.Time.Text = "Wheel Completion"
                                 end
                                 self.Completed = Wheel2Replace == "Completed"
                             elseif Order:FindFirstChild("Oil") then
@@ -561,6 +559,8 @@ return function (C,Settings)
                                     actionClone.Time.Text = "Fixing Oil"
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
+                            else
+                                actionClone.Time.Text = "NO NAME: " .. Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
                             end
                             return "Wait", 0
                         end,
