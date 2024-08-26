@@ -552,7 +552,7 @@ return function (C,Settings)
                 WalkAndFire = function(self,possibilities,event,formatName,tbl)
                     local closest, closestDist = nil, math.huge
                     for num, instance in ipairs(possibilities) do
-                        local curDist = (instance:GetPivot() - C.char:GetPivot()).Magnitude
+                        local curDist = (instance:GetPivot().Position - C.char:GetPivot().Position).Magnitude
                         if curDist < closestDist then
                             closest, closestDist = instance, curDist
                         end
