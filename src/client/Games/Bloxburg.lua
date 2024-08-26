@@ -513,7 +513,7 @@ return function (C,Settings)
                             elseif self.Completed then
                                 actionClone.Time.Text = "Completed"
                                 self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
-                                self.IgnoreCustomer = Customer
+                                --self.IgnoreCustomer = Customer
                                 self.Completed = false
                                 return
                             elseif Order:FindFirstChild("Color") then
