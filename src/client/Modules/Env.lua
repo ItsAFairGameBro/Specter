@@ -21,9 +21,11 @@ return function(C,Settings)
 				end
 				local print4Instance = val
 				if typeof(print4Instance) == "Instance" then
-					print4Instance = val:GetFullName()
+					print4Instance = "(inst) " .. val:GetFullName()
+				else
+					print4Instance = "("..typeof(print4Instance)..") " .. tostring(print4Instance)
 				end
-				printVal ..= tostring(print4Instance)
+				printVal ..= print4Instance
 			end
 			return printVal
 		end
