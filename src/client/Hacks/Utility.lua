@@ -96,7 +96,7 @@ return function(C,Settings)
 					local errorCode = GS:GetErrorCode()
 					errorCode = errorCode and errorCode.Value or -1
 
-					if errorCode ~= 267 then
+					if errorCode ~= 267 and errorCode ~= 277 then
 						if errorCode ~= 0 then
 							print("[Utility.NoKick]: Unknown Error Code:",errorCode)
 						end

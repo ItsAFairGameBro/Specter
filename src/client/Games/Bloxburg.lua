@@ -548,6 +548,8 @@ return function (C,Settings)
                                             Vehicle[Wheel2Replace]:SetAttribute("Replaced",true)
                                         end
                                     end
+                                else
+                                    actionClone.Time.Text = "Completion"
                                 end
                                 self.Completed = Wheel2Replace == "Completed"
                             elseif Order:FindFirstChild("Oil") then
