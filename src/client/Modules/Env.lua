@@ -20,10 +20,13 @@ return function(C,Settings)
 					printVal ..= " "
 				end
 				local print4Instance = val
-				if typeof(print4Instance) == "Instance" then
+				local myType = typeof(print4Instance)
+				if myType == "Instance" then
 					print4Instance = "(inst) " .. val:GetFullName()
+				elseif myType == "string" then
+					print4Instance = `"{print4Instance}"`
 				else
-					print4Instance = "("..typeof(print4Instance)..") " .. tostring(print4Instance)
+					print4Instance = "("..myType..") " .. tostring(print4Instance)
 				end
 				printVal ..= print4Instance
 			end
