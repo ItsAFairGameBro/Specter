@@ -360,6 +360,7 @@ return function (C,Settings)
                                         else
                                             actionClone.Time.Text = "Delivering"
                                             C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
+                                            return
                                         end
                                         --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
                                             --StaticCust.Occupied.Value = nil
