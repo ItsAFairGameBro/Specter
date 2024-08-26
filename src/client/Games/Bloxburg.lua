@@ -453,6 +453,21 @@ return function (C,Settings)
                             end
                         end,
                     },
+                    StylezHairdresser = {
+                        Overrides = {{"Noclip"}},ProximityOnly=true,
+                        Workstations = {Path="HairdresserWorkstations",PartOffset=Vector3.new(3,-1,0)},
+                        BotFunct = function(self, model, actionClone, myWorkstation)
+                            local Customer = myWorkstation.Occupied.Value
+                            if not Customer then
+                                actionClone.Time.Text = "Waiting For Customer"
+                                return
+                            end
+                            local Order = Customer.Order
+                            C.RemoteObjects.JobCompleted:FireServer(
+                                {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
+                            )
+                        end,
+                    },
                 },
                 GetClosestWorkstation = function(self,botData,jobModule)
                     local WData = botData.Workstations
@@ -572,7 +587,8 @@ return function (C,Settings)
                     {
 						Type = Types.Dropdown,
                         Selections = {"Hut Fisherman","Supermarket Stocker",
-                            "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker"},
+                            "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker",
+                            "StylezHairdresser"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
