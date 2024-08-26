@@ -341,13 +341,14 @@ return function (C,Settings)
                                             Ball = Cup.Ball1,
                                             Taste = Order.Flavor1.Value,
                                         })
+                                        Cup.Ball1.Transparency = 0
                                     elseif Order.Flavor2.Value ~= "" and Cup.Ball2.Transparency == 1 then
                                         actionClone.Time.Text = "Flavor 2"
                                         C.RemoteObjects["AddIceCreamScoop"]:FireServer({
                                             Ball = Cup.Ball2,
                                             Taste = Order.Flavor2.Value,
                                         })
-                                        print(Cup.Ball2,Order.Flavor2.Value)
+                                        Cup.Ball2.Transparency = 0
                                     elseif Order.Topping.Value ~= "" and not Cup.Ball1:FindFirstChild("Sprinkles") then
                                         actionClone.Time.Text = "Topping"
                                         C.RemoteObjects["AddIceCreamTopping"]:FireServer({

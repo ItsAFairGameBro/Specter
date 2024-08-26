@@ -22,9 +22,11 @@ return function(C,Settings)
 				local print4Instance = val
 				local myType = typeof(print4Instance)
 				if myType == "Instance" then
-					print4Instance = "(inst) " .. val:GetFullName()
+					print4Instance = "(Instance) " .. val:GetFullName()
 				elseif myType == "string" then
 					print4Instance = `"{print4Instance}"`
+				elseif myType == "boolean" or myType == "number" then
+					-- do nothing, just keep it to true/false
 				else
 					print4Instance = "("..myType..") " .. tostring(print4Instance)
 				end
