@@ -313,11 +313,11 @@ return function (C,Settings)
                     },
                     PizzaPlanetBaker = {
                         Overrides = {{"Noclip"}},ProximityOnly=true,
-                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(0,-1,-3)},
+                        Workstations = {Path="BakerWorkstations",PartOffset=Vector3.new(3,-1,-3)},
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Order = myWorkstation.Order
                             C.CanMoveOutOfPosition = Order.IngredientsLeft.Value <= 0
-                            if myWorkstation.IngredientsLeft.Value <= 0 then
+                            if Order.IngredientsLeft.Value <= 0 then
                                 local IngrCrate = model.IngredientCrates.Crate
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ingredient Crate" then
                                     C.human:MoveTo(IngrCrate:GetPivot() * Vector3.new(3,0,0))
