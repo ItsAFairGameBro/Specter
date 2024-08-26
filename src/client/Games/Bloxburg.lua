@@ -511,6 +511,7 @@ return function (C,Settings)
                             if Order and false then
                                 actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
                             elseif self.Completed then
+                                actionClone.Time.Text = "Completed"
                                 self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
                                 self.IgnoreCustomer = Customer
                                 self.Completed = false
@@ -518,11 +519,11 @@ return function (C,Settings)
                             elseif Order:FindFirstChild("Color") then
                                 -- It's a coloring one!
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Spray Painter" then
-                                    actionClone.Time.Text = "Getting Color"
+                                    actionClone.Time.Text = "Color: "..Order.Color.Value
                                     self.Parent:WalkAndFire({C.StringWait(model,"PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
                                     self.Completed = false
                                 else
-                                    actionClone.Time.Text = "Fixing"
+                                    actionClone.Time.Text = "Fixing Color"
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                                 return "Wait", 0
