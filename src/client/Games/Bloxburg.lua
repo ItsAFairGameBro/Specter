@@ -610,7 +610,7 @@ return function (C,Settings)
                                 Return, Return2 = self:GetClosestWorkstation(botData,jobModule)
                                 if Return then
                                     myWorkstation = Return2
-                                    if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize(),C.char:GetPivot().Position,true) then
+                                    if not C.IsInBox(myWorkstation:GetBoundingBox(),myWorkstation:GetExtentsSize()+Vector3.new(botData.Size,botData.Size,botData.Size),C.char:GetPivot().Position,true) then
                                         C.DoTeleport(myWorkstation:GetBoundingBox() * botData.Workstations.PartOffset)
                                     end
                                     Return, Return2 = "Wait", 0
