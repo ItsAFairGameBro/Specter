@@ -567,14 +567,14 @@ return function (C,Settings)
                 WalkAndFire = function(self,possibilities,event,formatName,tbl)
                     local closest, closestDist = nil, math.huge
                     for num, instance in ipairs(possibilities) do
-                        local curDist = (instance:GetPivot().Position - C.char:GetPivot().Position).Magnitude
+                        local curDist = ((instance:GetPivot().Position - C.char:GetPivot().Position)/Vector3.new(1,math.huge,1)).Magnitude
                         if curDist < closestDist then
                             closest, closestDist = instance, curDist
                         end
                     end
                     if closest then
                         C.human:MoveTo(closest:GetPivot().Position)
-                        if closestDist < 10 then
+                        if closestDist < 5 then
                             tbl = tbl or {}
                             tbl[formatName]=closest
                             C.RemoteObjects[event]:FireServer(tbl)
