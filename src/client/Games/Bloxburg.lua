@@ -314,7 +314,7 @@ return function (C,Settings)
                     BensIceCreamSeller = {
                         Part = "Floor",
                         BotFunct = function(self,model,actionClone)
-                            local StaticCust, CurrentCustomer, ClosestDist = nil, math.huge
+                            local StaticCust, CurrentCustomer, ClosestDist = nil, nil, math.huge
                             for num, cust in ipairs(model.CustomerTargets:GetChildren()) do
                                 local MyCust = cust.Occupied.Value
                                 if MyCust and (not cust.InUse.Value or cust.InUse.Value == C.plr) then
