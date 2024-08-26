@@ -332,7 +332,6 @@ return function (C,Settings)
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ice Cream Cup" then
                                     actionClone.Time.Text = "Getting Cup"
                                     C.RemoteObjects["TakeIceCreamCup"]:FireServer({})
-                                    return "Wait",0
                                 else
                                     local Cup = C.HotbarUI.Hotbar.EquipData.Object
                                     local Order = CurrentCustomer.Order
@@ -344,7 +343,6 @@ return function (C,Settings)
                                             Taste = Order.Flavor1.Value,
                                         })
                                         Cup.Ball1.Transparency = 0
-                                        return "Wait",0
                                     elseif Order.Flavor2.Value ~= "" and Cup.Ball2.Transparency == 1 then
                                         actionClone.Time.Text = "Flavor 2"
                                         C.RemoteObjects["AddIceCreamScoop"]:FireServer({
@@ -352,14 +350,12 @@ return function (C,Settings)
                                             Taste = Order.Flavor2.Value,
                                         })
                                         Cup.Ball2.Transparency = 0
-                                        return "Wait",0
                                     elseif Order.Topping.Value ~= "" and not Cup.Ball1:FindFirstChild("Sprinkles") then
                                         actionClone.Time.Text = "Topping"
                                         C.RemoteObjects["AddIceCreamTopping"]:FireServer({
                                             Taste = Order.Topping.Value
                                         })
                                         Instance.new("Folder",Cup.Ball1).Name = "Sprinkles"
-                                        return "Wait",0
                                     else
                                         if (C.char:GetPivot().Position - CurrentCustomer:GetPivot().Position).Magnitude < 10 then
                                             C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
@@ -368,17 +364,23 @@ return function (C,Settings)
                                         else
                                             actionClone.Time.Text = "Delivering"
                                             --C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
-                                            return
+                                            
                                         end
                                         --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
                                             --StaticCust.Occupied.Value = nil
                                         --end
                                     end
                                 end
-                                local IceCreamLoc = Vector3.new(932,13.72,1047) -- Vector3.new(932,13.72,1047)
-                                if (IceCreamLoc - C.char:GetPivot().Position).Magnitude > 0.2 then
-                                    C.human:MoveTo(IceCreamLoc)
+                                if actionClone.Time.Text == "Getting Cup" then
+                                    local IceCreamLoc = Vector3.new(932,13.72,1047) -- Vector3.new(932,13.72,1047)
+                                    if (IceCreamLoc - C.char:GetPivot().Position).Magnitude > 0.2 then
+                                        C.human:MoveTo(IceCreamLoc)
+                                    end
+                                else
+                                    C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
                                 end
+                                
+                                return "Wait",0
                             else
                                 if HasValid then
                                     C.human:MoveTo(Vector3.new(940,13.7269,1043.7152))
