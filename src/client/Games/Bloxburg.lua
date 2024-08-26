@@ -490,7 +490,7 @@ return function (C,Settings)
                             return "Wait", 0
                         end,
                     },
-                    MikesMechanics = {
+                    MikesMechanic = {
                         Overrides = {{"Noclip"}},ProximityOnly=true,
                         Workstations = {Path="MechanicWorkstations",PartOffset=Vector3.new(3,-1,0),Size=10},
                         BotFunct = function(self, model, actionClone, myWorkstation)
@@ -644,7 +644,7 @@ return function (C,Settings)
 						Type = Types.Dropdown,
                         Selections = {"Hut Fisherman","Supermarket Stocker",
                             "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker",
-                            "StylezHairdresser","Mikes Mechanics"},
+                            "StylezHairdresser","Mikes Mechanic"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
