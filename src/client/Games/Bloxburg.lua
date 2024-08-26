@@ -374,8 +374,9 @@ return function (C,Settings)
                                         --end
                                     end
                                 end
-                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
-                                    C.human:MoveTo(Vector3.new(932,13.72,1047))
+                                local IceCreamLoc = Vector3.new(937.986,13.7269,1043.946) -- Vector3.new(932,13.72,1047)
+                                if (IceCreamLoc - C.char:GetPivot().Position).Magnitude > 1.2 then
+                                    C.human:MoveTo(IceCreamLoc)
                                 end
                             else
                                 if HasValid then
@@ -386,7 +387,7 @@ return function (C,Settings)
                                     if not self.MoveTime then
                                         self.MoveTime = os.clock() + 1
                                     elseif os.clock() >= self.MoveTime then
-                                        C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
+                                        C.human:MoveTo(Vector3.new(937.986,13.7269,1043.946))
                                         self.MoveTime = nil
                                     end
                                     actionClone.Time.Text = "Waiting For First Customer"
