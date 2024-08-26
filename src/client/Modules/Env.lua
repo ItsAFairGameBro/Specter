@@ -24,9 +24,10 @@ return function(C,Settings)
 				if myType == "Instance" then
 					print4Instance = "(Instance) " .. val:GetFullName()
 				elseif myType == "string" then
-					print4Instance = `"{tostring(print4Instance)}"`
+					print4Instance = `"{print4Instance}"`
 				elseif myType == "boolean" or myType == "number" then
 					-- do nothing, just keep it to true/false
+					print4Instance = tostring(print4Instance)
 				else
 					print4Instance = "("..myType..") " .. tostring(print4Instance)
 				end
