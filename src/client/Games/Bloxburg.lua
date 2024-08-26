@@ -356,7 +356,7 @@ return function (C,Settings)
                                         if (C.char:GetPivot().Position - CurrentCustomer:GetPivot().Position).Magnitude < 10 then
                                             C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
                                             actionClone.Time.Text = "Firing"
-                                            return "Wait",2
+                                            return "Wait",0.5
                                         else
                                             actionClone.Time.Text = "Delivering"
                                             C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
