@@ -353,13 +353,17 @@ return function (C,Settings)
                                         })
                                         Instance.new("Folder",Cup.Ball1).Name = "Sprinkles"
                                     else
-                                        actionClone.Time.Text = "Finishing"
-                                        C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
+                                        if (C.char:GetPivot().Position - CurrentCustomer:GetPivot().Position).Magnitude < 10 then
+                                            C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
+                                            actionClone.Time.Text = "Firing"
+                                            return "Wait",2
+                                        else
+                                            actionClone.Time.Text = "Delivering"
+                                            C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
+                                        end
                                         --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
                                             --StaticCust.Occupied.Value = nil
                                         --end
-                                        C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
-                                        return
                                     end
                                 end
                                 if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
