@@ -519,6 +519,7 @@ return function (C,Settings)
                                 -- It's a coloring one!
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Spray Painter" then
                                     self.Parent:WalkAndFire({C.StringWait(model,"PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
+                                    self.Completed = false
                                 else
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
@@ -529,6 +530,7 @@ return function (C,Settings)
                                 if Wheel2Replace ~= "Completed" then
                                     if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Motorcycle Wheel" then
                                         self.Parent:WalkAndFire({C.StringWait(model,"TireRacks."..Order.Wheels.Value)},"TakeWheel","Object")
+                                        self.Completed = false
                                     else
                                         local beforeTbl = {}
                                         if Wheel2Replace == "Front" then
@@ -541,6 +543,7 @@ return function (C,Settings)
                             elseif Order:FindFirstChild("Oil") then
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Oil Can" then
                                     self.Parent:WalkAndFire(C.StringWait(model,"OilCans"):GetChildren(),"TakeOil","Object")
+                                    self.Completed = false
                                 else
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
@@ -564,8 +567,8 @@ return function (C,Settings)
                             tbl[formatName]=closest
                             C.RemoteObjects[event]:FireServer(tbl)
                             print("Firing",event,tbl)
+                            self.Completed=true
                         end
-                        self.Completed=true
                         return true
                     else
                         warn("None found out of event",event,possibilities)
