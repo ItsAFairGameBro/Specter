@@ -468,7 +468,7 @@ return function (C,Settings)
                                 actionClone.Time.Text = "Waiting For Next"
                                 return "Wait", 0
                             end
-                            if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 0.1 then
+                            if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 0.35 then
                                 actionClone.Time.Text = "Waiting For Customer"
                                 return "Wait", 0
                             end
@@ -482,6 +482,7 @@ return function (C,Settings)
                                     {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
                                 )
                                 self.IgnoreCustomer = Customer
+                                return
                             else
                                 actionClone.Time.Text = ("Waiting %.1f"):format(self.SendTime - os.clock())
                                 return "Wait", 0
