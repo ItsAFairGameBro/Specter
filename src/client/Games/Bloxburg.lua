@@ -518,9 +518,11 @@ return function (C,Settings)
                             elseif Order:FindFirstChild("Color") then
                                 -- It's a coloring one!
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Spray Painter" then
+                                    actionClone.Time.Text = "Getting Color"
                                     self.Parent:WalkAndFire({C.StringWait(model,"PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
                                     self.Completed = false
                                 else
+                                    actionClone.Time.Text = "Fixing"
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                                 return "Wait", 0
@@ -529,9 +531,11 @@ return function (C,Settings)
                                     or not Vehicle.BackWheel:FindFirstChild(Order.Wheels.Value) and "Back" or "Completed"
                                 if Wheel2Replace ~= "Completed" then
                                     if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Motorcycle Wheel" then
+                                        actionClone.Time.Text = "Getting Wheels"
                                         self.Parent:WalkAndFire({C.StringWait(model,"TireRacks."..Order.Wheels.Value)},"TakeWheel","Object")
                                         self.Completed = false
                                     else
+                                        actionClone.Time.Text = "Fixing Wheels"
                                         local beforeTbl = {}
                                         if Wheel2Replace == "Front" then
                                             beforeTbl.Front = true
@@ -544,7 +548,9 @@ return function (C,Settings)
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Oil Can" then
                                     self.Parent:WalkAndFire(C.StringWait(model,"OilCans"):GetChildren(),"TakeOil","Object")
                                     self.Completed = false
+                                    actionClone.Time.Text = "Getting Oil"
                                 else
+                                    actionClone.Time.Text = "Fixing Oil"
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                             end
