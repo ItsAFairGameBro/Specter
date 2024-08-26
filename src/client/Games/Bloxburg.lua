@@ -336,6 +336,7 @@ return function (C,Settings)
                                 else
                                     local Cup = C.HotbarUI.Hotbar.EquipData.Object
                                     local Order = CurrentCustomer.Order
+                                    C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
                                     if Order.Flavor1.Value ~= "" and Cup.Ball1.Transparency == 1 then
                                         actionClone.Time.Text = "Flavor 1"
                                         C.RemoteObjects["AddIceCreamScoop"]:FireServer({
@@ -366,7 +367,7 @@ return function (C,Settings)
                                             return "Wait",0
                                         else
                                             actionClone.Time.Text = "Delivering"
-                                            C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
+                                            --C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
                                             return
                                         end
                                         --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
