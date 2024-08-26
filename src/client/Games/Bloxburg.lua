@@ -325,9 +325,6 @@ return function (C,Settings)
                                 end
                             end
                             if CurrentCustomer then
-                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
-                                    C.DoTeleport(Vector3.new(932,13.72,1047))
-                                end
                                 actionClone.Time.Text = ""
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ice Cream Cup" then
                                     actionClone.Time.Text = "Getting Cup"
@@ -361,7 +358,12 @@ return function (C,Settings)
                                         --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
                                             --StaticCust.Occupied.Value = nil
                                         --end
+                                        C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
+                                        return
                                     end
+                                end
+                                if (Vector3.new(932,13.72,1047) - C.char:GetPivot().Position).Magnitude > 1.2 then
+                                    C.DoTeleport(Vector3.new(932,13.72,1047))
                                 end
                             else
                                 C.human:MoveTo(model.Window:GetPivot() * Vector3.new(3,0,0))
