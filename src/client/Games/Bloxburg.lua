@@ -354,6 +354,7 @@ return function (C,Settings)
                                         C.RemoteObjects["AddIceCreamTopping"]:FireServer({
                                             Taste = Order.Topping.Value
                                         })
+                                        Instance.new("Folder",Cup.Ball1).Name = "Sprinkles"
                                     else
                                         actionClone.Time.Text = "Finishing"
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})

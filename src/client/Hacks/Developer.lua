@@ -133,7 +133,7 @@ return function(C,Settings)
             {
 				Title = "Print Remote Event Spy",
 				Tooltip = "Prints all messages from remote events to the console.",
-				Layout = 12,Functs={},
+				Layout = 2,Functs={},
 				Shortcut = "PrintRemoteSpy",
                 IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime","CheckOwnsAsset","GetIKTargets","FirstPlayerExperience_IsFirstTime"}},
                 Activate = function(self,newValue)
@@ -166,6 +166,7 @@ return function(C,Settings)
 						Tooltip = "Tracks all requests coming TO the client (RemoteEvents)! Warning: DOES NOT TRACK REMOTE FUNCTIONS",
 						Layout = 1,Default=true,
 						Shortcut="Inbound",
+                        Activate = C.ReloadHack,
 					},
                     {
 						Type = Types.Toggle,
@@ -173,6 +174,7 @@ return function(C,Settings)
 						Tooltip = "Tracks all requests going TO the server (RemoteEvents/RemoteFunctions)!",
 						Layout = 2,Default=true,
 						Shortcut="Outbound",
+                        Activate = C.ReloadHack,
 					},
                 },
             },
