@@ -510,7 +510,7 @@ return function (C,Settings)
                             local Order,Vehicle = Customer.Order, Customer.Vehicle
                             if Order and false then
                                 actionClone.Time.Text = Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
-                            elseif self.Completed then
+                            elseif self.Completed and false then
                                 actionClone.Time.Text = "Completed"
                                 self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
                                 --self.IgnoreCustomer = Customer
