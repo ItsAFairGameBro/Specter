@@ -426,7 +426,8 @@ return function (C,Settings)
                                     end
                                 end
                                 if actionClone.Time.Text == "Getting Cup" then
-                                    local IceCreamLoc = Vector3.new(932,13.72,1047) -- Vector3.new(932,13.72,1047)
+                                    local IceCreamLoc = model["Ice Cream Cup"]:GetPivot() * Vector3.new(0,0,-3)
+                                    --Vector3.new(932,13.72,1047) -- Vector3.new(932,13.72,1047)
                                     if (IceCreamLoc - C.char:GetPivot().Position).Magnitude > 0.2 then
                                         C.human:MoveTo(IceCreamLoc)
                                     end
