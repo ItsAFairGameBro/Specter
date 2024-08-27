@@ -651,13 +651,13 @@ return function (C,Settings)
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
                             end
-                            if jobHandler:CanStartWorking(jobName,jobModule) then
+                            if jobHandler:GetJob() == "" and jobHandler:CanStartWorking(jobName,jobModule) then
                                 actionClone.Time.Text = "Going To Work"
                                 jobHandler:GoToWork(jobName)
                             else
                                 actionClone.Time.Text = "Waiting"
                             end
-                            task.wait(.5)
+                            task.wait(.1)
                         end
                         local curJob = jobHandler:GetJob()
                         local Return,Return2
