@@ -651,7 +651,7 @@ return function (C,Settings)
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
                             end
-                            if not jobHandler:GetJob() and jobHandler:CanStartWorking(jobName,jobModule) then
+                            if not jobHandler:GetJob() then--and jobHandler:CanStartWorking(jobName,jobModule) then
                                 actionClone.Time.Text = "Going To Work"
                                 jobHandler:GoToWork(jobName)
                             else
