@@ -512,6 +512,12 @@ return function(C,Settings)
 						end))
 					end
 					self:SetProperty(true)
+					C.HookMethod("__index",self.Shortcut,newValue and self.EnTbl.Hidden and function(theirScript,index,self,...)
+						if (self == C.human) then
+							print("Spoofing",index)
+							return "Spoof", C.GetPartProperty(self,"WalkSpeed")
+						end
+					end,{"walkspeed"})
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
@@ -536,6 +542,14 @@ return function(C,Settings)
 						Shortcut="Override",
 						Activate = C.ReloadHack,
 					},
+					{
+						Type = Types.Toggle,
+						Title = "Hidden",
+						Tooltip = `Prevents other scripts from noticing`,
+						Layout = 2,Default=true,
+						Shortcut="Hidden",
+						Activate = C.ReloadHack,
+					},
 				}
 			},
 			{
@@ -557,6 +571,12 @@ return function(C,Settings)
 						end))
 					end
 					self:SetProperty(true)
+					C.HookMethod("__index",self.Shortcut,newValue and self.EnTbl.Hidden and function(theirScript,index,self,...)
+						if (self == C.human) then
+							print("Spoofing",index)
+							return "Spoof", C.GetPartProperty(self,"JumpPower")
+						end
+					end,{"jumppower"})
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
@@ -579,6 +599,14 @@ return function(C,Settings)
 						Tooltip = "Prevents jump from being updated to anything else",
 						Layout = 1,Default=true,
 						Shortcut="Override",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Hidden",
+						Tooltip = `Prevents other scripts from noticing`,
+						Layout = 2,Default=true,
+						Shortcut="Hidden",
 						Activate = C.ReloadHack,
 					},
 				}
