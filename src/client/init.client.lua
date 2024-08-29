@@ -471,7 +471,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if method and getType(method) == "string" then
 					method = lower(method)
 					local parsed, count = gsub(method, "\000.*", "")
-					if gmatch(method,".+\000.*")() and strLen(parsed) > 0 and count <= 1 then
+					if (gsub(method,".+\000.*","") == "" or count == 0) and strLen(parsed) > 0 and count <= 1 then
 						method = parsed
 					elseif count > 1 then
 						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
