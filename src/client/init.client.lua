@@ -465,7 +465,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if HookType=="hookmetamethod" then
 					method = getnamecallmethod()
 				else
-					method = ...
+					method = ({...})[1]
 				end
 				if method and getType(method) == "string" then
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
