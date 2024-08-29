@@ -443,6 +443,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local checkcaller = C.checkcaller
 		local gsub,getType = string.gsub, typeof
 		local getVal, setVal = rawget, rawset
+		local strLen = string.len
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
 
 		local myHooks = {}
@@ -470,7 +471,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if method and getType(method) == "string" then
 					method = lower(method)
 					local parsed, count = gsub(method, "\000.*", "")
-					if parsed~="" and count <= 1 then
+					if strLen(parsed) > 0 and count <= 1 then
 						method = parsed
 					elseif count > 1 then
 						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
