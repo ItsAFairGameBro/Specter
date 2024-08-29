@@ -466,7 +466,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if HookType=="hookmetamethod" then
 					method = getnamecallmethod()
 				else
-					method = ({...})[1]
+					method = rawget({...}, 1)
 				end
 				if method and getType(method) == "string" then
 					method = lower(method)
