@@ -471,8 +471,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				if method == 'walkspeed' then
-					tskSpawn(warn,"method",method,tostring(theirScript))
+				if not theirScript then
+					tskSpawn(print,"method",self,method,tostring(theirScript))
 				end
 				if theirScript then
 					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
