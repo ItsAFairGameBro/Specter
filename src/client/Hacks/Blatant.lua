@@ -34,7 +34,7 @@ return function(C,Settings)
 						C.LastLoc = C.char:GetPivot()
 					end))
 					local function TeleportDetected()
-						if C.Camera.CameraType ~= Enum.CameraType.Custom and self.EnTbl.Active == "Camera On Character" then
+						if C.Camera.CameraType == Enum.CameraType.Scriptable and self.EnTbl.Active == "Camera On Character" then
 							return
 						end
 						newInput = C.char:GetPivot()
@@ -509,8 +509,7 @@ return function(C,Settings)
 					local GetPartProperty, Defaults = C.GetPartProperty, C.Defaults
 					C.HookMethod("__index",self.Shortcut,newValue and self.EnTbl.Hidden and function(theirScript,index,self,...)
 						if (self == C.human) then
-							print("Spoofing",index)
-							return "Spoof", {rawget(Defaults,"WalkSpeed")}--{GetPartProperty(self,"WalkSpeed")}
+							return "Spoof", {rawget(Defaults,"WalkSpeed")}
 						end
 					end,{"walkspeed"})
 					if self.EnTbl.Override then
@@ -570,8 +569,7 @@ return function(C,Settings)
 					local GetPartProperty, Defaults = C.GetPartProperty, C.Defaults
 					C.HookMethod("__index",self.Shortcut,newValue and self.EnTbl.Hidden and function(theirScript,index,self,...)
 						if (self == C.human) then
-							print("Spoofing",index)
-							return "Spoof", {rawget(Defaults,"JumpPower")}--{GetPartProperty(self,"WalkSpeed")}
+							return "Spoof", {rawget(Defaults,"JumpPower")}
 						end
 					end,{"jumppower"})
 					if self.EnTbl.Override then
