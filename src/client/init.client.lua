@@ -460,7 +460,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local OriginFunct
 		local function CallFunction(self,...)
 			 -- Check if the caller is not a local script
-			 if not checkcaller() or true then
+			 if not checkcaller() then
                 -- Get the method being called
 				local method
 				if HookType=="hookmetamethod" and hook == "__namecall" then
