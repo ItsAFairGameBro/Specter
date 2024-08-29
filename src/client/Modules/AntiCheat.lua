@@ -12,6 +12,10 @@ local function Static(C,Settings)
     end
     return yieldForeverFunct
 end
+local function ShouldBlock(name)
+	local sc = getcallingscript()
+	return sc and not sc.Parent and not checkcaller() and name ~= nil
+end
 -- https://apis.roblox.com/universes/v1/places/1962086868/universe
 return function(C,Settings)
     local yieldForeverFunct = Static(C,Settings)
@@ -157,7 +161,7 @@ return function(C,Settings)
         },
         {
             Run = function(self)
-                local Old
+                --[[local Old
                 Old = hookfunction(getrenv().pcall, C.newcclosure(function(self,...)
                     local Returns = {Old(self,...)}
                     print(self,debug.traceback(),Returns)
@@ -181,10 +185,46 @@ return function(C,Settings)
                     local Returns = {Old2(self,...)}
                     print("traceback",self,...,Returns)
                     return table.unpack(Returns)
-                end))
+                end))--]]
+                local Old2
+                Old2 = hookfunction(getrenv().pcall, function(...)
+                    if ShouldBlock(pcall) then
+                        warn("Killed a pcall script: "..tostring(getcallingscript()))
+                        while true do
+                            task.wait(9999999999)
+                        end
+                        return
+                    end
+                    return Old2(...)
+                end)
+
+                local Old3
+                Old3 = hookfunction(getrenv().ipairs,function(...)
+                    if ShouldBlock(ipairs) then
+                        warn("Killed a ipairs script: "..tostring(getcallingscript()))
+                        while true do
+                            task.wait(9999999999)
+                        end
+                        return
+                    end
+                    return Old3(...)
+                end)
+
+                local Old4
+                Old4 = hookmetamethod(game,"__namecall",function(...)
+                    if ShouldBlock(game) then
+                        warn("Killed a __namecall script: "..tostring(getcallingscript()))
+                        while true do
+                            task.wait(9999999999)
+                        end
+                        return
+                    end
+                    return Old4(...)
+                end)
+                print("RAN")
             end,
-            KeepGoing = false, RunOnce = false,
-            GameIds = {},PlaceIds={},
+            KeepGoing = false, RunOnce = true,
+            GameIds = {3734304510},PlaceIds={},
         },
         {
             Run = function(self)
