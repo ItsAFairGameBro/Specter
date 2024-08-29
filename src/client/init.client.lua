@@ -453,7 +453,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		assert(hookfunction,`[C.HookMethod]: Unknown HookType: {hook}!`)
 		for num, methodName in ipairs(methods or {}) do
-			assert(methodName ~= lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
+			assert(methodName == lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
 		end
 
 		local OriginFunct
