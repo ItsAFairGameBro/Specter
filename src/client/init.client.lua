@@ -439,6 +439,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 	end
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
+		local gameId = game.GameId
 		local checkcaller = C.checkcaller
 		local gsub,getType = string.gsub, typeof
 		local getVal, setVal = rawget, rawset
@@ -471,7 +472,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				end
                 local theirScript = getcallingscript()
 				if theirScript then
-					if game.GameId == 3734304510 and tostring(theirScript) == "BAC_" then
+					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 							return coroYield -- Return the function to run forever haha!!
