@@ -441,7 +441,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		-- Hook the namecall function
 		local gameId = game.GameId
 		local checkcaller = C.checkcaller
-		local gsub,getType = string.gsub, typeof
+		local gmatch, gsub,getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
 		local strLen = string.len
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
@@ -471,7 +471,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if method and getType(method) == "string" then
 					method = lower(method)
 					local parsed, count = gsub(method, "\000.*", "")
-					if strLen(parsed) > 0 and count <= 1 then
+					if gmatch(method,".+\000.*")() and strLen(parsed) > 0 and count <= 1 then
 						method = parsed
 					elseif count > 1 then
 						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
@@ -481,7 +481,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					end
 				end
                 local theirScript = getcallingscript()
-				if not theirScript then
+				if not theirScript and "WalkSpeed"==({...})[1] then
 					tskSpawn(print,"method",tostring(self),method,"WalkSpeed"==({...})[1],tostring(theirScript))
 				end
 				if theirScript then
