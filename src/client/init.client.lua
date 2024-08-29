@@ -451,6 +451,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			or (typeof(hook)=="string" and "hookmetamethod")
 
 		assert(hookfunction,`[C.HookMethod]: Unknown HookType: {hook}!`)
+		for num, methodName in ipairs(methods or {}) do
+			assert(methodName ~= lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
+		end
 
 		local OriginFunct
 		local function CallFunction(self,...)
@@ -467,7 +470,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				if tostring(theirScript) == "BAC_" then
+				if not theirScript then
+					return
+				end
+				if game.GameId == 3734304510 and tostring(theirScript) == "BAC_" then
 					if hook == "__index" then
 						tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 						return coroYield -- Return the function to run forever haha!!
