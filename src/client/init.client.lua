@@ -463,16 +463,16 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			 if not checkcaller() or true then
                 -- Get the method being called
 				local method
-				if HookType=="hookmetamethod" then
+				if HookType=="hookmetamethod" and hook == "__namecall" then
 					method = getnamecallmethod()
 				else
-					method = rawget({...}, 1)
+					method = ...
 				end
-				if method and getType(method) == "string" then
+				if method and getType(method) == "string" and false then
 					method = lower(method)
 					local parsed, count = gsub(method, "\000.*", "")
-					if (gsub(method,".+\000.*","") == "" or count == 0) and strLen(parsed) > 0 and count <= 1 then
-						--method = parsed
+					if strLen(parsed) > 0 and count <= 1 then
+						method = parsed
 					elseif count > 1 then
 						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
 					else
