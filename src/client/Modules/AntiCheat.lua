@@ -189,7 +189,7 @@ return function(C,Settings)
                 local Old2
                 Old2 = hookfunction(getrenv().pcall, function(...)
                     if ShouldBlock(pcall) then
-                        warn("Killed a pcall script: "..tostring(getcallingscript()))
+                        C.DebugMessage("AntiCheat","Killed a pcall script: "..tostring(getcallingscript()))
                         while true do
                             task.wait(9999999999)
                         end
@@ -201,7 +201,7 @@ return function(C,Settings)
                 local Old3
                 Old3 = hookfunction(getrenv().ipairs,function(...)
                     if ShouldBlock(ipairs) then
-                        warn("Killed a ipairs script: "..tostring(getcallingscript()))
+                        C.DebugMessage("AntiCheat","Killed a ipairs script: "..tostring(getcallingscript()))
                         while true do
                             task.wait(9999999999)
                         end
@@ -213,7 +213,7 @@ return function(C,Settings)
                 local Old4
                 Old4 = hookmetamethod(game,"__namecall",function(...)
                     if ShouldBlock(game) then
-                        warn("Killed a __namecall script: "..tostring(getcallingscript()))
+                        C.DebugMessage("AntiCheat","Killed a __namecall script: "..tostring(getcallingscript()))
                         while true do
                             task.wait(9999999999)
                         end
@@ -221,7 +221,6 @@ return function(C,Settings)
                     end
                     return Old4(...)
                 end)
-                print("RAN")
             end,
             KeepGoing = false, RunOnce = true,
             GameIds = {3734304510},PlaceIds={},
