@@ -470,52 +470,51 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
                 local theirScript = getcallingscript()
-				if not theirScript then
-					return
-				end
-				if game.GameId == 3734304510 and tostring(theirScript) == "BAC_" then
-					if hook == "__index" then
-						tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
-						return coroYield -- Return the function to run forever haha!!
-					else
-						tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {theirScript.Name}`)
-						coroYield()
-						error("coroutine thread was attempting to be resumed for script "..theirScript.Name)
-						return
-					end
-				end--]]
-                -- Block FireServer or InvokeServer methods
-                for name, list in pairs(myHooks) do
-					local indexes = getVal(list,2)
-                    if not indexes or tblFind(indexes,method) then -- Authorization
-						local isRunning = true
-						tskDelay(3, function()
-							if isRunning then
-								warn(`[C.{HookType}]: Hook is taking > 3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
-							end
-						end)
-                        local operation,returnData = getVal(list,3)(theirScript,method,self,...)
-						isRunning = false
-                        if operation then
-                            if operation == "Spoof" then
-                                return tblUnpack(returnData)
-							elseif operation == "Override" then
-								return OriginFunct(tblUnpack(returnData))
-							elseif operation == "FireSeperate" then
-								return tskSpawn(OriginFunct,tblUnpack(returnData))
-                            elseif operation == "Cancel" then
-                                return -- Cancelled
-                            elseif operation == "Yield" then
-								if hook == "__index" then
-									return yieldForeverFunct -- Return the function to run forever haha!!
-								else
-									return yieldForeverFunct()
+				if theirScript then
+					if game.GameId == 3734304510 and tostring(theirScript) == "BAC_" then
+						if hook == "__index" then
+							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
+							return coroYield -- Return the function to run forever haha!!
+						else
+							tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {theirScript.Name}`)
+							coroYield()
+							error("coroutine thread was attempting to be resumed for script "..theirScript.Name)
+							return
+						end
+					end--]]
+					-- Block FireServer or InvokeServer methods
+					for name, list in pairs(myHooks) do
+						local indexes = getVal(list,2)
+						if not indexes or tblFind(indexes,method) then -- Authorization
+							local isRunning = true
+							tskDelay(3, function()
+								if isRunning then
+									warn(`[C.{HookType}]: Hook is taking > 3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
 								end
-                            else
-                                warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Function Run!`)
-                            end
-                        end
-                    end
+							end)
+							local operation,returnData = getVal(list,3)(theirScript,method,self,...)
+							isRunning = false
+							if operation then
+								if operation == "Spoof" then
+									return tblUnpack(returnData)
+								elseif operation == "Override" then
+									return OriginFunct(tblUnpack(returnData))
+								elseif operation == "FireSeperate" then
+									return tskSpawn(OriginFunct,tblUnpack(returnData))
+								elseif operation == "Cancel" then
+									return -- Cancelled
+								elseif operation == "Yield" then
+									if hook == "__index" then
+										return yieldForeverFunct -- Return the function to run forever haha!!
+									else
+										return yieldForeverFunct()
+									end
+								else
+									warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Function Run!`)
+								end
+							end
+						end
+					end
                 end
             end
 			return OriginFunct(self,...)
