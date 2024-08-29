@@ -506,10 +506,11 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					if not C.human then return else task.wait(.1) end
+					local GetPartProperty = C.GetPartProperty
 					C.HookMethod("__index",self.Shortcut,newValue and self.EnTbl.Hidden and function(theirScript,index,self,...)
 						if (self == C.human) then
 							print("Spoofing",index)
-							return "Spoof", C.GetPartProperty(self,"WalkSpeed")
+							return "Spoof", {GetPartProperty(self,"WalkSpeed")}
 						end
 					end,{"walkspeed"})
 					if self.EnTbl.Override then
