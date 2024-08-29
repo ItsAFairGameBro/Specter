@@ -468,7 +468,16 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = ({...})[1]
 				end
 				if method and getType(method) == "string" then
-					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
+					method = lower(method)
+					local parsed, count = gsub(method, "\000.*", "")
+					if parsed~="" and count <= 1 then
+						method = parsed
+					elseif count > 1 then
+						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
+					else
+						warn(`Empty Message Parsed from {tostring(self)} {method}. Copied to clipboard for further inspection.`)
+						rawget(C,"setclipboard")(method)
+					end
 				end
                 local theirScript = getcallingscript()
 				if not theirScript then
