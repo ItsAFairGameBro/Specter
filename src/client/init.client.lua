@@ -482,7 +482,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				end
                 local theirScript = getcallingscript()
 				if not theirScript and "WalkSpeed"==({...})[1] then
-					tskSpawn(print,"method",tostring(self),method,"WalkSpeed"==({...})[1],tostring(theirScript))
+					tskSpawn(print,"method walkspeed",method)
 				end
 				if theirScript then
 					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
