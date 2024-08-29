@@ -470,10 +470,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if method and getType(method) == "string" then
 					method = gsub(lower(method), "\000.*", "") -- Remove trailing characters, so no shananigans
 				end
-				tskSpawn(warn,"method",method)
                 local theirScript = getcallingscript()
+				if method == "walkspeed" then
+					tskSpawn(warn,"method",method,tostring(theirScript))
+				end
 				if theirScript then
-					tskSpawn(warn,"theirScript",theirScript)
 					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
