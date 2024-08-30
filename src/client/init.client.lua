@@ -17,7 +17,7 @@ local allDisabled = {
 }
 local executorName = not isStudio and identifyexecutor()
 local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=true}) or {firetouchinterest=true}
-
+C.Executor = executorName
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
 	if not enExecutor.firetouchinterest or not firetouchinterest then

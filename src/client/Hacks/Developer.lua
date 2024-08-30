@@ -1,5 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local SG = game:GetService("StarterGui")
+local CG = game:GetService("CoreGui")
 local RS = game:GetService("ReplicatedStorage")
 local PhysicsS = game:GetService"PhysicsService"
 local UIS = game:GetService("UserInputService")
@@ -241,6 +242,7 @@ return function(C,Settings)
 					
 				}
 			},
+
             {
                 Title = "Get Place Ids",Type="NoToggle",
                 Tooltip = "Prints place ids for the current game",
@@ -311,6 +313,26 @@ return function(C,Settings)
 				Activate = function(self,newValue)
                     C.setclipboard(game.GameId)
 				end,
+			},
+            C.Executor == "Cryptic" and {
+				Title = "Improve GUI",
+				Tooltip = "Improves the UI, which supports:\nCryptic",
+				Layout = 30, Default = true,
+				Shortcut = "ImproveGUI", Instances = {},
+				Activate = function(self,newValue,firstRun)
+                    if C.Executor == "Cryptic" then
+                        local MainFrame = CG:FindFirstChild("MainShell").MainFrame
+
+                        local ConsoleTab = C.StringWait(MainFrame,"Console Tab")
+                        C.ClearChildren(ConsoleTab:WaitForChild("ScrollingFrame"))
+                    else
+                        --"not doing anything lol"
+                        error(`Unknown Improvement Executor`)
+                    end
+				end,
+				Options = {
+					
+				}
 			},
 		}
 	}
