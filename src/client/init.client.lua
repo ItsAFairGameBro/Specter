@@ -381,7 +381,12 @@ function GetModule(moduleName: string)
 		end
 	end
 end
-
+function HttpUrlDecode(str)
+	local output, t = string.gsub(str,"%%(%x%x)",function(hex)
+		return string.char(tonumber(hex,16))
+	end)
+	return output
+end
 function C.LoadModule(moduleName: string)
 	local informalSplit = moduleName:split("/")
 	local informalName = informalSplit[#informalSplit]
@@ -389,11 +394,12 @@ function C.LoadModule(moduleName: string)
 	if Ret then
 		return Ret
 	end
+	local DisplayName = HttpUrlDecode(moduleName)
 	local Start = os.clock()
-	C.DebugMessage("Module",`Loading {moduleName}`)
+	C.DebugMessage("Module",`Loading {DisplayName}`)
 	local Mod = GetModule(moduleName)
 	C.SaveModules[informalName] = Mod
-	C.DebugMessage("Module",(`Loaded {moduleName} in %.2f seconds`):format(os.clock()-Start))
+	C.DebugMessage("Module",(`Loaded {DisplayName} in %.2f seconds`):format(os.clock()-Start))
 	return Mod
 end
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
