@@ -330,7 +330,7 @@ return function(C,Settings)
                         ClearButton.Text = "Clear"
                         ClearButton.TextScaled = true
                         ClearButton.Size = UDim2.fromScale(.1,.1)
-                        ClearButton.Position = UDim2.fromScale(0,0)
+                        ClearButton.Position = UDim2.fromScale(0.1,0)
                         ClearButton.AnchorPoint = Vector2.new(0,1)
                         ClearButton.ZIndex = 99999
 
