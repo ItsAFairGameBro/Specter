@@ -519,7 +519,7 @@ return function(C,Settings)
             Parameters={},
             AfterTxt = "%s",
             Run = function()
-                C.LoadModule(EncodedScriptName).ScriptRun(C, Settings)
+                C.LoadModule("Scripts/"..EncodedScriptName).ScriptRun(C, Settings)
                 return true, "Ran"
             end,
         }
