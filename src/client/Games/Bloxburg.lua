@@ -119,6 +119,15 @@ local function Static(C,Settings)
                 C.CharFocus = C.CharFocusValue.Value
             end))
         end
+        local function RegisterGUIChild(child)
+            if child:IsA("ScreenGui") and child.Name == "_MessageBox" then
+                C.FireEvent("MessageBoxAdded",nil,child)
+            end
+        end
+        C.AddObjectConnection(C.PlayerGui,"Game: Bloxburg",C.PlayerGui.ChildAdded:Connect(RegisterGUIChild))
+        for num, child in ipairs(RegisterGUIChild:GetChildren()) do
+            RegisterGUIChild(child)
+        end
     end)
 
     --[[task.delay(2,function()
@@ -894,7 +903,7 @@ return function (C,Settings)
                 RunOnDestroy = function(self)
                     self:Activate(false)
                 end,
-                Activate = function(self,newValue)
+                Activate = function(self,newValue,firstRun)
                     if newValue and not self.OldFaintFunct then
                         self.OldFaintFunct = rawget(C.CharacterHandler,"TriggerFaint")
                         rawset(C.CharacterHandler,"TriggerFaint",function()
@@ -908,7 +917,31 @@ return function (C,Settings)
                         rawset(C.CharacterHandler,"TriggerFaint",self.OldFaintFunct)
                         self.OldFaintFunct = nil
                     end
+                    if not firstRun and self.EnTbl.HideUI then
+                        local GUI = C.PlayerGui:FindFirstChild("_MessageBox")
+                        if GUI then
+                            self.Events.MessageBoxAdded(self,GUI)
+                        end
+                    end
                 end,
+                Options = {
+                    {
+						Type = Types.Toggle,
+                        Default = true,
+						Title = "Hide UI",
+						Tooltip = "Prevents the UI from popping up so that you don't have to click \"Faint\"",
+						Layout = 1,
+						Shortcut="HideUI",
+					},
+                },
+                Events = {
+                    MessageBoxAdded = function(GUI)
+                        local EventSignal = C.StringWait(GUI,"MessageBox.Event",30)
+                        assert(EventSignal,"[Bloxburg.AntiFaint]: Event Signal Yielded for 30 seconds and it was not found!")
+                        EventSignal:Fire("Faint") -- hide it right away!
+                        warn("Anti-Faint Fired!")
+                    end,
+                },
             },
             {
 				Title = "Auto Cook",
