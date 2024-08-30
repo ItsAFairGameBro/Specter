@@ -321,7 +321,7 @@ return function(C,Settings)
 				Shortcut = "ImproveGUI", Instances = {},
 				Activate = function(self,newValue,firstRun)
                     if C.Executor == "Cryptic" then
-                        local MainFrame = CG:FindFirstChild("MainShell").MainFrame
+                        local MainFrame = CG:FindFirstChild("MainShell",true).MainFrame
 
                         local ConsoleTab = C.StringWait(MainFrame,"Console Tab")
                         C.ClearChildren(ConsoleTab:WaitForChild("ScrollingFrame"))
