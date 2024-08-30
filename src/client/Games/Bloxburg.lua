@@ -935,7 +935,7 @@ return function (C,Settings)
 					},
                 },
                 Events = {
-                    MessageBoxAdded = function(GUI)
+                    MessageBoxAdded = function(self,GUI)
                         local EventSignal = C.StringWait(GUI,"MessageBox.Event",30)
                         assert(EventSignal,"[Bloxburg.AntiFaint]: Event Signal Yielded for 30 seconds and it was not found!")
                         EventSignal:Fire("Faint") -- hide it right away!
