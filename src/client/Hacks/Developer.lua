@@ -331,7 +331,7 @@ return function(C,Settings)
                         ClearButton.TextScaled = true
                         ClearButton.Size = UDim2.fromScale(.1,.1)
                         ClearButton.Position = UDim2.fromScale(0,0)
-                        ClearButton.AnchorPoint = UDim2.new(0,1)
+                        ClearButton.AnchorPoint = Vector2.new(0,1)
 
                         table.insert(self.Instances, ClearButton)
                         C.ButtonClick(ClearButton,function()
