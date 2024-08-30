@@ -1,3 +1,4 @@
+local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
 local TCS = game:GetService("TextChatService")
 local RunS = game:GetService("RunService")
@@ -512,12 +513,13 @@ return function(C,Settings)
     local Scripts2Add = {"Dark Dex"}
     for num, scriptName in ipairs(Scripts2Add) do
         local FormattedName = scriptName:gsub("%s+","")
+        local EncodedScriptName = HttpService:UrlEncode(scriptName)
         assert(not C.CommandFunctions[FormattedName], `[CommandCore]: C.CommandFunctions already has command "{FormattedName}"`)
         C.CommandFunctions[FormattedName] = {
             Parameters={},
             AfterTxt = "%s",
             Run = function()
-                C.GetModule(scriptName).ScriptRun(C, Settings)
+                C.LoadModule(EncodedScriptName).ScriptRun(C, Settings)
                 return true, "Ran"
             end,
         }
