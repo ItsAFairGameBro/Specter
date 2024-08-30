@@ -324,7 +324,18 @@ return function(C,Settings)
                         local MainFrame = CG:FindFirstChild("MainShell",true).MainFrame
 
                         local ConsoleTab = C.StringWait(MainFrame,"Console Tab")
-                        C.ClearChildren(ConsoleTab:WaitForChild("ScrollingFrame"))
+
+                        local ClearButton = Instance.new("TextButton",ConsoleTab)
+                        ClearButton.Name = "ClearButton"
+                        ClearButton.Text = "Clear"
+                        ClearButton.TextScaled = true
+                        ClearButton.Size = UDim2.fromScale(.1,.1)
+                        ClearButton.Position = UDim2.fromScale(0,0)
+
+                        table.insert(self.Instances, ClearButton)
+                        C.ButtonClick(ClearButton,function()
+                            C.ClearChildren(ConsoleTab:WaitForChild("ScrollingFrame"))
+                        end)
                     else
                         --"not doing anything lol"
                         error(`Unknown Improvement Executor`)
