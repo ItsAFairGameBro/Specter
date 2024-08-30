@@ -374,7 +374,11 @@ function GetModule(moduleName: string)
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
 		local result = C.preloadedModule[moduleName] or C.RunLink(githubLink,gitType,path)
-		return result(C,Settings)
+		if typeof(result) == "function" then
+			return result(C,Settings)
+		else
+			return result
+		end
 	end
 end
 
