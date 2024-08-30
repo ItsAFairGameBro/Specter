@@ -332,6 +332,7 @@ return function(C,Settings)
                         ClearButton.Size = UDim2.fromScale(.1,.1)
                         ClearButton.Position = UDim2.fromScale(0,0)
                         ClearButton.AnchorPoint = Vector2.new(0,1)
+                        ClearButton.ZIndex = 99999
 
                         table.insert(self.Instances, ClearButton)
                         C.ButtonClick(ClearButton,function()
