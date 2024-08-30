@@ -508,6 +508,20 @@ return function(C,Settings)
     if C.Cleared then
         return
     end
+    -- TEMP: Add Scripts in there
+    local Scripts2Add = {"Dark Dex"}
+    for num, scriptName in ipairs(Scripts2Add) do
+        local FormattedName = scriptName:gsub("%s+","")
+        assert(not C.CommandFunctions[FormattedName], `[CommandCore]: C.CommandFunctions already has command "{FormattedName}"`)
+        C.CommandFunctions[FormattedName] = {
+            Parameters={},
+            AfterTxt = "%s",
+            Run = function()
+                C.GetModule(scriptName).ScriptRun(C, Settings)
+                return true, "Ran"
+            end,
+        }
+    end
     for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
