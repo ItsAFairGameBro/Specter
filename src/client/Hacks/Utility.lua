@@ -90,20 +90,25 @@ return function(C,Settings)
 				Functs={}, Threads={},
 				BestMessage = nil,
 				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
+				Codes = {
+					[267] = "Kick",
+					[277] = "Connection",
+					[266] = "Connection",
+				},
 				Update = function(self,errorMessage)
 					local KickedButton = C.UI.KickedButton
 
 					local errorCode = GS:GetErrorCode()
 					errorCode = errorCode and errorCode.Value or -1
 
-					if errorCode ~= 267 and errorCode ~= 277 then
+					if not self.Codes[errorCode] then
 						if errorCode ~= 0 then
 							print("[Utility.NoKick]: Unknown Error Code:",errorCode)
 						end
 						return false
 					end
 
-					if not self.BestMessage or self.BestMessage == "You have been kicked from the game" then
+					if not self.BestMessage or #errorMessage>0 then
 						self.BestMessage = errorMessage
 						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
 					end
