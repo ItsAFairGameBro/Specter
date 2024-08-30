@@ -125,7 +125,7 @@ local function Static(C,Settings)
             end
         end
         C.AddObjectConnection(C.PlayerGui,"Game: Bloxburg",C.PlayerGui.ChildAdded:Connect(RegisterGUIChild))
-        for num, child in ipairs(RegisterGUIChild:GetChildren()) do
+        for num, child in ipairs(C.PlayerGui:GetChildren()) do
             RegisterGUIChild(child)
         end
     end)
