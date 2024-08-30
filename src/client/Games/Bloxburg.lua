@@ -917,7 +917,7 @@ return function (C,Settings)
                         rawset(C.CharacterHandler,"TriggerFaint",self.OldFaintFunct)
                         self.OldFaintFunct = nil
                     end
-                    if not firstRun and self.EnTbl.HideUI then
+                    if not firstRun and newValue and self.EnTbl.HideUI then
                         local GUI = C.PlayerGui:FindFirstChild("_MessageBox")
                         if GUI then
                             self.Events.MessageBoxAdded(self,GUI)
@@ -939,7 +939,6 @@ return function (C,Settings)
                         local EventSignal = C.StringWait(GUI,"MessageBox.Event",30)
                         assert(EventSignal,"[Bloxburg.AntiFaint]: Event Signal Yielded for 30 seconds and it was not found!")
                         EventSignal:Fire("Faint") -- hide it right away!
-                        warn("Anti-Faint Fired!")
                     end,
                 },
             },
