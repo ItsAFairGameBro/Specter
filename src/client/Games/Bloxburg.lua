@@ -147,10 +147,10 @@ local function Static(C,Settings)
                     end
                     local Event = Instance.new("BindableEvent")
                     C.AddGlobalInstance(Event)
-                    C.AddObjectConnect(Event,"One",C.RemoteObjects.DonationSent.OnClientEvent:Connect(function()
+                    C.AddObjectConnection(Event,"One",C.RemoteObjects.DonationSent.OnClientEvent:Connect(function()
                         Event:Fire(true)
                     end))
-                    C.AddObjectConnect(Event,"Two",C.RemoteObjects.CreateGUI.OnClientEvent:Connect(function(data)
+                    C.AddObjectConnection(Event,"Two",C.RemoteObjects.CreateGUI.OnClientEvent:Connect(function(data)
                         Event:Fire(data.Args[2]:gsub("T_",""))
                     end))
                     local AmountLeft = args[2]
