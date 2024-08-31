@@ -2758,6 +2758,7 @@ return function(C, Settings)
 		C.getgenv().ActionsList[info.Name] = info
 		ActionClone.Parent = ActionsList
 		local TimeTextLabel = ActionClone:WaitForChild("Time")
+		info.TimeLabel = TimeTextLabel
 		if info.Time then
 			if typeof(info.Time) == "number" then
 				task.spawn(function()
@@ -2787,7 +2788,8 @@ return function(C, Settings)
 	end
 
 	function C.SetActionLabel(actionClone: Frame, text: string, type: string)
-		local Time = actionClone:FindFirstChild(type or "Time")
+		local info = C.getgenv().ActionsList[actionClone]
+		local Time = info.TimeLabel
 		if Time then
 			Time.Text = text
 		end
@@ -2795,7 +2797,8 @@ return function(C, Settings)
 	end
 
 	function C.SetActionPercentage(actionClone: Frame, percentage: number)
-		local Time = actionClone:WaitForChild("Time",5)
+		local info = C.getgenv().ActionsList[actionClone]
+		local Time = info.TimeLabel
 		if Time then
 			local Display = ("%.2f%%"):format(percentage * 100)
 			local LastPing, LastPercentage = actionClone:GetAttribute("LastPing"), actionClone:GetAttribute("LastPercentage")
