@@ -133,7 +133,7 @@ local function Static(C,Settings)
         return {
             ["Donate"] = {
                 Parameters={{Type="Player",ExcludeMe=true},{Type="Number",Min=1,Max=50000,Step=1}},
-                AfterTxt = "%s",
+                AfterTxt = " $%.2f",
                 Run = function(self,args)
                     local DonatePerms = C.StringFind(RS,`Stats.{args[1][1].Name}.Options.DonatePermission`)
                     if not DonatePerms then
@@ -145,7 +145,14 @@ local function Static(C,Settings)
                     if DonatePerms.Value == 2 then
                         return false, `{args[1][1].Name} has donate set to off!`
                     end
-                    return true, "Ran"
+                    C.RemoteObjects.Donate:FireServer(
+                        {
+                            Player = args[1][1],
+                            Action = "Donate",
+                            Amount = args[2],
+                        }
+                    )
+                    return true, args[2]
                 end,
             }
         }
