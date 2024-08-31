@@ -575,6 +575,55 @@ return function (C,Settings)
                             return "Wait", 0
                         end,
                     },
+                    BloxBurgersEmployee = {
+                        Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(180),0), Size = Vector3.new(20,1,6)},
+                        Workstations = {Path = "ScriptableObjects.Cashier.Workstations",Offset = Vector3.new(0,0,-2)},
+                        BotFunct = function(self, model, actionClone, myWorkstation, jobModule)
+                            local MainModule = jobModule.BloxBurgersCashier
+                            if MainModule.CurrentWorkStationIndexName ~= myWorkstation.Name then
+                                if MainModule.CurrentWorkStationIndexName == "" then
+                                    actionClone.Time.Text = "Assigning Workstation"
+                                    MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
+                                    actionClone.Time.Text = "Done Assigning"
+                                    return "Wait", 0
+                                else
+                                    myWorkstation = C.StringWait(model,self.Workstations.Path)[MainModule.CurrentWorkStationIndexName]
+                                end
+                            end
+                            local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
+                            local Customer = myWorkstation.Occupied.Value
+                            if Customer ~= self.IgnoreCustomer then
+                                if self.Customer ~= Customer then
+                                    self.SendTime = nil
+                                    self.Customer = Customer
+                                end
+                            else
+                                actionClone.Time.Text = "Waiting For Next"
+                                return "Wait", 0
+                            end
+                            if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 1 then
+                                actionClone.Time.Text = "Waiting For Customer"
+                                return "Wait", 0
+                            end
+                            local Order = Customer.Order
+                            if not self.SendTime then
+                                self.SendTime = os.clock() + C.Randomizer:NextNumber(0.15,0.25) -- Run it on next call!
+                            elseif os.clock() >= self.SendTime then
+                                self.SendTime = nil
+                                actionClone.Time.Text = "Spoofing"
+                                --C.RemoteObjects.JobCompleted:FireServer(
+                                --    {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
+                                --)
+                                --self.IgnoreCustomer = Customer
+                                --return
+
+                            else
+                                actionClone.Time.Text = ("Waiting %.1f"):format(self.SendTime - os.clock())
+                                return "Wait", 0
+                            end
+                            return "Wait", 0
+                        end,
+                    },
                 },
                 WalkAndFire = function(self,possibilities,event,formatName,tbl)
                     local closest, closestDist = nil, math.huge
@@ -693,7 +742,7 @@ return function (C,Settings)
                                 end
                             else
                                 --actionClone.Time.Text = "Run"
-                                Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation)
+                                Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation,jobModule)
                                 if Return == "Teleport" then
                                     TeleportToStation()
                                     Return, Return2 = "Wait", 0
