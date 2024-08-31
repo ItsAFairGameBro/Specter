@@ -590,6 +590,8 @@ return function (C,Settings)
                             elseif myWorkstation.InUse.Value ~= C.plr then
                                 C.SetActionLabel(actionClone,"In Use")
                                 return "Wait", 0
+                            else
+                                return
                             end
                             local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
                             local Customer = myWorkstation.Occupied.Value
