@@ -577,7 +577,7 @@ return function (C,Settings)
                     },
                     BloxBurgersEmployee = {
                         --Location = {CFrame = CFrame.new(1080,12.5,1097) * CFrame.Angles(0,math.rad(180),0), Size = Vector3.new(20,1,6)},
-                        Workstations = {Path = "ScriptableObjects.Cashier.Workstations",Offset = Vector3.new(0,0,-2)},
+                        Workstations = {Path = "ScriptableObjects.Cashier.Workstations",PartOffset = Vector3.new(0,0,-2)},
                         BotFunct = function(self, model, actionClone, myWorkstation, jobModule)
                             local MainModule = jobModule.BloxBurgersCashier
                             if MainModule.CurrentWorkStationIndexName ~= myWorkstation.Name then
