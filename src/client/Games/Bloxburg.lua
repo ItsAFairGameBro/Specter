@@ -709,7 +709,7 @@ return function (C,Settings)
                         actionClone = actionClone or C.AddAction(info)
                         while C.char and not C.IsBusy() and ((jobHandler:GetJob() ~= jobName and not false)--botData.ProximityOnly)
                             or (botData.Location and (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500)) do
-                            while info.Enabled and not C.Cleared and (not actionClone or not pcall(C.SetActionLabel,actionClone,"TextChatService") 
+                            while not C.Cleared and (not actionClone or not pcall(C.SetActionLabel,actionClone,"TextChatService") 
                                 or not actionClone.Parent or info ~= C.getgenv().ActionsList[info.Name]) do
                                 warn("Stil Running After Deadline")
                                 task.wait()
