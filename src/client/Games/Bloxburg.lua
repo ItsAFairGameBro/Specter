@@ -587,7 +587,8 @@ return function (C,Settings)
                                     C.SetActionLabel(actionClone, "Done Assigning")
                                     return "Wait", 0
                                 else
-                                    myWorkstation = C.StringWait(model,self.Workstations.Path)[MainModule.CurrentWorkStationIndexName]
+                                    local availableWorkstations = C.StringWait(model,self.Workstations.Path)
+                                    myWorkstation = availableWorkstations[MainModule.CurrentWorkStationIndexName]
                                 end
                             end
                             local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
