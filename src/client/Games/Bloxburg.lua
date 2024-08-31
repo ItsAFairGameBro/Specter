@@ -697,11 +697,6 @@ return function (C,Settings)
                         C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                     end
                     while info.Enabled do
-                        while info.Enabled and not C.Cleared and (not actionClone or not pcall(function() return actionClone.Parent end) 
-                            or not actionClone.Parent or info ~= C.getgenv().ActionsList[info.Name]) do
-                            warn("Stil Running After Deadline")
-                            task.wait()
-                        end
                         while C.IsBusy() do
                             if not info.Enabled then
                                 return
@@ -714,9 +709,11 @@ return function (C,Settings)
                         actionClone = actionClone or C.AddAction(info)
                         while C.char and not C.IsBusy() and ((jobHandler:GetJob() ~= jobName and not false)--botData.ProximityOnly)
                             or (botData.Location and (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500)) do
-                            if not info.Enabled then
-                                return
-                            end    
+                            while info.Enabled and not C.Cleared and (not actionClone or not pcall(function() return actionClone.Parent end) 
+                                or not actionClone.Parent or info ~= C.getgenv().ActionsList[info.Name]) do
+                                warn("Stil Running After Deadline")
+                                task.wait()
+                            end
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
                             end
