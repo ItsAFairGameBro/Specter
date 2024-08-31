@@ -697,6 +697,10 @@ return function (C,Settings)
                         C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                     end
                     while info.Enabled do
+                        while info.Enabled and not C.Cleared and (not actionClone or not pcall(function() return actionClone.Parent end) 
+                            or not actionClone.Parent or info ~= C.getgenv().ActionsList[info.Name]) do
+                            warn("Stil Running After Deadline")
+                        end
                         while C.IsBusy() do
                             if actionClone and actionClone:FindFirstChild("Time") then
                                 C.SetActionLabel(actionClone,"Busy")
