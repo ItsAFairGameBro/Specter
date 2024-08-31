@@ -716,7 +716,9 @@ return function (C,Settings)
                             end
                             if not jobHandler:GetJob() then--and jobHandler:CanStartWorking(jobName,jobModule) then
                                 C.SetActionLabel(actionClone,"Going To Work")
-                                jobHandler:GoToWork(jobName)
+                                if jobHandler:GoToWork(jobName) then
+                                    break
+                                end
                             else
                                 C.SetActionLabel(actionClone,"Waiting")
                             end
