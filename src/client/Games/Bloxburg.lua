@@ -150,9 +150,11 @@ local function Static(C,Settings)
                     C.AddObjectConnection(Event,"One",C.RemoteObjects.DonationSent.OnClientEvent:Connect(function()
                         Event:Fire(true)
                     end))
-                    C.AddObjectConnection(Event,"Two",C.RemoteObjects.CreateGUI.OnClientEvent:Connect(function(data)
-                        Event:Fire(data.Args[2]:gsub("T_",""))
-                    end))
+                    C.RemoteObjects.CreateGUI.OnClientInvoke = (function(data)
+                        local val = data.Args[2]:gsub("T_",""):gsub("(%u)(%u%l+)", "%1 %2"):gsub("(%l)(%u)", "%1 %2")
+                        Event:Fire(val)
+                        C.CreateSysMessage(`Donation To {args[1][1].Name} Failed: {val}`)
+                    end)
                     local AmountLeft = args[2]
                     local Step = AmountLeft
                     local Count = 0
@@ -170,7 +172,7 @@ local function Static(C,Settings)
                             if AmountLeft <= 0 then
                                 break
                             end
-                        elseif Result == "DonationLimited" then
+                        elseif Result == "Donation Limited" then
                             Step /= 10
                         else
                             warn("[Bloxburg.Donate]: unknown error: "..Result)
