@@ -527,7 +527,7 @@ return function(C,Settings)
             end,
         }
     end
-    for num, commandFunct in ipairs(C.CommandFunctions) do
+    for num, commandFunct in ipairs(C.InsertCommandFunctions) do
         if commandFunct then
             for name, commandData in pairs(commandFunct()) do
                 assert(not C.CommandFunctions[name], `[CommandCore]: C.CommandFunctions already has command "{name}"`)
@@ -537,7 +537,7 @@ return function(C,Settings)
             end
         end
     end
-    C.CommandFunctions = nil
+    C.InsertCommandFunctions = nil
     for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions

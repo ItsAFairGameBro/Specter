@@ -129,7 +129,7 @@ local function Static(C,Settings)
             RegisterGUIChild(child)
         end
     end)
-    table.insert(C.CommandFunctions,function()
+    table.insert(C.InsertCommandFunctions,function()
         return {
             ["Donate"] = {
                 Parameters={{Type="Player",ExcludeMe=true},{Type="Number",Min=1,Max=50000,Step=1}},
