@@ -164,7 +164,7 @@ local function Static(C,Settings)
                             {
                                 Player = args[1][1],
                                 Action = "Donate",
-                                Amount = args[2],
+                                Amount = Step,
                             }
                         )
                         local Result = Event.Event:Wait()
