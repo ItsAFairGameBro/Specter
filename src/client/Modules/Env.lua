@@ -515,6 +515,8 @@ return function(C,Settings)
 			elseif (aType == "number" and bType == "number")
 				or (aType == "function" and bType == "function") then
 				return aValue > bValue
+			elseif  aType == "Instance" and bType == "Instance" then
+				return aType.Name:lower() > bType.Name:lower()
 			else
 				error("[C.StringStartsWith]: error - unknown types: "..typeof(aValue).." and "..typeof(bValue))
 			end
