@@ -2797,7 +2797,7 @@ return function(C, Settings)
 	end
 
 	function C.SetActionPercentage(actionClone: Frame, percentage: number)
-		local info = C.getgenv().ActionsList[gethiddenproperty(actionClone,"Name")]
+		local info = C.getgenv().ActionsList[actionClone.Name]
 		local Time = info.TimeLabel
 		if Time then
 			local Display = ("%.2f%%"):format(percentage * 100)
