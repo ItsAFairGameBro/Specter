@@ -134,7 +134,7 @@ local function Static(C,Settings)
             ["Donate"] = {
                 Parameters={{Type="Player",ExcludeMe=true},{Type="Number",Min=1,Max=50000,Step=1}},
                 AfterTxt = "%s",
-                Run = function(args)
+                Run = function(self,args)
                     local DonatePerms = C.StringFind(RS,`Stats{args[1][1].Name}.Options.DonatePermission`)
                     if not DonatePerms then
                         return false, "Player Not Found"

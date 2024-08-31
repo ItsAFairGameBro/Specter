@@ -428,7 +428,7 @@ return function(C,Settings)
                                         end
                                     end
                                     if not isIn then
-                                        table.insert(options,{tostring(s),tostring(s)})
+                                        table.insert(options,{putInStep, putInStep})
                                     end
                                 end
                             elseif mySuggestion.Type == "Options" then
