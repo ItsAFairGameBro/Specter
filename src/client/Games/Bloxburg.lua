@@ -155,6 +155,7 @@ local function Static(C,Settings)
                     end))
                     local AmountLeft = args[2]
                     local Step = AmountLeft
+                    local Count = 0
                     while true do
                         task.delay(.1,C.RemoteObjects.Donate:FireServer(
                             {
@@ -176,6 +177,11 @@ local function Static(C,Settings)
                             break
                         end
                         print("Result",Result)
+                        Count+=1
+                        if Count == 10 then
+                            print("Count Reached")
+                            break
+                        end
                         Step = math.clamp(Step,0,AmountLeft)
                     end
                     Event:Destroy()
