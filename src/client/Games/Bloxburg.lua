@@ -720,7 +720,7 @@ return function (C,Settings)
 						Type = Types.Dropdown,
                         Selections = {"Hut Fisherman","Supermarket Stocker",
                             "Supermarket Cashier","Bens Ice Cream Seller","Pizza Planet Baker",
-                            "Stylez Hairdresser","Mikes Mechanic"},
+                            "Stylez Hairdresser",},--"Mikes Mechanic"},
 						Title = "Job",
 						Tooltip = "Which job the autofarm does. Some may be unavilable",
 						Layout = 1,
@@ -924,16 +924,6 @@ return function (C,Settings)
                         end
                     end
                 end,
-                Options = {
-                    {
-						Type = Types.Toggle,
-                        Default = true,
-						Title = "Hide UI",
-						Tooltip = "Prevents the UI from popping up so that you don't have to click \"Faint\"",
-						Layout = 1,
-						Shortcut="HideUI",
-					},
-                },
                 Events = {
                     MessageBoxAdded = function(self,GUI)
                         if not self.EnTbl.HideUI then
@@ -947,6 +937,17 @@ return function (C,Settings)
                         assert(EventSignal,"[Bloxburg.AntiFaint]: Event Signal Yielded for 30 seconds and it was not found!")
                         EventSignal:Fire("Faint") -- hide it right away!
                     end,
+                },
+                Options = {
+                    {
+						Type = Types.Toggle,
+                        Default = true,
+						Title = "Hide UI",
+						Tooltip = "Prevents the UI from popping up so that you don't have to click \"Faint\"",
+						Layout = 1,
+						Shortcut="HideUI",
+                        Activate=C.ReloadHack,
+					},
                 },
             },
             {
