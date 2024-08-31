@@ -586,7 +586,6 @@ return function (C,Settings)
                                 if Result then
                                     MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
                                 end
-                                C.SetActionLabel(actionClone, "Done Assigning")
                                 return "Wait", 0
                             elseif myWorkstation.InUse.Value ~= C.plr then
                                 C.SetActionLabel(actionClone,"In Use")
