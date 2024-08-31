@@ -700,8 +700,12 @@ return function (C,Settings)
                         while info.Enabled and not C.Cleared and (not actionClone or not pcall(function() return actionClone.Parent end) 
                             or not actionClone.Parent or info ~= C.getgenv().ActionsList[info.Name]) do
                             warn("Stil Running After Deadline")
+                            task.wait()
                         end
                         while C.IsBusy() do
+                            if not info.Enabled then
+                                return
+                            end
                             if actionClone and actionClone:FindFirstChild("Time") then
                                 C.SetActionLabel(actionClone,"Busy")
                             end
@@ -710,6 +714,9 @@ return function (C,Settings)
                         actionClone = actionClone or C.AddAction(info)
                         while C.char and not C.IsBusy() and ((jobHandler:GetJob() ~= jobName and not false)--botData.ProximityOnly)
                             or (botData.Location and (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500)) do
+                            if not info.Enabled then
+                                return
+                            end    
                             if jobHandler:GetJob() then
                                 jobHandler:StopWorking()
                             end
@@ -759,7 +766,7 @@ return function (C,Settings)
                             task.wait(.25)
                         end
                     end
-                    C.RemoveAction(self.Shortcut)
+                    --C.RemoveAction(self.Shortcut)
                 end,
 				Activate = function(self,newValue)
                     C.RemoveAction(self.Shortcut)
