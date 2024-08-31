@@ -158,14 +158,15 @@ local function Static(C,Settings)
                     local AmountLeft = args[2]
                     local Step = AmountLeft
                     local Count = 0
+                    local DonateEvent = C.RemoteObjects.Donate
                     while true do
-                        task.delay(.1,C.RemoteObjects.Donate:FireServer(
+                        task.delay(.1,DonateEvent.FireServer, DonateEvent,
                             {
                                 Player = args[1][1],
                                 Action = "Donate",
                                 Amount = args[2],
                             }
-                        ))
+                        )
                         local Result = Event.Event:Wait()
                         if Result == true then
                             AmountLeft -= Step
