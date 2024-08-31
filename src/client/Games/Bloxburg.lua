@@ -762,7 +762,7 @@ return function (C,Settings)
                     if not newValue then
                         return
                     end
-                    self:JobRunner(self.EnTbl.SelJob:gsub(" ",""))
+                    table.insert(self.Threads,task.spawn(self.JobRunner,self,self.EnTbl.SelJob:gsub(" ","")))
                 end,
                 Options = {
                     {

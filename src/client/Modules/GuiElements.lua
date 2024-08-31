@@ -2788,7 +2788,7 @@ return function(C, Settings)
 	end
 
 	function C.SetActionLabel(actionClone: Frame, text: string, type: string)
-		local info = C.getgenv().ActionsList[gethiddenproperty(actionClone,"Name")]
+		local info = C.getgenv().ActionsList[actionClone.Name]
 		local Time = info.TimeLabel
 		if Time then
 			Time.Text = text
