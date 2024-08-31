@@ -2788,7 +2788,7 @@ return function(C, Settings)
 	end
 
 	function C.SetActionLabel(actionClone: Frame, text: string, type: string)
-		local info = C.getgenv().ActionsList[actionClone]
+		local info = C.getgenv().ActionsList[actionClone.Name]
 		local Time = info.TimeLabel
 		if Time then
 			Time.Text = text
@@ -2797,7 +2797,7 @@ return function(C, Settings)
 	end
 
 	function C.SetActionPercentage(actionClone: Frame, percentage: number)
-		local info = C.getgenv().ActionsList[actionClone]
+		local info = C.getgenv().ActionsList[actionClone.Name]
 		local Time = info.TimeLabel
 		if Time then
 			local Display = ("%.2f%%"):format(percentage * 100)
