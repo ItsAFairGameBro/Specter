@@ -714,14 +714,14 @@ return function (C,Settings)
                                 warn("Stil Running After Deadline")
                                 task.wait()
                             end
-                            if jobHandler:GetJob() then
-                                jobHandler:StopWorking()
-                            end
                             if not jobHandler:GetJob() then--and jobHandler:CanStartWorking(jobName,jobModule) then
                                 C.SetActionLabel(actionClone,"Going To Work")
                                 jobHandler:GoToWork(jobName)
                             else
                                 C.SetActionLabel(actionClone,"Waiting")
+                            end
+                            if jobHandler:GetJob() then
+                                jobHandler:StopWorking()
                             end
                             task.wait(.1)
                         end
