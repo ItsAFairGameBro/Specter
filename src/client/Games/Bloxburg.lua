@@ -135,9 +135,9 @@ local function Static(C,Settings)
                 Parameters={{Type="Player",ExcludeMe=true},{Type="Number",Min=1,Max=50000,Step=1}},
                 AfterTxt = "%s",
                 Run = function(self,args)
-                    local DonatePerms = C.StringFind(RS,`Stats{args[1][1].Name}.Options.DonatePermission`)
+                    local DonatePerms = C.StringFind(RS,`Stats.{args[1][1].Name}.Options.DonatePermission`)
                     if not DonatePerms then
-                        return false, "Player Not Found"
+                        return false, "Player Stats Not Found"
                     end
                     if DonatePerms.Value == 1 and not C.plr:IsFriendsWith(args[1][1].UserId) then
                         return false, `{args[1][1].Name} has donate set to friends only!`
