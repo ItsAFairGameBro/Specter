@@ -82,9 +82,9 @@ return function(C,Settings)
                         elseif canRunFunction and (args[num] < argumentData.Min or args[num] > argumentData.Max) then
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows numbers between {argumentData.Min} to {argumentData.Max}`)
-                            elseif canRunFunction and (argumentData.Step and math.floor(args[num]/argumentData.Step)*argumentData.Step==args[num]) then
+                            elseif canRunFunction and (argumentData.Step and math.floor(args[num]/argumentData.Step)*argumentData.Step~=args[num]) then
                                 canRunFunction = false
-                                C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows numbers between {argumentData.Min} to {argumentData.Max}`)
+                                C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows numbers to the precision of {argumentData.Step}, such as {argumentData.Step + argumentData.Min}`)
                         end
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
@@ -415,7 +415,21 @@ return function(C,Settings)
                                 table.insert(options,{"random","random"})
                             elseif mySuggestion.Type == "Number" then
                                 for s = mySuggestion.Min, mySuggestion.Max, (mySuggestion.Max - mySuggestion.Min) / 8 do
-                                    table.insert(options,{tostring(s),tostring(s)})
+                                    local current = s
+                                    if mySuggestion.Step then
+                                        current = math.round(current/mySuggestion.Step)*mySuggestion.Step
+                                    end
+                                    local putInStep = tostring(math.clamp(current,mySuggestion.Min,mySuggestion.Max))
+                                    local isIn = false
+                                    for num, vals in ipairs(options) do
+                                        if vals[1] == putInStep or vals[2] == putInStep then
+                                            isIn = true
+                                            break
+                                        end
+                                    end
+                                    if not isIn then
+                                        table.insert(options,{tostring(s),tostring(s)})
+                                    end
                                 end
                             elseif mySuggestion.Type == "Options" then
                                 for num, val in ipairs(mySuggestion.Options) do
