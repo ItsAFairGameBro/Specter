@@ -145,14 +145,41 @@ local function Static(C,Settings)
                     if DonatePerms.Value == 2 then
                         return false, `{args[1][1].Name} has donate set to off!`
                     end
-                    C.RemoteObjects.Donate:FireServer(
-                        {
-                            Player = args[1][1],
-                            Action = "Donate",
-                            Amount = args[2],
-                        }
-                    )
-                    return true, args[2]
+                    local Event = Instance.new("BindableEvent")
+                    C.AddGlobalInstance(Event)
+                    C.AddObjectConnect(Event,"One",C.RemoteObjects.DonationSent.OnClientEvent:Connect(function()
+                        Event:Fire(true)
+                    end))
+                    C.AddObjectConnect(Event,"Two",C.RemoteObjects.CreateGUI.OnClientEvent:Connect(function(data)
+                        Event:Fire(data.Args[2]:gsub("T_",""))
+                    end))
+                    local AmountLeft = args[2]
+                    local Step = AmountLeft
+                    while true do
+                        task.delay(.1,C.RemoteObjects.Donate:FireServer(
+                            {
+                                Player = args[1][1],
+                                Action = "Donate",
+                                Amount = args[2],
+                            }
+                        ))
+                        local Result = Event.Event:Wait()
+                        if Result == true then
+                            AmountLeft -= Step
+                            if AmountLeft <= 0 then
+                                break
+                            end
+                        elseif Result == "DonationLimited" then
+                            Step /= 10
+                        else
+                            warn("[Bloxburg.Donate]: unknown error: "..Result)
+                            break
+                        end
+                        print("Result",Result)
+                        Step = math.clamp(Step,0,AmountLeft)
+                    end
+                    Event:Destroy()
+                    return true, args[2] - AmountLeft
                 end,
             }
         }
