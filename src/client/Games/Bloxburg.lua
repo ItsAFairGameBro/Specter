@@ -936,6 +936,13 @@ return function (C,Settings)
                 },
                 Events = {
                     MessageBoxAdded = function(self,GUI)
+                        if not self.EnTbl.HideUI then
+                            return
+                        end
+                        local Title = C.StringWait(GUI,"MessageBox.Title")
+                        if Title.Text ~= "Faint" then
+                            return
+                        end
                         local EventSignal = C.StringWait(GUI,"MessageBox.Event",30)
                         assert(EventSignal,"[Bloxburg.AntiFaint]: Event Signal Yielded for 30 seconds and it was not found!")
                         EventSignal:Fire("Faint") -- hide it right away!
