@@ -583,7 +583,10 @@ return function (C,Settings)
                             if MainModule.CurrentWorkStationIndexName ~= myWorkstation.Name then
                                 if not MainModule.CurrentWorkStationIndexName or MainModule.CurrentWorkStationIndexName == "" then
                                     C.SetActionLabel(actionClone, "Assigning Workstation")
-                                    --MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
+                                    local Result = C.RemoteObjects.RequestCashierRole:InvokeServer({StationName = "Cashier", StationIndexName = myWorkstation.Name})
+                                    if Result then
+                                        MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
+                                    end
                                     C.SetActionLabel(actionClone, "Done Assigning")
                                     return "Wait", 0
                                 else
