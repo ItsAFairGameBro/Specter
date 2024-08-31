@@ -581,7 +581,7 @@ return function (C,Settings)
                         BotFunct = function(self, model, actionClone, myWorkstation, jobModule)
                             local MainModule = jobModule.BloxBurgersCashier
                             if MainModule.CurrentWorkStationIndexName ~= myWorkstation.Name then
-                                if MainModule.CurrentWorkStationIndexName == "" then
+                                if not MainModule.CurrentWorkStationIndexName or MainModule.CurrentWorkStationIndexName == "" then
                                     C.SetActionLabel(actionClone, "Assigning Workstation")
                                     MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
                                     C.SetActionLabel(actionClone, "Done Assigning")
