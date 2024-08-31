@@ -166,17 +166,17 @@ return function (C,Settings)
                                     if Title then
                                         Title = Title:gsub("%a_","")--Some start with I_ because gay!
                                         if Title == "Cast" then
-                                            actionClone.Time.Text = "Casting"
+                                            C.SetActionLabel(actionClone,"Casting")
                                             task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                         elseif Title == "Pull" then
                                             if EquipData.Object.Pos.Value.Y <= 7.7 then
-                                                actionClone.Time.Text = "Pulling"
+                                                C.SetActionLabel(actionClone,"Pulling")
                                                 task.spawn(C.HotbarUI.Hotbar.DoEquipAction,C.HotbarUI.Hotbar)
                                             else
-                                                actionClone.Time.Text = "Waiting"
+                                                C.SetActionLabel(actionClone,"Waiting")
                                             end
                                         else
-                                            actionClone.Time.Text = ""
+                                            C.SetActionLabel(actionClone,". . .")
                                         end
                                         return true
                                     end
@@ -201,17 +201,17 @@ return function (C,Settings)
                                 end
                                 if closest then
                                     if closestDist < 10 then
-                                        actionClone.Time.Text = "Firing"
+                                        C.SetActionLabel(actionClone,"Firing")
                                         C.RemoteObjects["TakeFoodCrate"]:FireServer({Object=closest})
                                         C.human:MoveTo(C.char:GetPivot().Position)
                                         return "Wait", 0
                                     else
-                                        actionClone.Time.Text = "Walking"
+                                        C.SetActionLabel(actionClone, "Walking")
                                         C.human:MoveTo(closest:GetPivot().Position)
                                         return true
                                     end
                                 else
-                                    actionClone.Time.Text = "No Resupply Crates"
+                                    C.SetActionLabel(actionClone, "No Resupply Crates")
                                 end
                             else -- Has No Food Crate
                                 local closest2, closestDist2 = nil, math.huge
@@ -223,17 +223,17 @@ return function (C,Settings)
                                 end
                                 if closest2 then
                                     if closestDist2 < 10 then
-                                        actionClone.Time.Text = "Firing2"
+                                        C.SetActionLabel(actionClone, "Firing2")
                                         C.RemoteObjects["RestockShelf"]:FireServer({Shelf = closest2})
                                         C.human:MoveTo(C.char:GetPivot().Position)
                                         return "Wait", 0
                                     else
                                         C.human:MoveTo(closest2:GetPivot()*Vector3.new(0,0,3))
-                                        actionClone.Time.Text = "Walking2"
+                                        C.SetActionLabel(actionClone, "Walking2")
                                         return true
                                     end
                                 else
-                                    actionClone.Time.Text = "No Empty Shelves"
+                                    C.SetActionLabel(actionClone, "No Empty Shelves")
                                 end
                             end
                             C.human:MoveTo(C.char:GetPivot().Position)
@@ -245,7 +245,7 @@ return function (C,Settings)
                         BotFunct = function(self, model, actionClone, myWorkstation)
                             local Customer = myWorkstation.Occupied.Value
                             if not Customer then
-                                actionClone.Time.Text = "Waiting For Customer"
+                                C.SetActionLabel(actionClone, "Waiting For Customer")
                                 return
                             end
                             C.CanMoveOutOfPosition = myWorkstation.BagsLeft.Value <= 0
@@ -254,19 +254,19 @@ return function (C,Settings)
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "BFF Bags" then
                                     C.human:MoveTo(BagCrate:GetPivot() * Vector3.new(3,0,0))
                                     if (model.Crates.BagCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
-                                        actionClone.Time.Text = "New Bags (2/2)"
+                                        C.SetActionLabel(actionClone, "New Bags (2/2)")
                                         C.RemoteObjects["TakeNewBags"]:FireServer({Object = model.Crates.BagCrate})
                                     else
-                                        actionClone.Time.Text = "New Bags (1/2)"
+                                        C.SetActionLabel(actionClone, "New Bags (1/2)")
                                     end
                                 else
                                     if (myWorkstation:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
-                                        actionClone.Time.Text = "Restocking (2/2)"
+                                        C.SetActionLabel(actionClone, "Restocking (2/2)")
                                         C.RemoteObjects["RestockBags"]:FireServer({Workstation = myWorkstation})
                                         C.human:MoveTo(C.char:GetPivot().Position)
                                     else
                                         C.human:MoveTo(myWorkstation:GetPivot().Position)
-                                        actionClone.Time.Text = "Restocking (1/2)"
+                                        C.SetActionLabel(actionClone, "Restocking (1/2)")
                                     end
                                 end
                             elseif #myWorkstation.DroppedFood:GetChildren() > 0 then
@@ -281,18 +281,18 @@ return function (C,Settings)
                                 if curBagCount > 0 then
                                     for num, instance in ipairs(myWorkstation.DroppedFood:GetChildren()) do
                                         if num - 1 <= 3 - curBagCount then
-                                            actionClone.Time.Text = "Scanning "..instance.Name
+                                            C.SetActionLabel(actionClone, "Scanning "..instance.Name)
                                             C.RemoteObjects["ScanDroppedItem"]:FireServer({Item=instance})
                                             --task.wait()
                                         else
-                                            actionClone.Time.Text = "Finish Scan"
+                                            C.SetActionLabel(actionClone, "Finish Scan")
                                             break
                                         end
                                     end
                                     return "Wait", 0
                                 else
                                     C.RemoteObjects["TakeNewBag"]:FireServer({Workstation=myWorkstation})
-                                    actionClone.Time.Text = "Getting Bag"
+                                    C.SetActionLabel(actionClone, "Getting Bag")
                                     return "Wait", 0.15
                                 end
                             else
@@ -306,15 +306,15 @@ return function (C,Settings)
                                 if hasAtLeastOneItem then
                                     --self.Timer = (self.Timer or 0) + 1
                                     if (myWorkstation.CustomerTarget_2.Position - Customer:GetPivot().Position).Magnitude < 3 then
-                                        actionClone.Time.Text = "Finishing"
+                                        C.SetActionLabel(actionClone, "Finishing")
                                         C.RemoteObjects["JobCompleted"]:FireServer({Workstation=myWorkstation})
                                         myWorkstation.Occupied.Value = nil
                                     else
-                                        actionClone.Time.Text = "Item Wait"
+                                        C.SetActionLabel(actionClone, "Item Wait")
                                         return "Wait", 0
                                     end
                                 else
-                                    actionClone.Time.Text = "First Item Wait"
+                                    C.SetActionLabel(actionClone, "First Item Wait")
                                     return "Wait", 0
                                 end
                             end
@@ -331,23 +331,23 @@ return function (C,Settings)
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ingredient Crate" then
                                     C.human:MoveTo(IngrCrate:GetPivot() * Vector3.new(3,0,0))
                                     if (IngrCrate:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
-                                        actionClone.Time.Text = "Get Crate (2/2)"
+                                        C.SetActionLabel(actionClone, "Get Crate (2/2)")
                                         C.RemoteObjects["TakeIngredientCrate"]:FireServer({Object = IngrCrate})
                                     else
-                                        actionClone.Time.Text = "Get Crate (1/2)"
+                                        C.SetActionLabel(actionClone, "Get Crate (1/2)")
                                     end
                                 else
                                     if (myWorkstation:GetPivot().Position - C.char:GetPivot().Position).Magnitude < 10 then
-                                        actionClone.Time.Text = "Restock (2/2)"
+                                        C.SetActionLabel(actionClone, "Restock (2/2)")
                                         C.RemoteObjects["RestockIngredients"]:FireServer({Workstation = myWorkstation})
                                         C.human:MoveTo(C.char:GetPivot().Position)
                                     else
                                         C.human:MoveTo(myWorkstation:GetPivot().Position)
-                                        actionClone.Time.Text = "Restock (1/2)"
+                                        C.SetActionLabel(actionClone, "Restock (1/2)")
                                     end
                                 end
                             elseif Order.Value == "true" then
-                                actionClone.Time.Text = "Waiting"
+                                C.SetActionLabel(actionClone, "Waiting")
                             else
                                 local PizzaTbls = {
                                     ["Cheese"]={false},
@@ -357,9 +357,9 @@ return function (C,Settings)
                                 }
                                 local myTbl = PizzaTbls[Order.Value]
                                 if not myTbl then
-                                    actionClone.Time.Text = "Order: "..Order.Value .. " (UNKNOWN)"
+                                    C.SetActionLabel(actionClone, "Order: "..Order.Value .. " (UNKNOWN)")
                                 else
-                                    actionClone.Time.Text = "Order: "..Order.Value
+                                    C.SetActionLabel(actionClone, "Order: "..Order.Value)
                                     local endResult = {true,true,true}
                                     table.insert(endResult,myTbl[1])
                                     for s = 1, 4 do
@@ -391,30 +391,30 @@ return function (C,Settings)
                                 end
                             end
                             if CurrentCustomer then
-                                actionClone.Time.Text = ""
+                                C.SetActionLabel(actionClone, "")
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.Name ~= "Ice Cream Cup" then
-                                    actionClone.Time.Text = "Getting Cup"
+                                    C.SetActionLabel(actionClone, "Getting Cup")
                                     C.RemoteObjects["TakeIceCreamCup"]:FireServer({})
                                 else
                                     local Cup = C.HotbarUI.Hotbar.EquipData.Object
                                     local Order = CurrentCustomer.Order
                                     --C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
                                     if Order.Flavor1.Value ~= "" and Cup.Ball1.Transparency == 1 then
-                                        actionClone.Time.Text = "Flavor 1"
+                                        C.SetActionLabel(actionClone, "Flavor 1")
                                         C.RemoteObjects["AddIceCreamScoop"]:FireServer({
                                             Ball = Cup.Ball1,
                                             Taste = Order.Flavor1.Value,
                                         })
                                         Cup.Ball1.Transparency = 0
                                     elseif Order.Flavor2.Value ~= "" and Cup.Ball2.Transparency == 1 then
-                                        actionClone.Time.Text = "Flavor 2"
+                                        C.SetActionLabel(actionClone, "Flavor 2")
                                         C.RemoteObjects["AddIceCreamScoop"]:FireServer({
                                             Ball = Cup.Ball2,
                                             Taste = Order.Flavor2.Value,
                                         })
                                         Cup.Ball2.Transparency = 0
                                     elseif Order.Topping.Value ~= "" and not Cup.Ball1:FindFirstChild("Sprinkles") then
-                                        actionClone.Time.Text = "Topping"
+                                        C.SetActionLabel(actionClone, "Topping")
                                         C.RemoteObjects["AddIceCreamTopping"]:FireServer({
                                             Taste = Order.Topping.Value
                                         })
@@ -422,10 +422,10 @@ return function (C,Settings)
                                     else
                                         if (C.char:GetPivot().Position - CurrentCustomer:GetPivot().Position).Magnitude < 10 then
                                             C.RemoteObjects["JobCompleted"]:FireServer({Workstation = StaticCust})
-                                            actionClone.Time.Text = "Firing"
+                                            C.SetActionLabel(actionClone, "Firing")
                                             return "Wait",0
                                         else
-                                            actionClone.Time.Text = "Delivering"
+                                            C.SetActionLabel(actionClone, "Delivering")
                                             --C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
                                             
                                         end
@@ -449,7 +449,7 @@ return function (C,Settings)
                                 if HasValid then
                                     C.human:MoveTo(Vector3.new(940,13.7269,1043.7152))
                                     --C.human:MoveTo(Vector3.new(932,13.72,1047))
-                                    actionClone.Time.Text = "Waiting For Next"
+                                    C.SetActionLabel(actionClone, "Waiting For Next")
                                     self.MoveTime = nil
                                 else
                                     if not self.MoveTime then
@@ -458,7 +458,7 @@ return function (C,Settings)
                                         C.human:MoveTo(Vector3.new(940,13.7269,1043.7152))
                                         self.MoveTime = nil
                                     end
-                                    actionClone.Time.Text = "Waiting For First Customer"
+                                    C.SetActionLabel(actionClone, "Waiting For First Customer")
                                 end
                             end
                         end,
@@ -475,11 +475,11 @@ return function (C,Settings)
                                     self.Customer = Customer
                                 end
                             else
-                                actionClone.Time.Text = "Waiting For Next"
+                                C.SetActionLabel(actionClone, "Waiting For Next")
                                 return "Wait", 0
                             end
                             if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 1 then
-                                actionClone.Time.Text = "Waiting For Customer"
+                                C.SetActionLabel(actionClone, "Waiting For Customer")
                                 return "Wait", 0
                             end
                             local Order = Customer.Order
@@ -487,14 +487,14 @@ return function (C,Settings)
                                 self.SendTime = os.clock() + C.Randomizer:NextNumber(0.15,0.25) -- Run it on next call!
                             elseif os.clock() >= self.SendTime then
                                 self.SendTime = nil
-                                actionClone.Time.Text = "Spoofing"
+                                C.SetActionLabel(actionClone, "Spoofing")
                                 C.RemoteObjects.JobCompleted:FireServer(
                                     {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
                                 )
                                 self.IgnoreCustomer = Customer
                                 return
                             else
-                                actionClone.Time.Text = ("Waiting %.1f"):format(self.SendTime - os.clock())
+                                C.SetActionLabel(actionClone, ("Waiting %.1f"):format(self.SendTime - os.clock()))
                                 return "Wait", 0
                             end
                             return "Wait", 0
@@ -511,16 +511,16 @@ return function (C,Settings)
                                     self.Customer = Customer
                                 end
                             else
-                                --actionClone.Time.Text = "Waiting For Next"
+                                --C.SetActionLabel(actionClone, "Waiting For Next"
                                 --return "Wait", 0
                             end
                             if not Customer or (Customer:GetPivot().Position - myWorkstation.CustomerTarget.Position).Magnitude > 2 then
-                                actionClone.Time.Text = "Waiting For Customer"
+                                C.SetActionLabel(actionClone, "Waiting For Customer")
                                 return "Wait", 0
                             end
                             local Order,Vehicle = Customer.Order, Customer.Vehicle
                             if self.Completed then
-                                actionClone.Time.Text = "Completed"
+                                C.SetActionLabel(actionClone, "Completed")
                                 self.Parent:WalkAndFire({myWorkstation},"JobCompleted","Workstation")
                                 --self.IgnoreCustomer = Customer
                                 self.Completed = false
@@ -528,11 +528,11 @@ return function (C,Settings)
                             elseif Order:FindFirstChild("Color") then
                                 -- It's a coloring one!
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Spray Painter" then
-                                    actionClone.Time.Text = "Color: "..Order.Color.Value
+                                    C.SetActionLabel(actionClone, "Color: "..Order.Color.Value)
                                     self.Parent:WalkAndFire({C.StringWait(model,"PaintingEquipment."..Order.Color.Value)},"TakePainter","Object")
                                     self.Completed = false
                                 else
-                                    actionClone.Time.Text = "Fixing Color"
+                                    C.SetActionLabel(actionClone, "Fixing Color")
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                                 return "Wait", 0
@@ -541,11 +541,11 @@ return function (C,Settings)
                                     or (not Vehicle.BackWheel:GetAttribute("Replaced") and "BackWheel") or "Completed"
                                 if Wheel2Replace ~= "Completed" then
                                     if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Motorcycle Wheel" then
-                                        actionClone.Time.Text = "Getting Wheels"
+                                        C.SetActionLabel(actionClone, "Getting Wheels")
                                         self.Parent:WalkAndFire({C.StringWait(model,"TireRacks."..Order.Wheels.Value)},"TakeWheel","Object")
                                         self.Completed = false
                                     else
-                                        actionClone.Time.Text = "Fixing Wheels"
+                                        C.SetActionLabel(actionClone, "Fixing Wheels")
                                         local beforeTbl = {}
                                         if Wheel2Replace == "FrontWheel" then
                                             beforeTbl.Front = true
@@ -557,20 +557,20 @@ return function (C,Settings)
                                         end
                                     end
                                 else
-                                    actionClone.Time.Text = "Wheel Completion"
+                                    C.SetActionLabel(actionClone, "Wheel Completion")
                                 end
                                 self.Completed = Wheel2Replace == "Completed"
                             elseif Order:FindFirstChild("Oil") then
                                 if not C.HotbarUI.Hotbar.EquipData or C.HotbarUI.Hotbar.EquipData.ItemData.Name ~= "Oil Can" then
                                     self.Parent:WalkAndFire(C.StringWait(model,"OilCans"):GetChildren(),"TakeOil","Object")
                                     self.Completed = false
-                                    actionClone.Time.Text = "Getting Oil"
+                                    C.SetActionLabel(actionClone, "Getting Oil")
                                 else
-                                    actionClone.Time.Text = "Fixing Oil"
+                                    C.SetActionLabel(actionClone, "Fixing Oil")
                                     self.Parent:WalkAndFire({myWorkstation},"FixBike","Workstation")
                                 end
                             else
-                                actionClone.Time.Text = "NO NAME: " .. Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value
+                                C.SetActionLabel(actionClone, "NO NAME: " .. Order:GetChildren()[1].Value .. " " .. Order:GetChildren()[2].Value)
                             end
                             return "Wait", 0
                         end,
@@ -582,9 +582,9 @@ return function (C,Settings)
                             local MainModule = jobModule.BloxBurgersCashier
                             if MainModule.CurrentWorkStationIndexName ~= myWorkstation.Name then
                                 if MainModule.CurrentWorkStationIndexName == "" then
-                                    actionClone.Time.Text = "Assigning Workstation"
+                                    C.SetActionLabel(actionClone, "Assigning Workstation")
                                     MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
-                                    actionClone.Time.Text = "Done Assigning"
+                                    C.SetActionLabel(actionClone, "Done Assigning")
                                     return "Wait", 0
                                 else
                                     myWorkstation = C.StringWait(model,self.Workstations.Path)[MainModule.CurrentWorkStationIndexName]
@@ -598,11 +598,11 @@ return function (C,Settings)
                                     self.Customer = Customer
                                 end
                             else
-                                actionClone.Time.Text = "Waiting For Next"
+                                C.SetActionLabel(actionClone, "Waiting For Next")
                                 return "Wait", 0
                             end
                             if not Customer or (Customer:GetPivot().Position - StoolAttach.Position).Magnitude > 1 then
-                                actionClone.Time.Text = "Waiting For Customer"
+                                C.SetActionLabel(actionClone, "Waiting For Customer")
                                 return "Wait", 0
                             end
                             local Order = Customer.Order
@@ -610,7 +610,7 @@ return function (C,Settings)
                                 self.SendTime = os.clock() + C.Randomizer:NextNumber(0.15,0.25) -- Run it on next call!
                             elseif os.clock() >= self.SendTime then
                                 self.SendTime = nil
-                                actionClone.Time.Text = "Spoofing"
+                                C.SetActionLabel(actionClone, "Spoofing")
                                 --C.RemoteObjects.JobCompleted:FireServer(
                                 --    {Order={Order.Style.Value,Order.Color.Value},Workstation=myWorkstation}
                                 --)
@@ -618,7 +618,7 @@ return function (C,Settings)
                                 --return
 
                             else
-                                actionClone.Time.Text = ("Waiting %.1f"):format(self.SendTime - os.clock())
+                                C.SetActionLabel(actionClone, ("Waiting %.1f"):format(self.SendTime - os.clock()))
                                 return "Wait", 0
                             end
                             return "Wait", 0
@@ -692,14 +692,14 @@ return function (C,Settings)
                     local actionClone = C.AddAction(info)
                     local myWorkstation
                     local function TeleportToStation()
-                        actionClone.Time.Text = "Going To Station"
+                        C.SetActionLabel(actionClone,"Going To Station")
                         
                         C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                     end
                     while info.Enabled do
                         while C.IsBusy() do
                             if actionClone and actionClone:FindFirstChild("Time") then
-                                actionClone.Time.Text = "Busy"
+                                C.SetActionLabel(actionClone,"Busy")
                             end
                             task.wait(1)
                         end
@@ -710,10 +710,10 @@ return function (C,Settings)
                                 jobHandler:StopWorking()
                             end
                             if not jobHandler:GetJob() then--and jobHandler:CanStartWorking(jobName,jobModule) then
-                                actionClone.Time.Text = "Going To Work"
+                                C.SetActionLabel(actionClone,"Going To Work")
                                 jobHandler:GoToWork(jobName)
                             else
-                                actionClone.Time.Text = "Waiting"
+                                C.SetActionLabel(actionClone,"Waiting")
                             end
                             task.wait(.1)
                         end
@@ -741,7 +741,7 @@ return function (C,Settings)
                                     Return, Return2 = "Wait", 0
                                 end
                             else
-                                --actionClone.Time.Text = "Run"
+                                --TimeLabel.Text = "Run"
                                 Return, Return2 = botData:BotFunct(jobModule.Model,actionClone,myWorkstation,jobModule)
                                 if Return == "Teleport" then
                                     TeleportToStation()
@@ -884,7 +884,7 @@ return function (C,Settings)
                         end
                         local Plot = C.GetPlot()
                         if not Plot then
-                            actionClone.Time.Text = "Teleporting"
+                            C.SetActionLabel(actionClone,"Teleporting")
                             -- HotbarUI Yields, so no wait
                             C.HotbarUI:ToHouse()
                         else
@@ -901,7 +901,7 @@ return function (C,Settings)
                                 if values2Fix[1] then
                                     MoodValue = values2Fix[1]
                                     MoodName = values2Fix[1].Name
-                                    actionClone.Title.Text = "Boosting " .. MoodName
+                                    C.SetActionLabel(actionClone,`Boosting {MoodValue}`,"Title")
                                 else
                                     break
                                 end

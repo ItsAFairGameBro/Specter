@@ -2786,6 +2786,14 @@ return function(C, Settings)
 		return ActionClone
 	end
 
+	function C.SetActionLabel(actionClone: Frame, text: string, type: string)
+		local Time = actionClone:FindFirstChild(type or "Time")
+		if Time then
+			Time.Text = text
+		end
+		return Time ~= nil
+	end
+
 	function C.SetActionPercentage(actionClone: Frame, percentage: number)
 		local Time = actionClone:WaitForChild("Time",5)
 		if Time then
