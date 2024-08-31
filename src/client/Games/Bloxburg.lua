@@ -940,7 +940,7 @@ return function (C,Settings)
                             return
                         end
                         local Title = C.StringWait(GUI,"MessageBox.Title")
-                        if Title.Text ~= "Faint" then
+                        if Title.Text ~= "Critically low moods! " then
                             return
                         end
                         local EventSignal = C.StringWait(GUI,"MessageBox.Event",30)
