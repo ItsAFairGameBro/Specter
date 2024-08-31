@@ -580,19 +580,17 @@ return function (C,Settings)
                         Workstations = {Path = "ScriptableObjects.Cashier.Workstations",PartOffset = Vector3.new(0,0,-2)},
                         BotFunct = function(self, model, actionClone, myWorkstation, jobModule)
                             local MainModule = jobModule.BloxBurgersCashier
-                            if MainModule.CurrentWorkStationIndexName ~= myWorkstation.Name then
-                                if not MainModule.CurrentWorkStationIndexName or MainModule.CurrentWorkStationIndexName == "" then
-                                    C.SetActionLabel(actionClone, "Assigning Workstation")
-                                    local Result = C.RemoteObjects.RequestCashierRole:InvokeServer({StationName = "Cashier", StationIndexName = myWorkstation.Name})
-                                    if Result then
-                                        MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
-                                    end
-                                    C.SetActionLabel(actionClone, "Done Assigning")
-                                    return "Wait", 0
-                                else
-                                    local availableWorkstations = C.StringWait(model,self.Workstations.Path)
-                                    myWorkstation = availableWorkstations[MainModule.CurrentWorkStationIndexName]
+                            if not myWorkstation.InUse.Value then
+                                C.SetActionLabel(actionClone, "Assigning Workstation")
+                                local Result = C.RemoteObjects.RequestCashierRole:InvokeServer({StationName = "Cashier", StationIndexName = myWorkstation.Name})
+                                if Result then
+                                    MainModule:OnStationClaimed(myWorkstation.StationPart,C.Attachment)
                                 end
+                                C.SetActionLabel(actionClone, "Done Assigning")
+                                return "Wait", 0
+                            elseif myWorkstation.InUse.Value ~= C.plr then
+                                C.SetActionLabel(actionClone,"In Use")
+                                return "Wait", 0
                             end
                             local StoolAttach = C.StringWait(myWorkstation,"Stool.AttachPos")
                             local Customer = myWorkstation.Occupied.Value
