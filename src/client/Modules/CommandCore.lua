@@ -82,6 +82,9 @@ return function(C,Settings)
                         elseif canRunFunction and (args[num] < argumentData.Min or args[num] > argumentData.Max) then
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows numbers between {argumentData.Min} to {argumentData.Max}`)
+                            elseif canRunFunction and (argumentData.Step and math.floor(args[num]/argumentData.Step)*argumentData.Step==args[num]) then
+                                canRunFunction = false
+                                C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows numbers between {argumentData.Min} to {argumentData.Max}`)
                         end
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
@@ -524,6 +527,17 @@ return function(C,Settings)
             end,
         }
     end
+    for num, commandFunct in ipairs(C.CommandFunctions) do
+        if commandFunct then
+            for name, commandData in pairs(commandFunct()) do
+                assert(not C.CommandFunctions[name], `[CommandCore]: C.CommandFunctions already has command "{name}"`)
+                assert(commandData.Parameters, `[CommandCore]: {name} doesn't have .Paramters`)
+                assert(commandData.Run, `[CommandCore]: {name} doesn't have .Run`)
+                C.CommandFunctions[name] = commandData
+            end
+        end
+    end
+    C.CommandFunctions = nil
     for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions

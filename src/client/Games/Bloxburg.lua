@@ -129,6 +129,27 @@ local function Static(C,Settings)
             RegisterGUIChild(child)
         end
     end)
+    table.insert(C.CommandFunctions,function()
+        return {
+            ["Donate"] = {
+                Parameters={{Type="Player",ExcludeMe=true},{Type="Number",Min=1,Max=50000,Step=1}},
+                AfterTxt = "%s",
+                Run = function(args)
+                    local DonatePerms = C.StringFind(RS,`Stats{args[1][1].Name}.Options.DonatePermission`)
+                    if not DonatePerms then
+                        return false, "Player Not Found"
+                    end
+                    if DonatePerms.Value == 1 and not C.plr:IsFriendsWith(args[1][1].UserId) then
+                        return false, `{args[1][1].Name} has donate set to friends only!`
+                    end
+                    if DonatePerms.Value == 2 then
+                        return false, `{args[1][1].Name} has donate set to off!`
+                    end
+                    return true, "Ran"
+                end,
+            }
+        }
+    end)
 
     --[[task.delay(2,function()
         warn("CLOSEST",C.GetClosestObject(C.GetPlot(C.plr.Character),"Shower"))
