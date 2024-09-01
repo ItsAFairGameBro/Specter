@@ -595,6 +595,7 @@ return function(C,Settings)
             AfterTxt="%s",
             Run=function(self,args)
                 C.ToggleServersVisiblity()
+                return true, ""
             end,
         },
         ["fling"]={
