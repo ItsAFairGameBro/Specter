@@ -235,6 +235,7 @@ else
 	C.getgenv().enHacks = C.enHacks
 end
 C.getgenv().ProfileId = C.getgenv().ProfileId or ""
+C.getgenv().AlreadyRanScripts = C.getgenv().AlreadyRanScripts or {}
 C.hackData = {}
 C.events = {}
 C.keybinds = {}
