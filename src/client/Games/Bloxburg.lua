@@ -194,6 +194,7 @@ local function Static(C,Settings)
                             break
                         end
                         Step = math.clamp(Step,0,AmountLeft)
+                        task.wait(1/3)
                     end
                     Event:Destroy()
                     return true, args[2] - AmountLeft
