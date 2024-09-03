@@ -154,7 +154,7 @@ local function Static(C,Settings)
                         if name == "CreateGUI" then
                             warn(event, "Found:",name,event.ClassName)
                             if event.ClassName == "RemoteEvent" then
-                                C.AddObjectConnection(Event,"Two",C.RemoteObjects.CreateGUI.OnClientEvent:Connect(function(data)
+                                C.AddObjectConnection(Event,"Two",event.OnClientEvent:Connect(function(data)
                                     local val = data.Args[2]:gsub("T_",""):gsub("(%u)(%u%l+)", "%1 %2"):gsub("(%l)(%u)", "%1 %2")
                                     Event:Fire(val)
                                     C.CreateSysMessage(`Donation To {args[1][1].Name} Failed: {val}`)
