@@ -158,8 +158,8 @@ local function Static(C,Settings)
                             if event.ClassName == "RemoteEvent" then
                                 C.AddObjectConnection(Event,"Two",event.OnClientEvent:Connect(function(data)
                                     local val = data.Args[2]:gsub("T_",""):gsub("(%u)(%u%l+)", "%1 %2"):gsub("(%l)(%u)", "%1 %2")
-                                    Event:Fire(val)
                                     C.CreateSysMessage(`Donation To {args[1][1].Name} Of {Step} Failed: {val}`)
+                                    Event:Fire(val)
                                 end))
                             end
                         end
@@ -192,11 +192,11 @@ local function Static(C,Settings)
                         if Count == 10 then
                             print("Count Reached")
                             break
-                        elseif Count == 0 then
+                        elseif Step == 0 then
                             break
                         end
                         Step = math.clamp(Step,0,AmountLeft)
-                        task.wait(1/3)
+                        task.wait(2/3)
                     end
                     Event:Destroy()
                     return true, args[2] - AmountLeft
