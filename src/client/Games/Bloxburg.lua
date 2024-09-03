@@ -167,6 +167,7 @@ local function Static(C,Settings)
                     local Count = 0
                     local DonateEvent = C.RemoteObjects.Donate
                     while true do
+                        print("Set",Step)
                         task.delay(.1,DonateEvent.FireServer, DonateEvent,
                             {
                                 Player = args[1][1],
