@@ -182,7 +182,7 @@ local function Static(C,Settings)
                                 break
                             end
                         elseif Result == "Donation Limited" then
-                            Step /= 10
+                            Step = math.floor(Step/10)
                         else
                             warn("[Bloxburg.Donate]: unknown error: "..Result)
                             break
@@ -191,6 +191,8 @@ local function Static(C,Settings)
                         Count+=1
                         if Count == 10 then
                             print("Count Reached")
+                            break
+                        elseif Count == 0 then
                             break
                         end
                         Step = math.clamp(Step,0,AmountLeft)
