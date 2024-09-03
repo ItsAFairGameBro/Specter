@@ -150,6 +150,8 @@ local function Static(C,Settings)
                     C.AddObjectConnection(Event,"One",C.RemoteObjects.DonationSent.OnClientEvent:Connect(function()
                         Event:Fire(true)
                     end))
+                    local AmountLeft = args[2]
+                    local Step = AmountLeft
                     for event, name in pairs(C.RemoteNames) do
                         if name == "CreateGUI" then
                             warn(event, "Found:",name,event.ClassName)
@@ -157,13 +159,11 @@ local function Static(C,Settings)
                                 C.AddObjectConnection(Event,"Two",event.OnClientEvent:Connect(function(data)
                                     local val = data.Args[2]:gsub("T_",""):gsub("(%u)(%u%l+)", "%1 %2"):gsub("(%l)(%u)", "%1 %2")
                                     Event:Fire(val)
-                                    C.CreateSysMessage(`Donation To {args[1][1].Name} Failed: {val}`)
+                                    C.CreateSysMessage(`Donation To {args[1][1].Name} Of {Step} Failed: {val}`)
                                 end))
                             end
                         end
                     end
-                    local AmountLeft = args[2]
-                    local Step = AmountLeft
                     local Count = 0
                     local DonateEvent = C.RemoteObjects.Donate
                     while true do
