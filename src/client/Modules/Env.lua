@@ -11,7 +11,7 @@ local LS = game:GetService("LocalizationService")
 local RunS = game:GetService("RunService")
 return function(C,Settings)
 	--Print Environment
-	if not C.getgenv().PrintEnvironment then
+	if not C.getgenv().PrintEnvironment and false then
 		local OldEnv = {}
 		local function printInstances(...)
 			local printVal = ""
