@@ -456,7 +456,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local getVal, setVal = rawget, rawset
 		local strLen = string.len
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
-		local additionalWhitelist = {["SayMessageRequest"]=true}
+		local additionalCallerName = {["SayMessageRequest"]=true}
+		local additionalMethodName = {["sendasync"]=true}
 
 		local myHooks = {}
 		C.getgenv().SavedHookData[hook] = myHooks
@@ -471,27 +472,28 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			 -- Check if the caller is not a local script
-			 if not checkcaller() or getVal(additionalWhitelist,tostring(self)) then
-                -- Get the method being called
-				local method
-				if HookType=="hookmetamethod" and hook == "__namecall" then
-					method = getnamecallmethod()
+			-- Get the method being called
+			local method
+			if HookType=="hookmetamethod" and hook == "__namecall" then
+				method = getnamecallmethod()
+			else
+				method = ...
+			end
+			if method and getType(method) == "string" then
+				method = lower(method)
+				local parsed, count = gsub(method, "\000.*", "")
+				if strLen(parsed) > 0 and count <= 1 then
+					method = parsed
+				elseif count > 1 then
+					warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
 				else
-					method = ...
+					warn(`Empty Message Parsed from {tostring(self)} {method}. Copied to clipboard for further inspection.`)
+					getVal(C,"setclipboard")(method)
 				end
-				if method and getType(method) == "string" then
-					method = lower(method)
-					local parsed, count = gsub(method, "\000.*", "")
-					if strLen(parsed) > 0 and count <= 1 then
-						method = parsed
-					elseif count > 1 then
-						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
-					else
-						warn(`Empty Message Parsed from {tostring(self)} {method}. Copied to clipboard for further inspection.`)
-						getVal(C,"setclipboard")(method)
-					end
-				end
+			end
+			 -- Check if the caller is not a local script
+			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
+			 	or getVal(additionalMethodName,tostring(self)) then
                 local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
