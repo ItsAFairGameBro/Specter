@@ -491,18 +491,18 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
-			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
-				tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
-			end
+			--if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
+			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
+			--end
+			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
 			 -- Check if the caller is not a local script
-			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
-			 	or getVal(additionalMethodName,method) then
+			 if not checkcaller() or Override then
 					
                 local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
 				--end
-				if theirScript then
+				if theirScript or Override then
 					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
