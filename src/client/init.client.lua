@@ -456,6 +456,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local getVal, setVal = rawget, rawset
 		local strLen = string.len
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
+		local additionalWhitelist = {["SayMessageRequest"]=true}
 
 		local myHooks = {}
 		C.getgenv().SavedHookData[hook] = myHooks
@@ -470,14 +471,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			if HookType=="hookmetamethod" and hook == "__namecall" then
-				local method = getnamecallmethod()
-				if lower(method) == 'fireserver' then
-					tskSpawn(print,"Method",method)
-				end
-			end
 			 -- Check if the caller is not a local script
-			 if not checkcaller() then
+			 if not checkcaller() or rawget(additionalWhitelist,self.Name) then
                 -- Get the method being called
 				local method
 				if HookType=="hookmetamethod" and hook == "__namecall" then
