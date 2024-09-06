@@ -470,15 +470,17 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
+			local method = getnamecallmethod()
+			if lower(method) == 'fireserver' then
+				print("Method",method)
+			end
 			 -- Check if the caller is not a local script
 			 if not checkcaller() then
                 -- Get the method being called
 				local method
 				if HookType=="hookmetamethod" and hook == "__namecall" then
 					method = getnamecallmethod()
-					if lower(method) == 'fireserver' then
-						print("Method",method)
-					end
+					
 				else
 					method = ...
 				end
