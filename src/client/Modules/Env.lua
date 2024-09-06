@@ -1118,7 +1118,7 @@ return function(C,Settings)
 			C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)	
 		else
 			C.DebugMessage("Teleport",`Teleport Beggining for UNSPECIFIED SERVER...`)
-			C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)
+			C.API(TeleportService,"Teleport",1,PlaceId,JobId,C.plr)
 		end
 	end
 	function C.GetMinMax(n1,n2)

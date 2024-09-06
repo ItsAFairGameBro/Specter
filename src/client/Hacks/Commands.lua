@@ -541,7 +541,7 @@ return function(C,Settings)
                     end
                     local bool = #ServerJobIds ~= 0
                     if not bool then
-                        return false, "No other servers found; try ;rejoin any"
+                        return false, "No other servers found. Try ;rejoin any"
                     end
                     local random = Rand:NextInteger(1,#ServerJobIds)
     
@@ -552,7 +552,7 @@ return function(C,Settings)
                 elseif args[1] == "same" then
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
                     if #PS:GetPlayers() <= 1 then
-                        return false, "Rejoin the same server requires at least 1 other player; try ;rejoin any"
+                        return false, "Requires at least 1 other player. Try ;rejoin any"
                     end
                     C.ServerTeleport(game.PlaceId,game.JobId)
                 else
