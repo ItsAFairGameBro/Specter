@@ -13,6 +13,7 @@ return function(C,Settings)
 	--Print Environment
 	if not C.getgenv().PrintEnvironment then
 		local OldEnv = {}
+		local GetFullName = workspace.GetFullName
 		local function printInstances(...)
 			local printVal = ""
 			for num, val in pairs({...}) do
@@ -22,7 +23,7 @@ return function(C,Settings)
 				local print4Instance = val
 				local myType = typeof(print4Instance)
 				if myType == "Instance" then
-					print4Instance = "(Instance) " .. val:GetFullName()
+					print4Instance = "(Instance) " .. GetFullName(val)
 				elseif myType == "string" then
 					print4Instance = `"{print4Instance}"`
 				elseif myType == "boolean" or myType == "number" then
