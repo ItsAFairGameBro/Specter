@@ -567,7 +567,7 @@ return function(C,Settings)
                 else
                     error("[Commands]: Teleport Cmd Invalid Arg[1] "..args[1])
                 end
-                return true, args[1] .. " Server"
+                return true, args[1]:sub(1,1):upper() .. args[1]:sub(2) .. " Server"
             end,
         },
         ["console"]={
