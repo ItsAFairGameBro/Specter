@@ -469,6 +469,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		for num, methodName in ipairs(methods or {}) do
 			assert(methodName == lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
 		end
+		local isa = workspace.IsA
 
 		local OriginFunct
 		local function CallFunction(self,...)
@@ -491,13 +492,13 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
+			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,tostring(self)) or isa(self) == "TextChannel" then
+				tskSpawn(print,self,isa(self),method)
+			end
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
 			 	or getVal(additionalMethodName,tostring(self)) then
-				if getVal(additionalCallerName,tostring(self))
-				or getVal(additionalMethodName,tostring(self)) then
-					tskSpawn(print,self,method)
-				end
+					
                 local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
