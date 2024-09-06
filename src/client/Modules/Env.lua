@@ -232,6 +232,7 @@ return function(C,Settings)
 			C.objectfuncts[instance][key]:Disconnect()
 		end
 		C.objectfuncts[instance][key] = connection
+		return connection
 	end
 	function C.RemoveObjectConnection(instance,key)
 		C.objectfuncts[instance][key]:Disconnect()

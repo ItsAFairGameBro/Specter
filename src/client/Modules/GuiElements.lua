@@ -2700,8 +2700,6 @@ return function(C, Settings)
 		end
 	end)--]]
 	
-	local ActiveUserInputTypes = {}
-
 	function C.ButtonClick(button:GuiBase,funct,msb)
 		msb = msb or 1
 		local FirstClick,FirstClickCoords
@@ -2710,28 +2708,29 @@ return function(C, Settings)
 			return (inputObject.UserInputType == Enum.UserInputType["MouseButton"..msb] or 
 				(inputObject.UserInputType == Enum.UserInputType.Touch and msb==1))
 		end
-		button.InputBegan:Connect(function(inputObject: InputObject)
-			if isValidPress(inputObject) then
-				FirstClick = os.clock()
-				FirstClickCoords = inputObject.Position
-			end
-		end)
-		button.InputEnded:Connect(function(inputObject: InputObject)
-			if isValidPress(inputObject) and ActiveUserInputTypes[inputObject.UserInputType] > 0 then
+		local TouchConn
+		local function InputEnded(inputObject: InputObject)
+			if isValidPress(inputObject) and not TouchConn then
 				local diffTime = FirstClick and os.clock() - FirstClick
 				if diffTime and diffTime > 0.03 and diffTime < 1.5 and (FirstClickCoords-inputObject.Position).Magnitude < 15 then
 					funct()
 				end
 			end
+		end
+		button.InputBegan:Connect(function(inputObject: InputObject)
+			if isValidPress(inputObject) then
+				FirstClick = os.clock()
+				FirstClickCoords = inputObject.Position
+				if inputObject == Enum.UserInputType.Touch and msb == 1 then
+					TouchConn = C.AddObjectConnection(button,"C.ButtonClick",UIS.TouchEnded:Connect(function(inputObject)
+						TouchConn = C.RemoveObjectConnection(button,"C.ButtonClick",TouchConn)
+						InputEnded(inputObject)
+					end))
+				end
+			end
 		end)
+		button.InputEnded:Connect(InputEnded)
 	end
-
-	C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject: InputObject)
-		ActiveUserInputTypes[inputObject.UserInputType] = (ActiveUserInputTypes[inputObject.UserInputType] or 0) + 1
-	end))
-	C.AddGlobalConnection(UIS.InputEnded:Connect(function(inputObject: InputObject)
-		ActiveUserInputTypes[inputObject.UserInputType] -= 1
-	end))
 
 	-- Set up actions
 
