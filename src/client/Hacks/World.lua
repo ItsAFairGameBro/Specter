@@ -582,7 +582,7 @@ return function(C_new,Settings)
 									tskSpawn(print,"not found",character)
 								end
 							end
-							return "Override", {newMessage, channel}
+							return "Override", {self, newMessage, channel}
 						end
                     end,{"fireserver","sendasync"})
 				end,

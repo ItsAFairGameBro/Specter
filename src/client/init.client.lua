@@ -498,11 +498,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or Override then
 					
-                local theirScript = getcallingscript()
+                local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
 				--end
-				if theirScript or Override then
+				if theirScript~="nullptr" or Override then
 					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
@@ -530,6 +530,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 								if operation == "Spoof" then
 									return tblUnpack(returnData)
 								elseif operation == "Override" then
+									assert(typeof(getVal(returnData,1)) ~= typeof(self), 
+										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
 									return OriginFunct(tblUnpack(returnData))
 								elseif operation == "FireSeperate" then
 									return tskSpawn(OriginFunct,tblUnpack(returnData))
