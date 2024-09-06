@@ -573,7 +573,7 @@ return function(C_new,Settings)
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
 							if MultiLine then
-								message = gsub(message,"\\n",MultiLine)
+								message = gsub(message,"\\n","\n" .. MultiLine)
 							end
 							if TranslationTbl then
 								local newMessage = ""
