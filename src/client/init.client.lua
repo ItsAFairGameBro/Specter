@@ -494,6 +494,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
 			 	or getVal(additionalMethodName,tostring(self)) then
+				if getVal(additionalCallerName,tostring(self))
+				or getVal(additionalMethodName,tostring(self)) then
+					tskSpawn(print,self,method)
+				end
                 local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
