@@ -90,7 +90,7 @@ return function(C,Settings)
                         args[num] = argumentData.Default
                     end
                 elseif argumentData.Type == "Options" then
-                    if not argumentData.Options[args[num]] and canRunFunction then
+                    if not table.find(argumentData.Options,args[num]) and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
                         else
