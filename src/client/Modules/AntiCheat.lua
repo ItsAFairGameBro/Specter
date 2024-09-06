@@ -159,7 +159,7 @@ return function(C,Settings)
                 end),{"fireserver"})
                 C.AddGlobalThread(task.spawn(function()
                     while true do
-                        local success, result = pcall(TeleportService.Teleport,TeleportService,5,C.plr)
+                        local success, result = pcall(TeleportService.Teleport,TeleportService,0,C.plr)
                         if result ~= "Cannot teleport to invalid place id. Aborting teleport." then
                             warn("TELEPORTING NOTICED. CANCEL ATTEMPT!")
                             TeleportService:TeleportCancel()
