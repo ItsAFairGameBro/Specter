@@ -527,11 +527,13 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 							local operation,returnData = getVal(list,3)(theirScript,method,self,...)
 							isRunning = false
 							if operation then
+								if operation == "Override" or operation == "FireSeperate" then
+									assert(typeof(getVal(returnData,1)) == typeof(self),
+										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
+								end
 								if operation == "Spoof" then
 									return tblUnpack(returnData)
 								elseif operation == "Override" then
-									assert(typeof(getVal(returnData,1)) ~= typeof(self), 
-										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
 									return OriginFunct(tblUnpack(returnData))
 								elseif operation == "FireSeperate" then
 									return tskSpawn(OriginFunct,tblUnpack(returnData))
