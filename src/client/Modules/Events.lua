@@ -32,7 +32,10 @@ return function(C,Settings)
 	C.FireEvent = FireEvent
 	local function CharAdded(theirChar,wasAlreadyIn)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
-		local theirHuman = theirChar:WaitForChild("Humanoid")
+		local theirHuman = theirChar:WaitForChild("Humanoid",1e5)
+		if not theirHuman then
+			return
+		end
 		local theirAnimator = theirHuman:WaitForChild("Animator")
 		local centerPart = theirChar:WaitForChild("HumanoidRootPart",15)
 		if not centerPart then
