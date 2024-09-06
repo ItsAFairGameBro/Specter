@@ -2749,7 +2749,6 @@ return function(C, Settings)
 				-- Modification Detected!
 				JumpEvent:Fire(IsJumping)
 				C.IsJumping = IsJumping
-				warn("Now",IsJumping and "Jumping" or "Not Jumping")
 			end
 		end
 

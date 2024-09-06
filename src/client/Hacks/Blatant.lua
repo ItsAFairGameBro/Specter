@@ -189,7 +189,7 @@ return function(C,Settings)
 						end
 						local up = 0
 						if enTbl.UseExtraKeybinds then
-							if (UIS:IsKeyDown(Enum.KeyCode.Space)) then
+							if (C.IsJumping) then
 								up += 1
 							end
 							if (UIS:IsKeyDown(Enum.KeyCode.E)) then
