@@ -56,6 +56,7 @@ return function(C,Settings)
 		"MyCharRemoved","CharRemoved","OthersCharRemoved",
 		"MySeatAdded","SeatAdded","OthersSeatAdded",
 		"MySeatRemoved","SeatRemoved","OthersSeatRemoved",
+		"RbxErrorPrompt",
 		"IslandAdded", "DockAdded","ShipAdded","PlaneAdded",
 		"MyTeamAdded","TeamAdded","OthersTeamAdded",
 		"MapAdded","MapRemoved","GameStatus",

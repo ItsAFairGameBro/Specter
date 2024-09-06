@@ -1,4 +1,5 @@
 local PS = game:GetService("Players")
+local GS = game:GetService("GuiService")
 
 return function(C,Settings)
 	--[[for eventName,functDict in pairs(C.events) do
@@ -133,5 +134,24 @@ return function(C,Settings)
 			C.Camera = newCamera
 		end
 	end))
-
+	-- Kick detection
+	local WhitelistedCodes = {
+		[267] = "Kick",
+		[277] = "Connection",
+		[266] = "Connection",
+	}
+	local function CheckStatusCodes(ErrorMessage)
+		local ErrorCodeInstanceVal = GS:GetErrorCode()
+		local ErrorCode = ErrorCodeInstanceVal and ErrorCodeInstanceVal.Value or -1
+		local ErrorIdentification = WhitelistedCodes[ErrorCode]
+		if not ErrorIdentification then
+			if ErrorCode ~= 0 then
+				print("[Events.CheckStatusCodes]: Unknown Error Code:",ErrorCode)
+			end
+			return
+		end
+		FireEvent("RbxErrorPrompt", nil, ErrorMessage, ErrorCode, ErrorIdentification)
+	end
+	C.AddGlobalConnection(GS.ErrorMessageChanged:Connect(CheckStatusCodes))
+	CheckStatusCodes(GS:GetErrorMessage())
 end

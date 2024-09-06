@@ -2699,7 +2699,6 @@ return function(C, Settings)
 			task.wait(.3)
 		end
 	end)--]]
-	local PromptFrame=C.UI.PromptFrame
 	local StartedClicking = false
 
 	function C.ButtonClick(button:GuiBase,funct,msb)
@@ -2707,7 +2706,7 @@ return function(C, Settings)
 		local FirstClick,FirstClickCoords
 		--This does not need to be connected because it is removed when it is deleted.
 		local function isValidPress(inputObject: InputObject, started: boolean)
-			if started and C.PromptVisible and not PromptFrame:IsAncestorOf(button) then
+			if started and C.FocusFrame and not C.FocusFrame:IsAncestorOf(button) then
 				return
 			end
 			return (inputObject.UserInputType == Enum.UserInputType["MouseButton"..msb] or 
@@ -2935,6 +2934,7 @@ return function(C, Settings)
 	end
 
 	--Add Prompt control
+	local PromptFrame=C.UI.PromptFrame
 	local count=0
 	local queue,canRunEvent={},Instance.new("BindableEvent",script)
 	local buttonTriggerEvent=Instance.new("BindableEvent",script)
@@ -2974,6 +2974,7 @@ return function(C, Settings)
 		PromptFrame.PromptTitle.TextColor3=C.ComputeNameColor(Title)
 		PromptFrame.PromptDesc.Text=Desc
 		C.PromptVisible = true
+		C.FocusFrame = PromptFrame
 		--PromptFrame.PictureLabel.Visible = Image~=nil
 		--PromptFrame.PictureLabel.Image = Image~=nil and Image or 0
 		--PromptFrame.DescLabel.Size = Image~=nil and UDim2.fromScale(.575, .541) or UDim2.fromScale(.9,.541)
@@ -3001,6 +3002,7 @@ return function(C, Settings)
 		buttonTriggerEvent:Destroy()
 		PromptFrame:TweenPosition(UDim2.new(0.5,0,1+PromptFrame.Size.Y.Scale/2,36),"Out","Quad",3/8,true)
 		C.PromptVisible = #queue > 1
+		C.FocusFrame = nil
 		task.delay(2/8,function()
 			C.TblRemove(queue,saveTbl)
 			if #queue<=0 then

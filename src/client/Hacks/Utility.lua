@@ -90,58 +90,28 @@ return function(C,Settings)
 				Functs={}, Threads={},
 				BestMessage = nil,
 				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
-				Codes = {
-					[267] = "Kick",
-					[277] = "Connection",
-					[266] = "Connection",
+				Events = {
+					RbxErrorPrompt = function(self, errorMessage,errorCode,identification)
+						local KickedButton = C.UI.KickedButton
+						if not self.BestMessage or #errorMessage>0 then
+							self.BestMessage = errorMessage
+							print((`%s Error Has Occured (%.1f): %s`):format(identification, time(), errorMessage))
+						end
+	
+						if KickedButton then
+							KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
+							KickedButton.AutomaticSize = Enum.AutomaticSize.Y
+							if self.BestMessage then
+								KickedButton.Text = self.Message:format(self.BestMessage,errorCode)
+							end
+							KickedButton.Visible = true
+						end
+	
+						-- Debug.Traceback doesn't work for this:
+						task.delay(1,GS.ClearError,GS)
+						SG:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+					end,
 				},
-				Update = function(self,errorMessage)
-					local KickedButton = C.UI.KickedButton
-
-					local errorCode = GS:GetErrorCode()
-					errorCode = errorCode and errorCode.Value or -1
-
-					if not self.Codes[errorCode] then
-						if errorCode ~= 0 then
-							print("[Utility.NoKick]: Unknown Error Code:",errorCode)
-						end
-						return false
-					end
-
-					if not self.BestMessage or #errorMessage>0 then
-						self.BestMessage = errorMessage
-						print(("Client/Server Kick Has Occured (%.2f): %s"):format(time(), errorMessage))
-					end
-
-					if KickedButton then
-						KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
-						KickedButton.AutomaticSize = Enum.AutomaticSize.Y
-						if self.BestMessage then
-							KickedButton.Text = self.Message:format(self.BestMessage,errorCode)
-						end
-						KickedButton.Visible = true
-					end
-					-- pcall(function()
-						--print(#getconnections(game:GetService("ScriptContext").Error))
-				--end)
-					-- Debug.Traceback doesn't work for this:
-					task.delay(1,GS.ClearError,GS)
-					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
-					return true
-				end,
-				Activate = function(self,newValue)
-					if not newValue then
-						return
-					end
-					table.insert(self.Functs,GS.ErrorMessageChanged:Connect(function(msg,msg2)
-						--task.wait(.5)
-						--if NC:FindFirstChild("ClientReplicator") then
-						--	return -- We are still in the game!
-						--end
-						self:Update(msg)
-					end))
-					self:Update(GS:GetErrorMessage())
-				end,
 			},
 			{
 				Title = "Improvements",
@@ -154,10 +124,6 @@ return function(C,Settings)
 					end
 				end,
 				Activate = function(self,newValue,firstRun)
-					if firstRun then
-						--task.wait(3)
-					end
-					
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
 					
 					--Lock Camera Orientation
@@ -229,7 +195,7 @@ return function(C,Settings)
 						end
 						-- Remove next frame to allow for smooth transition!
 						DS:AddItem(tb,0)
-						warn("Textbox Select")
+						--warn("Textbox Select")
 					end
 				end,
                 Events = {
