@@ -162,7 +162,7 @@ return function(C,Settings)
                         local success, result = pcall(TeleportService.Teleport,TeleportService,5,C.plr)
                         if result ~= "Cannot teleport to invalid place id. Aborting teleport." then
                             warn("TELEPORTING NOTICED. CANCEL ATTEMPT!")
-                            TeleportService:Cancel()
+                            TeleportService:TeleportCancel()
                         end
                         RunService.RenderStepped:Wait()
                     end
