@@ -452,7 +452,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		-- Hook the namecall function
 		local gameId = game.GameId
 		local checkcaller = C.checkcaller
-		local gmatch, gsub,getType = string.gmatch, string.gsub, typeof
+		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
 		local strLen = string.len
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
@@ -476,6 +476,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				local method
 				if HookType=="hookmetamethod" and hook == "__namecall" then
 					method = getnamecallmethod()
+					print("Method",method)
 				else
 					method = ...
 				end
@@ -492,9 +493,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					end
 				end
                 local theirScript = getcallingscript()
-				if not theirScript and "WalkSpeed"==({...})[1] then
-					tskSpawn(print,`method walkspeed {tostring(method)}`)
-				end
+				--if not theirScript and "WalkSpeed"==({...})[1] then
+				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
+				--end
 				if theirScript then
 					if gameId == 3734304510 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
