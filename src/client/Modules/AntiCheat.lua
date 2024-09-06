@@ -157,7 +157,8 @@ return function(C,Settings)
                         return "Yield"
                     end
                 end),{"fireserver"})
-                C.AddGlobalThread(task.spawn(function()
+                -- DISABLE TELEPORT
+                --[[C.AddGlobalThread(task.spawn(function()
                     while true do
                         local success, result = pcall(TeleportService.Teleport,TeleportService,0,C.plr)
                         if result ~= "Cannot teleport to invalid place id. Aborting teleport." then
@@ -166,7 +167,7 @@ return function(C,Settings)
                         end
                         RunService.RenderStepped:Wait()
                     end
-                end))
+                end))--]]
             end,
             KeepGoing = false, RunOnce = false,
             GameIds = {1160789089},PlaceIds={}
