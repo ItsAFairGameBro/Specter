@@ -562,7 +562,7 @@ return function(C_new,Settings)
 					["Fancy Unicode Font 1"] = {Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
 						Output = {`卂`,`乃`,`匚`,`D`,`乇`,`千`,`G`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`卂`,`乃`,`匚`,`D`,`乇`,`千`,`G`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`0`,`1`,`2`,`3`,`4`,`5`,`6`,`7`,`8`,`9`,`.`,`,`,`:`,`;`,`'`,`"`,`!`,`?`,`-`,`_`,`/`,`+`,`*`,`=`,`(`,`)`,`%`,`@`,`#`,`$`,`&`,`^`,`~`}},
 				},
-				ParseMultiLine = function(message)
+				ParseMultiLine = function(message,inBetween)
 					local newMessage
 					local splitArray = rawget(string,"split")(message,"\\n")
 					for num, curMessage in ipairs(splitArray) do
@@ -570,6 +570,7 @@ return function(C_new,Settings)
 							newMessage = curMessage
 							continue
 						end
+						curMessage = inBetween .. curMessage
 						if rawget(C,"ChatVersion") == "TextChatService" then
 							newMessage ..= '\r' .. curMessage
 						elseif rawget(C,"ChatVersion") == "LegacyChatService" then
@@ -582,7 +583,7 @@ return function(C_new,Settings)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
 					local gsub, tskSpawn = string.gsub, task.spawn
 					local TranslationTbl = self.FontTranslations[self.EnTbl.ChosenFont]
-					local MultiLine = self.EnTbl.MultiLine
+					local BetweenMultiLine = self.EnTbl.MultiLine
 					assert(TranslationTbl or self.EnTbl.ChosenFont == "Off", `Chat Bypass Translation Doesn't Contain Proper Font: {self.EnTbl.ChosenFont}`)
 					local gmatch = string.gmatch
 					local Input, Output
@@ -592,8 +593,8 @@ return function(C_new,Settings)
 					local MultiLineFunction = self.ParseMultiLine
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
-							if MultiLine then
-								message = MultiLineFunction(message)--gsub(message,"\\n","\n" .. MultiLine)
+							if BetweenMultiLine then
+								message = MultiLineFunction(message, BetweenMultiLine)--gsub(message,"\\n","\n" .. MultiLine)
 							end
 							if TranslationTbl then
 								local newMessage = ""
