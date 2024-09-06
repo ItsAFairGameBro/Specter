@@ -2699,6 +2699,7 @@ return function(C, Settings)
 			task.wait(.3)
 		end
 	end)--]]
+	local StartedClicking = false
 	
 	function C.ButtonClick(button:GuiBase,funct,msb)
 		msb = msb or 1
@@ -2711,6 +2712,7 @@ return function(C, Settings)
 		local TouchConn
 		local function InputEnded(inputObject: InputObject)
 			if isValidPress(inputObject) and not TouchConn then
+				StartedClicking = false
 				local diffTime = FirstClick and os.clock() - FirstClick
 				if diffTime and diffTime > 0.03 and diffTime < 1.5 and (FirstClickCoords-inputObject.Position).Magnitude < 15 then
 					funct()
@@ -2718,7 +2720,8 @@ return function(C, Settings)
 			end
 		end
 		button.InputBegan:Connect(function(inputObject: InputObject)
-			if isValidPress(inputObject) then
+			if isValidPress(inputObject) and not StartedClicking then
+				StartedClicking = true
 				FirstClick = os.clock()
 				FirstClickCoords = inputObject.Position
 				if inputObject.UserInputType == Enum.UserInputType.Touch and msb == 1 then
