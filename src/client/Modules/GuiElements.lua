@@ -2776,10 +2776,14 @@ return function(C, Settings)
 				return
 			end
 			local JumpButton: ImageButton = C.StringWait(C.PlayerGui,"TouchGui.TouchControlFrame.JumpButton")
-			
+
 			table.insert(MobileConnections,JumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
 				local JumpButtonDown = JumpButton.ImageRectOffset.X > 3
+				if JumpButtonDown == MobileJumping then
+					return -- Stop, no change!
+				end
 				UpdateJumping(JumpButtonDown)
+				MobileJumping = JumpButtonDown
 			end))
 		end
 		
