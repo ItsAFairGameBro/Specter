@@ -554,7 +554,7 @@ return function(C_new,Settings)
 				},
 			},
 			{
-				Title = "Chat",
+				Title = "Chat Edit",
 				Tooltip = "Chat modifications are listed here",
 				Layout = 3,
 				Shortcut = "ChatEdit",

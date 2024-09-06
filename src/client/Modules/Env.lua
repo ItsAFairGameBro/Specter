@@ -7,6 +7,7 @@ local TCS = game:GetService"TextChatService"
 local RS = game:GetService"ReplicatedStorage"
 local TS = game:GetService"Teams"
 local DS = game:GetService('Debris')
+local UIS = game:GetService("UserInputService")
 local LS = game:GetService("LocalizationService")
 local RunS = game:GetService("RunService")
 return function(C,Settings)
@@ -135,6 +136,7 @@ return function(C,Settings)
 		end)--]]
 		C.getgenv().PrintEnvironment = true
 	end
+	
 	--Table Functions
 	function C.TblFind(tbl,val)
 		for key, val2 in pairs(tbl) do

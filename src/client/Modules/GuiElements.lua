@@ -2735,6 +2735,65 @@ return function(C, Settings)
 		button.InputEnded:Connect(InputEnded)
 	end
 
+	--Jump Detection
+	do
+		local JumpEvent = Instance.new("BindableEvent")
+		local JumpIndex = 0
+
+		local function UpdateJumping(Insert: boolean)
+			local WasJumping = JumpIndex > 0
+			JumpIndex += (Insert and 1 or -1)
+			assert(JumpIndex>=0,"JumpIndex < 0: " .. JumpIndex)
+			local IsJumping = JumpIndex > 0
+			if WasJumping ~= IsJumping then
+				-- Modification Detected!
+				JumpEvent:Fire(IsJumping)
+				C.IsJumping = IsJumping
+				warn("Now",IsJumping and "Jumping" or "Not Jumping")
+			end
+		end
+
+		-- KeyCode (Desktop, Console)
+		local KeyboardJumping, MobileJumping = false, false
+		C.AddGlobalConnection(UIS.InputBegan:Connect(function(input, gameProccesedEvent)
+			if not gameProccesedEvent and (input.KeyCode == Enum.KeyCode.Space or input.KeyCode == Enum.KeyCode.ButtonA or input.KeyCode == Enum.KeyCode.ButtonX) then
+				if KeyboardJumping then return end KeyboardJumping = true
+				UpdateJumping(true)
+			end
+		end))
+		C.AddGlobalConnection(UIS.InputEnded:Connect(function(input, gameProccesedEvent)
+			if not gameProccesedEvent and (input.KeyCode == Enum.KeyCode.Space or input.KeyCode == Enum.KeyCode.ButtonA or input.KeyCode == Enum.KeyCode.ButtonX) then
+				if not KeyboardJumping then return end KeyboardJumping = false
+				UpdateJumping()
+			end
+		end))
+
+		-- Touch (Phone, Tablet)
+		local MobileConnections = {}
+		local function RefreshMobileJumpInputs()
+			C.ClearFunctTbl(MobileConnections)
+			if not UIS.TouchEnabled then
+				return
+			end
+			local JumpButton: ImageButton = C.StringWait(C.PlayerGui,"TouchGui.TouchControlFrame.JumpButton")
+		
+			table.insert(MobileConnections,JumpButton.MouseButton1Down:Connect(function()
+				if MobileJumping then return end MobileJumping = true
+				UpdateJumping(true)
+			end))
+			table.insert(MobileConnections,JumpButton.MouseButton1Up:Connect(function()
+				if not MobileJumping then return end MobileJumping = false
+				UpdateJumping()
+			end))
+		end
+		
+		C.AddGlobalConnection(UIS:GetPropertyChangedSignal("TouchEnabled"):Connect(RefreshMobileJumpInputs))
+		C.AddGlobalThread(task.spawn(RefreshMobileJumpInputs))
+		
+		C.AddGlobalInstance(JumpEvent)
+		C.JumpEvent = JumpEvent
+	end
+
 	-- Set up actions
 
 	local ActionsFrame = C.UI.Actions
