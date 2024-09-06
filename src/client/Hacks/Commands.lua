@@ -526,11 +526,10 @@ return function(C,Settings)
                     if not promptOverride and not C.Prompt("Join Root PlaceID?","Are you sure that you want to rejoin? This will take you to the Root Place: "..RootPlaceInfo.Name,"Y/N") then
                         return true, "Cancelled"
                     end
-                    RootPlaceId = game.PlaceId
-                    --if args[1] == "same" then
-                        --args[1] = "any"
-                    --end
-
+                    --RootPlaceId = game.PlaceId
+                    if args[1] == "same" then
+                        args[1] = "any"
+                    end
                 end
                 if args[1] == "new" or args[1] == "small" then
                     local result, servers = pcall(game.HttpGet,game,`https://games.roblox.com/v1/games/{RootPlaceId}/servers/0?sortOrder={
