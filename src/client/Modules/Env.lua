@@ -771,6 +771,8 @@ return function(C,Settings)
 	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet, noFunction)
 		if C.gameUniverse == "Flee" and part.Name == "Weight" then
 			return
+		elseif value == C then
+			return C.ResetPartProperty(part,propertyName,requestName)
 		end
 
 		-- Attribute to track request count

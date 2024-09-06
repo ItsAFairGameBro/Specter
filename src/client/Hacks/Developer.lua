@@ -327,7 +327,9 @@ return function(C,Settings)
                         local ScrollingFrame = ConsoleTab:WaitForChild("ScrollingFrame")
                         local UIListLayout = ScrollingFrame:WaitForChild("UIListLayout")
 
-                        UIListLayout.Padding = UDim.new(0,0)
+                        C.SetPartProperty(UIListLayout,"Padding",self.Shortcut,newValue and UDim.new(0,0) or C)
+
+                        if not newValue then return end
                         
                         local ClearButton = Instance.new("TextButton",ConsoleTab)
                         ClearButton.Name = "ClearButton"
