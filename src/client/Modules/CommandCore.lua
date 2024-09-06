@@ -95,7 +95,7 @@ return function(C,Settings)
                             args[num] = argumentData.Default
                         else
                             canRunFunction = false
-                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)    
+                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`) 
                         end
                     end
                 elseif argumentData.Type=="" then

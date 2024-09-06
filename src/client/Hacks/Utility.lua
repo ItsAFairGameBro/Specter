@@ -209,9 +209,9 @@ return function(C,Settings)
 								end
 								if TouchGui2 then
 									table.insert(self.Functs,TouchGui2:GetPropertyChangedSignal("Enabled"):Connect(updateTouchScreenEnability))
-								end	
+								end
 							end
-							updateTouchScreenEnability()	
+							updateTouchScreenEnability()
 						end
 						table.insert(self.Functs,C.PlayerGui.ChildAdded:Connect(GUIAdded))
 						GUIAdded()
