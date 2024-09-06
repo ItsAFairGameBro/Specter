@@ -2721,7 +2721,7 @@ return function(C, Settings)
 			if isValidPress(inputObject) then
 				FirstClick = os.clock()
 				FirstClickCoords = inputObject.Position
-				if inputObject == Enum.UserInputType.Touch and msb == 1 then
+				if inputObject.UserInputType == Enum.UserInputType.Touch and msb == 1 then
 					print("Touch Connected")
 					TouchConn = C.AddObjectConnection(button,"C.ButtonClick",UIS.TouchEnded:Connect(function(inputObject)
 						print("Touch Ended")
