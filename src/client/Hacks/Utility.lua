@@ -219,14 +219,22 @@ return function(C,Settings)
 
 					--Fix Keyboard
 					if EnTbl.FixKeyboard then
-						local tb = Instance.new("TextBox",C.PlayerGui)
-						tb:CaptureFocus()
-						RunS.RenderStepped:Wait()
-						if tb:IsFocused() then
-							tb:ReleaseFocus()
-						end
-						-- Remove next frame to allow for smooth transition!
-						DS:AddItem(tb,0)
+						task.delay(3,function()
+							VU:CaptureController()
+							VU:ClickButton2(Vector2.new())
+							warn("Controller Captured")
+						end)
+						task.delay(2,function()
+							local tb = Instance.new("TextBox",C.PlayerGui)
+							tb:CaptureFocus()
+							RunS.RenderStepped:Wait()
+							if tb:IsFocused() then
+								tb:ReleaseFocus()
+							end
+							-- Remove next frame to allow for smooth transition!
+							DS:AddItem(tb,0)
+							warn("Textbox Select")
+						end)
 					end
 				end,
                 Events = {
