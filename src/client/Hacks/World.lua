@@ -560,7 +560,7 @@ return function(C_new,Settings)
 				Shortcut = "ChatEdit",
 				FontTranslations = {
 					{Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
-						Output = `卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙0123456789.,:;'"!?-_/+*=()%@#$&^~`},
+						Output = `卂`,`乃`,`匚`,`ᗪ`,`乇`,`千`,`Ꮆ`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`卂`,`乃`,`匚`,`ᗪ`,`乇`,`千`,`Ꮆ`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`0`,`1`,`2`,`3`,`4`,`5`,`6`,`7`,`8`,`9`,`.`,`,`,`:`,`;`,`'`,`"`,`!`,`?`,`-`,`_`,`/`,`+`,`*`,`=`,`(`,`)`,`%`,`@`,`#`,`$`,`&`,`^`,`~`},
 				},
 				Activate = function(self,newValue)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
@@ -576,7 +576,7 @@ return function(C_new,Settings)
 								local foundIndex = find(Input,character,1,true)
 								if foundIndex then
 									tskSpawn(print,"found",character)
-									newMessage ..= sub(Output,foundIndex,foundIndex)
+									newMessage ..= rawget(Output,foundIndex)
 								else
 									newMessage ..= character
 									tskSpawn(print,"not found",character)
