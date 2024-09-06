@@ -259,10 +259,10 @@ return function(C,Settings)
             GameIds = {88070565},PlaceIds={},
         },
     }
-    local GameDisconnected = NC:FindFirstAncestorWhichIsA("ClientReplicator")
+    local GameDisconnected = not NC:FindFirstChildWhichIsA("ClientReplicator")
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then
-            if not GameDisconnected and not cheatTbl.IgnoreKick then
+            if GameDisconnected and not cheatTbl.IgnoreKick then
                 C.DebugMessage("AntiCheat",`AntiCheat Method {num} Not Running Because Of Game Disconnect!`)
                 continue
             end
