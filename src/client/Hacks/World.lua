@@ -564,7 +564,7 @@ return function(C_new,Settings)
 				},
 				ParseMultiLine = function(message)
 					local newMessage
-					local splitArray = rawget(string,"split")(message,"\n")
+					local splitArray = rawget(string,"split")(message,"\\n")
 					for num, curMessage in ipairs(splitArray) do
 						if num == 1 then
 							newMessage = curMessage
@@ -573,7 +573,7 @@ return function(C_new,Settings)
 						if rawget(C,"ChatVersion") == "TextChatService" then
 							newMessage ..= '\r' .. curMessage
 						elseif rawget(C,"ChatVersion") == "LegacyChatService" then
-							newMessage ..= newMessage..rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
+							newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
 						end
 					end
 					return newMessage
