@@ -472,7 +472,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local OriginFunct
 		local function CallFunction(self,...)
 			 -- Check if the caller is not a local script
-			 if not checkcaller() or rawget(additionalWhitelist,tostring(self)) then
+			 if not checkcaller() or getVal(additionalWhitelist,tostring(self)) then
                 -- Get the method being called
 				local method
 				if HookType=="hookmetamethod" and hook == "__namecall" then
@@ -489,7 +489,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 						warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
 					else
 						warn(`Empty Message Parsed from {tostring(self)} {method}. Copied to clipboard for further inspection.`)
-						rawget(C,"setclipboard")(method)
+						getVal(C,"setclipboard")(method)
 					end
 				end
                 local theirScript = getcallingscript()
