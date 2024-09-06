@@ -563,11 +563,11 @@ return function(C_new,Settings)
 						Output = `卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙0123456789.,:;'"!?-_/+*=()%@#$&^~`},
 				},
 				Activate = function(self,newValue)
-					local find, sub = string.find, string.sub
+					local find, sub, isa = string.find, string.sub, workspace.IsA
 					local tskSpawn = task.spawn
 					local TranslationTbl = self.FontTranslations
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
-                        if tostring(self) == "SayMessageRequest" or self:IsA("TextChannel") then
+                        if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
 							tskSpawn(print,"parsing")
                             local newMessage = ""
 							for character in message:gmatch(".") do
