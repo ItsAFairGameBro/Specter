@@ -2699,13 +2699,17 @@ return function(C, Settings)
 			task.wait(.3)
 		end
 	end)--]]
+	local PromptFrame=C.UI.PromptFrame
 	local StartedClicking = false
 
 	function C.ButtonClick(button:GuiBase,funct,msb)
 		msb = msb or 1
 		local FirstClick,FirstClickCoords
 		--This does not need to be connected because it is removed when it is deleted.
-		local function isValidPress(inputObject: InputObject)
+		local function isValidPress(inputObject: InputObject, started: boolean)
+			if started and C.PromptVisible and not PromptFrame:IsAncestorOf(button) then
+				return
+			end
 			return (inputObject.UserInputType == Enum.UserInputType["MouseButton"..msb] or 
 				(inputObject.UserInputType == Enum.UserInputType.Touch and msb==1))
 		end
@@ -2720,7 +2724,7 @@ return function(C, Settings)
 			end
 		end
 		button.InputBegan:Connect(function(inputObject: InputObject)
-			if isValidPress(inputObject) and not StartedClicking then
+			if isValidPress(inputObject, true) and not StartedClicking then
 				StartedClicking = true
 				FirstClick = os.clock()
 				FirstClickCoords = inputObject.Position
@@ -2931,7 +2935,6 @@ return function(C, Settings)
 	end
 
 	--Add Prompt control
-	local PromptFrame=C.UI.PromptFrame
 	local count=0
 	local queue,canRunEvent={},Instance.new("BindableEvent",script)
 	local buttonTriggerEvent=Instance.new("BindableEvent",script)
@@ -2952,11 +2955,11 @@ return function(C, Settings)
 	end
 	
 	--[YIELDS] Result C.Prompt("Title","Description","Ok" | "Y/N")
+	C.PromptVisible = false
 	function C.Prompt(Title: string,Desc: string,Buttons: table): string
 		-- First: Check to see if there's a duplicate. If so, drop it
 		for num, promptData in ipairs(queue) do
 			if promptData.Title == Title and promptData.Desc == Desc and promptData.Buttons == Buttons then
-				print("EQUAL")
 				return -- EQUAL FOUND!
 			end
 		end
@@ -2970,6 +2973,7 @@ return function(C, Settings)
 		PromptFrame.PromptTitle.Text=Title
 		PromptFrame.PromptTitle.TextColor3=C.ComputeNameColor(Title)
 		PromptFrame.PromptDesc.Text=Desc
+		C.PromptVisible = true
 		--PromptFrame.PictureLabel.Visible = Image~=nil
 		--PromptFrame.PictureLabel.Image = Image~=nil and Image or 0
 		--PromptFrame.DescLabel.Size = Image~=nil and UDim2.fromScale(.575, .541) or UDim2.fromScale(.9,.541)
@@ -2996,7 +3000,8 @@ return function(C, Settings)
 		local result=buttonTriggerEvent.Event:Wait()
 		buttonTriggerEvent:Destroy()
 		PromptFrame:TweenPosition(UDim2.new(0.5,0,1+PromptFrame.Size.Y.Scale/2,36),"Out","Quad",3/8,true)
-		task.delay(3/8,function()
+		C.PromptVisible = #queue > 1
+		task.delay(2/8,function()
 			C.TblRemove(queue,saveTbl)
 			if #queue<=0 then
 				PromptFrame.Visible=false
