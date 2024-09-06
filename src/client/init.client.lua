@@ -6,6 +6,7 @@ local HS = game:GetService("HttpService")
 local CG = game:GetService("CoreGui")
 local HS = game:GetService("HttpService")
 local SP = game:GetService("StarterPlayer")
+local TextService = game:GetService("TextService")
 local VirtualUser = game:GetService("VirtualUser")
 
 local isStudio = RunS:IsStudio()
@@ -251,6 +252,7 @@ C.EventFunctions, C.InsertCommandFunctions = {}, {}
 C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
 C.PartConnections = {}
+C.ChatVersion = TextService.ChatVersion.Name
 C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,

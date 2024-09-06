@@ -562,7 +562,7 @@ return function(C_new,Settings)
 					["Fancy Unicode Font 1"] = {Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
 						Output = {`卂`,`乃`,`匚`,`D`,`乇`,`千`,`G`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`卂`,`乃`,`匚`,`D`,`乇`,`千`,`G`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`0`,`1`,`2`,`3`,`4`,`5`,`6`,`7`,`8`,`9`,`.`,`,`,`:`,`;`,`'`,`"`,`!`,`?`,`-`,`_`,`/`,`+`,`*`,`=`,`(`,`)`,`%`,`@`,`#`,`$`,`&`,`^`,`~`}},
 				},
-				MultiLine = function(message)
+				ParseMultiLine = function(message)
 					local newMessage
 					local splitArray = rawget(string,"split")(message,"\n")
 					for num, curMessage in ipairs(splitArray) do
@@ -570,9 +570,9 @@ return function(C_new,Settings)
 							newMessage = curMessage
 							continue
 						end
-						if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+						if rawget(C,"ChatVersion") == "TextChatService" then
 							newMessage ..= '\r' .. curMessage
-						elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+						elseif rawget(C,"ChatVersion") == "LegacyChatService" then
 							newMessage ..= newMessage..rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
 						end
 					end
@@ -589,7 +589,7 @@ return function(C_new,Settings)
 					if TranslationTbl then
 						Input, Output = TranslationTbl.Input, TranslationTbl.Output
 					end
-					local MultiLineFunction = self.MultiLine
+					local MultiLineFunction = self.ParseMultiLine
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
 							if MultiLine then
