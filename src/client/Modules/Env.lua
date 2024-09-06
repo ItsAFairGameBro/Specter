@@ -11,7 +11,7 @@ local LS = game:GetService("LocalizationService")
 local RunS = game:GetService("RunService")
 return function(C,Settings)
 	--Print Environment
-	if not C.getgenv().PrintEnvironment and false then
+	if not C.getgenv().PrintEnvironment then
 		local OldEnv = {}
 		local function printInstances(...)
 			local printVal = ""
@@ -110,10 +110,10 @@ return function(C,Settings)
 			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
-			return OldEnv.print1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.print2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
-			return OldEnv.warn1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			return OldEnv.warn2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		
 		--[[task.delay(3,function()
