@@ -476,7 +476,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				local method
 				if HookType=="hookmetamethod" and hook == "__namecall" then
 					method = getnamecallmethod()
-					print("Method",method)
+					if lower(method) == 'fireserver' then
+						print("Method",method)
+					end
 				else
 					method = ...
 				end
