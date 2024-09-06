@@ -155,7 +155,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue,firstRun)
 					if firstRun then
-						task.wait(20)
+						task.wait(3)
 					end
 					
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
@@ -219,11 +219,11 @@ return function(C,Settings)
 
 					--Fix Keyboard
 					if EnTbl.FixKeyboard then
-						task.delay(3,function()
+						--[[task.delay(3,function()
 							VU:CaptureController()
 							VU:ClickButton2(Vector2.new())
 							warn("Controller Captured")
-						end)
+						end)--]]
 						task.delay(2,function()
 							local tb = Instance.new("TextBox",C.PlayerGui)
 							tb:CaptureFocus()
