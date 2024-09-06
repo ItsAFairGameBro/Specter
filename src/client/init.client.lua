@@ -469,7 +469,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		for num, methodName in ipairs(methods or {}) do
 			assert(methodName == lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
 		end
-		local isa = workspace.IsA
 
 		local OriginFunct
 		local function CallFunction(self,...)
@@ -493,7 +492,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				end
 			end
 			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,tostring(self)) or tostring(self) == "RBXGeneral" then
-				tskSpawn(print,self,isa(self),method)
+				tskSpawn(print,self,method)
 			end
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
