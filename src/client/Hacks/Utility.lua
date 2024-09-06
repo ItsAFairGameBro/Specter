@@ -188,7 +188,10 @@ return function(C,Settings)
 					if UIS.TouchEnabled then
 						local function GUIAdded()
 							local ContextActionGui = C.PlayerGui:WaitForChild("ContextActionGui",.3)
-							local TouchGui = C.PlayerGui:WaitForChild("TouchGui");
+							local TouchGui = C.PlayerGui:FindFirstChild("TouchGui");
+							if not TouchGui then
+								return
+							end
 							local TouchGui2 = C.gameName == "FlagWars" and C.PlayerGui:WaitForChild("Mobile UI")
 							local function updateTouchScreenEnability()
 								TouchGui.Enabled = not EnTbl.DisableTouchGUI
