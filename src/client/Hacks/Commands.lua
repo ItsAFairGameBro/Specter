@@ -8,6 +8,7 @@ local DS = game:GetService("Debris")
 local CP = game:GetService("ContentProvider")
 local SG = game:GetService("StarterGui")
 local HS = game:GetService("HttpService")
+local AS = game:GetService("AssetService")
 return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.CommandFunctions = {
@@ -518,9 +519,19 @@ return function(C,Settings)
         ["rejoin"]={
             Parameters={{Type="Options",Default="same",Options={"same","new","small","any"}}},
             AfterTxt="%s",
-            Run=function(self,args)
+            Run=function(self,args,promptOverride)
+                local RootPlaceInfo = AS:GetGamePlacesAsync():GetCurrentPage()[1]
+                local RootPlaceId = RootPlaceInfo.PlaceId
+                if game.PlaceId ~= RootPlaceId then
+                    if promptOverride and not C.Prompt("Join Root PlaceID?","Are you sure that you want to rejoin? This will take you to the Root Place: "..RootPlaceInfo.Name,"Y/N") then
+                        return true, "Cancelled"
+                    end
+                    if args[1] == "same" then
+                        args[1] = "any"
+                    end
+                end
                 if args[1] == "new" or args[1] == "small" then
-                    local result, servers = pcall(game.HttpGet,game,`https://games.roblox.com/v1/games/{game.PlaceId}/servers/0?sortOrder={
+                    local result, servers = pcall(game.HttpGet,game,`https://games.roblox.com/v1/games/{RootPlaceId}/servers/0?sortOrder={
                         args[1]=="small" and 1 or 2}&excludeFullGames=true&limit=100`)
                     if not result then
                         return false, "Request Failed: "..servers
@@ -531,9 +542,7 @@ return function(C,Settings)
                     end
     
                     local ServerJobIds = {}
-    
-                    local Rand = Random.new(tick())
-    
+        
                     for i, v in ipairs(decoded.data) do
                         if v.id ~= game.JobId then
                             ServerJobIds[#ServerJobIds + 1] = v.id
@@ -543,18 +552,18 @@ return function(C,Settings)
                     if not bool then
                         return false, "No other servers found. Try ;rejoin any"
                     end
-                    local random = Rand:NextInteger(1,#ServerJobIds)
-    
+
+                    local random = C.Randomizer:NextInteger(1,#ServerJobIds)
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,ServerJobIds[random],C.plr)
-                    C.ServerTeleport(game.PlaceId,ServerJobIds[random])
+                    C.ServerTeleport(RootPlaceId,ServerJobIds[random])
                 elseif args[1] == "any" then
-                    C.ServerTeleport(game.PlaceId,nil) -- Leave blank to indicate that you want to join any server
+                    C.ServerTeleport(RootPlaceId,nil) -- Leave blank to indicate that you want to join any server
                 elseif args[1] == "same" then
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
                     if #PS:GetPlayers() <= 1 then
                         return false, "Requires at least 1 other player. Try ;rejoin any"
                     end
-                    C.ServerTeleport(game.PlaceId,game.JobId)
+                    C.ServerTeleport(RootPlaceId,game.JobId)
                 else
                     error("[Commands]: Teleport Cmd Invalid Arg[1] "..args[1])
                 end

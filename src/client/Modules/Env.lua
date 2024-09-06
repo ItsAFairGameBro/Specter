@@ -27,7 +27,9 @@ return function(C,Settings)
 				if myType == "Instance" then
 					print4Instance = "(Instance) " .. GetFullName(val)
 				elseif myType == "string" then
-					print4Instance = `"{print4Instance}"`
+					if tonumber(print4Instance) then -- only modify it if it can be a number!
+						print4Instance = `"{print4Instance}"`
+					end
 				else
 					local toStr = tostring(print4Instance)
 					if myType == "boolean" or myType == "number" then

@@ -425,6 +425,7 @@ return function(C,Settings)
 						Tooltip = "Allows you to climb ladders while still noclipping.\nThis may mess with ",
 						Layout = 3,Default=false,
 						Shortcut="EnClimbing",
+						Activate = C.ReloadHack,
 					},
 				}
 			},
