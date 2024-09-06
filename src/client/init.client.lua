@@ -491,12 +491,12 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
-			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,tostring(self)) or tostring(self) == "RBXGeneral" then
-				tskSpawn(print,self,method)
+			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
+				tskSpawn(print,self,method,checkcaller())
 			end
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
-			 	or getVal(additionalMethodName,tostring(self)) then
+			 	or getVal(additionalMethodName,method) then
 					
                 local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then

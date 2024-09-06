@@ -567,6 +567,7 @@ return function(C_new,Settings)
 					local tskSpawn = task.spawn
 					local TranslationTbl = self.FontTranslations
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
+						print("RAN")
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
 							tskSpawn(print,"parsing")
                             local newMessage = ""
