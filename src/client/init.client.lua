@@ -492,7 +492,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				end
 			end
 			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
-				tskSpawn(print,self,method,checkcaller())
+				tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			end
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or getVal(additionalCallerName,tostring(self))
