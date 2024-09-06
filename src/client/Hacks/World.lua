@@ -554,6 +554,33 @@ return function(C_new,Settings)
 				},
 			},
 			{
+				Title = "Chat Bypass",
+				Tooltip = "Allows some chat bypassing",
+				Layout = 3,
+				Shortcut = "ChatEdit",
+				FontTranslations = {
+					{Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
+						Output = `卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙0123456789.,:;'"!?-_/+*=()%@#$&^~`},
+				},
+				Activate = function(self,newValue)
+					local TranslationTbl = self.FontTranslations
+					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
+                        if tostring(self) == "SayMessageRequest" then
+                            local newMessage = ""
+							for character in message:gmatch(".") do
+								local foundIndex = TranslationTbl.Input:find(character,1,true)
+								if foundIndex then
+									newMessage ..= TranslationTbl.Output:sub(foundIndex,foundIndex)
+								else
+									newMessage ..= character
+								end
+							end
+							return "Override", {newMessage, channel}
+						end
+                    end,{"fireserver"})
+				end,
+			},
+			{
 				Title = "Freecam",
 				Tooltip = "Allows your camera to fly around",
 				Layout = 4,
