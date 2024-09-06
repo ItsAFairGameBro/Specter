@@ -413,6 +413,25 @@ return function(C,Settings)
 		return Color3.fromRGB(0,0,255)
 	end
 
+	function C.AreTablesEqual(t1, t2)
+		for i,v in pairs(t1) do
+			if t2[i] ~= nil then
+				if type(v) == "table" and type(t2[i]) == "table" then
+					if not C.AreTablesEqual(v, t2[i]) then
+						return false
+					end
+				else
+					if v~=t2[i] then
+						return false
+					end
+				end
+			else
+				return false
+			end
+		end
+		return true
+	end
+
 	local savedFriendsCashe = {}
 
 	local function iterPageItems(page)

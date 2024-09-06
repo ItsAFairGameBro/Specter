@@ -2953,10 +2953,18 @@ return function(C, Settings)
 	
 	--[YIELDS] Result C.Prompt("Title","Description","Ok" | "Y/N")
 	function C.Prompt(Title: string,Desc: string,Buttons: table): string
+		-- First: Check to see if there's a duplicate. If so, drop it
+		for num, promptData in ipairs(queue) do
+			if C.AreTablesEqual(promptData.Title, Title) and C.AreTablesEqual(promptData.Desc, Desc) and promptData.Buttons == Buttons then
+				print("EQUAL")
+				return -- EQUAL FOUND!
+			end
+		end
 		count+=1
 		local saveNum=count
-		table.insert(queue,saveNum)
-		while table.find(queue,saveNum)~=1 do
+		local saveTbl = {Num=saveNum,Title=Title,Desc=Desc,Buttons=Buttons}
+		table.insert(queue,saveTbl)
+		while table.find(queue,saveTbl)~=1 do
 			canRunEvent.Event:Wait()
 		end
 		PromptFrame.PromptTitle.Text=Title
@@ -2989,7 +2997,7 @@ return function(C, Settings)
 		buttonTriggerEvent:Destroy()
 		PromptFrame:TweenPosition(UDim2.new(0.5,0,1+PromptFrame.Size.Y.Scale/2,36),"Out","Quad",3/8,true)
 		task.delay(3/8,function()
-			C.TblRemove(queue,saveNum)
+			C.TblRemove(queue,saveTbl)
 			if #queue<=0 then
 				PromptFrame.Visible=false
 			end
