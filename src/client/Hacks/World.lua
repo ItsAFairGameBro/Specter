@@ -562,6 +562,22 @@ return function(C_new,Settings)
 					["Fancy Unicode Font 1"] = {Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
 						Output = {`卂`,`乃`,`匚`,`D`,`乇`,`千`,`G`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`卂`,`乃`,`匚`,`D`,`乇`,`千`,`G`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`0`,`1`,`2`,`3`,`4`,`5`,`6`,`7`,`8`,`9`,`.`,`,`,`:`,`;`,`'`,`"`,`!`,`?`,`-`,`_`,`/`,`+`,`*`,`=`,`(`,`)`,`%`,`@`,`#`,`$`,`&`,`^`,`~`}},
 				},
+				MultiLine = function(message)
+					local newMessage
+					local splitArray = rawget(string,"split")(message,"\n")
+					for num, curMessage in ipairs(splitArray) do
+						if num == 1 then
+							newMessage = curMessage
+							continue
+						end
+						if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+							newMessage ..= '\r' .. curMessage
+						elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+							newMessage ..= newMessage..rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
+						end
+					end
+					return newMessage
+				end,
 				Activate = function(self,newValue)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
 					local gsub, tskSpawn = string.gsub, task.spawn
@@ -573,10 +589,11 @@ return function(C_new,Settings)
 					if TranslationTbl then
 						Input, Output = TranslationTbl.Input, TranslationTbl.Output
 					end
+					local MultiLineFunction = self.MultiLine
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
 							if MultiLine then
-								message = gsub(message,"\\n","\n" .. MultiLine)
+								message = MultiLineFunction(message)--gsub(message,"\\n","\n" .. MultiLine)
 							end
 							if TranslationTbl then
 								local newMessage = ""
@@ -608,7 +625,7 @@ return function(C_new,Settings)
 						Type = Types.Textbox,
 						Title = "Multi Line",
 						Tooltip = `Whenever a \n is present, it is automatically replaced with a newline followed by this text!`,
-						Layout = 1,Default = "{System}: ",Min=1,Max=50,
+						Layout = 1,Default = "{System}:",Min=1,Max=50,
 						Shortcut="MultiLine",
 						Activate = C.ReloadHack,
 					},
