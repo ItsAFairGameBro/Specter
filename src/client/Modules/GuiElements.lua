@@ -2955,7 +2955,7 @@ return function(C, Settings)
 	function C.Prompt(Title: string,Desc: string,Buttons: table): string
 		-- First: Check to see if there's a duplicate. If so, drop it
 		for num, promptData in ipairs(queue) do
-			if C.AreTablesEqual(promptData.Title, Title) and C.AreTablesEqual(promptData.Desc, Desc) and promptData.Buttons == Buttons then
+			if promptData.Title == Title and promptData.Desc == Desc and promptData.Buttons == Buttons then
 				print("EQUAL")
 				return -- EQUAL FOUND!
 			end
