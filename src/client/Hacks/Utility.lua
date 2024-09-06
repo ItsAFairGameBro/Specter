@@ -155,7 +155,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue,firstRun)
 					if firstRun then
-						task.wait(3)
+						--task.wait(3)
 					end
 					
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
@@ -219,22 +219,17 @@ return function(C,Settings)
 
 					--Fix Keyboard
 					if EnTbl.FixKeyboard then
-						--[[task.delay(3,function()
-							VU:CaptureController()
-							VU:ClickButton2(Vector2.new())
-							warn("Controller Captured")
-						end)--]]
-						task.delay(2,function()
-							local tb = Instance.new("TextBox",C.PlayerGui)
-							tb:CaptureFocus()
-							RunS.RenderStepped:Wait()
-							if tb:IsFocused() then
-								tb:ReleaseFocus()
-							end
-							-- Remove next frame to allow for smooth transition!
-							DS:AddItem(tb,0)
-							warn("Textbox Select")
-						end)
+						local tb = Instance.new("TextBox",C.PlayerGui)
+						tb.Position = UDim2.new(-1, 0,-1, 0)
+						tb.AnchorPoint = Vector2.new(1, 1)
+						tb:CaptureFocus()
+						RunS.RenderStepped:Wait()
+						if tb:IsFocused() then
+							tb:ReleaseFocus()
+						end
+						-- Remove next frame to allow for smooth transition!
+						DS:AddItem(tb,0)
+						warn("Textbox Select")
 					end
 				end,
                 Events = {
