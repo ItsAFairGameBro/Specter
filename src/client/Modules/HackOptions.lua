@@ -218,7 +218,7 @@ return function(C,Settings)
 					--if name ~= self.Value then
 					local newDropdownEx = DropdownEx:Clone()
 					newDropdownEx.Text = name
-					newDropdownEx.LayoutOrder = name ~= self.Value and -1 or num
+					newDropdownEx.LayoutOrder = name == self.Value and -1 or num
 					newDropdownEx.Position = UDim2.fromScale(0,newDropdownEx.AbsoluteSize.Y*(num-1))
 					newDropdownEx.Parent = self.Dropdown
 					C.ButtonClick(newDropdownEx,function()
