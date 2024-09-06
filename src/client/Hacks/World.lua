@@ -565,7 +565,7 @@ return function(C_new,Settings)
 				Activate = function(self,newValue)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
 					local tskSpawn = task.spawn
-					local TranslationTbl = self.FontTranslations
+					local TranslationTbl = self.FontTranslations[1]
 					local Input, Output = TranslationTbl.Input, TranslationTbl.Output
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
