@@ -470,9 +470,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			local method = getnamecallmethod()
-			if lower(method) == 'fireserver' then
-				tskSpawn(print,"Method",method)
+			if HookType=="hookmetamethod" and hook == "__namecall" then
+				local method = getnamecallmethod()
+				if lower(method) == 'fireserver' then
+					tskSpawn(print,"Method",method)
+				end
 			end
 			 -- Check if the caller is not a local script
 			 if not checkcaller() then
