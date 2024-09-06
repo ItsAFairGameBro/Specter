@@ -569,7 +569,10 @@ return function(C_new,Settings)
 					local MultiLine = self.EnTbl.MultiLine
 					assert(TranslationTbl or self.EnTbl.ChosenFont == "Off", `Chat Bypass Translation Doesn't Contain Proper Font: {self.EnTbl.ChosenFont}`)
 					local gmatch = string.gmatch
-					local Input, Output = TranslationTbl.Input, TranslationTbl.Output
+					local Input, Output
+					if TranslationTbl then
+						Input, Output = TranslationTbl.Input, TranslationTbl.Output
+					end
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
 							if MultiLine then
