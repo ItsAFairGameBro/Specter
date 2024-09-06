@@ -391,7 +391,7 @@ return function(C_new,Settings)
 			Layout = 4,
 		},
 		Tab = {
-			{
+			--[[{
 				Title = "Fake Chat",
 				Tooltip = "Display two messages in the chat",
 				Layout = 1,Type = "NoToggle",
@@ -425,8 +425,8 @@ return function(C_new,Settings)
 						Shortcut="Fake",
 					}
 				},
-			},
-            --[[{
+			},--]]
+           	{
 				Title = "Chat Spy",
 				Tooltip = "Puts ALL whispers and team chat messages not visible to you into the chat!",
 				Layout = 2,
