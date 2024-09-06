@@ -554,38 +554,62 @@ return function(C_new,Settings)
 				},
 			},
 			{
-				Title = "Chat Bypass",
-				Tooltip = "Allows some chat bypassing",
+				Title = "Chat",
+				Tooltip = "Chat modifications are listed here",
 				Layout = 3,
 				Shortcut = "ChatEdit",
 				FontTranslations = {
-					{Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
+					["Fancy Unicode Font 1"] = {Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
 						Output = {`卂`,`乃`,`匚`,`ᗪ`,`乇`,`千`,`Ꮆ`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`卂`,`乃`,`匚`,`ᗪ`,`乇`,`千`,`Ꮆ`,`卄`,`丨`,`ﾌ`,`Ҝ`,`ㄥ`,`爪`,`几`,`ㄖ`,`卩`,`Ɋ`,`尺`,`丂`,`ㄒ`,`ㄩ`,`ᐯ`,`山`,`乂`,`ㄚ`,`乙`,`0`,`1`,`2`,`3`,`4`,`5`,`6`,`7`,`8`,`9`,`.`,`,`,`:`,`;`,`'`,`"`,`!`,`?`,`-`,`_`,`/`,`+`,`*`,`=`,`(`,`)`,`%`,`@`,`#`,`$`,`&`,`^`,`~`}},
 				},
 				Activate = function(self,newValue)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
-					local tskSpawn = task.spawn
-					local TranslationTbl = self.FontTranslations[1]
+					local gsub, tskSpawn = string.gsub, task.spawn
+					local TranslationTbl = self.FontTranslations[self.EnTbl.ChosenFont]
+					local MultiLine = self.EnTbl.MultiLine
+					assert(TranslationTbl or self.EnTbl.ChosenFont == "Off", `Chat Bypass Translation Doesn't Contain Proper Font: {self.EnTbl.ChosenFont}`)
 					local gmatch = string.gmatch
 					local Input, Output = TranslationTbl.Input, TranslationTbl.Output
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
-                            local newMessage = ""
-							for character in gmatch(message,".") do
-								tskSpawn(print,"start",character)
-								local foundIndex = find(Input,character,1,true)
-								if foundIndex then
-									tskSpawn(print,"found",character)
-									newMessage ..= rawget(Output,foundIndex)
-								else
-									newMessage ..= character
-									tskSpawn(print,"not found",character)
-								end
+							if MultiLine then
+								message = gsub(message,"\n",MultiLine)
 							end
-							return "Override", {self, newMessage, channel}
+							if TranslationTbl then
+								local newMessage = ""
+								for character in gmatch(message,".") do
+									local foundIndex = find(Input,character,1,true)
+									if foundIndex then
+										newMessage ..= rawget(Output,foundIndex)
+									else
+										newMessage ..= character
+									end
+								end
+								message = newMessage
+							end
+							return "Override", {self, message, channel}
 						end
                     end,{"fireserver","sendasync"})
 				end,
+				Options = {
+					{
+						Type = Types.Dropdown,
+						Selections = {"Off","Fancy Unicode Font 1"},
+						Title = "Font Bypass",
+						Tooltip = "Replaces your text with fancy custom font, which bypasses filter!",
+						Layout = 1,Default = 2,
+						Shortcut="ChosenFont",
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Textbox,
+						Title = "Multi Line",
+						Tooltip = `Whenever a \n is present, it is automatically replaced with a newline followed by this text!`,
+						Layout = 1,Default = "{System}: ",Min=1,Max=50,
+						Shortcut="MultiLine",
+						Activate = C.ReloadHack,
+					},
+				},
 			},
 			{
 				Title = "Freecam",

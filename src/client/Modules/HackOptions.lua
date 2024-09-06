@@ -179,6 +179,9 @@ return function(C,Settings)
 		assert(options.Selections,"Selections is missing")
 		-- Pick first one!
 		options.Default = options.Default or options.Selections[#options.Selections]
+		if typeof(options.Default) == "number" then
+			options.Default = options.Selections[options.Default]
+		end
 		--assert(table.find(options.Selections,options.Default),"Default Selection is Missing")
 
 		local self, newFrame, default = DoCombined(DropdownTbl, "Dropdown", parent, options)
