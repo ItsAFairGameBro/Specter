@@ -565,7 +565,9 @@ return function(C_new,Settings)
 				Activate = function(self,newValue)
 					local TranslationTbl = self.FontTranslations
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
+						print(self.Name)
                         if tostring(self) == "SayMessageRequest" then
+							print("parsing")
                             local newMessage = ""
 							for character in message:gmatch(".") do
 								local foundIndex = TranslationTbl.Input:find(character,1,true)
@@ -573,6 +575,7 @@ return function(C_new,Settings)
 									newMessage ..= TranslationTbl.Output:sub(foundIndex,foundIndex)
 								else
 									newMessage ..= character
+									print("not found",character)
 								end
 							end
 							return "Override", {newMessage, channel}
