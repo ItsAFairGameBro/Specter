@@ -566,7 +566,7 @@ return function(C_new,Settings)
 					local TranslationTbl = self.FontTranslations
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
 						print(self.Name)
-                        if tostring(self) == "SayMessageRequest" then
+                        if tostring(self) == "SayMessageRequest" or self:IsA("TextChannel") then
 							print("parsing")
                             local newMessage = ""
 							for character in message:gmatch(".") do
@@ -580,7 +580,7 @@ return function(C_new,Settings)
 							end
 							return "Override", {newMessage, channel}
 						end
-                    end,{"fireserver"})
+                    end,{"fireserver","sendasync"})
 				end,
 			},
 			{
