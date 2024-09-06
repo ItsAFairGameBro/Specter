@@ -2769,15 +2769,18 @@ return function(C, Settings)
 		end))
 
 		-- Touch (Phone, Tablet)
-		local MobileConnections = {}
+		local MobileConnection
 		local function RefreshMobileJumpInputs()
-			C.ClearFunctTbl(MobileConnections)
+			if MobileConnection then
+				MobileConnection:Disconnect()
+				MobileConnection = nil
+			end
 			if not UIS.TouchEnabled then
 				return
 			end
 			local JumpButton: ImageButton = C.StringWait(C.PlayerGui,"TouchGui.TouchControlFrame.JumpButton")
 
-			table.insert(MobileConnections,JumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
+			MobileConnection = C.AddGlobalConnection(JumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
 				local JumpButtonDown = JumpButton.ImageRectOffset.X > 3
 				if JumpButtonDown == MobileJumping then
 					return -- Stop, no change!
