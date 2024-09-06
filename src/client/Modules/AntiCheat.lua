@@ -1,8 +1,10 @@
 local DS = game:GetService("Debris")
+local RunService = game:GetService("RunService")
 local SC = game:GetService("ScriptContext")
 local LS = game:GetService("LogService")
 local RS = game:GetService("ReplicatedStorage")
 local NC = game:GetService("NetworkClient")
+local TeleportService = game:GetService("TeleportService")
 
 local function Static(C,Settings)
     local function yieldForeverFunct(...)
@@ -155,6 +157,16 @@ return function(C,Settings)
                         return "Yield"
                     end
                 end),{"fireserver"})
+                C.AddGlobalThread(task.spawn(function()
+                    while true do
+                        local success, result = pcall(TeleportService.Teleport,TeleportService,5,C.plr)
+                        if result ~= "Cannot teleport to invalid place id. Aborting teleport." then
+                            warn("TELEPORTING NOTICED. CANCEL ATTEMPT!")
+                            TeleportService:Cancel()
+                        end
+                        RunService.RenderStepped:Wait()
+                    end
+                end))
             end,
             KeepGoing = false, RunOnce = false,
             GameIds = {1160789089},PlaceIds={}
@@ -243,16 +255,17 @@ return function(C,Settings)
                 C.RemoteNames = remoteNames
                 C.RemoteObjects = remoteObjects
             end,
-            KeepGoing = false, RunOnce = false,
+            KeepGoing = false, RunOnce = false, IgnoreKick = true,
             GameIds = {88070565},PlaceIds={},
         },
     }
-    if not NC:FindFirstChildWhichIsA("ClientReplicator") then
-        C.DebugMessage("AntiCheat",`AntiCheat Not Running Because Of Game Disconnect!`)
-        return
-    end
+    local GameDisconnected = NC:FindFirstAncestorWhichIsA("ClientReplicator")
     for num, cheatTbl in ipairs(AntiCheat) do
         if table.find(cheatTbl.GameIds,game.GameId) or table.find(cheatTbl.PlaceIds,game.PlaceId) then
+            if not GameDisconnected and not cheatTbl.IgnoreKick then
+                C.DebugMessage("AntiCheat",`AntiCheat Method {num} Not Running Because Of Game Disconnect!`)
+                continue
+            end
             if not cheatTbl.RunOnce or not C.getgenv()["AntiCheat"..num] then
                 C.DebugMessage("AntiCheat",`Method {num} Activated`)
                 cheatTbl.Run(cheatTbl)
