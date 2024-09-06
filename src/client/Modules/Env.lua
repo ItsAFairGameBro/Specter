@@ -97,23 +97,23 @@ return function(C,Settings)
 			return str
 		end
 		local function BasicHookFunction(tbl,name,new)
-			local Old = rawget(tbl,name)
-			rawset(tbl,name,new)
-			return Old
+			--local Old = rawget(tbl,name)
+			--rawset(tbl,name,new)
+			return C.hookfunction(rawget(tbl,name),new)--Old
 		end
 		
 		local DoPrefix = false
+		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
+			return OldEnv.print1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
+		end)
+		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
+			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
+		end)
 		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
 			return OldEnv.print2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
 		end)
 		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
 			return OldEnv.warn2(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-		end)
-		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
-			return OldEnv.print2(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
-		end)
-		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
-			return OldEnv.warn2(`{DoPrefix and "[GAME]: " or "@"}` .. recurseLoopPrint({...}))
 		end)
 		
 		--[[task.delay(3,function()
