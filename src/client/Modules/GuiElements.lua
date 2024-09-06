@@ -2700,7 +2700,7 @@ return function(C, Settings)
 		end
 	end)--]]
 	local StartedClicking = false
-	
+
 	function C.ButtonClick(button:GuiBase,funct,msb)
 		msb = msb or 1
 		local FirstClick,FirstClickCoords
@@ -2725,9 +2725,7 @@ return function(C, Settings)
 				FirstClick = os.clock()
 				FirstClickCoords = inputObject.Position
 				if inputObject.UserInputType == Enum.UserInputType.Touch and msb == 1 then
-					print("Touch Connected")
 					TouchConn = C.AddObjectConnection(button,"C.ButtonClick",UIS.TouchEnded:Connect(function(inputObject)
-						print("Touch Ended")
 						TouchConn = C.RemoveObjectConnection(button,"C.ButtonClick",TouchConn)
 						InputEnded(inputObject)
 					end))
