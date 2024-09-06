@@ -324,7 +324,11 @@ return function(C,Settings)
                         local MainFrame = CG:FindFirstChild("MainShell",true).MainFrame
 
                         local ConsoleTab = C.StringWait(MainFrame,"Console Tab")
-
+                        local ScrollingFrame = ConsoleTab:WaitForChild("ScrollingFrame")
+                        local UIListLayout = ScrollingFrame:WaitForChild("UIListLayout")
+                        
+                        UIListLayout.Padding = UDim2.zero
+                        
                         local ClearButton = Instance.new("TextButton",ConsoleTab)
                         ClearButton.Name = "ClearButton"
                         ClearButton.Text = "Clear"
@@ -336,7 +340,7 @@ return function(C,Settings)
 
                         table.insert(self.Instances, ClearButton)
                         C.ButtonClick(ClearButton,function()
-                            C.ClearChildren(ConsoleTab:WaitForChild("ScrollingFrame"))
+                            C.ClearChildren(ScrollingFrame)
                         end)
                     else
                         --"not doing anything lol"
