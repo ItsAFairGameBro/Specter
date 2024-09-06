@@ -343,6 +343,8 @@ return function(C,Settings)
                         table.insert(self.Instances, ClearButton)
                         C.ButtonClick(ClearButton,function()
                             C.ClearChildren(ScrollingFrame)
+                            ScrollingFrame.CanvasSize = UDim2.new()
+                            ScrollingFrame.CanvasPosition = Vector2.new(0,0)
                         end)
                     else
                         --"not doing anything lol"
