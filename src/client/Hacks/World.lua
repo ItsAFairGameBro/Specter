@@ -563,19 +563,20 @@ return function(C_new,Settings)
 						Output = `卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙0123456789.,:;'"!?-_/+*=()%@#$&^~`},
 				},
 				Activate = function(self,newValue)
+					local find, sub = string.find, string.sub
+					local tskSpawn = task.spawn
 					local TranslationTbl = self.FontTranslations
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
-						print(self.Name)
                         if tostring(self) == "SayMessageRequest" or self:IsA("TextChannel") then
-							print("parsing")
+							tskSpawn(print,"parsing")
                             local newMessage = ""
 							for character in message:gmatch(".") do
-								local foundIndex = TranslationTbl.Input:find(character,1,true)
+								local foundIndex = find(TranslationTbl.Input,character,1,true)
 								if foundIndex then
-									newMessage ..= TranslationTbl.Output:sub(foundIndex,foundIndex)
+									newMessage ..= sub(TranslationTbl.Output,foundIndex,foundIndex)
 								else
 									newMessage ..= character
-									print("not found",character)
+									tskSpawn(print,"not found",character)
 								end
 							end
 							return "Override", {newMessage, channel}
