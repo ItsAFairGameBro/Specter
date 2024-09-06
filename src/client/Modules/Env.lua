@@ -15,6 +15,7 @@ return function(C,Settings)
 	if not C.getgenv().PrintEnvironment then
 		local OldEnv = {}
 		local GetFullName = workspace.GetFullName
+		local StrFind = string.find
 		local function printInstances(...)
 			local printVal = ""
 			for num, val in pairs({...}) do
@@ -27,11 +28,16 @@ return function(C,Settings)
 					print4Instance = "(Instance) " .. GetFullName(val)
 				elseif myType == "string" then
 					print4Instance = `"{print4Instance}"`
-				elseif myType == "boolean" or myType == "number" then
-					-- do nothing, just keep it to true/false
-					print4Instance = tostring(print4Instance)
 				else
-					print4Instance = "("..myType..") " .. tostring(print4Instance)
+					local toStr = tostring(print4Instance)
+					if myType == "boolean" or myType == "number" then
+						-- do nothing, just keep it to true/false
+						print4Instance = toStr
+					elseif StrFind(toStr,myType,1,true) then
+						print4Instance = toStr
+					else
+						print4Instance = "("..myType..") " .. toStr
+					end
 				end
 				printVal ..= print4Instance
 			end
