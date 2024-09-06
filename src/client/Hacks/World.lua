@@ -566,13 +566,16 @@ return function(C_new,Settings)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
 					local tskSpawn = task.spawn
 					local TranslationTbl = self.FontTranslations[1]
+					local gmatch = string.gmatch
 					local Input, Output = TranslationTbl.Input, TranslationTbl.Output
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
                         if tostring(self) == "SayMessageRequest" or isa(self,"TextChannel") then
                             local newMessage = ""
-							for character in message:gmatch(".") do
+							for character in gmatch(message,".") do
+								tskSpawn(print,"start",character)
 								local foundIndex = find(Input,character,1,true)
 								if foundIndex then
+									tskSpawn(print,"found",character)
 									newMessage ..= sub(Output,foundIndex,foundIndex)
 								else
 									newMessage ..= character
