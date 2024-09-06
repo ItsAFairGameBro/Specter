@@ -1094,9 +1094,13 @@ return function(C,Settings)
 		if not C:SaveProfile() then-- Save Profile First!
 			return
 		end
-		C.DebugMessage("Teleport",`Teleport Beggining for {JobId}...`)
-		C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)
-		--TeleportService:TeleportToPlaceInstance(PlaceId,JobId,C.plr)
+		if JobId then
+			C.DebugMessage("Teleport",`Teleport Beggining for {JobId}...`)
+			C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)	
+		else
+			C.DebugMessage("Teleport",`Teleport Beggining for UNSPECIFIED SERVER...`)
+			C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)
+		end
 	end
 	function C.GetMinMax(n1,n2)
 		if n2 > n1 then

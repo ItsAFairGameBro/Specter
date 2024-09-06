@@ -516,7 +516,7 @@ return function(C,Settings)
             end,
         },
         ["rejoin"]={
-            Parameters={{Type="Options",Default="same",Options={"same","new","small"}}},
+            Parameters={{Type="Options",Default="same",Options={"same","new","small","any"}}},
             AfterTxt="%s",
             Run=function(self,args)
                 if args[1] == "new" or args[1] == "small" then
@@ -541,17 +541,24 @@ return function(C,Settings)
                     end
                     local bool = #ServerJobIds ~= 0
                     if not bool then
-                        return false, "No other servers found!"
+                        return false, "No other servers found; try ;rejoin any"
                     end
                     local random = Rand:NextInteger(1,#ServerJobIds)
     
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,ServerJobIds[random],C.plr)
                     C.ServerTeleport(game.PlaceId,ServerJobIds[random])
-                elseif not args[1] or args[1]:len() == 0 then
+                elseif args[1] == "any" then
+                    C.ServerTeleport(game.PlaceId,nil) -- Leave blank to indicate that you want to join any server
+                elseif args[1] == "same" then
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
+                    if #PS:GetPlayers() <= 1 then
+                        return false, "Rejoin the same server requires at least 1 other player; try ;rejoin any"
+                    end
                     C.ServerTeleport(game.PlaceId,game.JobId)
+                else
+                    error("[Commands]: Teleport Cmd Invalid Arg[1] "..args[1])
                 end
-                return true
+                return true, args[1] .. " Server"
             end,
         },
         ["console"]={
