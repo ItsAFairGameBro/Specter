@@ -435,6 +435,8 @@ return function(C,Settings)
                                 for num, val in ipairs(mySuggestion.Options) do
                                     table.insert(options,{val,val})
                                 end
+                            else
+                                assert(not mySuggestion.Type, `(CommandCore.RegisterNewChatBar.textUpd): Suggestion Type Not Yet Implented for {mySuggestion.Type}`)
                             end
                             options = C.StringStartsWith(options,currentWord,true,true)
                         end

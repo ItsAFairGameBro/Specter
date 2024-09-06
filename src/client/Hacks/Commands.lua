@@ -516,7 +516,7 @@ return function(C,Settings)
             end,
         },
         ["rejoin"]={
-            Parameters={Type="Options",Default="same",Options={"same","new","small"}},
+            Parameters={{Type="Options",Default="same",Options={"same","new","small"}}},
             AfterTxt="%s",
             Run=function(self,args)
                 if args[1] == "new" or args[1] == "small" then
