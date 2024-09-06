@@ -492,7 +492,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
-			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,tostring(self)) or isa(self) == "TextChannel" then
+			if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,tostring(self)) or tostring(self) == "RBXGeneral" then
 				tskSpawn(print,self,isa(self),method)
 			end
 			 -- Check if the caller is not a local script
