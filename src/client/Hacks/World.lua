@@ -426,7 +426,7 @@ return function(C_new,Settings)
 					}
 				},
 			},
-            {
+            --[[{
 				Title = "Chat Spy",
 				Tooltip = "Puts ALL whispers and team chat messages not visible to you into the chat!",
 				Layout = 2,
@@ -486,7 +486,7 @@ return function(C_new,Settings)
 						Shortcut="Echo",
 					}
 				},
-			},
+			},--]]
 			FireElements={
 				Title = "Fire",Type="NoToggle",
 				Tooltip = "Fires TouchInterest, ProximityPrompt, ClickDetector",
