@@ -39,7 +39,9 @@ return function(C,Settings)
 					elseif myType == "function" then
 						print4Instance ..= `{GetInfo(print4Instance,"n")} @ {GetInfo(print4Instance, "s")}; Line {GetInfo(print4Instance, "l")}; {tostring(print4Instance)}`
 					elseif myType == "Connection" then
-						print4Instance ..= `{tostring(print4Instance)}; F: {print4Instance.ForeignState} L: {printVal.LuaConnection} Function: [{printInstances(myType.Function)}]`
+						print4Instance ..= `{tostring(print4Instance)}; F: {
+							print4Instance.ForeignState or false} L: {
+								printVal.LuaConnection or false} Function: [{printInstances(myType.Function)}]`
 					elseif StrFind(toStr,myType,1,true) then
 						print4Instance = toStr
 					else
