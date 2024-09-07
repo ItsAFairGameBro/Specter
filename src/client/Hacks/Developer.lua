@@ -143,7 +143,7 @@ return function(C,Settings)
                             if event:IsA("RemoteEvent") then
                                 table.insert(self.Functs,event.OnClientEvent:Connect(function(...)
                                     local RemoteNames = rawget(C,"RemoteNames")
-                                    local MyRemoteName = rawget(RemoteNames,event) or event.Name
+                                    local MyRemoteName = rawget(RemoteNames,event) or event:GetFullName()
                                     print(`[Inbound Remote Spy]: {MyRemoteName}`,...)
                                 end))
                             end
@@ -155,7 +155,7 @@ return function(C,Settings)
                         local RemoteNames = rawget(C,"RemoteNames") or {}
                         local MyRemoteName = rawget(RemoteNames,self) or self.Name
                         if not TblFind(IgnoreList,MyRemoteName) then
-                            task.spawn(print,`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ path {debug.traceback()}; args:`,...)
+                            task.spawn(print,`[Outbound Remote Spy]: "{theirScript}" on {MyRemoteName}:{method}() w/ path {debug.traceback()}; args`,...)
                         end
                         --require(game:GetService("Players").SuitedForBans12.PlayerScripts.Modules.CharacterHandler)["_attachedEvent"].Event:Connect(function(...) warn("attach",...) end) warn("Hook")
                     end,{"fireserver","invokeserver"})
