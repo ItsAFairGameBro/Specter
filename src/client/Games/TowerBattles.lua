@@ -20,7 +20,7 @@ return function(C,Settings)
 				Title = "Join Survival",
 				Tooltip = "Automatically joins survival!",
 				Layout = 1,
-				Shortcut = "Auto",Functs={},Default=true,
+				Shortcut = "Auto",Functs={},Threads={},
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
                         return
@@ -28,7 +28,9 @@ return function(C,Settings)
                     if game.PlaceId == 45146873 then
 						C.ServerTeleport(49707852, nil)
 					elseif game.PlaceId == 49707852 then
-						workspace.Vote:FireServer("Veto")
+						while task.wait(2) do
+							workspace.Vote:InvokeServer("Veto")
+						end
 					end
 				end,
                 Events = {},
