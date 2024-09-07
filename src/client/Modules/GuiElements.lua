@@ -2987,7 +2987,7 @@ return function(C, Settings)
 			if button.Name == "Ok" then
 				button.Visible = Buttons == "Ok" or not Buttons
 			elseif button.Name == "Yes" or button.Name == "No" then
-				button.Visible = Buttons == "Y/N" or Buttons == "Cancel"
+				button.Visible = Buttons == "Y/N" or (button.Name == "No" and Buttons == "Cancel")
 				if button.Name == "No" then
 					button.Text = Buttons=="Cancel" and "Cancel" or "No"
 				end
