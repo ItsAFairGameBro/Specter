@@ -562,7 +562,7 @@ return function(C,Settings)
                 elseif args[1] == "same" then
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
                     if #PS:GetPlayers() <= 1 then
-                        return false, "Requires at least 1 other player. Try ;rejoin any"
+                        --return false, "Requires at least 1 other player. Try ;rejoin any"
                     end
                     C.ServerTeleport(RootPlaceId,game.JobId)
                 else

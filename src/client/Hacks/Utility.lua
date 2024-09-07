@@ -184,7 +184,7 @@ return function(C,Settings)
 					end
 
 					--Fix Keyboard
-					if EnTbl.FixKeyboard then
+					if EnTbl.FixKeyboard and not UIS:GetFocusedTextBox() then
 						local tb = Instance.new("TextBox",C.PlayerGui)
 						tb.Position = UDim2.new(-1, 0,-1, 0)
 						tb.AnchorPoint = Vector2.new(1, 1)
