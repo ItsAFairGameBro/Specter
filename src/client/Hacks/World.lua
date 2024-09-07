@@ -570,11 +570,12 @@ return function(C_new,Settings)
 					},
 					["Bubble Font 3"] = {
 						Output = {
-							"🇦 ", "🇧 ", "🇨 ", "🇩 ", "🇪 ", "🇫 ", "🇬 ", "🇭 ", "🇮 ", "🇯 ", "🇰 ", "🇱 ", "🇲 ", "🇳 ", "🇴 ", "🇵 ", "🇶 ", "🇷 ", "🇸 ", "🇹 ", "🇺 ", "🇻 ", "🇼 ", "🇽 ", "🇾 ", "🇿 ",
-							"🇦 ", "🇧 ", "🇨 ", "🇩 ", "🇪 ", "🇫 ", "🇬 ", "🇭 ", "🇮 ", "🇯 ", "🇰 ", "🇱 ", "🇲 ", "🇳 ", "🇴 ", "🇵 ", "🇶 ", "🇷 ", "🇸 ", "🇹 ", "🇺 ", "🇻 ", "🇼 ", "🇽 ", "🇾 ", "🇿 ",
-							"0 ", "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ",
-							". ", ", ", ": ", "; ", "' ", '" ', "! ", "? ", "- ", "_ ", "/ ", "+ ", "* ", "= ", "( ", ") ", "% ", "@ ", "# ", "$ ", "& ", "^ ", "~ "
+							"🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮", "🇯", "🇰", "🇱", "🇲", "🇳", "🇴", "🇵", "🇶", "🇷", "🇸", "🇹", "🇺", "🇻", "🇼", "🇽", "🇾", "🇿",
+							"🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮", "🇯", "🇰", "🇱", "🇲", "🇳", "🇴", "🇵", "🇶", "🇷", "🇸", "🇹", "🇺", "🇻", "🇼", "🇽", "🇾", "🇿",
+							"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+							".", ",", ":", ";", "'", '"', "!", "?", "-", "_", "/", "+", "*", "=", "(", ")", "%", "@", "#", "$", "&", "^", "~"
 						},
+						SeperationCharacter = " ",
 					},
 					["Small Font 1"] = {
 						Output = {"Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ", "Ｗ", "Ｘ", "Ｙ", "Ｚ", "ａｂ", "ｃ", "ｄ", "ｅ", "ｆ", "ｇ", "ｈ", "ｉ", "ｊ", "ｋ", "ｌ", "ｍ", "ｎ", "ｏ", "ｐ", "ｑ", "ｒ", "ｓ", "ｔ", "ｕ", "ｖ", "ｗ", "ｘ", "ｙ", "ｚ", "０", "１", "２", "３", "４", "５", "６", "７", "８", "９", ".", ",", ":", ";", "'", '"', "!", "?", "-", "_", "/", "+", "*", "=", "(", ")", "%", "@", "#", "$", "&", "^", "~"}
@@ -610,9 +611,10 @@ return function(C_new,Settings)
 					local BetweenMultiLine = self.EnTbl.MultiLine
 					assert(TranslationTbl or self.EnTbl.ChosenFont == "Off", `Chat Bypass Translation Doesn't Contain Proper Font: {self.EnTbl.ChosenFont}`)
 					local gmatch = string.gmatch
-					local Input, Output
+					local Input, Output, SeperationCharacter
 					if TranslationTbl then
 						Input, Output = TranslationTbl.Input or self.DefaultInput, TranslationTbl.Output
+						SeperationCharacter = TranslationTbl.SeperationCharacter or ""
 					end
 					local MultiLineFunction = self.ParseMultiLine
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,message,channel)
@@ -622,10 +624,15 @@ return function(C_new,Settings)
 							end
 							if TranslationTbl then
 								local newMessage = ""
+								local index,total = 0, #message
 								for character in gmatch(message,".") do
+									index+=1
 									local foundIndex = find(Input,character,1,true)
 									if foundIndex then
 										newMessage ..= rawget(Output,foundIndex)
+										if total ~= index then
+											newMessage ..= SeperationCharacter
+										end
 									else
 										newMessage ..= character
 									end
