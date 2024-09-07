@@ -15,7 +15,7 @@ return function(C,Settings)
 	if not C.getgenv().PrintEnvironment then
 		local OldEnv = {}
 		local GetFullName = workspace.GetFullName
-		local GetInfo = table.info
+		local GetInfo = debug.info
 		local StrFind = string.find
 		local function printInstances(...)
 			local printVal = ""
