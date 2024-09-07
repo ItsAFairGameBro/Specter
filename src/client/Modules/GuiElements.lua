@@ -3137,8 +3137,6 @@ return function(C, Settings)
 				local placePages = AssetService:GetGamePlacesAsync()
 				while true do
 					for _, place in placePages:GetCurrentPage() do
-						print("Name:", place.Name)
-						print("PlaceId:", place.PlaceId)
 						table.insert(list, place)
 					end
 					if placePages.IsFinished then
@@ -3200,6 +3198,12 @@ return function(C, Settings)
 					serverClone.ServerTitle.Text = data.Name
 					serverClone.SecondData.Text = `PlaceID = {data.PlaceId}`
 					serverClone.TimeStamp.Text = ``
+					C.ButtonClick(serverClone, function()
+						if JoinServerDeb then return end
+						if C.Prompt(`Select Place?`, `Are you sure that you want to join this game?`, "Y/N") then
+							C.ServerTeleport(data.PlaceId,JobId)
+						end
+					end)
 				else
 					local listedData = {
 						(tabName=="Friend" and `{data.UserName}`) or (JobId == game.JobId and `Your Server`) or `Server {RealIndex}`,
@@ -3247,7 +3251,7 @@ return function(C, Settings)
 
 		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
 		BottomButtons.Visible = hasArrows
-		ServersTL.Text = `{tabName:upper()} SERVERS ({titleAfter})`
+		ServersTL.Text = `{tabName:upper()}{tabName=="Place" and "" or " SERVERS"} ({titleAfter})`
 		NoneFound.Visible = index == 0
 	end
 	C.ButtonClick(NextButton, function()
