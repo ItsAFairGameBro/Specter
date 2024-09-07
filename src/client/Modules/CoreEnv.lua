@@ -219,6 +219,7 @@ return function(C,Settings)
 				return
 			end
 			C:SaveProfile()
+			C.AddNotification("AutoSaving","Autosave success")
 		end
 	end
 	--Chat
