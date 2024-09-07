@@ -108,7 +108,7 @@ return function(C,Settings)
 						end
 	
 						-- Debug.Traceback doesn't work for this:
-						task.delay(1,GS.ClearError,GS)
+						task.defer(GS.ClearError,GS)
 						SG:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 					end,
 				},
