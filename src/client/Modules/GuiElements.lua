@@ -3093,7 +3093,6 @@ return function(C, Settings)
 
 	local CurrentlySel
 	local MaxPageNum,PageNum,Previous,Next = 0, 0, "", ""
-	local JoinServerDeb = false
 
 	local GetServers = {
 		Recent = function()
@@ -3199,13 +3198,22 @@ return function(C, Settings)
 				local serverClone = C.Examples.ServerEx:Clone()
 				local RealIndex = (PageNum-1)*100 + index
 				local JobId = data.JobId or data.id
+				local IsSame = game.PlaceId == data.PlaceId
 				serverClone.Name = index
 				if tabName == "Place" then
 					serverClone.ServerTitle.Text = data.Name
 					serverClone.SecondData.Text = `PlaceID = {data.PlaceId}`
 					serverClone.TimeStamp.Text = ``
+					if InGame then
+						serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
+					else
+						serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
+					end
+					IsSame = game.PlaceId == data.PlaceId
 					C.ButtonClick(serverClone, function()
-						if JoinServerDeb then return end
+						if InGame then
+							return C.Prompt(`Join Failed`, `You are currently in the place you are attempting to join:\n{data.Name}`,"Ok")
+						end
 						if C.Prompt(`Join Confirmation`, `Are you sure that you want to join {data.Name}?`, "Y/N") then
 							C.ServerTeleport(data.PlaceId,nil)
 						end
@@ -3220,13 +3228,8 @@ return function(C, Settings)
 					serverClone.ServerTitle.Text = listedData[1]
 					serverClone.SecondData.Text = listedData[2]
 					serverClone.TimeStamp.Text = listedData[3]
-					if JobId == game.JobId then
-						serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
-					else
-						serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
-					end
+					IsSame = game.JobId == data.JobId
 					C.ButtonClick(serverClone, function()
-						if JoinServerDeb then return end
 						if not JobId then
 							return C.Prompt(`Not InGame`, `{listedData[1]} is currently not in a game.\nPlease try again later.`)
 						end
@@ -3234,6 +3237,11 @@ return function(C, Settings)
 							C.ServerTeleport(data.PlaceId or game.PlaceId,JobId)
 						end
 					end)
+				end
+				if IsSame then
+					serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
+				else
+					serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
 				end
 				serverClone.LayoutOrder = index
 				serverClone.Parent = MainScroll
