@@ -468,8 +468,19 @@ return function(C,Settings)
 						return
 					end
 					while true do
-						TL.Text = ("%i"):format(math.min(60,1/RunS.RenderStepped:Wait()))
-						task.wait(2/3)
+						local Start = os.clock()
+						local Frames = {}
+						while (os.clock() - Start) < 2/3 do
+							task.wait(1/10)
+							table.insert(Frames,1/RunS.RenderStepped:Wait())
+						end
+						local Sum = 0
+						for num, val in ipairs(Frames) do
+							Sum += val
+						end
+						local AvgFrameRate = Sum / #Frames
+						local FrameRate = math.min(60,AvgFrameRate)
+						TL.Text = ("%i"):format(FrameRate)
 					end
 				end,
 			},
