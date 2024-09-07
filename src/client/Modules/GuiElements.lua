@@ -1985,7 +1985,6 @@ GuiTbl.MainScroll.TopImage = "rbxassetid://3062506445"
 GuiTbl.ServerEx.Name = "ServerEx"
 C.AddGlobalInstance(GuiTbl.ServerEx)
 C.Examples.ServerEx = GuiTbl.ServerEx
-GuiTbl.ServerEx.Active = true
 GuiTbl.ServerEx.BackgroundColor3 = Color3.fromRGB(255, 81, 0)
 GuiTbl.ServerEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.ServerEx.BorderSizePixel = 0
