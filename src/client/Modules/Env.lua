@@ -42,7 +42,7 @@ return function(C,Settings)
 					elseif myType == "Connection" then
 						print4Instance = `{toStr}; Foreign={
 							print4Instance.ForeignState or false} Luau={
-								printVal.LuaConnection or false} Function: [{printInstances(print4Instance.Function)}]`
+								print4Instance.LuaConnection or false}` .. (print4Instance.Function and ` Function: [{printInstances(print4Instance.Function)}]` or "")
 					elseif StrFind(toStr,myType,1,true) then
 						print4Instance = toStr
 					else
