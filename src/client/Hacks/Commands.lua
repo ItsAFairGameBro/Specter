@@ -528,7 +528,7 @@ return function(C,Settings)
                     end
                     RootPlaceId = game.PlaceId
                     if args[1] == "same" then
-                        args[1] = "any"
+                        --args[1] = "any"
                     end
                 end
                 if args[1] == "new" or args[1] == "small" then
