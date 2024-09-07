@@ -156,6 +156,8 @@ return function(C,Settings)
 		end
 		FireEvent("RbxErrorPrompt", nil, ErrorMessage, ErrorCode, ErrorIdentification)
 	end
-	C.AddGlobalConnection(GS.ErrorMessageChanged:Connect(CheckStatusCodes))
-	CheckStatusCodes(GS:GetErrorMessage())
+	if not C.isStudio then
+		C.AddGlobalConnection(GS.ErrorMessageChanged:Connect(CheckStatusCodes))
+		CheckStatusCodes(GS:GetErrorMessage())
+	end
 end

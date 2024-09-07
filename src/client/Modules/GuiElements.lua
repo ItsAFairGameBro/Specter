@@ -3097,12 +3097,18 @@ return function(C, Settings)
 
 	local GetServers = {
 		Recent = function()
+			if C.isStudio then
+				return true, {}
+			end
 			return true, C.getgenv().PreviousServers
 		end,
 		Game = function(Cursor)
+			if C.isStudio then
+				return true, {}
+			end
 			local success, result = C.API(C.request,nil,1,{Url=`https://games.roblox.com/v1/games/{CurrentPlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
 			if not success then
-				return success, result
+				return false, result
 			elseif not result.Success then
 				return false, result.StatusMessage
 			end
@@ -3116,7 +3122,7 @@ return function(C, Settings)
 		Friend = function()
 			local success, result = C.API(C.plr,"GetFriendsOnline",1)
 			if not success then
-				return success, result
+				return false, result
 			end
 			for num = #result, 1, -1 do
 				local friendData = result[num]
@@ -3147,7 +3153,7 @@ return function(C, Settings)
 				return list
 			end,nil,1)
 			if not success then
-				return success, placePages
+				return false, placePages
 			end
 			return true, placePages
 		end,
@@ -3200,8 +3206,8 @@ return function(C, Settings)
 					serverClone.TimeStamp.Text = ``
 					C.ButtonClick(serverClone, function()
 						if JoinServerDeb then return end
-						if C.Prompt(`Select Place?`, `Are you sure that you want to join this game?`, "Y/N") then
-							C.ServerTeleport(data.PlaceId,JobId)
+						if C.Prompt(`Join Confirmation`, `Are you sure that you want to join {data.Name}?`, "Y/N") then
+							C.ServerTeleport(data.PlaceId,nil)
 						end
 					end)
 				else
