@@ -3201,15 +3201,15 @@ return function(C, Settings)
 				local IsSame
 				serverClone.Name = index
 				if tabName == "Place" then
+					IsSame = game.PlaceId == data.PlaceId
 					serverClone.ServerTitle.Text = data.Name
 					serverClone.SecondData.Text = `PlaceID = {data.PlaceId}`
-					serverClone.TimeStamp.Text = ``
-					IsSame = game.PlaceId == data.PlaceId
+					serverClone.TimeStamp.Text = `{IsSame and "You are here" or "Click To Join"}`
 					C.ButtonClick(serverClone, function()
 						if IsSame then
 							return C.Prompt(`Join Failed`, `You are currently in the place you are attempting to join:\n{data.Name}`,"Ok")
 						end
-						if C.Prompt(`Join Confirmation`, `Are you sure that you want to join {data.Name}?`, "Y/N") then
+						if C.Prompt(`Join Confirmation`, `Are you sure that you want to join:\n{data.Name}?`, "Y/N") then
 							C.ServerTeleport(data.PlaceId,nil)
 						end
 					end)
