@@ -183,47 +183,53 @@ local GuiTbl = {
 	Friend = Instance.new("TextButton"),
 	UICorner_20 = Instance.new("UICorner"),
 	UIStroke_21 = Instance.new("UIStroke"),
+	Place = Instance.new("TextButton"),
+	UICorner_21 = Instance.new("UICorner"),
+	UIStroke_22 = Instance.new("UIStroke"),
 	MainScroll = Instance.new("ScrollingFrame"),
 	ServerEx = Instance.new("Frame"),
 	ServerTitle = Instance.new("TextLabel"),
 	TimeStamp = Instance.new("TextLabel"),
 	SecondData = Instance.new("TextLabel"),
-	UICorner_21 = Instance.new("UICorner"),
-	UIStroke_22 = Instance.new("UIStroke"),
+	UICorner_22 = Instance.new("UICorner"),
+	UIStroke_23 = Instance.new("UIStroke"),
 	UIGridLayout_2 = Instance.new("UIGridLayout"),
 	BottomButtons = Instance.new("Frame"),
 	Previous = Instance.new("TextButton"),
-	UICorner_22 = Instance.new("UICorner"),
-	UIStroke_23 = Instance.new("UIStroke"),
-	UIGridLayout_3 = Instance.new("UIGridLayout"),
-	Join = Instance.new("TextButton"),
 	UICorner_23 = Instance.new("UICorner"),
 	UIStroke_24 = Instance.new("UIStroke"),
-	Next = Instance.new("TextButton"),
+	UIGridLayout_3 = Instance.new("UIGridLayout"),
+	Join = Instance.new("TextButton"),
 	UICorner_24 = Instance.new("UICorner"),
 	UIStroke_25 = Instance.new("UIStroke"),
-	ExtraLabel = Instance.new("TextLabel"),
-	NoneFoundLabel = Instance.new("TextLabel"),
+	Next = Instance.new("TextButton"),
 	UICorner_25 = Instance.new("UICorner"),
 	UIStroke_26 = Instance.new("UIStroke"),
+	ExtraLabel = Instance.new("TextLabel"),
+	NoneFoundLabel = Instance.new("TextLabel"),
 	UICorner_26 = Instance.new("UICorner"),
 	UIStroke_27 = Instance.new("UIStroke"),
-	PromptFrame = Instance.new("Frame"),
+	SelectedLabel = Instance.new("TextLabel"),
 	UICorner_27 = Instance.new("UICorner"),
 	UIStroke_28 = Instance.new("UIStroke"),
+	UICorner_28 = Instance.new("UICorner"),
+	UIStroke_29 = Instance.new("UIStroke"),
+	PromptFrame = Instance.new("Frame"),
+	UICorner_29 = Instance.new("UICorner"),
+	UIStroke_30 = Instance.new("UIStroke"),
 	PromptTitle = Instance.new("TextLabel"),
 	PromptDesc = Instance.new("TextLabel"),
 	PromptButtons = Instance.new("Frame"),
 	UIGridLayout_4 = Instance.new("UIGridLayout"),
 	Yes = Instance.new("TextButton"),
-	UIStroke_29 = Instance.new("UIStroke"),
-	UICorner_28 = Instance.new("UICorner"),
-	No = Instance.new("TextButton"),
-	UIStroke_30 = Instance.new("UIStroke"),
-	UICorner_29 = Instance.new("UICorner"),
-	Ok = Instance.new("TextButton"),
 	UIStroke_31 = Instance.new("UIStroke"),
 	UICorner_30 = Instance.new("UICorner"),
+	No = Instance.new("TextButton"),
+	UIStroke_32 = Instance.new("UIStroke"),
+	UICorner_31 = Instance.new("UICorner"),
+	Ok = Instance.new("TextButton"),
+	UIStroke_33 = Instance.new("UIStroke"),
+	UICorner_32 = Instance.new("UICorner"),
 	NameTagEx = Instance.new("BillboardGui"),
 	Username = Instance.new("TextLabel"),
 	Distance = Instance.new("TextLabel"),
@@ -231,9 +237,9 @@ local GuiTbl = {
 	AmtFinished = Instance.new("Frame"),
 	VisibilityButton = Instance.new("Frame"),
 	UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint"),
-	UICorner_31 = Instance.new("UICorner"),
+	UICorner_33 = Instance.new("UICorner"),
 	VisibilityButton_2 = Instance.new("ImageLabel"),
-	UICorner_32 = Instance.new("UICorner"),
+	UICorner_34 = Instance.new("UICorner"),
 	FrameRate = Instance.new("TextLabel"),
 }
 
@@ -1346,7 +1352,7 @@ GuiTbl.HighlightBackground.BackgroundColor3 = Color3.fromRGB(0, 255, 60)
 GuiTbl.HighlightBackground.BackgroundTransparency = 1.000
 GuiTbl.HighlightBackground.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.HighlightBackground.BorderSizePixel = 0
-GuiTbl.HighlightBackground.Size = UDim2.new(1, 0, 0, 40)
+GuiTbl.HighlightBackground.Size = UDim2.new(1, 20, 0, 40)
 
 GuiTbl.KeybindButton.Name = "KeybindButton"
 GuiTbl.KeybindButton.Parent = GuiTbl.HackButtonEx
@@ -1870,7 +1876,7 @@ GuiTbl.UIStroke_18.Parent = GuiTbl.Game
 
 GuiTbl.UIGridLayout.Parent = GuiTbl.TabsSelection
 GuiTbl.UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-GuiTbl.UIGridLayout.CellPadding = UDim2.new(0, 0, 0.13333334, 0)
+GuiTbl.UIGridLayout.CellPadding = UDim2.new(0, 0, 0.063000001, 0)
 GuiTbl.UIGridLayout.CellSize = UDim2.new(1, 0, 0.150000006, 0)
 
 GuiTbl.Recent.Name = "Recent"
@@ -1937,6 +1943,28 @@ GuiTbl.UICorner_20.Parent = GuiTbl.Friend
 
 GuiTbl.UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 GuiTbl.UIStroke_21.Parent = GuiTbl.Friend
+
+GuiTbl.Place.Name = "Place"
+GuiTbl.Place.Parent = GuiTbl.TabsSelection
+GuiTbl.Place.BackgroundColor3 = Color3.fromRGB(157, 0, 255)
+GuiTbl.Place.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.Place.BorderSizePixel = 0
+GuiTbl.Place.LayoutOrder = 1
+GuiTbl.Place.Size = UDim2.new(0, 200, 0, 50)
+GuiTbl.Place.ZIndex = 103
+GuiTbl.Place.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.Place.Text = "Places"
+GuiTbl.Place.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Place.TextScaled = true
+GuiTbl.Place.TextSize = 21
+GuiTbl.Place.TextStrokeTransparency = 0.000
+GuiTbl.Place.TextWrapped = true
+
+GuiTbl.UICorner_21.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_21.Parent = GuiTbl.Place
+
+GuiTbl.UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_22.Parent = GuiTbl.Place
 
 GuiTbl.MainScroll.Name = "MainScroll"
 GuiTbl.MainScroll.Parent = GuiTbl.Servers
@@ -2018,11 +2046,11 @@ GuiTbl.SecondData.TextSize = 21
 GuiTbl.SecondData.TextStrokeTransparency = 0.000
 GuiTbl.SecondData.TextWrapped = true
 
-GuiTbl.UICorner_21.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_21.Parent = GuiTbl.ServerEx
+GuiTbl.UICorner_22.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_22.Parent = GuiTbl.ServerEx
 
-GuiTbl.UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_22.Parent = GuiTbl.ServerEx
+GuiTbl.UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_23.Parent = GuiTbl.ServerEx
 
 GuiTbl.UIGridLayout_2.Parent = GuiTbl.MainScroll
 GuiTbl.UIGridLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -2057,11 +2085,11 @@ GuiTbl.Previous.TextSize = 21
 GuiTbl.Previous.TextStrokeTransparency = 0.000
 GuiTbl.Previous.TextWrapped = true
 
-GuiTbl.UICorner_22.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_22.Parent = GuiTbl.Previous
+GuiTbl.UICorner_23.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_23.Parent = GuiTbl.Previous
 
-GuiTbl.UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_23.Parent = GuiTbl.Previous
+GuiTbl.UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_24.Parent = GuiTbl.Previous
 
 GuiTbl.UIGridLayout_3.Parent = GuiTbl.BottomButtons
 GuiTbl.UIGridLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -2085,11 +2113,11 @@ GuiTbl.Join.TextSize = 21
 GuiTbl.Join.TextStrokeTransparency = 0.000
 GuiTbl.Join.TextWrapped = true
 
-GuiTbl.UICorner_23.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_23.Parent = GuiTbl.Join
+GuiTbl.UICorner_24.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_24.Parent = GuiTbl.Join
 
-GuiTbl.UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_24.Parent = GuiTbl.Join
+GuiTbl.UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_25.Parent = GuiTbl.Join
 
 GuiTbl.Next.Name = "Next"
 GuiTbl.Next.Parent = GuiTbl.BottomButtons
@@ -2107,11 +2135,11 @@ GuiTbl.Next.TextSize = 21
 GuiTbl.Next.TextStrokeTransparency = 0.000
 GuiTbl.Next.TextWrapped = true
 
-GuiTbl.UICorner_24.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_24.Parent = GuiTbl.Next
+GuiTbl.UICorner_25.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_25.Parent = GuiTbl.Next
 
-GuiTbl.UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_25.Parent = GuiTbl.Next
+GuiTbl.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_26.Parent = GuiTbl.Next
 
 GuiTbl.ExtraLabel.Name = "ExtraLabel"
 GuiTbl.ExtraLabel.Parent = GuiTbl.Servers
@@ -2148,17 +2176,41 @@ GuiTbl.NoneFoundLabel.TextSize = 21
 GuiTbl.NoneFoundLabel.TextStrokeTransparency = 0.000
 GuiTbl.NoneFoundLabel.TextWrapped = true
 
-GuiTbl.UICorner_25.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_25.Parent = GuiTbl.NoneFoundLabel
-
-GuiTbl.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_26.Parent = GuiTbl.NoneFoundLabel
-
 GuiTbl.UICorner_26.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_26.Parent = GuiTbl.SecondaryHUD
+GuiTbl.UICorner_26.Parent = GuiTbl.NoneFoundLabel
 
 GuiTbl.UIStroke_27.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_27.Parent = GuiTbl.SecondaryHUD
+GuiTbl.UIStroke_27.Parent = GuiTbl.NoneFoundLabel
+
+GuiTbl.SelectedLabel.Name = "SelectedLabel"
+GuiTbl.SelectedLabel.Parent = GuiTbl.Servers
+GuiTbl.SelectedLabel.AnchorPoint = Vector2.new(0.5, 1)
+GuiTbl.SelectedLabel.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
+GuiTbl.SelectedLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.SelectedLabel.BorderSizePixel = 0
+GuiTbl.SelectedLabel.Position = UDim2.new(0.5, 0, 0, 0)
+GuiTbl.SelectedLabel.Size = UDim2.new(0.600000024, 0, 0, 30)
+GuiTbl.SelectedLabel.Visible = false
+GuiTbl.SelectedLabel.ZIndex = 102
+GuiTbl.SelectedLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.SelectedLabel.Text = "Target: Start Place (Tower Battles)"
+GuiTbl.SelectedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.SelectedLabel.TextScaled = true
+GuiTbl.SelectedLabel.TextSize = 21
+GuiTbl.SelectedLabel.TextStrokeTransparency = 0.000
+GuiTbl.SelectedLabel.TextWrapped = true
+
+GuiTbl.UICorner_27.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_27.Parent = GuiTbl.SelectedLabel
+
+GuiTbl.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_28.Parent = GuiTbl.SelectedLabel
+
+GuiTbl.UICorner_28.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_28.Parent = GuiTbl.SecondaryHUD
+
+GuiTbl.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_29.Parent = GuiTbl.SecondaryHUD
 
 GuiTbl.PromptFrame.Name = "PromptFrame"
 GuiTbl.PromptFrame.Parent = GuiTbl.SpecterGUI
@@ -2172,11 +2224,11 @@ GuiTbl.PromptFrame.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
 GuiTbl.PromptFrame.Visible = false
 GuiTbl.PromptFrame.ZIndex = 1000
 
-GuiTbl.UICorner_27.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_27.Parent = GuiTbl.PromptFrame
+GuiTbl.UICorner_29.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_29.Parent = GuiTbl.PromptFrame
 
-GuiTbl.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_28.Parent = GuiTbl.PromptFrame
+GuiTbl.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_30.Parent = GuiTbl.PromptFrame
 
 GuiTbl.PromptTitle.Name = "PromptTitle"
 GuiTbl.PromptTitle.Parent = GuiTbl.PromptFrame
@@ -2246,11 +2298,11 @@ GuiTbl.Yes.TextSize = 21
 GuiTbl.Yes.TextStrokeTransparency = 0.000
 GuiTbl.Yes.TextWrapped = true
 
-GuiTbl.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_29.Parent = GuiTbl.Yes
+GuiTbl.UIStroke_31.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_31.Parent = GuiTbl.Yes
 
-GuiTbl.UICorner_28.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_28.Parent = GuiTbl.Yes
+GuiTbl.UICorner_30.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_30.Parent = GuiTbl.Yes
 
 GuiTbl.No.Name = "No"
 GuiTbl.No.Parent = GuiTbl.PromptButtons
@@ -2268,11 +2320,11 @@ GuiTbl.No.TextSize = 21
 GuiTbl.No.TextStrokeTransparency = 0.000
 GuiTbl.No.TextWrapped = true
 
-GuiTbl.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_30.Parent = GuiTbl.No
+GuiTbl.UIStroke_32.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_32.Parent = GuiTbl.No
 
-GuiTbl.UICorner_29.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_29.Parent = GuiTbl.No
+GuiTbl.UICorner_31.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_31.Parent = GuiTbl.No
 
 GuiTbl.Ok.Name = "Ok"
 GuiTbl.Ok.Parent = GuiTbl.PromptButtons
@@ -2291,11 +2343,11 @@ GuiTbl.Ok.TextSize = 21
 GuiTbl.Ok.TextStrokeTransparency = 0.000
 GuiTbl.Ok.TextWrapped = true
 
-GuiTbl.UIStroke_31.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_31.Parent = GuiTbl.Ok
+GuiTbl.UIStroke_33.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_33.Parent = GuiTbl.Ok
 
-GuiTbl.UICorner_30.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_30.Parent = GuiTbl.Ok
+GuiTbl.UICorner_32.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_32.Parent = GuiTbl.Ok
 
 GuiTbl.NameTagEx.Name = "NameTagEx"
 C.AddGlobalInstance(GuiTbl.NameTagEx)
@@ -2371,8 +2423,8 @@ GuiTbl.VisibilityButton.ZIndex = 101
 
 GuiTbl.UIAspectRatioConstraint.Parent = GuiTbl.VisibilityButton
 
-GuiTbl.UICorner_31.CornerRadius = UDim.new(1, 0)
-GuiTbl.UICorner_31.Parent = GuiTbl.VisibilityButton
+GuiTbl.UICorner_33.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_33.Parent = GuiTbl.VisibilityButton
 
 GuiTbl.VisibilityButton_2.Name = "VisibilityButton"
 GuiTbl.VisibilityButton_2.Parent = GuiTbl.VisibilityButton
@@ -2389,8 +2441,8 @@ C.SetImage(GuiTbl.VisibilityButton_2,"rbxassetid://18416048326")
 GuiTbl.VisibilityButton_2.ImageTransparency = 0.360
 GuiTbl.VisibilityButton_2.ScaleType = Enum.ScaleType.Fit
 
-GuiTbl.UICorner_32.CornerRadius = UDim.new(1, 0)
-GuiTbl.UICorner_32.Parent = GuiTbl.VisibilityButton_2
+GuiTbl.UICorner_34.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_34.Parent = GuiTbl.VisibilityButton_2
 
 GuiTbl.FrameRate.Name = "FrameRate"
 GuiTbl.FrameRate.Parent = GuiTbl.SpecterGUI
@@ -3029,7 +3081,10 @@ return function(C, Settings)
 	local SecondaryHUD = C.UI.SecondaryHUD
 	local ServersFrame = SecondaryHUD:WaitForChild("Servers")
 
+	local CurrentPlaceId = game.PlaceId
+
 	local MainScroll = ServersFrame:WaitForChild("MainScroll")
+	local UIGridLayout = MainScroll:WaitForChild("UIGridLayout")
 	local TabsSelection = ServersFrame:WaitForChild("TabsSelection")
 	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
 	local ServersTL = ServersFrame:WaitForChild("ServersTitleLabel")
@@ -3045,7 +3100,7 @@ return function(C, Settings)
 			return true, C.getgenv().PreviousServers
 		end,
 		Game = function(Cursor)
-			local success, result = C.API(C.request,nil,1,{Url=`https://games.roblox.com/v1/games/{game.PlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
+			local success, result = C.API(C.request,nil,1,{Url=`https://games.roblox.com/v1/games/{CurrentPlaceId}/servers/Public?sortOrder=Desc&excludeFullGames=true&limit=100&cursor={Cursor}`})
 			if not success then
 				return success, result
 			elseif not result.Success then
@@ -3073,6 +3128,29 @@ return function(C, Settings)
 				friendData.GameId = nil
 			end
 			return true, result
+		end,
+		Place = function()
+			local AssetService = game:GetService("AssetService")
+
+			local success, placePages = C.API(function()
+				local list = {}
+				local placePages = AssetService:GetGamePlacesAsync()
+				while true do
+					for _, place in placePages:GetCurrentPage() do
+						print("Name:", place.Name)
+						print("PlaceId:", place.PlaceId)
+						table.insert(list, place)
+					end
+					if placePages.IsFinished then
+						break
+					end
+					placePages:AdvanceToNextPageAsync()
+				end
+			end,nil,1)
+			if not success then
+				return success, placePages
+			end
+
 		end,
 	}
 	local LocationType = {
@@ -3107,6 +3185,7 @@ return function(C, Settings)
 
 		CurrentlySel = tabName
 		C.ClearChildren(MainScroll)
+		UIGridLayout.CellSize = UDim2.new(tabName == "Place" and 1 or 0.3,0,0,UIGridLayout.CellSize.Y.Offset)
 		MainScroll.CanvasPosition = Vector2.zero
 		local index = 0
 		for num, data in ipairs(result) do
@@ -3115,31 +3194,37 @@ return function(C, Settings)
 				local serverClone = C.Examples.ServerEx:Clone()
 				local RealIndex = (PageNum-1)*100 + index
 				local JobId = data.JobId or data.id
-				local listedData = {
-					(tabName=="Friend" and `{data.UserName}`) or (JobId == game.JobId and `Your Server`) or `Server {RealIndex}`,
-					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`)
-						or (data.PlaceId and MS:GetProductInfo(data.PlaceId).Name) or "Not InGame",
-					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`) or (data.LocationType and `{LocationType[data.LocationType]}`),
-				}
 				serverClone.Name = index
-				serverClone.ServerTitle.Text = listedData[1]
-				serverClone.SecondData.Text = listedData[2]
-				serverClone.TimeStamp.Text = listedData[3]
-				serverClone.LayoutOrder = index
-				if JobId == game.JobId then
-					serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
+				if tabName == "Place" then
+					serverClone.ServerTitle.Text = data.Name
+					serverClone.SecondData.Text = `PlaceID = {data.PlaceId}`
+					serverClone.TimeStamp.Text = ``
 				else
-					serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
+					local listedData = {
+						(tabName=="Friend" and `{data.UserName}`) or (JobId == game.JobId and `Your Server`) or `Server {RealIndex}`,
+						(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`)
+							or (data.PlaceId and MS:GetProductInfo(data.PlaceId).Name) or "Not InGame",
+						(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`) or (data.LocationType and `{LocationType[data.LocationType]}`),
+					}
+					serverClone.ServerTitle.Text = listedData[1]
+					serverClone.SecondData.Text = listedData[2]
+					serverClone.TimeStamp.Text = listedData[3]
+					if JobId == game.JobId then
+						serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
+					else
+						serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
+					end
+					C.ButtonClick(serverClone, function()
+						if JoinServerDeb then return end
+						if not JobId then
+							return C.Prompt(`Not InGame`, `{listedData[1]} is currently not in a game.\nPlease try again later.`)
+						end
+						if C.Prompt(`Join {listedData[1]}?`, `JobId: {JobId}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
+							C.ServerTeleport(data.PlaceId or game.PlaceId,JobId)
+						end
+					end)
 				end
-				C.ButtonClick(serverClone, function()
-					if JoinServerDeb then return end
-					if not JobId then
-						return C.Prompt(`Not InGame`, `{listedData[1]} is currently not in a game.\nPlease try again later.`)
-					end
-					if C.Prompt(`Join {listedData[1]}?`, `JobId: {JobId}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
-						C.ServerTeleport(data.PlaceId or game.PlaceId,JobId)
-					end
-				end)
+				serverClone.LayoutOrder = index
 				serverClone.Parent = MainScroll
 			end
 		end
