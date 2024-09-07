@@ -16,6 +16,7 @@ return function(C,Settings)
 		local OldEnv = {}
 		local GetFullName = workspace.GetFullName
 		local GetInfo = debug.info
+		local GSub = string.gsub
 		local StrFind = string.find
 		local function printInstances(...)
 			local printVal = ""
@@ -37,10 +38,10 @@ return function(C,Settings)
 						-- do nothing, just keep it to true/false
 						print4Instance = toStr
 					elseif myType == "function" then
-						print4Instance = `{GetInfo(print4Instance,"n") or ""} @ {GetInfo(print4Instance, "s") or ""}; Line {tostring(GetInfo(print4Instance, "l"))}`
+						print4Instance = `{GetInfo(print4Instance,"n")} {GSub(toStr,"function: ","")} @ {GetInfo(print4Instance, "s")}; Line {tostring(GetInfo(print4Instance, "l"))}`
 					elseif myType == "Connection" then
-						print4Instance = `{toStr}; F: {
-							print4Instance.ForeignState or false} L: {
+						print4Instance = `{toStr}; Foreign={
+							print4Instance.ForeignState or false} Luau={
 								printVal.LuaConnection or false} Function: [{printInstances(print4Instance.Function)}]`
 					elseif StrFind(toStr,myType,1,true) then
 						print4Instance = toStr
