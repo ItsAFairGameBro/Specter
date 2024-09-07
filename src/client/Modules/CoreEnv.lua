@@ -116,14 +116,18 @@ return function(C,Settings)
 						table.remove(PreviousServers,index)
 					end
 				end
-				table.insert(PreviousServers,1,{
-					PlaceId = game.PlaceId,
-					JobId = game.JobId,
-					GameId = game.GameId,
-					Time = os.time(),
-					Players = #PS:GetPlayers(),
-					MaxPlayers = PS.MaxPlayers,
-				})
+				local PlayerCount = #PS:GetPlayers()
+				if PlayerCount >= 1 then
+					table.insert(PreviousServers,1,{
+						PlaceId = game.PlaceId,
+						JobId = game.JobId,
+						GameId = game.GameId,
+						Time = os.time(),
+						Players = PlayerCount,
+						MaxPlayers = PS.MaxPlayers,
+					})
+				end
+				
 			--[[else
 					C.getgenv().PreviousServers[1].Time = os.time() -- Update time
 					C.getgenv().PreviousServers[1].Players = #PS:GetPlayers() -- Update players

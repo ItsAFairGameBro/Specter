@@ -3117,7 +3117,7 @@ return function(C, Settings)
 				local JobId = data.JobId or data.id
 				local listedData = {
 					(tabName=="Friend" and `{data.UserName}`) or (JobId == game.JobId and `Your Server`) or `Server {RealIndex}`,
-					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`) 
+					(data.Players and `{data.Players}/{data.MaxPlayers} Players`) or (data.playing and `{data.playing}/{data.maxPlayers} Players`)
 						or (data.PlaceId and MS:GetProductInfo(data.PlaceId).Name) or "Not InGame",
 					(data.Time and `{C.FormatTimeFromUnix(data.Time)}`) or (data.ping and `{data.ping} ping`) or (data.LocationType and `{LocationType[data.LocationType]}`),
 				}
