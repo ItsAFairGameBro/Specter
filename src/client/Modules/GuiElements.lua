@@ -1811,7 +1811,6 @@ GuiTbl.SecondaryHUD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.SecondaryHUD.BorderSizePixel = 0
 GuiTbl.SecondaryHUD.Position = UDim2.new(0.5, 0, 0.5, 0)
 GuiTbl.SecondaryHUD.Size = UDim2.new(0.5, 0, 0.5, 0)
-GuiTbl.SecondaryHUD.Visible = false
 GuiTbl.SecondaryHUD.ZIndex = 100
 
 GuiTbl.Servers.Name = "Servers"
@@ -1979,8 +1978,10 @@ GuiTbl.MainScroll.ZIndex = 102
 GuiTbl.MainScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 GuiTbl.MainScroll.BottomImage = "rbxassetid://3062505976"
 GuiTbl.MainScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+GuiTbl.MainScroll.HorizontalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 GuiTbl.MainScroll.MidImage = "rbxassetid://3062506202"
 GuiTbl.MainScroll.TopImage = "rbxassetid://3062506445"
+GuiTbl.MainScroll.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 
 GuiTbl.ServerEx.Name = "ServerEx"
 C.AddGlobalInstance(GuiTbl.ServerEx)
