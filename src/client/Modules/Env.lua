@@ -37,11 +37,11 @@ return function(C,Settings)
 						-- do nothing, just keep it to true/false
 						print4Instance = toStr
 					elseif myType == "function" then
-						print4Instance ..= `{GetInfo(print4Instance,"n")} @ {GetInfo(print4Instance, "s")}; Line {GetInfo(print4Instance, "l")}; {tostring(print4Instance)}`
+						print4Instance ..= `{GetInfo(print4Instance,"n")} @ {GetInfo(print4Instance, "s")}; Line {GetInfo(print4Instance, "l")}; {toStr}`
 					elseif myType == "Connection" then
-						print4Instance ..= `{tostring(print4Instance)}; F: {
+						print4Instance ..= `{toStr}; F: {
 							print4Instance.ForeignState or false} L: {
-								printVal.LuaConnection or false} Function: [{printInstances(myType.Function)}]`
+								printVal.LuaConnection or false} Function: [{printInstances(print4Instance.Function)}]`
 					elseif StrFind(toStr,myType,1,true) then
 						print4Instance = toStr
 					else
@@ -1134,7 +1134,7 @@ return function(C,Settings)
 		end
 		if JobId then
 			C.DebugMessage("Teleport",`Teleport Beggining for {JobId}...`)
-			print("TEST",C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr))
+			C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr))
 		else
 			C.DebugMessage("Teleport",`Teleport Beggining for <GAME>...`)
 			C.API(TeleportService,"Teleport",1,PlaceId,JobId,C.plr)
