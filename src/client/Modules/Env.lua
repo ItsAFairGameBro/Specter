@@ -41,7 +41,7 @@ return function(C,Settings)
 						print4Instance = `{GSub(GetInfo(print4Instance,"nfsl"),"function: ","")}`
 					elseif myType == "Connection" then
 						print4Instance = `{toStr}; Foreign={
-							"N/A" or print4Instance.ForeignState or false} Luau={
+							"N/A"} Luau={ -- or print4Instance.ForeignState or false
 								print4Instance.LuaConnection or false}` 
 								.. (print4Instance.Function and (` Function: [{printInstances(print4Instance.Function)}]`) or "")
 					elseif StrFind(toStr,myType,1,true) then
