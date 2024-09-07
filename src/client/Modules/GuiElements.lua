@@ -3150,7 +3150,7 @@ return function(C, Settings)
 			if not success then
 				return success, placePages
 			end
-
+			return placePages
 		end,
 	}
 	local LocationType = {
