@@ -386,9 +386,7 @@ return function(C,Settings)
                 end,
                 Events = {
                     MyCharAdded = function(self,myPlr,myChar,firstRun)
-                        if not firstRun then
-                            task.wait(3)
-                        end
+                        task.wait(5)
                         C.getgenv()["Hack/"..self.Parent.Category.Name.."/"..self.Shortcut] = false
                         if self.RealEnabled then
                             C.DoActivate(self,self.Activate,self.RealEnabled)
