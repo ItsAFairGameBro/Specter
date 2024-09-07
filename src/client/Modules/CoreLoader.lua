@@ -9,6 +9,7 @@ local GamesWithModules = {
 	[66654135] = {ModuleName="MurderMystery",GameName="Murder Mystery 2"},
 	[1160789089] = {ModuleName = "FlagWars",GameName="Flag Wars"},
 	[88070565] = {ModuleName = "Bloxburg", GameName = "Bloxburg"},
+	[39559307] = {ModuleName = "TowerBattles", GameName = "Tower Battles"}
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
