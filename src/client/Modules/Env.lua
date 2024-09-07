@@ -37,7 +37,7 @@ return function(C,Settings)
 						-- do nothing, just keep it to true/false
 						print4Instance = toStr
 					elseif myType == "function" then
-						print4Instance ..= `{GetInfo(print4Instance,"n")} @ {GetInfo(print4Instance, "s")}; Line {GetInfo(print4Instance, "l")}; {toStr}`
+						print4Instance ..= `{GetInfo(print4Instance,"n")} @ {GetInfo(print4Instance, "s")}; Line {GetInfo(print4Instance, "l")}`
 					elseif myType == "Connection" then
 						print4Instance ..= `{toStr}; F: {
 							print4Instance.ForeignState or false} L: {
