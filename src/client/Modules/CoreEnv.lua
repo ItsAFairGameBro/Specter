@@ -196,7 +196,6 @@ return function(C,Settings)
 		return success, result
 	end
 	function C:StartAutoSave()
-		task.wait(20)
 		local AutoSaveEvent = Instance.new("BindableEvent")
 		local LastMenuSave
 		C.AddGlobalConnection(GuiService.MenuOpened:Connect(function()
@@ -219,7 +218,6 @@ return function(C,Settings)
 				return
 			end
 			C:SaveProfile()
-			C.AddNotification("AutoSaving","Autosave success")
 		end
 	end
 	--Chat
