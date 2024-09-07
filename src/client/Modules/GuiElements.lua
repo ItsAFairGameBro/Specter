@@ -2780,7 +2780,7 @@ return function(C, Settings)
 			if not UIS.TouchEnabled then
 				return
 			end
-			local JumpButton: ImageButton = C.StringWait(C.PlayerGui,"TouchGui.TouchControlFrame.JumpButton")
+			local JumpButton: ImageButton = C.StringWait(C.PlayerGui,"TouchGui.TouchControlFrame.JumpButton",1000000000)
 
 			MobileConnection = C.AddGlobalConnection(JumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
 				local JumpButtonDown = JumpButton.ImageRectOffset.X > 3

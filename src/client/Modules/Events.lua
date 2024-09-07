@@ -150,6 +150,9 @@ return function(C,Settings)
 				print("[Events.CheckStatusCodes]: Unknown Error Code:",ErrorCode)
 			end
 			return
+		elseif ErrorMessage:len() == 0 then
+			print("Blank Code Ignored For ErrorCode:",ErrorCode)
+			return
 		end
 		FireEvent("RbxErrorPrompt", nil, ErrorMessage, ErrorCode, ErrorIdentification)
 	end
