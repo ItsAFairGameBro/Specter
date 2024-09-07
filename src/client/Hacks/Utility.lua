@@ -128,11 +128,13 @@ return function(C,Settings)
 						self.Sending = true
 						local RejoinDelay = self.RejoinDelay
 						local Cancel = task.spawn(function()
-							C.Prompt(`Auto-Rejoin`,`Auto Rejoin Will Occur In {RejoinDelay} Seconds.\nTo turn this off, disable \"Utility->Bot\"`,"Cancel")
-							self.Sending = false
+							if not C.Prompt(`Auto-Rejoin`,`Auto Rejoin Will Occur In {RejoinDelay} Seconds.\nTo turn this off, disable \"Utility->Bot\"`,"Cancel") then
+								self.Sending = false
+							end
 						end)
 						task.wait(5)
 						if self.Sending then
+							C.Prompt_ButtonTriggerEvent:Fire("Yes")
 							C.ServerTeleport(game.PlaceId, nil)
 						end
 					end

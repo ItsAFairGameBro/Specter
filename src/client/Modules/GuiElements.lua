@@ -2939,6 +2939,7 @@ return function(C, Settings)
 	local queue,canRunEvent={},Instance.new("BindableEvent",script)
 	local buttonTriggerEvent=Instance.new("BindableEvent",script)
 	buttonTriggerEvent:AddTag("RemoveOnDestroy")
+	C.Prompt_ButtonTriggerEvent = buttonTriggerEvent
 	canRunEvent:AddTag("RemoveOnDestroy")
 
 	for _, button in ipairs(PromptFrame.PromptButtons:GetChildren()) do
@@ -2986,7 +2987,10 @@ return function(C, Settings)
 			if button.Name == "Ok" then
 				button.Visible = Buttons == "Ok" or not Buttons
 			elseif button.Name == "Yes" or button.Name == "No" then
-				button.Visible = Buttons == "Y/N"
+				button.Visible = Buttons == "Y/N" or Buttons == "Cancel"
+				if button.Name == "No" then
+					button.Text = Buttons=="Cancel" and "Cancel" or "No"
+				end
 			else
 				error(`[Prompt]: Unknown Button: {button.Name}`)
 			end
