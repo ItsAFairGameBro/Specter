@@ -272,7 +272,7 @@ return function(C,Settings)
 							TouchToggle.Parent=C.GUI
 							TouchToggle.Adornee=parent
 							TouchToggle.ExtentsOffsetWorldSpace = Vector3.new(0, 0, 0)
-							TouchToggle.Enabled = self.EnTbl.ClickMode == "Hidden"
+							TouchToggle.Enabled = self.EnTbl.ClickMode ~= "Hidden"
 							table.insert(self.Instances,TouchToggle)
 							CS:AddTag(parent,"TouchDisabled")
 
