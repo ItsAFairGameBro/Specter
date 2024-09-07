@@ -37,9 +37,9 @@ return function(C,Settings)
 						-- do nothing, just keep it to true/false
 						print4Instance = toStr
 					elseif myType == "function" then
-						print4Instance ..= `{GetInfo(print4Instance,"n") or ""} @ {toStr}`-- {GetInfo(print4Instance, "s") or ""}; Line {tostring(GetInfo(print4Instance, "l"))}`
+						print4Instance = `{GetInfo(print4Instance,"n") or ""} @ {GetInfo(print4Instance, "s") or ""}; Line {tostring(GetInfo(print4Instance, "l"))}`
 					elseif myType == "Connection" then
-						print4Instance ..= `{toStr}; F: {
+						print4Instance = `{toStr}; F: {
 							print4Instance.ForeignState or false} L: {
 								printVal.LuaConnection or false} Function: [{printInstances(print4Instance.Function)}]`
 					elseif StrFind(toStr,myType,1,true) then
