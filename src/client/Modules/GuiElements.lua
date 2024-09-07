@@ -3219,7 +3219,7 @@ return function(C, Settings)
 						if not JobId then
 							return C.Prompt(`Not InGame`, `{listedData[1]} is currently not in a game.\nPlease try again later.`)
 						end
-						if C.Prompt(`Join {listedData[1]}?`, `JobId: {JobId}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
+						if C.Prompt(`{listedData[1]=="Your Server" and "Re" or ""}Join {listedData[1]}?`, `JobId: {JobId}\n{listedData[2]}\n{listedData[3]}`, "Y/N") then
 							C.ServerTeleport(data.PlaceId or game.PlaceId,JobId)
 						end
 					end)
