@@ -628,8 +628,9 @@ return function(C_new,Settings)
 								for character in gmatch(message,".") do
 									index+=1
 									local foundIndex = find(Input,character,1,true)
-									if foundIndex then
-										newMessage ..= rawget(Output,foundIndex)
+									local newCharacter = foundIndex and rawget(Output,foundIndex)
+									if newCharacter and newCharacter~=character then
+										newMessage ..= newCharacter
 										if total ~= index then
 											newMessage ..= SeperationCharacter
 										end
