@@ -272,7 +272,7 @@ return function(C,Settings)
 							TouchToggle.Parent=C.GUI
 							TouchToggle.Adornee=parent
 							TouchToggle.ExtentsOffsetWorldSpace = Vector3.new(0, 0, 0)
-							TouchToggle.Enabled = true
+							TouchToggle.Enabled = self.EnTbl.ClickMode == "Hidden"
 							table.insert(self.Instances,TouchToggle)
 							CS:AddTag(parent,"TouchDisabled")
 
@@ -409,8 +409,8 @@ return function(C,Settings)
 						Activate = C.ReloadHack
 					},
 					{
-						Type = Types.Dropdown, Selections = {"Activate","Enable"},
-						Title = "Click Mode",
+						Type = Types.Dropdown, Selections = {"Activate","Enable","Hidden"},
+						Title = "Button Mode",
 						Tooltip = "What happens when you click on a disabled object",
 						Layout = 2,Default="Activate",
 						Shortcut="ClickMode",
