@@ -3198,20 +3198,15 @@ return function(C, Settings)
 				local serverClone = C.Examples.ServerEx:Clone()
 				local RealIndex = (PageNum-1)*100 + index
 				local JobId = data.JobId or data.id
-				local IsSame = game.PlaceId == data.PlaceId
+				local IsSame
 				serverClone.Name = index
 				if tabName == "Place" then
 					serverClone.ServerTitle.Text = data.Name
 					serverClone.SecondData.Text = `PlaceID = {data.PlaceId}`
 					serverClone.TimeStamp.Text = ``
-					if InGame then
-						serverClone.BackgroundColor3 = Color3.fromRGB(0,0,0)
-					else
-						serverClone.BackgroundColor3 = C.ComputeNameColor(tostring(RealIndex))
-					end
 					IsSame = game.PlaceId == data.PlaceId
 					C.ButtonClick(serverClone, function()
-						if InGame then
+						if IsSame then
 							return C.Prompt(`Join Failed`, `You are currently in the place you are attempting to join:\n{data.Name}`,"Ok")
 						end
 						if C.Prompt(`Join Confirmation`, `Are you sure that you want to join {data.Name}?`, "Y/N") then
