@@ -3146,6 +3146,7 @@ return function(C, Settings)
 					end
 					placePages:AdvanceToNextPageAsync()
 				end
+				return list
 			end,nil,1)
 			if not success then
 				return success, placePages
