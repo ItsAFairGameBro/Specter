@@ -1117,7 +1117,7 @@ return function(C,Settings)
 		end
 		if JobId then
 			C.DebugMessage("Teleport",`Teleport Beggining for {JobId}...`)
-			C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr)	
+			print("TEST",C.API(TeleportService,"TeleportToPlaceInstance",1,PlaceId,JobId,C.plr))
 		else
 			C.DebugMessage("Teleport",`Teleport Beggining for UNSPECIFIED SERVER...`)
 			C.API(TeleportService,"Teleport",1,PlaceId,JobId,C.plr)
