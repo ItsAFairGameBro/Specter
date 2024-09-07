@@ -27,11 +27,7 @@ return function(C,Settings)
                     VU:ClickButton2(Vector2.new())
                 end,
 				Activate = function(self,newValue)
-					if self.EnTbl.GameProtection and newValue then
-						C.DisableInstanceConnections(C.plr,"Idled",self.Shortcut)
-					else
-						C.EnableInstanceConnections(C.plr,"Idled",self.Shortcut)
-					end
+					C.SetInstanceConnections(C.plr,"Idled",self.Shortcut,newValue and self.EnTbl.GameProtection)
                     if not newValue then
                         return
                     end

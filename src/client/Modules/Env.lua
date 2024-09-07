@@ -15,6 +15,7 @@ return function(C,Settings)
 	if not C.getgenv().PrintEnvironment then
 		local OldEnv = {}
 		local GetFullName = workspace.GetFullName
+		local GetInfo = table.info
 		local StrFind = string.find
 		local function printInstances(...)
 			local printVal = ""
@@ -35,6 +36,10 @@ return function(C,Settings)
 					if myType == "boolean" or myType == "number" then
 						-- do nothing, just keep it to true/false
 						print4Instance = toStr
+					elseif myType == "function" then
+						print4Instance ..= `{GetInfo(print4Instance,"n")} @ {GetInfo(print4Instance, "s")}; Line {GetInfo(print4Instance, "l")}; {tostring(print4Instance)}`
+					elseif myType == "Connection" then
+						print4Instance ..= `{tostring(print4Instance)}; F: {print4Instance.ForeignState} L: {printVal.LuaConnection} Function: [{printInstances(myType.Function)}]`
 					elseif StrFind(toStr,myType,1,true) then
 						print4Instance = toStr
 					else
@@ -904,46 +909,56 @@ return function(C,Settings)
 		end
 	end
 	--Function to set instance connection
-	function C.DisableInstanceConnections(instance,name,key)
-		assert(key~="Value" and key~="Name",`Unable to assign {instance.Name} the key {key} because {key} is a protected value!`)
-		local signal = instance[name]
-		local instanceData = C.PartConnections[instance]
-		if not instanceData then
-			instanceData = {}
-			C.PartConnections[instance] = instanceData
+	do 
+		local function DisableInstanceConnections(instance,name,key)
+			assert(key~="Value" and key~="Name",`Unable to assign {instance.Name} the key {key} because {key} is a protected value!`)
+			local signal = instance[name]
+			local instanceData = C.PartConnections[instance]
+			if not instanceData then
+				instanceData = {}
+				C.PartConnections[instance] = instanceData
+			end
+			if not instanceData[name] then
+				instanceData[name] = {Value = 0,Name = name}
+				C.InternallySetConnections(signal,false)
+			end
+			if not instanceData[name][key] then
+				instanceData[name][key] = true
+				instanceData[name].Value += 1
+			end
 		end
-		if not instanceData[name] then
-			instanceData[name] = {Value = 0,Name = name}
-			C.InternallySetConnections(signal,false)
+		local function EnableInstanceConnections(instance,name,key)
+			local signal = instance[name]
+			local instanceData = C.PartConnections[instance]
+			if not instanceData then
+				return
+			end
+			if not instanceData[name] then
+				return
+			end
+			if instanceData[name][key] then
+				instanceData[name][key] = nil
+				instanceData[name].Value -= 1
+			end
+			if instanceData[name].Value > 0 then
+				return
+			end
+			C.InternallySetConnections(signal,true)
+			instanceData[name] = nil -- clear the signal data
+			if C.GetDictLength(instanceData) <= 0 then -- if its empty
+				-- then clear the cache!
+				C.PartConnections[instance] = nil
+			end
 		end
-		if not instanceData[name][key] then
-			instanceData[name][key] = true
-			instanceData[name].Value += 1
+		function C.SetInstanceConnections(instance,name,key,enabled)
+			if enabled then
+				EnableInstanceConnections(instance,name,key)
+			else
+				DisableInstanceConnections(instance,name,key)
+			end
 		end
 	end
-	function C.EnableInstanceConnections(instance,name,key)
-		local signal = instance[name]
-		local instanceData = C.PartConnections[instance]
-		if not instanceData then
-			return
-		end
-		if not instanceData[name] then
-			return
-		end
-		if instanceData[name][key] then
-			instanceData[name][key] = nil
-			instanceData[name].Value -= 1
-		end
-		if instanceData[name].Value > 0 then
-			return
-		end
-		C.InternallySetConnections(signal,true)
-		instanceData[name] = nil -- clear the signal data
-		if C.GetDictLength(instanceData) <= 0 then -- if its empty
-			-- then clear the cache!
-			C.PartConnections[instance] = nil
-		end
-	end
+	
 
 	function C.IsInBox(PartCF:CFrame,PartSize:Vector3,Point:Vector3,TwoDim:boolean)
 		local Transform = PartCF:PointToObjectSpace(Point) -- Transform into local space

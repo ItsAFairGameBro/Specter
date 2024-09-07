@@ -136,9 +136,9 @@ return function(C,Settings)
 	end))
 	-- Kick detection
 	local WhitelistedCodes = {
+		[266] = "Connection",
 		[267] = "Kick",
 		[277] = "Connection",
-		[266] = "Connection",
 		[288] = "Shut Down",
 	}
 	local function CheckStatusCodes(ErrorMessage)
