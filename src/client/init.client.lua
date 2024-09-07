@@ -6,6 +6,7 @@ local HS = game:GetService("HttpService")
 local CG = game:GetService("CoreGui")
 local HS = game:GetService("HttpService")
 local SP = game:GetService("StarterPlayer")
+local MPS = game:GetService("MarketplaceService")
 local TextChatService = game:GetService("TextChatService")
 local VirtualUser = game:GetService("VirtualUser")
 
@@ -253,6 +254,9 @@ C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
 C.PartConnections = {}
 C.ChatVersion = TextChatService.ChatVersion.Name
+if not C.getgenv().PlaceName then
+	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
+end
 C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,

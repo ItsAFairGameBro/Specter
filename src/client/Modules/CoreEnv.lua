@@ -1,4 +1,5 @@
 local CS = game:GetService("CollectionService")
+local GuiService = game:GetService("GuiService")
 local HS = game:GetService("HttpService")
 local RunS = game:GetService("RunService")
 local TCS = game:GetService("TextChatService")
@@ -125,6 +126,7 @@ return function(C,Settings)
 						Time = os.time(),
 						Players = PlayerCount,
 						MaxPlayers = PS.MaxPlayers,
+						Name = C.getgenv().PlaceName,
 					})
 				end
 				
@@ -194,10 +196,29 @@ return function(C,Settings)
 		return success, result
 	end
 	function C:StartAutoSave()
-		task.wait(60)
+		task.wait(20)
+		local AutoSaveEvent = Instance.new("BindableEvent")
+		local LastMenuSave
+		C.AddGlobalConnection(GuiService.MenuOpened:Connect(function()
+			if not LastMenuSave or os.clock() - LastMenuSave > 10 then
+				LastMenuSave = os.clock()
+				AutoSaveEvent:Fire("MenuOpened")
+			end
+		end))
+		C.AddGlobalInstance(AutoSaveEvent)
 		while not C.Cleared do
+			local IsWaiting = true
+			task.delay(60, function()
+				if IsWaiting and AutoSaveEvent then
+					AutoSaveEvent:Fire("Timeout")
+				end
+			end)
+			local Reason = AutoSaveEvent.Event:Wait()
+			IsWaiting = false
+			if C.Cleared then
+				return
+			end
 			C:SaveProfile()
-			task.wait(60)
 		end
 	end
 	--Chat

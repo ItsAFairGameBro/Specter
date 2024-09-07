@@ -3260,7 +3260,7 @@ return function(C, Settings)
 
 		MainScroll.Size = UDim2.fromScale(.7,hasArrows and 0.76 or 0.9)
 		BottomButtons.Visible = hasArrows
-		ServersTL.Text = `{tabName:upper()}{tabName=="Place" and "" or " SERVERS"} ({titleAfter})`
+		ServersTL.Text = `{tabName:upper()}{tabName=="Place" and "S" or " SERVERS"} ({titleAfter})`
 		NoneFound.Visible = index == 0
 	end
 	C.ButtonClick(NextButton, function()
