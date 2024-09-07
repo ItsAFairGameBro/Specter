@@ -639,7 +639,7 @@ return function(C_new,Settings)
 				Options = {
 					{
 						Type = Types.Dropdown,
-						Selections = {"Off","Fancy Unicode Font 1","Bubble Font 1","Bubble Font 2","Small Font 1","Accented Font 1","Accented Font 2"},
+						Selections = {"Off","Fancy Unicode Font 1","Bubble Font 1","Bubble Font 2","Bubble Font 3","Small Font 1","Accented Font 1","Accented Font 2"},
 						Title = "Font Bypass",
 						Tooltip = "Replaces your text with fancy custom font, which bypasses filter!\nFonts are named by ChatGPT of course",
 						Layout = 1,Default = 2,
