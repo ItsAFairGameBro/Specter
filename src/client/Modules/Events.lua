@@ -139,6 +139,7 @@ return function(C,Settings)
 		[267] = "Kick",
 		[277] = "Connection",
 		[266] = "Connection",
+		[288] = "Shut Down",
 	}
 	local function CheckStatusCodes(ErrorMessage)
 		local ErrorCodeInstanceVal = GS:GetErrorCode()

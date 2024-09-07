@@ -1,3 +1,5 @@
+local ChangeHistoryService = game:GetService("ChangeHistoryService")
+local GuiService = game:GetService("GuiService")
 local PhysicsService = game:GetService("PhysicsService")
 local RunS = game:GetService("RunService")
 local TS = game:GetService("TweenService")
@@ -575,6 +577,7 @@ return function(C,Settings)
                     end
                     print("ErrorMsg",errorMessage)
                     self:Run({"any"})
+                    GuiService:ClearError()
                 end)
                 local MyConn = self.Connection
                 task.delay(20,function()

@@ -114,6 +114,31 @@ return function(C,Settings)
 				},
 			},
 			{
+				Title = "Bot",
+				Tooltip = "Implements several automatic features",
+				Layout = 99,
+				Shortcut = "BotAuto",
+				RejoinDelay = 5,
+				Sending = false,
+				Events = {
+					RbxErrorPrompt = function(self, errorMessage, errorCode, errorIdentification)
+						if self.Sending then
+							return
+						end
+						self.Sending = true
+						local RejoinDelay = self.RejoinDelay
+						local Cancel = task.spawn(function()
+							C.Prompt(`Auto-Rejoin`,`Auto Rejoin Will Occur In {RejoinDelay} Seconds.\nTo turn this off, disable \"Utility->Bot\"`,"Cancel")
+							self.Sending = false
+						end)
+						task.wait(5)
+						if self.Sending then
+							C.ServerTeleport(game.PlaceId, nil)
+						end
+					end
+				},
+			},
+			{
 				Title = "Improvements",
 				Tooltip = "Many Client Improvement Settings can be found here!",
 				Layout = 103,
