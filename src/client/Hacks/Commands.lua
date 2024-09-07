@@ -523,9 +523,9 @@ return function(C,Settings)
                 local RootPlaceInfo = AS:GetGamePlacesAsync():GetCurrentPage()[1]
                 local RootPlaceId = RootPlaceInfo.PlaceId
                 if game.PlaceId ~= RootPlaceId then
-                    if not promptOverride and not C.Prompt("Join Root PlaceID?","Are you sure that you want to rejoin? This will take you to the Root Place: "..RootPlaceInfo.Name,"Y/N") then
-                        return true, "Cancelled"
-                    end
+                    --if not promptOverride and not C.Prompt("Join Root PlaceID?","Are you sure that you want to rejoin? This will take you to the Root Place: "..RootPlaceInfo.Name,"Y/N") then
+                    --    return true, "Cancelled"
+                    --end
                     RootPlaceId = game.PlaceId
                     if args[1] == "same" then
                         --args[1] = "any"
@@ -562,7 +562,7 @@ return function(C,Settings)
                 elseif args[1] == "same" then
                     --TeleportS:TeleportToPlaceInstance(game.PlaceId,game.JobId,C.plr)
                     if #PS:GetPlayers() <= 1 then
-                        return false, "Requires at least 1 other player. Try ;rejoin any"
+                        --return false, "Requires at least 1 other player. Try ;rejoin any"
                     end
                     C.ServerTeleport(RootPlaceId,game.JobId)
                 else
