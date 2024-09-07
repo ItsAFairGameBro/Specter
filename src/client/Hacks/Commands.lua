@@ -518,19 +518,20 @@ return function(C,Settings)
         },
         ["rejoin"]={
             Parameters={{Type="Options",Default="same",Options={"same","new","small","any"}}},
-            AfterTxt="%s",
+            AfterTxt="%s", Connection = nil,
             Run=function(self,args,promptOverride)
-                local RootPlaceInfo = AS:GetGamePlacesAsync():GetCurrentPage()[1]
-                local RootPlaceId = RootPlaceInfo.PlaceId
-                if game.PlaceId ~= RootPlaceId then
+                --local RootPlaceInfo = AS:GetGamePlacesAsync():GetCurrentPage()[1]
+                --local RootPlaceId = RootPlaceInfo.PlaceId
+                --if game.PlaceId ~= RootPlaceId then
                     --if not promptOverride and not C.Prompt("Join Root PlaceID?","Are you sure that you want to rejoin? This will take you to the Root Place: "..RootPlaceInfo.Name,"Y/N") then
                     --    return true, "Cancelled"
                     --end
-                    RootPlaceId = game.PlaceId
-                    if args[1] == "same" then
+                    --RootPlaceId = game.PlaceId
+                    --if args[1] == "same" then
                         --args[1] = "any"
-                    end
-                end
+                    --end
+                --end
+                local RootPlaceId = game.PlaceId
                 if args[1] == "new" or args[1] == "small" then
                     local result, servers = pcall(game.HttpGet,game,`https://games.roblox.com/v1/games/{RootPlaceId}/servers/0?sortOrder={
                         args[1]=="small" and 1 or 2}&excludeFullGames=true&limit=100`)
@@ -568,6 +569,20 @@ return function(C,Settings)
                 else
                     error("[Commands]: Teleport Cmd Invalid Arg[1] "..args[1])
                 end
+                self.Connection = TeleportS.TeleportInitFailed:Connect(function(player, teleportResult, errorMessage, placeId, teleportOptions)
+                    if player ~= C.plr then
+                        return
+                    end
+                    print("ErrorMsg",errorMessage)
+                    self:Run({"any"})
+                end)
+                local MyConn = self.Connection
+                task.delay(20,function()
+                    if self.Connection == MyConn then
+                        self.Connection:Disconnect()
+                        self.Connection = nil
+                    end
+                end)
                 return true, args[1]:sub(1,1):upper() .. args[1]:sub(2) .. " Server"
             end,
         },
