@@ -475,7 +475,7 @@ return function(C,Settings)
 							table.insert(Frames,1/RunS.RenderStepped:Wait())
 						end
 						local Sum = 0
-						for num, val in ipairs(Frames) do
+						for _, val in ipairs(Frames) do
 							Sum += val
 						end
 						local AvgFrameRate = Sum / #Frames

@@ -569,6 +569,9 @@ return function(C_new,Settings)
 					},
 					["Accented Font 1"] = {Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
 						Output = { "Á", "B", "Ć", "D", "É", "F", "Ǵ", "H", "í", "J", "Ḱ", "Ĺ", "Ḿ", "Ń", "Ő", "Ṕ", "Q", "Ŕ", "ś", "T", "Ű", "V", "Ẃ", "X", "Ӳ", "Ź", "á", "b", "ć", "d", "é", "f", "ǵ", "h", "í", "j", "ḱ", "ĺ", "ḿ", "ń", "ő", "ṕ", "q", "ŕ", "ś", "t", "ú", "v", "ẃ", "x", "ӳ", "ź", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ",", ":", ";", "'", '"', "!", "?", "-", "_", "/", "+", "*", "=", "(", ")", "%", "@", "#", "$", "&", "^", "~" }
+					},
+					["Accented Font 2"] = {Input = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;'"!?-_/+*=()%@#$&^~`,
+						Output = { "Ä", "ß", "Ç", "Ð", "È", "£", "G", "H", "Ì", "J", "K", "L", "M", "ñ", "Ö", "þ", "Q", "R", "§", "†", "Ú", "V", "W", "×", "¥", "Z", "å", "ß", "¢", "Ð", "ê", "£", "g", "h", "ï", "j", "k", "l", "m", "ñ", "ð", "þ", "q", "r", "§", "†", "µ", "v", "w", "x", "¥", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ",", ":", ";", "'", '"', "!", "?", "-", "_", "/", "+", "*", "=", "(", ")", "%", "@", "#", "$", "&", "^", "~" }
 					}
 				},
 				ParseMultiLine = function(message,inBetween)
@@ -624,7 +627,7 @@ return function(C_new,Settings)
 				Options = {
 					{
 						Type = Types.Dropdown,
-						Selections = {"Off","Fancy Unicode Font 1","Letter Font 1","Small Font 1","Accented Font 1"},
+						Selections = {"Off","Fancy Unicode Font 1","Letter Font 1","Small Font 1","Accented Font 1","Accented Font 2"},
 						Title = "Font Bypass",
 						Tooltip = "Replaces your text with fancy custom font, which bypasses filter!\nFonts are named by ChatGPT of course",
 						Layout = 1,Default = 2,
