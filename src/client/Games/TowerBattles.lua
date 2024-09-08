@@ -353,7 +353,7 @@ return function(C,Settings)
 			{
 				Title = "Auto Bot",
 				Tooltip = "Plays for you",
-				Shortcut = "AutoPlace",
+				Shortcut = "AutoBot",
 				Layout = 5, Threads = {},
 				Activate = function(self, newValue, firstRun)
 					if not newValue or GamePlaceIds.Lobby == game.PlaceId then
