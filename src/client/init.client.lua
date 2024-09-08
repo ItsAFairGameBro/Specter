@@ -472,6 +472,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local HookType = ((source or typeof(hook)=="function") and "hookfunction")
 			or (typeof(hook)=="string" and "hookmetamethod")
 
+		if HookType == "hookmetamethod" then
+			return
+		end
+
 		assert(hookfunction,`[C.HookMethod]: Unknown HookType: {hook}!`)
 		for num, methodName in ipairs(methods or {}) do
 			assert(methodName == lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
