@@ -26,7 +26,11 @@ local function Static(C, Settings)
 	end)
 end
 return function(C,Settings)
+	local IsPlacing = false
 	local function PlaceTroop(TroopName)
+		if IsPlacing then return end
+		IsPlacing = true
+
 		local Path = {} -- Parts representing the path
 		local StartTime = os.clock()
 
@@ -254,6 +258,7 @@ return function(C,Settings)
 		for num, pathInstance in ipairs(Path) do
 			pathInstance:Destroy()
 		end
+		IsPlacing = false
 	end
 	Static(C,Settings)
 	return {
