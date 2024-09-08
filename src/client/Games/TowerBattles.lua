@@ -12,7 +12,7 @@ local SG = game:GetService("StarterGui")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
 		C.AddGlobalThread(task.spawn(function()
-			local instance = workspace:WaitForChild("Map")
+			local instance = workspace:WaitForChild("Map",1e9)
 			C.Map = instance
 			C.FireEvent("MapAdded",nil,instance)
 		end))
@@ -178,7 +178,7 @@ return function(C,Settings)
 			newPart.Transparency = .6
 			newPart.Color = Color3.fromRGB(25,25,180)
 			newPart.TopSurface = Enum.SurfaceType.Smooth
-			newPart.BottomSurface = Enum.SurfaceType.Smooth	
+			newPart.BottomSurface = Enum.SurfaceType.Smooth
 			table.insert(Path,newPart)
 			LastPart = CurPart
 		end
@@ -393,8 +393,10 @@ return function(C,Settings)
 					local ChosenTower = C.StringWait(C.plr, "StuffToSave.Tower"..TowerIndex).Value
 					local TowerInformation = ChosenTower ~= "Nothing" and workspace:WaitForChild("TowerInformation")[ChosenTower]
 					while true do
+						print("Loop began")
 						-- RUN CONDITION --
-						if not WaveStop or workspace.WaveStart.Value < WaveStop then
+						if not WaveStop or workspace.Waves.Wave.Value < WaveStop then
+							print(`Loop End {workspace.Waves.Wave.Value} < {WaveStop}`)
 							break
 						elseif AutoPlayCond == "Never" then
 							break
@@ -404,12 +406,14 @@ return function(C,Settings)
 						end
 						-- TOWER PLACE --
 						if TowerInformation.Value > C.PlayerInformation.Cash.Value then
+							print(`Mon Wait`)
 							while TowerInformation.Value > C.PlayerInformation.Cash.Value do
 								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
 							end
 						elseif not IsPlacing then
 							PlaceTroop(ChosenTower)
 						else
+							print(`Placing`)
 							RunS.RenderStepped:Wait()
 						end
 					end
