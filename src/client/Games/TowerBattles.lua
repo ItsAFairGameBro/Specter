@@ -430,7 +430,7 @@ return function(C,Settings)
 						Type = Types.Dropdown,
 						Title = "Autoplay Troop",
 						Tooltip = "What troop is autoplayed",
-						Layout = 3,
+						Layout = 3, Default = "Slot 2",
 						Shortcut="AutoplayTroop",
 						Selections = {"Slot 1","Slot 2","Slot 3","Slot 4","Slot 5"},
 						Activate = C.ReloadHack,
