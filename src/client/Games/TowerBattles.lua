@@ -36,6 +36,21 @@ return function(C,Settings)
                 Events = {},
 				Options = {},
 			},
+			{
+				Title = "Auto Place",
+				Tooltip = "Finds the optimal placement for towers until Max Tries are reached; otherwise, lets you place",
+				Shortcut = "AutoPlace",
+				Activate = function(self, newValue, firstRun)
+					for num, rawFunct in ipairs(C.getgc()) do
+						local functInfo = debug.getinfo(rawFunct)
+						if functInfo.name == "Clicked" then
+							C.HookMethod(rawFunct, self.Shortcut, newValue and function()
+								print("NO CLICKY 4 U")
+							end)
+						end
+					end
+				end,
+			}
 		}
 		
 	}

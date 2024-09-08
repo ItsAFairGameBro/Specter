@@ -346,7 +346,7 @@ return function(C,Settings)
 						break
 					end
 					-- Adjust origin slightly to retry
-					origin = hitResult.Position:Lerp(origin,.01);
+					origin = hitResult.Position:Lerp(origin,-0.01);
 					lastInstance = hitResult.Instance;
 					if rayParams.FilterType == Enum.RaycastFilterType.Exclude then
 						rayParams:AddToFilter(lastInstance)

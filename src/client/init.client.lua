@@ -62,6 +62,7 @@ local function RegisterFunctions()
 	C.getrenv = isStudio and function() return _G end or getrenv
 	C.getgenv = isStudio and function() return _G end or getgenv
 	C.getsenv = isStudio and (function() return {} end) or getsenv
+	C.getgc = isStudio and function () return {} end or getgc
 	C.loadstring = isStudio and function() return function() end end or loadstring
 	C.getnamecallmethod = isStudio and (function() return "" end) or getnamecallmethod
 	C.getcallingscript = isStudio and (function() return nil end) or getcallingscript
