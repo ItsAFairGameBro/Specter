@@ -9,6 +9,7 @@ local TCS = game:GetService("TextChatService")
 local LS = game:GetService("Lighting")
 local GS = game:GetService("GuiService")
 local SG = game:GetService("StarterGui")
+local Workspace = game:GetService("Workspace")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
 		C.AddGlobalThread(task.spawn(function()
@@ -255,7 +256,6 @@ return function(C,Settings)
 			if Range * 0.05 > MaxCoveredArea then
 				return false, C.CreateSysMessage(("Min Size Failed of %.1f%%. Best find was %.1f"):format(Range*0.05,MaxCoveredArea))
 			end
-			print(("Best troop position covers area is %.1f in %.2f s"):format(MaxCoveredArea, os.clock()-StartTime))
 			if not C.isStudio then
 				C.DoTeleport(BestPosition+Vector3.new(0,3,0))
 				C.createTestPart(BestPosition)
@@ -263,10 +263,8 @@ return function(C,Settings)
 				if Result == "Worked" then
 					Result = workspace.Placed:InvokeServer(BestPosition - Vector3.new(0,0.4,0), 1, TroopName, BestPart);
 					if Result == true then
-						print("Placement Successful")
-						C.CreateSysMessage("Placement Success: "..MaxCoveredArea,Color3.fromRGB(0,225))
-						return true, 
-							C.CreateSysMessage(("Placement Succeeded: %.1f (%.1f seconds)"):format(MaxCoveredArea,TotalTime),Color3.fromRGB(0,225))
+						return true,
+							C.CreateSysMessage(("Placement Succeeded: %i/%i (%.1f seconds)"):format(MaxCoveredArea,Range,TotalTime),Color3.fromRGB(0,225))
 					else
 						return false, C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
@@ -391,26 +389,68 @@ return function(C,Settings)
 					local WaveStop = AutoPlayCond:gmatch("Wave %d+")() and tonumber(AutoPlayCond:gmatch("%d+")())
 					local TowerIndex = self.EnTbl.AutoplayTroop:gmatch("%d+")()
 					local ChosenTower = C.StringWait(C.plr, "StuffToSave.Tower"..TowerIndex).Value
-					local TowerInformation = ChosenTower ~= "Nothing" and workspace:WaitForChild("TowerInformation")[ChosenTower]
+					local TowerCount = C.PlayerInformation:WaitForChild("Towers")
+					local TowerCap = workspace:WaitForChild("TowerCap").Value
 					while true do
-						print("Loop began")
 						-- RUN CONDITION --
 						if not WaveStop or workspace.Waves.Wave.Value >= WaveStop then
 							print(`Loop End {workspace.Waves.Wave.Value} >= {WaveStop}`)
 							break
 						elseif AutoPlayCond == "Never" then
 							break
+						elseif TowerCount.Value < TowerCap then
+							C.CreateSysMessage(`Your towers are maxed ({TowerCount.Value}/{TowerCap}`,
+								Color3.fromRGB(25,225,25))
+							break
 						end
 						if ChosenTower == "Nothing" then
 							return C.Prompt("Invalid Tower", "In Slot "..TowerIndex..", you have nothing equipped.")
 						end
+						-- NEEDS --
+						local Priority = TowerCount < TowerCap and self.EnTbl.AutoplayStyle or "Quality"
+						local Action, ActionType
+						local CashNeeded
+						if Priority == "Sniper" then
+							
+						end
+						local TowerInformation
+						if Priority == "Quality" then
+							Action = nil
+							local LowestLevel = 4
+							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+								if towerModel.Owner.Value == C.plr then
+									local Level = C.StringWait(towerModel,"Tower.UP1").Value
+									if Level < LowestLevel then
+										Action, LowestLevel = towerModel.Name, Level
+									end
+								end
+							end
+							if not Priority then
+								Priority = "Quantity"
+							else
+								ActionType = "Upgrade"
+								CashNeeded = TowerInformation[tostring(LowestLevel-1)].Value
+								TowerInformation = workspace:WaitForChild("TowerInformation")[Action]
+							end
+						end
+						if Priority == "Quantity" then
+							Action = ChosenTower
+							TowerInformation = workspace:WaitForChild("TowerInformation")[Action]
+							CashNeeded = C.PlayerInformation.Cash.Value
+							ActionType = "Place"
+						end
 						-- TOWER PLACE --
-						if TowerInformation.Value > C.PlayerInformation.Cash.Value then
+						if TowerInformation.Value > CashNeeded then
 							print(`Mon Wait`)
-							while TowerInformation.Value > C.PlayerInformation.Cash.Value do
+							while TowerInformation.Value > CashNeeded do
 								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
 							end
-						elseif not IsPlacing then
+						elseif ActionType == "Upgrade" then
+							local Result = workspace.UpgradeTower:InvokeServer(Action)
+							if Result then
+								
+							end
+						elseif ActionType == "Place" and not IsPlacing then
 							PlaceTroop(ChosenTower)
 						else
 							print(`Placing`)
@@ -443,6 +483,15 @@ return function(C,Settings)
 						Layout = 3, Default = "Slot 2",
 						Shortcut="AutoplayTroop",
 						Selections = {"Slot 1","Slot 2","Slot 3","Slot 4","Slot 5"},
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Autoplay Style",
+						Tooltip = "How the bot plays: quantity of more towers or quality of less towers?",
+						Layout = 4, Default = "Sniper",
+						Shortcut="AutoplayStyle",
+						Selections = {"Quality","Sniper","Quantity"},
 						Activate = C.ReloadHack,
 					},
 				},
