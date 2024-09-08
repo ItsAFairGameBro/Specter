@@ -297,7 +297,8 @@ return function(C, _SETTINGS)
 				if C.Cleared then
 					return
 				end
-				if ((hackData.Activate and hackData.RealEnabled) or hackData.AlwaysActivate)
+				if ((hackData.Activate and hackData.RealEnabled) or hackData.AlwaysActivate
+					or hackData.Type == "NoToggle")
 					and (not started or not hackData.DontActivate) then
 					C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started)
 				end
