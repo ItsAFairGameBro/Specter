@@ -372,7 +372,8 @@ return function(C,Settings)
 						Tooltip = "In survival, vetos until chosen map is found.",
 						Layout = 2,Default=false,
 						Shortcut="PickMap",
-						Options = {"Longest Seen","Midnight Road","Borderlands"}
+						Selections = {"Longest Seen","Midnight Road","Borderlands"},
+						Activate = C.ReloadHack,
 					},
 				},
 			},
