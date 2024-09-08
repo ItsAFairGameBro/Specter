@@ -310,7 +310,7 @@ return function(C,Settings)
 						Title = "Gamemode",
 						Tooltip = "Choose which game to join",
 						Layout = 1,Default="Survival",
-						Shortcut="PickMap",
+						Shortcut="Gamemode",
 						Selections = {"Halloween","Arena (Versus)","Survival","Christmas","Halloween 2018",
 						"Winter 2019","Halloween 2023","Winter 2022"},
 						Activate = C.ReloadHack,
