@@ -11,6 +11,7 @@ local SG = game:GetService("StarterGui")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
 		local function newChild(instance)
+			task.wait(1)
 			if instance.Name == "Map" then
 				C.Map = instance
 				C.FireEvent("MapAdded",nil,instance)
@@ -18,7 +19,7 @@ local function Static(C, Settings)
 		end
 		C.AddGlobalConnection(workspace.ChildAdded:Connect(newChild))
 		for num, instance in ipairs(workspace:GetChildren()) do
-			newChild(instance)
+			task.spawn(newChild,instance)
 		end
 	end)
 	C.PlayerInformation = C.plr:WaitForChild("Information")
