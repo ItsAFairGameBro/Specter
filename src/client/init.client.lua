@@ -482,7 +482,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		end
 		
 		local OriginFunct
-		local function CallFunction(self,...)
+		function CallFunction(self,...)
 			print(0) wait(1)
 			-- Get the method being called
 			local method
@@ -583,7 +583,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			print("Origin",OriginFunct,hook,source)
 		else--]]
 		OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-			or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
+			or (HookType == "hookfunction" and hookfunction(hook, CallFunction))
 		--end
 	end
 	if runFunct then
