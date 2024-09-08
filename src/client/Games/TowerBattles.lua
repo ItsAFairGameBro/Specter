@@ -42,7 +42,7 @@ return function(C,Settings)
 
 		local Range -- Range of the troop
 		local PlacementType -- "Grass" / "High"
-		local MinDistBetweenTroops = 4.2
+		local MinDistBetweenTroops = 4.4
 
 		local TroopTemplate = not C.isStudio and LS.Placement[TroopName] -- Get the troop from ServerStorage
 		local GroundY = C.Map:WaitForChild("Height").Value
