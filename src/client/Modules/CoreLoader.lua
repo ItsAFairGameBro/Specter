@@ -297,7 +297,7 @@ return function(C, _SETTINGS)
 				if C.Cleared then
 					return
 				end
-				if (hackData.Activate and hackData.RealEnabled or hackData.AlwaysActivate)
+				if ((hackData.Activate and hackData.RealEnabled) or hackData.AlwaysActivate)
 					and (not started or not hackData.DontActivate) then
 					C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started)
 				end
