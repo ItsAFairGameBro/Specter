@@ -309,7 +309,7 @@ return function(C,Settings)
 					local toStr,tskSpawn = tostring, task.spawn
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,troopName)
 						--tskSpawn(print,"invoke",self)
-						if toStr(self) == "PlacingTower" then
+						if toStr(self) == "PlacingTower" and troopName then
 							tskSpawn(print,"TroopName",troopName)
 							tskSpawn(PlaceTroop,troopName)
 							return "Yield"
