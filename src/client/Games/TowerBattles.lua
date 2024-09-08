@@ -27,7 +27,7 @@ end
 return function(C,Settings)
 	local IsPlacing = false
 	local function PlaceTroop(TroopName)
-		if IsPlacing then return "Placement In Progress" end
+		if IsPlacing then return false, "Placement In Progress" end
 		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
 		if TowerInformation.Value > C.PlayerInformation.Cash.Value then
 			return false,
@@ -238,7 +238,9 @@ return function(C,Settings)
 		for _, pathInstance in ipairs(Path) do
 			pathInstance:Destroy()
 		end
-		IsPlacing = false
+		task.delay(1/3,function()
+			IsPlacing = false
+		end)
 
 		-- Place troop at the best position
 		if BestPosition and MaxCoveredArea > 1e-2 then
