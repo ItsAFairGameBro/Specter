@@ -237,10 +237,10 @@ return function(C,Settings)
 					Result = workspace.Placed:InvokeServer(BestPosition - Vector3.new(0,0.4,0), 1, TroopName, BestPart);
 					if Result == true then
 						print("Placement Successful")
-						getgenv().C.CreateSysMessage("Placement Success: "..MaxCoveredArea,Color3.fromRGB(0,225))
+						C.CreateSysMessage("Placement Success: "..MaxCoveredArea,Color3.fromRGB(0,225))
 					else
 						warn("Placed Failed: "..tostring(Result))
-						getgenv().C.CreateSysMessage("Placement Failed: "..tostring(Result))
+						C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
 				else
 					warn("PlacingTower Failed (Likely Not Enough $$): "..tostring(Result))
@@ -248,7 +248,7 @@ return function(C,Settings)
 			end
 		else
 			print("No valid position found")
-			getgenv().C.CreateSysMessage("Position Failed: No valid position found")
+			C.CreateSysMessage("Position Failed: No valid position found")
 		end
 
 		for num, pathInstance in ipairs(Path) do
