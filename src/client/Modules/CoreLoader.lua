@@ -279,7 +279,7 @@ return function(C, _SETTINGS)
 				end)
 			end
 			function hackData:SetValue(value,started)
-				if value == hackData.Enabled or C.Cleared then
+				if (value == hackData.Enabled or C.Cleared) and not started then
 					return--no change, don't bother!
 				end
 				if value and hackData.Type == "NoToggle" then
@@ -309,7 +309,7 @@ return function(C, _SETTINGS)
 			C.ButtonClick(MainText,function()
 				hackData:SetValue(not hackData.Enabled)
 			end)
-			task.spawn(hackData.SetValue,hackData,enTbl.En==true, true)
+			--task.spawn(hackData.SetValue,hackData,enTbl.En==true, true)
 			
 			--Keybind
 			if name ~= "Settings" then
@@ -382,7 +382,7 @@ return function(C, _SETTINGS)
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
 			if (data.RealEnabled or data.AlwaysActivate) and data.Activate and not data.DontActivate then
-				task.spawn(data.Activate,data,data.RealEnabled, true)
+				task.spawn(data.SetValue,data,data.RealEnabled, true)
 			end
 		end
 	end
