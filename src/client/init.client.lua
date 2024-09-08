@@ -510,7 +510,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
-			local isGameScript = HookType ~= "hookmetamethod"-- or not checkcaller()
+			local isGameScript =  not checkcaller()
 			 -- Check if the caller is not a local script
 			 if isGameScript or Override then
                 local theirScript = getcallingscript() or "nullptr"
