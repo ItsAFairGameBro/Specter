@@ -398,16 +398,12 @@ return function(C,Settings)
 							break
 						elseif AutoPlayCond == "Never" then
 							break
-						elseif TowerCount.Value >= TowerCap then
-							C.CreateSysMessage(`Your towers are maxed ({TowerCount.Value}/{TowerCap})`,
-								Color3.fromRGB(25,225,25))
-							break
 						end
 						if ChosenTower == "Nothing" then
 							return C.Prompt("Invalid Tower", "In Slot "..TowerIndex..", you have nothing equipped.")
 						end
 						-- NEEDS --
-						local Priority = TowerCount < TowerCap and self.EnTbl.AutoplayStyle or "Quality"
+						local Priority = TowerCount.Value < TowerCap and self.EnTbl.AutoplayStyle or "Quality"
 						local Action, ActionType
 						local CashNeeded
 						if Priority == "Sniper" then
@@ -434,6 +430,11 @@ return function(C,Settings)
 							end
 						end
 						if Priority == "Quantity" then
+							if TowerCount.Value >= TowerCap then
+								C.CreateSysMessage(`Your towers are maxed ({TowerCount.Value}/{TowerCap})`,
+									Color3.fromRGB(25,225,25))
+								break
+							end
 							Action = ChosenTower
 							TowerInformation = workspace:WaitForChild("TowerInformation")[Action]
 							CashNeeded = C.PlayerInformation.Cash.Value
