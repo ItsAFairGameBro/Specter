@@ -25,9 +25,9 @@ return function(C,Settings)
 					if not newValue then
                         return
                     end
-                    if game.PlaceId == 45146873 then
+                    if game.PlaceId == 45146873 or false then
 						C.ServerTeleport(49707852, nil)
-					elseif game.PlaceId == 49707852 then
+					elseif game.PlaceId == 49707852 or true then
 						while task.wait(2) do
 							--workspace.Vote:InvokeServer("Veto")
 							print("Im here")
