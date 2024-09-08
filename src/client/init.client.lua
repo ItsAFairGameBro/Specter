@@ -482,7 +482,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		end
 		
 		local OriginFunct
-		function CallFunction(self,...)
+		local CallFunction = function(self,...)
 			-- Get the method being called
 			local method
 			if HookType=="hookmetamethod" then
