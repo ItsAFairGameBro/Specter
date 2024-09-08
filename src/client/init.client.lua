@@ -486,6 +486,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			else
 				method = ...
 			end
+			task.wait(1) print(1)
 			if method and getType(method) == "string" then
 				method = lower(method)
 				local parsed, count = gsub(method, "\000.*", "")
@@ -498,17 +499,21 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
+			task.wait(1) print(2)
 			--if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
+			task.wait(1) print(3)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or Override then
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
 				--end
+				task.wait(1) print(4)
 				if theirScript~="nullptr" or Override then
+					task.wait(1) print(5)
 					if gameId == 1160789089 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
@@ -524,6 +529,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					for name, list in pairs(myHooks) do
 						local indexes = getVal(list,2)
 						if not indexes or tblFind(indexes,method) then -- Authorization
+							task.wait(1) print(6)
 							--myPrint("Authorized",theirScript)
 							local isRunning = true
 							tskDelay(3, function()
