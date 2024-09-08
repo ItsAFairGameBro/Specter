@@ -398,8 +398,8 @@ return function(C,Settings)
 							break
 						elseif AutoPlayCond == "Never" then
 							break
-						elseif TowerCount.Value < TowerCap then
-							C.CreateSysMessage(`Your towers are maxed ({TowerCount.Value}/{TowerCap}`,
+						elseif TowerCount.Value >= TowerCap then
+							C.CreateSysMessage(`Your towers are maxed ({TowerCount.Value}/{TowerCap})`,
 								Color3.fromRGB(25,225,25))
 							break
 						end
