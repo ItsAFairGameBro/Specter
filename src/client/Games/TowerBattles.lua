@@ -2,6 +2,7 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Text
 
 local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
+local SocialService = game:GetService("SocialService")
 local UIS = game:GetService("UserInputService")
 local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
@@ -334,11 +335,16 @@ return function(C,Settings)
 							end)
 						end
 					end--]]
+					local lastClickTime
 					local toStr,tskSpawn, tskDefer = tostring, task.spawn, task.defer
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,troopName)
 						--tskSpawn(print,"invoke",self)
 						if toStr(self) == "PlacingTower" and troopName then
+							if lastClickTime and os.clock() - lastClickTime < .5 then
+								return
+							end
 							tskDefer(PlaceTroop,troopName)
+							lastClickTime = os.clock()
 							return "Yield"
 						end
 					end,{"invokeserver"})
@@ -348,7 +354,7 @@ return function(C,Settings)
 				Title = "Auto Bot",
 				Tooltip = "Plays for you",
 				Shortcut = "AutoPlace",
-				Layout = 5, Threads = {}, Functs = {},
+				Layout = 5, Threads = {},
 				Activate = function(self, newValue, firstRun)
 					if not newValue or GamePlaceIds.Lobby == game.PlaceId then
 						return
