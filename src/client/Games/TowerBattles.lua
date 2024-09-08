@@ -40,6 +40,7 @@ return function(C,Settings)
 				Title = "Auto Place",
 				Tooltip = "Finds the optimal placement for towers until Max Tries are reached; otherwise, lets you place",
 				Shortcut = "AutoPlace",
+				Layout = 2,
 				Activate = function(self, newValue, firstRun)
 					for num, rawFunct in ipairs(C.getgc()) do
 						local functInfo = debug.getinfo(rawFunct)
