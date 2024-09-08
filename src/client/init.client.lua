@@ -481,10 +481,14 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local function CallFunction(self,...)
 			-- Get the method being called
 			local method
-			if HookType=="hookmetamethod" and hook == "__namecall" then
-				method = getnamecallmethod()
-			else
-				method = ...
+			if HookType=="hookmetamethod" then
+				if hook == "__namecall" then
+					method = getnamecallmethod()
+				else
+					method = ...
+				end
+			elseif HookType == "hookfunction" then
+				method = self
 			end
 			task.wait(1) print(1)
 			if method and getType(method) == "string" then
