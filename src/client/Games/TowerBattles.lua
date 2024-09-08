@@ -318,7 +318,6 @@ return function(C,Settings)
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,troopName)
 						--tskSpawn(print,"invoke",self)
 						if toStr(self) == "PlacingTower" and troopName then
-							tskSpawn(print,"TroopName",troopName)
 							tskDefer(PlaceTroop,troopName)
 							return "Yield"
 						end
