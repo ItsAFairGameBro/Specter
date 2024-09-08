@@ -479,6 +479,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		
 		local OriginFunct
 		local function CallFunction(self,...)
+			print(0) task.wait(1)
 			-- Get the method being called
 			local method
 			if HookType=="hookmetamethod" then
