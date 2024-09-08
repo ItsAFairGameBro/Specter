@@ -340,7 +340,7 @@ return function(C,Settings)
 					if curDistance <= 0 or lastInstance == hitResult.Instance then
 						if lastInstance == hitResult.Instance then
 							warn(`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
-							C.Prompt("Raycast Max Limit",`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
+							--C.Prompt("Raycast Max Limit",`The result reached its maximum curDistance {curDistance} or hit the same object twice {hitResult.Instance}`)
 						end
 						didHit = false
 						break
