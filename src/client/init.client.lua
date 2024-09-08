@@ -482,7 +482,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		end
 		
 		local OriginFunct
-		local CallFunction = function(self,...)
+		CallFunction = function(self,...)
 			-- Get the method being called
 			print(0) task.wait(1)
 			local method
