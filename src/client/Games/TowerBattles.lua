@@ -395,8 +395,8 @@ return function(C,Settings)
 					while true do
 						print("Loop began")
 						-- RUN CONDITION --
-						if not WaveStop or workspace.Waves.Wave.Value < WaveStop then
-							print(`Loop End {workspace.Waves.Wave.Value} < {WaveStop}`)
+						if not WaveStop or workspace.Waves.Wave.Value >= WaveStop then
+							print(`Loop End {workspace.Waves.Wave.Value} >= {WaveStop}`)
 							break
 						elseif AutoPlayCond == "Never" then
 							break
