@@ -513,7 +513,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--end
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
 			print(2) wait(1)
-			local checkedCaller = HookType ~= "hookmetamethod" and checkcaller()
+			local checkedCaller = HookType == "hookmetamethod" and checkcaller()
 			 -- Check if the caller is not a local script
 			 if checkedCaller or Override then
 				print(3) wait(1)
