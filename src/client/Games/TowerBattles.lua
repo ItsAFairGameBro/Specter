@@ -405,7 +405,7 @@ return function(C,Settings)
 						-- NEEDS --
 						local Priority = self.EnTbl.AutoplayStyle or "Quality"
 						local Action, ActionType
-						local CashNeeded
+						local CashCost
 						if Priority == "Sniper" then
 							
 						end
@@ -426,7 +426,7 @@ return function(C,Settings)
 							else
 								ActionType = "Upgrade"
 								TowerInformation = workspace:WaitForChild("TowerInformation")[TowerType]
-								CashNeeded = TowerInformation[tostring(LowestLevel - 1)].Value
+								CashCost = TowerInformation[tostring(LowestLevel - 1)].Value
 							end
 						end
 						if Priority == "Quantity" then
@@ -436,20 +436,22 @@ return function(C,Settings)
 								break
 							end
 							Action = ChosenTower
-							TowerInformation = workspace:WaitForChild("TowerInformation")[Action]
-							CashNeeded = C.PlayerInformation.Cash.Value
+							TowerInformation = workspace:WaitForChild("TowerInformation")[ChosenTower]
+							CashCost = C.PlayerInformation.Cash.Value
 							ActionType = "Place"
 						end
 						-- TOWER PLACE --
-						if TowerInformation.Value > CashNeeded then
+						if TowerInformation.Value > CashCost then
 							print(`Mon Wait`)
-							while TowerInformation.Value > CashNeeded do
+							while TowerInformation.Value > CashCost do
 								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
 							end
 						elseif ActionType == "Upgrade" then
 							local Result = workspace.UpgradeTower:InvokeServer(Action)
 							if Result then
-								
+								C.CreateSysMessage(`UpgradeTower Success`,Color3.fromRGB(25,225,25))
+							else
+								C.CreateSysMessage(`UpgradeTower Fail: {tostring(Result)}!`)
 							end
 						elseif ActionType == "Place" and not IsPlacing then
 							PlaceTroop(ChosenTower)
