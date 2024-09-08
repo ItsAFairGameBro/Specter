@@ -105,7 +105,7 @@ return function(C,Settings)
 					if depth ~= 0 then
 						str ..= addToString((addBrackets and "[" or "") .. printInstances(num) .. (addBrackets and "]" or "") .. " = " .. printInstances(val), depth, depth == 0) .. ","
 					else
-						str ..= addToString(printInstances(val), depth, depth == 0) .. ((not isDict and num ~= totalValues) and ", " or "")
+						str ..= addToString(printInstances(val), depth, depth == 0) .. ((not isDict and num ~= totalValues) and " " or "")
 					end
 				end
 		
@@ -381,12 +381,12 @@ return function(C,Settings)
 	end
 	--Debug
 	function C.createTestPart(position,timer)
-		if not Settings.hitBoxesEnabled then
+		if not Settings.hitBoxesEnabled and false then
 			return
 		end
 		local newPart=C.Examples.TestPartEx:Clone()
 		newPart.Position=position
-		newPart.Parent=workspace.Camera
+		newPart.Parent=workspace
 		C.AddGlobalInstance(newPart)
 		DS:AddItem(newPart,timer or 5)
 	end
@@ -982,6 +982,16 @@ return function(C,Settings)
 			math.clamp(Transform.y, -HalfSize.y, HalfSize.y),
 			math.clamp(Transform.z, -HalfSize.z, HalfSize.z)
 		)
+	end
+	function C.GetPartGlobalSize(part)
+		local partCFrame = part.CFrame
+		local partSize = part.Size
+	
+		-- Calculate the world size by transforming the local size using the part's CFrame and accounting for scale
+		local worldSize = (partCFrame - partCFrame.Position):VectorToWorldSpace(partSize)
+		worldSize = Vector3.new(math.abs(worldSize.X),math.abs(worldSize.Y),math.abs(worldSize.Z))
+			
+		return worldSize
 	end
 	function C.ClosestPointOnPartSurface(PartCF, PartSize, Point)
 		local Transform = PartCF:pointToObjectSpace(Point) -- Transform into local space
