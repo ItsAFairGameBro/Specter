@@ -382,7 +382,7 @@ return function(C,Settings)
 					workspace:WaitForChild("Map")
 					-- AUTOPLAY TIME--
 					local AutoPlayCond = self.EnTbl.AutoplayCond
-					local WaveStop = AutoPlayCond:gmatch("Wave %d")() and AutoPlayCond:gmatch("%d")()
+					local WaveStop = AutoPlayCond:gmatch("Wave %d")() and tonumber(AutoPlayCond:gmatch("%d")())
 					local TowerIndex = self.EnTbl.AutoplayTroop:gmatch("%d")()
 					local ChosenTower = C.StringWait(C.plr, "StuffToSave.Tower"..TowerIndex).Value
 					local TowerInformation = ChosenTower ~= "Nothing" and workspace:WaitForChild("TowerInformation")[ChosenTower]
