@@ -149,7 +149,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue,firstRun)
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
-					local InputFound = C.human.MoveDirection.Magnitude > 1e-5 or C.IsJumping
+					local InputFound = (C.human and C.human.MoveDirection.Magnitude > 1e-5) or C.IsJumping
 					
 					--Lock Camera Orientation
 					local LastCameraSubjectChangeSignal, LastCamera
