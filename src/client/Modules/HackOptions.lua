@@ -178,7 +178,7 @@ return function(C,Settings)
 	function DropdownTbl.new(parent, options)
 		assert(options.Selections,"Selections is missing")
 		-- Pick first one!
-		options.Default = options.Default or options.Selections[#options.Selections]
+		options.Default = options.Default==nil and options.Selections[#options.Selections] or options.Default
 		if typeof(options.Default) == "number" then
 			options.Default = options.Selections[options.Default]
 		end

@@ -10,20 +10,26 @@ local GS = game:GetService("GuiService")
 local SG = game:GetService("StarterGui")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
-		local function newChild(instance)
-			local TypeVal = instance:WaitForChild("Height",5)
-			if TypeVal then
-				C.Map = instance
-				C.FireEvent("MapAdded",nil,instance)
-			end
-		end
-		C.AddGlobalConnection(workspace.ChildAdded:Connect(newChild))
-		for num, instance in ipairs(workspace:GetChildren()) do
-			task.spawn(newChild,instance)
-		end
+		C.AddGlobalThread(task.spawn(function()
+			local instance = workspace:WaitForChild("Map")
+			C.Map = instance
+			C.FireEvent("MapAdded",nil,instance)
+		end))
 	end)
 	C.PlayerInformation = C.plr:WaitForChild("Information")
 end
+local GamePlaceIds = {
+	["N/A"]=0,
+	["Lobby"]=45146873,
+	["Halloween"]=45200529,
+	["Arena (Versus)"]=46955756,
+	["Survival"]=49707852,
+	["Christmas"]=1241893197,
+	["Halloween 2018"]=2470348319,
+	["Winter 2019"]=2776257214,
+	["Halloween 2023"]=5645832762,
+	["Winter 2022"]=8652280014,
+}
 return function(C,Settings)
 	local IsPlacing = false
 	local function PlaceTroop(TroopName)
@@ -241,6 +247,7 @@ return function(C,Settings)
 		task.delay(1/3,function()
 			IsPlacing = false
 		end)
+		local TotalTime = os.clock() - StartTime
 
 		-- Place troop at the best position
 		if BestPosition and MaxCoveredArea > 1e-2 then
@@ -258,7 +265,7 @@ return function(C,Settings)
 						print("Placement Successful")
 						C.CreateSysMessage("Placement Success: "..MaxCoveredArea,Color3.fromRGB(0,225))
 						return true, 
-							C.CreateSysMessage(("Placement Success: %.1f"):format(MaxCoveredArea),Color3.fromRGB(0,225))
+							C.CreateSysMessage(("Placement Succeeded: %.1f (%.1f seconds)"):format(MaxCoveredArea,TotalTime),Color3.fromRGB(0,225))
 					else
 						return false, C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
@@ -267,7 +274,7 @@ return function(C,Settings)
 				end
 			end
 		else
-			return false, C.CreateSysMessage("Position Failed: No valid position found")
+			return false, C.CreateSysMessage(("Position Failed: No valid position found (%.1f seconds)"):format(TotalTime))
 		end
 
 		return true
@@ -282,24 +289,33 @@ return function(C,Settings)
 		},
 		Tab = {
 			{
-				Title = "Join Survival",
-				Tooltip = "Automatically joins survival!",
+				Title = "Join Mode",
+				Tooltip = "Automatically joins the selected mode!",
 				Layout = 1,
-				Shortcut = "Auto",Functs={},Threads={},
+				Shortcut = "JoinMode",Functs={},Threads={},
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
                         return
                     end
                     if game.PlaceId == 45146873 then
-						C.ServerTeleport(49707852, nil)
-					--[[elseif game.PlaceId == 49707852 then
-						while task.wait(2) do
-							workspace.Vote:InvokeServer("Veto")
-						end--]]
+						local JoinLocation = GamePlaceIds[self.EnTbl.Gamemode]
+						assert(JoinLocation,`Invalid JoinLocation: `..self.EnTbl.Gamemode)
+						C.ServerTeleport(JoinLocation, nil)
 					end
 				end,
                 Events = {},
-				Options = {},
+				Options = {
+					{
+						Type = Types.Dropdown,
+						Title = "Gamemode",
+						Tooltip = "Choose which game to join",
+						Layout = 1,Default="Survival",
+						Shortcut="PickMap",
+						Selections = {"Halloween","Arena (Versus)","Survival","Christmas","Halloween 2018",
+						"Winter 2019","Halloween 2023","Winter 2022"},
+						Activate = C.ReloadHack,
+					},
+				},
 			},
 			{
 				Title = "Auto Place",
@@ -334,13 +350,10 @@ return function(C,Settings)
 				Shortcut = "AutoPlace",
 				Layout = 5, Threads = {}, Functs = {},
 				Activate = function(self, newValue, firstRun)
-					if not newValue then
+					if not newValue or GamePlaceIds.Lobby == game.PlaceId then
 						return
 					end
-					if game.PlaceId == 45146873 then
-						C.ServerTeleport(49707852, nil)
-					end
-					while workspace.VoteCount.Value > 0 do
+					while GamePlaceIds.Survival == game.PlaceId and workspace.VoteCount.Value > 0 do
 						local selMap, maxLength = nil, nil
 						for mapIndex = 1, 3 do
 							local mapStat = workspace:WaitForChild("Map"..mapIndex)
@@ -350,7 +363,7 @@ return function(C,Settings)
 							if self.EnTbl.PickMap == mapType then
 								selMap = mapStat
 								break
-							elseif self.EnTbl.PickMap == "Longest Seen" then
+							elseif self.EnTbl.PickMap == "Longest Of 3" then
 								if not selMap or maxLength < mapData.Length.Value then
 									selMap = mapStat, maxLength
 								end
@@ -364,21 +377,66 @@ return function(C,Settings)
 						end
 						workspace.VoteCount.Changed:Wait()
 					end
-					print("Finished Voting!")
+					-- VOTING FINISHED --
+					-- MAP LOADING --
+					workspace:WaitForChild("Map")
+					-- AUTOPLAY TIME--
+					local AutoPlayCond = self.EnTbl.AutoplayCond
+					local WaveStop = AutoPlayCond:gmatch("Wave %i")() and AutoPlayCond:gmatch("%i")()
+					local TowerIndex = self.EnTbl.AutoplayTroop:gmatch("%i")()
+					local ChosenTower = C.StringWait(C.plr, "StuffToSave.Tower"..TowerIndex).Value
+					local TowerInformation = ChosenTower ~= "Nothing" and workspace:WaitForChild("TowerInformation")[ChosenTower]
+					while true do
+						-- RUN CONDITION --
+						if not WaveStop or workspace.WaveStart.Value < WaveStop then
+							break
+						elseif AutoPlayCond == "Never" then
+							break
+						end
+						if ChosenTower == "Nothing" then
+							return C.Prompt("Invalid Tower", "In Slot "..TowerIndex..", you have nothing equipped.")
+						end
+						-- TOWER PLACE --
+						if TowerInformation.Value > C.PlayerInformation.Cash.Value then
+							while TowerInformation.Value > C.PlayerInformation.Cash.Value do
+								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
+							end
+						elseif not IsPlacing then
+							PlaceTroop(ChosenTower)
+						else
+							RunS.RenderStepped:Wait()
+						end
+					end
 				end,
 				Options = {
 					{
 						Type = Types.Dropdown,
 						Title = "Map Selection",
 						Tooltip = "In survival, vetos until chosen map is found.",
-						Layout = 2,Default=false,
+						Layout = 1,Default="Borderlands",
 						Shortcut="PickMap",
-						Selections = {"Longest Seen","Midnight Road","Borderlands"},
+						Selections = {"Nothing","Midnight Road","Borderlands","Longest Of 3"},
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Autoplay Condition",
+						Tooltip = "Until what wave the autoplay runs before SELLING ALL TOWERS",
+						Layout = 2,Default="Never",
+						Shortcut="AutoplayCond",
+						Selections = {"Never","Wave 18","Always"},
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Autoplay Troop",
+						Tooltip = "What troop is autoplayed",
+						Layout = 3,Default=false,
+						Shortcut="AutoplayTroop",
+						Selections = {"Slot 1","Slot 2","Slot 3","Slot 4","Slot 5"},
 						Activate = C.ReloadHack,
 					},
 				},
 			},
 		}
-		
 	}
 end
