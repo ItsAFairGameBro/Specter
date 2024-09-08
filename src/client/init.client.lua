@@ -484,7 +484,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local OriginFunct
 		CallFunction = function(self,...)
 			-- Get the method being called
-			print(0) task.wait(1)
+			print(0) wait(1)
 			local method
 			if HookType=="hookmetamethod" then
 				if hook == "__namecall" then
@@ -507,15 +507,15 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
-			print(1) task.wait(1)
+			print(1) wait(1)
 			--if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
-			print(2) task.wait(1)
+			print(2) wait(1)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or Override then
-				print(3) task.wait(1)
+				print(3) wait(1)
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
@@ -534,10 +534,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					end--]]
 					-- Block FireServer or InvokeServer methods
 					for name, list in pairs(myHooks) do
-						print(4) task.wait(1)
+						print(4) wait(1)
 						local indexes = getVal(list,2)
 						if not indexes or tblFind(indexes,method) then -- Authorization
-							print(5) task.wait(1)
+							print(5) wait(1)
 							--myPrint("Authorized",theirScript)
 							local isRunning = true
 							tskDelay(3, function()
@@ -548,7 +548,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 							local operation,returnData = getVal(list,3)(theirScript,method,self,...)
 							isRunning = false
 							if operation then
-								print(6) task.wait(1)
+								print(6) wait(1)
 								if operation == "Override" or operation == "FireSeperate" then
 									assert(typeof(getVal(returnData,1)) == typeof(self),
 										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
