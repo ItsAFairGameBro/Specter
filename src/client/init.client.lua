@@ -472,10 +472,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local HookType = ((source or typeof(hook)=="function") and "hookfunction")
 			or (typeof(hook)=="string" and "hookmetamethod")
 
-		if HookType == "hookmetamethod" then
-			return
-		end
-
 		assert(hookfunction,`[C.HookMethod]: Unknown HookType: {hook}!`)
 		for num, methodName in ipairs(methods or {}) do
 			assert(methodName == lower(methodName),`[C.HookMethod]: {toStr(methodName)} is not lowercase!`)
@@ -509,7 +505,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
-			tskSpawn(print,"CheckCaller",checkcaller())
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			local isGameScript = not checkcaller()
 			 -- Check if the caller is not a local script
