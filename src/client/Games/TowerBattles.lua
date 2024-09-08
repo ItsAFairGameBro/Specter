@@ -43,6 +43,10 @@ return function(C,Settings)
 				Layout = 2,
 				Activate = function(self, newValue, firstRun)
 					for num, rawFunct in ipairs(C.getgc()) do
+						if typeof(rawFunct) ~= "function" then
+							warn(num,rawFunct,"is not a function!")
+							continue
+						end
 						local functInfo = debug.getinfo(rawFunct)
 						if functInfo.name == "Clicked" then
 							C.HookMethod(rawFunct, self.Shortcut, newValue and function()
