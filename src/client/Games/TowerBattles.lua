@@ -365,7 +365,7 @@ return function(C,Settings)
 								break
 							elseif self.EnTbl.PickMap == "Longest Of 3" then
 								if not selMap or maxLength < mapData.Length.Value then
-									selMap = mapStat, maxLength
+									selMap, maxLength = mapStat, mapData.Length.Value
 								end
 							end
 						end
