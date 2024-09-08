@@ -476,7 +476,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		for num, methodName in ipairs(methods or {}) do
 			assert(methodName == lower(methodName),`[C.HookMethod]: {tostring(methodName)} is not lowercase!`)
 		end
-
+		local function myPrint(...)
+			task.spawn(print,...)
+			task.wait(1)
+		end
 		local OriginFunct
 		local function CallFunction(self,...)
 			-- Get the method being called
@@ -486,6 +489,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			else
 				method = ...
 			end
+			myPrint("Method",method)
 			if method and getType(method) == "string" then
 				method = lower(method)
 				local parsed, count = gsub(method, "\000.*", "")
@@ -502,9 +506,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
+			myPrint("Override",Override)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or Override then
                 local theirScript = getcallingscript() or "nullptr"
+				myPrint("TheirScript",theirScript)
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
 				--end
@@ -524,6 +530,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					for name, list in pairs(myHooks) do
 						local indexes = getVal(list,2)
 						if not indexes or tblFind(indexes,method) then -- Authorization
+							myPrint("Authorized",theirScript)
 							local isRunning = true
 							tskDelay(3, function()
 								if isRunning then
