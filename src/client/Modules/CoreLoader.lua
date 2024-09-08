@@ -190,6 +190,10 @@ return function(C, _SETTINGS)
 			end
 			assert(hackData.Shortcut,`{hackData.Title} from {name} doesn't have a Shortcut identifer!`)
 			assert(typeof(hackData.Layout)=="number",`{hackData.Title} from {name} has invalid .Layout property!`)
+			if C.hackData[name][hackData.Shortcut] then
+				warn(`Duplicate shortcut found: {name}/{hackData.Shortcut}; Therefore, not loading {hackData.Title}`)
+				continue
+			end
 			C.hackData[name][hackData.Shortcut] = hackData
 			local ButtonEx = C.Examples.HackButtonEx:Clone()
 			hackData.Button = ButtonEx
