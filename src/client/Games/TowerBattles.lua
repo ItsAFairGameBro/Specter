@@ -11,8 +11,8 @@ local SG = game:GetService("StarterGui")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
 		local function newChild(instance)
-			task.wait(3)
-			if instance.Name == "Map" then
+			local TypeVal = instance:FindFirstChild("Height")
+			if TypeVal then
 				C.Map = instance
 				C.FireEvent("MapAdded",nil,instance)
 			end
@@ -218,7 +218,6 @@ return function(C,Settings)
 		end
 
 		local NumLeft = #PotentialPositions
-		print("Total",NumLeft)
 
 		-- Loop through all potential positions and find the best one
 		for num, positionData in pairs(PotentialPositions) do
@@ -236,12 +235,12 @@ return function(C,Settings)
 		for _, pathInstance in ipairs(Path) do
 			pathInstance:Destroy()
 		end
+		IsPlacing = false
 
 		-- Place troop at the best position
 		if BestPosition and MaxCoveredArea > 1e-2 then
 			if Range * 0.05 > MaxCoveredArea then
-				IsPlacing = false
-				return "Lower than 5% range"
+				return false, C.CreateSysMessage(("Min Size Failed of %.1f%%. Best find was %.1f"):format(Range*0.05,MaxCoveredArea))
 			end
 			print(("Best troop position covers area is %.1f in %.2f s"):format(MaxCoveredArea, os.clock()-StartTime))
 			if not C.isStudio then
@@ -253,20 +252,19 @@ return function(C,Settings)
 					if Result == true then
 						print("Placement Successful")
 						C.CreateSysMessage("Placement Success: "..MaxCoveredArea,Color3.fromRGB(0,225))
+						return true, 
+							C.CreateSysMessage(("Placement Success: %.1f"):format(MaxCoveredArea),Color3.fromRGB(0,225))
 					else
-						warn("Placed Failed: "..tostring(Result))
-						C.CreateSysMessage("Placement Failed: "..tostring(Result))
+						return false, C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
 				else
-					warn("PlacingTower Failed (Likely Not Enough $$): "..tostring(Result))
+					return false, C.CreateSysMessage("Tower Placing Failed: "..tostring(Result))
 				end
 			end
 		else
-			print("No valid position found")
-			C.CreateSysMessage("Position Failed: No valid position found")
+			return false, C.CreateSysMessage("Position Failed: No valid position found")
 		end
 
-		IsPlacing = false
 		return true
 	end
 	Static(C,Settings)
