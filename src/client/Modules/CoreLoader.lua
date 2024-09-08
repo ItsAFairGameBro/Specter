@@ -297,12 +297,9 @@ return function(C, _SETTINGS)
 				if C.Cleared then
 					return
 				end
-				if hackData.Activate and not started then
-					if started then
-						--task.delay(0.3,hackData.Activate,hackData,hackData.Enabled,started)
-					else
-						C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started)
-					end
+				if (hackData.Activate and hackData.RealEnabled or hackData.AlwaysActivate)
+					and (not started or not hackData.DontActivate) then
+					C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started)
 				end
 			end
 			hackData.Override = hackData.Override or {}
@@ -381,9 +378,9 @@ return function(C, _SETTINGS)
 	if C.Cleared then return end
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
-			if (data.RealEnabled or data.AlwaysActivate) and data.Activate and not data.DontActivate then
+			--if (data.RealEnabled or data.AlwaysActivate) and data.Activate and not data.DontActivate then
 				task.spawn(data.SetValue,data,data.RealEnabled, true)
-			end
+			--end
 		end
 	end
 	for num, instance in ipairs(C.UI.TabsFrame:GetChildren()) do
