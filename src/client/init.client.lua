@@ -461,7 +461,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local checkcaller = C.checkcaller
 		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
-		local strLen = string.len
+		local strLen, toStr = string.len, tostring
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
 		local additionalCallerName = {["SayMessageRequest"]=true}
 		local additionalMethodName = {["sendasync"]=true}
@@ -501,17 +501,17 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if strLen(parsed) > 0 and count <= 1 then
 					method = parsed
 				elseif count > 1 then
-					warn(`Parsed Method Count {count} For Method: {tostring(self)} {method}`)
+					warn(`Parsed Method Count {count} For Method: {toStr(self)} {method}`)
 				else
-					warn(`Empty Message Parsed from {tostring(self)} {method}. Copied to clipboard for further inspection.`)
+					warn(`Empty Message Parsed from {toStr(self)} {method}. Copied to clipboard for further inspection.`)
 					getVal(C,"setclipboard")(method)
 				end
 			end
 			print(1) wait(1)
-			--if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
+			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
-			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
+			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			print(2) wait(1)
 			local isGameScript = HookType ~= "hookmetamethod" or not checkcaller()
 			 -- Check if the caller is not a local script
@@ -519,10 +519,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				print(3) wait(1)
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
-				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
+				--	tskSpawn(print,`method walkspeed {toStr(method)}`)
 				--end
 				if theirScript~="nullptr" or Override then
-					if gameId == 1160789089 and tostring(theirScript) == "BAC_" then
+					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 							return coroYield -- Return the function to run forever haha!!
