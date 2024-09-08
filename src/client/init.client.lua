@@ -479,7 +479,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		
 		local OriginFunct
 		local function CallFunction(self,...)
-			print(0) task.wait(1)
+			print(0) wait(1)
 			-- Get the method being called
 			local method
 			if HookType=="hookmetamethod" then
@@ -491,7 +491,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			elseif HookType == "hookfunction" then
 				method = self
 			end
-			print(1) task.wait(1)
+			print(1) wait(1)
 			if method and getType(method) == "string" then
 				method = lower(method)
 				local parsed, count = gsub(method, "\000.*", "")
@@ -504,21 +504,21 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
-			print(2) task.wait(1)
+			print(2) wait(1)
 			--if getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method) or tostring(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
-			print(3) task.wait(1)
+			print(3) wait(1)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or Override then
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
 				--end
-				print(4) task.wait(1)
+				print(4) wait(1)
 				if theirScript~="nullptr" or Override then
-					print(5) task.wait(1)
+					print(5) wait(1)
 					if gameId == 1160789089 and tostring(theirScript) == "BAC_" then
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
@@ -534,7 +534,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					for name, list in pairs(myHooks) do
 						local indexes = getVal(list,2)
 						if not indexes or tblFind(indexes,method) then -- Authorization
-							task.wait(1) print(6)
+							print(6) wait(1)
 							--myPrint("Authorized",theirScript)
 							local isRunning = true
 							tskDelay(3, function()
