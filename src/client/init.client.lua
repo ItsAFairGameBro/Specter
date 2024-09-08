@@ -524,7 +524,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					for name, list in pairs(myHooks) do
 						local indexes = getVal(list,2)
 						if not indexes or tblFind(indexes,method) then -- Authorization
-							myPrint("Authorized",theirScript)
+							--myPrint("Authorized",theirScript)
 							local isRunning = true
 							tskDelay(3, function()
 								if isRunning then
@@ -568,7 +568,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			print("Origin",OriginFunct,hook,source)
 		else--]]
 		OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-			or (HookType == "hookfunction" and hookfunction(hook, C.newcclosure(CallFunction)))
+			or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
 		--end
 	end
 	if runFunct then
