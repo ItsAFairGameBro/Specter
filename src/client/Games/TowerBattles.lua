@@ -52,9 +52,9 @@ return function(C,Settings)
 						if functInfo.name == "Clicked" then
 							clickyFound+=1
 							print("FOUND",clickyFound)
-							--C.HookMethod(rawFunct, self.Shortcut, newValue and function()
-							--	print("NO CLICKY 4 U")
-							--end)
+							C.HookMethod(rawFunct, self.Shortcut, newValue and function()
+								print("NO CLICKY 4 U")
+							end)
 							if clickyFound%5 == 0 then
 								task.wait(.5)
 							end
