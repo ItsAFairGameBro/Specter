@@ -314,12 +314,12 @@ return function(C,Settings)
 							end)
 						end
 					end--]]
-					local toStr,tskSpawn = tostring, task.spawn
+					local toStr,tskSpawn, tskDefer = tostring, task.spawn, task.defer
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,troopName)
 						--tskSpawn(print,"invoke",self)
 						if toStr(self) == "PlacingTower" and troopName then
 							tskSpawn(print,"TroopName",troopName)
-							tskSpawn(PlaceTroop,troopName)
+							tskDefer(PlaceTroop,troopName)
 							return "Yield"
 						end
 					end,{"invokeserver"})
