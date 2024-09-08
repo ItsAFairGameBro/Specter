@@ -24,11 +24,16 @@ local function Static(C, Settings)
 			newChild(instance)
 		end
 	end)
+	C.PlayerInformation = C.plr:WaitForChild("Information")
 end
 return function(C,Settings)
 	local IsPlacing = false
 	local function PlaceTroop(TroopName)
-		if IsPlacing then return end
+		if IsPlacing then return "Placement In Progress" end
+		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
+		if TowerInformation.Value > C.PlayerInformation.Cash.Value then
+			return "Not Enough Cash"
+		end
 		IsPlacing = true
 
 		local Path = {} -- Parts representing the path
@@ -230,8 +235,16 @@ return function(C,Settings)
 			end
 		end
 
+		for _, pathInstance in ipairs(Path) do
+			pathInstance:Destroy()
+		end
+
 		-- Place troop at the best position
 		if BestPosition and MaxCoveredArea > 1e-2 then
+			if Range * 0.05 > MaxCoveredArea then
+				IsPlacing = false
+				return "Lower than 5% range"
+			end
 			print(("Best troop position covers area is %.1f in %.2f s"):format(MaxCoveredArea, os.clock()-StartTime))
 			if not C.isStudio then
 				C.DoTeleport(BestPosition+Vector3.new(0,3,0))
@@ -255,10 +268,8 @@ return function(C,Settings)
 			C.CreateSysMessage("Position Failed: No valid position found")
 		end
 
-		for num, pathInstance in ipairs(Path) do
-			pathInstance:Destroy()
-		end
 		IsPlacing = false
+		return true
 	end
 	Static(C,Settings)
 	return {
