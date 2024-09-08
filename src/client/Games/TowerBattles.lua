@@ -42,6 +42,7 @@ return function(C,Settings)
 				Shortcut = "AutoPlace",
 				Layout = 2,
 				Activate = function(self, newValue, firstRun)
+					local clickyFound = 0
 					for num, rawFunct in ipairs(C.getgc()) do
 						if typeof(rawFunct) ~= "function" then
 							warn(num,rawFunct,"is not a function!")
@@ -49,9 +50,11 @@ return function(C,Settings)
 						end
 						local functInfo = debug.getinfo(rawFunct)
 						if functInfo.name == "Clicked" then
-							C.HookMethod(rawFunct, self.Shortcut, newValue and function()
-								print("NO CLICKY 4 U")
-							end)
+							clickyFound+=1
+							print("FOUND",clickyFound)
+							--C.HookMethod(rawFunct, self.Shortcut, newValue and function()
+							--	print("NO CLICKY 4 U")
+							--end)
 						end
 					end
 				end,
