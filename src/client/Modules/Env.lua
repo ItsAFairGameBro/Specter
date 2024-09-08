@@ -381,7 +381,7 @@ return function(C,Settings)
 	end
 	--Debug
 	function C.createTestPart(position,timer)
-		if not Settings.hitBoxesEnabled and false then
+		if not Settings.hitBoxesEnabled then
 			return
 		end
 		local newPart=C.Examples.TestPartEx:Clone()
