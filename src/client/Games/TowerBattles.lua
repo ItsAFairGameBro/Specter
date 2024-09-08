@@ -59,7 +59,7 @@ return function(C,Settings)
 							print("TroopName",troopName)
 							return "Yield"
 						end
-					end,{"fireserver"})
+					end,{"invokeserver"})
 				end,
 			}
 		}
