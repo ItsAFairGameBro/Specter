@@ -495,7 +495,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			elseif HookType == "hookfunction" then
 				method = self
 			end
-			print(1) wait(1)
+			print(1,method) wait(1)
 			if method and getType(method) == "string" then
 				method = lower(method)
 				local parsed, count = gsub(method, "\000.*", "")
