@@ -11,7 +11,7 @@ local SG = game:GetService("StarterGui")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
 		local function newChild(instance)
-			local TypeVal = instance:FindFirstChild("Height")
+			local TypeVal = instance:WaitForChild("Height",5)
 			if TypeVal then
 				C.Map = instance
 				C.FireEvent("MapAdded",nil,instance)
