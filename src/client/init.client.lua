@@ -265,7 +265,7 @@ C.Debugs = {All = false,
 	Override = false,
 	Thread = true,
 	SaveSystem = false,
-	RenderHighlight=true,
+	RenderHighlight=false,
 	AntiCheat = true,
 }
 

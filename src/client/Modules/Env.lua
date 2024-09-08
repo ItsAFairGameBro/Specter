@@ -676,6 +676,8 @@ return function(C,Settings)
 				warn(`Failed to stop thread {tostring(thread)} (Status: {Status}); {result}.`)
 			end
 			return true
+		else
+			C.DebugMessage("Thread",`Not stopping thread {tostring(thread)}, due to status: {Status}`)
 		end
 	end
 
