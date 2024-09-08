@@ -30,7 +30,10 @@ return function(C,Settings)
 		if IsPlacing then return "Placement In Progress" end
 		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
 		if TowerInformation.Value > C.PlayerInformation.Cash.Value then
-			return "Not Enough Cash"
+			return false,
+				C.CreateSysMessage(("Not Enough Cash: $%i Needed)"):format(TowerInformation.Value - C.PlayerInformation.Cash.Value))
+		elseif not C.Map then
+			return false, C.CreateSysMessage(`Map Not Found`)
 		end
 		IsPlacing = true
 
