@@ -55,9 +55,10 @@ return function(C,Settings)
 							C.HookMethod(rawFunct, self.Shortcut, newValue and function()
 								print("NO CLICKY 4 U")
 							end)
-							if clickyFound%5 == 0 then
+							if 
+							--[[if clickyFound%5 == 0 then
 								task.wait(.5)
-							end
+							end--]]
 						end
 					end
 				end,

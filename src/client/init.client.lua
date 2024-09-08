@@ -504,7 +504,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
 			 -- Check if the caller is not a local script
 			 if not checkcaller() or Override then
-					
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {tostring(method)}`)
@@ -567,8 +566,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			rawset(source,hook,CallFunction)
 			print("Origin",OriginFunct,hook,source)
 		else--]]
-			OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-				or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
+		OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
+			or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
 		--end
 	end
 	if runFunct then
