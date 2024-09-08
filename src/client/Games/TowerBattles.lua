@@ -403,7 +403,7 @@ return function(C,Settings)
 							return C.Prompt("Invalid Tower", "In Slot "..TowerIndex..", you have nothing equipped.")
 						end
 						-- NEEDS --
-						local Priority = TowerCount.Value < TowerCap and self.EnTbl.AutoplayStyle or "Quality"
+						local Priority = self.EnTbl.AutoplayStyle or "Quality"
 						local Action, ActionType
 						local CashNeeded
 						if Priority == "Sniper" then
