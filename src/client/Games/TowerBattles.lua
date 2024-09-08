@@ -30,7 +30,7 @@ return function(C,Settings)
 					elseif game.PlaceId == 49707852 then
 						while task.wait(2) and not C.Cleared do
 							workspace.Vote:InvokeServer("Veto")
-							print("Im here")
+							print("Im here",#self.Threads)
 						end
 					end
 				end,
