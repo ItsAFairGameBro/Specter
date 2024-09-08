@@ -11,9 +11,6 @@ local SG = game:GetService("StarterGui")
 local function Static(C, Settings)
 	table.insert(C.EventFunctions,function()
 		local function newChild(instance)
-			if instance.ClassName ~= "Model" then
-				return
-			end
 			if instance.Name == "Map" then
 				C.Map = instance
 				C.FireEvent("MapAdded",nil,instance)
