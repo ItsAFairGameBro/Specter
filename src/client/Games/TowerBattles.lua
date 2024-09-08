@@ -29,7 +29,8 @@ return function(C,Settings)
 						C.ServerTeleport(49707852, nil)
 					elseif game.PlaceId == 49707852 then
 						while task.wait(2) do
-							workspace.Vote:InvokeServer("Veto")
+							--workspace.Vote:InvokeServer("Veto")
+							print("Im here")
 						end
 					end
 				end,
