@@ -149,6 +149,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue,firstRun)
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
+					local InputFound = C.human.MoveDirection.Magnitude > 1e-5 or C.IsJumping
 					
 					--Lock Camera Orientation
 					local LastCameraSubjectChangeSignal, LastCamera
@@ -208,7 +209,7 @@ return function(C,Settings)
 					end
 
 					--Fix Keyboard
-					if EnTbl.FixKeyboard and not UIS:GetFocusedTextBox() then
+					if EnTbl.FixKeyboard and not UIS:GetFocusedTextBox() and not InputFound then
 						local tb = Instance.new("TextBox",C.PlayerGui)
 						tb.Position = UDim2.new(-1, 0,-1, 0)
 						tb.AnchorPoint = Vector2.new(1, 1)
