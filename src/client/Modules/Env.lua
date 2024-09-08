@@ -38,7 +38,7 @@ return function(C,Settings)
 						-- do nothing, just keep it to true/false
 						print4Instance = toStr
 					elseif myType == "function" then
-						print4Instance = `{GSub(GetInfo(print4Instance,"nfsl"),"function: ","")}`
+						print4Instance = `{GetInfo(print4Instance,"nfsl")}`
 					elseif myType == "Connection" then
 						print4Instance = `{toStr}; Foreign={
 							"N/A"} Luau={ -- or print4Instance.ForeignState or false
