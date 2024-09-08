@@ -327,7 +327,55 @@ return function(C,Settings)
 						end
 					end,{"invokeserver"})
 				end,
-			}
+			},
+			{
+				Title = "Auto Bot",
+				Tooltip = "Plays for you",
+				Shortcut = "AutoPlace",
+				Layout = 5, Threads = {}, Functs = {},
+				Activate = function(self, newValue, firstRun)
+					if not newValue then
+						return
+					end
+					if game.PlaceId == 45146873 then
+						C.ServerTeleport(49707852, nil)
+					end
+					while workspace.VoteCount.Value > 0 do
+						local selMap, maxLength = nil, nil
+						for mapIndex = 1, 3 do
+							local mapStat = workspace:WaitForChild("Map"..mapIndex)
+							local mapType = mapStat:WaitForChild("Type").Value
+							local mapData = C.StringWait(workspace,"MapsInformation."..mapType)
+							local mapLength = mapData:WaitForChild("Length").Value
+							if self.EnTbl.PickMap == mapType then
+								selMap = mapStat
+								break
+							elseif self.EnTbl.PickMap == "Longest Seen" then
+								if not selMap or maxLength < mapData.Length.Value then
+									selMap = mapStat, maxLength
+								end
+							end
+						end
+						if selMap then
+							workspace.Vote:InvokeServer(selMap.Name)
+						else
+							workspace.Vote:InvokeServer("Veto")
+						end
+						workspace.VoteCount.Changed:Wait()
+					end
+					print("Finished Voting!")
+				end,
+				Options = {
+					{
+						Type = Types.Toggle,
+						Title = "Map Selection",
+						Tooltip = "In survival, vetos until chosen map is found.",
+						Layout = 2,Default=false,
+						Shortcut="PickMap",
+						Options = {"Longest Seen","Midnight Road","Borderlands"}
+					},
+				},
+			},
 		}
 		
 	}
