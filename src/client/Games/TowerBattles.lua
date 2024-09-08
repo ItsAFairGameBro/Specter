@@ -367,7 +367,7 @@ return function(C,Settings)
 				end,
 				Options = {
 					{
-						Type = Types.Toggle,
+						Type = Types.Dropdown,
 						Title = "Map Selection",
 						Tooltip = "In survival, vetos until chosen map is found.",
 						Layout = 2,Default=false,
