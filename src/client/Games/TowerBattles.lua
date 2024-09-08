@@ -44,10 +44,10 @@ return function(C,Settings)
 				Activate = function(self, newValue, firstRun)
 					local clickyFound = 0
 					for num, rawFunct in ipairs(C.getgc()) do
-						if typeof(rawFunct) ~= "function" then
+						--[[if typeof(rawFunct) ~= "function" then
 							warn(num,rawFunct,"is not a function!")
 							continue
-						end
+						end--]]
 						local functInfo = debug.getinfo(rawFunct)
 						if functInfo.name == "Clicked" then
 							clickyFound+=1
@@ -55,6 +55,9 @@ return function(C,Settings)
 							--C.HookMethod(rawFunct, self.Shortcut, newValue and function()
 							--	print("NO CLICKY 4 U")
 							--end)
+							if clickyFound%5 == 0 then
+								task.wait(.5)
+							end
 						end
 					end
 				end,
