@@ -358,6 +358,7 @@ return function(C,Settings)
 						end
 						if selMap then
 							workspace.Vote:InvokeServer(selMap.Name)
+							workspace.SkipWaitVote:InvokeServer()
 						else
 							workspace.Vote:InvokeServer("Veto")
 						end
