@@ -28,7 +28,7 @@ return function(C,Settings)
                     if game.PlaceId == 45146873 then
 						C.ServerTeleport(49707852, nil)
 					elseif game.PlaceId == 49707852 then
-						while task.wait(2) do
+						while task.wait(2) and not C.Cleared do
 							workspace.Vote:InvokeServer("Veto")
 							print("Im here")
 						end
