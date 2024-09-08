@@ -513,8 +513,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--end
 			local Override = getVal(additionalCallerName,tostring(self)) or getVal(additionalMethodName,method)
 			print(2) wait(1)
+			local checkedCaller = HookType ~= "hookmetamethod" and checkcaller()
 			 -- Check if the caller is not a local script
-			 if not checkcaller() or Override then
+			 if checkedCaller or Override then
 				print(3) wait(1)
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
