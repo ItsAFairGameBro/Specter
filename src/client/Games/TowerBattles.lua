@@ -412,10 +412,10 @@ return function(C,Settings)
 						local TowerInformation
 						if Priority == "Quality" then
 							Action = nil
-							local LowestLevel = 4
+							local LowestLevel = 5
 							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 								if towerModel.Owner.Value == C.plr then
-									local Level = C.StringWait(towerModel,"Tower.UP1").Value
+									local Level = C.StringWait(towerModel,"Tower.UP1").Value + 1
 									if Level < LowestLevel then
 										Action, LowestLevel = towerModel.Name, Level
 									end
@@ -425,7 +425,7 @@ return function(C,Settings)
 								Priority = "Quantity"
 							else
 								ActionType = "Upgrade"
-								CashNeeded = TowerInformation[tostring(LowestLevel-1)].Value
+								CashNeeded = TowerInformation[tostring(LowestLevel - 1)].Value
 								TowerInformation = workspace:WaitForChild("TowerInformation")[Action]
 							end
 						end
