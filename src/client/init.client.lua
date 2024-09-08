@@ -478,7 +478,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		end
 		local function myPrint(...)
 			task.spawn(print,...)
-			task.wait(1)
 		end
 		local OriginFunct
 		local function CallFunction(self,...)
@@ -574,7 +573,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			print("Origin",OriginFunct,hook,source)
 		else--]]
 		OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
-			or (HookType == "hookfunction" and hookfunction(hook, (CallFunction)))
+			or (HookType == "hookfunction" and hookfunction(hook, C.newcclosure(CallFunction)))
 		--end
 	end
 	if runFunct then
