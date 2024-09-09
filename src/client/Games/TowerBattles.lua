@@ -506,8 +506,6 @@ return function(C,Settings)
 							if not Result then
 								if Error == "No Position" then
 									NoSpotsLeft = true
-								else
-									warn("Erm what error is prob in chat: "..tostring(Error))
 								end
 								task.wait(1/3)
 							end
