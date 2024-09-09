@@ -427,7 +427,7 @@ return function(C,Settings)
 							else
 								ActionType = "Upgrade"
 								TowerInformation = workspace:WaitForChild("TowerInformation")[TowerType]
-								CashCost = TowerInformation[tostring(LowestLevel - 1)].Value
+								CashCost = TowerInformation[tostring(LowestLevel)].Value
 							end
 						end
 						if Priority == "Quantity" then
