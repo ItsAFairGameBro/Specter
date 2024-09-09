@@ -264,7 +264,8 @@ return function(C,Settings)
 					Result = workspace.Placed:InvokeServer(BestPosition - Vector3.new(0,0.4,0), 1, TroopName, BestPart);
 					if Result == true then
 						return true,
-							C.CreateSysMessage(("Placement Succeeded: %i/%i (%.1f seconds)"):format(MaxCoveredArea,Range,TotalTime),Color3.fromRGB(0,225))
+							C.CreateSysMessage(("Placement Succeeded: %i/%i (%.1f seconds)"):format(
+								MaxCoveredArea,Range^2*math.pi,TotalTime),Color3.fromRGB(0,225))
 					else
 						return false, C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
