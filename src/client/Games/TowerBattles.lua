@@ -601,11 +601,13 @@ return function(C,Settings)
 					JustWon = "Winner",
 				},
 				Activate = function(self, newValue, firstRun)
-					if firstRun or not newValue then
+					if not newValue then
 						return
 					end
 					if game.PlaceId ~= GamePlaceIds["Lobby"] then
-						C.AddNotification("Restricted Game","This hack only works in the lobby")
+						if not firstRun then
+							C.AddNotification("Restricted Game","This hack only works in the lobby")
+						end
 						return
 					end
 					local cent = C.StringWait(C.PlayerGui,"Games.cent")
