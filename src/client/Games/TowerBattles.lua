@@ -408,7 +408,21 @@ return function(C,Settings)
 						local Action, ActionType
 						local CashCost
 						if Priority == "Sniper" then
-							
+							local MyTowers, HiddenDet = 0, 0
+							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+								if towerModel.Owner.Value == C.plr then
+									local Level = C.StringWait(towerModel,"Tower.UP1").Value + 1
+									if Level >= 2 then
+										HiddenDet+=1
+									end
+									MyTowers+=1
+								end
+							end
+							if HiddenDet >= 3 or MyTowers < 3 then
+								Priority = "Quantity"
+							else
+								Priority = "Quality"
+							end
 						end
 						local TowerInformation, LowestLevel
 						if Priority == "Quality" then
