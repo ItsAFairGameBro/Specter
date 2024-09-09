@@ -465,7 +465,7 @@ return function(C,Settings)
 						elseif ActionType == "Upgrade" then
 							local Result = workspace.UpgradeTower:InvokeServer(Action)
 							if Result then
-								C.CreateSysMessage(`UpgradeTower Success: {ChosenTower} #{Action} to Level {LowestLevel+2} for ${CashCost}`,
+								C.CreateSysMessage(`UpgradeTower Success: {ChosenTower} #{Action} to Level {LowestLevel+1} for ${CashCost}`,
 									Color3.fromRGB(25,225,25))
 							else
 								C.CreateSysMessage(`UpgradeTower Fail: {tostring(Result)}!`)
