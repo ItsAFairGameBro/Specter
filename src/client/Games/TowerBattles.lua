@@ -274,7 +274,7 @@ return function(C,Settings)
 				return false, C.CreateSysMessage(("Min Size Failed of %.1f%%. Best find was %.1f"):format(Range*0.05,MaxCoveredArea))
 			end
 			if not C.isStudio then
-				--C.DoTeleport(BestPosition+Vector3.new(0,3,0))
+				C.DoTeleport(BestPosition+Vector3.new(0,3,0))
 				C.createTestPart(BestPosition)
 				local Result = "Worked"--workspace.PlacingTower:InvokeServer(TroopName)
 				if Result == "Worked" then

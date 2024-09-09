@@ -2470,6 +2470,8 @@ local function CreateOtherElements(C, Settings)
 	newPart.BrickColor=BrickColor.Red()
 	newPart.Anchored=true
 	newPart.CanCollide=false
+	newPart.TopSurface = Enum.SurfaceType.Smooth
+	newPart.BottomSurface = Enum.SurfaceType.Smooth
 	newPart.Transparency=.35
 	newPart:AddTag("RemoveOnDestroy")
 	C.Examples.TestPartEx = newPart
