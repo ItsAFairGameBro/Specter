@@ -417,11 +417,12 @@ return function(C,Settings)
 								if towerModel.Owner.Value == C.plr then
 									local Level = C.StringWait(towerModel,"Tower.UP1").Value + 1
 									if Level < LowestLevel then
-										TowerType, Action, LowestLevel = towerModel.Tower.Tower.Value,towerModel.Name,Level
+										TowerType, Action, LowestLevel = C.StringWait(towerModel,"Tower.Tower").Value,
+											towerModel.Name,Level
 									end
 								end
 							end
-							if not Priority then
+							if not TowerType then
 								Priority = "Quantity"
 							else
 								ActionType = "Upgrade"
