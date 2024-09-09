@@ -419,7 +419,7 @@ return function(C,Settings)
 									MyTowers+=1
 								end
 							end
-							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers.Value < TowerCap.Value then
+							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers.Value < TowerCap then
 								Priority = "Quantity"
 							else
 								Priority = "Quality"
