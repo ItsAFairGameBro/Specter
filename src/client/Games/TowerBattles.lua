@@ -413,13 +413,12 @@ return function(C,Settings)
 							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 								if towerModel.Owner.Value == C.plr then
 									local Level = C.StringWait(towerModel,"Tower.UP1").Value + 1
-									if Level >= 2 then
+									if Level >= 3 then
 										HiddenDet+=1
 									end
 									MyTowers+=1
 								end
 							end
-							print("Hidden",HiddenDet,"Tower",MyTowers)
 							if HiddenDet >= 3 or MyTowers < 3 then
 								Priority = "Quantity"
 							else
@@ -460,7 +459,6 @@ return function(C,Settings)
 						end
 						-- TOWER PLACE --
 						if CashVal.Value < CashCost then
-							print(`Mon Wait`)
 							while CashVal.Value < CashCost do
 								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
 							end
@@ -476,7 +474,6 @@ return function(C,Settings)
 							PlaceTroop(ChosenTower)
 							RunS.RenderStepped:Wait()
 						else
-							print(`Placing`)
 							RunS.RenderStepped:Wait()
 						end
 					end
