@@ -234,6 +234,7 @@ return function(C,Settings)
 								break
 							end
 						end
+						RunS.RenderStepped:Wait()
 					end
 				end
 				if not overlapping then
