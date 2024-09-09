@@ -389,6 +389,7 @@ return function(C,Settings)
 					local WaveStop = AutoPlayCond:gmatch("Wave %d+")() and tonumber(AutoPlayCond:gmatch("%d+")())
 					local TowerIndex = self.EnTbl.AutoplayTroop:gmatch("%d+")()
 					local ChosenTower = C.StringWait(C.plr, "StuffToSave.Tower"..TowerIndex).Value
+					local CashVal = C.PlayerInformation:WaitForChild("Cash")
 					local TowerCount = C.PlayerInformation:WaitForChild("Towers")
 					local TowerCap = workspace:WaitForChild("TowerCap").Value
 					while true do
@@ -442,9 +443,9 @@ return function(C,Settings)
 							ActionType = "Place"
 						end
 						-- TOWER PLACE --
-						if TowerInformation.Value > CashCost then
+						if CashVal.Value < CashCost then
 							print(`Mon Wait`)
-							while TowerInformation.Value > CashCost do
+							while CashVal.Value < CashCost do
 								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
 							end
 						elseif ActionType == "Upgrade" then
