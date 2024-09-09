@@ -220,8 +220,8 @@ return function(C,Settings)
 				end
 				if not overlapping then
 					local hasChecked = false
+					print("STACKLEFT",C.enHacks.TowerBattles.AutoBot)
 					local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoBot.EnTbl.StackAmount) or 0
-					--print("STACKLEFT",C.enHacks.TowerBattles.AutoBot.EnTbl.StackAmount)
 					repeat
 						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
