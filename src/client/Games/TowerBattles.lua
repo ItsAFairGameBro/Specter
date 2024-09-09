@@ -35,6 +35,7 @@ local GamePlaceIds = {
 return function(C,Settings)
 	local TabTbl
 	local IsPlacing = false
+	local IgnorePoints = {}
 	local function PlaceTroop(TroopName)
 		if IsPlacing then return false, "Placement In Progress" end
 		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
@@ -189,7 +190,9 @@ return function(C,Settings)
 				continue
 			end
 			for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
-				local overlapping = (PlacementType == "High" and point.Y < GroundY + .5) or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
+				local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
+					or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
+					or IgnorePoints[point] ~= nil
 				--[[if not overlapping then
 					for num2, path in ipairs(Map:WaitForChild("Bad"):GetChildren()) do
 						if C.IsInBox(path.CFrame, path.Size, point - Vector3.new(0,YOffset)) then
@@ -284,6 +287,7 @@ return function(C,Settings)
 							C.CreateSysMessage(("Placement Succeeded: %i/%i (%.1f seconds)"):format(
 								MaxCoveredArea,Range*2*math.pi,TotalTime),Color3.fromRGB(0,225))
 					else
+						IgnorePoints[BestPosition] = true
 						return false, C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
 				else
