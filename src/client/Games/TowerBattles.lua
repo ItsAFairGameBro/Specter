@@ -234,7 +234,7 @@ return function(C,Settings)
 							end
 						end
 						--RunS.RenderStepped:Wait()
-					until stackleft > 0 and not hasChecked
+					until stackleft == 0 or hasChecked
 				end
 				if not overlapping then
 					table.insert(PotentialPositions, {Point = point, Part = placement})
