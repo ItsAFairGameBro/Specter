@@ -457,6 +457,7 @@ return function(C,Settings)
 							end
 						elseif ActionType == "Place" and not IsPlacing then
 							PlaceTroop(ChosenTower)
+							RunS.RenderStepped:Wait()
 						else
 							print(`Placing`)
 							RunS.RenderStepped:Wait()
