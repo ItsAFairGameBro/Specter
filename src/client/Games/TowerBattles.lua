@@ -218,13 +218,16 @@ return function(C,Settings)
 					end
 				end
 				if not overlapping then
+					local hasChecked
 					local stackleft = StackAmnt
-					while stackleft > 0 do
+					while stackleft > 0 or not hasChecked do
+						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
 								if stackleft > 0 then
 									stackleft -= 1
 									point += Vector3.new(0,MinDistBetweenTroops,0)
+									hasChecked = false
 								else
 									overlapping = true
 								end
