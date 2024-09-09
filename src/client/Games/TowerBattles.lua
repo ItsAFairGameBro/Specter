@@ -220,7 +220,7 @@ return function(C,Settings)
 				end
 				if not overlapping then
 					local hasChecked = false
-					local stackleft = placement == "High" and tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
+					local stackleft = placement == "High" and tonumber(C.enHacks.TowerBattles.AutoBot.StackAmount) or 0
 					print("stackleft",stackleft)
 					repeat
 						hasChecked = true
@@ -339,7 +339,7 @@ return function(C,Settings)
 					},
 				},
 			},
-			AutoPlace = {
+			{
 				Title = "Auto Place",
 				Tooltip = "Finds the optimal placement for towers until Max Tries are reached; otherwise, lets you place",
 				Shortcut = "AutoPlace",
