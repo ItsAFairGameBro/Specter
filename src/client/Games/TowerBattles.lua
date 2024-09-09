@@ -199,11 +199,16 @@ return function(C,Settings)
 					end
 				end--]]
 				if not overlapping then
+					local firstPoint
 					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,.2,0),{
 						--distance = YOffset,
 						raycastFilterType = Enum.RaycastFilterType.Include,
 						ignoreList = {C.Map},
-						passFunction = function(instance)
+						passFunction = function(instance,hitRes)
+							if firstPoint then
+								firstPoint = false
+								point = hitRes.Position
+							end
 							return instance.Name == PlacementType
 						end,
 					})

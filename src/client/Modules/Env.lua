@@ -300,7 +300,7 @@ return function(C,Settings)
 		local hitPart, hitPosition, hitNormal = nil, nil, nil
 		local didHit = false
 	
-		local function customFilter(instance)
+		local function customFilter(hitResult,instance)
 			if options.detectionFunction and options.detectionFunction(instance) then
 				return true
 			end
@@ -315,7 +315,7 @@ return function(C,Settings)
 				return false
 			end
 	
-			if options.passFunction and options.passFunction(instance) then
+			if options.passFunction and options.passFunction(instance,hitResult) then
 				return false
 			end
 		
@@ -330,7 +330,7 @@ return function(C,Settings)
 			hitResult = workspace:Raycast(origin, direction * curDistance, rayParams)
 	
 			if hitResult then
-				if customFilter(hitResult.Instance) then
+				if customFilter(hitResult,hitResult.Instance) then
 					hitPosition = hitResult.Position
 					didHit = true
 				else
