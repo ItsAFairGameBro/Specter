@@ -214,13 +214,13 @@ return function(C,Settings)
 							return instance.Name == PlacementType
 						end,
 					})
-					if HitRes and HitRes.Distance < 1 then
+					if HitRes and HitRes.Distance < .3 then
 						overlapping = true
 					end
 				end
 				if not overlapping then
 					local hasChecked = false
-					local stackleft = tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
+					local stackleft = placement == "High" and tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
 					repeat
 						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
