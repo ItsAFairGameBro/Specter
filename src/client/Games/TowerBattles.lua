@@ -419,6 +419,7 @@ return function(C,Settings)
 									MyTowers+=1
 								end
 							end
+							print("TowerCap",TowerCap)
 							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers.Value < TowerCap then
 								Priority = "Quantity"
 							else
