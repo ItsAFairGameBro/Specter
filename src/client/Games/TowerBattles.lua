@@ -33,6 +33,7 @@ local GamePlaceIds = {
 	["Winter 2022"]=8652280014,
 }
 return function(C,Settings)
+	local TabTbl
 	local IsPlacing = false
 	local function PlaceTroop(TroopName)
 		if IsPlacing then return false, "Placement In Progress" end
@@ -183,7 +184,7 @@ return function(C,Settings)
 			table.insert(Path,newPart)
 			LastPart = CurPart
 		end
-
+		local StackAmnt = tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
 		for _, placement in ipairs(C.Map:GetDescendants()) do
 			if placement.Name ~= PlacementType or not placement:IsA("BasePart") then
 				continue
@@ -200,7 +201,7 @@ return function(C,Settings)
 				end--]]
 				if not overlapping then
 					local firstPoint
-					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,.2,0),{
+					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,.6,0),{
 						--distance = YOffset,
 						raycastFilterType = Enum.RaycastFilterType.Include,
 						ignoreList = {C.Map},
@@ -217,10 +218,18 @@ return function(C,Settings)
 					end
 				end
 				if not overlapping then
-					for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
-						if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
-							overlapping = true
-							break
+					local stackleft = StackAmnt
+					while stackleft > 0 do
+						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
+								if stackleft > 0 then
+									stackleft -= 1
+									point += Vector3.new(0,3,0)
+								else
+									overlapping = true
+								end
+								break
+							end
 						end
 					end
 				end
@@ -286,7 +295,7 @@ return function(C,Settings)
 		return true
 	end
 	Static(C,Settings)
-	return {
+	TabTbl = {
 		Category = {
 			Name = "TowerBattles",
 			Title = "Tower Battles",
@@ -323,7 +332,7 @@ return function(C,Settings)
 					},
 				},
 			},
-			{
+			AutoPlace = {
 				Title = "Auto Place",
 				Tooltip = "Finds the optimal placement for towers until Max Tries are reached; otherwise, lets you place",
 				Shortcut = "AutoPlace",
@@ -354,6 +363,16 @@ return function(C,Settings)
 						end
 					end,{"invokeserver"})
 				end,
+				Options = {
+					{
+						Type = Types.Dropdown,
+						Title = "Stack",
+						Tooltip = "How many troops to stack on",
+						Layout = 1,Default="Disabled",
+						Shortcut="StackAmount",
+						Selections = {"Nothing","1"},
+					},
+				},
 			},
 			{
 				Title = "Auto Bot",
@@ -430,7 +449,7 @@ return function(C,Settings)
 								else
 									Priority = "Quality"
 								end
-							end	
+							end
 						else
 							Priority="Quality"
 						end
@@ -564,4 +583,5 @@ return function(C,Settings)
 			},
 		}
 	}
+	return TabTbl
 end
