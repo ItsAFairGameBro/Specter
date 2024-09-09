@@ -410,10 +410,10 @@ return function(C,Settings)
 						if Priority == "Sniper" then
 							
 						end
-						local TowerInformation
+						local TowerInformation, LowestLevel
 						if Priority == "Quality" then
-							Action = nil
-							local TowerType, LowestLevel = nil, 5
+							Action, LowestLevel = nil, 5
+							local TowerType = nil
 							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 								if towerModel.Owner.Value == C.plr then
 									local Level = C.StringWait(towerModel,"Tower.UP1").Value + 1
@@ -451,7 +451,8 @@ return function(C,Settings)
 						elseif ActionType == "Upgrade" then
 							local Result = workspace.UpgradeTower:InvokeServer(Action)
 							if Result then
-								C.CreateSysMessage(`UpgradeTower Success`,Color3.fromRGB(25,225,25))
+								C.CreateSysMessage(`UpgradeTower Success: {ChosenTower} #{Action} to Level {LowestLevel+2} for ${CashCost}`,
+									Color3.fromRGB(25,225,25))
 							else
 								C.CreateSysMessage(`UpgradeTower Fail: {tostring(Result)}!`)
 							end
