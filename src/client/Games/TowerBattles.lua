@@ -585,6 +585,38 @@ return function(C,Settings)
 					},
 				},
 			},
+			{
+				Title = "Claim Goodies",
+				Tooltip = "Automatically claims goods",
+				Shortcut = "ClaimRewards",
+				Layout = 15, Functs = {},
+				RewardFrames = {
+					JustFinished = "SurvivalAnalysis",
+					JustFinishedWinter = "Winter2022Analysis",
+				},
+				Activate = function(self, newValue, firstRun)
+					if firstRun or not newValue then
+						return
+					end
+					if game.PlaceId == GamePlaceIds["Lobby"] then
+						C.AddNotification("Note","This hack only works in the lobby")
+						return
+					end
+					local cent = C.StringWait(C.PlayerGui,"Games.cent")
+					for num, frame in ipairs(cent:GetChildren()) do
+						if frame:IsA("Frame") then
+							local RemoteName = self.RewardFrames[frame.Name]
+							if RemoteName then
+								table.insert(self.Functs,frame:GetPropertyChangedSignal("Visible"):Connect(function()
+									local RemoteInstance = workspace:WaitForChild(RemoteName)
+									RemoteInstance:InvokeServer()
+									frame.Visible = false
+								end))
+							end
+						end
+					end
+				end,
+			},
 		}
 	}
 	return TabTbl
