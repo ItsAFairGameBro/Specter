@@ -192,7 +192,6 @@ return function(C,Settings)
 			for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
 				local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
 					or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
-					or IgnorePoints[point] ~= nil
 				--[[if not overlapping then
 					for num2, path in ipairs(Map:WaitForChild("Bad"):GetChildren()) do
 						if C.IsInBox(path.CFrame, path.Size, point - Vector3.new(0,YOffset)) then
@@ -228,7 +227,7 @@ return function(C,Settings)
 							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
 								if stackleft > 0 then
 									stackleft -= 1
-									point += Vector3.new(0,MinDistBetweenTroops,0)
+									point += Vector3.new(0,MinDistBetweenTroops+.3,0)
 									hasChecked = false
 								else
 									overlapping = true
@@ -239,7 +238,7 @@ return function(C,Settings)
 						--RunS.RenderStepped:Wait()
 					until stackleft == 0 or hasChecked
 				end
-				if not overlapping then
+				if not overlapping and IgnorePoints[point] == nil then
 					table.insert(PotentialPositions, {Point = point, Part = placement})
 				end
 				if num%1000 == 0 then
