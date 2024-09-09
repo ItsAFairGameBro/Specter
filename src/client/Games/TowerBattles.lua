@@ -272,7 +272,7 @@ return function(C,Settings)
 			end
 			if not C.isStudio then
 				--C.DoTeleport(BestPosition+Vector3.new(0,3,0))
-				--C.createTestPart(BestPosition)
+				C.createTestPart(BestPosition)
 				local Result = "Worked"--workspace.PlacingTower:InvokeServer(TroopName)
 				if Result == "Worked" then
 					Result = workspace.Placed:InvokeServer(BestPosition - Vector3.new(0,0.4,0), 1, TroopName, BestPart);
@@ -370,7 +370,7 @@ return function(C,Settings)
 						Tooltip = "How many troops to stack on",
 						Layout = 1,Default="Disabled",
 						Shortcut="StackAmount",
-						Selections = {"Nothing","1"},
+						Selections = {"Disabled","1"},
 					},
 				},
 			},
