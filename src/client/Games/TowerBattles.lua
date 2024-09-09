@@ -200,7 +200,7 @@ return function(C,Settings)
 				end--]]
 				if not overlapping then
 					local firstPoint
-					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,.6,0),{
+					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,2.5,0),{
 						--distance = YOffset,
 						raycastFilterType = Enum.RaycastFilterType.Include,
 						ignoreList = {C.Map},
@@ -212,29 +212,29 @@ return function(C,Settings)
 							return instance.Name == PlacementType
 						end,
 					})
-					if HitRes then
+					if HitRes and HitRes.Distance < 1 then
 						overlapping = true
 					end
 				end
 				if not overlapping then
-					local hasChecked
+					local hasChecked = false
 					local stackleft = tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
-					--while stackleft > 0 or not hasChecked do
-						--hasChecked = true
+					repeat
+						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
-								--[[if stackleft > 0 then
+								if stackleft > 0 then
 									stackleft -= 1
 									point += Vector3.new(0,MinDistBetweenTroops,0)
 									hasChecked = false
-								else--]]
+								else
 									overlapping = true
-								--end
+								end
 								break
 							end
 						end
 						--RunS.RenderStepped:Wait()
-					--end
+					until stackleft > 0 and not hasChecked
 				end
 				if not overlapping then
 					table.insert(PotentialPositions, {Point = point, Part = placement})
