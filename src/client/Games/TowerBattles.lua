@@ -477,6 +477,25 @@ return function(C,Settings)
 							RunS.RenderStepped:Wait()
 						end
 					end
+					-- SELL TIME --
+					if WaveStop and workspace.Waves.Wave.Value >= WaveStop then
+						local Waiting = true
+						table.insert(self.Threads,task.delay(10,function()
+							if Waiting then
+								C.Prompt_ButtonTriggerEvent:Fire("Yes")
+							end
+						end))
+						local Res = C.Prompt(`Selling All Towers`,
+							`ALL YOUR TOWERS WILL BE SOLD IN 10 SECONDS!!\nYES TO CONTINUE, NO TO CANCEL`,`Y/N`)
+						Waiting = false
+						if Res == "Yes" then
+							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+								if towerModel.Owner.Value == C.plr then
+									task.spawn(workspace.SellTower.InvokeServer,workspace.SellTower,towerModel.Name)
+								end
+							end
+						end
+					end
 				end,
 				Options = {
 					{
