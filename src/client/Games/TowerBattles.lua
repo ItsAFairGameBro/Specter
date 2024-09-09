@@ -214,7 +214,7 @@ return function(C,Settings)
 							return instance.Name == PlacementType
 						end,
 					})
-					if HitRes and HitRes.Distance < .3 then
+					if HitRes and HitRes.Distance < .6 then
 						overlapping = true
 					end
 				end
