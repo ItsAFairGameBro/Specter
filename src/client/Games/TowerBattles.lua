@@ -318,6 +318,9 @@ return function(C,Settings)
 					if not newValue then
                         return
                     end
+					if firstRun then
+						task.wait(1)
+					end
                     if game.PlaceId == 45146873 then
 						local JoinLocation = GamePlaceIds[self.EnTbl.Gamemode]
 						assert(JoinLocation,`Invalid JoinLocation: `..self.EnTbl.Gamemode)
