@@ -224,7 +224,7 @@ return function(C,Settings)
 							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
 								if stackleft > 0 then
 									stackleft -= 1
-									point += Vector3.new(0,3,0)
+									point += Vector3.new(0,MinDistBetweenTroops,0)
 								else
 									overlapping = true
 								end
