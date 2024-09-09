@@ -535,7 +535,7 @@ return function(C,Settings)
 						Tooltip = "Until what wave the autoplay runs before SELLING ALL TOWERS",
 						Layout = 2,Default="Never",
 						Shortcut="AutoplayCond",
-						Selections = {"Never","Wave 19","Always"},
+						Selections = {"Never","Wave 20","Always"},
 						Activate = C.ReloadHack,
 					},
 					{
