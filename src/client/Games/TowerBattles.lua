@@ -419,6 +419,7 @@ return function(C,Settings)
 									MyTowers+=1
 								end
 							end
+							print("Hidden",HiddenDet,"Tower",MyTowers)
 							if HiddenDet >= 3 or MyTowers < 3 then
 								Priority = "Quantity"
 							else
