@@ -600,8 +600,8 @@ return function(C,Settings)
 					if firstRun or not newValue then
 						return
 					end
-					if game.PlaceId == GamePlaceIds["Lobby"] then
-						C.AddNotification("Note","This hack only works in the lobby")
+					if game.PlaceId ~= GamePlaceIds["Lobby"] then
+						C.AddNotification("Restricted Game","This hack only works in the lobby")
 						return
 					end
 					local cent = C.StringWait(C.PlayerGui,"Games.cent")
