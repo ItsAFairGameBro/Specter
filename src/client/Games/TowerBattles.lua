@@ -593,6 +593,8 @@ return function(C,Settings)
 				RewardFrames = {
 					JustFinished = "SurvivalAnalysis",
 					JustFinishedWinter = "Winter2022Analysis",
+					JustTied = "Triumph",
+					JustWon = "Winner",
 				},
 				Activate = function(self, newValue, firstRun)
 					if firstRun or not newValue then
