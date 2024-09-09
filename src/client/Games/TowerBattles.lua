@@ -220,8 +220,7 @@ return function(C,Settings)
 				end
 				if not overlapping then
 					local hasChecked = false
-					print("STACKLEFT",C.enHacks.TowerBattles.AutoBot)
-					local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoBot.EnTbl.StackAmount) or 0
+					local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoPlace.StackAmount) or 0
 					repeat
 						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
@@ -614,11 +613,16 @@ return function(C,Settings)
 						if frame:IsA("Frame") then
 							local RemoteName = self.RewardFrames[frame.Name]
 							if RemoteName then
-								table.insert(self.Functs,frame:GetPropertyChangedSignal("Visible"):Connect(function()
+								local function VisiblityChanged()
+									if not frame.Visible then
+										return
+									end
 									local RemoteInstance = workspace:WaitForChild(RemoteName)
 									RemoteInstance:InvokeServer()
 									frame.Visible = false
-								end))
+								end
+								table.insert(self.Functs,frame:GetPropertyChangedSignal("Visible"):Connect(VisiblityChanged))
+								task.spawn(VisiblityChanged)
 							end
 						end
 					end
