@@ -221,7 +221,6 @@ return function(C,Settings)
 				if not overlapping then
 					local hasChecked = false
 					local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoPlace.StackAmount) or 0
-					print("steck",C.enHacks.TowerBattles.AutoPlace.StackAmount)
 					repeat
 						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
@@ -419,7 +418,10 @@ return function(C,Settings)
 						workspace.VoteCount.Changed:Wait()
 					end
 					-- MAP LOADING --
-					workspace:WaitForChild("Map")
+					if not workspace:FindFirstChild("Map") then
+						workspace:WaitForChild("Map") -- Wait for it to be inserted!
+						task.wait(2.5) -- Wait for it to load
+					end
 					-- AUTOPLAY TIME--
 					local AutoPlayCond = self.EnTbl.AutoplayCond
 					local WaveStop = AutoPlayCond:gmatch("Wave %d+")() and tonumber(AutoPlayCond:gmatch("%d+")())
