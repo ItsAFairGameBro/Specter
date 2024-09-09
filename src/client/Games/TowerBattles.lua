@@ -184,7 +184,6 @@ return function(C,Settings)
 			table.insert(Path,newPart)
 			LastPart = CurPart
 		end
-		local StackAmnt = tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
 		for _, placement in ipairs(C.Map:GetDescendants()) do
 			if placement.Name ~= PlacementType or not placement:IsA("BasePart") then
 				continue
@@ -219,7 +218,7 @@ return function(C,Settings)
 				end
 				if not overlapping then
 					local hasChecked
-					local stackleft = StackAmnt
+					local stackleft = tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
 					while stackleft > 0 or not hasChecked do
 						hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
