@@ -373,7 +373,7 @@ return function(C,Settings)
 						Tooltip = "How many troops to stack on",
 						Layout = 1,Default="Disabled",
 						Shortcut="StackAmount",
-						Selections = {"Disabled","1"},
+						Selections = {"Disabled","1","2","3","4","5"},
 					},
 				},
 			},
