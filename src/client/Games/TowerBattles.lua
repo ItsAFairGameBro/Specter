@@ -219,22 +219,22 @@ return function(C,Settings)
 				if not overlapping then
 					local hasChecked
 					local stackleft = tonumber(TabTbl.Tab.AutoPlace.EnTbl.StackAmount) or 0
-					while stackleft > 0 or not hasChecked do
-						hasChecked = true
+					--while stackleft > 0 or not hasChecked do
+						--hasChecked = true
 						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
-								if stackleft > 0 then
+								--[[if stackleft > 0 then
 									stackleft -= 1
 									point += Vector3.new(0,MinDistBetweenTroops,0)
 									hasChecked = false
-								else
+								else--]]
 									overlapping = true
-								end
+								--end
 								break
 							end
 						end
 						--RunS.RenderStepped:Wait()
-					end
+					--end
 				end
 				if not overlapping then
 					table.insert(PotentialPositions, {Point = point, Part = placement})
