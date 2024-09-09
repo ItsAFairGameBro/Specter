@@ -419,7 +419,7 @@ return function(C,Settings)
 									MyTowers+=1
 								end
 							end
-							if HiddenDet >= 3 or MyTowers < 3 then
+							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers.Value < TowerCap.Value then
 								Priority = "Quantity"
 							else
 								Priority = "Quality"
@@ -515,7 +515,7 @@ return function(C,Settings)
 						Tooltip = "Until what wave the autoplay runs before SELLING ALL TOWERS",
 						Layout = 2,Default="Never",
 						Shortcut="AutoplayCond",
-						Selections = {"Never","Wave 18","Always"},
+						Selections = {"Never","Wave 19","Always"},
 						Activate = C.ReloadHack,
 					},
 					{
