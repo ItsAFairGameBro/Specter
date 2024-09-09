@@ -420,7 +420,7 @@ return function(C,Settings)
 								end
 							end
 							print("TowerCap",TowerCap)
-							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers.Value < TowerCap then
+							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers < TowerCap then
 								Priority = "Quantity"
 							else
 								Priority = "Quality"
