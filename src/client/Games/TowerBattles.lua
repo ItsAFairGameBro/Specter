@@ -359,6 +359,7 @@ return function(C,Settings)
 					if not newValue or GamePlaceIds.Lobby == game.PlaceId then
 						return
 					end
+					local NoSpotsLeft = false
 					while GamePlaceIds.Survival == game.PlaceId and workspace.VoteCount.Value > 0 do
 						local selMap, maxLength = nil, nil
 						for mapIndex = 1, 3 do
@@ -383,7 +384,6 @@ return function(C,Settings)
 						end
 						workspace.VoteCount.Changed:Wait()
 					end
-					-- VOTING FINISHED --
 					-- MAP LOADING --
 					workspace:WaitForChild("Map")
 					-- AUTOPLAY TIME--
@@ -397,7 +397,6 @@ return function(C,Settings)
 					while true do
 						-- RUN CONDITION --
 						if not WaveStop or workspace.Waves.Wave.Value >= WaveStop then
-							print(`Loop End {workspace.Waves.Wave.Value} >= {WaveStop}`)
 							break
 						elseif AutoPlayCond == "Never" then
 							break
@@ -466,14 +465,21 @@ return function(C,Settings)
 						elseif ActionType == "Upgrade" then
 							local Result = workspace.UpgradeTower:InvokeServer(Action)
 							if Result then
-								C.CreateSysMessage(`UpgradeTower Success: {ChosenTower} #{Action} to Level {LowestLevel+1} for ${CashCost}`,
+								C.CreateSysMessage(`Upgrade Tower Success: {ChosenTower} #{Action} to Level {LowestLevel+1} for ${CashCost}`,
 									Color3.fromRGB(25,225,25))
 							else
-								C.CreateSysMessage(`UpgradeTower Fail: {tostring(Result)}!`)
+								C.CreateSysMessage(`Upgrade Tower Fail: {tostring(Result)}!`)
 							end
 						elseif ActionType == "Place" and not IsPlacing then
-							PlaceTroop(ChosenTower)
-							RunS.RenderStepped:Wait()
+							local Result, Error = PlaceTroop(ChosenTower)
+							if not Result then
+								if Error == "No Position" then
+									NoSpotsLeft = true
+								else
+									warn("Erm what error is prob in chat: "..tostring(Error))
+								end
+								task.wait(1/3)
+							end
 						else
 							RunS.RenderStepped:Wait()
 						end
@@ -483,19 +489,27 @@ return function(C,Settings)
 						workspace.Waves.Wave.Changed:Wait()
 					end
 					if WaveStop and workspace.Waves.Wave.Value >= WaveStop then
-						local Waiting = true
-						table.insert(self.Threads,task.delay(10,function()
-							if Waiting then
-								C.Prompt_ButtonTriggerEvent:Fire("Yes")
+						local TowersCount = 0
+						for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+							if towerModel.Owner.Value == C.plr then
+								TowersCount+=1
 							end
-						end))
-						local Res = C.Prompt(`Selling All Towers`,
-							`ALL YOUR TOWERS WILL BE SOLD IN 10 SECONDS!!\nYES TO CONTINUE, NO TO CANCEL`,`Y/N`)
-						Waiting = false
-						if Res == "Yes" then
-							for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
-								if towerModel.Owner.Value == C.plr then
-									task.spawn(workspace.SellTower.InvokeServer,workspace.SellTower,towerModel.Name)
+						end
+						if TowersCount > 0 then
+							local Waiting = true
+							table.insert(self.Threads,task.delay(10,function()
+								if Waiting then
+									C.Prompt_ButtonTriggerEvent:Fire("Yes")
+								end
+							end))
+							local Res = C.Prompt(`Selling All Towers ({TowersCount})`,
+								`ALL YOUR TOWERS WILL BE SOLD IN 10 SECONDS!!\nYES TO ACTIVATE RIGHT NOW, NO TO CANCEL`,`Y/N`)
+							Waiting = false
+							if Res == "Yes" then
+								for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+									if towerModel.Owner.Value == C.plr then
+										task.spawn(workspace.SellTower.InvokeServer,workspace.SellTower,towerModel.Name)
+									end
 								end
 							end
 						end
