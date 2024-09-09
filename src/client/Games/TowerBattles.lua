@@ -274,7 +274,8 @@ return function(C,Settings)
 				end
 			end
 		else
-			return false, C.CreateSysMessage(("Position Failed: No valid position found (%.1f seconds)"):format(TotalTime))
+			C.CreateSysMessage(("Position Failed: No valid position found (%.1f seconds)"):format(TotalTime))
+			return false, "No Position"
 		end
 
 		return true
