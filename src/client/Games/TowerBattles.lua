@@ -257,15 +257,15 @@ return function(C,Settings)
 				return false, C.CreateSysMessage(("Min Size Failed of %.1f%%. Best find was %.1f"):format(Range*0.05,MaxCoveredArea))
 			end
 			if not C.isStudio then
-				C.DoTeleport(BestPosition+Vector3.new(0,3,0))
-				C.createTestPart(BestPosition)
+				--C.DoTeleport(BestPosition+Vector3.new(0,3,0))
+				--C.createTestPart(BestPosition)
 				local Result = "Worked"--workspace.PlacingTower:InvokeServer(TroopName)
 				if Result == "Worked" then
 					Result = workspace.Placed:InvokeServer(BestPosition - Vector3.new(0,0.4,0), 1, TroopName, BestPart);
 					if Result == true then
 						return true,
 							C.CreateSysMessage(("Placement Succeeded: %i/%i (%.1f seconds)"):format(
-								MaxCoveredArea,Range^2*math.pi,TotalTime),Color3.fromRGB(0,225))
+								MaxCoveredArea,Range*2*math.pi,TotalTime),Color3.fromRGB(0,225))
 					else
 						return false, C.CreateSysMessage("Placement Failed: "..tostring(Result))
 					end
@@ -419,7 +419,6 @@ return function(C,Settings)
 									MyTowers+=1
 								end
 							end
-							print("TowerCap",TowerCap)
 							if (HiddenDet >= 3 or MyTowers < 3) and MyTowers < TowerCap then
 								Priority = "Quantity"
 							else
