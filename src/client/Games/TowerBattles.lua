@@ -401,7 +401,7 @@ return function(C,Settings)
 					local TowerCap = workspace:WaitForChild("TowerCap").Value
 					while true do
 						-- RUN CONDITION --
-						if not WaveStop or workspace.Waves.Wave.Value >= WaveStop then
+						if WaveStop and workspace.Waves.Wave.Value >= WaveStop then
 							break
 						elseif AutoPlayCond == "Never" then
 							break
