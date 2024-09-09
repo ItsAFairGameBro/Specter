@@ -497,12 +497,16 @@ return function(C,Settings)
 								C.PlayerInformation.Cash:GetPropertyChangedSignal("Value"):Wait()
 							end
 						elseif ActionType == "Upgrade" then
-							local Result = workspace.UpgradeTower:InvokeServer(Action)
-							if Result then
-								C.CreateSysMessage(`Upgrade Tower Success: {ChosenTower} #{Action} to Level {LowestLevel+1} for ${CashCost}`,
-									Color3.fromRGB(25,225,25))
+							if workspace.Towers:FindFirstChild(tostring(Action)) then
+								local Result = workspace.UpgradeTower:InvokeServer(Action)
+								if Result then
+									C.CreateSysMessage(`Upgrade Tower Success: {ChosenTower} #{Action} to Level {LowestLevel+1} for ${CashCost}`,
+										Color3.fromRGB(25,225,25))
+								else
+									C.CreateSysMessage(`Upgrade Tower Fail: {tostring(Result)}!`)
+								end
 							else
-								C.CreateSysMessage(`Upgrade Tower Fail: {tostring(Result)}!`)
+								RunS.RenderStepped:Wait()
 							end
 						elseif ActionType == "Place" and not IsPlacing then
 							local Result, Error = PlaceTroop(ChosenTower)
