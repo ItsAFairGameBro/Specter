@@ -477,7 +477,10 @@ return function(C,Settings)
 							RunS.RenderStepped:Wait()
 						end
 					end
-					-- SELL TIME --
+					-- SELL ALL --
+					while WaveStop and workspace.Waves.Wave.Value < WaveStop do
+						workspace.Waves.Wave.Changed:Wait()
+					end
 					if WaveStop and workspace.Waves.Wave.Value >= WaveStop then
 						local Waiting = true
 						table.insert(self.Threads,task.delay(10,function()
