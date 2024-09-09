@@ -453,7 +453,7 @@ return function(C,Settings)
 							end
 							Action = ChosenTower
 							TowerInformation = workspace:WaitForChild("TowerInformation")[ChosenTower]
-							CashCost = C.PlayerInformation.Cash.Value
+							CashCost = TowerInformation.Value
 							ActionType = "Place"
 						end
 						-- TOWER PLACE --
