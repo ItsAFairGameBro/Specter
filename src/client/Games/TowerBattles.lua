@@ -185,82 +185,92 @@ return function(C,Settings)
 			table.insert(Path,newPart)
 			LastPart = CurPart
 		end
-		for _, placement in ipairs(C.Map:GetDescendants()) do
-			if placement.Name ~= PlacementType or not placement:IsA("BasePart") then
-				continue
+		local Cycles = 0
+		local MaxPlacement = C.enHacks.TowerBattles.AutoPlace.Placement=="Floating" and PlacementType == "High"
+		repeat
+			if cycles-1 >= 3 then
+				C.CreateSysMessage(`Maximum Cycles of {cycles} reached!`,Color3.fromRGB(25,225,25))
+				break
 			end
-			for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
-				local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
-					or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
-				--[[if not overlapping then
-					for num2, path in ipairs(Map:WaitForChild("Bad"):GetChildren()) do
-						if C.IsInBox(path.CFrame, path.Size, point - Vector3.new(0,YOffset)) then
-							overlapping = true
-							break
-						end
-					end
-				end--]]
-				if not overlapping then
-					local firstPoint
-					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,1.5,0),{
-						--distance = YOffset,
-						raycastFilterType = Enum.RaycastFilterType.Include,
-						ignoreList = {C.Map},
-						passFunction = function(instance,hitRes)
-							if firstPoint then
-								firstPoint = false
-								point = hitRes.Position
-							end
-							return instance.Name == PlacementType
-						end,
-					})
-					if HitRes and HitRes.Distance < .6 then
-						overlapping = true
-					end
+			for _, placement in ipairs(C.Map:GetDescendants()) do
+				if placement.Name ~= PlacementType or not placement:IsA("BasePart") then
+					continue
 				end
-				if not overlapping then
-					local hasChecked = false
-					local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoPlace.StackAmount) or 0
-					repeat
-						hasChecked = true
-						for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
-							if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
-								if stackleft > 0 then
-									stackleft -= 1
-									point += Vector3.new(0,MinDistBetweenTroops+.3,0)
-									hasChecked = false
-								else
-									overlapping = true
-								end
+				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
+					local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
+						or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
+					--[[if not overlapping then
+						for num2, path in ipairs(Map:WaitForChild("Bad"):GetChildren()) do
+							if C.IsInBox(path.CFrame, path.Size, point - Vector3.new(0,YOffset)) then
+								overlapping = true
 								break
 							end
 						end
-						--RunS.RenderStepped:Wait()
-					until stackleft == 0 or hasChecked
+					end--]]
+					if not overlapping then
+						local firstPoint
+						local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,1.5,0),{
+							--distance = YOffset,
+							raycastFilterType = Enum.RaycastFilterType.Include,
+							ignoreList = {C.Map},
+							passFunction = function(instance,hitRes)
+								if firstPoint then
+									firstPoint = false
+									point = hitRes.Position
+								end
+								return instance.Name == PlacementType
+							end,
+						})
+						if HitRes and HitRes.Distance < .6 then
+							overlapping = true
+						end
+					end
+					if not overlapping then
+						local hasChecked = false
+						local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoPlace.StackAmount) or 0
+						repeat
+							hasChecked = true
+							for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
+								if (point - tower:WaitForChild("FakeBase").Position).Magnitude < MinDistBetweenTroops then
+									if stackleft > 0 then
+										stackleft -= 1
+										point += Vector3.new(0,MinDistBetweenTroops+.3,0)
+										hasChecked = false
+									else
+										overlapping = true
+									end
+									break
+								end
+							end
+							--RunS.RenderStepped:Wait()
+						until stackleft == 0 or hasChecked
+					end
+					if not overlapping and IgnorePoints[point] == nil then
+						table.insert(PotentialPositions, {Point = point, Part = placement})
+					end
+					if num%1000 == 0 then
+						RunS[C.isStudio and "Heartbeat" or "RenderStepped"]:Wait()
+					end
 				end
-				if not overlapping and IgnorePoints[point] == nil then
-					table.insert(PotentialPositions, {Point = point, Part = placement})
+			end
+
+			local NumLeft = #PotentialPositions
+
+			-- Loop through all potential positions and find the best one
+			for num, positionData in pairs(PotentialPositions) do
+				local coveredArea = CalculateTotalCoveredArea(positionData.Point)
+				if coveredArea >= MaxCoveredArea then
+					MaxCoveredArea = coveredArea
+					BestPosition, BestPart = positionData.Point, positionData.Part
 				end
+				NumLeft -= 1
 				if num%1000 == 0 then
 					RunS[C.isStudio and "Heartbeat" or "RenderStepped"]:Wait()
 				end
 			end
-		end
-
-		local NumLeft = #PotentialPositions
-
-		-- Loop through all potential positions and find the best one
-		for num, positionData in pairs(PotentialPositions) do
-			local coveredArea = CalculateTotalCoveredArea(positionData.Point)
-			if coveredArea >= MaxCoveredArea then
-				MaxCoveredArea = coveredArea
-				BestPosition, BestPart = positionData.Point, positionData.Part
-			end
-			NumLeft -= 1
-			if num%1000 == 0 then
-				RunS[C.isStudio and "Heartbeat" or "RenderStepped"]:Wait()
-			end
-		end
+			cycles += 1
+			
+		until BestPart or not MaxPlacement
 
 		for _, pathInstance in ipairs(Path) do
 			pathInstance:Destroy()
@@ -380,6 +390,14 @@ return function(C,Settings)
 						Layout = 1,Default="Disabled",
 						Shortcut="StackAmount",
 						Selections = {"Disabled","1","2","3","4","5"},
+					},
+					{
+						Type = Types.Dropdown,
+						Title = "Placement",
+						Tooltip = "Where troops can be placed; only affects Placement High troops (i.e. Snipers) where Stack is not disabled.",
+						Layout = 2,Default="Placement",
+						Shortcut="Placement",
+						Selections = {"Legal","Anywhere"},
 					},
 				},
 			},
