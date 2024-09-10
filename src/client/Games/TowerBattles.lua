@@ -196,7 +196,6 @@ return function(C,Settings)
 				if not (((cycles==1 and placement.Name == PlacementType) or (MaxPlacement and cycles > 1 and placement.Name == "High")) and placement:IsA("BasePart")) then
 					continue
 				end
-				print("scanning",placement)
 				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
 					local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
 						or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
@@ -223,7 +222,7 @@ return function(C,Settings)
 							end,
 						})
 						if HitRes and HitRes.Distance < .6 then
-							overlapping = true
+							--overlapping = true
 						end
 					end
 					if not overlapping then
