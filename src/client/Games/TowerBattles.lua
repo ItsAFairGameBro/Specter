@@ -185,18 +185,18 @@ return function(C,Settings)
 			table.insert(Path,newPart)
 			LastPart = CurPart
 		end
-		local cycles = 0
+		local cycles = 1
 		local MaxPlacement = C.enHacks.TowerBattles.AutoPlace.Placement=="Floating" and PlacementType == "High"
 		repeat
-			if cycles-1 >= 3 then
-				C.CreateSysMessage(`Maximum Cycles of {cycles} reached!`,Color3.fromRGB(25,225,25))
+			if cycles >= 3 then
+				C.CreateSysMessage(`Maximum Cycles of {cycles} reached and no position found!`,Color3.fromRGB(25,225,25))
 				break
 			end
 			for _, placement in ipairs(C.Map:GetDescendants()) do
 				if placement.Name ~= PlacementType or not placement:IsA("BasePart") then
 					continue
 				end
-				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
+				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset + (cycles - 1) * 4)) do
 					local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
 						or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
 					--[[if not overlapping then
@@ -269,7 +269,6 @@ return function(C,Settings)
 				end
 			end
 			cycles += 1
-			
 		until BestPart or not MaxPlacement
 
 		for _, pathInstance in ipairs(Path) do
