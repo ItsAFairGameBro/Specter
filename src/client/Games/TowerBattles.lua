@@ -214,7 +214,7 @@ return function(C,Settings)
 							raycastFilterType = Enum.RaycastFilterType.Include,
 							ignoreList = {C.Map},
 							passFunction = function(instance,hitRes)
-								if firstPoint then
+								if firstPoint and instance.Name == PlacementType then
 									firstPoint = false
 									point = hitRes.Position
 								end
@@ -227,7 +227,7 @@ return function(C,Settings)
 					end
 					if not overlapping then
 						local hasChecked = false
-						local stackleft = PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoPlace.StackAmount) or 0
+						local stackleft = (PlacementType == "High" and tonumber(C.enHacks.TowerBattles.AutoPlace.StackAmount) or 0) + 1
 						repeat
 							hasChecked = true
 							for num3, tower in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
