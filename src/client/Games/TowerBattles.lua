@@ -186,7 +186,7 @@ return function(C,Settings)
 			LastPart = CurPart
 		end
 		local cycles = 1
-		local MaxPlacement = C.enHacks.TowerBattles.AutoPlace.Placement=="Floating" and PlacementType == "High"
+		local MaxPlacement = C.enHacks.TowerBattles.AutoPlace.Placement=="Anywhere" and PlacementType == "High"
 		repeat
 			if cycles >= 3 then
 				C.CreateSysMessage(`Maximum Cycles of {cycles} reached and no position found!`,Color3.fromRGB(25,225,25))
@@ -196,6 +196,7 @@ return function(C,Settings)
 				if not (((cycles==1 and placement.Name == PlacementType) or (MaxPlacement and cycles > 1 and placement.Name == "High")) and placement:IsA("BasePart")) then
 					continue
 				end
+				print("scanning",placement)
 				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
 					local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
 						or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
