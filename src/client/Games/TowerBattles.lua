@@ -568,6 +568,7 @@ return function(C,Settings)
 							local Res = C.Prompt(`Selling All Towers ({TowersCount})`,
 								`ALL YOUR TOWERS WILL BE SOLD IN 10 SECONDS!!\nYES TO ACTIVATE RIGHT NOW, NO TO CANCEL`,`Y/N`)
 							Waiting = false
+							print("Prompt",Res)
 							if Res == "Yes" then
 								for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 									if towerModel.Owner.Value == C.plr then
