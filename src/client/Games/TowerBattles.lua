@@ -37,12 +37,12 @@ return function(C,Settings)
 	local TabTbl
 	local IsPlacing = false
 	local IgnorePoints = {}
-	local CashVal,TowerCount
+	local CashVal,TowerCount, TowerCap
 	if game.PlaceId ~= GamePlaceIds.Lobby then
 		CashVal = C.PlayerInformation:WaitForChild("Cash")
 		TowerCount = C.PlayerInformation:WaitForChild("Towers")
+		TowerCap = workspace:WaitForChild("TowerCap").Value
 	end 
-	local TowerCap = workspace:WaitForChild("TowerCap").Value
 	local function PlaceTroop(TroopName)
 		if IsPlacing then return false, "Placement In Progress" end
 		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
