@@ -33,15 +33,22 @@ local GamePlaceIds = {
 	["Winter 2022"]=8652280014,
 }
 return function(C,Settings)
+	Static(C,Settings)
 	local TabTbl
 	local IsPlacing = false
 	local IgnorePoints = {}
+	local CashVal = C.PlayerInformation:WaitForChild("Cash")
+	local TowerCount = C.PlayerInformation:WaitForChild("Towers")
+	local TowerCap = workspace:WaitForChild("TowerCap").Value
 	local function PlaceTroop(TroopName)
 		if IsPlacing then return false, "Placement In Progress" end
 		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
 		if TowerInformation.Value > C.PlayerInformation.Cash.Value then
 			return false,
 				C.CreateSysMessage(("Not Enough Cash: $%i Needed)"):format(TowerInformation.Value - C.PlayerInformation.Cash.Value))
+		elseif TowerCount.Value >= TowerCap then
+			return false,
+				C.CreateSysMessage(("Max Towers %i/%i)"):format(TowerCount.Value, TowerCap))
 		elseif not C.Map then
 			return false, C.CreateSysMessage(`Map Not Found`)
 		end
@@ -307,7 +314,6 @@ return function(C,Settings)
 
 		return true
 	end
-	Static(C,Settings)
 	TabTbl = {
 		Category = {
 			Name = "TowerBattles",
@@ -442,9 +448,6 @@ return function(C,Settings)
 					local WaveStop = AutoPlayCond:gmatch("Wave %d+")() and tonumber(AutoPlayCond:gmatch("%d+")())
 					local TowerIndex = self.EnTbl.AutoplayTroop:gmatch("%d+")()
 					local ChosenTower = C.StringWait(C.plr, "StuffToSave.Tower"..TowerIndex).Value
-					local CashVal = C.PlayerInformation:WaitForChild("Cash")
-					local TowerCount = C.PlayerInformation:WaitForChild("Towers")
-					local TowerCap = workspace:WaitForChild("TowerCap").Value
 					while true do
 						-- RUN CONDITION --
 						if WaveStop and workspace.Waves.Wave.Value >= WaveStop then
