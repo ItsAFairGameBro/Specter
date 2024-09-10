@@ -179,7 +179,7 @@ return function(C,Settings)
 		assert(options.Selections,"Selections is missing")
 		-- Pick first one!
 		if options.Default ~= nil and not table.find(options.Selections,options.Default) then
-			warn(`Invalid Setting For DropdownTbl.new for {parent.Shortcut}/{options.Shortcut}, Default Selection Applied`)
+			warn(`Invalid Setting For DropdownTbl.new for {parent.Name}/{options.Shortcut}, Default Selection Applied`)
 			options.Default = nil
 		end
 		options.Default = options.Default==nil and options.Selections[#options.Selections] or options.Default
