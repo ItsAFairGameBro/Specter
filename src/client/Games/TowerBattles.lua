@@ -185,7 +185,7 @@ return function(C,Settings)
 			table.insert(Path,newPart)
 			LastPart = CurPart
 		end
-		local Cycles = 0
+		local cycles = 0
 		local MaxPlacement = C.enHacks.TowerBattles.AutoPlace.Placement=="Floating" and PlacementType == "High"
 		repeat
 			if cycles-1 >= 3 then
