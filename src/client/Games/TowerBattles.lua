@@ -193,10 +193,10 @@ return function(C,Settings)
 				break
 			end
 			for _, placement in ipairs(C.Map:GetDescendants()) do
-				if placement.Name ~= PlacementType or not placement:IsA("BasePart") then
+				if not (((cycles==1 and placement.Name == PlacementType) or (MaxPlacement and cycles > 1 and placement.Name == "High")) and placement:IsA("BasePart")) then
 					continue
 				end
-				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset + (cycles - 1) * 4)) do
+				for num, point in ipairs(calculatePointsInsideRotatedPart(placement, 1, YOffset)) do
 					local overlapping = (PlacementType == "High" and point.Y < GroundY + .5)
 						or (PlacementType == "Grass" and math.abs(point.Y - GroundY)>4)
 					--[[if not overlapping then
