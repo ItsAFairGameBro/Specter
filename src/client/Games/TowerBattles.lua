@@ -202,7 +202,7 @@ return function(C,Settings)
 				end--]]
 				if not overlapping then
 					local firstPoint
-					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,2.5,0),{
+					local HitRes, HitPos = C.Raycast(point + Vector3.new(0,.5),-Vector3.new(0,1.5,0),{
 						--distance = YOffset,
 						raycastFilterType = Enum.RaycastFilterType.Include,
 						ignoreList = {C.Map},
