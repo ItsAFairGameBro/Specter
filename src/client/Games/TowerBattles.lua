@@ -213,16 +213,14 @@ return function(C,Settings)
 							--distance = YOffset,
 							raycastFilterType = Enum.RaycastFilterType.Include,
 							ignoreList = {C.Map},
-							passFunction = function(instance,hitRes)
-								if firstPoint and instance.Name == PlacementType then
-									firstPoint = false
-									point = hitRes.Position
-								end
-								return instance.Name == PlacementType
-							end,
 						})
-						if HitRes and HitRes.Distance < .6 then
-							--overlapping = true
+						local HitInst = HitRes and HitRes.Instance
+						if HitInst then
+							if HitInst.Name == PlacementType then
+								point = HitRes.Position
+							else
+								overlapping = true
+							end
 						end
 					end
 					if not overlapping then
