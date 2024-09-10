@@ -666,11 +666,13 @@ return function(C,Settings)
                 C.TblRemove(args[1],C.plr) -- don't fling yourself!
                 if #args[1] == 0 then
                     self.Parent.unfling:Run() -- teleport back too!
-                    return true, "Stopped"-- do nothing if there's nothing to fling or just yourself!
+                else
+                    self.Parent.unfling:Run(nil,true,false)
                 end
-                self.Parent.unfling:Run(nil,true,false)
                 if C.hrp and not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,C.hrp.CollisionGroup) then
                     return false, "Fling cannot work because you walk through other players"
+                elseif #args[1] == 0 then
+                    return true, "Stopped (Fling Works)"-- do nothing if there's nothing to fling or just yourself!
                 end
                 local wasSeated = C.human:GetState() == Enum.HumanoidStateType.Seated
                 self.FlingThread = task.spawn(function()
