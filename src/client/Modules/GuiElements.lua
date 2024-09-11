@@ -3054,7 +3054,9 @@ return function(C, Settings)
 		end
 		--PromptFrame.Buttons.UIGridLayout.CellSize=UDim2.new(1/buttonCount,-3,1,0)
 		PromptFrame.Position=UDim2.new(0.5, 0,-PromptFrame.Size.Y.Scale/2, -36)
-		PromptFrame:TweenPosition(UDim2.new(0.5, 0,.5, 18),"Out","Quad",3/8,true)
+		task.spawn(function()
+			PromptFrame:TweenPosition(UDim2.new(0.5, 0,.5, 18),"Out","Quad",3/8,true)
+		end)
 		PromptFrame.Visible=true
 		local result=buttonTriggerEvent.Event:Wait()
 		buttonTriggerEvent:Destroy()
