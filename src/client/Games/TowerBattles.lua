@@ -562,14 +562,13 @@ return function(C,Settings)
 							local Waiting = true
 							table.insert(self.Threads,task.delay(10,function()
 								if Waiting then
-									C.Prompt_ButtonTriggerEvent:Fire("Yes")
+									C.Prompt_ButtonTriggerEvent:Fire(true)
 								end
 							end))
 							local Res = C.Prompt(`Selling All Towers ({TowersCount})`,
 								`ALL YOUR TOWERS WILL BE SOLD IN 10 SECONDS!!\nYES TO ACTIVATE RIGHT NOW, NO TO CANCEL`,`Y/N`)
 							Waiting = false
-							print("Prompt",Res)
-							if Res == "Yes" then
+							if Res == true then
 								for num, towerModel in ipairs(workspace:WaitForChild("Towers"):GetChildren()) do
 									if towerModel.Owner.Value == C.plr then
 										task.spawn(workspace.SellTower.InvokeServer,workspace.SellTower,towerModel.Name)
