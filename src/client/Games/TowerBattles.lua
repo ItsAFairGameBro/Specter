@@ -624,6 +624,7 @@ return function(C,Settings)
 				RewardFrames = {
 					JustFinished = "SurvivalAnalysis",
 					JustFinishedWinter = "Winter2022Analysis",
+					JustFinishedHallow = "Halloween2023Analysis",
 					JustTied = "Triumph",
 					JustWon = "Winner",
 				},
