@@ -662,7 +662,7 @@ return function(C,Settings)
 				Title = "Teleport Back To Lobby",
 				Tooltip = "Sometimes when the game crashes, it doesn't teleport all users back. This fixes it!",
 				Layout = 30,
-				Shortcut = "FixTeleportBack",Functs={},Threads={},
+				Shortcut = "FixTeleportBack",Threads={},
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
                         return
@@ -673,7 +673,6 @@ return function(C,Settings)
 						task.wait(5)
 					end
 				end,
-                Events = {},
 			},
 		}
 	}
