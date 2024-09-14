@@ -661,8 +661,8 @@ return function(C,Settings)
 			{
 				Title = "Teleport Back To Lobby",
 				Tooltip = "Sometimes when the game crashes, it doesn't teleport all users back. This fixes it!",
-				Layout = 1,
-				Shortcut = "JoinMode",Functs={},Threads={},
+				Layout = 30,
+				Shortcut = "FixTeleportBack",Functs={},Threads={},
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
                         return
