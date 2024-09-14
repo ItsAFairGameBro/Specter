@@ -648,7 +648,7 @@ return function(C,Settings)
 										return
 									end
 									local RemoteInstance = workspace:WaitForChild(RemoteName)
-									RemoteInstance:InvokeServer()
+									print("Remote:",RemoteInstance:InvokeServer())
 									frame.Visible = false
 								end
 								table.insert(self.Functs,frame:GetPropertyChangedSignal("Visible"):Connect(VisiblityChanged))
@@ -659,7 +659,7 @@ return function(C,Settings)
 				end,
 			},
 			{
-				Title = "Teleport Back To Lobby",
+				Title = "Fix Teleport Back",
 				Tooltip = "Sometimes when the game crashes, it doesn't teleport all users back. This fixes it!",
 				Layout = 30,
 				Shortcut = "FixTeleportBack",Threads={},
