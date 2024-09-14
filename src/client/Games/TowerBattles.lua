@@ -334,10 +334,11 @@ return function(C,Settings)
 					if not newValue then
                         return
                     end
-					if firstRun then
-						task.wait(1)
-					end
                     if game.PlaceId == 45146873 then
+						local NeedsToCollectVal = C.StringWait(C.plr, "Information.NeedsToCollect")
+						while NeedsToCollectVal.Value and not self.EnTbl.IgnoreReward do
+							NeedsToCollectVal.Changed:Wait()
+						end
 						local JoinLocation = GamePlaceIds[self.EnTbl.Gamemode]
 						assert(JoinLocation,`Invalid JoinLocation: `..self.EnTbl.Gamemode)
 						C.ServerTeleport(JoinLocation, nil)
@@ -353,6 +354,14 @@ return function(C,Settings)
 						Shortcut="Gamemode",
 						Selections = {"Halloween","Arena (Versus)","Survival","Christmas","Halloween 2018",
 						"Winter 2019","Halloween 2023","Winter 2022"},
+						Activate = C.ReloadHack,
+					},
+					{
+						Type = Types.Toggle,
+						Title = "Ignore Reward",
+						Tooltip = "Proceed to join without waiting to collect your reward, overriding it",
+						Layout = 2,Default=false,
+						Shortcut="IgnoreReward",
 						Activate = C.ReloadHack,
 					},
 				},
@@ -648,8 +657,10 @@ return function(C,Settings)
 										return
 									end
 									local RemoteInstance = workspace:WaitForChild(RemoteName)
-									print("Remote:",RemoteInstance:InvokeServer())
-									frame.Visible = false
+									local RemoteResult = RemoteInstance:InvokeServer()
+									if RemoteResult == "Success" then
+										frame.Visible = false
+									end
 								end
 								table.insert(self.Functs,frame:GetPropertyChangedSignal("Visible"):Connect(VisiblityChanged))
 								task.spawn(VisiblityChanged)
