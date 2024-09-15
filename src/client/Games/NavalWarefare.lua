@@ -100,7 +100,7 @@ local function Static(C,Settings)
 				end
 			end
 		end
-		return selShip, maxDist
+		return selShip, maxDist / 1000
 	end
 	function C.VehicleTeleport(vehicle, loc, useCF)
 		if not useCF then
