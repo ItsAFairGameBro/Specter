@@ -637,7 +637,7 @@ return function(C,Settings)
             Parameters={},
             AfterTxt="%s",
             Run=function(self,args)
-                C.ToggleServersVisiblity()
+                C.ToggleServersVisiblity("Places")
                 return true, ""
             end,
         },
