@@ -641,6 +641,14 @@ return function(C,Settings)
                 return true, ""
             end,
         },
+        ["friends"]={
+            Parameters={},
+            AfterTxt="%s",
+            Run=function(self,args)
+                C.ToggleServersVisiblity("Friend")
+                return true, ""
+            end,
+        },
         ["fling"]={
             Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
             AfterTxt="%s",
