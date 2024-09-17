@@ -2,6 +2,7 @@ local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Text
 
 local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
+local TeleportService = game:GetService("TeleportService")
 local UIS = game:GetService("UserInputService")
 local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
@@ -88,6 +89,9 @@ return function(C,Settings)
 				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
 				Events = {
 					RbxErrorPrompt = function(self, errorMessage,errorCode,identification)
+						if identification:find("Teleport") then
+							return -- Who cares?
+						end
 						local KickedButton = C.UI.KickedButton
 						if not self.BestMessage or #errorMessage>0 then
 							self.BestMessage = errorMessage
@@ -116,6 +120,17 @@ return function(C,Settings)
 				Shortcut = "BotAuto",
 				RejoinDelay = 5,
 				Sending = false,
+				--[[Functs = {},
+				Activate = function(self, newValue)
+					if newValue then
+						table.insert(self.Functs, TeleportService.TeleportInitFailed:Connect(function(player,teleportResult,errorMessage,placeId,teleportOptions)
+							if errorMessage == "Teleport failed due to an unexpected error. Please try teleporting again." then
+								
+							end
+							task.wait(2)
+						end))
+					end
+				end,--]]
 				Events = {
 					RbxErrorPrompt = function(self, errorMessage, errorCode, errorIdentification)
 						if self.Sending then

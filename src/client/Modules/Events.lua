@@ -140,6 +140,7 @@ return function(C,Settings)
 		[267] = "Kick",
 		[277] = "Connection",
 		[288] = "Shut Down",
+		[769] = "Teleport Failed",
 	}
 	local function CheckStatusCodes(ErrorMessage)
 		local ErrorCodeInstanceVal = GS:GetErrorCode()
