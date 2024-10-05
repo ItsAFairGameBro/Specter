@@ -18,7 +18,7 @@ local function ShouldBlock(name)
 	local sc = getcallingscript()
 	return sc and not sc.Parent and not checkcaller() and name ~= nil
 end
--- https://apis.roblox.com/universes/v1/places/1962086868/universe
+-- https://apis.roblox.com/universes/v1/places/2961583129/universe
 return function(C,Settings)
     local yieldForeverFunct = Static(C,Settings)
     -- Here's where the anti cheat stuff is done

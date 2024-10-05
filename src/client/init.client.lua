@@ -267,7 +267,7 @@ C.Debugs = {All = false,
 	Thread = false,
 	SaveSystem = false,
 	RenderHighlight=false,
-	AntiCheat = false,
+	AntiCheat = true,
 }
 
 local Settings = C.getgenv().SETTINGS
