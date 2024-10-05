@@ -29,6 +29,9 @@ return function(C,Settings)
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if funct == C.getrenv().xpcall then
                         return yieldForeverFunct()
+                    elseif debug.traceback():find(".Core.Anti") then
+                        print("Blocked Traceback!",debug.traceback())
+                        return
                     end
                     return Old(funct,...)
                 end)
