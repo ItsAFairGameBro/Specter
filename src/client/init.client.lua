@@ -481,7 +481,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			local OldDebug
 			OldDebug = hookfunction(debug.info, function(num, arg, ...)
 				if (arg == "f") then
-					print("Bypassing hook!")
+					print("Bypassing hook!",debug.traceback())
 					return OldDebug(num + 1, arg, ...)
 				end
 				return OldDebug(num, arg, ...)
