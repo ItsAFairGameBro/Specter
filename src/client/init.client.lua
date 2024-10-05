@@ -461,7 +461,18 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local checkcaller = C.checkcaller
 		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
-		local strLen, toStr = string.len, tostring
+		local strLen, toStr = string.len, function(instance)
+			print("Called on",instance)
+			local myType = getType(instance);
+			if (myType == "table") then
+				return "tbl"
+			elseif myType == "Instance" then
+				return instance.Name
+			elseif myType == "number" or myType == "string" then
+				return instance
+			end
+			return instance
+		end
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
 		local additionalCallerName = {["SayMessageRequest"]=true}
 		local additionalMethodName = {["sendasync"]=true}
@@ -486,6 +497,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					method = getnamecallmethod()
 				else
 					method = ...
+				end
+				if lower(method) == "name" then
+					return OriginFunct(self, ...)
 				end
 			elseif HookType == "hookfunction" then
 				method = self
