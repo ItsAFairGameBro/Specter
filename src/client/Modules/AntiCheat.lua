@@ -20,17 +20,26 @@ local function ShouldBlock(name)
 end
 -- https://apis.roblox.com/universes/v1/places/2961583129/universe
 return function(C,Settings)
+    local tskSpawn = task.spawn
     local yieldForeverFunct = Static(C,Settings)
     -- Here's where the anti cheat stuff is done
     local AntiCheat = {
         {
             Run = function(self)
-                local Old
+                --[[local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if funct == C.getrenv().xpcall then
                         return yieldForeverFunct()
                     end
                     return Old(funct,...)
+                end)--]]
+                local Old2 = rawget(C.getrenv(), "xpcall")
+                rawset(Old2,"xpcall", function(funct, ...)
+                    tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)
+                    if funct == C.getrenv().xpcall then
+                        return yieldForeverFunct()
+                    end
+                    return Old2(funct,...)
                 end)
                 return true -- indicate that the anti cheat is successful
             end,
