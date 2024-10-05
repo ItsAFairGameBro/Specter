@@ -34,7 +34,7 @@ return function(C,Settings)
                     return Old(funct,...)
                 end)--]]
                 local Old2 = rawget(C.getrenv(), "xpcall")
-                rawset(Old2,"xpcall", function(funct, ...)
+                rawset(C.getrenv(),"xpcall", function(funct, ...)
                     tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)
                     if funct == C.getrenv().xpcall then
                         return yieldForeverFunct()
