@@ -483,14 +483,20 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if (arg == "f") then
 					print("Bypassing hook!",debug.traceback())
 					return OldDebug(num + 2, arg, ...)
+				elseif (arg == "s") then
+					return "[C]"
+				elseif (arg == "l") then
+					return 1
+				elseif (arg == "n") then
+					return ""
+				elseif (arg == "a") then
+					return 0
 				end
 				return OldDebug(num, arg, ...)
 			end)
 			print("HOOKED DEBUG.INFO")
 			
 		end
-		print("CALLED",debug.traceback())
-		task.wait(100)
 
 		local myHooks = {}
 		C.getgenv().SavedHookData[hook] = myHooks
