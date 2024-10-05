@@ -26,7 +26,7 @@ return function(C,Settings)
         {
             Run = function(self)
                 local Old
-                Old = C.hookfunction(C.getrenv().task.spawn, function(funct,...)
+                Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if funct == C.getrenv().xpcall then
                         return yieldForeverFunct()
                     end
