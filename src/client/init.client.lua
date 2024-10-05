@@ -462,7 +462,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
 		local strLen, toStr = string.len, function(instance)
-			print("Called on",instance)
 			local myType = getType(instance);
 			if (myType == "table") then
 				return "tbl"
