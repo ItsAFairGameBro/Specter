@@ -478,12 +478,19 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		if (not C.getgenv().hookedDebugInfo) then
 			C.getgenv().hookedDebugInfo = true
-			--[[hookfunction(debug.info, function(num, arg)
+			local OldDebug
+			OldDebug = hookfunction(debug.info, function(num, arg, ...)
 				if (arg == "f") then
-					
+					print("Bypassing hook!")
+					return OldDebug(num + 1, arg, ...)
 				end
-			end)--]]
+				return OldDebug(num, arg, ...)
+			end)
+			print("HOOKED DEBUG.INFO")
+			
 		end
+		print("CALLED",debug.traceback())
+		task.wait(100)
 
 		local myHooks = {}
 		C.getgenv().SavedHookData[hook] = myHooks
