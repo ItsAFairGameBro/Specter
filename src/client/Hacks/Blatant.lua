@@ -103,7 +103,7 @@ return function(C,Settings)
 					end
 				end,
 				Activate = function(self,newValue)
-					--if not C.human then return end --else task.wait(.1) end
+					if not C.human then return end --else task.wait(.1) end
 					C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
 					
 					if not newValue then
