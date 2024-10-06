@@ -689,7 +689,7 @@ return function(C,Settings)
 		local Status = coroutine.status(thread)
 		if Status ~= "dead" then
 			C.DebugMessage("Thread",`Stopping thread {tostring(thread)}, current status: {Status}`)
-			local success, result = pcall(task.cancel,thread)
+			local success, result = pcall(coroutine.close,thread)
 			if not success then
 				warn(`Failed to stop thread {tostring(thread)} (Status: {Status}); {result}.`)
 			end

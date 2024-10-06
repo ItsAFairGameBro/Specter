@@ -100,7 +100,7 @@ return function(C,Settings)
 						if NewStorage then
 							self:RunCheck(NewStorage)
 						end
-						RunS.RenderStepped:Wait()
+						--RunS.RenderStepped:Wait()
 						if OldStorage then
 							self:RunCheck(OldStorage)
 						end
