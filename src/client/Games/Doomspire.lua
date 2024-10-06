@@ -31,6 +31,7 @@ return function (C,Settings)
                 SetEnabled = function(self, en)
                     for num, mod in ipairs(C.getgc()) do
                         if typeof(mod) == "table" and mod.Settings and mod.Settings.Rocket then
+                            print("Found Tbl", mod)
                             if (not en) then
                                 for key, val in pairs(self.Original) do
                                     mod[key] = val
