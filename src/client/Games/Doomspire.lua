@@ -26,8 +26,8 @@ return function (C,Settings)
                 PreModify = function(self, tbl, key)
                     --if not self.Original[key] then
                     for key, val in pairs(tbl) do
-                        if (typeof(val) == "table") then
-                            self.Original[key] = C.DeepCopy(tbl[key])
+                        if (key ~= "TeamsFiltered") then
+                            self.Original[key] = typeof(val) == "table" and C.DeepCopy(tbl[key]) or val
                         end
                     end
                     --end
@@ -44,10 +44,12 @@ return function (C,Settings)
                             else
                                 self:PreModify(mod, "Settings")
                                 local RocketStats = rawget(ModSettings,"Rocket")
-                                print("Modified Rocket.ReloadTime from",rawget(RocketStats,"ReloadTime"),"to 0.0")
+                                local BombStats = rawget(ModSettings, "Bomb")
+                                print("Modified Rocket.ReloadTime from",rawget(BombStats,"Reload"),"to 0.0")
                                 rawset(RocketStats,"ReloadTime",0.2)
                                 rawset(RocketStats,"Speed",600)
-                                rawset(,"Team")
+                                rawset(ModSettings,"TeamKill",true)
+                                rawset(BombStats, "Reload", 0)
                             end
                         end
                     end
