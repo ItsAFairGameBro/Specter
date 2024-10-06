@@ -31,14 +31,14 @@ return function (C,Settings)
                 SetEnabled = function(self, en)
                     for num, mod in ipairs(C.getgc(true)) do
                         if typeof(mod) == "table" and mod.Settings and mod.Settings.Rocket then
-                            print("Found Tbl", mod)
+                            --print("Found Tbl", mod)
                             if (not en) then
                                 for key, val in pairs(self.Original) do
                                     mod[key] = val
                                 end
                             else
                                 self:PreModify(mod, "Settings")
-                                local RocketStats = mod.Settings.RocketClient
+                                local RocketStats = mod.Settings.Rocket
                                 RocketStats.ReloadTime = 0
                             end
                         end
