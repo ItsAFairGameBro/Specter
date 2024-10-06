@@ -50,6 +50,8 @@ return function (C,Settings)
                                 rawset(RocketStats,"Speed",600)
                                 rawset(ModSettings,"TeamKill",true)
                                 rawset(BombStats, "ReloadTime", 4)
+                                rawset(BombStats, "Radius", 60)
+                                rawset(BombStats, "MaxMassToDestroy", math.huge)
                             end
                         end
                     end
