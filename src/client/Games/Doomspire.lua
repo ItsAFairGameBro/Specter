@@ -29,12 +29,8 @@ return function (C,Settings)
                     end
                 end,
                 SetEnabled = function(self, en)
-                    for num, sc in ipairs(C.getloadedmodules()) do
-                        if sc.Name == "RocketClient" then
-                            local mod = C.require(sc)
-                            if not (mod.Settings and mod.Settings.Rocket) then
-                                continue
-                            end
+                    for num, mod in ipairs(C.getgc()) do
+                        if mod.Settings and mod.Settings.Rocket then
                             if (not en) then
                                 for key, val in pairs(self.Original) do
                                     mod[key] = val
