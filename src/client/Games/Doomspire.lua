@@ -52,6 +52,7 @@ return function (C,Settings)
                                 rawset(BombStats, "ReloadTime", 4)
                                 rawset(BombStats, "Radius", 6000)
                                 rawset(BombStats, "ExplosionForce", 1e6 * (rawget(BombStats, "Radius") / 12))
+                                rawset(BombStats, "Damage", 1000)
                                 rawset(BombStats, "MaxMassToDestroy", math.huge)
                             end
                         end
