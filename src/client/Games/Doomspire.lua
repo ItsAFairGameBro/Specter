@@ -48,12 +48,16 @@ return function (C,Settings)
                                 --print("Modified Bomb.Reload from",rawget(BombStats,"Reload"),"to 0.0")
                                 rawset(RocketStats,"ReloadTime",1)
                                 rawset(RocketStats,"Speed",600)
+                                rawset(RocketStats, "Radius", 600)
+                                rawset(RocketStats, "MaxMassToDestroy", 300)
+
+
                                 rawset(ModSettings,"TeamKill",true)
                                 rawset(BombStats, "ReloadTime", 4)
                                 rawset(BombStats, "Radius", 600)
                                 rawset(BombStats, "ExplosionForce", 0)--1e6 * (rawget(BombStats, "Radius") / 12))
                                 rawset(BombStats, "Damage", 1000)
-                                rawset(BombStats, "MaxMassToDestroy", 600)
+                                rawset(BombStats, "MaxMassToDestroy", 300)
                             end
                         end
                     end
