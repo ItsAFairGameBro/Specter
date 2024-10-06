@@ -124,16 +124,24 @@ return function(C,Settings)
 		
 		local DoPrefix = false
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
-			return OldEnv.print1(`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
+			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
+			OldEnv.print1(msgToDisplay)
+			return msgToDisplay
 		end)
 		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
-			return OldEnv.warn1(`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
+			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
+			OldEnv.warn1(msgToDisplay)
+			return msgToDisplay
 		end)
 		OldEnv.print2 = BasicHookFunction(C.getrenv(), "print", function(...)
-			return OldEnv.print1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			OldEnv.print1(msgToDisplay)
+			return msgToDisplay
 		end)
 		OldEnv.warn2 = BasicHookFunction(C.getrenv(), "warn", function(...)
-			return OldEnv.warn1(`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
+			OldEnv.warn1(msgToDisplay)
+			return msgToDisplay
 		end)
 		
 		--[[task.delay(3,function()
