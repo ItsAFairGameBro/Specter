@@ -346,7 +346,7 @@ return function(C,Settings)
 						break
 					end
 					-- Adjust origin slightly to retry
-					origin = CFrame.new(origin,hitResult.Position) * Vector3.new(0,0,hitResult.Distance + 0.01);
+					origin = CFrame.new(origin,hitResult.Position) * Vector3.new(0,0,hitResult.Distance);
 					lastInstance = hitResult.Instance;
 					if rayParams.FilterType == Enum.RaycastFilterType.Exclude then
 						rayParams:AddToFilter(lastInstance)
