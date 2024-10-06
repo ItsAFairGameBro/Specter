@@ -513,6 +513,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		
 		local OriginFunct
 		local function CallFunction(self,...)
+			if (getnamecallmethod() == "GetLogHistory") then
+				print("one")
+			end
 			-- Get the method being called
 			local method
 			if HookType=="hookmetamethod" then
@@ -544,7 +547,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
-			if method == "getloghistory" or method == "GetLogHistory" then
+			if getnamecallmethod() == "getloghistory" or getnamecallmethod() == "GetLogHistory" then
 				print("LOG",method)
 			end
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
