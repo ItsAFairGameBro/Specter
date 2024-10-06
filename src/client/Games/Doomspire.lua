@@ -32,6 +32,9 @@ return function (C,Settings)
                     for num, sc in ipairs(C.getloadedmodules()) do
                         if sc.Name == "RocketClient" then
                             local mod = C.require(sc)
+                            if not (mod.Settings and mod.Settings.Rocket) then
+                                continue
+                            end
                             if (not en) then
                                 for key, val in pairs(self.Original) do
                                     mod[key] = val
