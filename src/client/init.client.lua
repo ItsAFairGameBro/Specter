@@ -476,7 +476,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local additionalCallerName = {["SayMessageRequest"]=true}
 		local additionalMethodName = {["sendasync"]=true}
 
-		if (not C.getgenv().hookedDebugInfo) then
+		--[[if (not C.getgenv().hookedDebugInfo) then
 			C.getgenv().hookedDebugInfo = true
 			local OldDebug
 			OldDebug = hookfunction(debug.info, function(num, arg, ...)
@@ -495,8 +495,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				return OldDebug(num, arg, ...)
 			end)
 			print("HOOKED DEBUG.INFO")
-			
-		end
+		end--]]
 
 		local myHooks = {}
 		C.getgenv().SavedHookData[hook] = myHooks
