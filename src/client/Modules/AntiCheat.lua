@@ -26,13 +26,13 @@ return function(C,Settings)
     local AntiCheat = {
         {
             Run = function(self)
-                --[[local Old
+                local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if funct == C.getrenv().xpcall then
                         return yieldForeverFunct()
                     end
                     return Old(funct,...)
-                end)--]]
+                end)
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
                     tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)

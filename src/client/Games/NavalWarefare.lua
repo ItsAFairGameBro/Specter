@@ -833,7 +833,7 @@ return function(C,Settings)
 				Title = "ESP Loop Bomb",
 				Tooltip = "Adds a button above objectives to bomb them continously",
 				Layout = 31, Threads = {}, Instances = {}, Functs = {}, Default = true,
-				Shortcut = "ESPIslandCapture",
+				Shortcut = "ESPLoopBomb",
 				DontActivate = true,
 				RefreshEn=function(self,tag)
 					if not tag.Adornee then
