@@ -361,8 +361,8 @@ return function(C,Settings)
 			for signal, data in pairs(signalData) do
 				for key, enabled in pairs(data) do
 					if key ~= "Value" and key ~= "Name" then
-						print("Attemping to disable",signal,data,key,enabled)
-						C.EnableInstanceConnections(instance,data.Name,key)
+						--print("Attemping to disable",signal,data,key,enabled)
+						C.SetInstanceConnections(instance,data.Name,key,true)
 					end
 				end
 			end
