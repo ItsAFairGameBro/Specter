@@ -456,6 +456,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		return
 	end
 	assert(name ~= "OldFunction", `[C.HookMethod]: {name} is a reserved method! Please use a different one!`)
+	assert(hook ~= "__namecall" or #methods ~= 0, `[C.HookMethod]: __namecall {name} hooks require at least one method, but none was specified`)
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
 		local gameId = game.GameId
@@ -543,6 +544,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
+			if method == "getloghistory" or method == "GetLogHistory" then
+				print("LOG",method)
+			end
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			local isGameScript = not checkcaller()
 			 -- Check if the caller is not a local script
