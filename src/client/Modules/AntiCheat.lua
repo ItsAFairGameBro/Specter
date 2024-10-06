@@ -29,7 +29,7 @@ return function(C,Settings)
             Run = function(self)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
-                    if (strFind.find(traceback, "Anti")) then
+                    if (strFind(traceback, "Anti")) then
                         return true
                     end
                     return false
