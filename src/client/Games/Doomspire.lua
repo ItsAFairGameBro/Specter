@@ -49,7 +49,7 @@ return function (C,Settings)
                                 rawset(RocketStats,"ReloadTime",1)
                                 rawset(RocketStats,"Speed",600)
                                 rawset(ModSettings,"TeamKill",true)
-                                rawset(BombStats, "ReloadTime", 0)
+                                rawset(BombStats, "ReloadTime", 4)
                             end
                         end
                     end
