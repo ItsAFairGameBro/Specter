@@ -45,7 +45,7 @@ return function(C,Settings)
                 local Old2
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                     if CheckIfValid() then
-                        return yieldForeverFunct()
+                        return warn("AntiCheat 1 Failed: ", Old2(yieldForeverFunct), debug.traceback())
                     end
                     return Old2(funct,...)
                 end)
