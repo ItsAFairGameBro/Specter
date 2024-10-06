@@ -143,7 +143,7 @@ return function(C,Settings)
                             if event:IsA("RemoteEvent") then
                                 table.insert(self.Functs,event.OnClientEvent:Connect(function(...)
                                     local RemoteNames = rawget(C,"RemoteNames")
-                                    local MyRemoteName = rawget(RemoteNames,event) or event:GetFullName()
+                                    local MyRemoteName = RemoteNames and rawget(RemoteNames,event) or event:GetFullName()
                                     print(`[Inbound Remote Spy]: {MyRemoteName}`,...)
                                 end))
                             end

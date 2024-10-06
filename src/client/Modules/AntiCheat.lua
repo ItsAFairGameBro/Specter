@@ -7,9 +7,10 @@ local NC = game:GetService("NetworkClient")
 local TeleportService = game:GetService("TeleportService")
 
 local function Static(C,Settings)
+    local wait4Child = game.WaitForChild
     local function yieldForeverFunct(...)
         C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
-        game:WaitForChild("SuckMyPp",math.huge)
+        wait4Child(game,"SuckMyPp",math.huge)
         return true
     end
     return yieldForeverFunct
