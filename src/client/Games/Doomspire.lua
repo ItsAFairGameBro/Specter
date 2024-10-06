@@ -24,9 +24,13 @@ return function (C,Settings)
 				Layout = 0, Instances = {}, Functs={}, Original = {},
 				Shortcut = "WeaponStats",Default=true, DontActivate=true,
                 PreModify = function(self, tbl, key)
-                    if not self.Original[key] then
-                        self.Original[key] = C.DeepCopy(tbl[key])
+                    --if not self.Original[key] then
+                    for key, val in pairs(tbl) do
+                        if (typeof(val) == "table") then
+                            self.Original[key] = C.DeepCopy(tbl[key])
+                        end
                     end
+                    --end
                 end,
                 SetEnabled = function(self, en)
                     for num, mod in ipairs(C.getgc(true)) do
@@ -41,7 +45,9 @@ return function (C,Settings)
                                 self:PreModify(mod, "Settings")
                                 local RocketStats = rawget(ModSettings,"Rocket")
                                 print("Modified Rocket.ReloadTime from",rawget(RocketStats,"ReloadTime"),"to 0.0")
-                                rawset(RocketStats,"ReloadTime",0.0)
+                                rawset(RocketStats,"ReloadTime",0.2)
+                                rawset(RocketStats,"Speed",600)
+                                rawset(,"Team")
                             end
                         end
                     end
