@@ -927,7 +927,7 @@ return function(C,Settings)
 
 	function C.InternallySetConnections(signal,enabled)
 		for _, connection in ipairs(C.getconnections(signal)) do
-			if not connection.ForeignState then
+			if not connection.ForeignState or true then
 				connection[enabled and "Enable" or "Disable"](connection)
 			end
 		end
@@ -939,7 +939,7 @@ return function(C,Settings)
 			local signal = instance[name]
 			local instanceData = C.PartConnections[instance]
 			if not instanceData then
-				instanceData = {}
+				instanceData = {Name = name}
 				C.PartConnections[instance] = instanceData
 			end
 			if not instanceData[name] then
