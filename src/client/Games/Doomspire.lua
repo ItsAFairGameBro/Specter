@@ -36,7 +36,7 @@ return function (C,Settings)
                     for num, mod in ipairs(C.getgc(true)) do
                         local ModSettings = typeof(mod) == "table" and rawget(mod, "Settings")
                         if ModSettings and typeof(ModSettings) == "table" and rawget(ModSettings,"Rocket") then
-                            C.setclipboard(print(mod))
+                            --C.setclipboard(print(mod))
                             if (not en) then
                                 for key, val in pairs(self.Original) do
                                     rawset(mod,key,val)
@@ -51,9 +51,9 @@ return function (C,Settings)
                                 rawset(ModSettings,"TeamKill",true)
                                 rawset(BombStats, "ReloadTime", 4)
                                 rawset(BombStats, "Radius", 600)
-                                rawset(BombStats, "ExplosionForce", 1e6 * (rawget(BombStats, "Radius") / 12))
+                                rawset(BombStats, "ExplosionForce", 0)--1e6 * (rawget(BombStats, "Radius") / 12))
                                 rawset(BombStats, "Damage", 1000)
-                                rawset(BombStats, "MaxMassToDestroy", 300)
+                                rawset(BombStats, "MaxMassToDestroy", 600)
                             end
                         end
                     end
