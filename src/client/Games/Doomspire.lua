@@ -57,7 +57,7 @@ return function (C,Settings)
                         --[[table.insert(self.Functs,theirPlr:WaitForChild("Backpack").ChildAdded:Connect(function(newTool)
                             self:NewInstance(newTool)
                         end))--]]
-                        task.delay(.5,self.Activate,self)
+                        task.delay(.5,self.Activate,self,self.RealEnabled)
 					end,
                 },
             },
