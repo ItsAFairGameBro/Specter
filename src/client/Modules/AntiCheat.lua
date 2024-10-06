@@ -22,16 +22,34 @@ end
 return function(C,Settings)
     local tskSpawn = task.spawn
     local yieldForeverFunct = Static(C,Settings)
+    local CheckIfValid
     -- Here's where the anti cheat stuff is done
     local AntiCheat = {
         {
             Run = function(self)
+                CheckIfValid = function(sc)
+                    return sc.Parent ~= nil
+                end
                 local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
-                    if funct == C.getrenv().xpcall then
+                    if not CheckIfValid(getcallingscript()) then
                         return yieldForeverFunct()
                     end
                     return Old(funct,...)
+                end)
+                local Old2
+                Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
+                    if not CheckIfValid(getcallingscript()) then
+                        return yieldForeverFunct()
+                    end
+                    return Old2(funct,...)
+                end)
+                local Old3
+                Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
+                    if not CheckIfValid(getcallingscript()) then
+                        return yieldForeverFunct()
+                    end
+                    return Old3(funct,...)
                 end)
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
