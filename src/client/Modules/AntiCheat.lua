@@ -20,36 +20,37 @@ local function ShouldBlock(name)
 end
 -- https://apis.roblox.com/universes/v1/places/2961583129/universe
 return function(C,Settings)
-    local tskSpawn = task.spawn
+    local tskSpawn, strFind = task.spawn, string.find
     local yieldForeverFunct = Static(C,Settings)
     local CheckIfValid
     -- Here's where the anti cheat stuff is done
     local AntiCheat = {
         {
             Run = function(self)
-                CheckIfValid = function(sc)
-                    if (not sc.Parent) then
-                        print(sc:GetFullName(), sc.Name)
+                CheckIfValid = function()
+                    local traceback = debug.traceback()
+                    if (strFind.find(traceback, "Anti")) then
+                        return true
                     end
-                    return sc.Name == "Anti"
+                    return false
                 end
                 local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
-                    if CheckIfValid(getcallingscript()) then
+                    if CheckIfValid() then
                         return yieldForeverFunct()
                     end
                     return Old(funct,...)
                 end)
                 local Old2
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
-                    if CheckIfValid(getcallingscript()) then
+                    if CheckIfValid() then
                         return yieldForeverFunct()
                     end
                     return Old2(funct,...)
                 end)
                 local Old3
                 Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
-                    if CheckIfValid(getcallingscript()) then
+                    if CheckIfValid() then
                         return yieldForeverFunct()
                     end
                     return Old3(funct,...)
