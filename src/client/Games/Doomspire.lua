@@ -29,7 +29,7 @@ return function (C,Settings)
                     end
                 end,
                 SetEnabled = function(self, en)
-                    for num, mod in ipairs(C.getgc()) do
+                    for num, mod in ipairs(C.getgc(true)) do
                         if typeof(mod) == "table" and mod.Settings and mod.Settings.Rocket then
                             print("Found Tbl", mod)
                             if (not en) then
