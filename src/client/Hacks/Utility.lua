@@ -285,9 +285,10 @@ return function(C,Settings)
 				Title = "Disable LogService",
 				Tooltip = "Prevents logs from being viewed or tracked\nNote: this may cause crash on startup!",
 				Layout = 200,
-				Shortcut = "GetLogHistory",Functs={},Default=false,
+				Shortcut = "LogServiceProtection",Functs={},Default=false,
 				Activate = function(self,newValue,firstRun)
 					C.HookMethod("__namecall",self.Shortcut,newValue and function (newSc,method,self)
+						print("CALLED!",newSc,method,self)
 						if self == LS then
 							print("Prevented LogService")
 							return "Override", {{}}
