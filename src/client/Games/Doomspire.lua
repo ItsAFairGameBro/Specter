@@ -30,16 +30,18 @@ return function (C,Settings)
                 end,
                 SetEnabled = function(self, en)
                     for num, mod in ipairs(C.getgc(true)) do
-                        if typeof(mod) == "table" and mod.Settings and mod.Settings.Rocket then
+                        local ModSettings = typeof(mod) == "table" and rawget(mod, "Settings")
+                        if ModSettings and rawget(ModSettings,"Rocket") then
                             --print("Found Tbl", mod)
                             if (not en) then
                                 for key, val in pairs(self.Original) do
-                                    mod[key] = val
+                                    rawset(mod,key,val)
                                 end
                             else
                                 self:PreModify(mod, "Settings")
-                                local RocketStats = mod.Settings.Rocket
-                                RocketStats.ReloadTime = 0
+                                local RocketStats = rawget(ModSettings,"Rocket")
+                                print("Modified Rocket.ReloadTime from",rawget(RocketStats,"ReloadTime"),"to 0.0")
+                                rawset(RocketStats,"ReloadTime",0.0)
                             end
                         end
                     end
