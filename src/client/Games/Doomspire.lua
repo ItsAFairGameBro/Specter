@@ -31,7 +31,7 @@ return function (C,Settings)
                 SetEnabled = function(self, en)
                     for num, mod in ipairs(C.getgc(true)) do
                         local ModSettings = typeof(mod) == "table" and rawget(mod, "Settings")
-                        if ModSettings and rawget(ModSettings,"Rocket") then
+                        if ModSettings and typeof(ModSettings) == "table" and rawget(ModSettings,"Rocket") then
                             --print("Found Tbl", mod)
                             if (not en) then
                                 for key, val in pairs(self.Original) do
