@@ -939,7 +939,7 @@ return function(C,Settings)
 			local signal = instance[name]
 			local instanceData = C.PartConnections[instance]
 			if not instanceData then
-				instanceData = {Name = name}
+				instanceData = {}
 				C.PartConnections[instance] = instanceData
 			end
 			if not instanceData[name] then
