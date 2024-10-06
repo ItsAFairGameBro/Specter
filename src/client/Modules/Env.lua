@@ -366,6 +366,16 @@ return function(C,Settings)
 		return didHit and hitResult, hitPosition
 	end
 
+	function C.DeepCopy(original)
+		local copy = {}
+		for k, v in pairs(original) do
+			if type(v) == "table" then
+				v = C.DeepCopy(v)
+			end
+			copy[k] = v
+		end
+		return copy
+	end
 	
 	function C.getCharacterHeight(model)
 		local Humanoid=model:WaitForChild("Humanoid")
