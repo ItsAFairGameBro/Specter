@@ -27,6 +27,7 @@ return function(C,Settings)
                     local tblInsert = table.insert
 					local Old
                     Old = C.HookMethod("__namecall",self.Shortcut, function(newSc,method,self)
+                        print(newSc,method,self)
                         if (self == LS) then
                             local LatestTimeStamp = rawget(rawget(C, "getgenv"), "LogCutoffTimeStamp")
                             local Results = Old(self)
