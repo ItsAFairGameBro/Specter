@@ -30,7 +30,7 @@ return function(C,Settings)
             Run = function(self)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
-                    if (strFind(traceback, "Anti")) then
+                    if (strFind(traceback, "Anti") and not strFind(traceback, "function __index")) then
                         return true
                     end
                     return false
@@ -45,7 +45,7 @@ return function(C,Settings)
                 local Old2
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                     if CheckIfValid() then
-                        return warn("AntiCheat 1 Failed: ", Old2(yieldForeverFunct), debug.traceback())
+                        return yieldForeverFunct()
                     end
                     return Old2(funct,...)
                 end)
