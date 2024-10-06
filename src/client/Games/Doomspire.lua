@@ -36,7 +36,7 @@ return function (C,Settings)
                     for num, mod in ipairs(C.getgc(true)) do
                         local ModSettings = typeof(mod) == "table" and rawget(mod, "Settings")
                         if ModSettings and typeof(ModSettings) == "table" and rawget(ModSettings,"Rocket") then
-                            --print("Found Tbl", mod)
+                            print("Found Tbl", mod)
                             if (not en) then
                                 for key, val in pairs(self.Original) do
                                     rawset(mod,key,val)
@@ -45,8 +45,8 @@ return function (C,Settings)
                                 self:PreModify(mod, "Settings")
                                 local RocketStats = rawget(ModSettings,"Rocket")
                                 local BombStats = rawget(ModSettings, "Bomb")
-                                print("Modified Rocket.ReloadTime from",rawget(BombStats,"Reload"),"to 0.0")
-                                rawset(RocketStats,"ReloadTime",0.2)
+                                print("Modified Bomb.Reload from",rawget(BombStats,"Reload"),"to 0.0")
+                                rawset(RocketStats,"ReloadTime",1)
                                 rawset(RocketStats,"Speed",600)
                                 rawset(ModSettings,"TeamKill",true)
                                 rawset(BombStats, "Reload", 0)
