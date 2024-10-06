@@ -455,6 +455,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
 	end
+	assert(name ~= "OldFunction", `[C.HookMethod]: {name} is a reserved method! Please use a different one!`)
 	if not C.getgenv().SavedHookData[hook] then
 		-- Hook the namecall function
 		local gameId = game.GameId
@@ -475,6 +476,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
 		local additionalCallerName = {["SayMessageRequest"]=true}
 		local additionalMethodName = {["sendasync"]=true}
+		local additionalAvoidLower = {["getlogHistory"] = true}
 
 		--[[if (not C.getgenv().hookedDebugInfo) then
 			C.getgenv().hookedDebugInfo = true
@@ -525,7 +527,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				method = self
 			end
 			if method and getType(method) == "string" then
-				method = lower(method)
+				if not rawget(additionalAvoidLower, method) then
+					method = lower(method)
+				end
 				local parsed, count = gsub(method, "\000.*", "")
 				if strLen(parsed) > 0 and count <= 1 then
 					method = parsed
@@ -561,6 +565,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					end--]]
 					-- Block FireServer or InvokeServer methods
 					for name, list in pairs(myHooks) do
+						if (name == "OldFunction") then
+							continue
+						end
 						local indexes = getVal(list,2)
 						if not indexes or tblFind(indexes,method) then -- Authorization
 							--myPrint("Authorized",theirScript)
@@ -608,10 +615,12 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		else--]]
 		OriginFunct = (HookType == "hookmetamethod" and C.hookmetamethod(source or game, hook, (CallFunction)))
 			or (HookType == "hookfunction" and C.hookfunction(hook, CallFunction))
+		C.getgenv().SavedHookData[hook].OldFunction = OriginFunct
 		--end
 	end
 	if runFunct then
 		C.getgenv().SavedHookData[hook][name] = {name,methods,runFunct}
+		return C.getgenv().SavedHookData[hook].OldFunction
 	else
 		C.getgenv().SavedHookData[hook][name] = nil
 	end

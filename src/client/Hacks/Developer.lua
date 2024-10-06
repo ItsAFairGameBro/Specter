@@ -3,10 +3,12 @@ local SG = game:GetService("StarterGui")
 local CG = game:GetService("CoreGui")
 local RS = game:GetService("ReplicatedStorage")
 local PhysicsS = game:GetService"PhysicsService"
+local LS = game:GetService("LogService")
 local UIS = game:GetService("UserInputService")
 local AS = game:GetService("AssetService")
+
 return function(C,Settings)
-	return {
+    return {
 		Category = {
 			Name = "Developer",
 			Title = "Developer",
@@ -15,6 +17,33 @@ return function(C,Settings)
             AfterMisc = true,
 		},
 		Tab = {
+            {
+				Title = "Clear Logs",
+				Tooltip = "Clears the console's logs",
+				Layout = 0,Type="NoToggle",
+				Shortcut = "ClearLogs",
+				Activate = function(self,newValue)
+                    C.getgenv().LogCutoffTimeStamp = os.time() + 1
+                    local tblInsert = table.insert
+					local Old
+                    Old = C.HookMethod("__namecall",self.Shortcut, function(newSc,method,self)
+                        if (self == LS) then
+                            local LatestTimeStamp = rawget(rawget(C, "getgenv"), "LogCutoffTimeStamp")
+                            local Results = Old(self)
+                            local Returns = {}
+                            for num, item in ipairs(Results) do
+                                if (rawget(item, 'timestamp') > LatestTimeStamp) then
+                                    tblInsert(Returns, item)
+                                end
+                            end
+                            return "Override", {Returns}
+                        end
+                    end,{"getloghistory"})
+				end,
+				Options = {
+					
+				}
+			},
 			{
 				Title = "OpenConsole",
 				Tooltip = "Opens Developers Console",

@@ -186,7 +186,7 @@ return function(C,Settings)
 		},
 		Tab = {
 			{
-				Title = "AimAssist",
+				Title = "Turret AimAssist",
 				Tooltip = "Automatically Aims At Enemies When In A Turret",
 				Layout = 1, Functs = {},
 				Shortcut = "AimAssist",

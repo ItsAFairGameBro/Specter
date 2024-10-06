@@ -8,6 +8,8 @@ local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
 local GS = game:GetService("GuiService")
 local SG = game:GetService("StarterGui")
+local SC = game:GetService("ScriptContext")
+local LS = game:GetService("LogService")
 local NC = game:GetService("NetworkClient")
 return function(C,Settings)
 	return {
@@ -28,7 +30,7 @@ return function(C,Settings)
                     VU:ClickButton2(Vector2.new())
                 end,
 				Activate = function(self,newValue)
-					C.SetInstanceConnections(C.plr,"Idled",self.Shortcut,newValue and self.EnTbl.GameProtection)
+					C.SetInstanceConnections(C.plr,"Idled",self.Shortcut,not newValue or not self.EnTbl.GameProtection)
                     if not newValue then
                         return
                     end
@@ -279,6 +281,22 @@ return function(C,Settings)
 					},
 				},
 			},
+			{
+				Title = "Disable LogService",
+				Tooltip = "Prevents logs from being viewed or tracked\nNote: this may cause crash on startup!",
+				Layout = 200,
+				Shortcut = "GetLogHistory",Functs={},Default=false,
+				Activate = function(self,newValue,firstRun)
+					C.HookMethod("__namecall",self.Shortcut,newValue and function (newSc,method,self)
+						if self == LS then
+							print("Prevented LogService")
+							return "Override", {{}}
+						end
+					end, {"getloghistory"})
+					C.SetInstanceConnections(SC,"Error",self.Shortcut,not newValue)
+					C.SetInstanceConnections(LS,"MessageOut",self.Shortcut,not newValue)
+				end
+			}
 		}
 		
 	}
