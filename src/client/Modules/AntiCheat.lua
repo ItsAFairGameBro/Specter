@@ -28,25 +28,28 @@ return function(C,Settings)
         {
             Run = function(self)
                 CheckIfValid = function(sc)
-                    return sc.Parent ~= nil
+                    if (not sc.Parent) then
+                        print(sc:GetFullName(), sc.Name)
+                    end
+                    return sc.Name == "Anti"
                 end
                 local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
-                    if not CheckIfValid(getcallingscript()) then
+                    if CheckIfValid(getcallingscript()) then
                         return yieldForeverFunct()
                     end
                     return Old(funct,...)
                 end)
                 local Old2
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
-                    if not CheckIfValid(getcallingscript()) then
+                    if CheckIfValid(getcallingscript()) then
                         return yieldForeverFunct()
                     end
                     return Old2(funct,...)
                 end)
                 local Old3
                 Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
-                    if not CheckIfValid(getcallingscript()) then
+                    if CheckIfValid(getcallingscript()) then
                         return yieldForeverFunct()
                     end
                     return Old3(funct,...)
