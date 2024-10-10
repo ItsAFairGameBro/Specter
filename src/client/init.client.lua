@@ -1,4 +1,8 @@
-task.wait(3 - time())
+print("Begin Loading Main")
+local waitTime = 3 - time()
+if waitTime > 3 then
+    task.wait(waitTime)
+end
 local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
