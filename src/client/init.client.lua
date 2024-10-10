@@ -451,7 +451,7 @@ C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 C.getgenv().realhookfunction = C.getgenv().realhookfunction or C.getgenv().hookfunction
 local MetaMethods = {"__index","__namecall","__newindex"}
-local AllowHookMethod = false;
+local AllowHookMethod = true;
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
