@@ -258,7 +258,7 @@ C.ChatVersion = TextChatService.ChatVersion.Name
 if not C.getgenv().PlaceName then
 	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
 end
-C.Debugs = {All = false,
+C.Debugs = {All = true,
 	Destroy = false,
 	Module = false,
 	Load = false,
