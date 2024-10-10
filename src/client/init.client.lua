@@ -338,9 +338,15 @@ function C.RemoveGlobalInstance(instance)
 end
 
 function C.RunLink(githubLink,gitType,name)
+    local RequestFinished = false
 	local URL = githubLink:format(gitType:lower(),name);
+    task.delay(3,function()
+        if (not RequestFinished) then
+            print("[C.RunLink]: Module Yielding For >3 seconds: "..name)
+        end
+    end)
 	local success, response = pcall(game.HttpGet,game,URL,false)
-
+    RequestFinished = true
 	if not success then
 		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
 	end
