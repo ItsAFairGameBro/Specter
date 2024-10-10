@@ -14,6 +14,8 @@ local MPS = game:GetService("MarketplaceService")
 local TextChatService = game:GetService("TextChatService")
 local VirtualUser = game:GetService("VirtualUser")
 
+print("services loaded")
+
 local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
 
@@ -24,6 +26,7 @@ local allDisabled = {
 local executorName = not isStudio and identifyexecutor()
 local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=true}) or {firetouchinterest=true}
 C.Executor = executorName
+print("1")
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
 	if not enExecutor.firetouchinterest or not firetouchinterest then
@@ -273,6 +276,7 @@ C.Debugs = {All = true,
 	RenderHighlight=false,
 	AntiCheat = false,
 }
+print("2")
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then
@@ -375,6 +379,7 @@ function C.RunLink(githubLink,gitType,name)
 
 	return compiledFunction()
 end
+print("3")
 
 C.SaveModules = {}
 
@@ -414,6 +419,8 @@ function C.LoadModule(moduleName: string)
 	C.DebugMessage("Module",(`Loaded {DisplayName} in %.2f seconds`):format(os.clock()-Start))
 	return Mod
 end
+print("modules p reload")
+
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
 local loaded = 0
 if not C.isStudio then
@@ -640,6 +647,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		C.getgenv().SavedHookData[hook][name] = nil
 	end
 end
+print("6")
+
 --[[function C.HookNamecall(name,methods,runFunct)
 	error"SHOULDN't be running"
 	if C.isStudio or (not C.getgenv().NamecallHooks and not methods) then
