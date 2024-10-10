@@ -451,9 +451,13 @@ C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 C.getgenv().realhookfunction = C.getgenv().realhookfunction or C.getgenv().hookfunction
 local MetaMethods = {"__index","__namecall","__newindex"}
+local AllowHookMethod = false;
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
+    elseif not AllowHookMethod then
+        print("Hook Method Disabled")
+        return
 	end
 	assert(name ~= "OldFunction", `[C.HookMethod]: {name} is a reserved method! Please use a different one!`)
 	assert(hook ~= "__namecall" or #methods ~= 0, `[C.HookMethod]: __namecall {name} hooks require at least one method, but none was specified`)
