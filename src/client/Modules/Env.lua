@@ -975,6 +975,10 @@ return function(C,Settings)
 			end
 		end
 		function C.SetInstanceConnections(instance,name,key,enabled)
+            if false then
+                print("C.SetInstanceConnection not allowed")
+                return
+            end
 			if enabled then
 				EnableInstanceConnections(instance,name,key)
 			else
