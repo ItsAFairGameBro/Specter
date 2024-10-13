@@ -11,6 +11,9 @@ local CP = game:GetService("ContentProvider")
 local SG = game:GetService("StarterGui")
 local HS = game:GetService("HttpService")
 local AS = game:GetService("AssetService")
+
+local MaxFlingSpeed = 1e6
+
 return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.CommandFunctions = {
@@ -404,7 +407,7 @@ return function(C,Settings)
             end,
         },
         ["follow"]={
-            Parameters={{Type="Player"},{Type="Number",Min=-100,Max=100,Default=5}},
+            Parameters={{Type="Player"},{Type="Number",Min=-MaxFlingSpeed,Max=MaxFlingSpeed,Default=5}},
             AfterTxt="",
             Priority=3,
             isFollowing=-1,
@@ -650,7 +653,7 @@ return function(C,Settings)
             end,
         },
         ["fling"]={
-            Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
+            Parameters={{Type="Players"},{Type="Number",Min=-MaxFlingSpeed,Max=MaxFlingSpeed,Default=5}},
             AfterTxt="%s",
             FlingThread=nil,
             OldLoc=nil,
@@ -736,7 +739,7 @@ return function(C,Settings)
                                         end
                                         C.DoTeleport(Target)
                                     end
-                                    timeLeft += task.wait(1/20)
+                                    timeLeft += task.wait(1/6)
                                 until timeLeft >= 0.15
 
                                 if exit then
@@ -761,7 +764,7 @@ return function(C,Settings)
             end}
         },
         ["lfling"]={
-            Parameters={{Type="Players"},{Type="Number",Min=-100,Max=100,Default=5}},
+            Parameters={{Type="Players"},{Type="Number",Min=-MaxFlingSpeed,Max=MaxFlingSpeed,Default=5}},
             AfterTxt="%s",
             Run = function(self,args)
                 return self.Parent.fling:Run(args,true)
