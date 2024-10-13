@@ -695,6 +695,7 @@ return function(C,Settings)
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
                             self:SetFling(true,args[2])
+                            local LastSpeedTime
                             for i = 0,30,1 do
                                 local theirChar = thisPlr.Character
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
@@ -707,7 +708,13 @@ return function(C,Settings)
                                     break
                                 end
                                 if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
-                                    break -- We did enough damage!
+                                    if not LastSpeedTime then
+                                        LastSpeedTime = os.clock()
+                                    elseif (os.clock() - LastSpeedTime > .5) then
+                                        break -- We did enough damage!
+                                    end
+                                else
+                                    LastSpeedTime = nil
                                 end
                                 if C.hrp then
                                     local SeatPart = theirHuman.SeatPart
