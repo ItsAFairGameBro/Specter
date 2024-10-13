@@ -337,15 +337,22 @@ function C.RemoveGlobalInstance(instance)
 	return C.TblRemove(C.instances,instance)
 end
 
+local ModulesLoaded = 0
 function C.RunLink(githubLink,gitType,name)
     local RequestFinished = false
 	local URL = githubLink:format(gitType:lower(),name);
     task.delay(3,function()
         if (not RequestFinished) then
-            print("[C.RunLink]: Module Yielding For >3 seconds: "..name)
+            RequestFinished = true
+            print("[C.RunLink]: Module Yielding For > 3 seconds: "..name.." [PRESUMING DEAD]")
+            C.RunLink(githubLink, gitType, name)
         end
     end)
 	local success, response = pcall(game.HttpGet,game,URL,false)
+    if RequestFinished then
+        print("[C.RunLink]: Module Yielding Callback-ed after alloted time: "..name)
+        return
+    end
     RequestFinished = true
 	if not success then
 		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
@@ -382,7 +389,7 @@ function C.RunLink(githubLink,gitType,name)
 	elseif not compiledFunction then
 		return warn(PrintName.." Loadstring Failed: Syntax Error!\n\n\t\tCheck Github or DM author!")
 	end
-
+    ModulesLoaded+=1
 	return compiledFunction()
 end
 --print("3")
@@ -397,6 +404,9 @@ function GetModule(moduleName: string)
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
 		local result = C.preloadedModule[moduleName] or C.RunLink(githubLink,gitType,path)
+        if not C.preloadedModule[moduleName] then
+            C.preloadedModule[moduleName] = result
+        end
 		if typeof(result) == "function" then
 			return result(C,Settings)
 		else
@@ -428,9 +438,7 @@ end
 --print("modules p reload")
 
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
-local loaded = 0
 if not C.isStudio then
-	local loaded = 0
 	for num, module in ipairs(ModulesToPreload) do
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
@@ -438,12 +446,9 @@ if not C.isStudio then
 		local moduleParams = module:split("/")
 		local informalSplit = module:split("/")
 		local informalName = informalSplit[#informalSplit]
-		task.delay(0.1 * (num), function()
-			C.preloadedModule[module] = C.RunLink(githubLink,gitType,path)
-			loaded += 1
-		end)
+		task.delay(0.1 * (num), C.RunLink, githubLink,gitType,path)
 	end
-	while loaded < #ModulesToPreload do
+	while ModulesLoaded < #ModulesToPreload do
 		RunS.RenderStepped:Wait()
 	end
 end

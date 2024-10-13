@@ -38,6 +38,12 @@ local function Static(C,Settings)
 
 		return true, player.Team -- Player exists!
 	end
+    function C.getHealth(asset)
+        local HP = asset:FindFirstChild("HP")
+        if HP then
+            return asset:GetAttribute("Dead") and 0 or HP.Value
+        end
+    end
 	
 	function C.getClosestBase(location: Vector3)
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
@@ -46,7 +52,7 @@ local function Static(C,Settings)
 		local selBase, maxDist = nil, math.huge
 		for baseType, bases in pairs(C.Bases) do
 			for num, base in ipairs(bases) do
-				if base:FindFirstChild("Team") and base.Team.Value ~= "" and base.Team.Value ~= C.plr.Team.Name and base.HP.Value > 0 then
+				if base:FindFirstChild("Team") and base.Team.Value ~= "" and base.Team.Value ~= C.plr.Team.Name and C.getHealth(base) > 0 then
 					local MainBody = base:WaitForChild("MainBody")
 					local d = (MainBody.Position - myHRPPos).Magnitude
 					if d < maxDist then
@@ -76,7 +82,7 @@ local function Static(C,Settings)
 
 		local selShip, maxDist = nil, math.huge
 		for num, ship  in pairs(C.Ships) do
-			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and ship.HP.Value > 0 and CanTargetOwner(ship) then
+			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and C.getHealth(ship) > 0 and CanTargetOwner(ship) then
 				local MainBody = ship:WaitForChild("MainBody")
 				local d = (MainBody.Position - myHRPPos).Magnitude
 				if d < maxDist then
@@ -92,7 +98,7 @@ local function Static(C,Settings)
 
 		local selShip, maxDist = nil, math.huge
 		for num, plane  in pairs(C.Planes) do
-			if plane:FindFirstChild("Team") and plane.Team.Value ~= "" and plane.Team.Value ~= C.plr.Team.Name and plane.HP.Value > 0 and CanTargetOwner(plane) then
+			if plane:FindFirstChild("Team") and plane.Team.Value ~= "" and plane.Team.Value ~= C.plr.Team.Name and C.getHealth(plane) > 0 and CanTargetOwner(plane) then
 				local MainBody = plane:WaitForChild("MainBody")
 				local d = (MainBody.Position - myHRPPos).Magnitude
 				if d < maxDist then
