@@ -714,7 +714,7 @@ return function(C,Settings)
                                         exit = true
                                         break
                                     end
-                                    if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
+                                    if (theirPrim.AssemblyLinearVelocity - Vector3.new(0, theirPrim.AssemblyLinearVelocity.Y, 0)).Magnitude > 100 then
                                         if not LastSpeedTime then
                                             LastSpeedTime = os.clock()
                                         elseif (os.clock() - LastSpeedTime > 1) then
