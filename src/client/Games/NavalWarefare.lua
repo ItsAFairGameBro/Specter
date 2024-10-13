@@ -99,11 +99,13 @@ local function Static(C,Settings)
 		local selShip, maxDist = nil, math.huge
 		for num, plane  in pairs(C.Planes) do
 			if plane:FindFirstChild("Team") and plane.Team.Value ~= "" and plane.Team.Value ~= C.plr.Team.Name and C.getHealth(plane) > 0 and CanTargetOwner(plane) then
-				local MainBody = plane:WaitForChild("MainBody")
-				local d = (MainBody.Position - myHRPPos).Magnitude
-				if d < maxDist then
-					selShip, maxDist = MainBody, d
-				end
+				local MainBody = plane:FindFirstChild("MainBody")
+                if MainBody then
+                    local d = (MainBody.Position - myHRPPos).Magnitude
+                    if d < maxDist then
+                        selShip, maxDist = MainBody, d
+                    end
+                end
 			end
 		end
 		return selShip, maxDist / 1000
