@@ -710,7 +710,7 @@ return function(C,Settings)
                                 if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
                                     if not LastSpeedTime then
                                         LastSpeedTime = os.clock()
-                                    elseif (os.clock() - LastSpeedTime > .5) then
+                                    elseif (os.clock() - LastSpeedTime > 1) then
                                         break -- We did enough damage!
                                     end
                                 else
