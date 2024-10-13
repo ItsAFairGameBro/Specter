@@ -1,4 +1,4 @@
-print("Begin Loading Main")
+--print("Begin Loading Main")
 local waitTime = 3 - time()
 if waitTime > 3 then
     task.wait(waitTime)
@@ -14,7 +14,7 @@ local MPS = game:GetService("MarketplaceService")
 local TextChatService = game:GetService("TextChatService")
 local VirtualUser = game:GetService("VirtualUser")
 
-print("services loaded")
+--print("services loaded")
 
 local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
@@ -26,7 +26,7 @@ local allDisabled = {
 local executorName = not isStudio and identifyexecutor()
 local enExecutor = (isStudio and allDisabled) or (executorName=="Cryptic" and {firetouchinterest=true}) or {firetouchinterest=true}
 C.Executor = executorName
-print("1")
+--print("1")
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
 	if not enExecutor.firetouchinterest or not firetouchinterest then
@@ -276,7 +276,7 @@ C.Debugs = {All = true,
 	RenderHighlight=false,
 	AntiCheat = false,
 }
-print("2")
+--print("2")
 
 local Settings = C.getgenv().SETTINGS
 if not Settings then
@@ -385,7 +385,7 @@ function C.RunLink(githubLink,gitType,name)
 
 	return compiledFunction()
 end
-print("3")
+--print("3")
 
 C.SaveModules = {}
 
@@ -425,7 +425,7 @@ function C.LoadModule(moduleName: string)
 	C.DebugMessage("Module",(`Loaded {DisplayName} in %.2f seconds`):format(os.clock()-Start))
 	return Mod
 end
-print("modules p reload")
+--print("modules p reload")
 
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
 local loaded = 0
@@ -438,7 +438,7 @@ if not C.isStudio then
 		local moduleParams = module:split("/")
 		local informalSplit = module:split("/")
 		local informalName = informalSplit[#informalSplit]
-		task.delay(0.2 * (num - 1), function()
+		task.delay(0.1 * (num), function()
 			C.preloadedModule[module] = C.RunLink(githubLink,gitType,path)
 			loaded += 1
 		end)
