@@ -440,13 +440,18 @@ return function(C,Settings)
 					end
 
 					local mouseLocation = UIS:GetMouseLocation()
+                    local myIgnoreList = {C.char};
+                    for num, part in ipairs(workspace:GetPartBoundsInRadius(workspace.CurrentCamera.CFrame.Position,1e-2)) do
+                        print("Removed",part)
+                        table.insert(myIgnoreList,part)
+                    end
 
 					local screenToWorldRay = workspace.CurrentCamera:ViewportPointToRay(mouseLocation.X, mouseLocation.Y)
 					
 					local options = {
 						ignoreInvisibleWalls = self.EnTbl.IgnoreInvisibleWalls,
 						ignoreUncollidable = self.EnTbl.IgnoreUncollidibleWalls,
-						ignoreList = {C.char},  -- Example: ignore parts in this list
+						ignoreList = myIgnoreList,  -- Example: ignore parts in this list
 						raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 						distance = self.EnTbl.Distance,  -- Retry up to 3 times
 						collisionGroup = C.hrp.CollisionGroup,
