@@ -265,7 +265,7 @@ C.ChatVersion = TextChatService.ChatVersion.Name
 if not C.getgenv().PlaceName then
 	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
 end
-C.Debugs = {All = true,
+C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
@@ -468,7 +468,7 @@ C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 C.getgenv().realhookfunction = C.getgenv().realhookfunction or C.getgenv().hookfunction
 local MetaMethods = {"__index","__namecall","__newindex"}
-local AllowHookMethod = true;
+local AllowHookMethod = false;
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
