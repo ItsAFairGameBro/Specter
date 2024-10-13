@@ -438,7 +438,7 @@ if not C.isStudio then
 		local moduleParams = module:split("/")
 		local informalSplit = module:split("/")
 		local informalName = informalSplit[#informalSplit]
-		task.spawn(function()
+		task.delay(0.2 * (num - 1), function()
 			C.preloadedModule[module] = C.RunLink(githubLink,gitType,path)
 			loaded += 1
 		end)
