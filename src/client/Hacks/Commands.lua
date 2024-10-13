@@ -704,32 +704,38 @@ return function(C,Settings)
                                     self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
                                 end
                                 C.Spectate(theirChar)
-                                if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
-                                    break
-                                end
-                                if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
-                                    if not LastSpeedTime then
-                                        LastSpeedTime = os.clock()
-                                    elseif (os.clock() - LastSpeedTime > 1) then
-                                        break -- We did enough damage!
+                                local timeLeft = 0
+                                repeat
+                                    if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
+                                        break
                                     end
-                                else
-                                    LastSpeedTime = nil
-                                end
-                                if C.hrp then
-                                    local SeatPart = theirHuman.SeatPart
-                                    local Target
-                                    if not SeatPart or not SeatPart.Parent or false then
-                                        Target = thisPlr.Character:GetPivot()
-                                        Target += theirPrim.AssemblyLinearVelocity * .06
+                                    if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
+                                        if not LastSpeedTime then
+                                            LastSpeedTime = os.clock()
+                                        elseif (os.clock() - LastSpeedTime > 1) then
+                                            break -- We did enough damage!
+                                        end
                                     else
-                                        Target = SeatPart.Parent:GetPivot()
+                                        LastSpeedTime = nil
                                     end
-                                    if Target.Y < workspace.FallenPartsDestroyHeight + 12 then
-                                        Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 12,0)
+                                    
+                                    if C.hrp then
+                                        local SeatPart = theirHuman.SeatPart
+                                        local Target
+                                        if not SeatPart or not SeatPart.Parent or false then
+                                            Target = thisPlr.Character:GetPivot()
+                                            Target += theirPrim.AssemblyLinearVelocity * .06
+                                        else
+                                            Target = SeatPart.Parent:GetPivot()
+                                        end
+                                        if Target.Y < workspace.FallenPartsDestroyHeight + 12 then
+                                            Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 12,0)
+                                        end
+                                        C.DoTeleport(Target)
                                     end
-                                    C.DoTeleport(Target)
-                                end
+                                    timeLeft += RunS.PreSimulation:Wait()
+                                until timeLeft > 0.15
+                                
                                 task.wait(0.15)
                             end
             
