@@ -478,7 +478,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
     elseif not AllowHookMethod then
-        --print("Hook Method Disabled")
+        print("Hook Method Disabled; Attempt For:",hook,name)
         return
 	end
 	assert(name ~= "OldFunction", `[C.HookMethod]: {name} is a reserved method! Please use a different one!`)
