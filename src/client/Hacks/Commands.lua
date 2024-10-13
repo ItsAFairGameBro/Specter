@@ -734,9 +734,8 @@ return function(C,Settings)
                                         C.DoTeleport(Target)
                                     end
                                     timeLeft += RunS.PreSimulation:Wait()
-                                until timeLeft > 0.15
+                                until timeLeft >= 0.15
                                 
-                                task.wait(0.15)
                             end
             
                             if C.human:GetState() == Enum.HumanoidStateType.Seated and not wasSeated then --check if seated
