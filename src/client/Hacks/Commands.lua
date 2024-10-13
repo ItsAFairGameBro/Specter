@@ -736,7 +736,7 @@ return function(C,Settings)
                                         end
                                         C.DoTeleport(Target)
                                     end
-                                    timeLeft += RunS.PreRender:Wait()
+                                    timeLeft += task.wait(1/20)
                                 until timeLeft >= 0.15
 
                                 if exit then
