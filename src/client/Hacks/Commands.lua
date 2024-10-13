@@ -704,15 +704,18 @@ return function(C,Settings)
                                     self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
                                 end
                                 C.Spectate(theirChar)
+                                local exit = false
                                 local timeLeft = 0
                                 repeat
                                     if thisPlr.Parent ~= PS or not theirChar or not theirHuman or theirHuman:GetState() == Enum.HumanoidStateType.Dead or theirHuman.Health <= 0 or not theirPrim then
+                                        exit = true
                                         break
                                     end
                                     if theirPrim.AssemblyLinearVelocity.Magnitude > 100 then
                                         if not LastSpeedTime then
                                             LastSpeedTime = os.clock()
                                         elseif (os.clock() - LastSpeedTime > 1) then
+                                            exit = true
                                             break -- We did enough damage!
                                         end
                                     else
@@ -735,7 +738,9 @@ return function(C,Settings)
                                     end
                                     timeLeft += RunS.PreSimulation:Wait()
                                 until timeLeft >= 0.15
-                                
+                                if exit then
+                                    break
+                                end
                             end
             
                             if C.human:GetState() == Enum.HumanoidStateType.Seated and not wasSeated then --check if seated
