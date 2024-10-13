@@ -441,9 +441,11 @@ return function(C,Settings)
 
 					local mouseLocation = UIS:GetMouseLocation()
                     local myIgnoreList = {C.char};
-                    for num, part in ipairs(workspace:GetPartBoundsInRadius(workspace.CurrentCamera.CFrame.Position,1)) do
-                        print("Removed",part)
-                        table.insert(myIgnoreList,part)
+
+                    if self.EnTbl.CamIgnoreDist > 0 then
+                        for num, part in ipairs(workspace:GetPartBoundsInRadius(workspace.CurrentCamera.CFrame.Position,self.EnTbl.CamIgnoreDist)) do
+                            table.insert(myIgnoreList,part)
+                        end
                     end
 
 					local screenToWorldRay = workspace.CurrentCamera:ViewportPointToRay(mouseLocation.X, mouseLocation.Y)
@@ -477,7 +479,7 @@ return function(C,Settings)
 					},
 					{
 						Type = Types.Slider,
-						Title = "Distance",
+						Title = "Distance*",
 						Tooltip = "How far the ray is cast. Longer rays cost more performance.",
 						Layout = 1,Default=1000,
 						Min=1,Max=20000,Digits=0,
@@ -496,6 +498,14 @@ return function(C,Settings)
 						Tooltip = "Whether or not you teleport through uncollidible walls (walls that have CanCollide=false)",
 						Layout = 3,Default=true,
 						Shortcut="IgnoreUncollidibleWalls",
+					},
+                    {
+						Type = Types.Slider,
+						Title = "Cam Ignore Dist",
+						Tooltip = "Objects closer to your camera than this distance will be ignored",
+						Layout = 1,Default=1,
+						Min=0,Max=5,Digits=1,
+						Shortcut="CamIgnoreDist",
 					},
 				}
 			},
