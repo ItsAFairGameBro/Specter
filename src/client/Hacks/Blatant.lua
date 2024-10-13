@@ -441,7 +441,7 @@ return function(C,Settings)
 
 					local mouseLocation = UIS:GetMouseLocation()
                     local myIgnoreList = {C.char};
-                    for num, part in ipairs(workspace:GetPartBoundsInRadius(workspace.CurrentCamera.CFrame.Position,1e-2)) do
+                    for num, part in ipairs(workspace:GetPartBoundsInRadius(workspace.CurrentCamera.CFrame.Position,1)) do
                         print("Removed",part)
                         table.insert(myIgnoreList,part)
                     end
