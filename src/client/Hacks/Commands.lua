@@ -661,7 +661,7 @@ return function(C,Settings)
                     C.AddOverride(C.hackData.Blatant.Noclip, "fling")
                     RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
                         if C.hrp then
-                            C.hrp.AssemblyAngularVelocity = Vector3.new(0,1,0) * (speed or 1)*1e4
+                            C.hrp.AssemblyAngularVelocity = Vector3.new(1,0,1) * (speed or 1)*1e4
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
