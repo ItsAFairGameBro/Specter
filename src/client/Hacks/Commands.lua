@@ -736,7 +736,7 @@ return function(C,Settings)
                                         end
                                         C.DoTeleport(Target)
                                     end
-                                    timeLeft += RunS.PreSimulation:Wait() * 3
+                                    timeLeft += RunS.PreRender:Wait()
                                 until timeLeft >= 0.15
 
                                 if exit then
