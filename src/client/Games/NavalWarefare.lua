@@ -629,6 +629,7 @@ return function(C,Settings)
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 								if closestBasePart then
+                                    local closestParent = closestBasePart.Parent
 									if self.EnTbl.Spectate and Spectate then
 										deb+= 1 local saveDeb = deb
 										C.Spectate(closestBasePart)
@@ -646,9 +647,9 @@ return function(C,Settings)
 										C.firetouchinterest(instance,closestBasePart,1)
 										task.wait()
 									end--]]
-                                    local changedFunct = instance.HP.Changed:Connect(function(newVal)
+                                    local changedFunct = closestParent.HP.Changed:Connect(function(newVal)
                                         if newVal <= 0 then
-                                            instance:SetAttribute("Dead",true)
+                                            closestParent:SetAttribute("Dead",true)
                                             print("Set",instance,'To Death!')
                                         end
                                     end)
