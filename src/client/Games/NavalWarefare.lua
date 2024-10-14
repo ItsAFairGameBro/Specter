@@ -646,7 +646,15 @@ return function(C,Settings)
 										C.firetouchinterest(instance,closestBasePart,1)
 										task.wait()
 									end--]]
+                                    local changedFunct = instance.HP.Changed:Connect(function(newVal)
+                                        if newVal <= 0 then
+                                            instance:SetAttribute("Dead",true)
+                                            print("Set",instance,'To Death!')
+                                        end
+                                    end)
 									C.firetouchinterest(instance,closestBasePart)
+                                    task.wait(1/3)
+                                    changedFunct:Disconnect()
 								else
 									instance.CanTouch = true
 								end
