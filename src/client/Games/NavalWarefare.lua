@@ -1259,8 +1259,13 @@ return function(C,Settings)
 						end
 					end,
                     PlaneAdded = function(self, vehicle)
+                        print("NewVehicle",vehicle)
+                        if not self.EnTbl.AutoSit then
+                            return
+                        end
                         local owner = vehicle:FindFirstChild("Owner")
                         if owner and owner.Name == C.plr.Name then
+                            print("Sitting")
                             vehicle.SeatPart:Sit(C.human)
                         end
                     end,
@@ -1294,10 +1299,10 @@ return function(C,Settings)
 					},
                     {
 						Type = Types.Toggle,
-						Title = "Auto Pilot",
+						Title = "Auto Sit",
 						Tooltip = "Automatically makes you sit in the pilot seat of a ship you spawned",
 						Layout = 4,Default=false,
-						Shortcut="AutoPilot",
+						Shortcut="AutoSit",
 					},
 					--[[{
 						Type = Types.Toggle,
