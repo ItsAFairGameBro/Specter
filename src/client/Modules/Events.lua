@@ -71,6 +71,7 @@ return function(C,Settings)
 				if isMe then
 					C.SeatPart = seatPart
 				end
+                print("Firing","Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
 				FireEvent("Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
 			end--instance,key,connection
 			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.Seated:Connect(SeatAdded))
