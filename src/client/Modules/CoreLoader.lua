@@ -216,6 +216,8 @@ return function(C, _SETTINGS)
             elseif enTbl.En == nil and hackData.Default ~= nil then
 				enTbl.En = hackData.Default
             end
+            hackData.RealEnabled = enTbl.En
+            hackData.Enabled = enTbl.Enabled
 			
 
 			--Options Activation
