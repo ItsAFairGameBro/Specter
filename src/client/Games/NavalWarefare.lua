@@ -903,6 +903,7 @@ return function(C,Settings)
 						self:RefreshAllTags()
 					end,
 					MySeatRemoved = function(self)
+                        print("Seat Removed:",self.RealEnabled,self.Enabled)
 						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)

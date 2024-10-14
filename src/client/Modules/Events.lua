@@ -16,13 +16,16 @@ return function(C,Settings)
 				FireEvent("Others"..name,nil,...)
 			end
 		end
+        if name == "MySeatAdded" then
+            print("connecting myseatadded")
+        end
 		for hackTbl, funct in pairs(C.events[name] or {}) do
 			if typeof(hackTbl) ~= "table" then
 				task.spawn(funct,...)
 			elseif hackTbl.RealEnabled or hackTbl.AlwaysFireEvents then
 				local Thread = task.spawn(funct,hackTbl,...)
 				if hackTbl.Threads then
-					table.insert(hackTbl.Threads,Thread)
+					--table.insert(hackTbl.Threads,Thread)
 				end
 			end
 		end
@@ -71,7 +74,7 @@ return function(C,Settings)
 				if isMe then
 					C.SeatPart = seatPart
 				end
-                print("Firing","Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart,C.events.MySeatAdded)
+                --print("Firing","Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart,C.events.MySeatAdded)
 				FireEvent("Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
 			end--instance,key,connection
 			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.Seated:Connect(SeatAdded))
