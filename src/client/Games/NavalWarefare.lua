@@ -899,6 +899,7 @@ return function(C,Settings)
 						self:RefreshAllTags()
 					end,
 					MySeatAdded=function(self)
+                        print("Seat Added:",self.RealEnabled,self.Enabled)
 						self:RefreshAllTags()
 					end,
 					MySeatRemoved = function(self)
