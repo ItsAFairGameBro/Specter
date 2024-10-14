@@ -884,12 +884,15 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyTeamAdded=function(self)
+                        print("New Team")
 						self:RefreshAllTags()
 					end,
 					MySeatAdded=function(self)
+                        print("New Seat")
 						self:RefreshAllTags()
 					end,
 					MySeatRemoved = function(self)
+                        print("Delete Seat")
 						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)

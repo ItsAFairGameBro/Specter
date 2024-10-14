@@ -212,7 +212,6 @@ return function(C, _SETTINGS)
 			enHackTab[hackData.Shortcut] = enTbl
 			hackData.EnTbl = enTbl
             if _SETTINGS.StartDisabled then
-                print("Starting Disabled")
                 enTbl.En = false
             elseif enTbl.En == nil and hackData.Default ~= nil then
 				enTbl.En = hackData.Default
