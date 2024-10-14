@@ -899,11 +899,9 @@ return function(C,Settings)
 						self:RefreshAllTags()
 					end,
 					MySeatAdded=function(self)
-                        print("Seat Added:",self.RealEnabled,self.Enabled)
 						self:RefreshAllTags()
 					end,
 					MySeatRemoved = function(self)
-                        print("Seat Removed:",self.RealEnabled,self.Enabled)
 						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)
@@ -1260,6 +1258,15 @@ return function(C,Settings)
 							self:Set(Vehicle,LineVelocity,AlignOrientation,1, 1)
 						end
 					end,
+                    PlaneAdded = function(self, vehicle)
+                        local owner = vehicle:FindFirstChild("Owner")
+                        if owner and owner.Name == C.plr.Name then
+                            vehicle.SeatPart:Sit(C.human)
+                        end
+                    end,
+                    ShipAdded = function(self, ship)
+                        self.Events.PlaneAdded(self,ship)
+                    end,
 				},
 				Options = {
 					{
@@ -1284,6 +1291,13 @@ return function(C,Settings)
 						Tooltip = "Allows vehicles that you drive to go through collidble objects",
 						Layout = 3,Default=false,
 						Shortcut="NoCollisions",
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Auto Pilot",
+						Tooltip = "Automatically makes you sit in the pilot seat of a ship you spawned",
+						Layout = 4,Default=false,
+						Shortcut="AutoPilot",
 					},
 					--[[{
 						Type = Types.Toggle,

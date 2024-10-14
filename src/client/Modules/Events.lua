@@ -24,8 +24,6 @@ return function(C,Settings)
 				if hackTbl.Threads then
 					table.insert(hackTbl.Threads,Thread)
                 end
-            elseif name == "MySeatAdded" then
-                print(hackTbl.Title,"Not running bc hcktbl:",hackTbl.RealEnabled)
 			end
 		end
 	end

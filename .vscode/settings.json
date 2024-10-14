@@ -28,6 +28,7 @@
         "getinstances",
         "getupvalue",
         "getreg",
-        "getinfo"
+        "getinfo",
+        "getgc"
     ]
 }
