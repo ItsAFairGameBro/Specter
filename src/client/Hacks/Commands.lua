@@ -729,7 +729,7 @@ return function(C,Settings)
                                     if C.hrp then
                                         local SeatPart = theirHuman.SeatPart
                                         local Target
-                                        if not SeatPart or not SeatPart.Parent or false then
+                                        if not SeatPart or not SeatPart.Parent then
                                             Target = thisPlr.Character:GetPivot()
                                             Target += theirPrim.AssemblyLinearVelocity * .06
                                         else

@@ -849,8 +849,8 @@ return function(C,Settings)
 					end
 					local Base = tag.Adornee.Parent
 					if Base then
-						local Team, HP = Base:WaitForChild("Team",5), Base:WaitForChild("HP")
-						if Team and HP and HP.Value > 0 then
+						local Team = Base:WaitForChild("Team",5)
+						if Team and C.getHealth(Base) > 0 then
 							local Plane = C.human and C.human.SeatPart and C.human.SeatPart.Parent
 							if Plane and C.human.SeatPart.Name == "Seat" then
 								local HitCode = Plane:FindFirstChild("HitCode")
@@ -859,6 +859,8 @@ return function(C,Settings)
 									return
 								end
 							end
+                        elseif Base:FindFirstChild("HP") and Base.HP.Value == 0 then
+                            Base:SetAttribute("Dead",true)
 						end
 					end
 					tag.Enabled = false
@@ -884,15 +886,12 @@ return function(C,Settings)
 				end,
 				Events = {
 					MyTeamAdded=function(self)
-                        print("New Team")
 						self:RefreshAllTags()
 					end,
 					MySeatAdded=function(self)
-                        print("New Seat")
 						self:RefreshAllTags()
 					end,
 					MySeatRemoved = function(self)
-                        print("Delete Seat")
 						self:RefreshAllTags()
 					end,
 					IslandAdded=function(self,island)

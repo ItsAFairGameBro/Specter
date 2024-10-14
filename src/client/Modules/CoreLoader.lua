@@ -388,7 +388,7 @@ return function(C, _SETTINGS)
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
 			--if (data.RealEnabled or data.AlwaysActivate) and data.Activate and not data.DontActivate then
-				task.spawn(data.SetValue,data,data.EnTbl.En, true)
+				task.delay(1/4,data.SetValue,data,data.EnTbl.En, true)
 			--end
 		end
 	end
