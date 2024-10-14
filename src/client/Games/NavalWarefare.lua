@@ -41,7 +41,7 @@ local function Static(C,Settings)
     function C.getHealth(asset)
         local HP = asset:FindFirstChild("HP")
         if HP then
-            return asset:GetAttribute("Dead") and 0 or HP.Value
+            return (asset:GetAttribute("Dead") or asset:GetAttribute("Ignore")) and 0 or HP.Value
         end
     end
 	
@@ -650,12 +650,19 @@ return function(C,Settings)
                                     local changedFunct = closestParent.HP.Changed:Connect(function(newVal)
                                         if newVal <= 0 then
                                             closestParent:SetAttribute("Dead",true)
-                                            print("Set",closestParent,'To Death!')
                                         end
                                     end)
+                                    local setIgnore = false
+                                    if closestParent.HP.Value <= 300 then
+                                        closestParent:SetAttribute("Ignore",true)
+                                        setIgnore = true
+                                    end
 									C.firetouchinterest(instance,closestBasePart)
-                                    task.wait(1/3)
+                                    task.wait(2/3)
                                     changedFunct:Disconnect()
+                                    if setIgnore then
+                                        closestParent:SetAttribute("Ignore",nil)
+                                    end
 								else
 									instance.CanTouch = true
 								end
