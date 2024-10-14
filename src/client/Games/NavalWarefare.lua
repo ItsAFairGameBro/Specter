@@ -1259,21 +1259,16 @@ return function(C,Settings)
 						end
 					end,
                     PlaneAdded = function(self, vehicle)
-                        print("NewVehicle",vehicle)
                         if not self.EnTbl.AutoSit then
-                            return print("autofit tbl",self.EnTbl)
+                            return
                         end
                         local owner = vehicle:FindFirstChild("Owner")
                         if owner then
-                            print(owner.Value)
-                            if owner.Name == C.plr.Name then
+                            if owner.Value == C.plr.Name then
                                 print("Sitting")
                                 vehicle.SeatPart:Sit(C.human)
                             end
-                        else
-                            print("owner not found")
                         end
-                        
                     end,
                     ShipAdded = function(self, ship)
                         self.Events.PlaneAdded(self,ship)
