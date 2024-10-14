@@ -1264,10 +1264,14 @@ return function(C,Settings)
                             return
                         end
                         local owner = vehicle:FindFirstChild("Owner")
-                        if owner and owner.Name == C.plr.Name then
-                            print("Sitting")
-                            vehicle.SeatPart:Sit(C.human)
+                        if owner then
+                            print(owner.Value)
+                            if owner.Name == C.plr.Name then
+                                print("Sitting")
+                                vehicle.SeatPart:Sit(C.human)
+                            end
                         end
+                        
                     end,
                     ShipAdded = function(self, ship)
                         self.Events.PlaneAdded(self,ship)
