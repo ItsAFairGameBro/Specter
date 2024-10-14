@@ -1254,14 +1254,14 @@ return function(C,Settings)
 							Vehicle.PrimaryPart.AssemblyAngularVelocity = Vector3.zero
 							local MainBody = Vehicle:WaitForChild("MainBody")
 							local LineVelocity = MainBody:WaitForChild("BodyVelocity")
-							local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")		
+							local AlignOrientation = LineVelocity.Parent:FindFirstChildWhichIsA("AlignOrientation")
 							self:Set(Vehicle,LineVelocity,AlignOrientation,1, 1)
 						end
 					end,
                     PlaneAdded = function(self, vehicle)
                         print("NewVehicle",vehicle)
                         if not self.EnTbl.AutoSit then
-                            return
+                            return print("autofit tbl",self.EnTbl)
                         end
                         local owner = vehicle:FindFirstChild("Owner")
                         if owner then
@@ -1270,6 +1270,8 @@ return function(C,Settings)
                                 print("Sitting")
                                 vehicle.SeatPart:Sit(C.human)
                             end
+                        else
+                            print("owner not found")
                         end
                         
                     end,
