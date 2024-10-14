@@ -211,9 +211,13 @@ return function(C, _SETTINGS)
 			local enTbl = enHackTab[hackData.Shortcut] or {}
 			enHackTab[hackData.Shortcut] = enTbl
 			hackData.EnTbl = enTbl
-			if enTbl.En == nil and hackData.Default ~= nil then
+            if _SETTINGS.StartDisabled then
+                print("Starting Disabled")
+                enTbl.En = false
+            elseif enTbl.En == nil and hackData.Default ~= nil then
 				enTbl.En = hackData.Default
-			end
+            end
+			
 
 			--Options Activation
 			local optionsUnused = table.clone(enTbl)

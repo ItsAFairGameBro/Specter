@@ -668,7 +668,7 @@ return function(C,Settings)
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
-                    self.ActionFrame = self.ActionFrame or C.AddAction({Name="fling",Title=`{doLoopFling and "L_" or ""}Flinging..`,Tags={"RemoveOnDestroy"},
+                    self.ActionFrame = self.ActionFrame or C.AddAction({Name="fling",Title=`{doLoopFling and "Loop " or ""}Flinging..`,Tags={"RemoveOnDestroy"},
                     Time=function(ActionClone,info)
                         ActionClone.Time.Text = "Loading.."
                     end,Stop=function(onRequest)
@@ -715,7 +715,7 @@ return function(C,Settings)
                                         exit = true
                                         break
                                     end
-                                    if (theirPrim.AssemblyLinearVelocity - Vector3.new(0, theirPrim.AssemblyLinearVelocity.Y, 0)).Magnitude > 100 then
+                                    if (theirPrim.AssemblyAngularVelocity).Magnitude > 100 then
                                         if not LastSpeedTime then
                                             LastSpeedTime = os.clock()
                                         elseif (os.clock() - LastSpeedTime > 1) then

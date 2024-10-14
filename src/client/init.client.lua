@@ -281,7 +281,8 @@ C.Debugs = {All = false,
 local Settings = C.getgenv().SETTINGS
 if not Settings then
 	Settings = {
-		ServerSaveDeleteTime = 3600 * 24 -- Time before deletion
+		ServerSaveDeleteTime = 3600 * 24, -- Time before deletion
+        StartDisabled = true, -- Starts everything disabled, regardless of your saved settings
 	}
 	C.getgenv().SETTINGS = Settings
 end

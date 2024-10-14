@@ -28,6 +28,9 @@ return function(C,Settings)
 		end
 	end
 	local function ShouldConnectEvent(name)
+        if C.events[name]==nil then
+            warn("Not Loading",name,"Event!")
+        end
 		return Settings.ConnectAllEvents or C.events[name]~=nil
 	end
 	C.FireEvent = FireEvent
