@@ -1265,8 +1265,8 @@ return function(C,Settings)
                         local owner = vehicle:FindFirstChild("Owner")
                         if owner then
                             if owner.Value == C.plr.Name then
-                                print("Sitting")
-                                vehicle.SeatPart:Sit(C.human)
+                                --print("Sitting")
+                                vehicle.Seat:Sit(C.human)
                             end
                         end
                     end,
