@@ -691,7 +691,9 @@ return function(C,Settings)
 			C.DebugMessage("Thread",`Stopping thread {tostring(thread)}, current status: {Status}`)
 			local success, result = pcall(coroutine.close,thread)
 			if not success then
-				warn(`Failed to stop thread {tostring(thread)} (Status: {Status}); {result}.`)
+				warn(`Failed to stop thread {tostring(thread)} (Status: {Status}); {result}. Retrying IN 1s`)
+                task.wait(1)
+                C.StopThread(thread)
 			end
 			return true
 		else

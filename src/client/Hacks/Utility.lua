@@ -95,7 +95,7 @@ return function(C,Settings)
 							return -- Who cares?
 						end
 						local KickedButton = C.UI.KickedButton
-						if not self.BestMessage or #errorMessage>0 then
+						if not self.BestMessage or (#errorMessage>0 and errorMessage ~= "You have been kicked from the game") then
 							self.BestMessage = errorMessage
 							print((`%s Error Has Occured (%.1f): %s`):format(identification, time(), errorMessage))
 						end

@@ -715,7 +715,7 @@ return function(C,Settings)
                                         exit = true
                                         break
                                     end
-                                    if (theirPrim.AssemblyAngularVelocity).Magnitude > 100 then
+                                    if (theirPrim.AssemblyAngularVelocity).Magnitude > 50 then
                                         if not LastSpeedTime then
                                             LastSpeedTime = os.clock()
                                         elseif (os.clock() - LastSpeedTime > 1) then
