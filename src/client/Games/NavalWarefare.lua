@@ -599,13 +599,20 @@ return function(C,Settings)
 				Activate = function(self, newValue)
 					-- Disconnect funct and set up childadded workspace event for the projectiles
 					if newValue then
+						if C.SeatPart then
+							self.Events.MySeatAdded(self,C.SeatPart)
+						end
+					end
+				end,
+				Events = {
+					MySeatAdded = function(self,seatPart)
 						local deb = 0
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
 							if instance.Name ~= "Bomb" then
 								return
 							end
+                            instance.CanTouch = false
 							local Spectate = C.hrp and (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude < 90
-							instance.CanTouch = false
 							task.wait(.4)
 							if instance.Parent then
 								local nearestTbl = {}
@@ -645,22 +652,9 @@ return function(C,Settings)
 								end
 							end
 						end))
-						--[[if C.SeatPart then
-							self.Events.MySeatAdded(self,C.SeatPart)
-						end--]]
-					end
-				end,
-				--[[Events = {
-					MySeatAdded = function(self,seatPart)
-						local vehicle = seatPart.Parent
-						local bomb = vehicle:FindFirstChild("Bomb")
-						if bomb then
-							table.insert(self.Functs,bomb:GetPropertyChangedSignal("Value"):Connect(function()
-								
-							end))
-						end
-					end
-				},--]]
+					end,
+                    MySeatRemoved = C.ReloadHack,
+				},
 				Options = {
 					{
 						Type = Types.Toggle,
