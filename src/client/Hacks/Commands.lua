@@ -658,7 +658,7 @@ return function(C,Settings)
             FlingThread=nil,
             OldLoc=nil,
             ActionFrame=nil,
-            SetFling=function(self,enabled,speed)
+            SetFling=function(self,enabled,speed,doLoopFling)
                 RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
                 if enabled then
                     C.AddOverride(C.hackData.Blatant.Noclip, "fling")
@@ -668,7 +668,8 @@ return function(C,Settings)
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
-                    self.ActionFrame = self.ActionFrame or C.AddAction({Name="fling",Title="Flinging..",Tags={"RemoveOnDestroy"},Time=function(ActionClone,info)
+                    self.ActionFrame = self.ActionFrame or C.AddAction({Name="fling",Title=`{doLoopFling and "L_" or ""}Flinging..`,Tags={"RemoveOnDestroy"},
+                    Time=function(ActionClone,info)
                         ActionClone.Time.Text = "Loading.."
                     end,Stop=function(onRequest)
                         self.Parent.unfling:Run()
@@ -697,7 +698,7 @@ return function(C,Settings)
                 self.FlingThread = task.spawn(function()
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
-                            self:SetFling(true,args[2])
+                            self:SetFling(true,args[2],doLoopFling)
                             local LastSpeedTime
                             for i = 0,30,1 do
                                 local theirChar = thisPlr.Character
