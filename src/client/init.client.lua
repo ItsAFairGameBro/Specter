@@ -283,7 +283,7 @@ if not Settings then
 	Settings = {
 		ServerSaveDeleteTime = 3600 * 24, -- Time before deletion
         StartDisabled = false, -- Starts everything disabled, regardless of your saved settings
-        ConnectAllEvents = true, -- Connects every event [DANGEROUS]
+        ConnectAllEvents = false, -- Connects every event [EXPENSIVE]
 	}
 	C.getgenv().SETTINGS = Settings
 end

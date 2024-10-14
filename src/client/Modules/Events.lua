@@ -63,6 +63,7 @@ return function(C,Settings)
 			local lastSeatPart
 			local function SeatAdded(active,seatPart)
 				--Do not connect global SeatAdded connections, hence the "nil"
+                print("Seat:", theirChar, active, seatPart)
 				if active then
 					lastSeatPart = seatPart
 				elseif not active and not lastSeatPart then
@@ -73,6 +74,7 @@ return function(C,Settings)
 				end
 				FireEvent("Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
 			end--instance,key,connection
+            print("Connecting Seat Connections")
 			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.Seated:Connect(SeatAdded))
 			SeatAdded(theirHuman.SeatPart~=nil, theirHuman.SeatPart)
 		end
