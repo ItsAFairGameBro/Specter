@@ -650,7 +650,7 @@ return function(C,Settings)
                                     local changedFunct = closestParent.HP.Changed:Connect(function(newVal)
                                         if newVal <= 0 then
                                             closestParent:SetAttribute("Dead",true)
-                                            print("Set",instance,'To Death!')
+                                            print("Set",closestParent,'To Death!')
                                         end
                                     end)
 									C.firetouchinterest(instance,closestBasePart)
