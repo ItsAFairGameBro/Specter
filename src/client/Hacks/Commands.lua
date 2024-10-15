@@ -47,7 +47,7 @@ return function(C,Settings)
         },
         ["spectate"]={
             Parameters={{Type="Player"}},
-            AfterTxt="%s",
+            AfterTxt=" %s",
             RequiresRefresh=true,
             Run=function(self,args)
                 C.Spectate(args[1][1].Character)

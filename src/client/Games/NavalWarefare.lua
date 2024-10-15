@@ -187,7 +187,7 @@ local function Static(C,Settings)
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
-                AfterTxt = " Success",
+                AfterTxt = " Started!",
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
@@ -207,7 +207,7 @@ local function Static(C,Settings)
                             C.RemoveAction(info.Name)
                         end))
                         local actionClone = C.AddAction(info)
-                        actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
+                        actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
                             if Genv.LastKick == nil or (Genv.LastKick - os.clock()) <= 0 then
                                 actionClone.Time.Text = "Sending (1/2)"
@@ -222,7 +222,7 @@ local function Static(C,Settings)
                                     end)
                                     targetPlr:SetAttribute("KickCounter", (targetPlr:GetAttribute("KickCounter") or 0) + 1)
                                     if not info.Enabled then return end
-                                    actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
+                                    actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
                                 else
                                     Genv.LastKick = os.clock() + 4
                                     actionClone.Time.Text = "More Time Needed"
