@@ -940,7 +940,7 @@ return function(C,Settings)
 			if not connection.ForeignState and false then
 				connection[enabled and "Enable" or "Disable"](connection)
 			end
-            print(rawget(connection,"LuaConnection"))
+            print("Connection",connection.LuaConnection)
 		end
 	end
 	--Function to set instance connection
