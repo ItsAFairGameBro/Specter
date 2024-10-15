@@ -2970,6 +2970,7 @@ return function(C, Settings)
 		for name, data in pairs(C.getgenv().ActionsList) do
             print("Searching",tagName,data.Tags)
 			if table.find(data.Tags,tagName) then
+                print("Found",name)
 				Items[name] = data
 			end
 		end
@@ -2978,6 +2979,7 @@ return function(C, Settings)
 	
 	function C.PurgeActionsWithTag(tagName:string)
 		for name, data in pairs(C.GetActionsWithTag(tagName)) do
+            print("Purged",name)
 			C.RemoveAction(name)
 		end
 	end
