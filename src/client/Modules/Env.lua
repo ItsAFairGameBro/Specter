@@ -940,7 +940,7 @@ return function(C,Settings)
 			if false and not connection.ForeignState and false then
 				connection[enabled and "Enable" or "Disable"](connection)
 			end
-            print("Conn", num, connection.Function)
+            print("Conn", num, connection.Function == nil)
 		end
 	end
 	--Function to set instance connection
