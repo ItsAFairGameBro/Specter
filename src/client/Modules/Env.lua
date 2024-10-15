@@ -936,15 +936,12 @@ return function(C,Settings)
 	end
 
 	function C.InternallySetConnections(signal,enabled)
-		for num, connection in ipairs(C.getconnections(signal)) do
-			--if false and not connection.ForeignState and false then
-                if enabled then
-                    connection:Enable()
-                else
-                    connection:Disable()
-                end
-			--end
-            --print("Conn", num, tostring(connection.ForeignState))
+		for _, connection in ipairs(C.getconnections(signal)) do
+			if enabled then
+                connection:Enable()
+            else
+                connection:Disable()
+            end
 		end
 	end
 	--Function to set instance connection

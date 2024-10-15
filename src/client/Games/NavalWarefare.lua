@@ -320,7 +320,23 @@ return function(C,Settings)
 					end,
 				}
 			},
-			{
+            --
+            {
+				Title = "Switch Teams",
+				Tooltip = "One click to change teams!",
+				Layout = 4, Functs = {}, Threads = {},
+				Shortcut = "ChangeTeams", Type = "NoToggle",
+                Activate = function(self)
+                    local part2Touch
+                    if C.plr.Team.Name == "Japan" then
+                        part2Touch = C.StringWait(workspace,"Lobby.TeamChange.ToUSA")
+                    else
+                        part2Touch = C.StringWait(workspace,"Lobby.TeamChange.ToJapan")
+                    end
+                    C.firetouchinterest(C.hrp, part2Touch)
+                end,
+            },
+			--[[{
 				Title = ({"OP","Balanced","NEENOO's","NotAVirus","Easy"})[math.random(1,5)].." God Mode",
 				Tooltip = "Keeps you invulerable using a forcefield. Only works in planes and when unseated",
 				Layout = 4, Functs = {}, Threads = {},
@@ -364,7 +380,7 @@ return function(C,Settings)
 						Shortcut="FFVisibility",
 					},
 				},
-			},
+			},--]]
 			{
 				Title = "Projectile Hit",
 				Tooltip = "Instantly hits enemies when shooting bullets",
