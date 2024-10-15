@@ -761,7 +761,6 @@ return function(C,Settings)
                 return true
             end,
             Events={MyCharAdded=function(self,theirPlr,theirChar,firstRun)
-                print("Set Fling",self.Enabled)
                 C.SetHumanoidTouch(self.Enabled,"fling")
             end}
         },
