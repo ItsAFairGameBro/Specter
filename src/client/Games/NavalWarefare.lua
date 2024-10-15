@@ -197,7 +197,7 @@ local function Static(C,Settings)
                     local Genv = C.getgenv()
                     task.spawn(function()
                         local functs = {}
-                        local info = {Name="NavalVotekick",Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}, Stop=function()
+                        local info = {Name="NavalVotekick",Title="Kick Starting", Tags={"RemoveOnDestroy"}, Stop=function()
                             C.ClearFunctTbl(functs)
                         end}
                         local JustKicked = false
@@ -207,6 +207,7 @@ local function Static(C,Settings)
                             C.RemoveAction(info.Name)
                         end))
                         local actionClone = C.AddAction(info)
+                        actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
                             if Genv.LastKick == nil or (Genv.LastKick - os.clock()) <= 0 then
                                 actionClone.Time.Text = "Sending (1/2)"
