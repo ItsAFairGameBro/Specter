@@ -668,12 +668,12 @@ return function(C,Settings)
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
                     end)
-                    self.ActionFrame = self.ActionFrame or C.AddAction({Name="fling",Title=`{doLoopFling and "Loop " or ""}Flinging..`,Tags={"RemoveOnDestroy"},
+                    self.ActionFrame = C.AddAction({Name="fling",Title=`{doLoopFling and "Loop " or ""}Flinging..`,Tags={"RemoveOnDestroy"},
                     Time=function(ActionClone,info)
                         ActionClone.Time.Text = "Loading.."
                     end,Stop=function(onRequest)
                         self.Parent.unfling:Run()
-                    end,})
+                    end,}) or self.ActionFrame
                 else
                     C.RemoveOverride(C.hackData.Blatant.Noclip, "fling")
                     C.RemoveAction("fling")
