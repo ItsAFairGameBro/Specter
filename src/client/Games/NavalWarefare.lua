@@ -195,7 +195,6 @@ local function Static(C,Settings)
                         return
                     end
                     local Genv = C.getgenv()
-                    local Counter = 0
                     task.spawn(function()
                         local functs = {}
                         local info = {Name="NavalVotekick",Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}, Stop=function()
@@ -220,9 +219,9 @@ local function Static(C,Settings)
                                     task.delay(1,function()
                                         JustKicked = false
                                     end)
-                                    Counter+=1
+                                    targetPlr:SetAttribute("KickCounter", (targetPlr:GetAttribute("KickCounter") or 0) + 1)
                                     if not info.Enabled then return end
-                                    actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. Counter .. "/6)"
+                                    actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
                                 else
                                     Genv.LastKick = os.clock() + 4
                                     actionClone.Time.Text = "More Time Needed"
