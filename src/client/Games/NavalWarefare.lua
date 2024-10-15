@@ -199,9 +199,9 @@ local function Static(C,Settings)
                         local info = {Name=self.Shortcut,Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}}
                         local actionClone = C.AddAction(info)
                         while info.Enabled do
-                            if self.LastKick == nil or (os.clock() - self.LastKick) >= TimeNeeded then
+                            if self.LastKick == nil or (self.LastKick - os.clock()) <= 0 then
                                 if not LegitVoteKick or C.StringWait(RS,"ServerResponse"):InvokeServer("CheckCanVote") then
-                                    self.LastKick = os.clock()
+                                    self.LastKick = os.clock() + TimeNeeded
                                     C.StringWait(RS,"Event"):FireServer("KickExploiter",targetPlr)
                                     print("Sent Kick")
                                     Counter+=1
@@ -212,9 +212,9 @@ local function Static(C,Settings)
                                 end
                                 task.wait(1)
                             end
-                            while (os.clock() - self.LastKick < TimeNeeded) do
-                                actionClone.Time.Text = C.GetFormattedTime(os.clock() - TimeNeeded)
-                                task.wait(math.min(os.clock() - self.LastKick, 1))
+                            while (self.LastKick - os.clock() > 0) do
+                                actionClone.Time.Text = C.GetFormattedTime(self.LastKick - TimeNeeded)
+                                task.wait(math.min(self.LastKick - os.clock(), 1))
                             end
                         end
                     end)
