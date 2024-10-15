@@ -2968,6 +2968,7 @@ return function(C, Settings)
 	function C.GetActionsWithTag(tagName:string)
 		local Items = {}
 		for name, data in pairs(C.getgenv().ActionsList) do
+            print("Searching",tagName,data.Tags)
 			if table.find(data.Tags,tagName) then
 				Items[name] = data
 			end
