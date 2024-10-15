@@ -187,7 +187,7 @@ local function Static(C,Settings)
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
-                AfterTxt = " $%.2f",LastKick = nil,
+                AfterTxt = " Success",LastKick = nil,
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
@@ -213,12 +213,12 @@ local function Static(C,Settings)
                                 task.wait(1)
                             end
                             while (self.LastKick - os.clock() > 0) do
-                                actionClone.Time.Text = C.GetFormattedTime(self.LastKick - TimeNeeded)
+                                actionClone.Time.Text = C.GetFormattedTime(self.LastKick - os.clock())
                                 task.wait(math.min(self.LastKick - os.clock(), 1))
                             end
                         end
                     end)
-                    
+                    return true
                 end,
             }
         }
