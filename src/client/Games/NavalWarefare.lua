@@ -197,7 +197,16 @@ local function Static(C,Settings)
                     local Genv = C.getgenv()
                     local Counter = 0
                     task.spawn(function()
-                        local info = {Name=self.Shortcut,Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}}
+                        local functs = {}
+                        local info = {Name="NavalVotekick",Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}, Stop=function()
+                            C.ClearFunctTbl(functs)
+                        end}
+                        local JustKicked = false
+                        table.insert(functs,targetPlr.AncestryChanged:Connect(function()
+                            C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`,
+                                JustKicked and Color3.fromRGB(0,255) or nil)
+                            C.RemoveAction(info.Name)
+                        end))
                         local actionClone = C.AddAction(info)
                         while info.Enabled do
                             if Genv.LastKick == nil or (Genv.LastKick - os.clock()) <= 0 then
@@ -206,7 +215,11 @@ local function Static(C,Settings)
                                     if not info.Enabled then return end
                                     actionClone.Time.Text = "Sending (2/2)"
                                     Genv.LastKick = os.clock() + TimeNeeded
+                                    JustKicked = true
                                     C.StringWait(RS,"Event"):FireServer("KickExploiter",targetPlr)
+                                    task.delay(1,function()
+                                        JustKicked = false
+                                    end)
                                     Counter+=1
                                     if not info.Enabled then return end
                                     actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. Counter .. "/6)"
