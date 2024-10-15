@@ -1158,6 +1158,7 @@ return function(C,Settings)
 	end
 	function C.GetFormattedTime(totalTime,shouldBeLowered,extraSettings)
 		extraSettings = extraSettings or {}
+        totalTime = math.ceil(totalTime)
 		local carryDown = false
 		local Table = {}
 		for order,vals in pairs(TimeDurations) do

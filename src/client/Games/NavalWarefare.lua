@@ -182,7 +182,7 @@ local function Static(C,Settings)
 		return closestPart,closestDist
 	end
     table.insert(C.InsertCommandFunctions,function()
-        local LegitVoteKick = false
+        local LegitVoteKick = true
         local TimeNeeded = LegitVoteKick and 120 or 3
         return {
             ["votekick"] = {
@@ -200,15 +200,19 @@ local function Static(C,Settings)
                         local actionClone = C.AddAction(info)
                         while info.Enabled do
                             if self.LastKick == nil or (self.LastKick - os.clock()) <= 0 then
+                                actionClone.Time.Text = "Sending (1/2)"
                                 if not LegitVoteKick or C.StringWait(RS,"ServerResponse"):InvokeServer("CheckCanVote") then
+                                    if not info.Enabled then return end
+                                    actionClone.Time.Text = "Sending (2/2)"
                                     self.LastKick = os.clock() + TimeNeeded
                                     C.StringWait(RS,"Event"):FireServer("KickExploiter",targetPlr)
-                                    print("Sent Kick")
                                     Counter+=1
+                                    if not info.Enabled then return end
                                     actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. Counter .. "/6)"
                                 else
-                                    self.LastKick = os.clock() + 3
-                                    print("Waiting Longer")
+                                    self.LastKick = os.clock() + 4
+                                    actionClone.Time.Text = "Failed (More Time Required)"
+                                    task.wait(1)
                                 end
                             end
                             while (info.Enabled and self.LastKick - os.clock() > 0) do
