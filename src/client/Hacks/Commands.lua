@@ -680,7 +680,7 @@ return function(C,Settings)
                     C.Spectate(C.plr.Character)
                 end
                 self.Enabled = enabled -- Toggle Events
-                self.Events.MyCharAdded(self,C.plr)
+                self.Events.MyCharAdded(self,C.plr,nil,nil)
             end,
             Run=function(self,args,doLoopFling)
                 C.TblRemove(args[1],C.plr) -- don't fling yourself!
@@ -761,6 +761,7 @@ return function(C,Settings)
                 return true
             end,
             Events={MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+                print("Set Fling",self.Enabled)
                 C.SetHumanoidTouch(self.Enabled,"fling")
             end}
         },
