@@ -181,6 +181,48 @@ local function Static(C,Settings)
 		end
 		return closestPart,closestDist
 	end
+    table.insert(C.InsertCommandFunctions,function()
+        local LegitVoteKick = true
+        local TimeNeeded = LegitVoteKick and 120 or 3
+        return {
+            ["votekick"] = {
+                Parameters={{Type="Player"}},
+                AfterTxt = " $%.2f",LastKick = nil,
+                Run = function(self,args)
+                    C.RemoveAction("NavalVotekick")
+                    local targetPlr = args[1][1]
+                    if not targetPlr then--or targetPlr == C.plr then
+                        return
+                    end
+                    local Counter = 0
+                    task.spawn(function()
+                        local info = {Name=self.Shortcut,Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}}
+                        local actionClone = C.AddAction(info)
+                        while info.Enabled do
+                            if self.LastKick == nil or (os.clock() - self.LastKick) >= TimeNeeded then
+                                if not LegitVoteKick or C.StringWait(RS,"ServerResponse"):InvokeServer("CheckCanVote") then
+                                    self.LastKick = os.clock()
+                                    C.StringWait(RS,"Event"):FireServer("KickExploiter",targetPlr)
+                                    print("Sent Kick")
+                                    Counter+=1
+                                    actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. Counter .. "/6)"
+                                else
+                                    self.LastKick = os.clock() + 3
+                                    print("Waiting Longer")
+                                end
+                                task.wait(1)
+                            end
+                            while (os.clock() - self.LastKick < TimeNeeded) do
+                                actionClone.Time.Text = C.GetFormattedTime(os.clock() - TimeNeeded)
+                                task.wait(math.min(os.clock() - self.LastKick, 1))
+                            end
+                        end
+                    end)
+                    
+                end,
+            }
+        }
+    end)
 end
 return function(C,Settings)
 	Static(C,Settings)

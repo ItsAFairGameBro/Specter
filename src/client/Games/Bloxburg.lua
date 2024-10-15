@@ -131,7 +131,7 @@ local function Static(C,Settings)
     end)
     table.insert(C.InsertCommandFunctions,function()
         return {
-            ["Donate"] = {
+            ["donate"] = {
                 Parameters={{Type="Player",ExcludeMe=true},{Type="Number",Min=1,Max=50000,Step=1}},
                 AfterTxt = " $%.2f",
                 Run = function(self,args)
