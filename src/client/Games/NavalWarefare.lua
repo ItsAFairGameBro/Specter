@@ -187,37 +187,38 @@ local function Static(C,Settings)
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
-                AfterTxt = " Success",LastKick = nil,
+                AfterTxt = " Success",
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
                     if not targetPlr then--or targetPlr == C.plr then
                         return
                     end
+                    local Genv = C.getgenv()
                     local Counter = 0
                     task.spawn(function()
                         local info = {Name=self.Shortcut,Title="Kicking " .. targetPlr.Name .. " (1/6)", Tags={"RemoveOnDestroy"}}
                         local actionClone = C.AddAction(info)
                         while info.Enabled do
-                            if self.LastKick == nil or (self.LastKick - os.clock()) <= 0 then
+                            if Genv.LastKick == nil or (Genv.LastKick - os.clock()) <= 0 then
                                 actionClone.Time.Text = "Sending (1/2)"
                                 if not LegitVoteKick or C.StringWait(RS,"ServerResponse"):InvokeServer("CheckCanVote") then
                                     if not info.Enabled then return end
                                     actionClone.Time.Text = "Sending (2/2)"
-                                    self.LastKick = os.clock() + TimeNeeded
+                                    Genv.LastKick = os.clock() + TimeNeeded
                                     C.StringWait(RS,"Event"):FireServer("KickExploiter",targetPlr)
                                     Counter+=1
                                     if not info.Enabled then return end
                                     actionClone.Title.Text = "Kicking " .. targetPlr.Name .. " (".. Counter .. "/6)"
                                 else
-                                    self.LastKick = os.clock() + 4
-                                    actionClone.Time.Text = "Failed (More Time Required)"
+                                    Genv.LastKick = os.clock() + 4
+                                    actionClone.Time.Text = "More Time Needed"
                                     task.wait(1)
                                 end
                             end
-                            while (info.Enabled and self.LastKick - os.clock() > 0) do
-                                actionClone.Time.Text = C.GetFormattedTime(self.LastKick - os.clock())
-                                task.wait(math.min(self.LastKick - os.clock(), 1))
+                            while (info.Enabled and Genv.LastKick - os.clock() > 0) do
+                                actionClone.Time.Text = C.GetFormattedTime(Genv.LastKick - os.clock())
+                                task.wait(math.min(Genv.LastKick - os.clock(), 1))
                             end
                         end
                     end)
