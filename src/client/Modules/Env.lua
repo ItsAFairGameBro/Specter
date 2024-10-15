@@ -936,11 +936,11 @@ return function(C,Settings)
 	end
 
 	function C.InternallySetConnections(signal,enabled)
-		for _, connection in ipairs(C.getconnections(signal)) do
-			if not connection.ForeignState and false then
+		for num, connection in ipairs(C.getconnections(signal)) do
+			if false and not connection.ForeignState and false then
 				connection[enabled and "Enable" or "Disable"](connection)
 			end
-            print("Connection",connection.LuaConnection)
+            print("Conn", num, connection.Function)
 		end
 	end
 	--Function to set instance connection
