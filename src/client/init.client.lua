@@ -475,12 +475,12 @@ C.yieldForeverFunct = yieldForeverFunct
 C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 C.getgenv().realhookfunction = C.getgenv().realhookfunction or C.getgenv().hookfunction
 local MetaMethods = {"__index","__namecall","__newindex"}
-local AllowHookMethod = false;
+local AllowHookMethod = true;
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
     elseif not AllowHookMethod then
-        print("Hook Method Disabled; Attempt For:",hook,name)
+        warn("Hook Method Disabled; Attempt For:",hook,name)
         return
 	end
 	assert(name ~= "OldFunction", `[C.HookMethod]: {name} is a reserved method! Please use a different one!`)
@@ -541,7 +541,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		
 		local OriginFunct
 		local function CallFunction(self,...)
-			if (getnamecallmethod() == "GetLogHistory") then
+			if (lower(getnamecallmethod()) == "getloghistory") then
 				print("one")
 			end
 			-- Get the method being called
