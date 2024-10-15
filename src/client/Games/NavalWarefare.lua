@@ -182,7 +182,7 @@ local function Static(C,Settings)
 		return closestPart,closestDist
 	end
     table.insert(C.InsertCommandFunctions,function()
-        local LegitVoteKick = true
+        local LegitVoteKick = false
         local TimeNeeded = LegitVoteKick and 120 or 3
         return {
             ["votekick"] = {
@@ -210,9 +210,8 @@ local function Static(C,Settings)
                                     self.LastKick = os.clock() + 3
                                     print("Waiting Longer")
                                 end
-                                task.wait(1)
                             end
-                            while (self.LastKick - os.clock() > 0) do
+                            while (info.Enabled and self.LastKick - os.clock() > 0) do
                                 actionClone.Time.Text = C.GetFormattedTime(self.LastKick - os.clock())
                                 task.wait(math.min(self.LastKick - os.clock(), 1))
                             end
