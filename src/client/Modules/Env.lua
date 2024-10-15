@@ -798,16 +798,23 @@ return function(C,Settings)
 	end
 
 	-- Disable Humanoid Parts
-	function C.SetHumanoidTouch(enabled,reason)
+	function C.SetHumanoidTouch(enabled,reason,includeCanCollide)
 		for num, basePart in ipairs(C.char:GetDescendants()) do
 			if not basePart:IsA("BasePart") then
 				continue
 			end
 			if enabled then
-				C.SetPartProperty(basePart,"CanTouch",reason)
+				C.SetPartProperty(basePart,"CanTouch",reason,false)
 			else
 				C.ResetPartProperty(basePart,"CanTouch",reason)
 			end
+            if includeCanCollide then
+                if enabled then
+                    C.SetPartProperty(basePart,"CanCollide",reason,false)
+                else
+                    C.ResetPartProperty(basePart,"CanCollide",reason)
+                end
+            end
 		end
 	end
 
@@ -837,6 +844,7 @@ return function(C,Settings)
 		elseif value == C then
 			return C.ResetPartProperty(part,propertyName,requestName)
 		end
+        assert(value~=nil,"[C.SetPartProperty]: Value must be a non nil value, but nil provided")
 
 		-- Attribute to track request count
 		local requestCountAttr = propertyName .. "_RequestCount"
