@@ -216,7 +216,7 @@ local function Static(C,Settings)
                                     actionClone.Time.Text = "Sending (2/2)"
                                     Genv.LastKick = os.clock() + TimeNeeded
                                     JustKicked = true
-                                    C.StringWait(RS,"Event"):FireServer("KickExploiter",targetPlr)
+                                    C.StringWait(RS,"Event"):FireServer("KickExploiter",{targetPlr})
                                     task.delay(1,function()
                                         JustKicked = false
                                     end)
