@@ -182,7 +182,7 @@ local function Static(C,Settings)
 		return closestPart,closestDist
 	end
     table.insert(C.InsertCommandFunctions,function()
-        local LegitVoteKick = false
+        local LegitVoteKick = true
         local TimeNeeded = LegitVoteKick and 120 or 3
         return {
             ["votekick"] = {
@@ -224,7 +224,7 @@ local function Static(C,Settings)
                                     if not info.Enabled then return end
                                     actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
                                 else
-                                    Genv.LastKick = os.clock() + 4
+                                    Genv.LastKick = os.clock() + 2.5
                                     actionClone.Time.Text = "More Time Needed"
                                     task.wait(1)
                                 end
