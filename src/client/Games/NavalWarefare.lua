@@ -182,7 +182,7 @@ local function Static(C,Settings)
 		return closestPart,closestDist
 	end
     table.insert(C.InsertCommandFunctions,function()
-        local LegitVoteKick = true
+        local LegitVoteKick = false
         local TimeNeeded = LegitVoteKick and 120 or 3
         return {
             ["votekick"] = {
@@ -217,7 +217,7 @@ local function Static(C,Settings)
                                     Genv.LastKick = os.clock() + TimeNeeded
                                     JustKicked = true
                                     C.StringWait(RS,"Event"):FireServer("KickExploiter",{targetPlr})
-                                    task.delay(1,function()
+                                    task.delay(3,function()
                                         JustKicked = false
                                     end)
                                     targetPlr:SetAttribute("KickCounter", (targetPlr:GetAttribute("KickCounter") or 0) + 1)
