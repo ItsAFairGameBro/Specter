@@ -76,6 +76,15 @@ local function Static(C,Settings)
 		end
 		return true
 	end
+    local function IsNearHarbor(location: Vector3, team: string)
+        local EnemyHarbor = workspace:WaitForChild(team=="Japan" and "JapanDock" or "USDock")
+        local HarborMainBody = EnemyHarbor:WaitForChild("MainBody")
+
+        local HarborSize = HarborMainBody.Size+Vector3.new(120,220,120)
+        local HarborCF = HarborMainBody.CFrame*CFrame.new(0,-40,30)
+
+        return C.IsInBox(HarborCF, HarborSize, location)
+    end
 	function C.getClosestShip(location: Vector3)
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
 		if not myHRPPos then return end
@@ -85,7 +94,7 @@ local function Static(C,Settings)
 			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and C.getHealth(ship) > 0 and CanTargetOwner(ship) then
 				local MainBody = ship:WaitForChild("MainBody")
 				local d = (MainBody.Position - myHRPPos).Magnitude
-				if d < maxDist then
+				if d < maxDist and not IsNearHarbor(location, ship.Team.Value) then
 					selShip, maxDist = MainBody, d
 				end
 			end
@@ -297,10 +306,10 @@ return function(C,Settings)
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
 				Shoot = function(self,Target: BasePart)
-					if C.char and not C.char:FindFirstChild("InGame") and not C.char:GetAttribute("InGame") then
+					--[[if C.char and not C.char:FindFirstChild("InGame") and not C.char:GetAttribute("InGame") then
 						C.RemoteEvent:FireServer("Teleport",{"Harbour",""})
 						C.char:SetAttribute("InGame",true) -- Only fire once, no need for spam
-					end
+					end--]]
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
@@ -1391,6 +1400,23 @@ return function(C,Settings)
 					},
 				}
 			},
+            {
+				Title = "God Mode 2",
+				Tooltip = "New and improved God Mode?\nBreaks the Rifle btw",
+				Layout = 100,
+				Shortcut = "GodMode2",
+                Activate = function(self,newValue)
+                    local tskSpawn = task.spawn
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,dataTbl)
+						--tskSpawn(print,"invoke",self)
+						if toStr(self) == "Teleport" then
+							local loc = dataTbl[1]
+                            
+							return "Cancel"
+						end
+					end,{"fireserver"})
+                end,
+            },
             {
 				Title = "Change Teams",
 				Tooltip = "One click to change teams!",
