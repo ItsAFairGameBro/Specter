@@ -659,6 +659,11 @@ return function(C,Settings)
             OldLoc=nil,
             ActionFrame=nil,
             SetFling=function(self,enabled,speed,doLoopFling)
+                if enabled then
+                    C.SetPartProperty(workspace,"FallenPartsDestroyHeight", "fling",-1e5)
+                else
+                    C.ResetPartProperty(workspace,"FallenPartsDestroyHeight","fling")
+                end
                 RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
                 if enabled then
                     C.AddOverride(C.hackData.Blatant.Noclip, "fling")
@@ -696,6 +701,7 @@ return function(C,Settings)
                 end
                 local wasSeated = C.human:GetState() == Enum.HumanoidStateType.Seated
                 self.FlingThread = task.spawn(function()
+                    local FallenDestroyHeight = C.GetPartProperty(workspace,"FallenPartsDestroyHeight")
                     repeat
                         for num, thisPlr in ipairs(args[1]) do
                             self:SetFling(true,args[2],doLoopFling)
@@ -735,8 +741,9 @@ return function(C,Settings)
                                         else
                                             Target = SeatPart.Parent:GetPivot()
                                         end
-                                        if Target.Y < workspace.FallenPartsDestroyHeight + 12 then
-                                            Target += Vector3.new(0, workspace.FallenPartsDestroyHeight - Target.Y + 12,0)
+                                        
+                                        if Target.Y < FallenDestroyHeight + 12 then
+                                            Target += Vector3.new(0, FallenDestroyHeight - Target.Y + 12,0)
                                         end
                                         C.DoTeleport(Target)
                                     end

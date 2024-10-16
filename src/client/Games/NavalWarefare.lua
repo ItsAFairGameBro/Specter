@@ -191,7 +191,7 @@ local function Static(C,Settings)
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
-                    if not targetPlr then--or targetPlr == C.plr then
+                    if not targetPlr or targetPlr == C.plr then
                         return
                     end
                     local Genv = C.getgenv()
