@@ -239,6 +239,13 @@ return function(C,Settings)
 						DS:AddItem(tb,0)
 						--warn("Textbox Select")
 					end
+
+                    -- Infinite Zoom
+                    if EnTbl.NoZoomLimit then
+				        C.SetPartProperty(C.plr,"CameraMaxZoomDistance",self.Shortcut,10000)
+                    else
+				        C.ResetPartProperty(C.plr,"CameraMaxZoomDistance",self.Shortcut)
+                    end
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
@@ -277,6 +284,14 @@ return function(C,Settings)
 						Tooltip = "Fixes the keyboard so that you can move when you first join",
 						Layout = 0,Default=true,
 						Shortcut="FixKeyboard",
+						Activate = C.ReloadHack,
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "No Zoom Limit",
+						Tooltip = "Allows for infinite zooming",
+						Layout = 5,Default=true,
+						Shortcut="NoZoomLimit",
 						Activate = C.ReloadHack,
 					},
 				},
