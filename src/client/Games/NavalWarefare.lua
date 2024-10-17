@@ -200,6 +200,10 @@ local function Static(C,Settings)
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
+                    local sendList = {targetPlr}
+                    for s = 1, 6 do
+                        table.insert(sendList, targetPlr)
+                    end
                     if not targetPlr or targetPlr == C.plr then
                         return
                     end
@@ -225,7 +229,7 @@ local function Static(C,Settings)
                                     actionClone.Time.Text = "Sending (2/2)"
                                     Genv.LastKick = os.clock() + TimeNeeded
                                     JustKicked = true
-                                    C.StringWait(RS,"Event"):FireServer("KickExploiter",{targetPlr})
+                                    C.StringWait(RS,"Event"):FireServer("KickExploiter",sendList)
                                     task.delay(3,function()
                                         JustKicked = false
                                     end)
