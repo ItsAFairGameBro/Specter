@@ -412,11 +412,11 @@ return function(C,Settings)
 					end
 					if C.human then
                         print("Climb Changed")
-						if newValue and not self.EnTbl.EnClimbing then
+						--[[if newValue and not self.EnTbl.EnClimbing then
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
 						else
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
-						end
+						end--]]
 					end
 					self.Update(newValue)
 					if not newValue then
