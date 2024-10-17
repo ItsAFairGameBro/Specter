@@ -606,6 +606,16 @@ return function(C,Settings)
             --RunOnDestroy=function(self)
             --    self:Run({})
            -- end,
+            ResetVel = function(self)
+                if C.char then
+                    for num, part in ipairs(C.char:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            C.hrp.AssemblyLinearVelocity = Vector3.zero
+                            C.hrp.AssemblyAngularVelocity = Vector3.zero
+                        end
+                    end
+                end
+            end,
             Run=function(self,args,notpback,nodeletethread)
                 if self.Parent.fling.FlingThread then
                     if not nodeletethread then -- if its not our current thread
@@ -618,16 +628,15 @@ return function(C,Settings)
                 if C.hrp then
                     C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                 end
+                self:ResetVel()
                 if notpback and not self.OldLoc and C.hrp then
                     self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
                     C.human:ChangeState(Enum.HumanoidStateType.Landed)
                     local saveLoc = self.OldLoc
                     task.spawn(function()
-                        for _ = 1, 4 do
-                            if C.hrp then
-                                C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
-                            end
+                        for _ = 1, 1 do
+                            self:ResetVel()
                             C.char:PivotTo(saveLoc)
                             C.human:ChangeState(Enum.HumanoidStateType.Landed)
                             RunS.PreSimulation:Wait()
