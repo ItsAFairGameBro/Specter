@@ -718,8 +718,8 @@ return function(C,Settings)
 		end
 	end
     function C.DoTeleportToObject(Part: BasePart)
-        local Offset = C.GetPartGlobalSize(Part)
-        C.DoTeleport(Part.Position + Vector3.new(0, Offset.Y/2, 0))
+        local GlobalSize = C.GetPartGlobalSize(Part)
+        C.DoTeleport(Part.Position + Vector3.new(0, GlobalSize.Y/2 + C.getCharacterHeight(C.char), 0))
     end
 	-- Degree calculation
 	function C.AngleOffFromCFrame(cframe: CFrame, point: Vector3)
