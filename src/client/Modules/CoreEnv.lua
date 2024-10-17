@@ -380,6 +380,8 @@ return function(C,Settings)
                     list.Stop()
                 end
                 list.Enabled = false
+                list.ActionFrame = nil
+                print("Disabled",name)
             end
 		end
 		
