@@ -1409,7 +1409,7 @@ return function(C,Settings)
                     local name = rawget(dataTbl,1)
                     local owner = rawget(dataTbl, 2)
                     local id = rawget(dataTbl, 3)
-                    if name == "Harbor" then
+                    if name == "Harbour" then
 					    local HarborModel = C.plr.Team.Name == "Japan" and workspace:WaitForChild("JapanDock") or workspace:WaitForChild("USDock")
                         C.char:MoveTo(HarborModel.MainBody.Position)
                         return
@@ -1429,6 +1429,7 @@ return function(C,Settings)
                             end
                         end
                     end
+                    warn(`[God Mode 2: TeleportTo]: SPAWN LOCATION NOT FOUND:`,name,owner,id)
                 end,
                 Activate = function(self,newValue)
                     local remoteEvent = C.RemoteEvent
