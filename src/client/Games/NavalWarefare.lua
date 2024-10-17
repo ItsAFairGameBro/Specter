@@ -481,7 +481,7 @@ return function(C,Settings)
                                                     closestBasePart.Parent:SetAttribute("Dead",true)
                                                 end
                                             end)
-                                            task.delay(HPChangedFunct.Disconnect, HPChangedFunct)
+                                            task.delay(1,HPChangedFunct.Disconnect, HPChangedFunct)
 											--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 											--[[for s = 0, 1, 1 do
 												C.firetouchinterest(instance,closestBasePart,0)
