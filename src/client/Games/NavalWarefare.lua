@@ -80,8 +80,8 @@ local function Static(C,Settings)
         local TheirHarbor = workspace:WaitForChild(team=="Japan" and "JapanDock" or "USDock")
         local HarborMainBody = TheirHarbor:WaitForChild("MainBody")
 
-        local HarborSize = HarborMainBody.Size+Vector3.new(300,220,300)
-        local HarborCF = HarborMainBody.CFrame*CFrame.new(0,-40,-60)
+        local HarborSize = HarborMainBody.Size+Vector3.new(340,240,340)
+        local HarborCF = HarborMainBody.CFrame*CFrame.new(0,0,-80)
 
         local myPart = Instance.new("Part",workspace)
         myPart.CanCollide = false
