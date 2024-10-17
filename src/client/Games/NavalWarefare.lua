@@ -1406,13 +1406,24 @@ return function(C,Settings)
 				Layout = 100,
 				Shortcut = "GodMode2",
                 Activate = function(self,newValue)
+                    local remoteEvent = C.RemoteEvent
                     local tskSpawn = task.spawn
-                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,dataTbl)
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self, eventType, dataTbl)
 						--tskSpawn(print,"invoke",self)
-						if toStr(self) == "Teleport" then
-							local loc = dataTbl[1]
+						if self == remoteEvent and eventType == "Teleport" then
+                            --tskSpawn(print, eventType, dataTbl)
+							local loc = rawget(dataTbl,1)
+                            local id = rawget(dataTbl, 2)
+                            tskSpawn(print, loc, id)
+                            if loc == "Island" then
+                                
+                            elseif loc == "Harbor" then
+
+                            else--Instance or smth
+                                tskSpawn(print,"inst")
+                            end
                             
-							return "Cancel"
+							return {"Cancel"}
 						end
 					end,{"fireserver"})
                 end,
