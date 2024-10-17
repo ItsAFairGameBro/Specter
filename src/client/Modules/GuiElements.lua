@@ -2957,8 +2957,8 @@ return function(C, Settings)
 	
 	function C.RemoveAction(name)
         local info = C.getgenv().ActionsList[name]
-		local actionInstance = info.ActionClone
-		if actionInstance then
+		if info and info.ActionClone then
+		    local actionInstance = info.ActionClone
 			local event = actionInstance:FindFirstChild("StopEvent")
 			if event then
 				event:Fire(false)
