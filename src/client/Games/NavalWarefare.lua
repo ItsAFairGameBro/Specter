@@ -1425,7 +1425,7 @@ return function(C,Settings)
                     if name == "Harbour" then
 					    local HarborModel = C.plr.Team.Name == "Japan" and workspace:WaitForChild("JapanDock") or workspace:WaitForChild("USDock")
                         local Barracks = C.StringWait(HarborModel,"Decoration.Barracks")
-                        local ChosenPart = Barracks[C.Randomizer:NextInteger(1,Barracks:GetChildren())]
+                        local ChosenPart = Barracks[C.Randomizer:NextInteger(1,#Barracks:GetChildren())]
                         C.char:MoveTo(ChosenPart.Position + C.getHumanoidHeight(C.char))
                         return
                     end
