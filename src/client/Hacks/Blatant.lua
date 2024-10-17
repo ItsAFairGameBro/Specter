@@ -90,6 +90,7 @@ return function(C,Settings)
 				Layout = 1,DontActivate=true,
 				Shortcut = "Fly",Functs={},Instances={},Default=false,Keybind = "Z",
 				AllowedIds={1416947241,939025537,894494203,894494919,961932719,6802445333},
+                Anims={},
 				RunOnDestroy=function(self)
 					self:ClearData()
 					self:Activate(false)
@@ -97,11 +98,22 @@ return function(C,Settings)
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
 						if not self.AllowedIds[tonumber(v.Animation.AnimationId:gmatch("%d+")())] then
+                            if v.Looped then
+                                table.insert(self.Anims, v)
+                                v:SetAttribute("OrgSpeed", v.Speed)
+                            end
 							v:Stop(1e-1)
 							v:Destroy()
 						end
 					end
 				end,
+                StartAnims = function(self)
+                    for _, v in ipairs(self.Anims) do
+                        v:Play(0.1, 1, v:GetAttribute("OrgSpeed"))
+                        v:SetAttribute("OrgSpeed",nil)
+                    end
+                    self.Anims = {}
+                end,
 				Activate = function(self,newValue)
 					if not C.human then return end --else task.wait(.1) end
                     local IsSeated = false
@@ -113,6 +125,8 @@ return function(C,Settings)
 					
 					if not newValue then
 						self:StopAllAnims()
+                    else
+                        self:StartAnims()
 					end
 					
 					if C.char:FindFirstChild("Animate") ~=nil and game.GameId~=372226183 and C.gameName ~= "NavalWarefare" then
