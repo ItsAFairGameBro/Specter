@@ -357,6 +357,8 @@ return function(C,Settings)
 			C.ClearFunctTbl(dict,true)
 		end
 
+        
+
 		for instance, signalData in pairs(C.PartConnections) do
 			for signal, data in pairs(signalData) do
 				for key, enabled in pairs(data) do
@@ -373,6 +375,12 @@ return function(C,Settings)
 		RunS:UnbindFromRenderStep("Spin"..C.SaveIndex)
 		if C.PurgeActionsWithTag then
 			C.PurgeActionsWithTag("RemoveOnDestroy")
+            for name, list in pairs(C.getgenv().ActionsList) do
+                if list.Stop then
+                    list.Stop()
+                end
+                list.Enabled = false
+            end
 		end
 		
 		for key, instance in ipairs(CS:GetTagged("RemoveOnDestroy")) do
