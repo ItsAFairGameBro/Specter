@@ -77,16 +77,17 @@ local function Static(C,Settings)
 		return true
 	end
     local function IsNearHarbor(location: Vector3, team: string)
-        local EnemyHarbor = workspace:WaitForChild(team=="Japan" and "JapanDock" or "USDock")
-        local HarborMainBody = EnemyHarbor:WaitForChild("MainBody")
+        local TheirHarbor = workspace:WaitForChild(team=="Japan" and "JapanDock" or "USDock")
+        local HarborMainBody = TheirHarbor:WaitForChild("MainBody")
 
         local HarborSize = HarborMainBody.Size+Vector3.new(120,220,120)
         local HarborCF = HarborMainBody.CFrame*CFrame.new(0,-40,30)
 
-        local myPart = Instance.new("Part")
+        local myPart = Instance.new("Part",workspace)
         myPart.CanCollide = false
         myPart.Anchored = true
         myPart.Size, myPart.CFrame = HarborSize, HarborCF
+        DS:AddItem(myPart,20)
 
         return C.IsInBox(HarborCF, HarborSize, location)
     end
