@@ -224,7 +224,7 @@ local function Static(C,Settings)
                             C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
-                            C.RemoveAction(info.Name)
+                            C.RemoveAction("NavalVotekick")
                         end))
                         actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
