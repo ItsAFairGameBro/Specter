@@ -915,10 +915,10 @@ return function(C,Settings)
 								while Info.Enabled and TeamVal.Value == "" and ActionClone and ActionClone.Parent do
 									C.SetActionPercentage(ActionClone, HPVal.Value / C.DataStorage.Island.Health)
 									Touching = not Touching
-									local PrimaryPart = C.char and C.char.PrimaryPart
-									if PrimaryPart then
+									local PrimaryPart = C.hrp
+									if PrimaryPart and PrimaryPart.Parent then
 										--C.firetouchinterest(C.char.PrimaryPart, FlagPad, Touching and 0 or 1)
-										C.firetouchinterest(C.char.PrimaryPart, FlagPad, Touching and 0 or 1)
+										C.firetouchinterest(PrimaryPart, FlagPad, Touching and 0 or 1)
 									end
 									RunS.RenderStepped:Wait()
 								end
