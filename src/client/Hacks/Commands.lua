@@ -624,11 +624,12 @@ return function(C,Settings)
                     C.human:ChangeState(Enum.HumanoidStateType.Landed)
                     local saveLoc = self.OldLoc
                     task.spawn(function()
-                        for _ = 1, 30 do
+                        for _ = 1, 4 do
                             if C.hrp then
                                 C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                             end
                             C.char:PivotTo(saveLoc)
+                            C.human:ChangeState(Enum.HumanoidStateType.Landed)
                             RunS.PreSimulation:Wait()
                         end
                     end)
