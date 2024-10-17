@@ -142,6 +142,7 @@ return function(C,Settings)
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 							
                             if not IsSeated then
+                                print("Set Seat")
 							    C.human:ChangeState(Enum.HumanoidStateType.Running)
                             end
 						end
@@ -149,6 +150,7 @@ return function(C,Settings)
 						return
 					else
                         if not IsSeated then
+                            print("Set Seat 2")
 						    C.human:ChangeState(Enum.HumanoidStateType.Physics)
                         end
 						task.spawn(self.StopAllAnims,self)
@@ -317,6 +319,7 @@ return function(C,Settings)
 					end
 					C.human:SetStateEnabled(Enum.HumanoidStateType.Jumping,not newValue)
 					C.human:SetStateEnabled(Enum.HumanoidStateType.GettingUp,not newValue)
+                    print("SWIM CHANGE")
 					if not newValue then
 						C.human:ChangeState(Enum.HumanoidStateType.GettingUp)
 						return

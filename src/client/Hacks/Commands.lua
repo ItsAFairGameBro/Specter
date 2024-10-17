@@ -622,7 +622,16 @@ return function(C,Settings)
                     self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
                     C.human:ChangeState(Enum.HumanoidStateType.Landed)
-                    task.delay(.1,C.char.PivotTo,C.char,self.OldLoc)
+                    local saveLoc = self.OldLoc
+                    task.spawn(function()
+                        for _ = 1, 3 do
+                            if C.hrp then
+                                C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
+                            end
+                            C.DoTeleport(saveLoc)
+                            RunS.PreSimulation:Wait()
+                        end
+                    end)
                     self.OldLoc = nil
                 end
                 return true
@@ -755,7 +764,7 @@ return function(C,Settings)
                                 end
                             end
             
-                            if C.human:GetState() == Enum.HumanoidStateType.Seated and not wasSeated then --check if seated
+                            if not wasSeated and C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
                                 C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                             end
                         end
