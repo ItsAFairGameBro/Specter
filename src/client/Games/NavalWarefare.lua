@@ -85,7 +85,7 @@ local function Static(C,Settings)
 
         local myPart = Instance.new("Part",workspace)
         myPart.CanCollide = false
-        myPart.Transparency = .5
+        myPart.Transparency = .87
         myPart.Anchored = true
         myPart.Size, myPart.CFrame = HarborSize, HarborCF
         DS:AddItem(myPart,20)
