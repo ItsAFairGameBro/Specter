@@ -215,6 +215,7 @@ local function Static(C,Settings)
                         end}
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
+                            warn("Votekick",targetPlr.Name,"Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
                             C.RemoveAction(info.Name)
