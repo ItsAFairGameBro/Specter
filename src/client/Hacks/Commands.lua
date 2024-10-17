@@ -624,11 +624,11 @@ return function(C,Settings)
                     C.human:ChangeState(Enum.HumanoidStateType.Landed)
                     local saveLoc = self.OldLoc
                     task.spawn(function()
-                        for _ = 1, 3 do
+                        for _ = 1, 30 do
                             if C.hrp then
                                 C.hrp.AssemblyLinearVelocity, C.hrp.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
                             end
-                            C.DoTeleport(saveLoc)
+                            C.char:PivotTo(saveLoc)
                             RunS.PreSimulation:Wait()
                         end
                     end)
@@ -677,7 +677,7 @@ return function(C,Settings)
                 if enabled then
                     C.AddOverride(C.hackData.Blatant.Noclip, "fling")
                     RunS:BindToRenderStep("Spin"..C.SaveIndex,69,function()
-                        if C.hrp then
+                        if C.hrp and self.Enabled then
                             C.hrp.AssemblyAngularVelocity = Vector3.new(1,0,1) * (speed or 1)*1e4
                             C.hrp.AssemblyLinearVelocity = Vector3.zero
                         end
