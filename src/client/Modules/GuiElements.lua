@@ -2865,11 +2865,12 @@ return function(C, Settings)
 		if ActionsList:FindFirstChild(info.Name) then
 			return ActionClone
 		end
-		info.Tags = info.Tags or {}
+		info.Tags = info.Tags or {"RemoveOnDestroy"}
 		ActionClone = C.Examples.ActionsEx:Clone()
 		ActionClone.Name = info.Name
 		ActionClone.Title.Text = (info.Title or info.Name):gsub("/"," "):gsub("_"," "):gsub("%l%u",function(old) return old:sub(1,1) .. " " .. old:sub(2) end)
 		ActionClone.Visible = true
+        info.ActionClone = ActionClone
 		local StopEvent = Instance.new("BindableEvent",ActionClone)
 		StopEvent.Name = "StopEvent"
 		StopEvent.Event:Connect(function(onRequest)

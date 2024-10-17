@@ -219,7 +219,8 @@ local function Static(C,Settings)
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
                         C.ClearFunctTbl(functs)
-                    end, Run=function()
+                    end, Time=function()
+                        local actionClone = info.ActionClone
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
                             warn("Votekick",targetPlr.Name,"Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
@@ -228,7 +229,6 @@ local function Static(C,Settings)
                                 JustKicked and Color3.fromRGB(0,255) or nil)
                             C.RemoveAction(info.Name)
                         end))
-                        local actionClone = C.AddAction(info)
                         actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
                             if Genv.LastKick == nil or (Genv.LastKick - os.clock()) <= 0 then
@@ -257,6 +257,7 @@ local function Static(C,Settings)
                             end
                         end
                     end}
+                    C.AddAction(info)
                     return true
                 end,
             }
