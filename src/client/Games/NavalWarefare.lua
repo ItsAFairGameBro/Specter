@@ -1418,11 +1418,13 @@ return function(C,Settings)
                         if inst.Name == name then
                             if inst.Name == "Island" then
                                 if inst.IslandCode.Value == owner then
-                                    C.char:MoveTo(inst:GetPivot().Position())
+                                    C.char:MoveTo(inst:GetPivot().Position)
+                                    break
                                 end
                             else
                                 if inst.Number.Value == id and inst.Owner.Value == owner then
-                                    C.char:MoveTo(inst:GetPivot().Position())
+                                    C.char:MoveTo(inst:GetPivot().Position)
+                                    break
                                 end
                             end
                         end
