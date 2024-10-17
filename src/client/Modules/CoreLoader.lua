@@ -21,11 +21,13 @@ return function(C, _SETTINGS)
 	--Load Locale Environment
 	C.LoadModule('Env')
 	if C.Cleared then return end
+    --Load Core Env
+	C.LoadModule('CoreEnv')
+    if C.Cleared then return end
 	--Load GUI Elements
 	C.LoadModule('GuiElements')
 	if C.Cleared then return end
-	--Load Core Env
-	C.LoadModule('CoreEnv')
+	
 	if C.SaveIndex == 1 then
 		C:LoadProfile("Default")
 		if C.Cleared then return end
