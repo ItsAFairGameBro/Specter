@@ -1405,14 +1405,38 @@ return function(C,Settings)
 				Tooltip = "New and improved God Mode?\nBreaks the Rifle btw",
 				Layout = 100,
 				Shortcut = "GodMode2",
+                TeleportTo = function(self,dataTbl)
+                    local name = rawget(dataTbl,1)
+                    local owner = rawget(dataTbl, 2)
+                    local id = rawget(dataTbl, 3)
+                    if name == "Harbor" then
+					    local HarborModel = C.plr.Team.Name == "Japan" and workspace:WaitForChild("JapanDock") or workspace:WaitForChild("USDock")
+                        C.char:MoveTo(HarborModel.MainBody.Position)
+                        return
+                    end
+                    for num, inst in ipairs(workspace:GetChildren()) do
+                        if inst.Name == name then
+                            if inst.Name == "Island" then
+                                if inst.IslandCode.Value == owner then
+                                    C.char:MoveTo(inst:GetPivot().Position())
+                                end
+                            else
+                                if inst.Number.Value == id and inst.Owner.Value == owner then
+                                    C.char:MoveTo(inst:GetPivot().Position())
+                                end
+                            end
+                        end
+                    end
+                end,
                 Activate = function(self,newValue)
                     local remoteEvent = C.RemoteEvent
                     local tskSpawn = task.spawn
+                    local runFunct = rawget(self, "TeleportTo")
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self, eventType, dataTbl)
 						--tskSpawn(print,"invoke",self)
 						if self == remoteEvent and eventType == "Teleport" then
                             --tskSpawn(print, eventType, dataTbl)
-							local loc = rawget(dataTbl,1)
+							--[[local loc = rawget(dataTbl,1)
                             local id = rawget(dataTbl, 2)
                             local three = rawget(dataTbl, 3)
                             --tskSpawn(print, loc, id)
@@ -1422,7 +1446,8 @@ return function(C,Settings)
 
                             else--Instance or smth
                                 tskSpawn(print,"inst",id,three,typeof(loc),typeof(id),typeof(three))
-                            end
+                            end--]]
+                            tskSpawn(runFunct, self, dataTbl)
                             
 							return "Cancel"
 						end
