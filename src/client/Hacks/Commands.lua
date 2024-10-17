@@ -633,7 +633,8 @@ return function(C,Settings)
                     self.OldLoc = C.hrp:GetPivot()
                 elseif not notpback and self.OldLoc and C.char then
                     C.human:ChangeState(Enum.HumanoidStateType.Landed)
-                    local saveLoc = self.OldLoc
+                    C.char:PivotTo(self.OldLoc)
+                    --[[local saveLoc = self.OldLoc
                     task.spawn(function()
                         for _ = 1, 1 do
                             self:ResetVel()
@@ -641,7 +642,7 @@ return function(C,Settings)
                             C.human:ChangeState(Enum.HumanoidStateType.Landed)
                             RunS.PreSimulation:Wait()
                         end
-                    end)
+                    end)--]]
                     self.OldLoc = nil
                 end
                 return true
