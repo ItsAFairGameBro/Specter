@@ -215,11 +215,11 @@ local function Static(C,Settings)
                         return
                     end
                     local Genv = C.getgenv()
-                    task.spawn(function()
-                        local functs = {}
-                        local info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
-                            C.ClearFunctTbl(functs)
-                        end}
+                    local functs = {}
+                    local info
+                    info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
+                        C.ClearFunctTbl(functs)
+                    end, Run=function()
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
                             warn("Votekick",targetPlr.Name,"Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
@@ -256,7 +256,7 @@ local function Static(C,Settings)
                                 task.wait(math.min(Genv.LastKick - os.clock(), 1))
                             end
                         end
-                    end)
+                    end}
                     return true
                 end,
             }
