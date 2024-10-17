@@ -562,7 +562,7 @@ return function(C,Settings)
 				local aPriority = aValue.Priority or 1
 				local bPriority = bValue.Priority or 1
 				if aPriority ~= bPriority then
-					return aPriority > bPriority
+					return aPriority < bPriority
 				end
 				if leaveAsIs then
 					return SortStringStartsWith(aValue[1],bValue[1],true)

@@ -3284,13 +3284,14 @@ return function(C, Settings)
 
 	local Visible = true
 	function C.ToggleServersVisiblity(startPlace)
+        startPlace = startPlace or "Game"
         if startPlace ~= CurrentlySel then
             Visible = true
         else
             Visible = not Visible
         end
 		if Visible then
-			ActivateServers(startPlace or "Game")
+			ActivateServers(startPlace)
 		end
 		SecondaryHUD.Visible = Visible
 	end
