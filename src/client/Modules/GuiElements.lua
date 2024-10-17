@@ -2169,7 +2169,7 @@ GuiTbl.NoneFoundLabel.Position = UDim2.new(0.649999976, 0, 0.479999989, 0)
 GuiTbl.NoneFoundLabel.Size = UDim2.new(0.600000024, 0, 0.699999988, 0)
 GuiTbl.NoneFoundLabel.ZIndex = 102
 GuiTbl.NoneFoundLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GuiTbl.NoneFoundLabel.Text = "There are no results for this category.\\nClick on the category again to refresh it."
+GuiTbl.NoneFoundLabel.Text = "There are no results for this category.\nClick on the category again to refresh it."
 GuiTbl.NoneFoundLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.NoneFoundLabel.TextScaled = true
 GuiTbl.NoneFoundLabel.TextSize = 21
@@ -3284,7 +3284,11 @@ return function(C, Settings)
 
 	local Visible = true
 	function C.ToggleServersVisiblity(startPlace)
-		Visible = not Visible
+        if startPlace ~= CurrentlySel then
+            Visible = true
+        else
+            Visible = not Visible
+        end
 		if Visible then
 			ActivateServers(startPlace or "Game")
 		end
