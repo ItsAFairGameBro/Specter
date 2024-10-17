@@ -85,10 +85,10 @@ local function RegisterFunctions()
 		part1.CanTouch, part2.CanTouch = true, true
 		if part1.Parent and part2.Parent then
 			if number then
-				firetouchinterest(part1,part2,number)
+				pcall(firetouchinterest,part1,part2,number)
 			else
-				firetouchinterest(part1,part2,0)
-				task.spawn(firetouchinterest,part1,part2,1)
+				pcall(firetouchinterest,part1,part2,0)
+				task.spawn(pcall,firetouchinterest,part1,part2,1)
 			end
 		end
 		part1.CanTouch, part2.CanTouch = CanTouch1, CanTouch2
