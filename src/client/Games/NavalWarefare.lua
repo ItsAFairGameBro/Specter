@@ -331,7 +331,7 @@ return function(C,Settings)
 					local Tool = C.char:FindFirstChildWhichIsA("Tool")
 					while self.RealEnabled do
 						local Target, Distance = C.getClosest({})
-						if Target and Distance <= 450 then
+						if Tool and Target and Distance <= 450 then
 							self:Shoot(Target)
 						end
 						RunS.RenderStepped:Wait()
