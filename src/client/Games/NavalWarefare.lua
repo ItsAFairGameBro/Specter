@@ -1433,12 +1433,12 @@ return function(C,Settings)
                         if inst.Name == name then
                             if name == "Island" then
                                 if inst.IslandCode.Value == owner then
-                                    C.DoTeleportToObject(inst)
+                                    C.DoTeleportToObject(inst.PrimaryPart)
                                     return
                                 end
                             else
                                 if inst.Number.Value == id and inst.Owner.Value == owner then
-                                    C.DoTeleportToObject(inst)
+                                    C.DoTeleportToObject(inst.PrimaryPart)
                                     return
                                 end
                             end
