@@ -3295,7 +3295,7 @@ return function(C, Settings)
 		end
 		SecondaryHUD.Visible = Visible
 	end
-	C.ToggleServersVisiblity()
+	SecondaryHUD.Visible = false
 
 	for num, button in ipairs(TabsSelection:GetChildren()) do
 		if button:IsA("TextButton") then
