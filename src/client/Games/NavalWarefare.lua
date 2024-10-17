@@ -41,8 +41,12 @@ local function Static(C,Settings)
     function C.getHealth(asset)
         local HP = asset:FindFirstChild("HP")
         if HP then
+            if C.DataStorage[asset.Name].Type == "Base" then
+                return HP.Value
+            end
             return (asset:GetAttribute("Dead") or asset:GetAttribute("Ignore")) and 0 or HP.Value
         end
+        return 0
     end
 	
 	function C.getClosestBase(location: Vector3)
