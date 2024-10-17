@@ -2865,12 +2865,12 @@ return function(C, Settings)
 		if ActionsList:FindFirstChild(info.Name) then
 			return ActionClone
 		end
-		info.Tags = info.Tags or {"RemoveOnDestroy"}
 		ActionClone = C.Examples.ActionsEx:Clone()
 		ActionClone.Name = info.Name
 		ActionClone.Title.Text = (info.Title or info.Name):gsub("/"," "):gsub("_"," "):gsub("%l%u",function(old) return old:sub(1,1) .. " " .. old:sub(2) end)
-		ActionClone.Visible = true
+		info.Tags = info.Tags or {"RemoveOnDestroy"}
         info.ActionClone = ActionClone
+        info.Enabled = true
 		local StopEvent = Instance.new("BindableEvent",ActionClone)
 		StopEvent.Name = "StopEvent"
 		StopEvent.Event:Connect(function(onRequest)
@@ -2912,7 +2912,6 @@ return function(C, Settings)
 			TimeTextLabel.Text = "Starting"
 			--Probably utilized elsewhere!
 		end
-		info.Enabled = true
 		ActionsFrame.Visible = true
 		return ActionClone
 	end
