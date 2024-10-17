@@ -106,6 +106,7 @@ return function(C,Settings)
 					if not C.human then return end --else task.wait(.1) end
                     local IsSeated = false
                     if C.human:GetState() ~= Enum.HumanoidStateType.Seated then -- Only update if not sitting
+                        print("Fly Seat")
 					    C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
                     else
                         IsSeated = true
@@ -410,6 +411,7 @@ return function(C,Settings)
 						return
 					end
 					if C.human then
+                        print("Climb Changed")
 						if newValue and not self.EnTbl.EnClimbing then
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
 						else
