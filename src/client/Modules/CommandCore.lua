@@ -562,6 +562,10 @@ return function(C,Settings)
     for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
+        for _, aliasName in ipairs(commandTbl.Alias or {}) do
+            assert(C.CommandFunctions[aliasName]==nil, `[CommandCore]: Duplicate AliasName: {aliasName} from the command {shortcut}`)
+            C.CommandFunctions[aliasName] = commandTbl
+        end
         C.BindEvents(commandTbl)
     end
 end
