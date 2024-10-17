@@ -1424,12 +1424,12 @@ return function(C,Settings)
                             if name == "Island" then
                                 if inst.IslandCode.Value == owner then
                                     C.char:MoveTo(inst:GetPivot().Position)
-                                    break
+                                    return
                                 end
                             else
                                 if inst.Number.Value == id and inst.Owner.Value == owner then
                                     C.char:MoveTo(inst:GetPivot().Position)
-                                    break
+                                    return
                                 end
                             end
                         end
@@ -1441,20 +1441,7 @@ return function(C,Settings)
                     local tskSpawn = task.spawn
                     local runFunct = rawget(self, "TeleportTo")
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self, eventType, dataTbl)
-						--tskSpawn(print,"invoke",self)
 						if self == remoteEvent and eventType == "Teleport" then
-                            --tskSpawn(print, eventType, dataTbl)
-							--[[local loc = rawget(dataTbl,1)
-                            local id = rawget(dataTbl, 2)
-                            local three = rawget(dataTbl, 3)
-                            --tskSpawn(print, loc, id)
-                            if loc == "Island" then
-                                
-                            elseif loc == "Harbor" then
-
-                            else--Instance or smth
-                                tskSpawn(print,"inst",id,three,typeof(loc),typeof(id),typeof(three))
-                            end--]]
                             tskSpawn(runFunct, self, dataTbl)
                             
 							return "Cancel"
