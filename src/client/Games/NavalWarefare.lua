@@ -1432,8 +1432,7 @@ return function(C,Settings)
                         local List = Barracks:GetChildren()
                         local Index = C.Randomizer:NextInteger(1,#List)
                         local ChosenPart = List[Index]
-                        --print(List,Index,ChosenPart)
-                        local TelLoc = ChosenPart.Position-- + Vector3.new(0,C.getHumanoidHeight(C.char),0)
+                        local TelLoc = ChosenPart.Position
                         C.char:MoveTo(TelLoc)
                         return
                     end
@@ -1445,7 +1444,7 @@ return function(C,Settings)
                                     return
                                 end
                             else
-                                if inst.Number.Value == id and inst.Owner.Value == owner then
+                                if inst.Number.Value == id and inst.Owner.Value == owner and C.plr.Team.Name == inst.Team.Value then
                                     C.DoTeleportToObject(inst.PrimaryPart)
                                     return
                                 end
