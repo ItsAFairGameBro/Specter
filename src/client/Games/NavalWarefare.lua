@@ -456,6 +456,7 @@ return function(C,Settings)
 						return
 					end
 					if newValue then
+                        local ConnectionTbl = {}
 						local CurConn
 						table.insert(self.Functs,UIS.InputBegan:Connect(function(inputObj, gameProcessed)
 							if inputObj.KeyCode == Enum.KeyCode.F and not CurConn then
@@ -475,13 +476,17 @@ return function(C,Settings)
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
 											end
-                                            local HPChangedFunct = closestBasePart.Parent.HP.Changed:Connect(function(newVal)
-                                                if newVal <= 0 then
-                                                    print("Now dead!")
-                                                    closestBasePart.Parent:SetAttribute("Dead",true)
-                                                end
-                                            end)
-                                            task.delay(1,HPChangedFunct.Disconnect, HPChangedFunct)
+                                            if not ConnectionTbl[closestBasePart] then
+                                                local HPChangedFunct = closestBasePart.Parent.HP.Changed:Connect(function(newVal)
+                                                    if newVal <= 0 then
+                                                        closestBasePart.Parent:SetAttribute("Dead",true)
+                                                    end
+                                                end)
+                                                ConnectionTbl[closestBasePart] = true
+                                                task.delay(1,HPChangedFunct.Disconnect, HPChangedFunct)
+                                                task.delay(1,rawset,ConnectionTbl,closestBasePart,nil)
+                                            end
+                                            
 											--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 											--[[for s = 0, 1, 1 do
 												C.firetouchinterest(instance,closestBasePart,0)
