@@ -1420,10 +1420,10 @@ return function(C,Settings)
                             elseif loc == "Harbor" then
 
                             else--Instance or smth
-                                tskSpawn(print,"inst")
+                                tskSpawn(print,"inst",typeof(loc))
                             end
                             
-							return {"Cancel"}
+							return "Cancel"
 						end
 					end,{"fireserver"})
                 end,
