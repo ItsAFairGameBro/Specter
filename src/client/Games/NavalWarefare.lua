@@ -83,12 +83,12 @@ local function Static(C,Settings)
         local HarborSize = HarborMainBody.Size+Vector3.new(340,240,340)
         local HarborCF = HarborMainBody.CFrame*CFrame.new(0,0,-80)
 
-        local myPart = Instance.new("Part",workspace)
+        --[[local myPart = Instance.new("Part",workspace)
         myPart.CanCollide = false
         myPart.Transparency = .87
         myPart.Anchored = true
         myPart.Size, myPart.CFrame = HarborSize, HarborCF
-        DS:AddItem(myPart,20)
+        DS:AddItem(myPart,20)--]]
 
         return C.IsInBox(HarborCF, HarborSize, location)
     end
