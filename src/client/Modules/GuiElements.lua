@@ -3285,8 +3285,8 @@ return function(C, Settings)
 	local Visible = true
 	function C.ToggleServersVisiblity(startPlace)
 		Visible = not Visible
-		if Visible and not CurrentlySel then
-			ActivateServers(startPlace or "Friend")
+		if Visible then
+			ActivateServers(startPlace or "Game")
 		end
 		SecondaryHUD.Visible = Visible
 	end
