@@ -475,10 +475,13 @@ return function(C,Settings)
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
 											end
-                                            if closestBasePart.Parent.HP.Value <= 0 then
-                                                closestBasePart.Parent:SetAttribute("Dead",true)
-                                                print("Now dead!")
-                                            end
+                                            local HPChangedFunct = closestBasePart.Parent.HP.Changed:Connect(function(newVal)
+                                                if newVal <= 0 then
+                                                    print("Now dead!")
+                                                    closestBasePart.Parent:SetAttribute("Dead",true)
+                                                end
+                                            end)
+                                            task.delay(HPChangedFunct.Disconnect, HPChangedFunct)
 											--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 											--[[for s = 0, 1, 1 do
 												C.firetouchinterest(instance,closestBasePart,0)

@@ -106,7 +106,6 @@ return function(C,Settings)
 					if not C.human then return end --else task.wait(.1) end
                     local IsSeated = false
                     if C.human:GetState() ~= Enum.HumanoidStateType.Seated then -- Only update if not sitting
-                        print("Fly Seat")
 					    C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
                     else
                         IsSeated = true
@@ -143,7 +142,6 @@ return function(C,Settings)
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 							
                             if not IsSeated then
-                                print("Set Seat")
 							    C.human:ChangeState(Enum.HumanoidStateType.Running)
                             end
 						end
@@ -151,7 +149,6 @@ return function(C,Settings)
 						return
 					else
                         if not IsSeated then
-                            print("Set Seat 2")
 						    C.human:ChangeState(Enum.HumanoidStateType.Physics)
                         end
 						task.spawn(self.StopAllAnims,self)
@@ -320,7 +317,6 @@ return function(C,Settings)
 					end
 					C.human:SetStateEnabled(Enum.HumanoidStateType.Jumping,not newValue)
 					C.human:SetStateEnabled(Enum.HumanoidStateType.GettingUp,not newValue)
-                    print("SWIM CHANGE")
 					if not newValue then
 						C.human:ChangeState(Enum.HumanoidStateType.GettingUp)
 						return
@@ -411,12 +407,11 @@ return function(C,Settings)
 						return
 					end
 					if C.human then
-                        print("Climb Changed")
-						--[[if newValue and not self.EnTbl.EnClimbing then
+						if newValue and not self.EnTbl.EnClimbing then
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
 						else
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
-						end--]]
+						end
 					end
 					self.Update(newValue)
 					if not newValue then
