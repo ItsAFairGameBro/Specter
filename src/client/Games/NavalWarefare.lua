@@ -1428,7 +1428,8 @@ return function(C,Settings)
                         local List = Barracks:GetChildren()
                         local Index = C.Randomizer:NextInteger(1,#List)
                         local ChosenPart = List[Index]
-                        C.char:MoveTo(ChosenPart.Position + Vector3.new(0,C.getHumanoidHeight(C.char),0))
+                        local TelLoc = ChosenPart.Position + Vector3.new(0,C.getHumanoidHeight(C.char),0)
+                        C.char:MoveTo(TelLoc)
                         return
                     end
                     for _, inst in ipairs(workspace:GetChildren()) do
