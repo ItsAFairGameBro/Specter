@@ -229,12 +229,12 @@ local function Static(C,Settings)
                                     if not info.Enabled then return end
                                     actionClone.Time.Text = "Sending (2/2)"
                                     Genv.LastKick = os.clock() + TimeNeeded
+                                    targetPlr:SetAttribute("KickCounter", (targetPlr:GetAttribute("KickCounter") or 0) + 1)
                                     JustKicked = true
                                     C.StringWait(RS,"Event"):FireServer("KickExploiter",sendList)
                                     task.delay(3,function()
                                         JustKicked = false
                                     end)
-                                    targetPlr:SetAttribute("KickCounter", (targetPlr:GetAttribute("KickCounter") or 0) + 1)
                                     if not info.Enabled then return end
                                     actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
                                 else
