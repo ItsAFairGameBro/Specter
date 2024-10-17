@@ -1415,7 +1415,7 @@ return function(C,Settings)
 							local loc = rawget(dataTbl,1)
                             local id = rawget(dataTbl, 2)
                             local three = rawget(dataTbl, 3)
-                            tskSpawn(print, loc, id)
+                            --tskSpawn(print, loc, id)
                             if loc == "Island" then
                                 
                             elseif loc == "Harbor" then
