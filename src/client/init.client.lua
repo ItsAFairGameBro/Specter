@@ -626,6 +626,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 								elseif operation == "FireSeperate" then
 									return tskSpawn(OriginFunct,tblUnpack(returnData))
 								elseif operation == "Cancel" then
+                                    print("Cancelled")
 									return -- Cancelled
 								elseif operation == "Yield" then
 									if hook == "__index" then

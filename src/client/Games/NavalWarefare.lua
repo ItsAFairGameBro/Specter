@@ -1413,14 +1413,15 @@ return function(C,Settings)
                     local name = rawget(dataTbl,1)
                     local owner = rawget(dataTbl, 2)
                     local id = rawget(dataTbl, 3)
+
                     if name == "Harbour" then
 					    local HarborModel = C.plr.Team.Name == "Japan" and workspace:WaitForChild("JapanDock") or workspace:WaitForChild("USDock")
                         C.char:MoveTo(HarborModel.MainBody.Position)
                         return
                     end
-                    for num, inst in ipairs(workspace:GetChildren()) do
+                    for _, inst in ipairs(workspace:GetChildren()) do
                         if inst.Name == name then
-                            if inst.Name == "Island" then
+                            if name == "Island" then
                                 if inst.IslandCode.Value == owner then
                                     C.char:MoveTo(inst:GetPivot().Position)
                                     break
