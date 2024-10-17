@@ -207,18 +207,15 @@ local function Static(C,Settings)
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
-                    local sendList = {targetPlr}
-                    for s = 1, 6 do
-                        table.insert(sendList, targetPlr)
-                    end
                     if not targetPlr or targetPlr == C.plr then
                         return
                     end
+                    local sendList = {targetPlr}
                     local Genv = C.getgenv()
                     local functs = {}
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
-                        C.ClearFunctTbl(functs)
+                        C.ClearFunctTbl(functs,true)
                     end, Time=function()
                         local actionClone = info.ActionClone
                         local JustKicked = false
