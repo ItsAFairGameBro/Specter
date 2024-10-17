@@ -3282,7 +3282,7 @@ return function(C, Settings)
 		ActivateServers(CurrentlySel,false)
 	end)
 
-	local Visible = true
+	local Visible = false
 	function C.ToggleServersVisiblity(startPlace)
         startPlace = startPlace or "Game"
         if startPlace ~= CurrentlySel then
