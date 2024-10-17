@@ -702,7 +702,7 @@ return function(C,Settings)
 	end
 
 	-- Teleport
-	function C.DoTeleport(NewLocation: CFrame)
+	function C.DoTeleport(NewLocation: CFrame | Vector3)
 		if C.human and C.human.SeatPart and C.VehicleTeleport then
 			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
 			C.VehicleTeleport(C.human.SeatPart.Parent,NewLocation)
@@ -717,6 +717,10 @@ return function(C,Settings)
 			C.hrp.AssemblyAngularVelocity, C.hrp.AssemblyLinearVelocity = Vector3.zero, Vector3.zero
 		end
 	end
+    function C.DoTeleportToObject(Part: BasePart)
+        local Offset = C.GetPartGlobalSize(Part)
+        C.DoTeleport(Part.Position + Offset)
+    end
 	-- Degree calculation
 	function C.AngleOffFromCFrame(cframe: CFrame, point: Vector3)
 		-- Get the forward vector of the CFrame (this is the lookVector)

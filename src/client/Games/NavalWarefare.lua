@@ -1424,19 +1424,21 @@ return function(C,Settings)
 
                     if name == "Harbour" then
 					    local HarborModel = C.plr.Team.Name == "Japan" and workspace:WaitForChild("JapanDock") or workspace:WaitForChild("USDock")
-                        C.char:MoveTo(HarborModel.MainBody.Position)
+                        local Barracks = C.StringWait(HarborModel,"Decoration.Barracks")
+                        local ChosenPart = Barracks[C.Randomizer:NextInteger(1,Barracks:GetChildren())]
+                        C.char:MoveTo(ChosenPart.Position + C.getHumanoidHeight(C.char))
                         return
                     end
                     for _, inst in ipairs(workspace:GetChildren()) do
                         if inst.Name == name then
                             if name == "Island" then
                                 if inst.IslandCode.Value == owner then
-                                    C.char:MoveTo(inst:GetPivot().Position)
+                                    C.DoTeleportToObject(inst)
                                     return
                                 end
                             else
                                 if inst.Number.Value == id and inst.Owner.Value == owner then
-                                    C.char:MoveTo(inst:GetPivot().Position)
+                                    C.DoTeleportToObject(inst)
                                     return
                                 end
                             end
