@@ -104,7 +104,9 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					if not C.human then return end --else task.wait(.1) end
-					C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue or C.human:GetState() == Enum.HumanoidStateType.Seated)
+                    if C.human:GetState() ~= Enum.HumanoidStateType.Seated then -- Only update if not sitting
+					    C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
+                    end
 					
 					if not newValue then
 						self:StopAllAnims()
