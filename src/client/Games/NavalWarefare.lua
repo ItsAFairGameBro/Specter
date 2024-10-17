@@ -217,13 +217,14 @@ local function Static(C,Settings)
                     local Genv = C.getgenv()
                     task.spawn(function()
                         local functs = {}
-                        local info = {Name="NavalVotekick",Title="Kick Starting", Tags={"RemoveOnDestroy"}, Stop=function()
+                        local info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
                             C.ClearFunctTbl(functs)
                         end}
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
                             warn("Votekick",targetPlr.Name,"Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
-                            C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`,
+                            C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
+                                .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
                             C.RemoveAction(info.Name)
                         end))
