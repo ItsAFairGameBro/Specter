@@ -475,7 +475,7 @@ return function(C,Settings)
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
 											end
-                                            if closestBasePart.Parent.HP.Value == 0 then
+                                            if closestBasePart.Parent.HP.Value <= 0 then
                                                 closestBasePart.Parent:SetAttribute("Dead",true)
                                                 print("Now dead!")
                                             end
