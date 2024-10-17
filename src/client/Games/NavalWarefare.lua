@@ -1414,13 +1414,14 @@ return function(C,Settings)
                             --tskSpawn(print, eventType, dataTbl)
 							local loc = rawget(dataTbl,1)
                             local id = rawget(dataTbl, 2)
+                            local three = rawget(dataTbl, 3)
                             tskSpawn(print, loc, id)
                             if loc == "Island" then
                                 
                             elseif loc == "Harbor" then
 
                             else--Instance or smth
-                                tskSpawn(print,"inst",typeof(loc))
+                                tskSpawn(print,"inst",id,three,typeof(loc),typeof(id),typeof(three))
                             end
                             
 							return "Cancel"
