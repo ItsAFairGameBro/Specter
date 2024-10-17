@@ -381,7 +381,7 @@ return function(C,Settings)
                 end
                 list.Enabled = false
                 list.ActionFrame = nil
-                print("Disabled",name)
+                C.ClearThreadTbl(list.Threads)
             end
 		end
 		
