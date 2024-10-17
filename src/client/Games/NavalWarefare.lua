@@ -1445,7 +1445,11 @@ return function(C,Settings)
                                 end
                             else
                                 if inst.Number.Value == id and inst.Owner.Value == owner and C.plr.Team.Name == inst.Team.Value then
-                                    C.DoTeleportToObject(inst.PrimaryPart)
+                                    if inst.Name == "Battleship" then
+                                        C.DoTeleportToObject(C.StringWait(inst,"Body.TopBody"))
+                                    else
+                                        C.DoTeleportToObject(inst.PrimaryPart)
+                                    end
                                     return
                                 end
                             end
