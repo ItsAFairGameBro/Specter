@@ -318,10 +318,10 @@ return function(C,Settings)
 				Layout = 2, Functs = {}, Threads = {},
 				Shortcut = "KillAura",
 				Shoot = function(self,Target: BasePart)
-					--[[if C.char and not C.char:FindFirstChild("InGame") and not C.char:GetAttribute("InGame") then
+					if C.char and not C.char:FindFirstChild("InGame") and not C.char:GetAttribute("InGame") then
 						C.RemoteEvent:FireServer("Teleport",{"Harbour",""})
 						C.char:SetAttribute("InGame",true) -- Only fire once, no need for spam
-					end--]]
+					end
 					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
@@ -1440,7 +1440,7 @@ return function(C,Settings)
                         local List = Barracks:GetChildren()
                         local Index = C.Randomizer:NextInteger(1,#List)
                         local ChosenPart = List[Index]
-                        local TelLoc = ChosenPart.Position
+                        local TelLoc = ChosenPart.Position + Vector3.new(0, C.getHumanoidHeight(C.char), 0)
                         C.char:MoveTo(TelLoc)
                         return
                     end
