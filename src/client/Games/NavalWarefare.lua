@@ -101,7 +101,7 @@ local function Static(C,Settings)
 			if ship:FindFirstChild("Team") and ship.Team.Value ~= "" and ship.Team.Value ~= C.plr.Team.Name and C.getHealth(ship) > 0 and CanTargetOwner(ship) then
 				local MainBody = ship:WaitForChild("MainBody")
 				local d = (MainBody.Position - myHRPPos).Magnitude
-				if d < maxDist and not IsNearHarbor(location, ship.Team.Value) then
+				if d < maxDist and not IsNearHarbor(MainBody.Position, ship.Team.Value) then
 					selShip, maxDist = MainBody, d
 				end
 			end
