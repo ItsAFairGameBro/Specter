@@ -104,8 +104,11 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					if not C.human then return end --else task.wait(.1) end
+                    local IsSeated = false
                     if C.human:GetState() ~= Enum.HumanoidStateType.Seated then -- Only update if not sitting
 					    C.human:SetStateEnabled(Enum.HumanoidStateType.Seated,not newValue)
+                    else
+                        IsSeated = true
                     end
 					
 					if not newValue then
@@ -138,12 +141,16 @@ return function(C,Settings)
 							end
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 							
-							C.human:ChangeState(Enum.HumanoidStateType.Running)
+                            if not IsSeated then
+							    C.human:ChangeState(Enum.HumanoidStateType.Running)
+                            end
 						end
 						
 						return
 					else
-						C.human:ChangeState(Enum.HumanoidStateType.Physics)
+                        if not IsSeated then
+						    C.human:ChangeState(Enum.HumanoidStateType.Physics)
+                        end
 						task.spawn(self.StopAllAnims,self)
 					end
 
