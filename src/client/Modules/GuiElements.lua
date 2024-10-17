@@ -2865,6 +2865,8 @@ return function(C, Settings)
 		if ActionsList:FindFirstChild(info.Name) then
 			return ActionClone
 		end
+        info.Threads = info.Threads or {}
+
 		ActionClone = C.Examples.ActionsEx:Clone()
 		ActionClone.Name = info.Name
 		ActionClone.Title.Text = (info.Title or info.Name):gsub("/"," "):gsub("_"," "):gsub("%l%u",function(old) return old:sub(1,1) .. " " .. old:sub(2) end)
@@ -2878,6 +2880,7 @@ return function(C, Settings)
 			if info.Stop then
 				info.Stop(onRequest)
 			end
+            C.ClearThreadTbl(info.Threads)
 			info.Enabled = false
 			ActionsFrame.Visible = #ActionsList:GetChildren()-1 > 2 -- If there's something else apart from UIListLayout and the deleted instance!
 			ActionClone:Destroy()
@@ -2906,7 +2909,7 @@ return function(C, Settings)
 			elseif typeof(info.Time) == "string" then
 				TimeTextLabel.Text = info.Time
 			else
-				task.spawn(info.Time,ActionClone,info)
+				table.insert(info.Threads, task.spawn(info.Time,ActionClone,info))
 			end
 		else
 			TimeTextLabel.Text = "Starting"
