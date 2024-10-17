@@ -83,6 +83,11 @@ local function Static(C,Settings)
         local HarborSize = HarborMainBody.Size+Vector3.new(120,220,120)
         local HarborCF = HarborMainBody.CFrame*CFrame.new(0,-40,30)
 
+        local myPart = Instance.new("Part")
+        myPart.CanCollide = false
+        myPart.Anchored = true
+        myPart.Size, myPart.CFrame = HarborSize, HarborCF
+
         return C.IsInBox(HarborCF, HarborSize, location)
     end
 	function C.getClosestShip(location: Vector3)
