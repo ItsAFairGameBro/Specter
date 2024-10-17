@@ -2956,12 +2956,17 @@ return function(C, Settings)
 	end
 	
 	function C.RemoveAction(name)
-		local actionInstance = ActionsList.FindFirstChild(ActionsList,name)
+        local info = C.getgenv().ActionsList[name]
+		local actionInstance = info.ActionClone
 		if actionInstance then
 			local event = actionInstance:FindFirstChild("StopEvent")
 			if event then
 				event:Fire(false)
+            else
+                print("StopEvent Not Found!")
 			end
+        else
+            warn("ActionClone Not Found",info)
 		end
 		if C.getgenv().ActionsList[name] then
 			C.getgenv().ActionsList[name] = nil

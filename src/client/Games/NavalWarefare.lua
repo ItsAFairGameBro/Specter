@@ -203,6 +203,7 @@ local function Static(C,Settings)
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
+                Alias = {"ban"},
                 AfterTxt = " Started!",
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
