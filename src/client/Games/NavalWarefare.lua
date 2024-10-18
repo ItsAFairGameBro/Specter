@@ -80,6 +80,11 @@ local function Static(C,Settings)
 		end
 		return true
 	end
+    for num, plane in ipairs(workspace:GetChildren()) do
+        if plane:FindFirstChild("Owner") and plane.Owner == "Biglugger2017" then
+            print("Plane",plane,CanTargetOwner(plane))
+        end
+    end
     local function IsNearHarbor(location: Vector3, team: string)
         local TheirHarbor = workspace:WaitForChild(team=="Japan" and "JapanDock" or "USDock")
         local HarborMainBody = TheirHarbor:WaitForChild("MainBody")
