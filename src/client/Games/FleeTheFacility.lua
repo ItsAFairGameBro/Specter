@@ -15,21 +15,32 @@ return function(C,Settings)
     
     local function SendWaitRemoteEvent(retType, ...)
         local bindableEvent = Instance.new("BindableEvent")
-        local rets = {}
+        local rets
         local isWaiting = true
         local conn
-        conn = C.AddGlobalConnection(C.RemoteEvent.OnClientEvent:Connect(function(type,...)
+        local thr = task.delay(4, function()
+            isWaiting = false
+            bindableEvent:Fire()
+        end)
+        conn = C.RemoteEvent.OnClientEvent:Connect(function(type,...)
+            print(type, retType)
             if type == retType then
                 rets = {type,...}
                 isWaiting = false
-                bindableEvent:Fire(type,...)
+                bindableEvent:Fire()
             end
-        end))
+        end)
         while isWaiting do
             bindableEvent.Event:Wait()
         end
+        C.StopThread(thr)
         bindableEvent:Destroy()
-        return table.unpack(rets)
+        conn:Disconnect()
+        if rets then
+            return true, table.unpack(rets)
+        else
+            return false, "Timeout Occured"
+        end
     end
     table.insert(C.InsertCommandFunctions,function()
         return {
