@@ -208,7 +208,7 @@ local function Static(C,Settings)
 	end
     table.insert(C.InsertCommandFunctions,function()
         local LegitVoteKick = true
-        local TimeNeeded = LegitVoteKick and 90 or 3
+        local TimeNeeded = LegitVoteKick and 60 or 3
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
@@ -239,7 +239,7 @@ local function Static(C,Settings)
                                 if C.GetAction("NavalVotekick") then
                                     return
                                 end
-                                C.CreateSysMessage(`You ban cooldown has expired!`, Color3.fromRGB(0,255))
+                                C.CreateSysMessage(`You ban cooldown has expired!`, Color3.fromRGB(255,255))
                             end)
                         end))
                         actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
