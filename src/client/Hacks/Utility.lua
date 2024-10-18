@@ -124,6 +124,7 @@ return function(C,Settings)
 				Shortcut = "BotAuto",
 				RejoinDelay = 5,
 				Sending = false,
+                Functs = {},
 				--[[Functs = {},
 				Activate = function(self, newValue)
 					if newValue then
