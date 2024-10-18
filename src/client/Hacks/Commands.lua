@@ -56,7 +56,7 @@ return function(C,Settings)
         },
         ["morph"]={
             Parameters={{Type="Players",SupportsNew = true}},
-            AfterTxt=" to %s%s",Priority=3,
+            AfterTxt=" to %s%s",Priority=-3,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
                 local success, desc
