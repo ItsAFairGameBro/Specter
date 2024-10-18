@@ -401,7 +401,7 @@ return function(C,Settings)
 		while RemoveOnDestroyIndex > 0 do
 			theTime+=task.wait() -- Wait while being destroyed
 			if theTime > 10 then
-				warn(`[C:Destroy]: It's been 10 seconds bro and I'm still waiting on RemoveOnDestroy functions: {RemoveOnDestroyIndex}`,ThingsToRemove)
+				warn(`[C:Destroy]: It's been 10 seconds bro and I'm still waiting on RunOnDestroy functions: {RemoveOnDestroyIndex}`,ThingsToRemove)
 				theTime = 0
 			end
 		end
