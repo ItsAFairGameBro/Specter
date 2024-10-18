@@ -235,6 +235,12 @@ local function Static(C,Settings)
                             C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
+                            task.delay(Genv.LastKick - os.clock(), function()
+                                if C.GetAction("NavalVotekick") then
+                                    return
+                                end
+                                C.CreateSysMessage(`You ban cooldown has expired!`, Color3.fromRGB(0,255))
+                            end)
                         end))
                         actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
