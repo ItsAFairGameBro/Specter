@@ -246,6 +246,13 @@ return function(C,Settings)
                     else
 				        C.ResetPartProperty(C.plr,"CameraMaxZoomDistance",self.Shortcut)
                     end
+
+                    -- No First Person
+                    if EnTbl.NoFirstPerson then
+                        C.SetPartProperty(C.plr,"CameraMinZoomDistance",self.Shortcut,1)
+                    else
+				        C.ResetPartProperty(C.plr,"CameraMinZoomDistance",self.Shortcut)
+                    end
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
@@ -292,6 +299,14 @@ return function(C,Settings)
 						Tooltip = "Allows for infinite zooming",
 						Layout = 5,Default=true,
 						Shortcut="NoZoomLimit",
+						Activate = C.ReloadHack,
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Disable First Person",
+						Tooltip = "Prevents First Person",
+						Layout = 6,Default=true,
+						Shortcut="NoFirstPerson",
 						Activate = C.ReloadHack,
 					},
 				},
