@@ -599,7 +599,7 @@ return function(C_new,Settings)
 							continue
 						end
 						curMessage = inBetween .. curMessage
-						if rawget(C,"ChatVersion") == "TextChatService" then
+						if rawget(C,"ChatVersion") == "TextChatService" or true then
 							newMessage ..= '\r' .. curMessage
 						elseif rawget(C,"ChatVersion") == "LegacyChatService" then
 							newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
