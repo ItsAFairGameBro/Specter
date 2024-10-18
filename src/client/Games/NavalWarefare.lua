@@ -663,7 +663,10 @@ return function(C,Settings)
 				end,
 				Events = {
 					ShipAdded=function(self,ship)
-						local MainBody = ship:WaitForChild("MainBody")
+						local MainBody = ship:WaitForChild("MainBody",1e-3)
+                        if not MainBody then
+                            return
+                        end
 						local Team = ship:WaitForChild("Team")
 						local ExpandSize = (Team.Value == C.plr.Team.Name or not self.RealEnabled) and 0 or self.EnTbl.Size
 						local DefaultSize = C.GetPartProperty(MainBody,"Size")
