@@ -3298,10 +3298,10 @@ return function(C, Settings)
         else
             Visible = not Visible
         end
+        SecondaryHUD.Visible = Visible
 		if Visible then
 			ActivateServers(startPlace)
 		end
-		SecondaryHUD.Visible = Visible
 	end
 	SecondaryHUD.Visible = false
 

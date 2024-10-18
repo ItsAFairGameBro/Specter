@@ -60,6 +60,7 @@ return function(C,Settings)
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
                     local found, count = false, 0
+                    print(result,signal,dict)
                     for gameID, data in pairs(dict) do
                         count+=1
                         if table.find(data.namesList, SearchUser) then
