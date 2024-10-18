@@ -52,7 +52,7 @@ return function(C,Settings)
                 Alias = {},
                 AfterTxt = " %s in %.1fs",
                 Run = function(self,args)
-                    local SearchUser = args[1]
+                    local SearchUser = args[1][1]
                     local TimeStart = os.clock()
 
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
@@ -60,7 +60,7 @@ return function(C,Settings)
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
                     local found, count = false, 0
-                    print(result,signal,dict)
+                    print(result,SearchUser)
                     for gameID, data in pairs(dict) do
                         count+=1
                         if table.find(data.namesList, SearchUser) then

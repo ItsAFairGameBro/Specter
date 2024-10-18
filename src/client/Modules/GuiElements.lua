@@ -3182,6 +3182,7 @@ return function(C, Settings)
         MainScroll.Visible = false
         LoadingLabel.Visible = true
 		NoneFound.Visible = false
+        BottomButtons.Visible = false
 		local Cursor = ""
 		if increment then
 			Cursor = Next
@@ -3293,7 +3294,7 @@ return function(C, Settings)
 	local Visible = false
 	function C.ToggleServersVisiblity(startPlace)
         startPlace = startPlace or "Game"
-        if startPlace ~= CurrentlySel then
+        if startPlace ~= CurrentlySel and startPlace ~= "Exit" then
             Visible = true
         else
             Visible = not Visible
@@ -3312,7 +3313,9 @@ return function(C, Settings)
 					ActivateServers(button.Name)
 				end)
 			else
-				C.ButtonClick(button, C.ToggleServersVisiblity)
+				C.ButtonClick(button, function()
+                    C.ToggleServersVisiblity("Exit")
+                end)
 			end
 		end
 	end
