@@ -602,7 +602,7 @@ return function(C_new,Settings)
 						if rawget(C,"ChatVersion") == "TextChatService" and false then
 							newMessage ..= '\n' .. curMessage
 						elseif rawget(C,"ChatVersion") == "LegacyChatService" then
-							newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
+							newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155+100),#rawget(splitArray,num-1))..curMessage
 						end
 					end
 					return newMessage
