@@ -73,7 +73,7 @@ local function Static(C,Settings)
 	local function CanTargetOwner(model: Model)
 		local Owner = model:FindFirstChild("Owner")
 		if Owner and Owner.Value ~= "" then
-			local theirPlr = PS:FindFirstChild(Owner)
+			local theirPlr = PS:FindFirstChild(Owner.Value)
 			if theirPlr and not C.CanTargetPlayer(theirPlr) then
 				return false
 			end
