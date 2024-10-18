@@ -720,8 +720,8 @@ return function(C,Settings)
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 local theirPrim = theirChar and theirChar.PrimaryPart
                                 if C.hrp and not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,theirPrim.CollisionGroup) then
-                                    C.CreateSysMessage(`Fling cannot work because you do not collide with {thisPlr.Name}`)
-                                    task.spawn(self.Run,self,{})
+                                    C.CreateSysMessage(`Fling cannot work because you do not collide with {thisPlr.Name}!`)
+                                    task.spawn(self.Parent.unfling.Run,self.Parent.unfling)
                                     return
                                 end
                                 if self.ActionFrame:FindFirstChild("Time") then
