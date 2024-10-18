@@ -705,10 +705,8 @@ return function(C,Settings)
                 else
                     self.Parent.unfling:Run(nil,true,false)
                 end
-                if C.hrp and not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,C.hrp.CollisionGroup) then
-                    return false, "Fling cannot work because you walk through other players"
-                elseif #args[1] == 0 then
-                    return true, "Stopped (Fling Works)"-- do nothing if there's nothing to fling or just yourself!
+                if #args[1] == 0 then
+                    return true, "Stopped"-- do nothing if there's nothing to fling or just yourself!
                 end
                 local wasSeated = C.human:GetState() == Enum.HumanoidStateType.Seated
                 self.FlingThread = task.spawn(function()
@@ -721,6 +719,11 @@ return function(C,Settings)
                                 local theirChar = thisPlr.Character
                                 local theirHuman = theirChar and theirChar:FindFirstChild("Humanoid")
                                 local theirPrim = theirChar and theirChar.PrimaryPart
+                                if C.hrp and not PhysicsService:CollisionGroupsAreCollidable(C.hrp.CollisionGroup,theirPrim.CollisionGroup) then
+                                    C.CreateSysMessage(`Fling cannot work because you do not collide with {thisPlr.Name}`)
+                                    task.spawn(self.Run,self,{})
+                                    return
+                                end
                                 if self.ActionFrame:FindFirstChild("Time") then
                                     self.ActionFrame.Time.Text = `{thisPlr.Name} ({i}/30)`
                                 end
