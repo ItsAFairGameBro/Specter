@@ -208,7 +208,7 @@ local function Static(C,Settings)
 	end
     table.insert(C.InsertCommandFunctions,function()
         local LegitVoteKick = true
-        local TimeNeeded = LegitVoteKick and 120 or 3
+        local TimeNeeded = LegitVoteKick and 90 or 3
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
