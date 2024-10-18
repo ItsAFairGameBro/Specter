@@ -409,7 +409,7 @@ return function(C,Settings)
         ["follow"]={
             Parameters={{Type="Player"},{Type="Number",Min=-MaxFlingSpeed,Max=MaxFlingSpeed,Default=5}},
             AfterTxt="",
-            Priority=3,
+            Priority=-3,
             isFollowing=-1,
             ForcePlayAnimations={},
             MyPlayingAnimations={},
