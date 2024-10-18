@@ -11,38 +11,55 @@ local RS = game:GetService("ReplicatedStorage")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
+    
+    
+    local function SendWaitRemoteEvent(retType, ...)
+        local bindableEvent = Instance.new("BindableEvent")
+        local rets = {}
+        local isWaiting = true
+        local conn
+        conn = C.AddGlobalConnection(C.RemoteEvent.OnClientEvent:Connect(function(type,...)
+            if type == retType then
+                rets = {type,...}
+                isWaiting = false
+                bindableEvent:Fire(type,...)
+            end
+        end))
+        while isWaiting do
+            bindableEvent.Event:Wait()
+        end
+        bindableEvent:Destroy()
+        return table.unpack(rets)
+    end
     table.insert(C.InsertCommandFunctions,function()
         return {
             ["findtrader"] = {
                 Parameters={{Type="User"}},
                 Alias = {},
-                AfterTxt = " %s in %.2f",
+                AfterTxt = " %s in %.1fs",
                 Run = function(self,args)
                     local SearchUser = args[1]
+                    local TimeStart = os.clock()
 
-                    local conn
-                    conn = C.RemoteEvent.OnClientEvent:Connect(function(signal, dict)
-                        if signal == "ReceiveTradingPostPlayersList" then
-                            conn:Disconnect()
-                            local count = 0
-                            for gameID, data in pairs(dict) do
-                                count+=1
-                                if table.find(data.namesList, SearchUser) then
-                                    if C.Prompt(`Join {SearchUser} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\n"), "Y/N") == true then
-                                        C.ServerTeleport(1738581510,gameID)
-                                    end
-                                    print("Found In ",gameID)
+                    local signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
+                    local found, count = false, 0
+                    for gameID, data in pairs(dict) do
+                        count+=1
+                        if table.find(data.namesList, SearchUser) then
+                            task.spawn(function()
+                                if C.Prompt(`Join {SearchUser} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\n"), "Y/N") == true then
+                                    C.ServerTeleport(1738581510,gameID)
                                 end
-                                if count%8==0 then
-                                    task.wait()
-                                end
-                            end
-                            warn("NOT FOUND!")
+                            end)
+                            found = gameID
+                            print("Found In ",gameID)
+                            break
                         end
-                    end)
-
-                    C.RemoteEvent:FireServer("RequestTradingPostPlayersList")
-                    return "",.1
+                        if count%8==0 then
+                            task.wait()
+                        end
+                    end
+                    return true, found and `In {found}` or `Not Found`, os.clock() - TimeStart
                 end,
             }
         }
