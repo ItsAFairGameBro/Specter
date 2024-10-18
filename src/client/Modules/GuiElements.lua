@@ -458,6 +458,7 @@ GuiTbl.HeaderTitleLabel.BackgroundTransparency = 1.000
 GuiTbl.HeaderTitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.HeaderTitleLabel.BorderSizePixel = 0
 GuiTbl.HeaderTitleLabel.Size = UDim2.new(0.600000024, 0, 1, 0)
+GuiTbl.HeaderTitleLabel.RichText = true
 GuiTbl.HeaderTitleLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 GuiTbl.HeaderTitleLabel.Text = " SPECTER"
 GuiTbl.HeaderTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -689,6 +690,7 @@ GuiTbl.HeaderTitleLabel_2.BorderSizePixel = 0
 GuiTbl.HeaderTitleLabel_2.LayoutOrder = -12
 GuiTbl.HeaderTitleLabel_2.Size = UDim2.new(0.600000024, 0, 1, 0)
 GuiTbl.HeaderTitleLabel_2.Visible = false
+GuiTbl.HeaderTitleLabel_2.RichText = true
 GuiTbl.HeaderTitleLabel_2.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 GuiTbl.HeaderTitleLabel_2.Text = " SPECTER"
 GuiTbl.HeaderTitleLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1609,6 +1611,7 @@ GuiTbl.HeaderTitleLabel_3.LayoutOrder = -12
 GuiTbl.HeaderTitleLabel_3.Size = UDim2.new(0.600000024, 0, 1, 0)
 GuiTbl.HeaderTitleLabel_3.Visible = false
 GuiTbl.HeaderTitleLabel_3.ZIndex = -47
+GuiTbl.HeaderTitleLabel_3.RichText = true
 GuiTbl.HeaderTitleLabel_3.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 GuiTbl.HeaderTitleLabel_3.Text = " SPECTER"
 GuiTbl.HeaderTitleLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2117,6 +2120,7 @@ GuiTbl.NoneFoundLabel.BorderSizePixel = 0
 GuiTbl.NoneFoundLabel.Position = UDim2.new(0.649999976, 0, 0.479999989, 0)
 GuiTbl.NoneFoundLabel.Size = UDim2.new(0.600000024, 0, 0.699999988, 0)
 GuiTbl.NoneFoundLabel.ZIndex = 102
+GuiTbl.NoneFoundLabel.RichText = true
 GuiTbl.NoneFoundLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 GuiTbl.NoneFoundLabel.Text = "There are no results for this category.<br />Click on the category again to refresh it."
 GuiTbl.NoneFoundLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2141,6 +2145,7 @@ GuiTbl.LoadingLabel.Position = UDim2.new(0.649999976, 0, 0.479999989, 0)
 GuiTbl.LoadingLabel.Size = UDim2.new(0.600000024, 0, 0.699999988, 0)
 GuiTbl.LoadingLabel.Visible = false
 GuiTbl.LoadingLabel.ZIndex = 102
+GuiTbl.LoadingLabel.RichText = true
 GuiTbl.LoadingLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 GuiTbl.LoadingLabel.Text = "Loading, please wait...<br />Click on the category again if this takes too long!"
 GuiTbl.LoadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -3174,6 +3179,7 @@ return function(C, Settings)
 	local LoadingDeb
 	local function ActivateServers(tabName: string, increment: boolean | nil)
 		if LoadingDeb then return end LoadingDeb = true
+        MainScroll.Visible = false
         LoadingLabel.Visible = true
 		NoneFound.Visible = false
 		local Cursor = ""
@@ -3195,6 +3201,7 @@ return function(C, Settings)
 		end
 
 		CurrentlySel = tabName
+        MainScroll.Visible = true
 		C.ClearChildren(MainScroll)
 		UIGridLayout.CellSize = UDim2.new(tabName == "Place" and 1 or 0.3,0,0,UIGridLayout.CellSize.Y.Offset)
 		MainScroll.CanvasPosition = Vector2.zero
