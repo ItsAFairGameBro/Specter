@@ -10,14 +10,51 @@ local PS = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
-    if game.PlaceId ~= 1738581510 then -- Trading Hub!
+    C.RemoteEvent = RS:WaitForChild("RemoteEvent")
+    table.insert(C.InsertCommandFunctions,function()
+        return {
+            ["findtrader"] = {
+                Parameters={{Type="User"}},
+                Alias = {},
+                AfterTxt = " %s in %.2f",
+                Run = function(self,args)
+                    local SearchUser = args[1]
+
+                    local conn
+                    conn = C.RemoteEvent.OnClientEvent:Connect(function(signal, dict)
+                        if signal == "ReceiveTradingPostPlayersList" then
+                            conn:Disconnect()
+                            local count = 0
+                            for gameID, data in pairs(dict) do
+                                count+=1
+                                if table.find(data.namesList, SearchUser) then
+                                    if C.Prompt(`Join {SearchUser} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\n"), "Y/N") == true then
+                                        C.ServerTeleport(1738581510,gameID)
+                                    end
+                                    print("Found In ",gameID)
+                                end
+                                if count%8==0 then
+                                    task.wait()
+                                end
+                            end
+                            warn("NOT FOUND!")
+                        end
+                    end)
+
+                    C.RemoteEvent:FireServer("RequestTradingPostPlayersList")
+                    return "",.1
+                end,
+            }
+        }
+    end)
+    if game.PlaceId ~= 1738581510 then -- Not Trading Hub!
         return
     end
-    C.RemoteEvent = RS:WaitForChild("RemoteEvent")
+    
 	return {
 		Category = {
-			Name = "PassBomb",
-			Title = "Pass The Bomb",
+			Name = "FleeTheFacility",
+			Title = "Flee The Facility",
 			Image = nil, -- Set to nil for game image
 			Layout = 20,
 		},
@@ -26,7 +63,7 @@ return function(C,Settings)
 				Title = "Insta Trade",
 				Tooltip = "Automatically trades with \"trusted\" users!",
 				Layout = 1,
-				Shortcut = "InstaTrade",Functs={}, Instances = {},Default=true,
+				Shortcut = "InstaTrade",Functs={}, Instances = {},Default=false,
 				whitelistedUsers = {"queen_bestiesforlife"},
                 lastSend = 0,
 				Activate = function(self,newValue,firstRun)
@@ -129,6 +166,5 @@ return function(C,Settings)
 				Options = {},
 			},
 		}
-		
 	}
 end

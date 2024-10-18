@@ -98,6 +98,15 @@ return function(C,Settings)
                             C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`) 
                         end
                     end
+                elseif argumentData.Type=="User" then
+                    local success, name, id = C.GetUserNameAndId(args[num])
+                    if success then
+                        args[num] = {name, id}
+                    else
+                        canRunFunction = false
+                        C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid users. No matching username/userid found for {args[num]}`)
+                    end
+                    
                 elseif argumentData.Type=="" then
                     --do nothing
                 elseif argumentData.Type~=false then
