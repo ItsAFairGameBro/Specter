@@ -81,7 +81,7 @@ local function Static(C,Settings)
 		return true
 	end
     for num, plane in ipairs(workspace:GetChildren()) do
-        if plane:FindFirstChild("Owner") and plane.Owner == "Biglugger2017" then
+        if plane:FindFirstChild("Owner") and plane.Owner.Value == "Biglugger2017" then
             print("Plane",plane,CanTargetOwner(plane))
         end
     end
