@@ -134,7 +134,7 @@ return function(C, _SETTINGS)
 		local isGame = GameModule == name
 
 		local hack = C.LoadModule(isGame and "Games/"..name or "Hacks/"..name)
-        assert(hack, `[C.CoreLoader]: Module #{num}: {name} Failed To Load!`)
+        if not hack then continue end -- No hacks is crazy!
 		local category = hack.Category
 		local idName = category and category.Name or name
 
