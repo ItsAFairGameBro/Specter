@@ -18,7 +18,10 @@ return function(C,Settings)
         local rets
         local isWaiting = true
         local conn
-        local thr = task.delay(4, function()
+        task.delay(4, function()
+            if not isWaiting then
+                return
+            end
             isWaiting = false
             bindableEvent:Fire()
         end)
@@ -30,10 +33,10 @@ return function(C,Settings)
                 bindableEvent:Fire()
             end
         end)
+        C.RemoteEvent:FireServer(...)
         while isWaiting do
             bindableEvent.Event:Wait()
         end
-        C.StopThread(thr)
         bindableEvent:Destroy()
         conn:Disconnect()
         if rets then
@@ -52,7 +55,10 @@ return function(C,Settings)
                     local SearchUser = args[1]
                     local TimeStart = os.clock()
 
-                    local signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
+                    local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
+                    if not result then
+                        return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
+                    end
                     local found, count = false, 0
                     for gameID, data in pairs(dict) do
                         count+=1
