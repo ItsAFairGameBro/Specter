@@ -161,9 +161,6 @@ local GuiTbl = {
 	UIStroke_15 = Instance.new("UIStroke"),
 	UIStroke_16 = Instance.new("UIStroke"),
 	UIGradient_6 = Instance.new("UIGradient"),
-	ToggleTagEx = Instance.new("BillboardGui"),
-	Toggle = Instance.new("TextButton"),
-	UIStroke_17 = Instance.new("UIStroke"),
 	KickedButton = Instance.new("TextButton"),
 	SecondaryHUD = Instance.new("Frame"),
 	Servers = Instance.new("Frame"),
@@ -172,75 +169,77 @@ local GuiTbl = {
 	TabsSelection = Instance.new("Frame"),
 	Game = Instance.new("TextButton"),
 	UICorner_17 = Instance.new("UICorner"),
-	UIStroke_18 = Instance.new("UIStroke"),
+	UIStroke_17 = Instance.new("UIStroke"),
 	UIGridLayout = Instance.new("UIGridLayout"),
 	Recent = Instance.new("TextButton"),
 	UICorner_18 = Instance.new("UICorner"),
-	UIStroke_19 = Instance.new("UIStroke"),
+	UIStroke_18 = Instance.new("UIStroke"),
 	Close = Instance.new("TextButton"),
 	UICorner_19 = Instance.new("UICorner"),
-	UIStroke_20 = Instance.new("UIStroke"),
+	UIStroke_19 = Instance.new("UIStroke"),
 	Friend = Instance.new("TextButton"),
 	UICorner_20 = Instance.new("UICorner"),
-	UIStroke_21 = Instance.new("UIStroke"),
-	Place = Instance.new("TextButton"),
-	UICorner_21 = Instance.new("UICorner"),
-	UIStroke_22 = Instance.new("UIStroke"),
+	UIStroke_20 = Instance.new("UIStroke"),
 	MainScroll = Instance.new("ScrollingFrame"),
 	ServerEx = Instance.new("Frame"),
 	ServerTitle = Instance.new("TextLabel"),
 	TimeStamp = Instance.new("TextLabel"),
 	SecondData = Instance.new("TextLabel"),
-	UICorner_22 = Instance.new("UICorner"),
-	UIStroke_23 = Instance.new("UIStroke"),
+	UICorner_21 = Instance.new("UICorner"),
+	UIStroke_21 = Instance.new("UIStroke"),
 	UIGridLayout_2 = Instance.new("UIGridLayout"),
 	BottomButtons = Instance.new("Frame"),
 	Previous = Instance.new("TextButton"),
-	UICorner_23 = Instance.new("UICorner"),
-	UIStroke_24 = Instance.new("UIStroke"),
+	UICorner_22 = Instance.new("UICorner"),
+	UIStroke_22 = Instance.new("UIStroke"),
 	UIGridLayout_3 = Instance.new("UIGridLayout"),
 	Join = Instance.new("TextButton"),
-	UICorner_24 = Instance.new("UICorner"),
-	UIStroke_25 = Instance.new("UIStroke"),
+	UICorner_23 = Instance.new("UICorner"),
+	UIStroke_23 = Instance.new("UIStroke"),
 	Next = Instance.new("TextButton"),
-	UICorner_25 = Instance.new("UICorner"),
-	UIStroke_26 = Instance.new("UIStroke"),
+	UICorner_24 = Instance.new("UICorner"),
+	UIStroke_24 = Instance.new("UIStroke"),
 	ExtraLabel = Instance.new("TextLabel"),
 	NoneFoundLabel = Instance.new("TextLabel"),
+	UICorner_25 = Instance.new("UICorner"),
+	UIStroke_25 = Instance.new("UIStroke"),
+	LoadingLabel = Instance.new("TextLabel"),
 	UICorner_26 = Instance.new("UICorner"),
-	UIStroke_27 = Instance.new("UIStroke"),
-	SelectedLabel = Instance.new("TextLabel"),
+	UIStroke_26 = Instance.new("UIStroke"),
 	UICorner_27 = Instance.new("UICorner"),
-	UIStroke_28 = Instance.new("UIStroke"),
-	UICorner_28 = Instance.new("UICorner"),
-	UIStroke_29 = Instance.new("UIStroke"),
+	UIStroke_27 = Instance.new("UIStroke"),
 	PromptFrame = Instance.new("Frame"),
-	UICorner_29 = Instance.new("UICorner"),
-	UIStroke_30 = Instance.new("UIStroke"),
+	UICorner_28 = Instance.new("UICorner"),
+	UIStroke_28 = Instance.new("UIStroke"),
 	PromptTitle = Instance.new("TextLabel"),
 	PromptDesc = Instance.new("TextLabel"),
 	PromptButtons = Instance.new("Frame"),
 	UIGridLayout_4 = Instance.new("UIGridLayout"),
 	Yes = Instance.new("TextButton"),
-	UIStroke_31 = Instance.new("UIStroke"),
-	UICorner_30 = Instance.new("UICorner"),
+	UIStroke_29 = Instance.new("UIStroke"),
+	UICorner_29 = Instance.new("UICorner"),
 	No = Instance.new("TextButton"),
-	UIStroke_32 = Instance.new("UIStroke"),
-	UICorner_31 = Instance.new("UICorner"),
+	UIStroke_30 = Instance.new("UIStroke"),
+	UICorner_30 = Instance.new("UICorner"),
 	Ok = Instance.new("TextButton"),
-	UIStroke_33 = Instance.new("UIStroke"),
+	UIStroke_31 = Instance.new("UIStroke"),
+	UICorner_31 = Instance.new("UICorner"),
+	VisibilityButton = Instance.new("Frame"),
+	UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint"),
 	UICorner_32 = Instance.new("UICorner"),
+	VisibilityButton_2 = Instance.new("ImageLabel"),
+	UICorner_33 = Instance.new("UICorner"),
+	FrameRate = Instance.new("TextLabel"),
+	ESP = Instance.new("Folder"),
+	ToggleTagEx = Instance.new("BillboardGui"),
+	Toggle = Instance.new("TextButton"),
+	UIStroke_32 = Instance.new("UIStroke"),
 	NameTagEx = Instance.new("BillboardGui"),
 	Username = Instance.new("TextLabel"),
 	Distance = Instance.new("TextLabel"),
 	ExpandingBar = Instance.new("Frame"),
 	AmtFinished = Instance.new("Frame"),
-	VisibilityButton = Instance.new("Frame"),
-	UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint"),
-	UICorner_33 = Instance.new("UICorner"),
-	VisibilityButton_2 = Instance.new("ImageLabel"),
-	UICorner_34 = Instance.new("UICorner"),
-	FrameRate = Instance.new("TextLabel"),
+	Modal = Instance.new("TextButton"),
 }
 
 --Properties:
@@ -1758,33 +1757,6 @@ GuiTbl.UIStroke_16.Parent = GuiTbl.ActionsEx
 GuiTbl.UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(140, 140, 140)), ColorSequenceKeypoint.new(0.96, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(39, 39, 39))}
 GuiTbl.UIGradient_6.Parent = GuiTbl.ActionsEx
 
-GuiTbl.ToggleTagEx.Name = "ToggleTagEx"
-C.AddGlobalInstance(GuiTbl.ToggleTagEx)
-C.Examples.ToggleTagEx = GuiTbl.ToggleTagEx
-GuiTbl.ToggleTagEx.Enabled = false
-GuiTbl.ToggleTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-GuiTbl.ToggleTagEx.Active = true
-GuiTbl.ToggleTagEx.AlwaysOnTop = true
-GuiTbl.ToggleTagEx.ExtentsOffsetWorldSpace = Vector3.new(0, 4, 0)
-GuiTbl.ToggleTagEx.LightInfluence = 1.000
-GuiTbl.ToggleTagEx.Size = UDim2.new(1, 30, 0.75, 10)
-
-GuiTbl.Toggle.Name = "Toggle"
-GuiTbl.Toggle.Parent = GuiTbl.ToggleTagEx
-GuiTbl.Toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-GuiTbl.Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GuiTbl.Toggle.BorderSizePixel = 0
-GuiTbl.Toggle.Size = UDim2.new(1, 0, 1, 0)
-GuiTbl.Toggle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GuiTbl.Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-GuiTbl.Toggle.TextScaled = true
-GuiTbl.Toggle.TextSize = 21
-GuiTbl.Toggle.TextStrokeTransparency = 0.000
-GuiTbl.Toggle.TextWrapped = true
-
-GuiTbl.UIStroke_17.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_17.Parent = GuiTbl.Toggle
-
 GuiTbl.KickedButton.Name = "KickedButton"
 GuiTbl.KickedButton.Parent = GuiTbl.SpecterGUI
 C.UI.KickedButton = GuiTbl.KickedButton
@@ -1870,12 +1842,12 @@ GuiTbl.Game.TextWrapped = true
 GuiTbl.UICorner_17.CornerRadius = UDim.new(0, 32)
 GuiTbl.UICorner_17.Parent = GuiTbl.Game
 
-GuiTbl.UIStroke_18.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_18.Parent = GuiTbl.Game
+GuiTbl.UIStroke_17.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_17.Parent = GuiTbl.Game
 
 GuiTbl.UIGridLayout.Parent = GuiTbl.TabsSelection
 GuiTbl.UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-GuiTbl.UIGridLayout.CellPadding = UDim2.new(0, 0, 0.063000001, 0)
+GuiTbl.UIGridLayout.CellPadding = UDim2.new(0, 0, 0.13333334, 0)
 GuiTbl.UIGridLayout.CellSize = UDim2.new(1, 0, 0.150000006, 0)
 
 GuiTbl.Recent.Name = "Recent"
@@ -1896,8 +1868,8 @@ GuiTbl.Recent.TextWrapped = true
 GuiTbl.UICorner_18.CornerRadius = UDim.new(0, 32)
 GuiTbl.UICorner_18.Parent = GuiTbl.Recent
 
-GuiTbl.UIStroke_19.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_19.Parent = GuiTbl.Recent
+GuiTbl.UIStroke_18.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_18.Parent = GuiTbl.Recent
 
 GuiTbl.Close.Name = "Close"
 GuiTbl.Close.Parent = GuiTbl.TabsSelection
@@ -1918,8 +1890,8 @@ GuiTbl.Close.TextWrapped = true
 GuiTbl.UICorner_19.CornerRadius = UDim.new(0, 32)
 GuiTbl.UICorner_19.Parent = GuiTbl.Close
 
-GuiTbl.UIStroke_20.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_20.Parent = GuiTbl.Close
+GuiTbl.UIStroke_19.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_19.Parent = GuiTbl.Close
 
 GuiTbl.Friend.Name = "Friend"
 GuiTbl.Friend.Parent = GuiTbl.TabsSelection
@@ -1940,30 +1912,8 @@ GuiTbl.Friend.TextWrapped = true
 GuiTbl.UICorner_20.CornerRadius = UDim.new(0, 32)
 GuiTbl.UICorner_20.Parent = GuiTbl.Friend
 
-GuiTbl.UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_21.Parent = GuiTbl.Friend
-
-GuiTbl.Place.Name = "Place"
-GuiTbl.Place.Parent = GuiTbl.TabsSelection
-GuiTbl.Place.BackgroundColor3 = Color3.fromRGB(157, 0, 255)
-GuiTbl.Place.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GuiTbl.Place.BorderSizePixel = 0
-GuiTbl.Place.LayoutOrder = 1
-GuiTbl.Place.Size = UDim2.new(0, 200, 0, 50)
-GuiTbl.Place.ZIndex = 103
-GuiTbl.Place.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GuiTbl.Place.Text = "Places"
-GuiTbl.Place.TextColor3 = Color3.fromRGB(255, 255, 255)
-GuiTbl.Place.TextScaled = true
-GuiTbl.Place.TextSize = 21
-GuiTbl.Place.TextStrokeTransparency = 0.000
-GuiTbl.Place.TextWrapped = true
-
-GuiTbl.UICorner_21.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_21.Parent = GuiTbl.Place
-
-GuiTbl.UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_22.Parent = GuiTbl.Place
+GuiTbl.UIStroke_20.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_20.Parent = GuiTbl.Friend
 
 GuiTbl.MainScroll.Name = "MainScroll"
 GuiTbl.MainScroll.Parent = GuiTbl.Servers
@@ -1978,14 +1928,13 @@ GuiTbl.MainScroll.ZIndex = 102
 GuiTbl.MainScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 GuiTbl.MainScroll.BottomImage = "rbxassetid://3062505976"
 GuiTbl.MainScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-GuiTbl.MainScroll.HorizontalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 GuiTbl.MainScroll.MidImage = "rbxassetid://3062506202"
 GuiTbl.MainScroll.TopImage = "rbxassetid://3062506445"
-GuiTbl.MainScroll.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 
 GuiTbl.ServerEx.Name = "ServerEx"
 C.AddGlobalInstance(GuiTbl.ServerEx)
 C.Examples.ServerEx = GuiTbl.ServerEx
+GuiTbl.ServerEx.Active = true
 GuiTbl.ServerEx.BackgroundColor3 = Color3.fromRGB(255, 81, 0)
 GuiTbl.ServerEx.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.ServerEx.BorderSizePixel = 0
@@ -2046,11 +1995,11 @@ GuiTbl.SecondData.TextSize = 21
 GuiTbl.SecondData.TextStrokeTransparency = 0.000
 GuiTbl.SecondData.TextWrapped = true
 
-GuiTbl.UICorner_22.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_22.Parent = GuiTbl.ServerEx
+GuiTbl.UICorner_21.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_21.Parent = GuiTbl.ServerEx
 
-GuiTbl.UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_23.Parent = GuiTbl.ServerEx
+GuiTbl.UIStroke_21.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_21.Parent = GuiTbl.ServerEx
 
 GuiTbl.UIGridLayout_2.Parent = GuiTbl.MainScroll
 GuiTbl.UIGridLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -2085,11 +2034,11 @@ GuiTbl.Previous.TextSize = 21
 GuiTbl.Previous.TextStrokeTransparency = 0.000
 GuiTbl.Previous.TextWrapped = true
 
-GuiTbl.UICorner_23.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_23.Parent = GuiTbl.Previous
+GuiTbl.UICorner_22.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_22.Parent = GuiTbl.Previous
 
-GuiTbl.UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_24.Parent = GuiTbl.Previous
+GuiTbl.UIStroke_22.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_22.Parent = GuiTbl.Previous
 
 GuiTbl.UIGridLayout_3.Parent = GuiTbl.BottomButtons
 GuiTbl.UIGridLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -2113,11 +2062,11 @@ GuiTbl.Join.TextSize = 21
 GuiTbl.Join.TextStrokeTransparency = 0.000
 GuiTbl.Join.TextWrapped = true
 
-GuiTbl.UICorner_24.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_24.Parent = GuiTbl.Join
+GuiTbl.UICorner_23.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_23.Parent = GuiTbl.Join
 
-GuiTbl.UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_25.Parent = GuiTbl.Join
+GuiTbl.UIStroke_23.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_23.Parent = GuiTbl.Join
 
 GuiTbl.Next.Name = "Next"
 GuiTbl.Next.Parent = GuiTbl.BottomButtons
@@ -2135,11 +2084,11 @@ GuiTbl.Next.TextSize = 21
 GuiTbl.Next.TextStrokeTransparency = 0.000
 GuiTbl.Next.TextWrapped = true
 
-GuiTbl.UICorner_25.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_25.Parent = GuiTbl.Next
+GuiTbl.UICorner_24.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_24.Parent = GuiTbl.Next
 
-GuiTbl.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_26.Parent = GuiTbl.Next
+GuiTbl.UIStroke_24.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_24.Parent = GuiTbl.Next
 
 GuiTbl.ExtraLabel.Name = "ExtraLabel"
 GuiTbl.ExtraLabel.Parent = GuiTbl.Servers
@@ -2169,48 +2118,48 @@ GuiTbl.NoneFoundLabel.Position = UDim2.new(0.649999976, 0, 0.479999989, 0)
 GuiTbl.NoneFoundLabel.Size = UDim2.new(0.600000024, 0, 0.699999988, 0)
 GuiTbl.NoneFoundLabel.ZIndex = 102
 GuiTbl.NoneFoundLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GuiTbl.NoneFoundLabel.Text = "There are no results for this category.\nClick on the category again to refresh it."
+GuiTbl.NoneFoundLabel.Text = "There are no results for this category.<br />Click on the category again to refresh it."
 GuiTbl.NoneFoundLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 GuiTbl.NoneFoundLabel.TextScaled = true
 GuiTbl.NoneFoundLabel.TextSize = 21
 GuiTbl.NoneFoundLabel.TextStrokeTransparency = 0.000
 GuiTbl.NoneFoundLabel.TextWrapped = true
 
+GuiTbl.UICorner_25.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_25.Parent = GuiTbl.NoneFoundLabel
+
+GuiTbl.UIStroke_25.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_25.Parent = GuiTbl.NoneFoundLabel
+
+GuiTbl.LoadingLabel.Name = "LoadingLabel"
+GuiTbl.LoadingLabel.Parent = GuiTbl.Servers
+GuiTbl.LoadingLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+GuiTbl.LoadingLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+GuiTbl.LoadingLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.LoadingLabel.BorderSizePixel = 0
+GuiTbl.LoadingLabel.Position = UDim2.new(0.649999976, 0, 0.479999989, 0)
+GuiTbl.LoadingLabel.Size = UDim2.new(0.600000024, 0, 0.699999988, 0)
+GuiTbl.LoadingLabel.Visible = false
+GuiTbl.LoadingLabel.ZIndex = 102
+GuiTbl.LoadingLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.LoadingLabel.Text = "Loading, please wait...<br />Click on the category again if this takes too long!"
+GuiTbl.LoadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.LoadingLabel.TextScaled = true
+GuiTbl.LoadingLabel.TextSize = 21
+GuiTbl.LoadingLabel.TextStrokeTransparency = 0.000
+GuiTbl.LoadingLabel.TextWrapped = true
+
 GuiTbl.UICorner_26.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_26.Parent = GuiTbl.NoneFoundLabel
+GuiTbl.UICorner_26.Parent = GuiTbl.LoadingLabel
+
+GuiTbl.UIStroke_26.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_26.Parent = GuiTbl.LoadingLabel
+
+GuiTbl.UICorner_27.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_27.Parent = GuiTbl.SecondaryHUD
 
 GuiTbl.UIStroke_27.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_27.Parent = GuiTbl.NoneFoundLabel
-
-GuiTbl.SelectedLabel.Name = "SelectedLabel"
-GuiTbl.SelectedLabel.Parent = GuiTbl.Servers
-GuiTbl.SelectedLabel.AnchorPoint = Vector2.new(0.5, 1)
-GuiTbl.SelectedLabel.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
-GuiTbl.SelectedLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GuiTbl.SelectedLabel.BorderSizePixel = 0
-GuiTbl.SelectedLabel.Position = UDim2.new(0.5, 0, 0, 0)
-GuiTbl.SelectedLabel.Size = UDim2.new(0.600000024, 0, 0, 30)
-GuiTbl.SelectedLabel.Visible = false
-GuiTbl.SelectedLabel.ZIndex = 102
-GuiTbl.SelectedLabel.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GuiTbl.SelectedLabel.Text = "Target: Start Place (Tower Battles)"
-GuiTbl.SelectedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-GuiTbl.SelectedLabel.TextScaled = true
-GuiTbl.SelectedLabel.TextSize = 21
-GuiTbl.SelectedLabel.TextStrokeTransparency = 0.000
-GuiTbl.SelectedLabel.TextWrapped = true
-
-GuiTbl.UICorner_27.CornerRadius = UDim.new(1, 0)
-GuiTbl.UICorner_27.Parent = GuiTbl.SelectedLabel
-
-GuiTbl.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_28.Parent = GuiTbl.SelectedLabel
-
-GuiTbl.UICorner_28.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_28.Parent = GuiTbl.SecondaryHUD
-
-GuiTbl.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_29.Parent = GuiTbl.SecondaryHUD
+GuiTbl.UIStroke_27.Parent = GuiTbl.SecondaryHUD
 
 GuiTbl.PromptFrame.Name = "PromptFrame"
 GuiTbl.PromptFrame.Parent = GuiTbl.SpecterGUI
@@ -2224,11 +2173,11 @@ GuiTbl.PromptFrame.Size = UDim2.new(0.400000006, 0, 0.400000006, 0)
 GuiTbl.PromptFrame.Visible = false
 GuiTbl.PromptFrame.ZIndex = 1000
 
-GuiTbl.UICorner_29.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_29.Parent = GuiTbl.PromptFrame
+GuiTbl.UICorner_28.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_28.Parent = GuiTbl.PromptFrame
 
-GuiTbl.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_30.Parent = GuiTbl.PromptFrame
+GuiTbl.UIStroke_28.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_28.Parent = GuiTbl.PromptFrame
 
 GuiTbl.PromptTitle.Name = "PromptTitle"
 GuiTbl.PromptTitle.Parent = GuiTbl.PromptFrame
@@ -2298,11 +2247,11 @@ GuiTbl.Yes.TextSize = 21
 GuiTbl.Yes.TextStrokeTransparency = 0.000
 GuiTbl.Yes.TextWrapped = true
 
-GuiTbl.UIStroke_31.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_31.Parent = GuiTbl.Yes
+GuiTbl.UIStroke_29.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_29.Parent = GuiTbl.Yes
 
-GuiTbl.UICorner_30.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_30.Parent = GuiTbl.Yes
+GuiTbl.UICorner_29.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_29.Parent = GuiTbl.Yes
 
 GuiTbl.No.Name = "No"
 GuiTbl.No.Parent = GuiTbl.PromptButtons
@@ -2320,11 +2269,11 @@ GuiTbl.No.TextSize = 21
 GuiTbl.No.TextStrokeTransparency = 0.000
 GuiTbl.No.TextWrapped = true
 
-GuiTbl.UIStroke_32.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_32.Parent = GuiTbl.No
+GuiTbl.UIStroke_30.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_30.Parent = GuiTbl.No
 
-GuiTbl.UICorner_31.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_31.Parent = GuiTbl.No
+GuiTbl.UICorner_30.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_30.Parent = GuiTbl.No
 
 GuiTbl.Ok.Name = "Ok"
 GuiTbl.Ok.Parent = GuiTbl.PromptButtons
@@ -2343,11 +2292,96 @@ GuiTbl.Ok.TextSize = 21
 GuiTbl.Ok.TextStrokeTransparency = 0.000
 GuiTbl.Ok.TextWrapped = true
 
-GuiTbl.UIStroke_33.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-GuiTbl.UIStroke_33.Parent = GuiTbl.Ok
+GuiTbl.UIStroke_31.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_31.Parent = GuiTbl.Ok
 
-GuiTbl.UICorner_32.CornerRadius = UDim.new(0, 32)
-GuiTbl.UICorner_32.Parent = GuiTbl.Ok
+GuiTbl.UICorner_31.CornerRadius = UDim.new(0, 32)
+GuiTbl.UICorner_31.Parent = GuiTbl.Ok
+
+GuiTbl.VisibilityButton.Name = "VisibilityButton"
+GuiTbl.VisibilityButton.Parent = GuiTbl.SpecterGUI
+C.UI.VisibilityButton = GuiTbl.VisibilityButton
+GuiTbl.VisibilityButton.Active = true
+GuiTbl.VisibilityButton.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
+GuiTbl.VisibilityButton.BackgroundTransparency = 0.250
+GuiTbl.VisibilityButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.VisibilityButton.BorderSizePixel = 0
+GuiTbl.VisibilityButton.Position = UDim2.new(0.74000001, 0, 0.800000012, 0)
+GuiTbl.VisibilityButton.Selectable = true
+GuiTbl.VisibilityButton.Size = UDim2.new(0.0850000009, 0, 0.0850000009, 0)
+GuiTbl.VisibilityButton.ZIndex = 101
+
+GuiTbl.UIAspectRatioConstraint.Parent = GuiTbl.VisibilityButton
+
+GuiTbl.UICorner_32.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_32.Parent = GuiTbl.VisibilityButton
+
+GuiTbl.VisibilityButton_2.Name = "VisibilityButton"
+GuiTbl.VisibilityButton_2.Parent = GuiTbl.VisibilityButton
+GuiTbl.VisibilityButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
+GuiTbl.VisibilityButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.VisibilityButton_2.BackgroundTransparency = 1.000
+GuiTbl.VisibilityButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.VisibilityButton_2.BorderSizePixel = 0
+GuiTbl.VisibilityButton_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+GuiTbl.VisibilityButton_2.Selectable = true
+GuiTbl.VisibilityButton_2.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
+GuiTbl.VisibilityButton_2.ZIndex = 102
+C.SetImage(GuiTbl.VisibilityButton_2,"rbxassetid://18416048326")
+GuiTbl.VisibilityButton_2.ImageTransparency = 0.360
+GuiTbl.VisibilityButton_2.ScaleType = Enum.ScaleType.Fit
+
+GuiTbl.UICorner_33.CornerRadius = UDim.new(1, 0)
+GuiTbl.UICorner_33.Parent = GuiTbl.VisibilityButton_2
+
+GuiTbl.FrameRate.Name = "FrameRate"
+GuiTbl.FrameRate.Parent = GuiTbl.SpecterGUI
+C.UI.FrameRate = GuiTbl.FrameRate
+GuiTbl.FrameRate.AnchorPoint = Vector2.new(1, 0)
+GuiTbl.FrameRate.BackgroundColor3 = Color3.fromRGB(255, 163, 3)
+GuiTbl.FrameRate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.FrameRate.BorderSizePixel = 0
+GuiTbl.FrameRate.Position = UDim2.new(1, -60, 0, 10)
+GuiTbl.FrameRate.Size = UDim2.new(0, 23, 0, 23)
+GuiTbl.FrameRate.Visible = false
+GuiTbl.FrameRate.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.FrameRate.Text = "60"
+GuiTbl.FrameRate.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.FrameRate.TextScaled = true
+GuiTbl.FrameRate.TextSize = 21
+GuiTbl.FrameRate.TextStrokeTransparency = 0.000
+GuiTbl.FrameRate.TextWrapped = true
+
+GuiTbl.ESP.Name = "ESP"
+GuiTbl.ESP.Parent = GuiTbl.SpecterGUI
+C.UI.ESP = GuiTbl.ESP
+
+GuiTbl.ToggleTagEx.Name = "ToggleTagEx"
+C.AddGlobalInstance(GuiTbl.ToggleTagEx)
+C.Examples.ToggleTagEx = GuiTbl.ToggleTagEx
+GuiTbl.ToggleTagEx.Enabled = false
+GuiTbl.ToggleTagEx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+GuiTbl.ToggleTagEx.Active = true
+GuiTbl.ToggleTagEx.AlwaysOnTop = true
+GuiTbl.ToggleTagEx.ExtentsOffsetWorldSpace = Vector3.new(0, 4, 0)
+GuiTbl.ToggleTagEx.LightInfluence = 1.000
+GuiTbl.ToggleTagEx.Size = UDim2.new(1, 30, 0.75, 10)
+
+GuiTbl.Toggle.Name = "Toggle"
+GuiTbl.Toggle.Parent = GuiTbl.ToggleTagEx
+GuiTbl.Toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+GuiTbl.Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.Toggle.BorderSizePixel = 0
+GuiTbl.Toggle.Size = UDim2.new(1, 0, 1, 0)
+GuiTbl.Toggle.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Toggle.TextScaled = true
+GuiTbl.Toggle.TextSize = 21
+GuiTbl.Toggle.TextStrokeTransparency = 0.000
+GuiTbl.Toggle.TextWrapped = true
+
+GuiTbl.UIStroke_32.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_32.Parent = GuiTbl.Toggle
 
 GuiTbl.NameTagEx.Name = "NameTagEx"
 C.AddGlobalInstance(GuiTbl.NameTagEx)
@@ -2408,59 +2442,19 @@ GuiTbl.AmtFinished.BackgroundTransparency = 0.100
 GuiTbl.AmtFinished.BorderColor3 = Color3.fromRGB(27, 42, 53)
 GuiTbl.AmtFinished.Size = UDim2.new(0, 0, 1, 0)
 
-GuiTbl.VisibilityButton.Name = "VisibilityButton"
-GuiTbl.VisibilityButton.Parent = GuiTbl.SpecterGUI
-C.UI.VisibilityButton = GuiTbl.VisibilityButton
-GuiTbl.VisibilityButton.Active = true
-GuiTbl.VisibilityButton.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
-GuiTbl.VisibilityButton.BackgroundTransparency = 0.250
-GuiTbl.VisibilityButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GuiTbl.VisibilityButton.BorderSizePixel = 0
-GuiTbl.VisibilityButton.Position = UDim2.new(0.74000001, 0, 0.800000012, 0)
-GuiTbl.VisibilityButton.Selectable = true
-GuiTbl.VisibilityButton.Size = UDim2.new(0.0850000009, 0, 0.0850000009, 0)
-GuiTbl.VisibilityButton.ZIndex = 101
-
-GuiTbl.UIAspectRatioConstraint.Parent = GuiTbl.VisibilityButton
-
-GuiTbl.UICorner_33.CornerRadius = UDim.new(1, 0)
-GuiTbl.UICorner_33.Parent = GuiTbl.VisibilityButton
-
-GuiTbl.VisibilityButton_2.Name = "VisibilityButton"
-GuiTbl.VisibilityButton_2.Parent = GuiTbl.VisibilityButton
-GuiTbl.VisibilityButton_2.AnchorPoint = Vector2.new(0.5, 0.5)
-GuiTbl.VisibilityButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-GuiTbl.VisibilityButton_2.BackgroundTransparency = 1.000
-GuiTbl.VisibilityButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GuiTbl.VisibilityButton_2.BorderSizePixel = 0
-GuiTbl.VisibilityButton_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-GuiTbl.VisibilityButton_2.Selectable = true
-GuiTbl.VisibilityButton_2.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
-GuiTbl.VisibilityButton_2.ZIndex = 102
-C.SetImage(GuiTbl.VisibilityButton_2,"rbxassetid://18416048326")
-GuiTbl.VisibilityButton_2.ImageTransparency = 0.360
-GuiTbl.VisibilityButton_2.ScaleType = Enum.ScaleType.Fit
-
-GuiTbl.UICorner_34.CornerRadius = UDim.new(1, 0)
-GuiTbl.UICorner_34.Parent = GuiTbl.VisibilityButton_2
-
-GuiTbl.FrameRate.Name = "FrameRate"
-GuiTbl.FrameRate.Parent = GuiTbl.SpecterGUI
-C.UI.FrameRate = GuiTbl.FrameRate
-GuiTbl.FrameRate.AnchorPoint = Vector2.new(1, 0)
-GuiTbl.FrameRate.BackgroundColor3 = Color3.fromRGB(255, 163, 3)
-GuiTbl.FrameRate.BorderColor3 = Color3.fromRGB(0, 0, 0)
-GuiTbl.FrameRate.BorderSizePixel = 0
-GuiTbl.FrameRate.Position = UDim2.new(1, -60, 0, 10)
-GuiTbl.FrameRate.Size = UDim2.new(0, 23, 0, 23)
-GuiTbl.FrameRate.Visible = false
-GuiTbl.FrameRate.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
-GuiTbl.FrameRate.Text = "60"
-GuiTbl.FrameRate.TextColor3 = Color3.fromRGB(255, 255, 255)
-GuiTbl.FrameRate.TextScaled = true
-GuiTbl.FrameRate.TextSize = 21
-GuiTbl.FrameRate.TextStrokeTransparency = 0.000
-GuiTbl.FrameRate.TextWrapped = true
+GuiTbl.Modal.Name = "Modal"
+GuiTbl.Modal.Parent = GuiTbl.SpecterGUI
+C.UI.Modal = GuiTbl.Modal
+GuiTbl.Modal.Active = false
+GuiTbl.Modal.AnchorPoint = Vector2.new(1, 1)
+GuiTbl.Modal.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Modal.BackgroundTransparency = 1.000
+GuiTbl.Modal.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.Modal.BorderSizePixel = 0
+GuiTbl.Modal.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+GuiTbl.Modal.TextColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.Modal.TextSize = 21
+GuiTbl.Modal.TextTransparency = 1.000
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
@@ -3099,11 +3093,12 @@ return function(C, Settings)
 	local BottomButtons = ServersFrame:WaitForChild("BottomButtons")
 	local ServersTL = ServersFrame:WaitForChild("ServersTitleLabel")
 	local NoneFound = ServersFrame:WaitForChild("NoneFoundLabel")
+    local LoadingLabel = ServersFrame:WaitForChild("LoadingLabel")
 	local PrevButton, NextButton = BottomButtons:WaitForChild("Previous"), BottomButtons:WaitForChild("Next")
 
 	local CurrentlySel
 	local MaxPageNum,PageNum,Previous,Next = 0, 0, "", ""
-
+    
 	local GetServers = {
 		Recent = function()
 			if C.isStudio then
@@ -3179,6 +3174,7 @@ return function(C, Settings)
 	local LoadingDeb
 	local function ActivateServers(tabName: string, increment: boolean | nil)
 		if LoadingDeb then return end LoadingDeb = true
+        LoadingLabel.Visible = true
 		NoneFound.Visible = false
 		local Cursor = ""
 		if increment then
@@ -3192,6 +3188,7 @@ return function(C, Settings)
 			PageNum,MaxPageNum = 1, nil
 		end
 		local success, result = GetServers[tabName](Cursor)
+        LoadingLabel.Visible = false
 		LoadingDeb = false
 		if not success then
 			return

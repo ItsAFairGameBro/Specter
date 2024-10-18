@@ -122,7 +122,7 @@ return function(C,Settings)
 						robloxHighlight.Parent = C.GUI
 						local nameTag = C.Examples.NameTagEx:Clone()
 						nameTag:WaitForChild("Username").Text = theirPlr.Name
-						nameTag.Parent = C.GUI
+						nameTag.Parent = C.UI.ESP
 						nameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
 						table.insert(self.Instances,nameTag)
 						table.insert(self.Instances,robloxHighlight)

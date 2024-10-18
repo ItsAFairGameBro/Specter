@@ -902,7 +902,7 @@ return function(C,Settings)
 					IslandAdded=function(self,island)
 						local newTag=C.Examples.ToggleTagEx:Clone()
 						newTag.Name = "Island"
-						newTag.Parent=C.GUI
+						newTag.Parent=C.UI.ESP
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, 45, 0)
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
 		
@@ -1015,7 +1015,7 @@ return function(C,Settings)
 						
 						local newTag=C.Examples.ToggleTagEx:Clone()
 						newTag.Name = "LoopBombESP"
-						newTag.Parent=C.GUI
+						newTag.Parent=C.UI.ESP
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
 						table.insert(self.Instances, newTag)
 		
