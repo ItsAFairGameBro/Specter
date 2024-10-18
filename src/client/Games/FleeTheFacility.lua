@@ -52,7 +52,7 @@ return function(C,Settings)
                 Alias = {},
                 AfterTxt = " %s in %.1fs",
                 Run = function(self,args)
-                    local SearchUser = args[1][1]
+                    local SearchUser = args[1][1]:lower()
                     local TimeStart = os.clock()
 
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
@@ -63,14 +63,19 @@ return function(C,Settings)
                     print(result,SearchUser)
                     for gameID, data in pairs(dict) do
                         count+=1
-                        if table.find(data.namesList, SearchUser) then
+                        for key, val in ipairs(data.namesList) do
+                            if val:lower() == SearchUser then
+                                found = true
+                                break
+                            end
+                        end
+                        if found then
                             task.spawn(function()
                                 if C.Prompt(`Join {SearchUser} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\n"), "Y/N") == true then
                                     C.ServerTeleport(1738581510,gameID)
                                 end
                             end)
                             found = gameID
-                            print("Found In ",gameID)
                             break
                         end
                         if count%8==0 then
