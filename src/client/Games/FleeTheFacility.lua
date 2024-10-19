@@ -234,7 +234,7 @@ return function(C,Settings)
                                 local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
                                 myInventory[name] = newCount>0 and newCount or nil
                             end
-                            task.wait(1)
+                            task.wait(1/2)
                             if not self.EnTbl.ReceiveOnly then
                                 local ItemsToSend = 4
                                 local sendArr = {}
@@ -388,7 +388,7 @@ return function(C,Settings)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
                         end
-                        task.wait(.8)
+                        task.wait(.1)
                     end
                     C.SetActionLabel(actionClone, "Calculating")
                     local start = os.clock()
