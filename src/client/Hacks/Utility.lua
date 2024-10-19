@@ -183,7 +183,7 @@ return function(C,Settings)
                                     local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
                                     if self:ShouldConnect(thePlr) then
                                         local msg = data.Message
-                                        print(thePlr,msg)
+                                        --print(thePlr,msg)
                                         if not msg then
                                             return
                                         end
@@ -195,7 +195,7 @@ return function(C,Settings)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                             end
-                            print("Waiting For Established Connection!",theirPlr)
+                            --print("Waiting For Established Connection!",theirPlr)
                         end
                     end,
 				},
