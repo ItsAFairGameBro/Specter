@@ -420,6 +420,9 @@ return function(C,Settings)
 					if not C.char then
 						return
 					end
+                    if not newValue and C.human and C.human.FloorMaterial ~= Enum.Material.Air then
+                        C.human:ChangeState(Enum.HumanoidStateType.Landed)
+                    end
 					if C.human then
 						if newValue and not self.EnTbl.EnClimbing then
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
@@ -429,9 +432,6 @@ return function(C,Settings)
 					end
 					self.Update(newValue)
 					if not newValue then
-                        if C.human and C.human.FloorMaterial ~= Enum.Material.Air then
-                            C.human:ChangeState(Enum.HumanoidStateType.Landed)
-                        end
 						return
 					end
 					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
