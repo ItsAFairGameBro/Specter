@@ -159,7 +159,7 @@ return function(C,Settings)
                             if table.find(self.whitelistedUsers,tradePlr.Name:lower()) then
                                 IsTrading = true
                                 C.RemoteEvent:FireServer("AcceptTradeRequest")
-                                print("Accepted")
+                                print("Trade Accepted")
                                 --[[local theirItems,theirUser=waitForReceive("GetOtherPlayerInventory",{user.UserId})
                                 local items2Trade=waitForReceive("GetPlayerInventory")
                                 local theirItemsCount={}
@@ -219,8 +219,7 @@ return function(C,Settings)
                                     local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
                                     myInventory[name] = newCount>0 and newCount or nil
                                 end
-                                print(theirInventory, myInventory)
-                                task.wait(4)
+                                task.wait()
                                 local ItemsToSend = 4
                                 local sendArr = {}
                                 for name, count in pairs(myInventory) do
@@ -228,7 +227,7 @@ return function(C,Settings)
                                         table.insert(sendArr,  name)
                                         C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
                                         count -=1
-                                        task.wait(1)
+                                        task.wait(1/7)
                                     end
                                     
                                     ItemsToSend -= 1
@@ -236,7 +235,6 @@ return function(C,Settings)
                                         break
                                     end
                                 end
-                                print("SendArr",sendArr)
                                 
 
                                 task.wait(4)
