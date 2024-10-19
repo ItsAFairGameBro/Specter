@@ -49,8 +49,20 @@ return function(C,Settings)
             Parameters={{Type="Player"}},
             AfterTxt=" %s",
             RequiresRefresh=true,
+            Functs = {},
+            TheirCharAdded = function(self, theirPlr, theirChar)
+                C.Spectate(theirChar)
+            end,
             Run=function(self,args)
-                C.Spectate(args[1][1].Character)
+                print("spec",#self.Functs)
+                
+                local theirPlr = args[1][1]
+                table.insert(theirPlr.CharacterAdded:Connect(function(newChar)
+                    self:TheirCharAdded(self, theirPlr, newChar)
+                end))
+                if theirPlr.Character then
+                    self:TheirCharAdded(self, theirPlr, theirPlr.Character)
+                end
                 return true,"Successful"
             end,
         },

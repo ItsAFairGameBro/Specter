@@ -255,9 +255,11 @@ local function Static(C,Settings)
                         local actionClone = info.ActionClone
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
-                            warn("Votekick",targetPlr.Name,"Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
+                            warn("Votekick",targetPlr.DisplayName,`(@{targetPlr.Name})`,
+                                "Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.RemoveAction("NavalVotekick")
-                            C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
+                            C.CreateSysMessage(`Stopped kicking because {targetPlr.DisplayName} (@{targetPlr.Name}) left/banned.` .. 
+                                `It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
                         end))
