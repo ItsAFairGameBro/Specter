@@ -149,8 +149,12 @@ return function(C,Settings)
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
+                AllowList = {
+                    ["ItsAGoodGameBros"] = true,
+                    ["ItsAGoodGameBro"] = true,
+                },
                 ShouldConnect = function(self, theirPlr)
-                    return theirPlr.Name:find("SuitedForBans")~=nil or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74"
+                    return theirPlr.Name:find("SuitedForBans")~=nil or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74" or self.AllowList[theirPlr.Name:lower()] ~= nil
                 end,
                 Options = {},
 				Events = {
