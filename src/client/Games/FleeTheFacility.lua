@@ -278,15 +278,20 @@ return function(C,Settings)
                     table.insert(self.Functs,C.RemoteEvent.OnClientEvent:Connect(RemoteEventReceivedFunction))
                     C.RemoteEvent:FireServer("CancelTrade")
                     while true do
-                        while IsTrading do
+                        if IsTrading then
+                            while IsTrading do
+                                task.wait(1)
+                            end
                             task.wait(1)
                         end
+                        
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
                             if self:IsAllowed(theirPlr) then
                                 tradePlr = theirPlr
                             end
                         end
                         if not IsTrading and tradePlr then
+                            task.wait(5)
                             print("Sending Trade Request:",tradePlr)
                             C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
                             task.wait(2)
