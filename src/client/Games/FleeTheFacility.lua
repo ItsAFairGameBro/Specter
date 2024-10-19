@@ -216,14 +216,14 @@ return function(C,Settings)
                                 
                                 local myInventory = C.GetUserInventory()
                                 for name, count in ipairs(myInventory) do
-                                    count = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name]))
-                                    myInventory[name] = count>0 and count or nil
+                                    local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name]))
+                                    myInventory[name] = newCount>0 and newCount or nil
                                 end
                                 print(theirInventory, myInventory)
-                                task.wait(3)
+                                task.wait(4)
                                 local ItemsToSend = 4
                                 local sendArr = {}
-                                for name, count in ipairs(myInventory) do
+                                for name, count in pairs(myInventory) do
                                     while count > 0 do
                                         table.insert(sendArr,  name)
                                         count -=1
