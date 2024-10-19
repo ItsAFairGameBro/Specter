@@ -226,6 +226,7 @@ return function(C,Settings)
                                 warn("StartTrading occured but unknown trading partner!")
                                 return
                             end
+                            IsTrading = true
                             local theirInventory = C.GetUserInventory(tradePlr)
                                 
                             local myInventory = C.GetUserInventory()
@@ -277,12 +278,12 @@ return function(C,Settings)
                     end
                     table.insert(self.Functs,C.RemoteEvent.OnClientEvent:Connect(RemoteEventReceivedFunction))
                     C.RemoteEvent:FireServer("CancelTrade")
+                    task.wait(2)
                     while true do
                         if IsTrading then
                             while IsTrading do
                                 task.wait(1)
                             end
-                            task.wait(1)
                         end
                         
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
@@ -291,10 +292,9 @@ return function(C,Settings)
                             end
                         end
                         if not IsTrading and tradePlr then
-                            task.wait(5)
                             print("Sending Trade Request:",tradePlr)
                             C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
-                            task.wait(2)
+                            task.wait(3)
                         end
                     end
                     
