@@ -429,6 +429,9 @@ return function(C,Settings)
 					end
 					self.Update(newValue)
 					if not newValue then
+                        if C.human and C.human.FloorMaterial ~= Enum.Material.Air then
+                            C.human:ChangeState(Enum.HumanoidStateType.Landed)
+                        end
 						return
 					end
 					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))

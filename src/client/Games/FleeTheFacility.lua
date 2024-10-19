@@ -162,8 +162,36 @@ local function Static(C, Settings)
     return SharedHacks
 end
 
+local function SetUpGameEvents(C, Settings)
+    C.GameTimer = RS:WaitForChild("GameTimer")
+    C.GameStatus = RS:WaitForChild("GameStatus")
+    table.insert(C.EventFunctions,function()
+        local CurrentMap = RS:WaitForChild("CurrentMap")
+		local function MapAdded(newMap)
+            while (newMap == CurrentMap and C.GameStatus.Value:lower():find("loading")) do
+                C.GameStatus:GetPropertyChangedSignal("Value"):Wait()
+            end
+            if newMap ~= CurrentMap.Value then
+                return
+            end
+            if not newMap then
+                C.FireEvent("MapRemoved",nil,C.Map)
+                C.Map = nil
+                return
+            end
+            C.Map = newMap
+            C.FireEvent("MapAdded",nil,C.Map)
+        end
+        C.AddGlobalConnection(CurrentMap.Changed:Connect(CurrentMap))
+        MapAdded(CurrentMap)
+    end)
+end
+
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
+    if game.PlaceId == 0 then
+        SetUpGameEvents(C,Settings)
+    end
     
     local SharedHacks = Static(C, Settings)
     local function SendWaitRemoteEvent(retType, ...)
@@ -349,7 +377,7 @@ return function(C,Settings)
                                             return
                                         end
                                         C.RemoteEvent:FireServer("AcceptTradeOffer")
-                                        task.wait(1)
+                                        task.wait(1/3)
                                     end
                                     --print("Trade Timed Out!")
                                     C.RemoteEvent:FireServer("CancelTrade")

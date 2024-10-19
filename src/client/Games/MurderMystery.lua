@@ -52,6 +52,7 @@ local function Static(C, Settings)
             C.FireEvent("MapAdded",nil,C.Map)
             C.AddObjectConnection(C.Map,"MapRemoved",C.Map.Destroying:Connect(function()
                 C.FireEvent("MapRemoved",nil,C.Map)
+                C.Map = nil
             end))
         end
         C.StringWait(RS,"Remotes.Gameplay.LoadingMap").OnClientEvent:Connect(MapAdded)
