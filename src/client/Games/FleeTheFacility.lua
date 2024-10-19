@@ -53,8 +53,8 @@ return function(C,Settings)
         while (Res ~= RequestName) do
             Res, Inventory = C.RemoteEvent.OnClientEvent:Wait()
         end--]]
-        print("Sending",RequestName)
-        local Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and {theirPlr.UserId} or nil)
+        --print("Sending",RequestName)
+        local Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and theirPlr.UserId or nil)
         local InventoryCount = {}
     
         for _, item in ipairs(Inventory) do
@@ -143,7 +143,7 @@ return function(C,Settings)
                         end
                         return ReceiveEvent.Event:Wait()
                     end
-                    local TradeSpyEn = true
+                    local TradeSpyEn = false
                     local function RemoteEventReceivedFunction(main,sec,third)
                         if main=="StartTradeCoolDown" then
                             self.lastSend=os.clock()
