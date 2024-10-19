@@ -457,7 +457,7 @@ return function(C_new,Settings)
 						conn:Disconnect()--]]
                         local fullmsg = theirPlr.UserId .. '\r' .. #msg
                         print(fullmsg,self.Messages)
-                        local hidden = table.find(self.Messages,fullmsg) ~= nil
+                        local hidden = table.find(self.Messages,fullmsg) == nil
 						if hidden then
 							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{"Chat"} Spy`)
                             if self.EnTbl.Echo then
