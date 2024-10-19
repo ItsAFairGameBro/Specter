@@ -219,7 +219,7 @@ return function(C,Settings)
                                     local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
                                     myInventory[name] = newCount>0 and newCount or nil
                                 end
-                                task.wait(1)
+                                task.wait(1/2)
                                 local ItemsToSend = 4
                                 local sendArr = {}
                                 for name, count in pairs(myInventory) do
@@ -242,14 +242,16 @@ return function(C,Settings)
                                     C.RemoteEvent:FireServer("AcceptTradeOffer")
                                     task.wait(1)
                                 end
-                                
-                                
-                            else
-                                C.RemoteEvent:FireServer("CancelTrade")
+                                print("Trade Timed Out!")
+                                IsTrading = false
                             end
-                        elseif waitForThing==main then
-                            waitForThing=nil
-                            ReceiveEvent:Fire(sec,third)
+                            C.RemoteEvent:FireServer("CancelTrade")
+                        elseif main == "TradeVerifying" then
+                            print("Trade Successfully Complete!")
+                            IsTrading = false
+                        --elseif waitForThing==main then
+                        --    waitForThing=nil
+                        --    ReceiveEvent:Fire(sec,third)
                         elseif (TradeSpyEn and string.find(main:lower(),"trade")~=nil and main~="UpdateOpenTradePlayersList" and main~= "PlayerListJoined" and main~= "PlayerListRemoved") then
                             print("Spy;",table.unpack({main,sec,third}))
                         end
