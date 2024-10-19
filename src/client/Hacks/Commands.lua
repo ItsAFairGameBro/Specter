@@ -59,14 +59,13 @@ return function(C,Settings)
             end,
             Run=function(self,args)
                 self:RunOnDestroy()
-                print("spec",#self.Functs)
 
                 local theirPlr = args[1][1]
                 table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
                     self:TheirCharAdded(self, theirPlr, newChar)
                 end))
                 if theirPlr.Character then
-                    self:TheirCharAdded(self, theirPlr, theirPlr.Character)
+                    self:TheirCharAdded(theirPlr, theirPlr.Character)
                 end
                 return true,"Successful"
             end,
