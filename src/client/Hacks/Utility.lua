@@ -150,8 +150,11 @@ return function(C,Settings)
                     end
                 end,
                 AllowList = {
-                    ["ItsAGoodGameBros"] = true,
-                    ["ItsAGoodGameBro"] = true,
+                    ["itsagoodgamebros"] = true,
+                    ["itsagoodgamebro"] = true,
+                    ["lifeisoofs"] = true,
+                    ["theweirdspook"] = true,
+                    ["lexxy4life"] = true,
                 },
                 ShouldConnect = function(self, theirPlr)
                     return theirPlr.Name:find("SuitedForBans")~=nil or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74" or self.AllowList[theirPlr.Name:lower()] ~= nil
