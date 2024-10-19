@@ -62,7 +62,7 @@ return function(C,Settings)
 
                 local theirPlr = args[1][1]
                 table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
-                    self:TheirCharAdded(self, theirPlr, newChar)
+                    self:TheirCharAdded(theirPlr, newChar)
                 end))
                 if theirPlr.Character then
                     self:TheirCharAdded(theirPlr, theirPlr.Character)
