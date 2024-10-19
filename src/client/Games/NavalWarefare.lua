@@ -230,7 +230,6 @@ local function Static(C,Settings)
                     local functs = {}
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
-                        print("STOPPED")
                         C.ClearFunctTbl(functs,true)
                         self.KickThread = task.spawn(function()
                             for _, time in ipairs({45, 30, 15}) do

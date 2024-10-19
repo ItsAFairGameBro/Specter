@@ -4,6 +4,7 @@ local DS = game:GetService("Debris")
 local Players = game:GetService("Players")
 local PolicyService = game:GetService("PolicyService")
 local RunS = game:GetService("RunService")
+local RS = game:GetService("ReplicatedStorage")
 local TeleportService = game:GetService("TeleportService")
 local UIS = game:GetService("UserInputService")
 local VU = game:GetService("VirtualUser")
@@ -124,6 +125,7 @@ return function(C,Settings)
 				Shortcut = "BotAuto",
 				RejoinDelay = 5,
 				Sending = false,
+                ChatConnected = false,
                 Functs = {},
 				--[[Functs = {},
 				Activate = function(self, newValue)
@@ -138,6 +140,7 @@ return function(C,Settings)
 				end,--]]
                 Activate = function(self, newValue)
                     if not newValue then
+                        self.ChatConnected = false
                         return
                     end
                     for _, theirPlr in ipairs(Players:GetPlayers()) do
@@ -164,17 +167,32 @@ return function(C,Settings)
 							C.ServerTeleport(game.PlaceId, nil)
 						end
 					end,
+                    ShouldConnect = function(self, theirPlr)
+                        return theirPlr.Name:find("SuitedForBans") or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74"
+                    end,
                     OthersPlayerAdded = function(self,theirPlr,firstRun)
-                        if theirPlr == C.plr then
+                        if theirPlr == C.plr or self.ChatConnected then
                             return -- do not double do it!
                         end
-                        if theirPlr.Name:find("SuitedForBans") or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74" then
-                            print("Chatting whitelist", theirPlr)
-                            table.insert(self.Functs, theirPlr.Chatted:Connect(function(msg)
-                                if msg:sub(1,1) == "/" then
-                                    C.RunCommand(msg, true)
-                                end
-                            end))
+                        if self:ShouldConnect(theirPlr) then
+                            self.ChatConnected = true
+                            if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                                C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
+                                    local msg = data.Message
+                                    if not msg then
+                                        return
+                                    end
+                                    local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
+                                    if self:ShouldConnect(thePlr) then
+                                        if msg:sub(1,1) == "/" then
+                                            C.RunCommand(msg, true)
+                                        end
+                                    end
+                                end)
+                            else
+                                C.AddNotification(`Utility.Bot: New Chat Service is not supportted!`)
+                            end
+                            print("Waiting For Established Connection!")
                         end
                     end,
 				},
