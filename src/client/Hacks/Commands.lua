@@ -55,9 +55,9 @@ return function(C,Settings)
             end,
             Run=function(self,args)
                 print("spec",#self.Functs)
-                
+
                 local theirPlr = args[1][1]
-                table.insert(theirPlr.CharacterAdded:Connect(function(newChar)
+                table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
                     self:TheirCharAdded(self, theirPlr, newChar)
                 end))
                 if theirPlr.Character then
