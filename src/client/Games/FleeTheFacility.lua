@@ -148,14 +148,16 @@ return function(C,Settings)
                         end
                         return ReceiveEvent.Event:Wait()
                     end
+                    local IsTrading = false
                     local TradeSpyEn = false
                     local function RemoteEventReceivedFunction(main,sec,third)
                         if main=="StartTradeCoolDown" then
                             self.lastSend=os.clock()
                         end
-                        if main=="RecieveTradeRequest" then
+                        if main=="RecieveTradeRequest" and not IsTrading then
                             local tradePlr=PS:GetPlayerByUserId(sec)
                             if table.find(self.whitelistedUsers,tradePlr.Name:lower()) then
+                                IsTrading = true
                                 C.RemoteEvent:FireServer("AcceptTradeRequest")
                                 print("Accepted")
                                 --[[local theirItems,theirUser=waitForReceive("GetOtherPlayerInventory",{user.UserId})
@@ -218,9 +220,26 @@ return function(C,Settings)
                                     myInventory[name] = count>0 and count or nil
                                 end
                                 print(theirInventory, myInventory)
+                                task.wait(3)
+                                local ItemsToSend = 4
+                                local sendArr = {}
+                                for name, count in ipairs(myInventory) do
+                                    for i = 1, count, 1 do
+                                        table.insert(sendArr,  count)
+                                    end
 
+                                    ItemsToSend -= 1
+                                    if ItemsToSend == 0 then
+                                        break
+                                    end
+                                end
+                                print("SendArr",sendArr)
+                                C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
+
+                                task.wait(3)
                                 C.RemoteEvent:FireServer("AcceptTradeOffer")
                                 print("Trade Successfully Complete!")
+                                IsTrading = false
                             else
                                 C.RemoteEvent:FireServer("CancelTrade")
                             end
