@@ -217,21 +217,21 @@ local function Static(C,Settings)
                 KickThread = nil,
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
-                    if self.KickThread then
+                    local Genv = C.getgenv()
+                    if Genv.NavalKickThread then
                         C.StopThread(self.KickThread)
-                        self.KickThread = nil
+                        Genv.NavalKickThread = nil
                     end
                     local targetPlr = args[1][1]
                     if not targetPlr or targetPlr == C.plr then
                         return true, "Stopped!"
                     end
                     local sendList = {targetPlr}
-                    local Genv = C.getgenv()
                     local functs = {}
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
                         C.ClearFunctTbl(functs,true)
-                        self.KickThread = task.spawn(function()
+                        Genv.NavalKickThread = task.spawn(function()
                             for _, time in ipairs({45, 30, 15}) do
                                 local TimeLeft = Genv.LastKick - os.clock()
                                 --print("LastKick",TimeLeft,time,TimeLeft - time)
