@@ -298,6 +298,8 @@ return function(C,Settings)
                         end
                         task.wait(.8)
                     end
+                    C.SetActionLabel(actionClone, "Calculating")
+                    local start = os.clock()
                     for name, data in pairs(Crates) do
                         if not table.find(self.IgnoreList, name) then
                             for _, prizeVal in pairs(data.Prizes) do
@@ -311,7 +313,7 @@ return function(C,Settings)
                         end
                     end
 
-                    --print("TOT",CountToPurchase)
+                    print("TOT",os.clock()-start)
                     
                     for name, data in pairs(Crates) do
                         if not table.find(self.IgnoreList, name) then
