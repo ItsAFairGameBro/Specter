@@ -219,7 +219,7 @@ return function(C,Settings)
                             else
                                 C.RemoteEvent:FireServer("CancelTrade")
                                 print("Trade Denied:",tradePlr)
-                                tradePlr = nil
+                                IsTrading, tradePlr = false, nil
                             end
                         elseif main == "StartTrading" then
                             if not tradePlr then
@@ -233,7 +233,7 @@ return function(C,Settings)
                                 local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
                                 myInventory[name] = newCount>0 and newCount or nil
                             end
-                            task.wait(1/2)
+                            task.wait(1)
                             if not self.EnTbl.ReceiveOnly then
                                 local ItemsToSend = 4
                                 local sendArr = {}
