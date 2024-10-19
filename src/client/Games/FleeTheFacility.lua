@@ -312,6 +312,8 @@ return function(C,Settings)
                     
                     local info = {Name = self.Shortcut, Title = "Purchasing", Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
                         self:Process(actionClone)
+                    end, Stop = function(byRequest)
+                        self:SetValue(false)
                     end}
                     local actionClone = C.AddAction(info)
                 end,
@@ -321,7 +323,7 @@ return function(C,Settings)
                         Title = "Event Crates",
                         Tooltip = "How much of every event crate to buy!",
                         Layout = 1,Default = 1,
-                        Min = 1, Max=10, Digits=0,
+                        Min = 0, Max=10, Digits=0,
                         Shortcut="EventCrateQty",
                     },
                     {
@@ -329,7 +331,7 @@ return function(C,Settings)
                         Title = "Event Bundles",
                         Tooltip = "How much of every event bundle to buy!",
                         Layout = 2,Default = 1,
-                        Min = 1, Max=10, Digits=0,
+                        Min = 0, Max=10, Digits=0,
                         Shortcut="EventBundleQty",
                     },
                 },
