@@ -1192,6 +1192,13 @@ return function(C,Settings)
 			C.API(TeleportService,"Teleport",1,PlaceId,JobId,C.plr)
 		end
 	end
+    function C.GetPlayerName(plr: Player)
+        if plr.DisplayName == plr.Name then
+            return plr.Name
+        else
+            return `{plr.DisplayName} (@{plr.Name})`
+        end
+    end
 	function C.GetMinMax(n1,n2)
 		if n2 > n1 then
 			return n1, n2

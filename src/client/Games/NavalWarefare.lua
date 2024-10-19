@@ -255,15 +255,15 @@ local function Static(C,Settings)
                         local actionClone = info.ActionClone
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
-                            warn("Votekick",targetPlr.DisplayName,`(@{targetPlr.Name})`,
+                            warn("Votekick",C.GetPlayerName(targetPlr),
                                 "Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.RemoveAction("NavalVotekick")
-                            C.CreateSysMessage(`Stopped kicking because {targetPlr.DisplayName} (@{targetPlr.Name}) left/banned.` .. 
+                            C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left.` .. 
                                 `It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
                         end))
-                        actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
+                        actionClone.Title.Text = "Kicking " .. C.GetPlayerName(targetPlr) .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
                             if Genv.LastKick == nil or (Genv.LastKick - os.clock()) <= 0 then
                                 actionClone.Time.Text = "Sending (1/2)"
@@ -278,7 +278,7 @@ local function Static(C,Settings)
                                         JustKicked = false
                                     end)
                                     if not info.Enabled then return end
-                                    actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
+                                    actionClone.Title.Text = "Kicking " .. C.GetPlayerName(targetPlr) .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
                                 else
                                     Genv.LastKick = os.clock() + 2.5
                                     actionClone.Time.Text = "More Time Needed"

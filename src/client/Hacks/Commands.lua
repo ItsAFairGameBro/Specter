@@ -55,7 +55,10 @@ return function(C,Settings)
                 C.Spectate()
             end,
             TheirCharAdded = function(self, theirPlr, theirChar)
-                C.Spectate(theirChar)
+                local theirHuman = theirChar:WaitForChild("Humanoid",15)
+                if theirHuman then
+                    C.Spectate(theirChar)
+                end
             end,
             Run=function(self,args)
                 self:RunOnDestroy()
@@ -63,6 +66,10 @@ return function(C,Settings)
                 local theirPlr = args[1][1]
                 table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
                     self:TheirCharAdded(theirPlr, newChar)
+                end))
+                table.insert(self.Functs, theirPlr.AncestryChanged:Connect(function()
+                    C.CreateSysMessage(`Stopped spectating because {C.GetPlayerName(theirPlr)} left`, Color3.fromRGB(0,255,255))
+                    self:Run({C.plr})
                 end))
                 if theirPlr.Character then
                     self:TheirCharAdded(theirPlr, theirPlr.Character)
