@@ -215,8 +215,7 @@ return function(C,Settings)
                                 local theirInventory = C.GetUserInventory(tradePlr)
                                 
                                 local myInventory = C.GetUserInventory()
-                                for name, count in ipairs(myInventory) do
-                                    print(count,self.EnTbl.KeepAmount)
+                                for name, count in pairs(myInventory) do
                                     local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name]))
                                     myInventory[name] = newCount>0 and newCount or nil
                                 end
@@ -227,16 +226,18 @@ return function(C,Settings)
                                 for name, count in pairs(myInventory) do
                                     while count > 0 do
                                         table.insert(sendArr,  name)
+                                        C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
                                         count -=1
+                                        task.wait(1/3)
                                     end
-
+                                    
                                     ItemsToSend -= 1
                                     if ItemsToSend == 0 then
                                         break
                                     end
                                 end
                                 print("SendArr",sendArr)
-                                C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
+                                
 
                                 task.wait(4)
                                 C.RemoteEvent:FireServer("AcceptTradeOffer")
