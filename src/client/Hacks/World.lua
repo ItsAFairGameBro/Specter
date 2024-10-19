@@ -448,7 +448,7 @@ return function(C_new,Settings)
 							end
                             setChannel,moveon = channel or packet.OriginalChannel, true
 						end)
-                        task.delay(C.plr:GetNetworkPing()*3,function()
+                        task.delay(1,function()
                             moveon=true
                         end)
                         while not moveon do
