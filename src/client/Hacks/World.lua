@@ -439,7 +439,7 @@ return function(C_new,Settings)
                     end
                     local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
                     table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg)
-                        msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
+                        --[[msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
 						local setChannel,moveon,hidden = nil,false,true
 						local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
 							if (packet.Message==msg:sub(#msg-#packet.Message+1) and (channel=="All") and packet.SpeakerUserId==theirPlr.UserId)
@@ -454,22 +454,38 @@ return function(C_new,Settings)
                         while not moveon do
                             RunS.RenderStepped:Wait()
                         end
-						conn:Disconnect()
+						conn:Disconnect()--]]
+                        local fullmsg = theirPlr.UserId .. '\r' .. #msg
+                        print(fullmsg,self.Messages)
+                        local hidden = table.find(self.Messages,fullmsg) ~= nil
 						if hidden then
-							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{setChannel or "Chat"} Spy`)
+							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{"Chat"} Spy`)
                             if self.EnTbl.Echo then
                                 C.SendGeneralMessage("["..theirPlr.Name.."]: "..msg)
                             end
 						end
                     end))
                 end,
+                Messages = {},
 				Activate = function(self,newValue)
+                    if TCS.ChatVersion ~= Enum.ChatVersion.LegacyChatService then
+                        C.CreateSysMessage(`[Chat Spy]: Chat Spy doesn't support the new roblox chat version: {Enum.ChatVersion.TextChatService.Name}`)
+                        return
+                    end
                     if not newValue then return end
 					for num, theirPlr in ipairs(PS:GetPlayers()) do
                         if theirPlr ~= C.plr then
                             self:AddToChat(theirPlr)
                         end
                     end
+                    -- Message detection
+                    local newMessageEvent = C.StringWait(RS,"DefaultChatSystemChatEvents.OnNewMessage")
+                    table.insert(self.Functs, newMessageEvent.OnClientEvent:Connect(function(data, channel)
+                        local Message = data.SpeakerUserId .. '\r' .. data.MessageLength
+                        local Index = #self.Messages + 1
+                        table.insert(self.Messages, Message)
+                        task.delay(10, table.remove, self.Messages, Index)
+                    end))
 				end,
                 Events = {
                     OthersPlayerAdded=function(self,theirPlr,firstRun)

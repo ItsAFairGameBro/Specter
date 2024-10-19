@@ -1199,6 +1199,31 @@ return function(C,Settings)
             return `{plr.DisplayName} (@{plr.Name})`
         end
     end
+    --[[function C.RunFunctionWithTimeout(funct, timeout)
+        timeout = timeout or 5
+        -- Set up
+        local Threads = {}
+        local BindableEvent = Instance.new("BindableEvent")
+        local Rets
+        table.insert(Threads,task.spawn(function()
+            Rets = table.pack(funct())
+            BindableEvent:Fire()
+        end))
+        table.insert(Threads,task.delay(timeout, function()
+            BindableEvent:Fire()
+        end))
+
+        BindableEvent.Event:Wait()
+        -- Clean-up
+        C.ClearThreadTbl(Threads)
+        BindableEvent:Destroy()
+        -- Return Values
+        if Rets then
+            return true, table.unpack(Rets)
+        else
+            return false, `Timeout of {timeout}s Occured!`
+        end
+    end--]]
 	function C.GetMinMax(n1,n2)
 		if n2 > n1 then
 			return n1, n2
