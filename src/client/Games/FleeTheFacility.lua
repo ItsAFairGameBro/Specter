@@ -45,6 +45,21 @@ return function(C,Settings)
             return false, "Timeout Occured"
         end
     end
+    function C.GetUserInventory(theirPlr)
+        local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
+        local Inventory = task.delay(.3,C.RemoteEvent.FireServer,C.RemoteEvent, RequestName,theirPlr and {theirPlr.UserId} or nil)
+    
+        local Res, Inventory
+        while (Res ~= RequestName) do
+            Res, Inventory = C.RemoteEvent.OnClientEvent:Wait()
+        end
+        local InventoryCount = {}
+    
+        for _, item in ipairs(Inventory) do
+            InventoryCount[item] = (InventoryCount[item] or 0) + 1
+        end
+        return InventoryCount
+    end
     table.insert(C.InsertCommandFunctions,function()
         return {
             ["findtrader"] = {
@@ -132,11 +147,11 @@ return function(C,Settings)
                             self.lastSend=os.clock()
                         end
                         if main=="RecieveTradeRequest" then
-                            local user=PS:GetPlayerByUserId(sec)
-                            if table.find(self.whitelistedUsers,user.Name:lower()) then
+                            local tradePlr=PS:GetPlayerByUserId(sec)
+                            if table.find(self.whitelistedUsers,tradePlr.Name:lower()) then
                                 C.RemoteEvent:FireServer("AcceptTradeRequest")
                                 print("Accepted")
-                                local theirItems,theirUser=waitForReceive("GetOtherPlayerInventory",{user.UserId})
+                                --[[local theirItems,theirUser=waitForReceive("GetOtherPlayerInventory",{user.UserId})
                                 local items2Trade=waitForReceive("GetPlayerInventory")
                                 local theirItemsCount={}
                                 table.remove(items2Trade,table.find(items2Trade,"H0001"))
@@ -187,7 +202,12 @@ return function(C,Settings)
                                     end
                                     C.RemoteEvent:FireServer("AcceptTradeOffer")
                                     task.wait()
-                                end
+                                end--]]
+                                local theirInventory = C.GetUserInventory(tradePlr)
+                                local myInventory = C.GetUserInventory()
+                                print(theirInventory, myInventory)
+
+                                C.RemoteEvent:FireServer("AcceptTradeOffer")
                                 print("Trade Successfully Complete!")
                             else
                                 C.RemoteEvent:FireServer("CancelTrade")
@@ -203,7 +223,16 @@ return function(C,Settings)
                     C.RemoteEvent:FireServer("CancelTrade")
 				end,
                 Events = {},
-				Options = {},
+				Options = {
+                    {
+                        Type = Types.Slider,
+                        Title = "Keep Amount",
+                        Tooltip = "How many of each item to keep!",
+                        Layout = 1,Default = 1,
+                        Min = 0, Max=9, Digits=0,
+                        Shortcut="KeepAmount",
+                    },
+                },
 			},
 		}
 	}
