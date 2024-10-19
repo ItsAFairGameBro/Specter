@@ -388,7 +388,7 @@ return function(C,Settings)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
                         end
-                        task.wait(.1)
+                        task.wait(.35)
                     end
                     C.SetActionLabel(actionClone, "Calculating")
                     local start = os.clock()
