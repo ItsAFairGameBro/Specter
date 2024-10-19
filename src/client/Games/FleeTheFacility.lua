@@ -9,6 +9,10 @@ local GS = game:GetService("GuiService")
 local PS = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
 local SG = game:GetService("StarterGui")
+
+
+local MAX_SHOP_ITEM = 10
+
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
     
@@ -26,7 +30,6 @@ return function(C,Settings)
             bindableEvent:Fire()
         end)
         conn = C.RemoteEvent.OnClientEvent:Connect(function(type,...)
-            print(type, retType)
             if type == retType then
                 rets = {type,...}
                 isWaiting = false
@@ -236,6 +239,101 @@ return function(C,Settings)
                     },
                 },
 			},
+            {
+				Title = "Speed Buy",
+				Tooltip = "Automatically buys selected items up to n amount!",
+				Layout = 1,
+				Shortcut = "SpeedBuy",Functs={}, Instances = {},Default=false,
+                IgnoreList = {"Series 1H", "Series 1G"},
+                Process = function(self, actionClone)
+                    C.SetActionLabel(actionClone, "Loading Modules...")
+
+                    local Crates = require(RS.ShopCrates)
+                    local Bundles = require(RS.ShopBundles)
+
+                    C.SetActionLabel(actionClone, "Loading Inventory...")
+                    local MyInventory = C.GetUserInventory()
+                    local function GetItemWhileNotLimit(itemName, itemType: nil, requiredItems)
+                        if itemType then -- Crate
+                            while (MyInventory[itemName] or 0) < self.EnTbl.EventCrateQty do
+                                C.SetActionLabel(actionClone, itemName)
+                                C.RemoteEvent:FireServer("BuyCrateBoxItem", itemType, itemName)
+                                task.wait(1/2)
+                                MyInventory = C.GetUserInventory()
+                            end
+                        else-- Bundle
+                            while true do
+                                local HasAll = true
+                                local HasOneMaxed = false
+                                for _, item in ipairs(requiredItems) do
+                                    if (MyInventory[item] or 0) < self.EnTbl.EventBundleQty then
+                                        HasAll = false
+                                    elseif (MyInventory[item] or 0) >= MAX_SHOP_ITEM then
+                                        HasOneMaxed = true
+                                        break
+                                    end
+                                end
+                                if HasAll or HasOneMaxed then
+                                    break
+                                end
+                                C.SetActionLabel(actionClone, itemName)
+                                C.RemoteEvent:FireServer("BuyShopBundle",itemName)
+                                task.wait(1/2)
+                                MyInventory = C.GetUserInventory()
+                            end
+                        end
+                    end
+                    MyInventory = C.GetUserInventory()
+                    
+                    
+                    for name, data in pairs(Crates) do
+                        if not table.find(self.IgnoreList, name) then
+                            for _, prizeVal in pairs(data.Prizes) do
+                                GetItemWhileNotLimit(prizeVal, name)
+                            end
+                        end
+                    end
+                    
+                    for name, data in pairs(Bundles) do
+                        if not data.CostRobux then
+                            GetItemWhileNotLimit(name, nil, data.Items)
+                        end
+                    end
+
+                    -- COMPELTED --
+                    C.CreateSysMessage(`Successfully purchased all crates and bundles!`, Color3.fromRGB(0,255,0))
+                    self:SetValue(false)
+                end,
+                Activate = function(self, enabled, firstRun)
+                    C.RemoveAction(self.Shortcut)
+                    if not enabled then
+                        return
+                    end
+                    
+                    local info = {Name = self.Shortcut, Title = "Purchasing", Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
+                        self:Process(actionClone)
+                    end}
+                    local actionClone = C.AddAction(info)
+                end,
+                Options = {
+                    {
+                        Type = Types.Slider,
+                        Title = "Event Crates",
+                        Tooltip = "How much of every event crate to buy!",
+                        Layout = 1,Default = 1,
+                        Min = 1, Max=10, Digits=0,
+                        Shortcut="EventCrateQty",
+                    },
+                    {
+                        Type = Types.Slider,
+                        Title = "Event Bundles",
+                        Tooltip = "How much of every event bundle to buy!",
+                        Layout = 2,Default = 1,
+                        Min = 1, Max=10, Digits=0,
+                        Shortcut="EventBundleQty",
+                    },
+                },
+            },
 		}
 	}
 end
