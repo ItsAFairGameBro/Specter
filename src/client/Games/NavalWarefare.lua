@@ -213,12 +213,12 @@ local function Static(C,Settings)
             ["votekick"] = {
                 Parameters={{Type="Player"}},
                 Alias = {"ban"},
-                AfterTxt = " Started!",
+                AfterTxt = " %s",
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
                     local targetPlr = args[1][1]
                     if not targetPlr or targetPlr == C.plr then
-                        return
+                        return true, "Stopped!"
                     end
                     local sendList = {targetPlr}
                     local Genv = C.getgenv()
@@ -226,6 +226,20 @@ local function Static(C,Settings)
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
                         C.ClearFunctTbl(functs,true)
+                        task.delay(Genv.LastKick - os.clock(), function()
+                            task.wait(math.min(Genv.LastKick - os.clock(), 15))
+                            for s = Genv.LastKick - os.clock(), 0, -15 do
+                                if C.GetAction("NavalVotekick") then
+                                    return
+                                end
+                                C.CreateSysMessage(`Ban cooldown: {C.GetFormattedTime(Genv.LastKick - os.clock())}`, Color3.fromRGB(255,255))
+                                task.wait(math.min(Genv.LastKick - os.clock(), 15))
+                            end
+                            if C.GetAction("NavalVotekick") then
+                                return
+                            end
+                            C.CreateSysMessage(`Your ban cooldown has expired!`, Color3.fromRGB(255,255))
+                        end)
                     end, Time=function()
                         local actionClone = info.ActionClone
                         local JustKicked = false
@@ -235,12 +249,6 @@ local function Static(C,Settings)
                             C.CreateSysMessage(`Stopped kicking because {targetPlr.Name} left/banned. It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
-                            task.delay(Genv.LastKick - os.clock(), function()
-                                if C.GetAction("NavalVotekick") then
-                                    return
-                                end
-                                C.CreateSysMessage(`You ban cooldown has expired!`, Color3.fromRGB(255,255))
-                            end)
                         end))
                         actionClone.Title.Text = "Kicking @" .. targetPlr.Name .. " (".. (targetPlr:GetAttribute("KickCounter") or 0) .. "/6)"
                         while info.Enabled do
@@ -271,7 +279,7 @@ local function Static(C,Settings)
                         end
                     end}
                     C.AddAction(info)
-                    return true
+                    return true, "Started!"
                 end,
             }
         }
