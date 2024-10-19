@@ -64,6 +64,7 @@ return function(C,Settings)
         for _, item in ipairs(Inventory) do
             InventoryCount[item] = (InventoryCount[item] or 0) + 1
         end
+        InventoryCount["H0001"], InventoryCount["G0001"] = nil, nil
         return InventoryCount, #Inventory
     end
     table.insert(C.InsertCommandFunctions,function()
@@ -212,13 +213,12 @@ return function(C,Settings)
                                 local theirInventory = C.GetUserInventory(tradePlr)
                                 
                                 local myInventory = C.GetUserInventory()
-                                local eachAmntToGive = 10 - self.EnTbl.KeepAmount
                                 for name, count in ipairs(myInventory) do
-                                    count = math.min(count, eachAmntToGive, 10 - (theirInventory[name]))
+                                    count = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name]))
                                     myInventory[name] = count>0 and count or nil
                                 end
                                 print(theirInventory, myInventory)
-                                
+
                                 C.RemoteEvent:FireServer("AcceptTradeOffer")
                                 print("Trade Successfully Complete!")
                             else
