@@ -296,7 +296,7 @@ return function(C,Settings)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
                         end
-                        task.wait(1/2)
+                        task.wait(.8)
                     end
                     for name, data in pairs(Crates) do
                         if not table.find(self.IgnoreList, name) then
@@ -311,7 +311,7 @@ return function(C,Settings)
                         end
                     end
 
-                    print("TOT",CountToPurchase)
+                    --print("TOT",CountToPurchase)
                     
                     for name, data in pairs(Crates) do
                         if not table.find(self.IgnoreList, name) then
