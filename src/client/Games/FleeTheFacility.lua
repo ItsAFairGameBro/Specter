@@ -122,12 +122,15 @@ return function(C,Settings)
 		},
 		Tab = {
 			{
-				Title = "Insta Giveaway",
+				Title = "Insta Trade",
 				Tooltip = "Automatically trades with \"trusted\" users!",
 				Layout = 1,
-				Shortcut = "InstaTrade",Functs={}, Instances = {},Default=false,
+				Shortcut = "InstaTrade",Functs={}, Threads={}, Instances = {},Default=false,
 				whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage"},
                 lastSend = 0,
+                IsAllowed = function(self,theirPlr)
+                    return table.find(self.whitelistedUsers,theirPlr.Name:lower())
+                end,
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
                         return
@@ -150,13 +153,14 @@ return function(C,Settings)
                     end
                     local IsTrading = false
                     local TradeSpyEn = false
+                    local tradePlr
                     local function RemoteEventReceivedFunction(main,sec,third)
                         if main=="StartTradeCoolDown" then
                             self.lastSend=os.clock()
                         end
                         if main=="RecieveTradeRequest" and not IsTrading then
-                            local tradePlr=PS:GetPlayerByUserId(sec)
-                            if table.find(self.whitelistedUsers,tradePlr.Name:lower()) then
+                            tradePlr=PS:GetPlayerByUserId(sec)
+                            if self:IsAllowed(tradePlr) then
                                 IsTrading = true
                                 C.RemoteEvent:FireServer("AcceptTradeRequest")
                                 print("Trade Accepted")
@@ -212,14 +216,24 @@ return function(C,Settings)
                                     C.RemoteEvent:FireServer("AcceptTradeOffer")
                                     task.wait()
                                 end--]]
-                                local theirInventory = C.GetUserInventory(tradePlr)
                                 
-                                local myInventory = C.GetUserInventory()
-                                for name, count in pairs(myInventory) do
-                                    local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
-                                    myInventory[name] = newCount>0 and newCount or nil
-                                end
-                                task.wait(1/2)
+                            end
+                            C.RemoteEvent:FireServer("CancelTrade")
+                            tradePlr = nil
+                        elseif main == "StartTrading" then
+                            if not tradePlr then
+                                warn("StartTrading occured but unknown trading partner!")
+                                return
+                            end
+                            local theirInventory = C.GetUserInventory(tradePlr)
+                                
+                            local myInventory = C.GetUserInventory()
+                            for name, count in pairs(myInventory) do
+                                local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
+                                myInventory[name] = newCount>0 and newCount or nil
+                            end
+                            task.wait(1/2)
+                            if not self.EnTbl.ReceiveOnly then
                                 local ItemsToSend = 4
                                 local sendArr = {}
                                 for name, count in pairs(myInventory) do
@@ -234,21 +248,21 @@ return function(C,Settings)
                                     end
                                 end
                                 C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
-                                task.wait(3)
-                                for s = 30, 1, -1 do
-                                    if not IsTrading then
-                                        return
-                                    end
-                                    C.RemoteEvent:FireServer("AcceptTradeOffer")
-                                    task.wait(1)
-                                end
-                                print("Trade Timed Out!")
-                                IsTrading = false
                             end
-                            C.RemoteEvent:FireServer("CancelTrade")
+                            task.wait(3)
+                            for s = 30, 1, -1 do
+                                if not IsTrading then
+                                    return
+                                end
+                                C.RemoteEvent:FireServer("AcceptTradeOffer")
+                                task.wait(1)
+                            end
+                            print("Trade Timed Out!")
+                            IsTrading = false
                         elseif main == "TradeVerifying" then
                             print("Trade Successfully Complete!")
                             IsTrading = false
+                            tradePlr = nil
                         --elseif waitForThing==main then
                         --    waitForThing=nil
                         --    ReceiveEvent:Fire(sec,third)
@@ -258,6 +272,20 @@ return function(C,Settings)
                     end
                     table.insert(self.Functs,C.RemoteEvent.OnClientEvent:Connect(RemoteEventReceivedFunction))
                     C.RemoteEvent:FireServer("CancelTrade")
+                    while true do
+                        while IsTrading do
+                            task.wait(1)
+                        end
+                        for _, theirPlr in ipairs(PS:GetPlayers()) do
+                            if self:IsAllowed(tradePlr) then
+                                tradePlr = theirPlr
+                            end
+                        end
+                        if not IsTrading and tradePlr then
+                            SendWaitRemoteEvent("StartTrading","SendTradeRequest",tradePlr.UserId)
+                        end
+                    end
+                    
 				end,
                 Events = {},
 				Options = {
@@ -268,6 +296,21 @@ return function(C,Settings)
                         Layout = 1,Default = 1,
                         Min = 0, Max=9, Digits=0,
                         Shortcut="KeepAmount",
+                    },
+                    {
+                        Type = Types.Toggle,
+                        Title = "Receive Only",
+                        Tooltip = "Only allows receiving items, it will not trade any of your inventory",
+                        Layout = 1,Default = false,
+                        Shortcut="ReceiveOnly",
+                    },
+                    {
+                        Type = Types.Toggle,
+                        Title = "AutoSend",
+                        Tooltip = "Enables auto sender so that it sends to the bot immediately!",
+                        Layout = 2,Default = false,
+                        Shortcut="AutoSend",
+                        Activate = C.ReloadHack,
                     },
                 },
 			},
