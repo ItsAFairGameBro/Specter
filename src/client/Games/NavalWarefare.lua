@@ -214,8 +214,13 @@ local function Static(C,Settings)
                 Parameters={{Type="Player"}},
                 Alias = {"ban"},
                 AfterTxt = " %s",
+                KickThread = nil,
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
+                    if self.KickThread then
+                        C.StopThread(self.KickThread)
+                        self.KickThread = nil
+                    end
                     local targetPlr = args[1][1]
                     if not targetPlr or targetPlr == C.plr then
                         return true, "Stopped!"
@@ -226,14 +231,16 @@ local function Static(C,Settings)
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
                         C.ClearFunctTbl(functs,true)
-                        task.delay(Genv.LastKick - os.clock(), function()
-                            task.wait(math.min(Genv.LastKick - os.clock(), 15))
-                            for s = Genv.LastKick - os.clock(), 0, -15 do
+                        self.KickThread = task.delay(Genv.LastKick - os.clock(), function()
+                            for _, time in ipairs({45, 30, 15}) do
+                                local TimeLeft = Genv.LastKick - os.clock()
+                                if TimeLeft >= time then
+                                    task.wait(TimeLeft - time)
+                                end
                                 if C.GetAction("NavalVotekick") then
                                     return
                                 end
                                 C.CreateSysMessage(`Ban cooldown: {C.GetFormattedTime(Genv.LastKick - os.clock())}`, Color3.fromRGB(255,255))
-                                task.wait(math.min(Genv.LastKick - os.clock(), 15))
                             end
                             if C.GetAction("NavalVotekick") then
                                 return
