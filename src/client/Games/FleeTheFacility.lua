@@ -216,6 +216,7 @@ return function(C,Settings)
                                 
                                 local myInventory = C.GetUserInventory()
                                 for name, count in ipairs(myInventory) do
+                                    print(count,self.EnTbl.KeepAmount)
                                     local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name]))
                                     myInventory[name] = newCount>0 and newCount or nil
                                 end
