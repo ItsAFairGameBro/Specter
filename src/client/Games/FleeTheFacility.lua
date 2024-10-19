@@ -45,7 +45,7 @@ local function Static(C, Settings)
                     amntToBuy = self.EnTbl.EventCrateQty - (MyInventory[itemName] or 0)
                 else-- Bundle
                     for _, item in ipairs(requiredItems) do
-                        local itemNeeds = self.EnTbl.EventBundleQty - MyInventory[item]
+                        local itemNeeds = self.EnTbl.EventBundleQty - (MyInventory[item] or 0)
                         amntToBuy = math.min(amntToBuy, itemNeeds)
                     end
                     amntToBuy = amntToBuy * #requiredItems
