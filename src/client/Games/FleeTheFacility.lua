@@ -243,8 +243,8 @@ return function(C,Settings)
             {
 				Title = "Speed Buy",
 				Tooltip = "Automatically buys selected items up to n amount!",
-				Layout = 1,
-				Shortcut = "SpeedBuy",Functs={}, Instances = {},Default=false,
+				Layout = 0,
+				Shortcut = "SpeedBuy",
                 IgnoreList = {"Series 1H", "Series 1G"},
                 Process = function(self, actionClone)
                     C.SetActionLabel(actionClone, "Loading Modules...")
@@ -266,6 +266,7 @@ return function(C,Settings)
                                 local itemNeeds = self.EnTbl.EventBundleQty - MyInventory[item]
                                 amntToBuy = math.min(amntToBuy, itemNeeds)
                             end
+                            amntToBuy = amntToBuy * #requiredItems
                         end
                         if amntToBuy > 0 then
                             table.insert(ItemsToBuy,{itemName,itemType,requiredItems})
@@ -318,18 +319,26 @@ return function(C,Settings)
                         end
                     end
 
-                    
-                    for n, data in ipairs(ItemsToBuy) do
-                        GetItemWhileNotLimit(table.unpack(data))
+                    -- Dummy Check / Confirmation
+                    if CountToPurchase > 0 and C.Prompt(`Purchase Items`,
+                        `Are you sure that you want to insta buy {CountToPurchase} hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N") then
+                        for n, data in ipairs(ItemsToBuy) do
+                            GetItemWhileNotLimit(table.unpack(data))
+                        end
+    
+                        -- COMPELTED --
+                        C.CreateSysMessage(`Successfully purchased {CountToPurchase} crates and bundles in {C.GetFormattedTime(os.clock()-start)}!`, Color3.fromRGB(0,255,0))
                     end
-
-                    -- COMPELTED --
-                    C.CreateSysMessage(`Successfully purchased {CountToPurchase} crates and bundles in {C.GetFormattedTime(os.clock()-start)}!`, Color3.fromRGB(0,255,0))
+                    
+                    
                     self:SetValue(false)
                 end,
                 Activate = function(self, enabled, firstRun)
                     C.RemoveAction(self.Shortcut)
                     if not enabled then
+                        return
+                    elseif firstRun then
+                        self:SetValue(false)
                         return
                     end
                     
