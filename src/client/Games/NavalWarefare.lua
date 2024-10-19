@@ -234,7 +234,7 @@ local function Static(C,Settings)
                         self.KickThread = task.spawn(function()
                             for _, time in ipairs({45, 30, 15}) do
                                 local TimeLeft = Genv.LastKick - os.clock()
-                                print("LastKick",TimeLeft,time,TimeLeft - time)
+                                --print("LastKick",TimeLeft,time,TimeLeft - time)
                                 if TimeLeft >= time then
                                     task.wait(TimeLeft - time)
                                 else
