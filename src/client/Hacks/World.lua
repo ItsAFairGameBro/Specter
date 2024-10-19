@@ -509,7 +509,7 @@ return function(C_new,Settings)
                         Type = Types.Slider,
                         Title = "Timeout",
                         Tooltip = "How long to wait before a message is revealed as hidden\nAdjust this to be higher if messages that are not hidden are displayed as such",
-                        Layout = 2,Default = 0.5,
+                        Layout = 2,Default = 1,
                         Min = 0, Max=3, Digits=1,
                         Shortcut="HiddenTimeout",
                     },

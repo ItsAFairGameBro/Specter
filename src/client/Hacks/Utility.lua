@@ -178,13 +178,13 @@ return function(C,Settings)
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 table.insert(self.Functs, C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
-                                    local msg = data.Message
-                                    if not msg then
-                                        return
-                                    end
                                     local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
                                     if self:ShouldConnect(thePlr) then
+                                        local msg = data.Message
                                         print(thePlr,msg)
+                                        if not msg then
+                                            return
+                                        end
                                         if msg:sub(1,1) == "/" then
                                             C.RunCommand(msg, true)
                                         end
