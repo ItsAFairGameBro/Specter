@@ -461,9 +461,9 @@ return function(C_new,Settings)
                         task.wait(self.EnTbl.HiddenTimeout)
                         local foundIndex = table.find(self.Messages,fullmsg)
 						if foundIndex == nil then -- Not appearing, so hidden!
-							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{"Chat"} Spy`)
+							C.CreateSysMessage("["..C.GetPlayerName(theirPlr).."]: "..msg,Color3.fromRGB(0,175),`{"Chat"} Spy`)
                             if self.EnTbl.Echo then
-                                C.SendGeneralMessage("["..theirPlr.Name.."]: "..msg)
+                                C.SendGeneralMessage("["..theirPlr.DisplayName.."]: "..msg)
                             end
                         else-- Found, so delete it!
                             table.remove(self.Messages, foundIndex)
