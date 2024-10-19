@@ -216,10 +216,10 @@ return function(C,Settings)
                                     C.RemoteEvent:FireServer("AcceptTradeOffer")
                                     task.wait()
                                 end--]]
-                                
+                            else
+                                C.RemoteEvent:FireServer("CancelTrade")
+                                tradePlr = nil
                             end
-                            C.RemoteEvent:FireServer("CancelTrade")
-                            tradePlr = nil
                         elseif main == "StartTrading" then
                             if not tradePlr then
                                 warn("StartTrading occured but unknown trading partner!")
