@@ -456,7 +456,7 @@ return function(C_new,Settings)
                         end
 						conn:Disconnect()--]]
                         local fullmsg = theirPlr.UserId .. '\r' .. #msg
-                        print(fullmsg,self.Messages)
+                        task.wait(self.EnTbl.HiddenTimeout)
                         local hidden = table.find(self.Messages,fullmsg) == nil
 						if hidden then
 							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{"Chat"} Spy`)
@@ -500,7 +500,15 @@ return function(C_new,Settings)
 						Tooltip = "What is said privately in the chat you repeat (using the chat function)",
 						Layout = 2,Default = false,
 						Shortcut="Echo",
-					}
+					},
+                    {
+                        Type = Types.Slider,
+                        Title = "Timeout",
+                        Tooltip = "How long to wait before a message is revealed as hidden\nAdjust this to be higher if messages that are not hidden are displayed as such",
+                        Layout = 2,Default = 0.5,
+                        Min = 0, Max=3, Digits=1,
+                        Shortcut="HiddenTimeout",
+                    },
 				},
 			},--]]
 			FireElements={
