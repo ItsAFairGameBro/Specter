@@ -116,6 +116,8 @@ local function Static(C, Settings)
 
                 -- COMPELTED --
                 C.CreateSysMessage(`Successfully purchased {CountToPurchase} crates and bundles in {C.GetFormattedTime(os.clock()-start)}!`, Color3.fromRGB(0,255,0))
+            elseif CountToPurchase <= 0 then
+                C.AddNotification(`No Items To Purchases`,`All the crates and bundles you have selected for pruchase are already in your inventory at the requested/max amount.`)
             end
             
             
