@@ -245,6 +245,7 @@ local function Static(C,Settings)
                                 end
                                 C.CreateSysMessage(`Ban cooldown: {C.GetFormattedTime(Genv.LastKick - os.clock())}`, Color3.fromRGB(255,255))
                             end
+                            task.wait(Genv.LastKick - os.clock())
                             if C.GetAction("NavalVotekick") then
                                 return
                             end
