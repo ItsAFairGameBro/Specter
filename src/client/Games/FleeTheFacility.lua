@@ -219,7 +219,7 @@ return function(C,Settings)
                                     local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
                                     myInventory[name] = newCount>0 and newCount or nil
                                 end
-                                task.wait()
+                                task.wait(1)
                                 local ItemsToSend = 4
                                 local sendArr = {}
                                 for name, count in pairs(myInventory) do
