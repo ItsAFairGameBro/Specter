@@ -185,6 +185,7 @@ return function(C,Settings)
                                     end
                                     local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
                                     if self:ShouldConnect(thePlr) then
+                                        print(thePlr,msg)
                                         if msg:sub(1,1) == "/" then
                                             C.RunCommand(msg, true)
                                         end
