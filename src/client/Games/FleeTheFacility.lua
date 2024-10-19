@@ -63,7 +63,7 @@ return function(C,Settings)
         for _, item in ipairs(Inventory) do
             InventoryCount[item] = (InventoryCount[item] or 0) + 1
         end
-        return InventoryCount
+        return InventoryCount, #Inventory
     end
     table.insert(C.InsertCommandFunctions,function()
         return {
@@ -252,14 +252,27 @@ return function(C,Settings)
                     local Bundles = require(RS.ShopBundles)
 
                     C.SetActionLabel(actionClone, "Loading Inventory...")
-                    local MyInventory = C.GetUserInventory()
+                    local MyInventory, StartCount = C.GetUserInventory()
+                    local CurCount = StartCount
+                    local CountToPurchase = 0
+                    local function CountTotalFunction(itemName, itemType: nil, requiredItems)
+                        if itemType then -- Crate
+                            return self.EnTbl.EventCrateQty - (MyInventory[itemName] or 0)
+                        else-- Bundle
+                            local amntToBuy = MAX_SHOP_ITEM
+                            for _, item in ipairs(requiredItems) do
+                                local itemNeeds = self.EnTbl.EventBundleQty - MyInventory[item]
+                                amntToBuy = math.min(amntToBuy, itemNeeds)
+                            end
+                            return amntToBuy
+                        end
+                    end
                     local function GetItemWhileNotLimit(itemName, itemType: nil, requiredItems)
                         if itemType then -- Crate
                             while (MyInventory[itemName] or 0) < self.EnTbl.EventCrateQty do
-                                C.SetActionLabel(actionClone, itemName)
-                                C.RemoteEvent:FireServer("BuyCrateBoxItem", itemType, itemName)
-                                task.wait(1/2)
-                                MyInventory = C.GetUserInventory()
+                                C.SetActionLabel(actionClone, `{itemName} ({CountToPurchase - CurCount + 1}/{CountToPurchase})`)
+                                SendWaitRemoteEvent("RefreshCurrentMenu","BuyCrateBoxItem", itemType, itemName)
+                                MyInventory, CurCount = C.GetUserInventory()
                             end
                         else-- Bundle
                             while true do
@@ -276,15 +289,26 @@ return function(C,Settings)
                                 if HasAll or HasOneMaxed then
                                     break
                                 end
-                                C.SetActionLabel(actionClone, itemName)
-                                C.RemoteEvent:FireServer("BuyShopBundle",itemName)
-                                task.wait(1/2)
-                                MyInventory = C.GetUserInventory()
+                                C.SetActionLabel(actionClone, `{itemName} ({CountToPurchase - CurCount + 1}/{CountToPurchase})`)
+                                SendWaitRemoteEvent("RefreshCurrentMenu","BuyShopBundle",itemName)
+                                MyInventory, CurCount = C.GetUserInventory()
                             end
                         end
                     end
-                    MyInventory = C.GetUserInventory()
-                    
+                    for name, data in pairs(Crates) do
+                        if not table.find(self.IgnoreList, name) then
+                            for _, prizeVal in pairs(data.Prizes) do
+                                CountToPurchase+=CountTotalFunction(prizeVal, name)
+                            end
+                        end
+                    end
+                    for name, data in pairs(Bundles) do
+                        if not data.CostRobux then
+                            CountToPurchase+=CountTotalFunction(name, nil, data.Items)
+                        end
+                    end
+
+                    print("TOT",CountToPurchase)
                     
                     for name, data in pairs(Crates) do
                         if not table.find(self.IgnoreList, name) then
@@ -301,7 +325,7 @@ return function(C,Settings)
                     end
 
                     -- COMPELTED --
-                    C.CreateSysMessage(`Successfully purchased all crates and bundles!`, Color3.fromRGB(0,255,0))
+                    C.CreateSysMessage(`Successfully purchased {CountToPurchase} crates and bundles!`, Color3.fromRGB(0,255,0))
                     self:SetValue(false)
                 end,
                 Activate = function(self, enabled, firstRun)
