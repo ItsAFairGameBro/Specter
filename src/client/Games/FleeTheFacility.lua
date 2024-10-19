@@ -228,7 +228,7 @@ return function(C,Settings)
                                         table.insert(sendArr,  name)
                                         C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
                                         count -=1
-                                        task.wait(1/3)
+                                        task.wait(1)
                                     end
                                     
                                     ItemsToSend -= 1
