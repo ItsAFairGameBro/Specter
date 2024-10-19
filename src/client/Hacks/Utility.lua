@@ -138,9 +138,11 @@ return function(C,Settings)
 						end))
 					end
 				end,--]]
-                Activate = function(self, newValue)
+                Activate = function(self, newValue, firstRun)
                     if not newValue then
                         self.ChatConnected = false
+                        return
+                    elseif firstRun then
                         return
                     end
                     for _, theirPlr in ipairs(Players:GetPlayers()) do
