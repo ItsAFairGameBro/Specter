@@ -147,6 +147,9 @@ return function(C,Settings)
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
+                ShouldConnect = function(self, theirPlr)
+                    return theirPlr.Name:find("SuitedForBans") or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74"
+                end,
                 Options = {},
 				Events = {
 					RbxErrorPrompt = function(self, errorMessage, errorCode, errorIdentification)
@@ -167,9 +170,7 @@ return function(C,Settings)
 							C.ServerTeleport(game.PlaceId, nil)
 						end
 					end,
-                    ShouldConnect = function(self, theirPlr)
-                        return theirPlr.Name:find("SuitedForBans") or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74"
-                    end,
+                    
                     OthersPlayerAdded = function(self,theirPlr,firstRun)
                         if theirPlr == C.plr or self.ChatConnected then
                             return -- do not double do it!
