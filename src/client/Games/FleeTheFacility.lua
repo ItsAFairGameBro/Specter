@@ -270,7 +270,7 @@ return function(C,Settings)
                     local function GetItemWhileNotLimit(itemName, itemType: nil, requiredItems)
                         if itemType then -- Crate
                             while (MyInventory[itemName] or 0) < self.EnTbl.EventCrateQty do
-                                C.SetActionLabel(actionClone, `{itemName} ({CountToPurchase - CurCount + 1}/{CountToPurchase})`)
+                                C.SetActionLabel(actionClone, `{itemName} ({CountToPurchase - CurCount + StartCount + 1}/{CountToPurchase})`)
                                 SendWaitRemoteEvent("RefreshCurrentMenu","BuyCrateBoxItem", itemType, itemName)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
@@ -289,7 +289,7 @@ return function(C,Settings)
                                 if HasAll or HasOneMaxed then
                                     break
                                 end
-                                C.SetActionLabel(actionClone, `{itemName} ({CountToPurchase - CurCount + 1}/{CountToPurchase})`)
+                                C.SetActionLabel(actionClone, `{itemName} ({CountToPurchase - CurCount + StartCount + 1}/{CountToPurchase})`)
                                 SendWaitRemoteEvent("RefreshCurrentMenu","BuyShopBundle",itemName)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
