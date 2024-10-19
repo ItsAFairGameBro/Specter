@@ -439,7 +439,8 @@ return function(C_new,Settings)
                     end
                     local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
                     table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg)
-                        --[[msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
+                        msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
+                        --[[
 						local setChannel,moveon,hidden = nil,false,true
 						local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
 							if (packet.Message==msg:sub(#msg-#packet.Message+1) and (channel=="All") and packet.SpeakerUserId==theirPlr.UserId)
