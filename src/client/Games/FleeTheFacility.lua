@@ -364,7 +364,8 @@ return function(C,Settings)
                             while (MyInventory[itemName] or 0) < self.EnTbl.EventCrateQty do
                                 actionClone.Title.Text = `Purchasing ({CurCount - StartCount + 1}/{CountToPurchase})`
                                 C.SetActionLabel(actionClone, `{itemName}`)
-                                SendWaitRemoteEvent("RefreshCurrentMenu","BuyCrateBoxItem", itemType, itemName)
+                                C.RemoteEvent:FireServer("BuyCrateBoxItem", itemType, itemName)--SendWaitRemoteEvent("RefreshCurrentMenu","BuyCrateBoxItem", itemType, itemName)
+                                task.wait(1)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
                         else-- Bundle
@@ -384,11 +385,12 @@ return function(C,Settings)
                                 end
                                 actionClone.Title.Text = `Purchasing ({CurCount - StartCount + 1}/{CountToPurchase})`
                                 C.SetActionLabel(actionClone, `{itemName}`)
-                                SendWaitRemoteEvent("RefreshCurrentMenu","BuyShopBundle",itemName)
+                                C.RemoteEvent:FireServer("BuyShopBundle",itemName)--SendWaitRemoteEvent("RefreshCurrentMenu","BuyShopBundle",itemName)
+                                task.wait(1)
                                 MyInventory, CurCount = C.GetUserInventory()
                             end
                         end
-                        task.wait(1)
+                        
                     end
                     C.SetActionLabel(actionClone, "Calculating")
                     local start = os.clock()
