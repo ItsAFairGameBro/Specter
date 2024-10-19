@@ -104,7 +104,7 @@ return function(C,Settings)
 				Tooltip = "Automatically trades with \"trusted\" users!",
 				Layout = 1,
 				Shortcut = "InstaTrade",Functs={}, Instances = {},Default=false,
-				whitelistedUsers = {"queen_bestiesforlife"},
+				whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros"},
                 lastSend = 0,
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
