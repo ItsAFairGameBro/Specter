@@ -230,13 +230,16 @@ local function Static(C,Settings)
                     local functs = {}
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
+                        print("STOPPED")
                         C.ClearFunctTbl(functs,true)
-                        self.KickThread = task.delay(Genv.LastKick - os.clock(), function()
+                        self.KickThread = task.spawn(function()
                             for _, time in ipairs({45, 30, 15}) do
                                 local TimeLeft = Genv.LastKick - os.clock()
                                 print("LastKick",TimeLeft,time,TimeLeft - time)
                                 if TimeLeft >= time then
                                     task.wait(TimeLeft - time)
+                                else
+                                    continue
                                 end
                                 if C.GetAction("NavalVotekick") then
                                     return
