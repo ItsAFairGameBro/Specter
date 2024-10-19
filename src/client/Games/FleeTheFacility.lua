@@ -218,6 +218,7 @@ return function(C,Settings)
                                 end--]]
                             else
                                 C.RemoteEvent:FireServer("CancelTrade")
+                                print("Trade Denied:",tradePlr)
                                 tradePlr = nil
                             end
                         elseif main == "StartTrading" then
@@ -258,7 +259,8 @@ return function(C,Settings)
                                 task.wait(1)
                             end
                             print("Trade Timed Out!")
-                            IsTrading = false
+                            C.RemoteEvent:FireServer("CancelTrade")
+                            IsTrading, tradePlr = false, nil
                         elseif main == "TradeVerifying" then
                             print("Trade Successfully Complete!")
                             IsTrading = false
