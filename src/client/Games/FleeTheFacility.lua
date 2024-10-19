@@ -200,14 +200,11 @@ return function(C,Settings)
     end
     function C.GetUserInventory(theirPlr)
         local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
-        --[[task.delay(.3,C.RemoteEvent.FireServer,C.RemoteEvent, RequestName,theirPlr and {theirPlr.UserId} or nil)
-    
-        local Res, Inventory
-        while (Res ~= RequestName) do
-            Res, Inventory = C.RemoteEvent.OnClientEvent:Wait()
-        end--]]
-        --print("Sending",RequestName)
-        local Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and theirPlr.UserId or nil)
+
+        local Success, Res, Inventory
+        repeat
+            Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and theirPlr.UserId or nil)
+        until Success
         local InventoryCount = {}
     
         for _, item in ipairs(Inventory) do
