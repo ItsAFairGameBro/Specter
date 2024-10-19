@@ -455,14 +455,17 @@ return function(C_new,Settings)
                             RunS.RenderStepped:Wait()
                         end
 						conn:Disconnect()--]]
-                        local fullmsg = theirPlr.UserId .. '\r' .. #msg
+                        local clippedMsg = msg:gsub("/w %a+ ",""):gsub("/t ",""):gsub("/team ", "")
+                        local fullmsg = theirPlr.UserId .. '\r' .. #clippedMsg
                         task.wait(self.EnTbl.HiddenTimeout)
-                        local hidden = table.find(self.Messages,fullmsg) == nil
-						if hidden then
+                        local foundIndex = table.find(self.Messages,fullmsg)
+						if foundIndex == nil then -- Not appearing, so hidden!
 							C.CreateSysMessage("["..theirPlr.Name.."]: "..msg,Color3.fromRGB(0,175),`{"Chat"} Spy`)
                             if self.EnTbl.Echo then
                                 C.SendGeneralMessage("["..theirPlr.Name.."]: "..msg)
                             end
+                        else-- Found, so delete it!
+                            table.remove(self.Messages, foundIndex)
 						end
                     end))
                 end,
@@ -484,7 +487,7 @@ return function(C_new,Settings)
                         local Message = data.SpeakerUserId .. '\r' .. data.MessageLength
                         local Index = #self.Messages + 1
                         table.insert(self.Messages, Message)
-                        task.delay(10, table.remove, self.Messages, Index)
+                        task.delay(10, C.TblRemove, self.Messages, Message)
                     end))
 				end,
                 Events = {
