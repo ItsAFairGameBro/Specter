@@ -257,7 +257,17 @@ return function(C,Settings)
         }
     end)
     if game.PlaceId ~= 1738581510 then -- Not Trading Hub!
-        return
+        return {
+            Category = {
+                Name = "FleeTheFacility",
+                Title = "Flee The Facility",
+                Image = nil, -- Set to nil for game image
+                Layout = 20,
+            },
+            Tab =  AppendToFirstArr(SharedHacks,{
+                
+            })
+        }
     end
     
 	return {
