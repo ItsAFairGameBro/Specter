@@ -277,7 +277,7 @@ return function(C,Settings)
                             task.wait(1)
                         end
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
-                            if self:IsAllowed(tradePlr) then
+                            if self:IsAllowed(theirPlr) then
                                 tradePlr = theirPlr
                             end
                         end
