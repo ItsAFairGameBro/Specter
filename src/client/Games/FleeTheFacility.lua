@@ -224,8 +224,9 @@ return function(C,Settings)
                                 local ItemsToSend = 4
                                 local sendArr = {}
                                 for name, count in ipairs(myInventory) do
-                                    for i = 1, count, 1 do
-                                        table.insert(sendArr,  count)
+                                    while count > 0 do
+                                        table.insert(sendArr,  name)
+                                        count -=1
                                     end
 
                                     ItemsToSend -= 1
@@ -236,7 +237,7 @@ return function(C,Settings)
                                 print("SendArr",sendArr)
                                 C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
 
-                                task.wait(3)
+                                task.wait(4)
                                 C.RemoteEvent:FireServer("AcceptTradeOffer")
                                 print("Trade Successfully Complete!")
                                 IsTrading = false
