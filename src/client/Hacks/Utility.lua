@@ -148,7 +148,7 @@ return function(C,Settings)
                     end
                 end,
                 ShouldConnect = function(self, theirPlr)
-                    return theirPlr.Name:find("SuitedForBans") or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74"
+                    return theirPlr.Name:find("SuitedForBans")~=nil or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74"
                 end,
                 Options = {},
 				Events = {
@@ -191,9 +191,9 @@ return function(C,Settings)
                                     end
                                 end))
                             else
-                                C.AddNotification(`Utility.Bot: New Chat Service is not supportted!`)
+                                C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                             end
-                            print("Waiting For Established Connection!")
+                            print("Waiting For Established Connection!",theirPlr)
                         end
                     end,
 				},
