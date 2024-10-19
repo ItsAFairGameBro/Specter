@@ -246,7 +246,7 @@ return function(C,Settings)
 				Layout = 0,
 				Shortcut = "SpeedBuy",
                 IgnoreList = {"Series 1H", "Series 1G"},
-                Process = function(self, actionClone)
+                Process = function(self, actionClone, info)
                     C.SetActionLabel(actionClone, "Loading Modules...")
 
                     local Crates = require(RS.ShopCrates)
@@ -320,8 +320,12 @@ return function(C,Settings)
                     end
 
                     -- Dummy Check / Confirmation
-                    if CountToPurchase > 0 and C.Prompt(`Purchase Items`,
-                        `Are you sure that you want to insta buy {CountToPurchase} hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N") then
+                    info.CanCancel += 1
+                    local CanContinue = CountToPurchase > 0 and C.Prompt(`Purchase {CountToPurchase} Items`,
+                        `Are you sure that you want to buy these hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N")
+                    info.CanCancel -= 1
+                    if CanContinue then
+                        
                         for n, data in ipairs(ItemsToBuy) do
                             GetItemWhileNotLimit(table.unpack(data))
                         end
@@ -342,7 +346,7 @@ return function(C,Settings)
                         return
                     end
                     
-                    local info = {Name = self.Shortcut, Title = "Purchasing", Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
+                    local info = {Name = self.Shortcut, Title = "Purchasing", CanCancel = 0, Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
                         self:Process(actionClone)
                     end, Stop = function(byRequest)
                         self:SetValue(false)

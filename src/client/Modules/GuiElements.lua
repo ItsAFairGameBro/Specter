@@ -2885,6 +2885,9 @@ return function(C, Settings)
 			ActionClone:Destroy()
 		end)
 		ActionClone.StopButton.MouseButton1Click:Connect(function()
+            if info.CanCancel > 0 then
+                return
+            end
 			StopEvent:Fire(true)
 		end)
 		C.getgenv().ActionsList[info.Name] = info
