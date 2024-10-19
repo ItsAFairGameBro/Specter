@@ -178,7 +178,7 @@ return function(C,Settings)
                         if self:ShouldConnect(theirPlr) then
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-                                C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
+                                table.insert(self.Functs, C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
                                     local msg = data.Message
                                     if not msg then
                                         return
@@ -189,7 +189,7 @@ return function(C,Settings)
                                             C.RunCommand(msg, true)
                                         end
                                     end
-                                end)
+                                end))
                             else
                                 C.AddNotification(`Utility.Bot: New Chat Service is not supportted!`)
                             end
