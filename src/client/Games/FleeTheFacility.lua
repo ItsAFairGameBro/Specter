@@ -133,7 +133,7 @@ return function(C,Settings)
                         end
                         if main=="RecieveTradeRequest" then
                             local user=PS:GetPlayerByUserId(sec)
-                            if ((self.whitelistedUsers[user.Name:lower()])) then
+                            if table.find(self.whitelistedUsers,user.Name:lower()) then
                                 C.RemoteEvent:FireServer("AcceptTradeRequest")
                                 print("Accepted")
                                 local theirItems,theirUser=waitForReceive("GetOtherPlayerInventory",{user.UserId})
