@@ -50,10 +50,15 @@ return function(C,Settings)
             AfterTxt=" %s",
             RequiresRefresh=true,
             Functs = {},
+            RunOnDestroy = function(self)
+                C.ClearFunctTbl(self.Functs)
+                C.Spectate()
+            end,
             TheirCharAdded = function(self, theirPlr, theirChar)
                 C.Spectate(theirChar)
             end,
             Run=function(self,args)
+                self:RunOnDestroy()
                 print("spec",#self.Functs)
 
                 local theirPlr = args[1][1]
