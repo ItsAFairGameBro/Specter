@@ -100,11 +100,11 @@ return function(C,Settings)
 		},
 		Tab = {
 			{
-				Title = "Insta Trade",
+				Title = "Insta Giveaway",
 				Tooltip = "Automatically trades with \"trusted\" users!",
 				Layout = 1,
 				Shortcut = "InstaTrade",Functs={}, Instances = {},Default=false,
-				whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros"},
+				whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage"},
                 lastSend = 0,
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
