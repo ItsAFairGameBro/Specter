@@ -45,6 +45,7 @@ return function(C,Settings)
         if rets then
             return true, table.unpack(rets)
         else
+            warn("Timeout occured for yield signal",retType)
             return false, "Timeout Occured"
         end
     end
@@ -255,17 +256,21 @@ return function(C,Settings)
                     local MyInventory, StartCount = C.GetUserInventory()
                     local CurCount = StartCount
                     local CountToPurchase = 0
+                    local ItemsToBuy = {}
                     local function CountTotalFunction(itemName, itemType: nil, requiredItems)
+                        local amntToBuy = MAX_SHOP_ITEM
                         if itemType then -- Crate
-                            return self.EnTbl.EventCrateQty - (MyInventory[itemName] or 0)
+                            amntToBuy = self.EnTbl.EventCrateQty - (MyInventory[itemName] or 0)
                         else-- Bundle
-                            local amntToBuy = MAX_SHOP_ITEM
                             for _, item in ipairs(requiredItems) do
                                 local itemNeeds = self.EnTbl.EventBundleQty - MyInventory[item]
                                 amntToBuy = math.min(amntToBuy, itemNeeds)
                             end
-                            return amntToBuy
                         end
+                        if amntToBuy > 0 then
+                            table.insert(ItemsToBuy,{itemName,itemType,requiredItems})
+                        end
+                        return amntToBuy
                     end
                     local function GetItemWhileNotLimit(itemName, itemType: nil, requiredItems)
                         if itemType then -- Crate
@@ -313,24 +318,13 @@ return function(C,Settings)
                         end
                     end
 
-                    print("TOT",os.clock()-start)
                     
-                    for name, data in pairs(Crates) do
-                        if not table.find(self.IgnoreList, name) then
-                            for _, prizeVal in pairs(data.Prizes) do
-                                GetItemWhileNotLimit(prizeVal, name)
-                            end
-                        end
-                    end
-                    
-                    for name, data in pairs(Bundles) do
-                        if not data.CostRobux then
-                            GetItemWhileNotLimit(name, nil, data.Items)
-                        end
+                    for n, data in ipairs(ItemsToBuy) do
+                        GetItemWhileNotLimit(table.unpack(data))
                     end
 
                     -- COMPELTED --
-                    C.CreateSysMessage(`Successfully purchased {CountToPurchase} crates and bundles!`, Color3.fromRGB(0,255,0))
+                    C.CreateSysMessage(`Successfully purchased {CountToPurchase} crates and bundles in {C.GetFormattedTime(os.clock()-start)}!`, Color3.fromRGB(0,255,0))
                     self:SetValue(false)
                 end,
                 Activate = function(self, enabled, firstRun)
