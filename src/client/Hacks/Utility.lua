@@ -199,7 +199,7 @@ return function(C,Settings)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                             end
-                            --print("Waiting For Established Connection!",theirPlr)
+                            print("Waiting For Established Connection!",theirPlr)
                         end
                     end,
 				},
