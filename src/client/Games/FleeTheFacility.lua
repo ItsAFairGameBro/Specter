@@ -283,7 +283,7 @@ return function(C,Settings)
                     Tooltip = "Automatically trades with \"trusted\" users!",
                     Layout = 1,
                     Shortcut = "InstaTrade",Functs={}, Threads={}, Instances = {},Default=false,
-                    whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage"},
+                    whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage","bxnny_senpxii"},
                     lastSend = 0,
                     IsAllowed = function(self,theirPlr)
                         return table.find(self.whitelistedUsers,theirPlr.Name:lower())
