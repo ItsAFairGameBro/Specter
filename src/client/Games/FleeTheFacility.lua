@@ -261,6 +261,9 @@ return function(C,Settings)
                             print("Trade Timed Out!")
                             C.RemoteEvent:FireServer("CancelTrade")
                             IsTrading, tradePlr = false, nil
+                        elseif main == "TradeCancelled" then
+                            print("Trade Cancelled!")
+                            IsTrading, tradePlr = false, nil
                         elseif main == "TradeVerifying" then
                             print("Trade Successfully Complete!")
                             IsTrading = false
@@ -284,7 +287,9 @@ return function(C,Settings)
                             end
                         end
                         if not IsTrading and tradePlr then
-                            SendWaitRemoteEvent("StartTrading","SendTradeRequest",tradePlr.UserId)
+                            print("Sending Trade Request:",tradePlr)
+                            C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
+                            task.wait(2)
                         end
                     end
                     
