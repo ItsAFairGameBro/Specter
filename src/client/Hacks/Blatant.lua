@@ -39,7 +39,7 @@ return function(C,Settings)
 						end
 						newInput = C.char:GetPivot()
 						if self.BlockTeleports then
-							if (newInput.Position - C.LastLoc.Position).Magnitude > 16 then
+							if (newInput.Position - C.LastLoc.Position).Magnitude > 1 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
 								if self.EnTbl.UpdateOthers and C.hrp.AssemblyAngularVelocity.Magnitude < .5 then
