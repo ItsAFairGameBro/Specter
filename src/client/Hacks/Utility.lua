@@ -170,7 +170,6 @@ return function(C,Settings)
 							C.ServerTeleport(game.PlaceId, nil)
 						end
 					end,
-                    
                     OthersPlayerAdded = function(self,theirPlr,firstRun)
                         if theirPlr == C.plr or self.ChatConnected then
                             return -- do not double do it!

@@ -2885,7 +2885,7 @@ return function(C, Settings)
 			ActionClone:Destroy()
 		end)
 		ActionClone.StopButton.MouseButton1Click:Connect(function()
-            if info.CanCancel > 0 then
+            if (info.CanCancel and info.CanCancel > 0) or C.PromptVisible then
                 return
             end
 			StopEvent:Fire(true)
