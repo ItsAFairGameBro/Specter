@@ -210,9 +210,15 @@ return function(C,Settings)
                                     task.wait()
                                 end--]]
                                 local theirInventory = C.GetUserInventory(tradePlr)
+                                
                                 local myInventory = C.GetUserInventory()
+                                local eachAmntToGive = 10 - self.EnTbl.KeepAmount
+                                for name, count in ipairs(myInventory) do
+                                    count = math.min(count, eachAmntToGive, 10 - (theirInventory[name]))
+                                    myInventory[name] = count>0 and count or nil
+                                end
                                 print(theirInventory, myInventory)
-
+                                
                                 C.RemoteEvent:FireServer("AcceptTradeOffer")
                                 print("Trade Successfully Complete!")
                             else
