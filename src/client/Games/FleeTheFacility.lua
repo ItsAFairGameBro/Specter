@@ -347,7 +347,7 @@ return function(C,Settings)
                     end
                     
                     local info = {Name = self.Shortcut, Title = "Purchasing", CanCancel = 0, Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
-                        self:Process(actionClone)
+                        self:Process(actionClone, info)
                     end, Stop = function(byRequest)
                         self:SetValue(false)
                     end}
