@@ -225,9 +225,9 @@ return function(C,Settings)
                                 for name, count in pairs(myInventory) do
                                     while count > 0 do
                                         table.insert(sendArr,  name)
-                                        C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
+                                        
                                         count -=1
-                                        task.wait(1/7)
+                                        --task.wait(1/7)
                                     end
                                     
                                     ItemsToSend -= 1
@@ -235,7 +235,7 @@ return function(C,Settings)
                                         break
                                     end
                                 end
-                                
+                                C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
 
                                 task.wait(4)
                                 C.RemoteEvent:FireServer("AcceptTradeOffer")
