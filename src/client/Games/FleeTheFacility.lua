@@ -267,7 +267,7 @@ return function(C,Settings)
 			Image = nil, -- Set to nil for game image
 			Layout = 20,
 		},
-		Tab = {
+		Tab = 
             AppendToFirstArr(SharedHacks,{
                 {
                     Title = "Insta Trade",
@@ -408,6 +408,5 @@ return function(C,Settings)
                 },
             }
         )
-        }
 	}
 end
