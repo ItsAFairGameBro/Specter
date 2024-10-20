@@ -739,7 +739,7 @@ return function(C,Settings)
                             local friend = hitList[(myIndex - 1) > 0 and myIndex - 1 or (#hitList)]
                             print(hitList,myIndex,friend)
                             local friendTSM = friend:WaitForChild("TempPlayerStatsModule")
-                            table.insert(self.Threads, friendTSM:WaitForChild("Captured").Changed:Connect(function()
+                            table.insert(self.Functs, friendTSM:WaitForChild("Captured").Changed:Connect(function()
                                 local friendChar = friend.Character
                                 for _, freezePod in ipairs(C.FreezingPods) do
                                     local CapturedTorso = C.StringFind(freezePod, "PodTrigger.CapturedTorso")
