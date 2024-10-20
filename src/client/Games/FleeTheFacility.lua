@@ -425,9 +425,14 @@ return function(C,Settings)
     function C.GetPlayerListOfType(options)
         local list = {}
         for _, theirPlr in ipairs(PS:GetPlayers()) do
+            local theirTSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
+            if not theirTSM then
+                continue
+            end
             local inGame, role = C.isInGame(theirPlr.Character)
             if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) 
-                or (options.Ragdoll ~= nil and options.Ragdoll == theirPlr.TempPlayerStatsModule.Ragdoll.Value) then
+                or (options.Ragdoll ~= nil and options.Ragdoll == theirTSM.Ragdoll.Value)
+                or (options.Captured ~= nil and options.Captured == theirTSM.Captured.Value) then
                 table.insert(list, theirPlr)
             end
         end
@@ -653,7 +658,17 @@ return function(C,Settings)
 
                     end,
                     StartBeast = function(self)
-                        
+                        for num, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false})) do
+                            local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
+                            if not TSM then
+                                return
+                            end
+                            C.CommandFunctions.follow:Run({{theirPlr},5})
+                            while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
+                                RunS.RenderStepped:Wait()
+                            end
+                        end
+                        C.CommandFunctions.follow:Run({{}})
                     end,
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)
@@ -677,7 +692,17 @@ return function(C,Settings)
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
                             self:StartUp()
                         end,
-                    }
+                    },
+                    Options = {
+                        {
+                            Type = Types.Dropdown,
+                            Title = "Run Type",
+                            Tooltip = "Which ServerFarm type to run",
+                            Layout = 1,
+                            Shortcut="RunType",
+                            Selections = {"BeastCapture"},
+                        },
+                    },
                 }
             
             } or {}))
