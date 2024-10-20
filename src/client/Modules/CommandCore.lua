@@ -100,10 +100,9 @@ return function(C,Settings)
                         end
                     end
                 elseif argumentData.Type == "Friend" then
-                    local Ret = C.StringStartsWith(C.friendnames, args[num], true)
-                    print(args[num],Ret)
+                    local Ret = C.StringStartsWith(C.friendnames, args[num], true)[1]
                     if Ret then
-                        args[num] = Ret
+                        args[num] = {UserId=C.friendnamestoids[Ret[2]], UserName= Ret[2]}
                     else
                         canRunFunction = false
                         C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid friends. No matching username/userid found for {args[num]}`)

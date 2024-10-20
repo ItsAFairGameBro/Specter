@@ -377,7 +377,7 @@ return function(C,Settings)
             Parameters={{Type="Friend"}},
             AfterTxt="%s",
             Run=function(self,args)
-                local index, selectedName = table.unpack(C.checkFriendsPCALLFunction(args[1])[1] or {})
+                local selectedName = args[1]--local index, selectedName = table.unpack(C.checkFriendsPCALLFunction(args[1])[1] or {})
                 C.getgenv().Outfits = C.getgenv().Outfits or {}
                 if not selectedName then
                     return false, "User Not Found ("..tostring(args[1])..")"

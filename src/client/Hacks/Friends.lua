@@ -22,11 +22,14 @@ return function(C,Settings)
 					local theirEnTbl = C.enHacks.Users.MainAccount
 					local friends = C.GetFriendsFunct(theirEnTbl.En and theirEnTbl.MainAccountId[1] or C.plr.UserId)
                     local friendNames = {}
+                    local friendNamesToIds = {}
                     for _, data in ipairs(friends) do
                         table.insert(friendNames,data.SortName)
+                        friendNamesToIds[data.SortName] = data.UserId
                     end
 
                     C.friendnames = friendNames
+                    C.friendnamestoids = friendNamesToIds
 					C.friends = friends
 					if self.RealEnabled and not firstRun then
 						C.AddNotification("Friends Loaded",`{#friends} Friends will not be targeted by modules`)
