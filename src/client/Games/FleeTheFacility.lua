@@ -735,6 +735,37 @@ return function(C,Settings)
                                 return a.Name:lower() < b.Name:lower()
                             end)
                             -- ADD HERE --
+                            local myIndex = table.find(hitList, C.plr)
+                            local friend = hitList[(myIndex - 1) % (#hitList)]
+                            local friendTSM = friend:WaitForChild("TempPlayerStatsModule")
+                            table.insert(self.Threads, friendTSM:WaitForChild("Captured").Changed:Connect(function()
+                                local friendChar = friend.Character
+                                for _, freezePod in ipairs(C.FreezingPods) do
+                                    local CapturedTorso = C.StringFind(freezePod, "PodTrigger.CapturedTorso")
+                                    if CapturedTorso and friendChar:IsAncestorOf(CapturedTorso.Value) then
+                                        C.RescueSurvivor(freezePod)
+                                        C.getgenv().Rescued = true
+                                        print("Free SUCCESS!")
+                                        return
+                                    end
+                                end
+                                print('none found :(')
+                            end))
+                            -- Everyone but first player waits
+                            while not C.getgenv().Rescued and myIndex ~= 1 do
+                                task.wait(1/3)
+                            end
+                            while true do
+                                -- First player gets captured / anyone gets captured after rescuing
+                                while not C.myTSM.Captured.Value and not C.myTSM.Ragdoll.Value do
+                                    C.DoTeleport(CFrame.new(C.BeastChar:GetPivot() * Vector3.new(0,0,3), C.BeastChar:GetPivot().Position))
+                                    task.wait(1/3)
+                                end
+                                -- First player rescues
+                                while not C.getgenv().Rescued do
+                                    task.wait(1/3)
+                                end
+                            end
                         else
                             warn(`[Server Farm]: Unknown RunType: {self.EnTbl.RunType}`)
                         end
@@ -808,6 +839,7 @@ return function(C,Settings)
                     Completed = function(self)
                         -- Finished on its own --
                         C.RemoveAction(self.Shortcut)
+                        C.getgenv().Rescued = nil
                         --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
                     end,

@@ -4,7 +4,7 @@ local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local function getMass(model)
 	assert(model and model:IsA("Model"), "Model argument of getMass must be a model.");
-	
+
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
 return function(C,Settings)
@@ -25,8 +25,7 @@ return function(C,Settings)
 					if not newValue or not C.human then
 						return
 					end
-					local CenterPart = (C.gameName == "FleeMain" and C.char:FindFirstChild("HumanoidRootPart")) 
-						or (C.human.RigType == Enum.HumanoidRigType.R6 and C.char:WaitForChild("Torso",2)) or C.char:WaitForChild("HumanoidRootPart")
+					local CenterPart = (C.human.RigType == Enum.HumanoidRigType.R6 and C.char:WaitForChild("Torso",2)) or C.char:WaitForChild("HumanoidRootPart")
 					local newInput = nil
 					C.LastLoc = C.char:GetPivot() -- Inital Starting Position
 					self.BlockTeleports = (not C.isInGame or C.isInGame(C.char))
@@ -38,7 +37,7 @@ return function(C,Settings)
 							return
 						end
 						newInput = C.char:GetPivot()
-						if self.BlockTeleports then
+						if self.BlockTeleports and CenterPart.AssemblyMass == math.huge then
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 1 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
@@ -122,13 +121,13 @@ return function(C,Settings)
                     else
                         IsSeated = true
                     end
-					
+
 					if not newValue then
 						self:StopAllAnims()
                     else
                         self:StartAnims()
 					end
-					
+
 					if C.char:FindFirstChild("Animate") ~=nil and game.GameId~=372226183 and C.gameName ~= "NavalWarefare" then
 						C.char.Animate.Enabled = not newValue
 					end
@@ -136,7 +135,7 @@ return function(C,Settings)
 					if not newValue then
 						if C.char and C.hrp and C.human then
 							local Orient = C.hrp.Orientation
-							
+
 							local options = {
 								ignoreInvisibleWalls = false,
 								ignoreUncollidable = true,
@@ -144,22 +143,22 @@ return function(C,Settings)
 								raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 								distance = C.getCharacterHeight(C.char)+3.1,  -- Retry up to 3 times
 							}
-		
+
 							local hitResult, hitPosition = C.Raycast(C.hrp.Position+Vector3.new(0,3,0),-Vector3.new(0,3,0),options)
-							
-		
+
+
 							if hitResult then
 								C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(0,math.rad(Orient.Y),0) + Vector3.new(0,C.getCharacterHeight(C.char)))
 							else
 								C.DoTeleport(CFrame.new(C.char:GetPivot().Position) * CFrame.Angles(0,math.rad(Orient.Y),0))
 							end
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
-							
+
                             if not IsSeated then
 							    C.human:ChangeState(Enum.HumanoidStateType.Running)
                             end
 						end
-						
+
 						return
 					else
                         if not IsSeated then
@@ -171,8 +170,8 @@ return function(C,Settings)
 					local enTbl = self.EnTbl
 
 					local bodyGyro, bodyVel, bodyForce
-					
-					
+
+
 					if enTbl.LookDirection then
 						bodyGyro = Instance.new("BodyGyro")
 						bodyGyro.maxTorque = Vector3.new(1, 1, 1)*10^6
@@ -191,7 +190,7 @@ return function(C,Settings)
 						table.insert(self.Instances,bodyVel)
 					else
 						bodyForce = Instance.new("BodyForce")
-						bodyForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))					
+						bodyForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))
 						bodyForce.Parent = C.hrp--]]
 						table.insert(self.Instances,bodyForce)
 					end
@@ -227,7 +226,7 @@ return function(C,Settings)
 						if (MoveDirection:Dot(MoveDirection) > 0) then
 							MoveDirection = MoveDirection.Unit
 						end
-						
+
 						local newVelocity = (MoveDirection * Vector3.new(enTbl.HorizontalMult,enTbl.VerticalMult,enTbl.HorizontalMult)) * enTbl.Speed * 5
 							* (enTbl.UseWalkSpeed and (C.human.WalkSpeed/C.Defaults.WalkSpeed) or 1)
 						if bodyGyro then
@@ -475,7 +474,7 @@ return function(C,Settings)
                     end
 
 					local screenToWorldRay = workspace.CurrentCamera:ViewportPointToRay(mouseLocation.X, mouseLocation.Y)
-					
+
 					local options = {
 						ignoreInvisibleWalls = self.EnTbl.IgnoreInvisibleWalls,
 						ignoreUncollidable = self.EnTbl.IgnoreUncollidibleWalls,
@@ -487,11 +486,11 @@ return function(C,Settings)
 					}
 
 					local hitResult, hitPosition = C.Raycast(screenToWorldRay.Origin,screenToWorldRay.Direction,options)
-					
+
 
 					if (self.EnTbl.AlwaysTeleport or hitResult) and C.char.PrimaryPart then
 						local OrientX,OrientY,OrientZ = C.char:GetPivot():toEulerAnglesXYZ()
-						
+
 						C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
 					end
 				end,
@@ -607,7 +606,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					if not C.human then return else task.wait(.1) end
-					
+
 					local GetPartProperty, Defaults = C.GetPartProperty, C.Defaults
 					C.HookMethod("__index",self.Shortcut,newValue and self.EnTbl.Hidden and function(theirScript,index,self,...)
 						if (self == C.human) then
