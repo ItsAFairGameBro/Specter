@@ -2479,12 +2479,12 @@ end
 
 return function(C, Settings)
 	-- Gui to Lua
-	
+
 	-- Initiziations
 	C.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
 	C.Examples = {}
 	C.UI = {}
-	
+
 	-- Functions
 	local BlockStartDragging = false
 	function C.SetImage(imageButton,image)
@@ -2537,7 +2537,7 @@ return function(C, Settings)
 		end
 
 		C.AddGlobalConnection(dragInstance.InputBegan:Connect(function(input)
-			if (input.UserInputType == Enum.UserInputType.MouseButton1 
+			if (input.UserInputType == Enum.UserInputType.MouseButton1
 				or input.UserInputType == Enum.UserInputType.Touch)
 				and not BlockStartDragging then
 				BlockStartDragging = true
@@ -2545,7 +2545,7 @@ return function(C, Settings)
 				dragStartTime = os.clock()
 				dragStart = input.Position
 				startPos = frame.Position
-				
+
 				local connection
 
 				connection = input.Changed:Connect(function()
@@ -2573,7 +2573,7 @@ return function(C, Settings)
 				update(input.Position - dragStart)
 			end
 		end))
-		
+
 		return update
 	end
 	function C.MakeDraggableTab(TabEx,HasScroll)
@@ -2620,7 +2620,7 @@ return function(C, Settings)
 		UpdateTabSize()
 	end
 	-- BEGIN LOAD CORE
-	
+
 	-- Instances:
 	local SpecterGUI,CategoriesFrame,TabsFrame,ToolTipHeaderFrame,ToolTipText = LoadCore(C)
 	if C.isStudio then
@@ -2631,15 +2631,15 @@ return function(C, Settings)
 	SpecterGUI.SafeAreaCompatibility = Enum.SafeAreaCompatibility.None
 	SpecterGUI.ScreenInsets = Enum.ScreenInsets.None
 	SpecterGUI.ClipToDeviceSafeArea = false
-	
+
 	CreateOtherElements(C, Settings)
-	
+
 	-- Load tooltip
 
-	
+
 	local toolTipFunct
 	local toolTipDeb = 0
-	
+
 	function C.TooltipActivate(text)
 		toolTipDeb+=1
 		local wasRegistered = C.TooltipDeactivate(true)
@@ -2676,10 +2676,10 @@ return function(C, Settings)
 
 		ToolTipHeaderFrame.Position = UDim2.fromOffset(x, y)
 	end
-	
+
 	function C.TooltipSetUp(button,label)
 		local saveDeb
-		
+
 		C.AddGlobalConnection(button.InputBegan:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseMovement then
 				saveDeb = C.TooltipActivate(label)
@@ -2693,9 +2693,9 @@ return function(C, Settings)
 			end
 		end))
 	end
-	
+
 	--Load Notifications
-	
+
 	local NotiList = {}
 	function C.AddNotification(title,desc)
 		local NotiClone = C.Examples.NotificationEx:Clone()
@@ -2763,7 +2763,7 @@ return function(C, Settings)
 			if started and C.FocusFrame and not C.FocusFrame:IsAncestorOf(button) then
 				return
 			end
-			return (inputObject.UserInputType == Enum.UserInputType["MouseButton"..msb] or 
+			return (inputObject.UserInputType == Enum.UserInputType["MouseButton"..msb] or
 				(inputObject.UserInputType == Enum.UserInputType.Touch and msb==1))
 		end
 		local TouchConn
@@ -2845,10 +2845,10 @@ return function(C, Settings)
 				MobileJumping = JumpButtonDown
 			end))
 		end
-		
+
 		C.AddGlobalConnection(UIS:GetPropertyChangedSignal("TouchEnabled"):Connect(RefreshMobileJumpInputs))
 		C.AddGlobalThread(task.spawn(RefreshMobileJumpInputs))
-		
+
 		C.AddGlobalInstance(JumpEvent)
 		C.JumpEvent = JumpEvent
 	end
@@ -2859,7 +2859,7 @@ return function(C, Settings)
 	local ActionsList = ActionsFrame:WaitForChild("ScrollTab")
 
 	C.getgenv().ActionsList = C.getgenv().ActionsList or {}
-	
+
 	function C.AddAction(info)
 		local ActionClone = ActionsList:FindFirstChild(info.Name)
 		if ActionsList:FindFirstChild(info.Name) then
@@ -2927,7 +2927,7 @@ return function(C, Settings)
             return
         end
 		local info = C.getgenv().ActionsList[actionClone.Name]
-		local Time = info.TimeLabel
+		local Time = info:FindFirstChild("TimeLabel")
 		if Time then
 			Time.Text = text
 		end
@@ -2953,14 +2953,14 @@ return function(C, Settings)
 			end
 		end
 	end
-	
+
 	function C.GetAction(name)
 		local actionInstance = ActionsList.FindFirstChild(ActionsList,name)
 		if actionInstance then
 			return actionInstance
 		end
 	end
-	
+
 	function C.RemoveAction(name)
         local info = C.getgenv().ActionsList[name]
 		if info and info.ActionClone then
@@ -2974,7 +2974,7 @@ return function(C, Settings)
 			C.getgenv().ActionsList[name] = nil
 		end
 	end
-	
+
 	function C.GetActionsWithTag(tagName:string)
 		local Items = {}
 		for name, data in pairs(C.getgenv().ActionsList) do
@@ -2984,7 +2984,7 @@ return function(C, Settings)
 		end
 		return Items
 	end
-	
+
 	function C.PurgeActionsWithTag(tagName:string)
 		for name, data in pairs(C.GetActionsWithTag(tagName)) do
 			C.RemoveAction(name)
@@ -3020,7 +3020,7 @@ return function(C, Settings)
 			buttonTriggerEvent:Fire(Return)
 		end)
 	end
-	
+
 	--[YIELDS] Result C.Prompt("Title","Description","Ok" | "Y/N")
 	C.PromptVisible = false
 	function C.Prompt(Title: string,Desc: string,Buttons: table): string
@@ -3110,7 +3110,7 @@ return function(C, Settings)
 
 	local CurrentlySel
 	local MaxPageNum,PageNum,Previous,Next = 0, 0, "", ""
-    
+
 	local GetServers = {
 		Recent = function()
 			if C.isStudio then
@@ -3329,14 +3329,14 @@ return function(C, Settings)
 			end
 		end
 	end
-	
-	
+
+
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("HackOptions")
-	
+
 	C.UI.CategoriesFrame = CategoriesFrame
 	C.UI.TabsFrame = TabsFrame
-	
+
 	C.GUI = SpecterGUI
 
 	ActionsFrame.Position = UDim2.fromOffset(0, C.GUI.AbsoluteSize.Y * 3)

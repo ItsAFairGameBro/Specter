@@ -682,7 +682,7 @@ return function(C,Settings)
                             return
                         end
                         if C.CarriedTorso and C.BeastPlr == C.plr and C.CarriedTorso.Value then
-                            self.Events.MyBeastRopeAdded(self)
+                            self.Events.MyBeastRopeAdded(self, C.CarriedTorso.Value.Parent)
                         end
                     end,
                     Events = {
