@@ -90,7 +90,7 @@ return function(C,Settings)
                         args[num] = argumentData.Default
                     end
                 elseif argumentData.Type == "Options" or argumentData.Type == "Friend" then
-                    local Options = argumentData.Type=="Options" and argumentData.Options or C.enHacks.Users.NoTargetFriends.Friends
+                    local Options = argumentData.Type=="Options" and argumentData.Options or C.friends
                     if not table.find(Options,args[num]) and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
@@ -441,7 +441,7 @@ return function(C,Settings)
                                     end
                                 end
                             elseif mySuggestion.Type == "Options" or mySuggestion.Type == "Friend" then
-                                local Options = mySuggestion.Type=="Options" and mySuggestion.Options or C.enHacks.Users.NoTargetFriends.Friends
+                                local Options = mySuggestion.Type=="Options" and mySuggestion.Options or C.friends
                                 for num, val in ipairs(Options) do
                                     table.insert(options,{val,val})
                                 end
