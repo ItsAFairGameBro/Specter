@@ -725,10 +725,6 @@ return function(C,Settings)
                             end, Stop = function(byReq)
                                 if BotActionClone == myActionClone then
                                     BotActionClone = nil
-                                    if not byReq then
-                                        -- Finished on its own --
-                                        C.human:ChangeState(Enum.HumanoidStateType.Dead)
-                                    end
                                 end
                                 if byReq then
                                     self:SetValue(false)
@@ -743,15 +739,20 @@ return function(C,Settings)
                         end
                         self:StartUp()
                     end,
+                    Completed = function(self)
+                        -- Finished on its own --
+                        C.RemoveAction(self.Shortcut)
+                        C.human:ChangeState(Enum.HumanoidStateType.Dead)
+                    end,
                     Events = {
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
                             self:StartUp()
                         end,
                         MySurvivorRemoved = function(self)
-                            C.RemoveAction(self.Shortcut)
+                            self:Completed()
                         end,
                         MyBeastHammerRemoved = function(self)
-                            C.RemoveAction(self.Shortcut)
+                            self:Completed()
                         end
                     },
                     Options = {
