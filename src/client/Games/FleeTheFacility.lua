@@ -677,22 +677,22 @@ return function(C,Settings)
                                 if not TSM then
                                     return
                                 end
-                                C.CommandFunctions.follow:Run({{theirPlr},-3})
+                                C.CommandFunctions.teleport:Run({{theirPlr},-3})
                                 while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
                                     RunS.RenderStepped:Wait()
                                 end
                             end
                         until #MyList == 0
-                        C.CommandFunctions.follow:Run({{C.plr}})
+                        --C.CommandFunctions.follow:Run({{C.plr}})
                     end,
                     DoOverrides = function(self, toggle)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
-                        if not toggle and self.WasRunning then
+                        --[[if not toggle and self.WasRunning then
                             C.CommandFunctions.follow:Run({{C.plr}})
                             C.CommandFunctions.spectate:Run({{C.plr}})
-                        end
+                        end--]]
                         self.WasRunning = toggle
                     end,
                     StartUp = function(self)
