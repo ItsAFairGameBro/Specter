@@ -223,17 +223,21 @@ local function SetUpGame(C, Settings)
     table.insert(C.EventFunctions,function()
         local CurrentMap = RS:WaitForChild("CurrentMap")
 		local function MapAdded(newMap)
+            print(newMap,1)
             while (newMap == CurrentMap and C.GameStatus.Value:lower():find("loading")) do
                 C.GameStatus:GetPropertyChangedSignal("Value"):Wait()
             end
+            print(newMap,2)
             if newMap ~= CurrentMap.Value then
                 return
             end
+            print(newMap,3)
             if not newMap then
                 C.FireEvent("MapRemoved",nil,C.Map)
                 CleanUpMap()
                 return
             end
+            print(newMap,4)
             -- ADD FREEZING PODS, COMPUTERS --
             for _, item in ipairs(newMap:GetChildren()) do
                 if item.Name:sub(1,9) == "FreezePod" then
