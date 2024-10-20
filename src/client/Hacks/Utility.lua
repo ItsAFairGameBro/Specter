@@ -183,7 +183,7 @@ return function(C,Settings)
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
-                                    if thePlr and self:HasAdminAccess(thePlr) then
+                                    if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
                                         local msg = data.Message
                                         if not msg then
                                             return

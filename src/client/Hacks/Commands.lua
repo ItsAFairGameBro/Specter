@@ -12,6 +12,7 @@ local SG = game:GetService("StarterGui")
 local HS = game:GetService("HttpService")
 local AS = game:GetService("AssetService")
 
+local MaxRelativeDist = 50
 local MaxFlingSpeed = 1e6
 
 return function(C,Settings)
@@ -430,7 +431,7 @@ return function(C,Settings)
             end,
         },
         ["follow"]={
-            Parameters={{Type="Player"},{Type="Number",Min=-MaxFlingSpeed,Max=MaxFlingSpeed,Default=5}},
+            Parameters={{Type="Player"},{Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=5}, {Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=0}},
             AfterTxt="",
             Priority=-3,
             isFollowing=-1,
@@ -472,10 +473,8 @@ return function(C,Settings)
                         return
                     end
                     if not HRP or not HRP.Parent then
-                        print("No HRP")
                         theirChar = theirPlr.Character
                         if theirChar and theirChar.PrimaryPart then
-                            print("SET HRP")
                             HRP = theirChar.PrimaryPart
                         end
                     end
