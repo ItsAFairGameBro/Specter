@@ -389,6 +389,11 @@ local function SetUpGame(C, Settings)
             end
         end
     end
+    function C.WaitForHammer()
+        while not C.Hammer do
+            task.wait(1)
+        end
+    end
 end
 
 return function(C,Settings)
@@ -563,9 +568,7 @@ return function(C,Settings)
                     Events = {
                         GameAdded = function(self)
                             while true do
-                                while not C.Hammer do
-                                    task.wait(1)
-                                end
+                                C.WaitForHammer()
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true})) do
                                     if C.CanTarget(self, theirPlr) and theirPlr.Character then
                                         C.HitSurvivor(theirPlr.Character)
@@ -589,6 +592,7 @@ return function(C,Settings)
                     Events = {
                         RagdollAdded = function(self, theirPlr, theirChar)
                             print("RagdollAdded")
+                            C.WaitForHammer()
                             if C.CanTarget(self, C.BeastPlr) then
                                 C.RopeSurvivor(theirChar)
                             end
