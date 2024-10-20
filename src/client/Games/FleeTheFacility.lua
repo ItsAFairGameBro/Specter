@@ -187,7 +187,7 @@ local function SetUpGame(C, Settings)
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
         end
-        C.AddGlobalConnection(CurrentMap.Changed:Connect(CurrentMap))
+        C.AddGlobalConnection(CurrentMap.Changed:Connect(MapAdded))
         MapAdded(CurrentMap)
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
@@ -240,7 +240,7 @@ return function(C,Settings)
         for _, theirPlr in ipairs(PS:GetPlayers()) do
             local inGame, role = C.isInGame(theirPlr.Character)
             if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) then
-                table.insert(theirPlr, list)
+                table.insert(list, theirPlr)
             end
         end
         return list
