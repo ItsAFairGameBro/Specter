@@ -124,7 +124,7 @@ return function(C,Settings)
                     end,
                 }
             },
-            Headless={146574359,826042567,1287648573,1091344783,1001407414},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen"},
+            Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army"},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
