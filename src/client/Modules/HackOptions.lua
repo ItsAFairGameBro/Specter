@@ -190,7 +190,7 @@ return function(C,Settings)
 
 		local self, newFrame, default = DoCombined(DropdownTbl, "Dropdown", parent, options)
 
-        assert(default, `[Dropdowntbl.new]: Missing/Invalid Default for {parent.Shortcut}`)
+        --assert(default, `[Dropdowntbl.new]: Missing/Invalid Default for {parent}`)
 		
 		self.SelectionsFrame = newFrame
 		self.DropdownButton = newFrame:WaitForChild("DropdownButton")
