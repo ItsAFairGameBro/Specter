@@ -588,6 +588,7 @@ return function(C,Settings)
                     Shortcut = "AutoRope",
                     Events = {
                         RagdollAdded = function(self, theirPlr, theirChar)
+                            print("RagdollAdded")
                             if C.CanTarget(self, C.BeastPlr) then
                                 C.RopeSurvivor(theirChar)
                             end
