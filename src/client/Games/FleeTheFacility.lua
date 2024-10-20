@@ -326,6 +326,7 @@ local function SetUpGame(C, Settings)
         end
         C.AddPlayerConnection(theirPlr, hpVal.Changed:Connect(healthChangedVal))
         local function ragdollChangedVal(newVal)
+            task.wait(.5)
             C.FireEvent(newVal and "RagdollAdded" or "RagdollRemoved", theirPlr == C.plr, theirPlr, theirPlr.Character)
         end
         C.AddPlayerConnection(theirPlr, ragdollVal.Changed:Connect(ragdollChangedVal))
@@ -807,7 +808,7 @@ return function(C,Settings)
                     Completed = function(self)
                         -- Finished on its own --
                         C.RemoveAction(self.Shortcut)
-                        task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
+                        --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
                     end,
                     Events = {
