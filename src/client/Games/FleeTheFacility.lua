@@ -767,13 +767,8 @@ return function(C,Settings)
                             local runnerPlrs={}
                             local myRunerPlrKey
                             local function canRun(fullLoop)
-                                local plrs = {}
-                                for num, theirPlr in ipairs(PS:GetPlayers()) do
-                                    if theirPlr and theirPlr.Character and select(2,C.isInGame(theirPlr.Character,true))=="Survivor" then
-                                        table.insert(plrs,theirPlr)
-                                    end
-                                end
-                                runnerPlrs = table.sort(plrs, function(a, b)
+                                local runnerPlrs = C.GetPlayerListOfType({Survivor = true})
+                                table.sort(runnerPlrs, function(a, b)
                                     return a.Name:lower() < b.Name:lower()
                                 end)
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
