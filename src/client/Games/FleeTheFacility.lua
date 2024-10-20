@@ -237,7 +237,7 @@ return function(C,Settings)
     function C.GetPlayerListOfType(options)
         local list = {}
         for _, theirPlr in ipairs(PS:GetPlayers()) do
-            local inGame, role = C.IsInGame(theirPlr.Character)
+            local inGame, role = C.isInGame(theirPlr.Character)
             if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) then
                 table.insert(theirPlr, list)
             end
@@ -280,7 +280,7 @@ return function(C,Settings)
     do
         --local BeastCaveBaseplate = workspace:WaitForChild("BeastCaveBaseplate")
         local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
-        function C.IsInGame(theirChar,isDefacto)
+        function C.isInGame(theirChar,isDefacto)
             if not theirChar then
                 return false, "Lobby"
             end
@@ -392,7 +392,7 @@ return function(C,Settings)
                         if not C.Beast then
                             return -- No beast no hoes
                         end
-                        local inGame, role = C.IsInGame(C.char)
+                        local inGame, role = C.isInGame(C.char)
                         if inGame then
                             if role == "Beast" then
                                 self:StartBeast()
@@ -402,7 +402,7 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        if firstRun or not C.char or not C.IsInGame(C.char) then
+                        if firstRun or not C.char or not C.isInGame(C.char) then
                             return
                         end
                         self:StartUp()
