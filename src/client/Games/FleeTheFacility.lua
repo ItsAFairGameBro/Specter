@@ -166,6 +166,7 @@ local function GetSharedHacks(C, Settings)
         Tooltip = "Fixes stuff necessary to live💀",
         Layout = 100,
         Shortcut = "GameImprovements",
+        Default = true,
         Functs = {},
         Activate = function(self, newValue)
             if not newValue then
@@ -334,7 +335,6 @@ local function SetUpGame(C, Settings)
         if not theirChar.PrimaryPart then
             return
         end
-        C.SetActionLabel(BotActionClone, `Hitting {theirChar.Name}`)
         local Dist=(C.Handle.Position-theirChar.PrimaryPart.Position).magnitude
         if Dist<15 then
             local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
@@ -347,6 +347,7 @@ local function SetUpGame(C, Settings)
                 end
             end
             if closestPart then
+                C.SetActionLabel(BotActionClone, `Hitting {theirChar.Name}`)
                 C.HammerEvent:FireServer("HammerHit", closestPart)
                 return true
             end
@@ -750,6 +751,7 @@ return function(C,Settings)
                             Layout = 1, Default = "Capture",
                             Shortcut="RunType",
                             Selections = {"Capture","Rescue"},
+                            Activate = C.ReloadHack,
                         },
                     },
                 }
