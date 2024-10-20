@@ -659,6 +659,7 @@ return function(C,Settings)
                     end,
                     StartBeast = function(self)
                         for num, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false})) do
+                            print(theirPlr)
                             local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
                             if not TSM then
                                 return
@@ -670,15 +671,25 @@ return function(C,Settings)
                         end
                         C.CommandFunctions.follow:Run({{}})
                     end,
+                    DoOverrides = function(self, toggle)
+                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
+                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
+                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
+                    end,
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)
                         if not C.BeastChar or not C.char or not C.isInGame(C.char) then
-                            return -- No beast no hoes
+                            return self:DoOverrides(false)-- No beast no hoes
                         end
+                        self:DoOverrides(true)
                         local inGame, role = C.isInGame(C.char)
                         if inGame then
                             C.AddAction({Title=`ServerFarm: {role}`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
                                 self["Start"..role](self, actionClone, info)
+                            end, Stop = function(byReq)
+                                if byReq then
+                                    self:SetValue(true)
+                                end
                             end})
                         end
                     end,
