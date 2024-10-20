@@ -7,7 +7,9 @@ return function(C,Settings)
 			
 		end
 	end--]]
-    C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={}}
+    C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={},
+                    MyBeast={}, Beast={}, OthersBeast={},
+                    Game={}}
 	local function FireEvent(name,doExternalConn,...)
         local SavedTable = C.SaveEvents[name]
         if SavedTable then

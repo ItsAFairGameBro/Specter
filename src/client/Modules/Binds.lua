@@ -61,14 +61,15 @@ return function(C,Settings)
 		"MyTeamAdded","TeamAdded","OthersTeamAdded",
 		"MapAdded","MapRemoved","GameStatus",
 		"MessageBoxAdded",
-        
+
         "MyBeastAdded", "BeastAdded", "OthersBeastAdded",
         "MyBeastHammerAdded", "BeastHammerAdded", "OthersBeastHammerAdded",
         "MyBeastHammerRemoved","BeastHammerRemoved","OthersBeastHammerRemoved",
         "MyRunnerAdded", "RunnerAdded", "OthersRunnerAdded",
         "MyRagdollAdded", "RagdollAdded", "OthersRagdollAdded",
         "MyRagdollRemoved", "RagdollRemoved", "OthersRagdollRemoved",
-        "MyBeastRopeAdded", "BeastRopeAdded", "OthersBeastRopeAdded"
+        "MyBeastRopeAdded", "BeastRopeAdded", "OthersBeastRopeAdded",
+        "GameAdded","GameRemoved",--Don't laugh!
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do

@@ -310,6 +310,15 @@ local function SetUpGame(C, Settings)
         end
     end)
 
+    local gameActiveVal = RS:WaitForChild("IsGameActive")
+    local function gameActiveValChanged(newVal)
+        C.FireEvent(newVal and "GameAdded" or "GameRemoved", nil)
+    end
+    C.AddGlobalConnetion(gameActiveVal.Changed:Connect(gameActiveValChanged))
+    if gameActiveVal.Value then
+        gameActiveValChanged(gameActiveVal.Value)
+    end
+
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
             return
@@ -537,9 +546,50 @@ return function(C,Settings)
             },
             Tab = AppendToFirstArr(SharedHacks, AppendToFirstArr({
                 {
+                    Title = "Auto Hit",
+                    Tooltip = "Automatically ropes nearby survivors",
+                    Layout = 1,
+                    Shortcut = "AutoHit",Threads={},
+                    Events = {
+                        GameAdded = function(self)
+                            while true do
+                                for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true})) do
+                                    if C.CanTarget(self, theirPlr) and theirPlr.Character then
+                                        C.HitSurvivor(theirPlr.Character)
+                                    end
+                                end
+                                task.wait(1/4)
+                            end
+                        end,
+                    },
+                    Options = AppendToFirstArr({
+
+                        },
+                        C.SelectPlayerType,true
+                    )
+                },
+                {
+                    Title = "Auto Rope",
+                    Tooltip = "Automatically ropes nearby survivors",
+                    Layout = 1,
+                    Shortcut = "AutoRope",
+                    Events = {
+                        RagdollAdded = function(self, theirPlr, theirChar)
+                            if C.CanTarget(self, theirPlr) then
+                                C.HitSurvivor(theirChar)
+                            end
+                        end,
+                    },
+                    Options = AppendToFirstArr({
+
+                        },
+                        C.SelectPlayerType,true
+                    )
+                },
+                {
                     Title = "🔨Auto Capture",
                     Tooltip = "Capture survivors when roped (BEAST ONLY)",
-                    Layout = 1,
+                    Layout = 3,
                     Shortcut = "AutoCapture",Functs={},
                     Activate = function(self, newValue, firstRun)
                         if firstRun or not newValue then
@@ -553,26 +603,8 @@ return function(C,Settings)
                         MyBeastRopeAdded = function(self,theirChar)
                             C.CaptureSurvivor(theirChar)
                         end,
-                    }
-                },
-                {
-                    Title = "Auto Hit",
-                    Tooltip = "Automatically hits nearby survivors",
-                    Layout = 1,
-                    Shortcut = "AutoHit",Threads={},
-                    Events = {
-                        RagdollAdded = function(self, theirPlr, theirChar)
-                            if C.CanTarget(self, theirPlr) then
-                                C.HitSurvivor(theirChar)
-                            end
-                        end,
                     },
-                    Options = AppendToFirstArr({
-
-                        },
-                        C.SelectPlayerType,true
-                    )
-                }
+                },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",

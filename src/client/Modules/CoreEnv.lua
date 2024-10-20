@@ -51,6 +51,12 @@ return function(C,Settings)
 		C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 	end
 	function C.DoActivate(self,funct,...)
+        if not funct then
+            if self.Activate ~= funct then
+                warn(`[C.DoActivate]: Non activate function being ignored because it does not exist for {self.Shortcut}: `,self)
+            end
+            return
+        end
         if self.Activate == funct then
             local firstRun = not select(2,...)
             if not firstRun and C.SavedEvents then
