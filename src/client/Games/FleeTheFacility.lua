@@ -307,6 +307,7 @@ local function SetUpGame(C, Settings)
         local isBeastVal = theTSM:WaitForChild("IsBeast")
         local hpVal = theTSM:WaitForChild("Health")
         local ragdollVal = theTSM:WaitForChild("Ragdoll")
+        local capturedVal = theTSM:WaitForChild("Captured")
         local function beastChangedVal(newVal)
             C.FireEvent(newVal and "BeastAdded" or "BeastRemoved",theirPlr == C.plr,theirPlr)
         end
@@ -326,12 +327,18 @@ local function SetUpGame(C, Settings)
         end
         C.AddPlayerConnection(theirPlr, hpVal.Changed:Connect(healthChangedVal))
         local function ragdollChangedVal(newVal)
-            task.wait(.5)
             C.FireEvent(newVal and "RagdollAdded" or "RagdollRemoved", theirPlr == C.plr, theirPlr, theirPlr.Character)
         end
         C.AddPlayerConnection(theirPlr, ragdollVal.Changed:Connect(ragdollChangedVal))
         if ragdollVal.Value then
             ragdollChangedVal(ragdollVal.Value)
+        end
+        local function capturedChangedVal(newVal)
+            C.FireEvent(newVal and "CapturedAdded" or "CapturedRemoved", theirPlr == C.plr, theirPlr, theirPlr.Character)
+        end
+        C.AddPlayerConnection(theirPlr, capturedVal.Changed:Connect(capturedChangedVal))
+        if capturedVal.Value then
+            ragdollChangedVal(capturedVal.Value)
         end
     end)
 
@@ -908,6 +915,9 @@ return function(C,Settings)
                                 theirPlr:SetAttribute("HasRescued",nil)
                                 theirPlr:SetAttribute("HasCaptured",nil)
                             end
+                        end,
+                        OthersCapturedAdded = function(self, theirPlr, theirChar)
+                            theirPlr:SetAttribute("HasCaptured",true)
                         end,
                     },
                     Options = {

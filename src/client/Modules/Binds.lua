@@ -71,7 +71,8 @@ return function(C,Settings)
         "MyRagdollRemoved", "RagdollRemoved", "OthersRagdollRemoved",
         "MyBeastRopeAdded", "BeastRopeAdded", "OthersRopeAdded",
         "MyBeastRopeRemoved", "BeastRopeRemoved", "OthersRopeRemoved",
-        "MySurvivorCaptured", "SurvivorCaptured", "OthersSurvivorCaptured",
+        "MyCapturedAdded", "CapturedAdded", "OthersCapturedAdded",
+        "MyCapturedRemoved", "CapturedRemoved", "OthersCapturedRemoved",
         "MySurvivorRescued", "SurvivorRescued", "OthersSurvivorRescued",
         "GameAdded","GameRemoved",--Don't laugh!
         "NewFreezingPod"
