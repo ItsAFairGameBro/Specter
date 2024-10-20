@@ -191,6 +191,7 @@ local function SetUpGame(C, Settings)
         MapAdded(CurrentMap)
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
+        print("newchar",theirChar)
         local function childAdded(inst)
             if inst and inst.Name == "Hammer" then
                 print("BeastHammerAdded")
