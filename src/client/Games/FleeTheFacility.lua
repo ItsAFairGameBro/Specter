@@ -18,7 +18,7 @@ local MAX_SHOP_ITEM = 10
 
 local function AppendToFirstArr(tbl1, tbl2, clone)
     for _, val2 in ipairs(tbl2) do
-        table.insert(tbl1, table.clone(val2))
+        table.insert(tbl1, clone and table.clone(val2) or val2)
     end
     return tbl1
 end
@@ -281,7 +281,7 @@ local function SetUpGame(C, Settings)
         local isMe = theirPlr == C.plr
 
         local isBeastVal = theTSM:WaitForChild("IsBeast")
-        local hpVal = theTSM:WaitForChild("HP")
+        local hpVal = theTSM:WaitForChild("Health")
         local ragdollVal = theTSM:WaitForChild("Ragdoll")
         local function beastChangedVal(newVal)
             C.FireEvent(newVal and "BeastAdded" or "BeastRemoved",theirPlr == C.plr,theirPlr)
@@ -378,6 +378,24 @@ return function(C,Settings)
     if game.PlaceId == 893973440 then
         SetUpGame(C,Settings)
     end
+    C.SelectPlayerType = {
+        {
+            Type = Types.Toggle,
+            Title = "Me",
+            Tooltip = "Whether or not this hack will target you",
+            Layout = -10,Default=true,
+            Shortcut="Me",
+            Activate = C.ReloadHack,
+        },
+        {
+            Type = Types.Toggle,
+            Title = "Others",
+            Tooltip = "Whether or not this hack will target you",
+            Layout = -9,Default=true,
+            Shortcut="Others",
+            Activate = C.ReloadHack,
+        },
+    }
     C.myTSM = C.plr:WaitForChild("TempPlayerStatsModule")
     C.mySSM = C.plr:WaitForChild("SavedPlayerStatsModule")
     
@@ -541,10 +559,7 @@ return function(C,Settings)
                     Title = "Auto Hit",
                     Tooltip = "Automatically hits nearby survivors",
                     Layout = 1,
-                    Shortcut = "AutoCapture",Threads={},
-                    Activate = function()
-                        
-                    end,
+                    Shortcut = "AutoHit",Threads={},
                     Events = {
                         RagdollAdded = function(self, theirPlr, theirChar)
                             if C.CanTarget(self, theirPlr) then
@@ -552,7 +567,7 @@ return function(C,Settings)
                             end
                         end,
                     },
-                    Options = {}
+                    Options = C.AppendToFirstArr({},C.SelectPlayerType,true)
                 }
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
