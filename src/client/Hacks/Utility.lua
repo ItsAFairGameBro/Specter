@@ -303,8 +303,10 @@ return function(C,Settings)
                     -- No First Person
                     if EnTbl.NoFirstPerson then
                         C.SetPartProperty(C.plr,"CameraMinZoomDistance",self.Shortcut,1)
+                        C.SetPartProperty(C.plr,"CameraMode",self.Shortcut,Enum.CameraMode.Classic)
                     else
 				        C.ResetPartProperty(C.plr,"CameraMinZoomDistance",self.Shortcut)
+                        C.ResetPartProperty(C.plr,"CameraMode",self.Shortcut)
                     end
 				end,
                 Events = {

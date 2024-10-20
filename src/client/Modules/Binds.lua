@@ -61,6 +61,10 @@ return function(C,Settings)
 		"MyTeamAdded","TeamAdded","OthersTeamAdded",
 		"MapAdded","MapRemoved","GameStatus",
 		"MessageBoxAdded",
+        "MyBeastAdded", "BeastAdded", "OthersBeastAdded",
+        "MyBeastHammerAdded", "BeastHammerAdded", "OthersBeastHammerAdded",
+        "MyBeastHammerRemoved","BeastHammerRemoved","OthersBeastHammerRemoved",
+        "MyRunnerAdded", "RunnerAdded", "OthersRunnerAdded",
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do
@@ -77,6 +81,7 @@ return function(C,Settings)
 		C.UI.MainHUD.Visible = enabled
 		C.UI.MainHUD.Active = enabled
 		C.UI.MainHUD.Interactable = enabled
+        C.UI.Modal.Visbile = enabled
 		TS:Create(C.UI.HUDBackgroundFade,TweenInfo.new(.3),{BackgroundTransparency=(enabled and 0.3 or 1)}):Play()
 	end
 	local function ToggleOpenHUDKeyPress(actionName,inputState)

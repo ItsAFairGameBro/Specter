@@ -88,6 +88,9 @@ return function(C,Settings)
 				end
 			end))
 		end
+        for _, additionalFunct in ipairs(C.CharacterAddedEventFuncts) do
+            additionalFunct(theirPlr, theirChar, theirHuman)
+        end
 		task.wait(0.1)
 		FireEvent("CharAdded",isMe,theirPlr,theirChar,wasAlreadyIn)
 	end
@@ -116,6 +119,9 @@ return function(C,Settings)
 			C.AddPlayerConnection(theirPlr, theirPlr:GetPropertyChangedSignal("Team"):Connect(RegisterNewTeam))
 			RegisterNewTeam()
 		end
+        for _, theirFunct in ipairs(C.PlayerAddedEventFuncts) do
+            theirFunct(theirPlr, wasAlreadyIn)
+        end
 	end
 	local function PlrRemoving(theirPlr)
 		C.RemoveAllPlayerConnections(theirPlr)

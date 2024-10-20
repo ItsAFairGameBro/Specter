@@ -13,12 +13,17 @@ local SG = game:GetService("StarterGui")
 
 local MAX_SHOP_ITEM = 10
 
+
+-- STANDARD FUNCTIONS--
+
 local function AppendToFirstArr(tbl1, tbl2)
     for _, val2 in ipairs(tbl2) do
         table.insert(tbl1, val2)
     end
     return tbl1
 end
+
+
 
 local function Static(C, Settings)
     local SharedHacks = {
@@ -162,7 +167,7 @@ local function Static(C, Settings)
     return SharedHacks
 end
 
-local function SetUpGameEvents(C, Settings)
+local function SetUpGame(C, Settings)
     C.GameTimer = RS:WaitForChild("GameTimer")
     C.GameStatus = RS:WaitForChild("GameStatus")
     table.insert(C.EventFunctions,function()
@@ -185,14 +190,60 @@ local function SetUpGameEvents(C, Settings)
         C.AddGlobalConnection(CurrentMap.Changed:Connect(CurrentMap))
         MapAdded(CurrentMap)
     end)
+    table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
+        local function childAdded(inst)
+            if inst and inst.Name == "Hammer" then
+                print("BeastHammerAdded")
+                C.BeastPlr, C.BeastChar = theirPlr, theirPlr.Character
+                C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
+                C.AddObjectConnection(inst, "BeastHammerRemoved", inst.Destroying:Connect(function()
+                    print("BeastHammerRemoved")
+                    C.BeastPlr, C.BeastChar = nil, nil
+                    C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
+                end))
+            end
+        end
+        C.AddObjectConnection(theirChar, "BeastHammerAdded", theirChar.ChildAdded:Connect(childAdded))
+        childAdded(theirChar:FindFirstChild("Hammer"))
+    end)
+    table.insert(C.PlayerAddedEventFuncts, function(theirPlr, wasAlreadyIn)
+        local theTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
+        local isMe = theirPlr == C.plr
+
+        local isBeastVal = theTSM:WaitForChild("IsBeast")
+        local function beastChangedVal(newVal)
+            print("BeastAdded",theirPlr,newVal)
+            if newVal then
+                C.FireEvent("BeastAdded",theirPlr == C.plr,theirPlr)
+            else
+                C.FireEvent("BeastRemoved",theirPlr == C.plr,theirPlr)
+            end
+        end
+        C.AddPlayerConnection(theirPlr,isBeastVal.Changed:Connect(beastChangedVal))
+        if isBeastVal.Value then
+            beastChangedVal(isBeastVal.Value)
+        end
+    end)
 end
 
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
     if game.PlaceId == 0 then
-        SetUpGameEvents(C,Settings)
+        SetUpGame(C,Settings)
     end
+    C.myTSM = C.plr:WaitForChild("TempPlayerStatsModule")
+    C.mySSM = C.plr:WaitForChild("SavedPlayerStatsModule")
     
+    function C.GetPlayerListOfType(options)
+        local list = {}
+        for _, theirPlr in ipairs(PS:GetPlayers()) do
+            local inGame, role = C.IsInGame(theirPlr.Character)
+            if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) then
+                table.insert(theirPlr, list)
+            end
+        end
+        return list
+    end
     local SharedHacks = Static(C, Settings)
     local function SendWaitRemoteEvent(retType, ...)
         local bindableEvent = Instance.new("BindableEvent")
@@ -226,6 +277,32 @@ return function(C,Settings)
             return false, "Timeout Occured"
         end
     end
+    do
+        --local BeastCaveBaseplate = workspace:WaitForChild("BeastCaveBaseplate")
+        local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
+        function C.IsInGame(theirChar,isDefacto)
+            if not theirChar then
+                return false, "Lobby"
+            end
+            local theirPlr = PS:GetPlayerFromCharacter(theirChar)
+            local theirTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
+            if theirChar:FindFirstChild("Hammer") or theirTSM.IsBeast.Value then
+                return true, "Beast"
+            elseif theirTSM.Health.Value > 0 then
+                return true, "Survivor"
+            elseif isDefacto then
+                local Location = theirChar:GetPivot().Position
+                if C.IsInBox(LobbyOBWall.Size, LobbyOBWall.CFrame, Location, true) then
+                    return false, "Lobby"
+                else
+                    return true, "Survivor"
+                end
+            else
+                return false, "Lobby"
+            end
+        end
+    end
+    
     function C.GetUserInventory(theirPlr)
         local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
 
@@ -241,6 +318,7 @@ return function(C,Settings)
         InventoryCount["H0001"], InventoryCount["G0001"] = nil, nil
         return InventoryCount, #Inventory
     end
+    -- COMMANDS --
     table.insert(C.InsertCommandFunctions,function()
         return {
             ["findtrader"] = {
@@ -283,7 +361,8 @@ return function(C,Settings)
             }
         }
     end)
-    if game.PlaceId ~= 1738581510 then -- Not Trading Hub!
+    -- MAIN GAME --
+    if game.PlaceId ~= 1738581510 then
         return {
             Category = {
                 Name = "FleeTheFacility",
@@ -291,8 +370,47 @@ return function(C,Settings)
                 Image = nil, -- Set to nil for game image
                 Layout = 20,
             },
-            Tab =  AppendToFirstArr(SharedHacks,{
-                
+            Tab = AppendToFirstArr(SharedHacks,{
+                {
+                    Title = "Server Farm",
+                    Tooltip = "Event tester",
+                    Layout = 1,
+                    Shortcut = "ServerBot",Functs={}, Threads={}, Instances = {},Default=false,
+                    StartRunner = function(self)
+                        local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
+                        table.sort(hitList,function(a,b)
+                            return a:lower() < b:lower()
+                        end)
+                        print(hitList)
+                    end,
+                    StartBeast = function(self)
+                        print("StartBeast")
+                    end,
+                    StartUp = function(self)
+                        if not C.Beast then
+                            return -- No beast no hoes
+                        end
+                        local inGame, role = C.IsInGame(C.char)
+                        if inGame then
+                            if role == "Beast" then
+                                self:StartBeast()
+                            else
+                                self:StartRunner()
+                            end
+                        end
+                    end,
+                    Activate = function(self, newValue, firstRun)
+                        if firstRun or not C.char or not C.IsInGame(C.char) then
+                            return
+                        end
+                        self:StartUp()
+                    end,
+                    Events = {
+                        HammerAdded = function(self,theirPlr,theirChar,theirHuman)
+                            self:StartUp()
+                        end,
+                    }
+                }
             })
         }
     end
