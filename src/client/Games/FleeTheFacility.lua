@@ -535,7 +535,7 @@ return function(C,Settings)
                 return true, "Survivor"
             elseif isDefacto then
                 local Location = theirChar:GetPivot().Position
-                if C.IsInBox(LobbyOBWall.Size, LobbyOBWall.CFrame, Location, true) then
+                if C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, Location, true) then
                     return false, "Lobby"
                 else
                     return true, "Survivor"
