@@ -373,7 +373,7 @@ local function SetUpGame(C, Settings)
             return false, "Capsule Not Found"
         end
         C.LastCaptureTime = os.clock()
-        local Trigger = capsule:WaitForChild("PodTrigger",)
+        local Trigger = capsule:WaitForChild("PodTrigger",5)
         local ActionSign = Trigger and Trigger:FindFirstChild("ActionSign")
         for s=1,3,1 do
             local isOpened = ActionSign and (ActionSign.Value==11)
