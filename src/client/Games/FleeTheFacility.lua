@@ -897,6 +897,10 @@ return function(C,Settings)
                         end,
                         GameRemoved = function(self)
                             self:Completed()
+                            for _, theirPlr in ipairs(PS:GetPlayers()) do
+                                theirPlr:SetAttribute("HasRescued",nil)
+                                theirPlr:SetAttribute("HasCaptured",nil)
+                            end
                         end,
                     },
                     Options = {
