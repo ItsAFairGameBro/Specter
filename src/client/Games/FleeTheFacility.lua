@@ -813,7 +813,7 @@ return function(C,Settings)
                                 end
                                 return (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
                             end
-                            self:GetFreeze(canRun,canCapture)
+                            self:FreezeMyself(canRun,canCapture)
                         else
                             warn(`[Server Farm]: Unknown RunType: {self.EnTbl.RunType}`)
                         end
