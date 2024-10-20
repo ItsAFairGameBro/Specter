@@ -12,7 +12,7 @@ local SG = game:GetService("StarterGui")
 
 
 local MAX_SHOP_ITEM = 10
-
+local BotActionClone
 
 -- STANDARD FUNCTIONS--
 
@@ -334,6 +334,7 @@ local function SetUpGame(C, Settings)
         if not theirChar.PrimaryPart then
             return
         end
+        C.SetActionLabel(BotActionClone, `Hitting {theirChar.Name}`)
         local Dist=(C.Handle.Position-theirChar.PrimaryPart.Position).magnitude
         if Dist<15 then
             local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
@@ -355,12 +356,14 @@ local function SetUpGame(C, Settings)
         if C.CarriedTorso.Value then
             return
         end
+        C.SetActionLabel(BotActionClone, `Roping {theirChar.Name}`)
         C.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
     end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
             return
         end
+        C.SetActionLabel(BotActionClone, `Capturing {theirChar.Name}`)
         local function isCapsuleOpen(cap)
             return cap:FindFirstChild("PodTrigger") and cap.PodTrigger:FindFirstChild("CapturedTorso") and not cap.PodTrigger.CapturedTorso.Value
         end
@@ -659,36 +662,45 @@ return function(C,Settings)
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",
-                    Tooltip = "Event tester",
+                    Tooltip = "Verifies that the whole server is a bot, and if so, proceeds by grinding credits and xp for the whole server",
                     Layout = 100,
                     Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
                     WasRunning = false,
-                    StartSurvivor = function(self)
-                        local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
-                        table.sort(hitList,function(a,b)
-                            return a.Name:lower() < b.Name:lower()
-                        end)
-                        -- ADD HERE --
+                    StartSurvivor = function(self, actionClone, info)
+                        if self.EnTbl.RunType == "Capture" then
+                            C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
+                        elseif self.EnTbl.RunType == "Rescue" then
+                            local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
+                            table.sort(hitList,function(a,b)
+                                return a.Name:lower() < b.Name:lower()
+                            end)
+                            -- ADD HERE --
+                        else
+                            warn(`[Server Farm]: Unknown RunType: {self.EnTbl.RunType}`)
+                        end
                     end,
-                    StartBeast = function(self)
-                        repeat
-                            local MyList = C.GetPlayerListOfType({Survivor = true, Captured = false, ExcludeMe = true})
-                            for _, theirPlr in ipairs(MyList) do
-                                local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
-                                if not TSM then
-                                    return
-                                end
-                                local i = 0
-                                while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
-                                    if i%12 == 0 then
-                                        C.CommandFunctions.teleport:Run({{theirPlr}})
+                    StartBeast = function(self, actionClone, info)
+                        if self.EnTbl.RunType == "Capture" then
+                            repeat
+                                local MyList = C.GetPlayerListOfType({Survivor = true, Captured = false, ExcludeMe = true})
+                                for _, theirPlr in ipairs(MyList) do
+                                    local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
+                                    if not TSM then
+                                        return
                                     end
-                                    RunS.RenderStepped:Wait()
-                                    i+=1
+                                    local i = 0
+                                    while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
+                                        if i%12 == 0 then
+                                            C.CommandFunctions.teleport:Run({{theirPlr}})
+                                        end
+                                        RunS.RenderStepped:Wait()
+                                        i+=1
+                                    end
                                 end
-                            end
-                        until #MyList == 0
-                        --C.CommandFunctions.follow:Run({{C.plr}})
+                            until #MyList == 0
+                        elseif self.EnTbl.RunType == "Rescue" then
+                            C.SetActionLabel(actionClone,"[Idle]")
+                        end
                     end,
                     DoOverrides = function(self, toggle)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
@@ -704,7 +716,7 @@ return function(C,Settings)
                         self:DoOverrides(true)
                         local inGame, role = C.isInGame(C.char)
                         if inGame then
-                            C.AddAction({Title=`ServerFarm: {role}`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
+                            BotActionClone = C.AddAction({Title=`ServerFarm: {self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
                                 self["Start"..role](self, actionClone, info)
                             end, Stop = function(byReq)
                                 if byReq then
@@ -726,7 +738,7 @@ return function(C,Settings)
                         MySurvivorRemoved = function(self)
                             C.RemoveAction(self.Shortcut)
                         end,
-                        MyBeastRemoved = function(self)
+                        MyBeastHammerRemoved = function(self)
                             C.RemoveAction(self.Shortcut)
                         end
                     },
@@ -735,9 +747,9 @@ return function(C,Settings)
                             Type = Types.Dropdown,
                             Title = "Run Type",
                             Tooltip = "Which ServerFarm type to run",
-                            Layout = 1, Default = "BeastCapture",
+                            Layout = 1, Default = "Capture",
                             Shortcut="RunType",
-                            Selections = {"BeastCapture"},
+                            Selections = {"Capture","Rescue"},
                         },
                     },
                 }

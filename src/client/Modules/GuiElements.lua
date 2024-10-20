@@ -2922,6 +2922,9 @@ return function(C, Settings)
 	end
 
 	function C.SetActionLabel(actionClone: Frame, text: string, type: string)
+        if not actionClone then
+            return
+        end
 		local info = C.getgenv().ActionsList[actionClone.Name]
 		local Time = info.TimeLabel
 		if Time then
