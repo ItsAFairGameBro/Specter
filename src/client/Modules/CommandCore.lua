@@ -89,7 +89,7 @@ return function(C,Settings)
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
                     end
-                elseif argumentData.Type == "Options" or argumentData.Type == "Friend" then
+                elseif argumentData.Type == "Options" then
                     local Options = argumentData.Type=="Options" and argumentData.Options or C.checkFriendsPCALLFunction()
                     if not table.find(Options,args[num]) and canRunFunction then
                         if args[num] == "" and argumentData.Default then
@@ -98,6 +98,14 @@ return function(C,Settings)
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)
                         end
+                    end
+                elseif argumentData.Type == "Friend" then
+                    local Ret = C.StringStartsWith(C.checkFriendsPCALLFunction(), args[num])[1]
+                    if Ret then
+                        args[num] = Ret
+                    else
+                        canRunFunction = false
+                        C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid friends. No matching username/userid found for {args[num]}`)
                     end
                 elseif argumentData.Type=="User" then
                     local success, name, id = C.GetUserNameAndId(args[num])
@@ -440,10 +448,13 @@ return function(C,Settings)
                                         table.insert(options,{putInStep, putInStep})
                                     end
                                 end
-                            elseif mySuggestion.Type == "Options" or mySuggestion.Type == "Friend" then
-                                local Options = mySuggestion.Type=="Options" and mySuggestion.Options or C.checkFriendsPCALLFunction()
-                                for num, val in ipairs(Options) do
+                            elseif mySuggestion.Type == "Options" then
+                                for num, val in ipairs(mySuggestion.Options) do
                                     table.insert(options,{val,val})
+                                end
+                            elseif mySuggestion.Type == "Friend" then
+                                for num, val in ipairs(C.checkFriendsPCALLFunction()) do
+                                    table.insert(options,{val.UserId,val.SortName})
                                 end
                             elseif mySuggestion.Type == "User" then
                                 -- No suggestions available
