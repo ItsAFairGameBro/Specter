@@ -268,7 +268,7 @@ C.ChatVersion = TextChatService.ChatVersion.Name
 C.BotUsers = {`lexxy4life`,`theweirdspook`,`lifeisoofs`,`itsagoodgamebro`,`itsagoodgamebros`,`bottingforthewin`}
 C.AdminUsers = {`suitedforbans`,`suitedforbans2`,`suitedforbans3`,`suitedforbans4`,`suitedforbans5`,
 `suitedforbans6`,`suitedforbans7`,`suitedforbans8`,`suitedforbans9`,`suitedforbans10`,`suitedforbans11`,`suitedforbans12`,
-`biglugger2017`,`sssNsss72`,`itsagoodgamebro`,`itsagoodgamebros`,`lifeisoofs`,`averynotafkbot3`}
+`biglugger2017`,`sssNsss72`,`itsagoodgamebro`,`itsagoodgamebros`,`lifeisoofs`,`averynotafkbot3`,`theweirdspook`,`lexxy4life`}
 if not C.getgenv().PlaceName then
 	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
 end

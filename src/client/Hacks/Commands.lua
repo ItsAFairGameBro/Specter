@@ -265,7 +265,7 @@ return function(C,Settings)
                     else
                         task.wait(.63) --Avatar loaded wait!
                     end
-                    if not theirPlr or not theirChar or not theirChar.Parent then
+                    if not theirChar.Parent then
                         return
                     end
                     local currentChar = C.getgenv().currentDesc[theirPlr.Name]
