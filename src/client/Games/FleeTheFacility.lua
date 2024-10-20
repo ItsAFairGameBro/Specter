@@ -763,7 +763,7 @@ return function(C,Settings)
                                     task.wait(1/3)
                                 end
                                 -- First player rescues
-                                while not C.getgenv().Rescued do
+                                while not C.getgenv().Rescued or C.myTSM.Captured.Value or C.myTSM.Ragdoll.Value do
                                     task.wait(1/3)
                                 end
                             end
