@@ -50,12 +50,14 @@ return function(C,Settings)
 		end--]]
 		C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 	end
+    local e =false
 	function C.DoActivate(self,funct,...)
         if self.Activate == funct then
             local firstRun = select(2,...)
             if not firstRun then
                 self:ClearData()
                 if C.SaveEvents then
+                    if not e then e = true print('saveevent exists') end
                     for key, eventFunct in pairs(self.Events) do
                         local eventList = C.SaveEvents[key]
                         if eventList then
