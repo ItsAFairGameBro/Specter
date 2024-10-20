@@ -255,7 +255,7 @@ local function SetUpGame(C, Settings)
             C.FireEvent("MapAdded",nil,C.Map)
         end
         C.AddGlobalConnection(CurrentMap.Changed:Connect(MapAdded))
-        MapAdded(CurrentMap)
+        MapAdded(CurrentMap.Value)
         local gameActiveVal = RS:WaitForChild("IsGameActive")
         local function gameActiveValChanged(newVal)
             C.FireEvent(newVal and "GameAdded" or "GameRemoved", nil)
