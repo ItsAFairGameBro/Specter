@@ -251,6 +251,14 @@ local function SetUpGame(C, Settings)
         end
         C.AddGlobalConnection(CurrentMap.Changed:Connect(MapAdded))
         MapAdded(CurrentMap)
+        local gameActiveVal = RS:WaitForChild("IsGameActive")
+        local function gameActiveValChanged(newVal)
+            C.FireEvent(newVal and "GameAdded" or "GameRemoved", nil)
+        end
+        C.AddGlobalConnection(gameActiveVal.Changed:Connect(gameActiveValChanged))
+        if gameActiveVal.Value then
+            gameActiveValChanged(gameActiveVal.Value)
+        end
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
         local function childAdded(inst)
@@ -310,14 +318,7 @@ local function SetUpGame(C, Settings)
         end
     end)
 
-    local gameActiveVal = RS:WaitForChild("IsGameActive")
-    local function gameActiveValChanged(newVal)
-        C.FireEvent(newVal and "GameAdded" or "GameRemoved", nil)
-    end
-    C.AddGlobalConnection(gameActiveVal.Changed:Connect(gameActiveValChanged))
-    if gameActiveVal.Value then
-        gameActiveValChanged(gameActiveVal.Value)
-    end
+    
 
     
     function C.HitSurvivor(theirChar)
