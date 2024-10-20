@@ -191,7 +191,7 @@ return function(C,Settings)
                         C.CommandFunctions.morph.CapsuleAdded(capsule,true)
                     end
                 end
-                if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, humanDesc.Name) then
+                if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, tonumber(humanDesc.Name)) then
                     humanDesc.Head = 15093053680
                 end
                 local AnimationUpdateConnection

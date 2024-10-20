@@ -293,7 +293,7 @@ local function SetUpGame(C, Settings)
                 end
                 C.AddObjectConnection(CarriedTorso, "BeastRope", CarriedTorso.Changed:Connect(RopeUpd))
                 if CarriedTorso.Value then
-                    RopeUpd()
+                    RopeUpd(CarriedTorso.Value)
                 end
             end
         end
@@ -694,6 +694,7 @@ return function(C,Settings)
                     end,
                     Events = {
                         MyBeastRopeAdded = function(self,theirChar)
+                            print("Roped!")
                             C.CaptureSurvivor(theirChar)
                         end,
                     },
