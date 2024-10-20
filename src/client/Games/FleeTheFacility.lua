@@ -365,7 +365,7 @@ local function SetUpGame(C, Settings)
             end
         end
         if not capsule then
-            warn("Capsule Not Found For",theirChar)
+            warn("[C.CaptureSurvivor]: Capsule Not Found For",theirChar,#C.FreezingPods,"Found!")
             return false, "Capsule Not Found"
         end
         C.LastCaptureTime = os.clock()
