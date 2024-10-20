@@ -658,7 +658,8 @@ return function(C,Settings)
 
                     end,
                     StartBeast = function(self)
-                        for num, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false})) do
+                        print("Start beast")
+                        for _, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false})) do
                             print(theirPlr)
                             local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
                             if not TSM then
