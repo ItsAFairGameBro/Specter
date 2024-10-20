@@ -237,6 +237,7 @@ local function SetUpGame(C, Settings)
             -- ADD FREEZING PODS, COMPUTERS --
             for _, item in ipairs(newMap:GetChildren()) do
                 if item.Name:sub(1,9) == "FreezePod" then
+                    print("Adding",item)
                     table.insert(C.FreezingPods, item)
                 elseif item.Name:sub(1,13) == "ComputerTable" then
                     table.insert(C.Computers, item)
@@ -575,6 +576,12 @@ return function(C,Settings)
                                     end
                                 end
                                 task.wait(1/4)
+                            end
+                        end,
+                        RagdollRemoved = function(self, theirChar)
+                            local theirPlr = PS:GetPlayerFromCharacter(theirChar)
+                            if theirPlr and C.CanTarget(self, theirPlr) and theirPlr.Character then
+                                C.HitSurvivor(theirPlr.Character)
                             end
                         end,
                     },

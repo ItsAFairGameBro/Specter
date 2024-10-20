@@ -19,7 +19,6 @@ return function(C,Settings)
                 for key, val in ipairs(SavedTable) do
                     if C.AreTablesEqual(val, args) then
                         table.remove(SavedTable, key)
-                        print("DEL SUCC!")
                         del = true
                         break
                     end

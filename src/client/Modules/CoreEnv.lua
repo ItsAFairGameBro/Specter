@@ -61,7 +61,6 @@ return function(C,Settings)
                         if eventList then
                             print("possible eventdata")
                             for _, eventData in ipairs(eventList) do
-                                print('eventdata found!')
                                 C.DoActivate(self,eventFunct,table.unpack(eventData))
                             end
                         end
