@@ -191,10 +191,8 @@ local function SetUpGame(C, Settings)
         MapAdded(CurrentMap)
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
-        print("newchar",theirChar)
         local function childAdded(inst)
             if inst and inst.Name == "Hammer" then
-                print("BeastHammerAdded")
                 C.BeastPlr, C.BeastChar = theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 C.AddObjectConnection(inst, "BeastHammerRemoved", inst.Destroying:Connect(function()
@@ -213,7 +211,6 @@ local function SetUpGame(C, Settings)
 
         local isBeastVal = theTSM:WaitForChild("IsBeast")
         local function beastChangedVal(newVal)
-            print("BeastAdded",theirPlr,newVal)
             if newVal then
                 C.FireEvent("BeastAdded",theirPlr == C.plr,theirPlr)
             else
@@ -286,7 +283,6 @@ return function(C,Settings)
             if not theirChar or not theirPlr then
                 return false, "Lobby"
             end
-            print(theirPlr, theirChar)
             local theirTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
             if theirChar:FindFirstChild("Hammer") or theirTSM.IsBeast.Value then
                 return true, "Beast"
