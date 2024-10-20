@@ -427,7 +427,7 @@ return function(C,Settings)
 			local Type = theirIsInGame[2]
 			if Type == "Murderer" then
 				return Color3.fromRGB(255)
-			elseif Type == "Sheriff" or Type == "Runner" then
+			elseif Type == "Sheriff" or Type == "Runner" or Type == "Survivor" then
 				return Color3.fromRGB(0,0,255)
 			elseif Type == "Innocent" then
 				return Color3.fromRGB(0,255)
