@@ -664,7 +664,8 @@ return function(C,Settings)
                             if not TSM then
                                 return
                             end
-                            warn(C.CommandFunctions.follow:Run({{theirPlr},5}))
+                            C.CommandFunctions.follow:Run({{theirPlr},5})
+                            print(theirPlr,theirPlr.Parent,TSM.Captured.Value)
                             while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
                                 RunS.RenderStepped:Wait()
                             end
