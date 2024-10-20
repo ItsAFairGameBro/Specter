@@ -736,7 +736,7 @@ return function(C,Settings)
                             end)
                             -- ADD HERE --
                             local myIndex = table.find(hitList, C.plr)
-                            local friend = hitList[(myIndex - 1) % (#hitList)]
+                            local friend = hitList[(myIndex - 1) > 0 and myIndex - 1 or (#hitList)]
                             print(hitList,myIndex,friend)
                             local friendTSM = friend:WaitForChild("TempPlayerStatsModule")
                             table.insert(self.Threads, friendTSM:WaitForChild("Captured").Changed:Connect(function()
