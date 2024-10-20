@@ -372,7 +372,7 @@ return function(C,Settings)
             },
             Tab = AppendToFirstArr(SharedHacks, AppendToFirstArr({
 
-            }, C.BotUsers and {
+            }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",
                     Tooltip = "Event tester",
