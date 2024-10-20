@@ -1231,6 +1231,9 @@ return function(C,Settings)
 									HarborRefuel()
 								else -- Refueled!
 									C.RemoveAction("Plane Refuel")
+                                    if MainBody then
+                                        MainBody.AssemblyAngularVelocity = Vector3.new()
+                                    end
 								end
 							end
 							Conn = BombC.Changed:Connect(CheckDORefuel)

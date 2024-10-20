@@ -93,7 +93,7 @@ return function(C,Settings)
                 desc.Name = userID .. (outfitId and ("/"..outfitId) or "")
                 return  desc
             end,
-            DoAnimationEffect = "Fade",
+            DoAnimationEffect = nil,--"Fade",
             AnimationEffectFunctions={
                 Fade = {
                     Tween = function(self,targetChar,loopList,visible,instant)
