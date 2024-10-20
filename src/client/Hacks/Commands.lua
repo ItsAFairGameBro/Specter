@@ -100,7 +100,7 @@ return function(C,Settings)
                         local newTransparency = visible and 0 or 1
                         local property = "Transparency"--targetChar == plr.Character and "LocalTransparencyModifier" or "Transparency"
                         for num, part in ipairs(loopList) do
-                            if (part:IsA("BasePart") or part:IsA("Decal")) and 
+                            if (part:IsA("BasePart") or part:IsA("Decal")) and
                                 ((not visible and part.Transparency<1) or (part:GetAttribute("PreviousTransparency"))) then
                                 local PreviousTransparency = part:GetAttribute('PreviousTransparency') or part.Transparency
                                 part:SetAttribute("PreviousTransparency",PreviousTransparency)
@@ -124,9 +124,10 @@ return function(C,Settings)
                     end,
                 }
             },
+            Headless={146574359,826042567,1287648573,1091344783},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii"},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
-    
+
                 local targetHuman = targetChar:FindFirstChild("Humanoid")
                 local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
                 if not targetHuman or targetHuman.Health <=0 or not targetHRP then
@@ -135,7 +136,7 @@ return function(C,Settings)
                 if AnimationEffectData then
                     AnimationEffectData:Start(targetChar)
                 end
-    
+
                 --local wasAnchored = targetHRP.Anchored
                 --humanDesc.Name = "CharacterDesc"
                 if not dontUpdate then
@@ -151,17 +152,17 @@ return function(C,Settings)
                     self.Enabled = C.GetDictLength(C.getgenv().currentDesc)
                 end
                 local isR6 = targetHuman.RigType == Enum.HumanoidRigType.R6
-    
+
                 local oldHuman = targetHuman
                 local newHuman = oldHuman:Clone()--(isR6 and false) and Instance.new("Humanoid") or oldHuman:Clone()----oldHuman:Clone()
-    
-    
+
+
                 local newHuman_Animator = newHuman:FindFirstChild("Animator")
                 if newHuman_Animator then
                     newHuman_Animator:Destroy() -- Prevents LoadAnimation error spams
                 end
                 local oldChar_ForceField = targetChar:FindFirstChild("ForceField",true)
-    
+
                 newHuman.Name = "FakeHuman"
                 newHuman.Parent = targetChar
                 C.AddGlobalInstance(newHuman)
@@ -190,7 +191,7 @@ return function(C,Settings)
                         C.CommandFunctions.morph.CapsuleAdded(capsule,true)
                     end
                 end
-                if not isDefault and humanDesc.Head ~= 86498048 then
+                if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, humanDesc.Name) then
                     humanDesc.Head = 15093053680
                 end
                 local AnimationUpdateConnection
@@ -242,7 +243,7 @@ return function(C,Settings)
                         end
                     end
                 end
-    
+
                 if not noAddFunct then
                     table.insert(C.CommandFunctions.morph.Functs,capsule.ChildAdded:Connect(childAdded))
                 end
@@ -320,7 +321,7 @@ return function(C,Settings)
                 if defaultHumanDesc == nil then
                     return false, "HumanoidDesc returned NULL for all players!"
                 end
-                local savedDescription = selectedName~="no" 
+                local savedDescription = selectedName~="no"
                     and C.CommandFunctions.morph:GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
                 --((args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id)) or PS:GetHumanoidDescriptionFromUserId(selectedName.UserId))
                 if args[1]=="new" or args[1]=="others" or args[1]=="all" then
@@ -346,7 +347,7 @@ return function(C,Settings)
                         if theirPlr.Character then
                             task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,selectedName == "no")
                         elseif selectedName ~= "no" then
-                            if C.getgenv().currentDesc[theirPlr.Name] 
+                            if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
                                 C.getgenv().currentDesc[theirPlr.Name]:Destroy()
                             end
@@ -393,7 +394,7 @@ return function(C,Settings)
                         for num = #bodyResult,1,-1 do--for num, val in ipairs(bodyResult) do
                             local val = bodyResult[num];
                             if val.isEditable then
-                                val.SortName = val.name 
+                                val.SortName = val.name
                             else
                                 table.remove(bodyResult,num)
                             end
@@ -453,10 +454,10 @@ return function(C,Settings)
                 if not dist then
                     return false, `Invalid Number {args[2]}`
                 end
-    
+
                 --C.CommandFunctions.follow.isFollowing = theirPlr.UserId
                 --print("Set To",C.CommandFunctions.follow.isFollowing,theirPlr.UserId)
-    
+
                 local saveChar = C.char
                 C.CommandFunctions.unfollow:Run()
                 if not theirPlr or theirPlr == C.plr then
@@ -507,9 +508,9 @@ return function(C,Settings)
                             end
                         end
                     end--]]
-    
-    
-    
+
+
+
                     -- * CFrame.new(0,C.getHumanoidHeight(C.char),dist))
                     --task.wait()
                     --end
@@ -571,9 +572,9 @@ return function(C,Settings)
                     if not result2 then
                         return false, "Request Decode Failed: "..decoded
                     end
-    
+
                     local ServerJobIds = {}
-        
+
                     for i, v in ipairs(decoded.data) do
                         if v.id ~= game.JobId then
                             ServerJobIds[#ServerJobIds + 1] = v.id
@@ -769,7 +770,7 @@ return function(C,Settings)
                                     else
                                         LastSpeedTime = nil
                                     end
-                                    
+
                                     if C.hrp then
                                         local SeatPart = theirHuman.SeatPart
                                         local Target
@@ -779,7 +780,7 @@ return function(C,Settings)
                                         else
                                             Target = SeatPart.Parent:GetPivot()
                                         end
-                                        
+
                                         if Target.Y < FallenDestroyHeight + 12 then
                                             Target += Vector3.new(0, FallenDestroyHeight - Target.Y + 12,0)
                                         end
@@ -792,7 +793,7 @@ return function(C,Settings)
                                     break
                                 end
                             end
-            
+
                             if not wasSeated and C.human:GetState() == Enum.HumanoidStateType.Seated then --check if seated
                                 C.human:ChangeState(Enum.HumanoidStateType.Running) --get out if you are
                             end
