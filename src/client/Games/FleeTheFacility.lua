@@ -263,6 +263,10 @@ local function SetUpGame(C, Settings)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
         local function childAdded(inst)
             if inst and inst.Name == "Hammer" then
+                local Handle = inst:WaitForChild("Handle",100)
+                if not Handle then
+                    return
+                end
                 C.Hammer, C.BeastPlr, C.BeastChar = inst, theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 C.AddObjectConnection(inst, "BeastHammerRemoved", inst.Destroying:Connect(function()

@@ -486,7 +486,7 @@ return function(C,Settings)
 
                     C.DoTeleport(setCFrame)
 
-                    if C.char and C.char.PrimaryPart and not self.Parent.fling.FlingThread then
+                    if C.char and C.char.PrimaryPart and not C.CommandFunctions.fling.FlingThread then
                         C.char.PrimaryPart.AssemblyAngularVelocity = Vector3.new()
                         C.char.PrimaryPart.AssemblyLinearVelocity = Vector3.new()
                     end
