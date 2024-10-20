@@ -300,7 +300,7 @@ return function(C,Settings)
                             return false, "Outfit Getter Err " .. tostring(err)
                         end
                     end
-                    if not C.C.getgenv().Outfits[selectedName.UserId] then
+                    if not C.getgenv().Outfits[selectedName.UserId] then
                         return false, `Outfit not found for user {selectedName.SortName}, {selectedName.UserId}`
                     end
                     if tonumber(args[3]) then
