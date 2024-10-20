@@ -417,7 +417,7 @@ return function(C,Settings)
 			break
 		  end
 		end
-		return formatted	  
+		return formatted
 	end
 
 	function C.GetPlayerNameTagColor(theirPlr,theirChar,theirIsInGame)

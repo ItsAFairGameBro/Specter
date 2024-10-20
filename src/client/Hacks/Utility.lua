@@ -1,7 +1,7 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
-local Players = game:GetService("Players")
+local PS = game:GetService("Players")
 local PolicyService = game:GetService("PolicyService")
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
@@ -91,7 +91,7 @@ return function(C,Settings)
 				Shortcut = "NoKick",
 				Functs={}, Threads={},
 				BestMessage = nil,
-				Message = "%s (Error Code %i)\nRejoin to interact with the game and other players, and click here to hide this prompt.",
+				Message = "%s (Error Code %i)\nRejoin to interact with the game and other PS, and click here to hide this prompt.",
 				Events = {
 					RbxErrorPrompt = function(self, errorMessage,errorCode,identification)
 						if identification:find("Teleport") then
@@ -146,7 +146,7 @@ return function(C,Settings)
                     elseif firstRun then
                         return
                     end
-                    for _, theirPlr in ipairs(Players:GetPlayers()) do
+                    for _, theirPlr in ipairs(PS:GetPS()) do
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
@@ -180,9 +180,10 @@ return function(C,Settings)
                         if self:HasAdminAccess(theirPlr) then
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-                                table.insert(self.Functs, C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
+                                local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
+                                table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     print("_SIGNAL")
-                                    local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
+                                    local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
                                     print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
                                     if thePlr and self:HasAdminAccess(thePlr) then
                                         print("Message",data.Message)
@@ -197,7 +198,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end))
-                                print("Waiting For Established Connection!",theirPlr)
+                                print("Waiting For Established Connection22!",theirPlr)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 print("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
