@@ -408,7 +408,7 @@ return function(C,Settings)
                         self:StartUp()
                     end,
                     Events = {
-                        HammerAdded = function(self,theirPlr,theirChar,theirHuman)
+                        BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
                             self:StartUp()
                         end,
                     }
