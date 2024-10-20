@@ -775,6 +775,7 @@ return function(C,Settings)
 								if self.EnTbl.Plane then
 									table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
 								end
+                                table.insert(nearestTbl,{C.getClosest({noForcefield=true},instance.Position)})
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 								if closestBasePart then
@@ -806,8 +807,13 @@ return function(C,Settings)
                                         closestParent:SetAttribute("Ignore",true)
                                         setIgnore = true
                                     end
-                                    self:MoveBombTo(instance,closestBasePart.Position)
-									--C.firetouchinterest(instance,closestBasePart)
+                                    if self.EnTbl.RemoteExplosion or closestBasePart.Parent:FindFirstChild("Humanoid") then
+                                        self:MoveBombTo(instance,closestBasePart.Position)
+                                        task.wait(1/3)
+                                        C.firetouchinterest(instance,closestBasePart)
+                                    else
+                                        C.firetouchinterest(instance,closestBasePart)
+                                    end
                                     task.wait(2/3)
                                     changedFunct:Disconnect()
                                     if setIgnore then
