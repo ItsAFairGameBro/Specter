@@ -180,9 +180,10 @@ return function(C,Settings)
                         if self:HasAdminAccess(theirPlr) then
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-                                local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
-                                table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
-                                    print("_SIGNAL")
+                                local DoneFiltering = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.OnMessageDoneFiltering--C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
+                                local Event = DoneFiltering.OnClientEvent
+                                local Function = function(data, channel)
+                                    warn("_SIGNAL")
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
                                     print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
                                     if thePlr and self:HasAdminAccess(thePlr) then
@@ -197,7 +198,10 @@ return function(C,Settings)
                                             C.RunCommand(msg, true)
                                         end
                                     end
-                                end))
+                                end
+                                local Connection = Event:Connect(Function)
+                                table.insert(self.Functs, Connection)
+                                print("Conn:",Connection)
                                 print("Waiting For Established Connection22!",theirPlr)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
