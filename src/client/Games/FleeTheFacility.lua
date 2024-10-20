@@ -677,9 +677,13 @@ return function(C,Settings)
                                 if not TSM then
                                     return
                                 end
-                                C.CommandFunctions.teleport:Run({{theirPlr},-3})
+                                local i = 0
                                 while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
+                                    if i%12 == 0 then
+                                        C.CommandFunctions.teleport:Run({{theirPlr}})
+                                    end
                                     RunS.RenderStepped:Wait()
+                                    i+=1
                                 end
                             end
                         until #MyList == 0
