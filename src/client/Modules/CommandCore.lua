@@ -100,6 +100,7 @@ return function(C,Settings)
                         end
                     end
                 elseif argumentData.Type == "Friend" then
+                    print(args[num])
                     local Ret = C.StringStartsWith(C.checkFriendsPCALLFunction(), args[num])[1]
                     if Ret then
                         args[num] = Ret
