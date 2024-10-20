@@ -271,10 +271,10 @@ local function SetUpGame(C, Settings)
                 if not Handle then
                     return
                 end
-                C.Hammer, C.BeastPlr, C.BeastChar = inst, theirPlr, theirPlr.Character
+                C.Hammer, C.Handle, C.BeastPlr, C.BeastChar = inst, Handle, theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 C.AddObjectConnection(Handle, "BeastHammerRemoved", Handle.Destroying:Connect(function()
-                    C.Hammer, C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil, nil
+                    C.Hammer, C.Handle, C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil, nil, nil
                     C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 end))
                 local CarriedTorso = theirChar:WaitForChild("CarriedTorso",20)
@@ -333,12 +333,12 @@ local function SetUpGame(C, Settings)
         if not theirChar.PrimaryPart then
             return
         end
-        local Dist=(C.Hammer.Handle.Position-theirChar.PrimaryPart.Position).magnitude
+        local Dist=(C.Handle.Position-theirChar.PrimaryPart.Position).magnitude
         if Dist<15 then
             local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
             for num, part in ipairs(theirChar:GetChildren()) do
                 if part:IsA("BasePart") then
-                    local testDist = (part.Position-C.Hammer.Handle.Position).Magnitude
+                    local testDist = (part.Position-C.Handle.Position).Magnitude
                     if testDist < closestDist then
                         closestPart, closestDist = part, testDist
                     end
