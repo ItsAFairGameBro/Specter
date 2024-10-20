@@ -812,9 +812,12 @@ return function(C,Settings)
                                         closestParent:SetAttribute("Ignore",true)
                                         setIgnore = true
                                     end
-                                    if self.EnTbl.RemoteExplosion or closestBasePart.Parent:FindFirstChild("Humanoid") then
-                                        self:MoveBombTo(instance,closestBasePart.Position)
-                                        task.wait(1/3)
+                                    if self.EnTbl.RemoteExplosion or closestParent:FindFirstChild("Humanoid") then
+                                        local End = os.clock() + 1
+                                        while os.clock() < End do
+                                            self:MoveBombTo(instance,closestBasePart.Position)
+                                            RunS.RenderStepped:Wait()
+                                        end
                                         C.firetouchinterest(instance,closestBasePart)
                                     else
                                         C.firetouchinterest(instance,closestBasePart)
