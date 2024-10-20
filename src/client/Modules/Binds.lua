@@ -74,7 +74,9 @@ return function(C,Settings)
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do
-			assert(table.find(eventsAllowed,name),`{name} is not a valid event!`)
+			if not table.find(eventsAllowed,name) then
+                warn(`[C.BindEvents]: {name} is not a valid event!`)
+            end
 			C.events[name] = C.events[name] or {}
 			C.events[name][hackTbl] = funct
 		end

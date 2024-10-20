@@ -723,7 +723,7 @@ return function(C,Settings)
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
                             self:StartUp()
                         end,
-                        MyRunnerRemoved = function(self)
+                        MySurvivorRemoved = function(self)
                             C.RemoveAction(self.Shortcut)
                         end,
                         MyBeastRemoved = function(self)
