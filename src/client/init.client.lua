@@ -184,8 +184,9 @@ local function RegisterFunctions()
 		end
 		ProximityPrompt.HoldDuration = HoldDuration
 	end
-	C.setclipboard = isStudio and function() return end or function(input: string)
+	C.setclipboard = isStudio and function() return end or function(input: string, notifyMsg: string)
 		setclipboard(tostring(input))
+        C.AddNotification(`Copied{notifyMsg and " " .. notifyMsg or ""}`,`Successfully copied to clipboard!`)
 	end
 	C.getloadedmodules = isStudio and function() return {C.PlayerScripts.PlayerModule.ControlModule} end or getloadedmodules
 	C.getrunningscripts = isStudio and function () return {} end or getrunningscripts

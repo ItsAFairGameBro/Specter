@@ -3232,8 +3232,7 @@ return function(C, Settings)
 						end
 					end)
                     C.ButtonClick(serverClone,function()
-                        C.setclipboard(data.PlaceId)
-                        C.AddNotification(`Copied`,`Successfully coppied to clipboard!`)
+                        C.setclipboard(data.PlaceId, "PlaceId")
                     end, 2)
 				else
 					local listedData = {

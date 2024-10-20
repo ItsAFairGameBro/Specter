@@ -88,7 +88,6 @@ return function(C,Settings)
 				end
 			end))
 		end
-        print(C.CharacterAddedEventFuncts)
         for _, additionalFunct in ipairs(C.CharacterAddedEventFuncts) do
             additionalFunct(theirPlr, theirChar, theirHuman)
         end

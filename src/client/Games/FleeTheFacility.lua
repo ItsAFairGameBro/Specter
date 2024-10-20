@@ -229,7 +229,7 @@ end
 
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
-    if game.PlaceId == 893 then
+    if game.PlaceId == 893973440 then
         SetUpGame(C,Settings)
     end
     C.myTSM = C.plr:WaitForChild("TempPlayerStatsModule")
@@ -282,10 +282,11 @@ return function(C,Settings)
         --local BeastCaveBaseplate = workspace:WaitForChild("BeastCaveBaseplate")
         local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
         function C.isInGame(theirChar,isDefacto)
-            if not theirChar then
+            local theirPlr = theirChar and PS:GetPlayerFromCharacter(theirChar)
+            if not theirChar or not theirPlr then
                 return false, "Lobby"
             end
-            local theirPlr = PS:GetPlayerFromCharacter(theirChar)
+            print(theirPlr, theirChar)
             local theirTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
             if theirChar:FindFirstChild("Hammer") or theirTSM.IsBeast.Value then
                 return true, "Beast"
