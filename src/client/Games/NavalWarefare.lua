@@ -797,13 +797,18 @@ return function(C,Settings)
 										C.firetouchinterest(instance,closestBasePart,1)
 										task.wait()
 									end--]]
-                                    local changedFunct = closestParent.HP.Changed:Connect(function(newVal)
-                                        if newVal <= 0 then
-                                            closestParent:SetAttribute("Dead",true)
-                                        end
-                                    end)
+                                    local changedFunct
+                                    local HP = closestParent:FindFirstChild("HP")
+                                    if HP then
+                                        changedFunct = closestParent.HP.Changed:Connect(function(newVal)
+                                            if newVal <= 0 then
+                                                closestParent:SetAttribute("Dead",true)
+                                            end
+                                        end)
+                                    end
+
                                     local setIgnore = false
-                                    if closestParent.HP.Value <= 300 then
+                                    if HP and closestParent.HP.Value <= 300 then
                                         closestParent:SetAttribute("Ignore",true)
                                         setIgnore = true
                                     end
@@ -815,7 +820,9 @@ return function(C,Settings)
                                         C.firetouchinterest(instance,closestBasePart)
                                     end
                                     task.wait(2/3)
-                                    changedFunct:Disconnect()
+                                    if changedFunct then
+                                        changedFunct:Disconnect()
+                                    end
                                     if setIgnore then
                                         closestParent:SetAttribute("Ignore",nil)
                                     end
@@ -855,6 +862,13 @@ return function(C,Settings)
 						Tooltip = "Spectates who you did dirty..",
 						Layout = 4,Default=true,
 						Shortcut="Spectate",
+					},
+                    {
+						Type = Types.Toggle,
+						Title = "Remote Explosion",
+						Tooltip = "When possible, drops the bomb on top of the target\nSometimes required, in which case always happens",
+						Layout = 4,Default=true,
+						Shortcut="RemoteExplosion",
 					}
 				}
 			},
