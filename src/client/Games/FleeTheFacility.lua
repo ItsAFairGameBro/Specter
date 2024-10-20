@@ -614,7 +614,6 @@ return function(C,Settings)
                     Shortcut = "AutoRope",
                     Events = {
                         RagdollAdded = function(self, theirPlr, theirChar)
-                            print("RagdollAdded")
                             C.WaitForHammer()
                             if C.CanTarget(self, C.BeastPlr) then
                                 C.RopeSurvivor(theirChar)
@@ -662,12 +661,13 @@ return function(C,Settings)
                     Tooltip = "Event tester",
                     Layout = 100,
                     Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
+                    WasRunning = false,
                     StartSurvivor = function(self)
                         local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
                         table.sort(hitList,function(a,b)
                             return a.Name:lower() < b.Name:lower()
                         end)
-
+                        -- ADD HERE --
                     end,
                     StartBeast = function(self)
                         repeat
@@ -689,6 +689,11 @@ return function(C,Settings)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
+                        if not toggle and self.WasRunning then
+                            C.CommandFunctions.follow:Run({{C.plr}})
+                            C.CommandFunctions.spectate:Run({{C.plr}})
+                        end
+                        self.WasRunning = toggle
                     end,
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)
@@ -702,7 +707,7 @@ return function(C,Settings)
                                 self["Start"..role](self, actionClone, info)
                             end, Stop = function(byReq)
                                 if byReq then
-                                    self:SetValue(true)
+                                    self:SetValue(false)
                                 end
                             end})
                         end
