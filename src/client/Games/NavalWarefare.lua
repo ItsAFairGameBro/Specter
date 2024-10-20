@@ -745,6 +745,7 @@ return function(C,Settings)
                 end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
+					    local secondaryBasePart = C.getClosestBase(seatPart.Position)
 						local deb = 0
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
 							if instance.Name ~= "Bomb" then
@@ -820,7 +821,7 @@ return function(C,Settings)
                                             self:MoveBombTo(instance,closestBasePart.Position)
                                             RunS.RenderStepped:Wait()
                                         end
-                                        C.firetouchinterest(instance,closestBasePart)
+                                        C.firetouchinterest(instance,secondaryBasePart)
                                     else
                                         C.firetouchinterest(instance,closestBasePart)
                                     end
