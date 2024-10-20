@@ -285,7 +285,7 @@ return function(C,Settings)
                 end,
             },
             Run=function(self,args)
-                self.Enabled = true
+                self.RealEnabled = true
                 local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])[1]
                 selectedName = selectedName ~= "no" and selectedName[2] or selectedName
                 if not selectedName then

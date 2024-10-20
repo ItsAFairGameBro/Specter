@@ -544,13 +544,12 @@ return function(C,Settings)
                 Run = function(self,args)
                     local SearchUser = args[1][1]:lower()
                     local TimeStart = os.clock()
-
+                    
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
                     if not result then
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
                     local found, count = false, 0
-                    print(result,SearchUser)
                     for gameID, data in pairs(dict) do
                         count+=1
                         for key, val in ipairs(data.namesList) do
@@ -569,7 +568,7 @@ return function(C,Settings)
                             break
                         end
                         if count%8==0 then
-                            task.wait()
+                            task.wait(1/7)
                         end
                     end
                     return true, found and `In {found}` or `Not Found`, os.clock() - TimeStart
@@ -745,7 +744,7 @@ return function(C,Settings)
                     Completed = function(self)
                         -- Finished on its own --
                         C.RemoveAction(self.Shortcut)
-                        C.human:ChangeState(Enum.HumanoidStateType.Dead)
+                        task.spawn(C.ResetCharacter)
                     end,
                     Events = {
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
