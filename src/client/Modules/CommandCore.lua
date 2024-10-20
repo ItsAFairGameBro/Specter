@@ -454,7 +454,7 @@ return function(C,Settings)
                                     table.insert(options,{val,val})
                                 end
                             elseif mySuggestion.Type == "Friend" then
-                                for num, val in ipairs(C.checkFriendsPCALLFunction()) do
+                                for num, val in ipairs(C.friends) do
                                     table.insert(options,{val.UserId,val.SortName})
                                 end
                             elseif mySuggestion.Type == "User" then
