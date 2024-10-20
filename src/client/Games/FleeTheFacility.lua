@@ -717,13 +717,18 @@ return function(C,Settings)
                         self:DoOverrides(true)
                         local inGame, role = C.isInGame(C.char)
                         if inGame then
-                            BotActionClone = C.AddAction({Title=`ServerFarm: {self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
+                            local myActionClone
+                            myActionClone = C.AddAction({Title=`ServerFarm: {self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
                                 self["Start"..role](self, actionClone, info)
                             end, Stop = function(byReq)
+                                if BotActionClone == myActionClone then
+                                    BotActionClone = nil
+                                end
                                 if byReq then
                                     self:SetValue(false)
                                 end
                             end})
+                            BotActionClone = myActionClone
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
