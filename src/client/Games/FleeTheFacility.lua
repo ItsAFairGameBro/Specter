@@ -319,6 +319,34 @@ local function SetUpGame(C, Settings)
         gameActiveValChanged(gameActiveVal.Value)
     end
 
+    
+    function C.HitSurvivor(theirChar)
+        if not theirChar.PrimaryPart then
+            return
+        end
+        local Dist=(C.Hammer:GetPivot().Position-theirChar.PrimaryPart.Position).magnitude
+        if Dist<15 then
+            local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
+            for num, part in ipairs(theirChar:GetChildren()) do
+                if part:IsA("BasePart") then
+                    local testDist = (part.Position-C.Hammer:GetPivot().Position).Magnitude
+                    if testDist < closestDist then
+                        closestPart, closestDist = part, testDist
+                    end
+                end
+            end
+            if closestPart then
+                C.Hammer.HammerEvent:FireServer("HammerHit", closestPart)
+                return true
+            end
+        end
+    end
+    function C.RopeSurvivor(theirChar)
+        if C.CarriedTorso.Value then
+            return
+        end
+        C.Beast.Hammer.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
+    end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
             return
@@ -339,6 +367,7 @@ local function SetUpGame(C, Settings)
             warn("Capsule Not Found For",theirChar)
             return false, "Capsule Not Found"
         end
+        C.LastCaptureTime = os.clock()
         local Trigger = capsule:WaitForChild("PodTrigger",5)
         local ActionSign = Trigger and Trigger:FindFirstChild("ActionSign")
         for s=1,3,1 do
@@ -356,27 +385,6 @@ local function SetUpGame(C, Settings)
                 if isOpened then
                     C.RemoteEvent:FireServer("Input", "Trigger", false)
                 end
-            end
-        end
-    end
-    function C.HitSurvivor(theirChar)
-        if not theirChar.PrimaryPart then
-            return
-        end
-        local Dist=(C.Hammer:GetPivot().Position-theirChar.PrimaryPart.Position).magnitude
-        if Dist<15 then
-            local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
-            for num, part in ipairs(theirChar:GetChildren()) do
-                if part:IsA("BasePart") then
-                    local testDist = (part.Position-C.Hammer:GetPivot().Position).Magnitude
-                    if testDist < closestDist then
-                        closestPart, closestDist = part, testDist
-                    end
-                end
-            end
-            if closestPart then
-                C.Hammer.HammerEvent:FireServer("HammerHit", closestPart)
-                return true
             end
         end
     end
@@ -412,7 +420,8 @@ return function(C,Settings)
         local list = {}
         for _, theirPlr in ipairs(PS:GetPlayers()) do
             local inGame, role = C.isInGame(theirPlr.Character)
-            if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) then
+            if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) 
+                or (options.Ragdoll ~= nil and options.Ragdoll == theirPlr.TempPlayerStatsModule.Ragdoll.Value) then
                 table.insert(list, theirPlr)
             end
         end
@@ -575,13 +584,23 @@ return function(C,Settings)
                     Shortcut = "AutoRope",
                     Events = {
                         RagdollAdded = function(self, theirPlr, theirChar)
-                            if C.CanTarget(self, theirPlr) then
-                                C.HitSurvivor(theirChar)
+                            if C.CanTarget(self, C.BeastPlr) then
+                                C.RopeSurvivor(theirChar)
+                            end
+                        end,
+                        BeastRopeRemoved = function(self)
+                            if not C.CanTarget(self, C.BeastPlr) then
+                                return
+                            end
+                            if not C.LastCaptureTime or (os.clock() - C.LastCaptureTime) > 2 then
+                                for _, theirPlr in ipairs(C.GetPlayerListOfType({Ragdoll=true})) do
+                                    self.Events.RagdollAdded(self, theirPlr, theirPlr.Character)
+                                end
                             end
                         end,
                     },
                     Options = AppendToFirstArr({
-
+                            
                         },
                         C.SelectPlayerType,true
                     )
