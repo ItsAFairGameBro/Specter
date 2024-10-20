@@ -204,7 +204,6 @@ local function SetUpGame(C, Settings)
     C.GameTimer = RS:WaitForChild("GameTimer")
     C.GameStatus = RS:WaitForChild("GameStatus")
     function C.CanTarget(self, target)
-        print(C.plr,target,self.EnTbl.Others,self.EnTbl.Me)
         if self.EnTbl.Me and target == C.plr then
             return true
         elseif self.EnTbl.Others and target ~= C.plr then
@@ -327,12 +326,12 @@ local function SetUpGame(C, Settings)
         if not theirChar.PrimaryPart then
             return
         end
-        local Dist=(C.Hammer:GetPivot().Position-theirChar.PrimaryPart.Position).magnitude
+        local Dist=(C.Hammer.Handle.Position-theirChar.PrimaryPart.Position).magnitude
         if Dist<15 then
             local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
             for num, part in ipairs(theirChar:GetChildren()) do
                 if part:IsA("BasePart") then
-                    local testDist = (part.Position-C.Hammer:GetPivot().Position).Magnitude
+                    local testDist = (part.Position-C.Hammer.Handle.Position).Magnitude
                     if testDist < closestDist then
                         closestPart, closestDist = part, testDist
                     end
