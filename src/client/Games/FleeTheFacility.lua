@@ -204,7 +204,7 @@ local function SetUpGame(C, Settings)
     C.GameTimer = RS:WaitForChild("GameTimer")
     C.GameStatus = RS:WaitForChild("GameStatus")
     function C.CanTarget(self, target)
-        print(self,target,self.EnTbl)
+        print(target,self.EnTbl)
         if self.EnTbl.Me and target == C.plr then
             return true
         elseif self.EnTbl.Others and target ~= C.plr then
@@ -323,6 +323,7 @@ local function SetUpGame(C, Settings)
 
     
     function C.HitSurvivor(theirChar)
+        print("Called Hit",theirChar,C.Hammer)
         if not theirChar.PrimaryPart then
             return
         end
