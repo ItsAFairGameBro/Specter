@@ -754,7 +754,7 @@ return function(C,Settings)
                     Completed = function(self)
                         -- Finished on its own --
                         C.RemoveAction(self.Shortcut)
-                        task.spawn(C.ResetCharacter)
+                        --task.spawn(C.ResetCharacter)
                     end,
                     Events = {
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
