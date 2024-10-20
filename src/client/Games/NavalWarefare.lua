@@ -1210,9 +1210,10 @@ return function(C,Settings)
 								if actionClone then
 									actionClone:WaitForChild("Time").Text = "~2s"
 								end
+                                local ChosenNumber = C.Randomizer:NextNumber(-40, 40)
 								while canRun(true) and Info.Enabled do
 									if (Plane:GetPivot().Position - HarborMain.Position).Magnitude > 30 then
-										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(C.Randomizer:NextNumber(-40, 40),0,80)) -- used to be 0 45, 15
+										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(ChosenNumber,0,80)) -- used to be 0 45, 15
 									end
 									MainBody.AssemblyLinearVelocity = Vector3.new()
 									--MainBody.AssemblyAngularVelocity = Vector3.new()
