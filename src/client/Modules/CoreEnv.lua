@@ -55,9 +55,9 @@ return function(C,Settings)
             local firstRun = select(2,...)
             if not firstRun then
                 self:ClearData()
-                if C.SavedEvents then
+                if C.SaveEvents then
                     for key, eventFunct in pairs(self.Events) do
-                        local eventList = C.SavedEvents[key]
+                        local eventList = C.SaveEvents[key]
                         if eventList then
                             print("possible eventdata")
                             for _, eventData in ipairs(eventList) do
