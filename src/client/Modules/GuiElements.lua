@@ -3231,6 +3231,10 @@ return function(C, Settings)
 							C.ServerTeleport(data.PlaceId,nil)
 						end
 					end)
+                    C.ButtonClick(serverClone,function()
+                        C.setclipboard(data.PlaceId)
+                        C.AddNotification(`Copied`,`Successfully coppied to clipboard!`)
+                    end, 2)
 				else
 					local listedData = {
 						(tabName=="Friend" and `{data.UserName}`) or (JobId == game.JobId and `Your Server`) or `Server {RealIndex}`,

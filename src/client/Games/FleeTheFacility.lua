@@ -229,7 +229,7 @@ end
 
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
-    if game.PlaceId == 0 then
+    if game.PlaceId == 893 then
         SetUpGame(C,Settings)
     end
     C.myTSM = C.plr:WaitForChild("TempPlayerStatsModule")
