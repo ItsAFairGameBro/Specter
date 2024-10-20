@@ -51,12 +51,6 @@ return function(C,Settings)
 		C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 	end
 	function C.DoActivate(self,funct,...)
-        if not funct then
-            if self.Activate ~= funct then
-                warn(`[C.DoActivate]: Non activate function being ignored because it does not exist for {self.Shortcut}: `,self)
-            end
-            return
-        end
         if self.Activate == funct then
             local firstRun = select(2,...)
             if not firstRun then
@@ -76,6 +70,12 @@ return function(C,Settings)
             end
         else
             self:ClearData()
+        end
+        if not funct then
+            if self.Activate ~= funct then
+                warn(`[C.DoActivate]: Non activate function being ignored because it does not exist for {self.Shortcut}: `,self)
+            end
+            return
         end
 		
 		local header = "Hack/"..self.Parent.Category.Name.."/"..self.Shortcut
