@@ -313,6 +313,7 @@ return function(C,Settings)
                 else
                     args[3] = nil
                 end
+                print(selectedName)
                 local defaultHumanDesc = selectedName~="no" and
                     (args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id) or PS:GetHumanoidDescriptionFromUserId(selectedName.UserId))
                 if defaultHumanDesc == nil then
