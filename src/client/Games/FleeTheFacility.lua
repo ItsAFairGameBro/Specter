@@ -268,10 +268,11 @@ local function SetUpGame(C, Settings)
         local function childAdded(inst)
             if inst and inst.Name == "Hammer" then
                 local Handle = inst:WaitForChild("Handle",100)
-                if not Handle then
+                local HammerEvent = inst:WaitForChild("HammerEvent", 100)
+                if not Handle or not HammerEvent then
                     return
                 end
-                C.Hammer, C.Handle, C.BeastPlr, C.BeastChar = inst, Handle, theirPlr, theirPlr.Character
+                C.Hammer, C.Handle, C.HammerEvent, C.BeastPlr, C.BeastChar = inst, Handle, HammerEvent, theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 C.AddObjectConnection(Handle, "BeastHammerRemoved", Handle.Destroying:Connect(function()
                     C.Hammer, C.Handle, C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil, nil, nil
@@ -345,7 +346,7 @@ local function SetUpGame(C, Settings)
                 end
             end
             if closestPart then
-                C.Hammer.HammerEvent:FireServer("HammerHit", closestPart)
+                C.HammerEvent:FireServer("HammerHit", closestPart)
                 return true
             end
         end
@@ -354,7 +355,7 @@ local function SetUpGame(C, Settings)
         if C.CarriedTorso.Value then
             return
         end
-        C.Hammer.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
+        C.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
     end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
@@ -693,10 +694,6 @@ return function(C,Settings)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
-                        --[[if not toggle and self.WasRunning then
-                            C.CommandFunctions.follow:Run({{C.plr}})
-                            C.CommandFunctions.spectate:Run({{C.plr}})
-                        end--]]
                         self.WasRunning = toggle
                     end,
                     StartUp = function(self)
@@ -726,6 +723,12 @@ return function(C,Settings)
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
                             self:StartUp()
                         end,
+                        MyRunnerRemoved = function(self)
+                            C.RemoveAction(self.Shortcut)
+                        end,
+                        MyBeastRemoved = function(self)
+                            C.RemoveAction(self.Shortcut)
+                        end
                     },
                     Options = {
                         {
