@@ -146,7 +146,7 @@ return function(C,Settings)
                     elseif firstRun then
                         return
                     end
-                    for _, theirPlr in ipairs(PS:GetPS()) do
+                    for _, theirPlr in ipairs(PS:GetPlayers()) do
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,

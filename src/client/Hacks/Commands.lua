@@ -69,7 +69,7 @@ return function(C,Settings)
                 end))
                 table.insert(self.Functs, theirPlr.AncestryChanged:Connect(function()
                     C.CreateSysMessage(`Stopped spectating because {C.GetPlayerName(theirPlr)} left`, Color3.fromRGB(0,255,255))
-                    self:Run({C.plr})
+                    self:Run({{C.plr}})
                 end))
                 if theirPlr.Character then
                     self:TheirCharAdded(theirPlr, theirPlr.Character)
