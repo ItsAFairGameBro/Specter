@@ -204,7 +204,7 @@ local function SetUpGame(C, Settings)
     C.GameTimer = RS:WaitForChild("GameTimer")
     C.GameStatus = RS:WaitForChild("GameStatus")
     function C.CanTarget(self, target)
-        --print(target,self.EnTbl)
+        print(C.plr,target,self.EnTbl.Others,self.EnTbl.Me)
         if self.EnTbl.Me and target == C.plr then
             return true
         elseif self.EnTbl.Others and target ~= C.plr then
@@ -311,7 +311,7 @@ local function SetUpGame(C, Settings)
         end
         C.AddPlayerConnection(theirPlr, hpVal.Changed:Connect(healthChangedVal))
         local function ragdollChangedVal(newVal)
-            C.FireEvent(newVal and "RagdollAdded" or "RagdollRemoved", theirPlr == C.plr, theirPlr, theirPlr.theirChar)
+            C.FireEvent(newVal and "RagdollAdded" or "RagdollRemoved", theirPlr == C.plr, theirPlr, theirPlr.Character)
         end
         C.AddPlayerConnection(theirPlr, ragdollVal.Changed:Connect(ragdollChangedVal))
         if ragdollVal.Value then
