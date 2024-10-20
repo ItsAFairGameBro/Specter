@@ -346,7 +346,7 @@ local function SetUpGame(C, Settings)
         if C.CarriedTorso.Value then
             return
         end
-        C.Beast.Hammer.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
+        C.Hammer.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
     end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
