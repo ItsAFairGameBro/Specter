@@ -774,7 +774,7 @@ return function(C,Settings)
                                     end
                                 end
                                 runnerPlrs = table.sort(plrs, function(a, b)
-                                    return a.Name < b.Name
+                                    return a.Name:lower() < b.Name:lower()
                                 end)
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
 
