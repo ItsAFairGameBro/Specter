@@ -242,6 +242,7 @@ local function SetUpGame(C, Settings)
             local function newChild(item)
                 if item.Name:sub(1,9) == "FreezePod" then
                     table.insert(C.FreezingPods, item)
+                    C.FireEvent("NewFreezingPod", item)
                 elseif item.Name:sub(1,13) == "ComputerTable" then
                     table.insert(C.Computers, item)
                 elseif item.Name=="SingleDoor" or item.Name=="DoubleDoor" then
@@ -406,6 +407,30 @@ local function SetUpGame(C, Settings)
                     C.RemoteEvent:FireServer("Input", "Trigger", false)
                 end
             end
+        end
+    end
+    function C.RescueSurvivor(capsule)
+        if not capsule or not capsule:FindFirstChild("PodTrigger")
+					or not capsule.PodTrigger.CapturedTorso.Value then return end
+        if C.char:FindFirstChild("Hammer")~=nil or C.myTSM.Health.Value <= 0 then return end
+        local Trigger=capsule:FindFirstChild("PodTrigger")
+        if not Trigger then return end
+        C.SetActionLabel(BotActionClone, `Rescuing {capsule.PodTrigger.CapturedTorso.Value.Parent.Name}`)
+        for s=5,1,-1 do
+            if not workspace:IsAncestorOf(Trigger) then
+                break
+            elseif Trigger.CapturedTorso.Value==nil then
+                return true
+            end
+            local isOpened=Trigger.ActionSign.Value==11
+            C.RemoteEvent:FireServer("Input", "Trigger", true, Trigger.Event)
+            C.RemoteEvent:FireServer("Input", "Action", true)
+            if isOpened then
+                C.RemoteEvent:FireServer("Input", "Trigger", false)
+            end
+            task.wait(.075)
+            C.RemoteEvent:FireServer("Input", "Action", false)
+            task.wait(.075)
         end
     end
     function C.WaitForHammer()
@@ -664,6 +689,34 @@ return function(C,Settings)
                             C.CaptureSurvivor(theirChar)
                         end,
                     },
+                },
+                {
+                    Title = "⛹️Auto Rescue",
+                    Tooltip = "Capture survivors when roped (SURVIVOR ONLY)",
+                    Layout = 4,
+                    Shortcut = "AutoRescue",Functs={},
+                    Activate = function(self, newValue)
+                        if not newValue then
+                            return
+                        end
+                        for _, freezePod in ipairs(C.FreezingPods) do
+                            self.Events.NewFreezingPod(self, freezePod)
+                        end
+                    end,
+                    Events = {
+                        NewFreezingPod = function(self, freezePod)
+                            local PodTrigger = freezePod:WaitForChild("PodTrigger",10)
+                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",10)
+                            if CapturedTorso then
+                                table.insert(CapturedTorso.Changed:Connect(function()
+                                    C.RescueSurvivor(freezePod)
+                                end) or false)
+                                if CapturedTorso.Value then
+                                    table.insert(self.Functs, task.spawn(C.RescueSurvivor,freezePod))
+                                end
+                            end
+                        end,
+                    }
                 },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
