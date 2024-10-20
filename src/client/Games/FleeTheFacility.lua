@@ -89,7 +89,7 @@ local function GetSharedHacks(C, Settings)
                         MyInventory, CurCount = C.GetUserInventory()
                     end
                 end
-                
+
             end
             C.SetActionLabel(actionClone, "Calculating")
             local start = os.clock()
@@ -112,7 +112,7 @@ local function GetSharedHacks(C, Settings)
                 `Are you sure that you want to buy these hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N")
             info.CanCancel -= 1
             if CanContinue then
-                
+
                 for n, data in ipairs(ItemsToBuy) do
                     GetItemWhileNotLimit(table.unpack(data))
                 end
@@ -122,8 +122,8 @@ local function GetSharedHacks(C, Settings)
             elseif CountToPurchase <= 0 then
                 C.AddNotification(`No Items To Purchases`,`All the crates and bundles you have selected for pruchase are already in your inventory at the requested/max amount.`)
             end
-            
-            
+
+
             self:SetValue(false)
         end,
         Activate = function(self, enabled, firstRun)
@@ -134,7 +134,7 @@ local function GetSharedHacks(C, Settings)
                 self:SetValue(false)
                 return
             end
-            
+
             local info = {Name = self.Shortcut, Title = "Purchasing", CanCancel = 0, Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
                 self:Process(actionClone, info)
             end, Stop = function(byRequest)
@@ -188,10 +188,10 @@ local function GetSharedHacks(C, Settings)
             end
             table.insert(self.Functs,MenusTabFrame:GetPropertyChangedSignal("Visible"):Connect(menusTab))
             menusTab()
-            
+
             table.insert(self.Functs,BeastPowerMenuFrame:GetPropertyChangedSignal("Visible"):Connect(beastScreen))
             beastScreen()
-            
+
             table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
             survivorScreen()
         end,
@@ -199,7 +199,7 @@ local function GetSharedHacks(C, Settings)
             MyCharAdded = C.ReloadHack,
         }
     },
-    
+
     }
     return SharedHacks
 end
@@ -333,9 +333,9 @@ local function SetUpGame(C, Settings)
         end
     end)
 
-    
 
-    
+
+
     function C.HitSurvivor(theirChar)
         if not theirChar.PrimaryPart then
             return
@@ -387,6 +387,7 @@ local function SetUpGame(C, Settings)
             return false, "Capsule Not Found"
         end
         C.LastCaptureTime = os.clock()
+        task.wait(1/3)
         local Trigger = capsule:WaitForChild("PodTrigger",5)
         local ActionSign = Trigger and Trigger:FindFirstChild("ActionSign")
         for s=1,3,1 do
@@ -439,7 +440,7 @@ return function(C,Settings)
     }
     C.myTSM = C.plr:WaitForChild("TempPlayerStatsModule")
     C.mySSM = C.plr:WaitForChild("SavedPlayerStatsModule")
-    
+
     function C.GetPlayerListOfType(options)
         local list = {}
         for _, theirPlr in ipairs(PS:GetPlayers()) do
@@ -448,7 +449,7 @@ return function(C,Settings)
             end
             local theirTSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
             if not theirTSM then
-                print("Not tsm",theirPlr)
+                --print("[C.GetPlayerListOfType]: No TSM Found",theirPlr)
                 continue
             end
             local inGame, role = C.isInGame(theirPlr.Character)
@@ -518,7 +519,7 @@ return function(C,Settings)
             end
         end
     end
-    
+
     function C.GetUserInventory(theirPlr)
         local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
 
@@ -527,7 +528,7 @@ return function(C,Settings)
             Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and theirPlr.UserId or nil)
         until Success
         local InventoryCount = {}
-    
+
         for _, item in ipairs(Inventory) do
             InventoryCount[item] = (InventoryCount[item] or 0) + 1
         end
@@ -544,7 +545,7 @@ return function(C,Settings)
                 Run = function(self,args)
                     local SearchUser = args[1][1]:lower()
                     local TimeStart = os.clock()
-                    
+
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
                     if not result then
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
@@ -640,7 +641,7 @@ return function(C,Settings)
                         end,
                     },
                     Options = AppendToFirstArr({
-                            
+
                         },
                         C.SelectPlayerType,true
                     )
@@ -706,6 +707,7 @@ return function(C,Settings)
                         elseif self.EnTbl.RunType == "Rescue" then
                             C.SetActionLabel(actionClone,"[Idle]")
                         end
+                        self:Completed()
                     end,
                     DoOverrides = function(self, toggle)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
@@ -777,11 +779,11 @@ return function(C,Settings)
                         },
                     },
                 }
-            
+
             } or {}))
         }
     end
-    
+
 	return {
 		Category = {
 			Name = "FleeTheFacility",
@@ -789,7 +791,7 @@ return function(C,Settings)
 			Image = nil, -- Set to nil for game image
 			Layout = 20,
 		},
-		Tab = 
+		Tab =
             AppendToFirstArr(SharedHacks,{
                 {
                     Title = "Insta Trade",
@@ -833,7 +835,7 @@ return function(C,Settings)
                                 IsTrading = true
                                 table.insert(self.Threads, task.spawn(function()
                                     local theirInventory = C.GetUserInventory(tradePlr)
-                                    
+
                                     local myInventory = C.GetUserInventory()
                                     for name, count in pairs(myInventory) do
                                         local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
@@ -848,7 +850,7 @@ return function(C,Settings)
                                                 table.insert(sendArr,  name)
                                                 count -=1
                                             end
-                                            
+
                                             ItemsToSend -= 1
                                             if ItemsToSend == 0 then
                                                 break
@@ -868,7 +870,7 @@ return function(C,Settings)
                                     C.RemoteEvent:FireServer("CancelTrade")
                                     IsTrading, tradePlr = false, nil
                                 end))
-                                
+
                             elseif main == "TradeCancelled" then
                                 --print("Trade Cancelled!")
                                 IsTrading, tradePlr = false, nil
@@ -887,7 +889,7 @@ return function(C,Settings)
                                     task.wait(1)
                                 end
                             end
-                            
+
                             for _, theirPlr in ipairs(PS:GetPlayers()) do
                                 if self:IsAllowed(theirPlr) then
                                     tradePlr = theirPlr
@@ -899,7 +901,7 @@ return function(C,Settings)
                                 task.wait(3)
                             end
                         end
-                        
+
                     end,
                     Events = {},
                     Options = {
