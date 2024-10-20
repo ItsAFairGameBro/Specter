@@ -737,7 +737,7 @@ return function(C,Settings)
 					end
 				end,
                 MoveBombTo = function(self,instance,target)
-                    instance.CFrame = CFrame.new(target + Vector3.new(0,10,0), target)
+                    instance.CFrame = CFrame.new(target + Vector3.new(0,30,0), target)
                     instance.AssemblyLinearVelocity = Vector3.zero
                     instance.AssemblyAngularVelocity = Vector3.zero
                     instance.CanTouch = true
