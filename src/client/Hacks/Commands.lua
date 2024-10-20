@@ -696,7 +696,7 @@ return function(C,Settings)
             ActionFrame=nil,
             SetFling=function(self,enabled,speed,doLoopFling)
                 if enabled then
-                    C.SetPartProperty(workspace,"FallenPartsDestroyHeight", "fling",-1e5)
+                    C.SetPartProperty(workspace,"FallenPartsDestroyHeight", "fling",-1e4)
                 else
                     C.ResetPartProperty(workspace,"FallenPartsDestroyHeight","fling")
                 end

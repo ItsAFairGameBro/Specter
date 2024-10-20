@@ -48,7 +48,7 @@ local function Static(C,Settings)
         end
         return 0
     end
-	
+
 	function C.getClosestBase(location: Vector3)
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char:GetPivot().Position)
 		if not myHRPPos then return end
@@ -165,7 +165,7 @@ local function Static(C,Settings)
 		else
 			vehicle:PivotTo(loc)
 		end
-	end	
+	end
 	C.getgenv().isInGame = C.isInGame
 	C.RemoteEvent = RS:WaitForChild("Event") -- image naming something "Event"
 	C.Bases = {Dock={},Island={}}
@@ -258,7 +258,7 @@ local function Static(C,Settings)
                             warn("Votekick",C.GetPlayerName(targetPlr),
                                 "Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.RemoveAction("NavalVotekick")
-                            C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left.` .. 
+                            C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left.` ..
                                 `It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
@@ -358,7 +358,7 @@ return function(C,Settings)
 						C.RemoteEvent:FireServer("Teleport",{"Harbour",""})
 						C.char:SetAttribute("InGame",true) -- Only fire once, no need for spam
 					end
-					C.RemoteEvent:FireServer("shootRifle","",{Target}) 
+					C.RemoteEvent:FireServer("shootRifle","",{Target})
 					C.RemoteEvent:FireServer("shootRifle","hit",{Target.Parent:FindFirstChild("Humanoid")})
 				end,
 				Activate = function(self,newValue)
@@ -436,7 +436,7 @@ return function(C,Settings)
 					end,
 				}
 			},
-            
+
 			--[[{
 				Title = ({"OP","Balanced","NEENOO's","NotAVirus","Easy"})[math.random(1,5)].." God Mode",
 				Tooltip = "Keeps you invulerable using a forcefield. Only works in planes and when unseated",
@@ -522,7 +522,7 @@ return function(C,Settings)
                                                 task.delay(1,HPChangedFunct.Disconnect, HPChangedFunct)
                                                 task.delay(1,rawset,ConnectionTbl,closestBasePart,nil)
                                             end
-                                            
+
 											--closestBasePart = game:GetService("Workspace").JapanDock.Decoration.ConcreteBases.ConcreteBase
 											--[[for s = 0, 1, 1 do
 												C.firetouchinterest(instance,closestBasePart,0)
@@ -534,7 +534,7 @@ return function(C,Settings)
 										end
 									end
 								end)
-								CurConn = MyConn 
+								CurConn = MyConn
 								table.insert(self.Functs,CurConn)
 							end
 						end))
@@ -632,8 +632,8 @@ return function(C,Settings)
 									end
 									if C.IsInBox(data[1],data[2],seatPart.Position) == data[3] then
 										local PullUpSpeed = self.EnTbl.PullUpSpeed
-										GetOutSpeed += 
-											((data[3] and C.ClosestPointOnPartSurface or C.ClosestPointOnPart)(data[1], data[2], seatPart.Position) 
+										GetOutSpeed +=
+											((data[3] and C.ClosestPointOnPartSurface or C.ClosestPointOnPart)(data[1], data[2], seatPart.Position)
 												- seatPart.Position) * (data[3] and PullUpSpeed/3 or PullUpSpeed)
 									end
 								end
@@ -697,7 +697,7 @@ return function(C,Settings)
 						local Team = ship:WaitForChild("Team")
 						local ExpandSize = (Team.Value == C.plr.Team.Name or not self.RealEnabled) and 0 or self.EnTbl.Size
 						local DefaultSize = C.GetPartProperty(MainBody,"Size")
-	
+
 						C.ResetPartProperty(MainBody,"Size","ShipHitboxExpander")
 
 						if ExpandSize ~= 0 then
@@ -932,7 +932,7 @@ return function(C,Settings)
 						newTag.Parent=C.UI.ESP
 						newTag.StudsOffsetWorldSpace = Vector3.new(0, 45, 0)
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
-		
+
 						table.insert(self.Instances,newTag)
 						C.AddObjectConnection(island,"ESPIslandCapture",island.Destroying:Connect(function()
 							newTag:Destroy()
@@ -1039,13 +1039,13 @@ return function(C,Settings)
 					IslandAdded=function(self,island)
 						local DropOffset = 250
 						local TimeFromDropToExpl = math.sqrt(DropOffset/workspace.Gravity)
-						
+
 						local newTag=C.Examples.ToggleTagEx:Clone()
 						newTag.Name = "LoopBombESP"
 						newTag.Parent=C.UI.ESP
 						newTag.ExtentsOffsetWorldSpace = Vector3.zero
 						table.insert(self.Instances, newTag)
-		
+
 						C.AddObjectConnection(island,"Parent",island:GetPropertyChangedSignal("Parent"):Connect(function()
 							newTag:Destroy()
 						end))
@@ -1069,8 +1069,8 @@ return function(C,Settings)
 									C.RemoveAction(Info.Name)
 									RunS.RenderStepped:Wait()
 								end
-								
-								
+
+
 								local Plane = C.human.SeatPart and C.human.SeatPart.Parent
 								if not Plane then
 									return basebomb_activate(false)
@@ -1078,15 +1078,15 @@ return function(C,Settings)
 								local PlaneMB = Plane:WaitForChild("MainBody")
 								local BombC = Plane:WaitForChild("BombC")
 								local ActionClone = C.AddAction(Info)
-								
+
 								local IslandLoc
-								
+
 								local HalfSize = IslandBody.Size/4 -- Make it a quarter so it doesn't miss!
 								local Randomizer = Random.new()
-								
+
 								local XOfffset,ZOffset
 								local TargetCF
-								
+
 								local function CalculateNew(Regenerate)
 									if Regenerate or not XOfffset then
 										XOfffset,ZOffset = Randomizer:NextNumber(-HalfSize.X,HalfSize.X), Randomizer:NextNumber(-HalfSize.Z,HalfSize.Z)
@@ -1094,7 +1094,7 @@ return function(C,Settings)
 									IslandLoc = IslandBody:GetPivot() + (IslandBody.AssemblyLinearVelocity * TimeFromDropToExpl)
 									TargetCF = IslandLoc * CFrame.new(XOfffset,0,ZOffset) + Vector3.new(0,DropOffset,0)
 								end
-														
+
 								local WhileIn = 0
 								while Info.Enabled and TeamVal.Value ~= "" and TeamVal.Value ~= C.plr.Team.Name and ActionClone and ActionClone.Parent and island.Parent
 									and C.human.SeatPart and C.human.SeatPart.Parent == Plane and HPVal.Value > 0 do
@@ -1183,9 +1183,9 @@ return function(C,Settings)
 							local Conn
 							local function canRun(toRun)
 								return MainBody and Plane.Parent and table.find(self.Functs,Conn) and not MainBody:FindFirstChild("weldConstraint")
-									and C.human and seatPart == C.human.SeatPart and not C.Cleared
-									and (not toRun or 
-										((self.EnTbl.Bomb and BombC.Value == 0) 
+									and C.human and seatPart == C.human.SeatPart and HP.Value > 0 and not C.Cleared
+									and (not toRun or
+										((self.EnTbl.Bomb and BombC.Value == 0)
 											or (self.EnTbl.MinHPPercentage*C.DataStorage[Plane.Name].Health/100>=HP.Value)
 											or (self.EnTbl.Fuel and Fuel.Value <= 3))
 											or (self.EnTbl.Ammo and ((AmmoC and AmmoC.Value <= 30) or (AmmoC2 and AmmoC2.Value <= 0)))
@@ -1212,7 +1212,7 @@ return function(C,Settings)
 								end
 								while canRun(true) and Info.Enabled do
 									if (Plane:GetPivot().Position - HarborMain.Position).Magnitude > 30 then
-										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(0,45,15))
+										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(C.Randomizer:NextNumber(-40, 40),0,40)) -- used to be 0 45, 15
 									end
 									MainBody.AssemblyLinearVelocity = Vector3.new()
 									--MainBody.AssemblyAngularVelocity = Vector3.new()
@@ -1511,7 +1511,7 @@ return function(C,Settings)
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self, eventType, dataTbl)
 						if self == remoteEvent and eventType == "Teleport" then
                             tskSpawn(runFunct, self, dataTbl)
-                            
+
 							return "Cancel"
 						end
 					end,{"fireserver"})
