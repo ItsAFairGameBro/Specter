@@ -146,7 +146,7 @@ return function(C,Settings)
                     elseif firstRun then
                         return
                     end
-                    for _, theirPlr in ipairs(PS:GetPS()) do
+                    for _, theirPlr in ipairs(PS:GetPlayers()) do
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
@@ -184,7 +184,7 @@ return function(C,Settings)
                                 task.defer(function()
                                     table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                         print("_SIGNAL")
-                                        local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
+                                        --[[local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
                                         print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
                                         if thePlr and self:HasAdminAccess(thePlr) then
                                             print("Message",data.Message)
@@ -197,7 +197,7 @@ return function(C,Settings)
                                                 print("Ran Cmd",msg)
                                                 C.RunCommand(msg, true)
                                             end
-                                        end
+                                        end--]]
                                     end))
                                     print("Waiting For Established Connection22!",theirPlr)
                                 end)
