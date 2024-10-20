@@ -189,6 +189,8 @@ return function(C,Settings)
 		--assert(table.find(options.Selections,options.Default),"Default Selection is Missing")
 
 		local self, newFrame, default = DoCombined(DropdownTbl, "Dropdown", parent, options)
+
+        assert(default, `[Dropdowntbl.new]: Missing/Invalid Default for {parent.Shortcut}`)
 		
 		self.SelectionsFrame = newFrame
 		self.DropdownButton = newFrame:WaitForChild("DropdownButton")

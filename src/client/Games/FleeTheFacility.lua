@@ -698,7 +698,7 @@ return function(C,Settings)
                             Type = Types.Dropdown,
                             Title = "Run Type",
                             Tooltip = "Which ServerFarm type to run",
-                            Layout = 1,
+                            Layout = 1, Default = "BeastCapture",
                             Shortcut="RunType",
                             Selections = {"BeastCapture"},
                         },
