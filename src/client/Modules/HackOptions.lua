@@ -35,7 +35,7 @@ return function(C,Settings)
 		else
 			Default = self.Default
 		end
-        assert(Default, `[HackOptions.Combined]: Invalid Default for {self.ParentShortcut} {self.Shortcut}`)
+        --assert(Default, `[HackOptions.Combined]: Invalid Default for {self.ParentShortcut} {self.Shortcut}`)
 		newFrame.LayoutOrder = options.Layout
 		newFrame.Name = options.Title
 		newFrame:WaitForChild("NameTL").Text = options.Title
