@@ -755,6 +755,7 @@ return function(C,Settings)
                             while not C.getgenv().Rescued and myIndex ~= 1 do
                                 task.wait(1/3)
                             end
+                            print("Proceeded to be cooked")
                             while true do
                                 -- First player gets captured / anyone gets captured after rescuing
                                 while not C.myTSM.Captured.Value and not C.myTSM.Ragdoll.Value do
@@ -838,8 +839,9 @@ return function(C,Settings)
                     end,
                     Completed = function(self)
                         -- Finished on its own --
-                        C.RemoveAction(self.Shortcut)
+                        --C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
+                        C.DoActivate(self, self.Activate, self.RealEnabled, false)
                         --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
                     end,
@@ -852,7 +854,10 @@ return function(C,Settings)
                         end,
                         MyBeastHammerRemoved = function(self)
                             self:Completed()
-                        end
+                        end,
+                        GameRemoved = function(self)
+                            self:Completed()
+                        end,
                     },
                     Options = {
                         {
