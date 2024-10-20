@@ -1213,7 +1213,7 @@ return function(C,Settings)
                                 local ChosenNumber = C.Randomizer:NextNumber(-40, 40)
 								while canRun(true) and Info.Enabled do
 									if (Plane:GetPivot().Position - HarborMain.Position).Magnitude > 30 then
-										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(ChosenNumber,0,80)) -- used to be 0 45, 15
+										C.VehicleTeleport(Plane,HarborMain:GetPivot() * CFrame.new(-40,0,80)) -- used to be 0 45, 15
 									end
 									MainBody.AssemblyLinearVelocity = Vector3.new()
 									--MainBody.AssemblyAngularVelocity = Vector3.new()
