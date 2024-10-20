@@ -182,9 +182,9 @@ return function(C,Settings)
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 task.defer(function()
-                                    DoneFiltering.OnClientEvent:Connect(function(msg, ...)
-                                        print(msg.Message)
-                                    end)
+                                    table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(msg, ...)
+                                        print(3,msg.Message)
+                                    end))
                                         --[[local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
                                         print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
                                         if thePlr and self:HasAdminAccess(thePlr) then
