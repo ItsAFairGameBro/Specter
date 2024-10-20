@@ -276,9 +276,9 @@ return function(C,Settings)
 		end
 	end
 	--Update Targeting
-	function C.CanTargetPlayer(plr)
+	function C.CanTargetPlayer(plr, includeSelf)
 		if plr == C.plr then
-			return false
+			return includeSelf or false
 		end
 		local NoTargetFriends = C.enHacks.Users.NoTargetFriends
 		if not NoTargetFriends.En then
@@ -822,10 +822,10 @@ return function(C,Settings)
 	end
 
 	-- Get Non Friends
-	function C.GetNonFriends()
+	function C.GetNonFriends(includeSelf)
 		local list = {}
 		for num, theirPlr in ipairs(PS:GetPlayers()) do
-			if C.CanTargetPlayer(theirPlr) then
+			if C.CanTargetPlayer(theirPlr, includeSelf) then
 				table.insert(list, theirPlr)
 			end
 		end

@@ -79,7 +79,7 @@ return function(C,Settings)
             end,
         },
         ["morph"]={
-            Parameters={{Type="Players",SupportsNew = true}},
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true}},
             AfterTxt=" to %s%s",Priority=-3,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
@@ -125,7 +125,7 @@ return function(C,Settings)
                 }
             },
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
-                local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect or false]
+                local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
     
                 local targetHuman = targetChar:FindFirstChild("Humanoid")
                 local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")

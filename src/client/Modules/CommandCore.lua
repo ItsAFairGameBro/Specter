@@ -37,7 +37,7 @@ return function(C,Settings)
             local canRunFunction = true
             for num, argumentData in ipairs(CommandData.Parameters) do
                 if argumentData.Type=="Players" or argumentData.Type=="Player" then
-                    local plrList = C.GetNonFriends()
+                    local plrList = argumentData.AllowFriends and PS:GetPlayers() or C.GetNonFriends(true)
                     if args[num]=="all" then
                         args[num] = plrList
                     elseif args[num] == "others" then
