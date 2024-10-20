@@ -484,7 +484,7 @@ return function(C,Settings)
 			},--]]
 			{
 				Title = "Projectile Hit",
-				Tooltip = "Instantly hits enemies when shooting bullets",
+				Tooltip = "Instantly hits enemies when shooting bullets\nPlease note that players you directly kill will know who killed them",
 				Layout = 4, Functs = {},
 				Shortcut = "ProjectileHit",
 				Activate = function(self,newValue)
@@ -502,7 +502,7 @@ return function(C,Settings)
 									if instance.Name == "bullet" and instance.Parent and MyConn == CurConn then
 										local nearestTbl = {}
 										if self.EnTbl.Users then
-											table.insert(nearestTbl,{C.getClosest({},instance.Position)})
+											table.insert(nearestTbl,{C.getClosest({noForcefield=true},instance.Position)})
 										end
 										if self.EnTbl.Planes then
 											table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
