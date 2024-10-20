@@ -48,7 +48,7 @@ return function(C,Settings)
 			C.enHacks[tblHack.Parent.Category.Name][tblHack.Shortcut].Keybind = nil
 		end
 	end
-	
+
 	--Set Binds for UI
 	local eventsAllowed={
 		"MyCharAdded","CharAdded","OthersCharAdded",
@@ -72,6 +72,7 @@ return function(C,Settings)
         "MyBeastRopeAdded", "BeastRopeAdded", "OthersRopeAdded",
         "MyBeastRopeRemoved", "BeastRopeRemoved", "OthersRopeRemoved",
         "GameAdded","GameRemoved",--Don't laugh!
+        "NewFreezingPod"
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do
@@ -82,7 +83,7 @@ return function(C,Settings)
 			C.events[name][hackTbl] = funct
 		end
 	end
-	
+
 	--Open HUD visibility
 	C.UI.HUDEn = false
 	function C.SetHUDVis(enabled,instant)
@@ -104,7 +105,7 @@ return function(C,Settings)
 		C.SetHUDVis(not C.UI.HUDEn)
 	end)
 	C.SetHUDVis(false,true)
-	
+
 	--Save keypress
 	C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject,gameProcessed)
 		if gameProcessed then return end
@@ -114,7 +115,7 @@ return function(C,Settings)
 			C.ToggleServersVisiblity()
 		end
 	end))
-	
+
 	--Clear UI connection
 	local function CheckDeleteButton(actionName,inputState)
 		if inputState == Enum.UserInputState.Begin
