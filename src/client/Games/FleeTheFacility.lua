@@ -269,7 +269,7 @@ local function SetUpGame(C, Settings)
                 end
                 C.Hammer, C.BeastPlr, C.BeastChar = inst, theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
-                C.AddObjectConnection(inst, "BeastHammerRemoved", inst.Destroying:Connect(function()
+                C.AddObjectConnection(Handle, "BeastHammerRemoved", Handle.Destroying:Connect(function()
                     C.Hammer, C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil, nil
                     C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 end))
@@ -357,7 +357,7 @@ local function SetUpGame(C, Settings)
             return
         end
         local function isCapsuleOpen(cap)
-            return cap.PrimaryPart and cap:FindFirstChild("PodTrigger") and cap.PodTrigger:FindFirstChild("CapturedTorso") and not cap.PodTrigger.CapturedTorso.Value
+            return cap:FindFirstChild("PodTrigger") and cap.PodTrigger:FindFirstChild("CapturedTorso") and not cap.PodTrigger.CapturedTorso.Value
         end
         local capsule,closestDist=nil,math.huge
         for _, cap in ipairs(C.FreezingPods) do
@@ -373,7 +373,7 @@ local function SetUpGame(C, Settings)
             return false, "Capsule Not Found"
         end
         C.LastCaptureTime = os.clock()
-        local Trigger = capsule:WaitForChild("PodTrigger",5)
+        local Trigger = capsule:WaitForChild("PodTrigger",)
         local ActionSign = Trigger and Trigger:FindFirstChild("ActionSign")
         for s=1,3,1 do
             local isOpened = ActionSign and (ActionSign.Value==11)
@@ -673,7 +673,7 @@ return function(C,Settings)
                                 if not TSM then
                                     return
                                 end
-                                C.CommandFunctions.follow:Run({{theirPlr},5})
+                                C.CommandFunctions.follow:Run({{theirPlr},-3})
                                 while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
                                     RunS.RenderStepped:Wait()
                                 end
