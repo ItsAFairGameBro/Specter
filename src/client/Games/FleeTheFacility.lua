@@ -579,7 +579,7 @@ return function(C,Settings)
                     Tooltip = "Event tester",
                     Layout = 100,
                     Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
-                    StartRunner = function(self)
+                    StartSurvivor = function(self)
                         local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
                         table.sort(hitList,function(a,b)
                             return a.Name:lower() < b.Name:lower()
