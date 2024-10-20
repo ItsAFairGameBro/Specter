@@ -68,8 +68,8 @@ return function(C,Settings)
         "MyRunnerAdded", "RunnerAdded", "OthersRunnerAdded",
         "MyRagdollAdded", "RagdollAdded", "OthersRagdollAdded",
         "MyRagdollRemoved", "RagdollRemoved", "OthersRagdollRemoved",
-        "MyBeastRopeAdded", "BeastRopeAdded", "OthersBeastRopeAdded",
-        "MyBeastRopeRemoved", "BeastRopeRemoved", "OthersBeastRemoved",
+        "MyBeastRopeAdded", "BeastRopeAdded", "OthersRopeAdded",
+        "MyBeastRopeRemoved", "BeastRopeRemoved", "OthersRopeRemoved",
         "GameAdded","GameRemoved",--Don't laugh!
 	}
 	function C.BindEvents(hackTbl)
