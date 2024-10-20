@@ -427,10 +427,11 @@ return function(C,Settings)
         for _, theirPlr in ipairs(PS:GetPlayers()) do
             local theirTSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
             if not theirTSM then
+                print("Not tsm",theirPlr)
                 continue
             end
             local inGame, role = C.isInGame(theirPlr.Character)
-            if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role]) 
+            if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role])
                 or (options.Ragdoll ~= nil and options.Ragdoll == theirTSM.Ragdoll.Value)
                 or (options.Captured ~= nil and options.Captured == theirTSM.Captured.Value) then
                 table.insert(list, theirPlr)
