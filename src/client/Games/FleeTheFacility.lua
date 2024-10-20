@@ -372,7 +372,7 @@ return function(C,Settings)
             },
             Tab = AppendToFirstArr(SharedHacks, AppendToFirstArr({
 
-            }, C.IsBotUser and {
+            }, C.BotUsers and {
                 {
                     Title = "Server Farm",
                     Tooltip = "Event tester",
