@@ -275,9 +275,11 @@ return function(C,Settings)
                     end
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
+                        print(theirChar,"first run")
                         if JoinPlayerMorphDesc then
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
+                            print(theirChar,"first run set to",JoinPlayerMorphDesc)
                             C.CommandFunctions.morph:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
                         end
                     elseif currentChar then
