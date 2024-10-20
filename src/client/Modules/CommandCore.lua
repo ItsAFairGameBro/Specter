@@ -100,7 +100,7 @@ return function(C,Settings)
                         end
                     end
                 elseif argumentData.Type == "Friend" then
-                    local Ret = C.StringStartsWith(C.friendnames, args[num])[1]
+                    local Ret = C.StringStartsWith(C.friendnames, args[num], true)[1]
                     if Ret then
                         args[num] = Ret
                     else
