@@ -2926,8 +2926,8 @@ return function(C, Settings)
         if not actionClone then
             return
         end
-		local info = C.getgenv().ActionsList[actionClone.Name]
-		local Time = info:FindFirstChild("TimeLabel")
+		--local info = C.getgenv().ActionsList[actionClone.Name]
+		local Time = actionClone:FindFirstChild("TimeLabel")
 		if Time then
 			Time.Text = text
 		end
