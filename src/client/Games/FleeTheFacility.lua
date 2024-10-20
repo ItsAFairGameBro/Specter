@@ -224,7 +224,7 @@ local function SetUpGame(C, Settings)
         local CurrentMap = RS:WaitForChild("CurrentMap")
 		local function MapAdded(newMap)
             print(newMap,1)
-            while (newMap == CurrentMap and C.GameStatus.Value:lower():find("loading")) do
+            while (newMap == CurrentMap.Value and C.GameStatus.Value:lower():find("loading")) do
                 C.GameStatus:GetPropertyChangedSignal("Value"):Wait()
             end
             print(newMap,2)
