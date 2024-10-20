@@ -89,13 +89,14 @@ return function(C,Settings)
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
                     end
-                elseif argumentData.Type == "Options" then
-                    if not table.find(argumentData.Options,args[num]) and canRunFunction then
+                elseif argumentData.Type == "Options" or argumentData.Type == "Friends" then
+                    local Options = argumentData.Type=="Options" and argumentData.Options or C.enHacks.Users.NoTargetFriends.Friends
+                    if not table.find(Options,args[num]) and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
                         else
                             canRunFunction = false
-                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`) 
+                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)
                         end
                     end
                 elseif argumentData.Type=="User" then
@@ -106,7 +107,6 @@ return function(C,Settings)
                         canRunFunction = false
                         C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid users. No matching username/userid found for {args[num]}`)
                     end
-                    
                 elseif argumentData.Type=="" then
                     --do nothing
                 elseif argumentData.Type~=false then
@@ -124,8 +124,8 @@ return function(C,Settings)
                     if wasSuccess then
                         local Length = ChosenPlr and #ChosenPlr
                         local playersAffected = typeof(ChosenPlr) == "table" and (Length>1 and Length .. " Players" or tostring(ChosenPlr[1]))
-                            --(typeof(ChosenPlr)=="Instance" and (ChosenPlr==C.plr and ChosenPlr.Name) or ChosenPlr.Name) 
-                           -- or (ChosenPlr:sub(1,1):upper() .. 
+                            --(typeof(ChosenPlr)=="Instance" and (ChosenPlr==C.plr and ChosenPlr.Name) or ChosenPlr.Name)
+                           -- or (ChosenPlr:sub(1,1):upper() ..
                             --    ChosenPlr:sub(2,ChosenPlr:sub(ChosenPlr:len())=="s" and ChosenPlr:len()-1 or ChosenPlr:len()))
                         if playersAffected == C.plr.Name then
                             playersAffected = "you"
@@ -147,7 +147,7 @@ return function(C,Settings)
                     task.spawn(yieldFunction)
                 end
             end
-            
+
         elseif inputCommand~="c" and inputCommand~="whisper" and inputCommand~="mute" and inputCommand~="block" and inputCommand~="unblock"
             and inputCommand~="unmute" and inputCommand~="e" then
             C.CreateSysMessage(`Command Not Found: {inputCommand}`)
@@ -162,7 +162,7 @@ return function(C,Settings)
 
     local function registerNewChatBar(_,firstRun)
         local sendButton = hasNewChat and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
-        chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and 
+        chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
             "Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar" or "ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox")
 
         local sendTheMessage
@@ -252,25 +252,25 @@ return function(C,Settings)
         end
         local function HighlightLayout(num)
             currentIndex = math.clamp(num, math.min(#frameList,1), #frameList)
-        
+
             for num2, frameButton in ipairs(frameList) do
                 local selected = frameButton.LayoutOrder == currentIndex
                 frameButton.BackgroundColor3 = selected and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
-        
+
                 if selected then
                     -- Get the position of the frameButton relative to the ChatAutoCompleteFrame
                     local objectTop = frameButton.AbsolutePosition.Y
                     local objectBottom = objectTop + frameButton.AbsoluteSize.Y
                     local canvasPosition = ChatAutoCompleteFrame.CanvasPosition.Y
                     local windowBottom = ChatAutoCompleteFrame.AbsolutePosition.Y + ChatAutoCompleteFrame.AbsoluteSize.Y
-        
+
                     -- Check if the object is above the current view
                     if objectTop < ChatAutoCompleteFrame.AbsolutePosition.Y then
-                        ChatAutoCompleteFrame.CanvasPosition = 
+                        ChatAutoCompleteFrame.CanvasPosition =
                             Vector2.new(ChatAutoCompleteFrame.CanvasPosition.X, ChatAutoCompleteFrame.CanvasPosition.Y - (ChatAutoCompleteFrame.AbsolutePosition.Y - objectTop))
                     -- Check if the object is below the current view
                     elseif objectBottom > windowBottom then
-                        ChatAutoCompleteFrame.CanvasPosition = 
+                        ChatAutoCompleteFrame.CanvasPosition =
                             Vector2.new(ChatAutoCompleteFrame.CanvasPosition.X, ChatAutoCompleteFrame.CanvasPosition.Y + (objectBottom - windowBottom))
                     end
                 end
@@ -476,7 +476,7 @@ return function(C,Settings)
             if not chatBar or not isFocused then
                 return
             end
-            
+
             --Up Down Commands
             if #C.savedCommands==0 or lastText == newInput then
                 return
@@ -494,7 +494,7 @@ return function(C,Settings)
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))--:GetPropertyChangedSignal("Text"):Connect(textUpd))
         C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
         textUpd()
-        
+
         C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
         ChatBarUpdated()
         C.AddObjectConnection(chatBar,"FocusLostChatbar",chatBar.FocusLost:Connect(function(enterPressed)
@@ -512,7 +512,7 @@ return function(C,Settings)
                     end
                 end
             end
-            
+
             if not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     if connectionFunct.Function then
