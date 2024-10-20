@@ -425,7 +425,7 @@ return function(C,Settings)
 			return theirPlr.Team.TeamColor.Color
 		elseif theirIsInGame then
 			local Type = theirIsInGame[2]
-			if Type == "Murderer" then
+			if Type == "Murderer" or Type == "Beast" then
 				return Color3.fromRGB(255)
 			elseif Type == "Sheriff" or Type == "Runner" or Type == "Survivor" then
 				return Color3.fromRGB(0,0,255)
