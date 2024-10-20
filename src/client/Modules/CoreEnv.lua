@@ -53,7 +53,6 @@ return function(C,Settings)
 	function C.DoActivate(self,funct,...)
         if self.Activate ~= funct or not select(2,...) then
             self:ClearData()
-            print("Running ClearDAta")
         end
 		
 		local header = "Hack/"..self.Parent.Category.Name.."/"..self.Shortcut

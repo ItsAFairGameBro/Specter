@@ -181,28 +181,22 @@ return function(C,Settings)
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
-                                    table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(msg, ...)
-                                        print(3,msg.Message)
-                                    end))
-                                        --[[local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
-                                        print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
-                                        if thePlr and self:HasAdminAccess(thePlr) then
-                                            print("Message",data.Message)
-                                            local msg = data.Message
-                                            --print(thePlr,msg)
-                                            if not msg then
-                                                return
-                                            end
-                                            if msg:sub(1,1) == "/" then
-                                                print("Ran Cmd",msg)
-                                                C.RunCommand(msg, true)
-                                            end
-                                        end--]]
-                                    print("Waiting For Established Connection22!",theirPlr)
-                                
+                                table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
+                                    local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
+                                    if thePlr and self:HasAdminAccess(thePlr) then
+                                        local msg = data.Message
+                                        if not msg then
+                                            return
+                                        end
+                                        if msg:sub(1,1) == "/" then
+                                            C.RunCommand(msg, true)
+                                        end
+                                    end
+                                end))
+                                --print("Waiting For Established Connection22!",theirPlr)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
-                                print("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
+                                warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
                             end
                             
                         end
