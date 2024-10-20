@@ -89,7 +89,7 @@ return function(C,Settings)
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
                     end
-                elseif argumentData.Type == "Options" or argumentData.Type == "Friends" then
+                elseif argumentData.Type == "Options" or argumentData.Type == "Friend" then
                     local Options = argumentData.Type=="Options" and argumentData.Options or C.enHacks.Users.NoTargetFriends.Friends
                     if not table.find(Options,args[num]) and canRunFunction then
                         if args[num] == "" and argumentData.Default then
