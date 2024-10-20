@@ -1235,9 +1235,9 @@ return function(C,Settings)
 		return math.clamp(x,C.GetMinMax(n1,n2))
 	end
     function C.ResetCharacter()
-        if C.char~=nil and C.human~=nil and C.char.Parent~=nil and C.human.Health > 0 then
+        if C.char and C.human and C.human.Health > 0 then
             local saveChar = C.char
-            C.AvailableHacks.Commands[24].BeforeReset()
+            
             if C.char.PrimaryPart then
                 C.char.PrimaryPart.Anchored=true
             end
@@ -1249,17 +1249,16 @@ return function(C,Settings)
             task.wait(1);
             C.DoTeleport(CFrame.new(1e3,1e-3,1e3))
             task.wait(.25);
-            if not C.char.Humanoid:FindFirstChild("Humanoid") then
+            if not C.char:FindFirstChild("Humanoid") then
                 if C.char.Humanoid.Health<=0 then
-                    local chardescendants = C.char:GetDescendants();
-                    for num,part in ipairs(chardescendants) do
+                    for num,part in ipairs(C.char:GetDescendants()) do
                         if part:IsA("BasePart") then
-                            part:Destroy();
-                        end;
-                    end;
+                            part:Destroy()
+                        end
+                    end
                 else
                     C.char.Humanoid.Health = 0;
-                end;
+                end
                 task.delay(30,function()
                     if C.char==saveChar and table.find(C.BotUsers,C.plr.Name:lower())~=nil and C.enHacks.FleeTheFacility.ServerFarm and not C.Cleared then
                         C.plr:Kick("Reset Activation Failed")
