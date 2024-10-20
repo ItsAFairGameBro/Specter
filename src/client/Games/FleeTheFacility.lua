@@ -314,7 +314,7 @@ local function SetUpGame(C, Settings)
     local function gameActiveValChanged(newVal)
         C.FireEvent(newVal and "GameAdded" or "GameRemoved", nil)
     end
-    C.AddGlobalConnetion(gameActiveVal.Changed:Connect(gameActiveValChanged))
+    C.AddGlobalConnection(gameActiveVal.Changed:Connect(gameActiveValChanged))
     if gameActiveVal.Value then
         gameActiveValChanged(gameActiveVal.Value)
     end
