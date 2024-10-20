@@ -750,6 +750,7 @@ return function(C,Settings)
                                 local target = game:GetService("Workspace").Lobby.KickExploiter.Visual.Position + Vector3.new(0,10,0)
                                 instance.Position = target
                                 instance.CanTouch = true
+                                C.Spectate(game:GetService("Workspace").Lobby.KickExploiter.Visual)
                                 print("MOVED")
                                 return
                             end
