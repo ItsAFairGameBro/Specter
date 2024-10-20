@@ -807,6 +807,7 @@ return function(C,Settings)
                     Completed = function(self)
                         -- Finished on its own --
                         C.RemoveAction(self.Shortcut)
+                        task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
                     end,
                     Events = {
