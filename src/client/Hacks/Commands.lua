@@ -269,7 +269,7 @@ return function(C,Settings)
                         return
                     end
                     local currentChar = C.getgenv().currentDesc[theirPlr.Name]
-                    if C.gameUniverse == "NavalWarefare" then
+                    if C.hackData.NavalWarefare then
                         task.wait(3)
                     end
                     if firstRun and not currentChar then
@@ -285,6 +285,7 @@ return function(C,Settings)
                 end,
             },
             Run=function(self,args)
+                self.Enabled = true
                 local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])[1]
                 selectedName = selectedName ~= "no" and selectedName[2] or selectedName
                 if not selectedName then

@@ -195,6 +195,9 @@ local function GetSharedHacks(C, Settings)
             table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
             survivorScreen()
         end,
+        Events = {
+            MyCharAdded = C.ReloadHack,
+        }
     },
     
     }
