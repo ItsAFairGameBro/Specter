@@ -146,7 +146,7 @@ return function(C,Settings)
                     elseif firstRun then
                         return
                     end
-                    for _, theirPlr in ipairs(PS:GetPlayers()) do
+                    for _, theirPlr in ipairs(PS:GetPS()) do
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
@@ -180,29 +180,28 @@ return function(C,Settings)
                         if self:HasAdminAccess(theirPlr) then
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-                                local DoneFiltering = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.OnMessageDoneFiltering--C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
-                                local Event = DoneFiltering.OnClientEvent
-                                local Function = function(data, channel)
-                                    warn("_SIGNAL")
-                                    local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
-                                    print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
-                                    if thePlr and self:HasAdminAccess(thePlr) then
-                                        print("Message",data.Message)
-                                        local msg = data.Message
-                                        --print(thePlr,msg)
-                                        if not msg then
-                                            return
+                                local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
+                                task.defer(function()
+                                    table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
+                                        print("_SIGNAL")
+                                        local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
+                                        print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
+                                        if thePlr and self:HasAdminAccess(thePlr) then
+                                            print("Message",data.Message)
+                                            local msg = data.Message
+                                            --print(thePlr,msg)
+                                            if not msg then
+                                                return
+                                            end
+                                            if msg:sub(1,1) == "/" then
+                                                print("Ran Cmd",msg)
+                                                C.RunCommand(msg, true)
+                                            end
                                         end
-                                        if msg:sub(1,1) == "/" then
-                                            print("Ran Cmd",msg)
-                                            C.RunCommand(msg, true)
-                                        end
-                                    end
-                                end
-                                local Connection = Event:Connect(Function)
-                                table.insert(self.Functs, Connection)
-                                print("Conn:",Connection)
-                                print("Waiting For Established Connection22!",theirPlr)
+                                    end))
+                                    print("Waiting For Established Connection22!",theirPlr)
+                                end)
+                                
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 print("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
