@@ -358,7 +358,7 @@ local function SetUpGame(C, Settings)
         local capsule,closestDist=nil,math.huge
         for _, cap in ipairs(C.FreezingPods) do
             if isCapsuleOpen(cap) then
-                local dist=(cap.PrimaryPart.Position-theirChar.PrimaryPart.Position).Magnitude
+                local dist=(cap:GetPivot().Position-theirChar.PrimaryPart.Position).Magnitude
                 if (dist<closestDist) then
                     capsule,closestDist=cap,dist
                 end

@@ -55,11 +55,10 @@ return function(C,Settings)
             local firstRun = select(2,...)
             if not firstRun then
                 self:ClearData()
-                if C.SaveEvents then
+                if C.SaveEvents and self.Events then
                     for key, eventFunct in pairs(self.Events) do
                         local eventList = C.SaveEvents[key:gsub("Added","")]
                         if eventList then
-                            print("possible eventdata")
                             for _, eventData in ipairs(eventList) do
                                 C.DoActivate(self,eventFunct,table.unpack(eventData))
                             end
