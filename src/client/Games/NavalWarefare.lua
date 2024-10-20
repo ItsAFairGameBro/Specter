@@ -745,7 +745,7 @@ return function(C,Settings)
                 end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
-					    local secondaryBasePart = C.getClosestBase(seatPart.Position)
+					    local secondaryBasePart = C.Bases.Island[2].PrimaryPart
 						local deb = 0
 						table.insert(self.Functs,workspace.ChildAdded:Connect(function(instance)
 							if instance.Name ~= "Bomb" then
