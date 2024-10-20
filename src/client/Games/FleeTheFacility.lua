@@ -746,11 +746,9 @@ return function(C,Settings)
                                     if CapturedTorso and friendChar:IsAncestorOf(CapturedTorso.Value) then
                                         C.RescueSurvivor(freezePod)
                                         C.getgenv().Rescued = true
-                                        print("Free SUCCESS!")
                                         return
                                     end
                                 end
-                                print('none found :(')
                             end))
                             -- Everyone but first player waits
                             while not C.getgenv().Rescued and myIndex ~= 1 do
