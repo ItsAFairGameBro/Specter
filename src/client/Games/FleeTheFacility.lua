@@ -773,15 +773,16 @@ return function(C,Settings)
                                 end)
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
 
-                                local Ret1 = (C.char and C.human and C.human.Health>0 and C.Camera.CameraSubject==C.human and C.char:FindFirstChild("HumanoidRootPart") and C.BeastChar)
+                                local Ret1 = (C.char and C.human and C.human.Health>0 and C.char:FindFirstChild("HumanoidRootPart") and C.Hammer)
                                 local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
                                 return (Ret1 and Ret2)
                             end
-                            task.spawn(function()
+                            table.insert(self.Threads,task.spawn(function()
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
+                                        print("My guy was captured!")
                                         local targetCapsule
                                         for _, capsule in ipairs(C.FreezingPods) do
                                             if capsule:FindFirstChild("PodTrigger")~=nil and capsule.Parent then
@@ -792,13 +793,17 @@ return function(C,Settings)
                                                 end
                                             end
                                         end
-                                        if targetCapsule and C.RescueSurvivor(targetCapsule) then
-                                            return C.plr:SetAttribute("HasRescued",true)
+                                        if targetCapsule then
+                                            local Freed = C.RescueSurvivor(targetCapsule)
+                                            print("Found Pod, Freeing Status:",Freed)
+                                            if Freed then
+                                                return C.plr:SetAttribute("HasRescued",true)
+                                            end
                                         end
                                     end
                                     RunS.RenderStepped:Wait()
                                 end
-                            end)
+                            end))
                             local function canCapture()
                                 local keyNeeded = 0
                                 for key, theirPlr in ipairs(runnerPlrs) do
@@ -834,6 +839,8 @@ return function(C,Settings)
                             until #MyList == 0
                         elseif self.EnTbl.RunType == "Rescue" then
                             C.SetActionLabel(actionClone,"[Idle]")
+                        else
+                            warn(`[C.StartBeast]: Unknown Implementation for StartBeast`)
                         end
                         self:Completed()
                     end,
@@ -846,7 +853,7 @@ return function(C,Settings)
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
-                        if not C.BeastChar or not C.char or not C.isInGame(C.char) then
+                        if not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealValue then
                             return self:DoOverrides(false)-- No beast no hoes
                         end
                         self:DoOverrides(true)
