@@ -322,7 +322,6 @@ local function SetUpGame(C, Settings)
 
     
     function C.HitSurvivor(theirChar)
-        print("Called Hit",theirChar,C.Hammer)
         if not theirChar.PrimaryPart then
             return
         end
