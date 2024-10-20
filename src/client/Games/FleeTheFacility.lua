@@ -438,9 +438,9 @@ return function(C,Settings)
                 continue
             end
             local inGame, role = C.isInGame(theirPlr.Character)
-            if (options.InGame~= nil and inGame == options.InGame) or (options[role] ~= nil and options[role])
-                or (options.Ragdoll ~= nil and options.Ragdoll == theirTSM.Ragdoll.Value)
-                or (options.Captured ~= nil and options.Captured == theirTSM.Captured.Value) then
+            if (options.InGame == nil or inGame == options.InGame) and (options[role] == nil or options[role])
+                and (options.Ragdoll == nil or options.Ragdoll == theirTSM.Ragdoll.Value)
+                and (options.Captured == nil or options.Captured == theirTSM.Captured.Value) then
                 table.insert(list, theirPlr)
             end
         end
@@ -666,19 +666,20 @@ return function(C,Settings)
 
                     end,
                     StartBeast = function(self)
-                        for _, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false, ExcludeMe = true})) do
-                            local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
-                            if not TSM then
-                                return
+                        repeat
+                            local MyList = C.GetPlayerListOfType({Captured = false, ExcludeMe = true})
+                            for _, theirPlr in ipairs(MyList) do
+                                local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
+                                if not TSM then
+                                    return
+                                end
+                                C.CommandFunctions.follow:Run({{theirPlr},5})
+                                while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
+                                    RunS.RenderStepped:Wait()
+                                end
                             end
-                            C.CommandFunctions.follow:Run({{theirPlr},5})
-                            print(theirPlr,theirPlr.Parent,TSM.Captured.Value)
-                            while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
-                                RunS.RenderStepped:Wait()
-                            end
-                        end
-                        print("FINISHED")
-                        C.CommandFunctions.follow:Run({{}})
+                        until #MyList == 0
+                        C.CommandFunctions.follow:Run({{C.plr}})
                     end,
                     DoOverrides = function(self, toggle)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
