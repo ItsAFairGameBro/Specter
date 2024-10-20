@@ -737,6 +737,7 @@ return function(C,Settings)
                             -- ADD HERE --
                             local myIndex = table.find(hitList, C.plr)
                             local friend = hitList[(myIndex - 1) % (#hitList)]
+                            print(hitList,myIndex,friend)
                             local friendTSM = friend:WaitForChild("TempPlayerStatsModule")
                             table.insert(self.Threads, friendTSM:WaitForChild("Captured").Changed:Connect(function()
                                 local friendChar = friend.Character
@@ -820,7 +821,7 @@ return function(C,Settings)
                                 end
                             end})
                             BotActionClone = myActionClone
-                            table.insert(self.Threads,task.delay(30, function()
+                            table.insert(self.Threads,task.delay(309, function()
                                 if myActionClone ~= BotActionClone then
                                     return
                                 end
