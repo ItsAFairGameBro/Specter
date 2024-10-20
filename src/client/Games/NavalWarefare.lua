@@ -579,7 +579,7 @@ return function(C,Settings)
 						Layout = 3,Default=true,
 						Shortcut="Planes",
 					},
-					--[[{
+					{
 						Type = Types.Dropdown, Selections = {"InGame"},
 						Title = "Target Users",
 						Tooltip = "Who on the enemy team to target. (PATCHED: Can only target INGAME players with NO FF)",
