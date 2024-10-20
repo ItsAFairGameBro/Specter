@@ -667,7 +667,7 @@ return function(C,Settings)
                     end,
                     StartBeast = function(self)
                         repeat
-                            local MyList = C.GetPlayerListOfType({Captured = false, ExcludeMe = true})
+                            local MyList = C.GetPlayerListOfType({Survivor = true, Captured = false, ExcludeMe = true})
                             for _, theirPlr in ipairs(MyList) do
                                 local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
                                 if not TSM then
