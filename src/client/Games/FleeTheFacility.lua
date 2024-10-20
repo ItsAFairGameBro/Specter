@@ -731,7 +731,7 @@ return function(C,Settings)
                             C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
                         elseif self.EnTbl.RunType == "Rescue" then
                             local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
-                            table.sort(hitList,function(a,b)
+                            table.sort(hitList,function(a, b)
                                 return a.Name:lower() < b.Name:lower()
                             end)
                             -- ADD HERE --
@@ -740,6 +740,7 @@ return function(C,Settings)
                             print(hitList,myIndex,friend)
                             local friendTSM = friend:WaitForChild("TempPlayerStatsModule")
                             table.insert(self.Functs, friendTSM:WaitForChild("Captured").Changed:Connect(function()
+                                task.wait(1/3)
                                 local friendChar = friend.Character
                                 for _, freezePod in ipairs(C.FreezingPods) do
                                     local CapturedTorso = C.StringFind(freezePod, "PodTrigger.CapturedTorso")
