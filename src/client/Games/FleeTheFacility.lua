@@ -563,6 +563,9 @@ return function(C,Settings)
                     Events = {
                         GameAdded = function(self)
                             while true do
+                                while not C.Hammer do
+                                    task.wait(1)
+                                end
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true})) do
                                     if C.CanTarget(self, theirPlr) and theirPlr.Character then
                                         C.HitSurvivor(theirPlr.Character)
