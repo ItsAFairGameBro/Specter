@@ -51,7 +51,11 @@ return function(C,Settings)
 		C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 	end
 	function C.DoActivate(self,funct,...)
-		self:ClearData()
+        if self.Activate ~= funct or not select(2,...) then
+            self:ClearData()
+            print("Running ClearDAta")
+        end
+		
 		local header = "Hack/"..self.Parent.Category.Name.."/"..self.Shortcut
 		if self.Type == "OneRun" then
 			if not self.RealEnabled then

@@ -181,7 +181,6 @@ return function(C,Settings)
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
-                                task.defer(function()
                                     table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(msg, ...)
                                         print(3,msg.Message)
                                     end))
@@ -200,7 +199,6 @@ return function(C,Settings)
                                             end
                                         end--]]
                                     print("Waiting For Established Connection22!",theirPlr)
-                                end)
                                 
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
