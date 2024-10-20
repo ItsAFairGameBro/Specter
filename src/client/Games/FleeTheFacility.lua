@@ -725,6 +725,10 @@ return function(C,Settings)
                             end, Stop = function(byReq)
                                 if BotActionClone == myActionClone then
                                     BotActionClone = nil
+                                    if not byReq then
+                                        -- Finished on its own --
+                                        C.human:ChangeState(Enum.HumanoidStateType.Dead)
+                                    end
                                 end
                                 if byReq then
                                     self:SetValue(false)
