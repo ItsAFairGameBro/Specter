@@ -806,7 +806,7 @@ return function(C,Settings)
                                         closestParent:SetAttribute("Ignore",true)
                                         setIgnore = true
                                     end
-                                    self:MoveBombTo(instance,closestBasePart)
+                                    self:MoveBombTo(instance,closestBasePart.Position)
 									--C.firetouchinterest(instance,closestBasePart)
                                     task.wait(2/3)
                                     changedFunct:Disconnect()
