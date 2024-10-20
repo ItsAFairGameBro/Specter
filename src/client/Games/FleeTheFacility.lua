@@ -642,7 +642,7 @@ return function(C,Settings)
 
                     end,
                     StartBeast = function(self)
-                        print("StartBeast")
+                        
                     end,
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)

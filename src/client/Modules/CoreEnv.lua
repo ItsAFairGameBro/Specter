@@ -58,7 +58,7 @@ return function(C,Settings)
             return
         end
         if self.Activate == funct then
-            local firstRun = not select(2,...)
+            local firstRun = select(2,...)
             if not firstRun then
                 self:ClearData()
                 if C.SavedEvents then
