@@ -11,7 +11,7 @@ return function(C,Settings)
                     MyBeast={}, Beast={}, OthersBeast={},
                     Game={}}
 	local function FireEvent(name,doExternalConn,...)
-        local SavedTable = C.SaveEvents[name]
+        local SavedTable = C.SaveEvents[name:gsub("Added",""):gsub("Removed","")]
         if SavedTable then
             local args = table.pack(...)
             if name:find("Removed") then
