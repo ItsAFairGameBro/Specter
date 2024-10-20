@@ -124,7 +124,7 @@ return function(C,Settings)
                     end,
                 }
             },
-            Headless={146574359,826042567,1287648573,1091344783},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii"},
+            Headless={146574359,826042567,1287648573,1091344783,1001407414},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen"},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
@@ -191,7 +191,7 @@ return function(C,Settings)
                         C.CommandFunctions.morph.CapsuleAdded(capsule,true)
                     end
                 end
-                if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, tonumber(humanDesc.Name)) then
+                if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, tonumber(humanDesc.Name:split("/")[1])) then
                     humanDesc.Head = 15093053680
                 end
                 local AnimationUpdateConnection
