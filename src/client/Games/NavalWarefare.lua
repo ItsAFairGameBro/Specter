@@ -736,6 +736,13 @@ return function(C,Settings)
 						end
 					end
 				end,
+                MoveBombTo = function(self,instance,target)
+                    instance.CFrame = CFrame.new(target + Vector3.new(0,10,0), target)
+                    instance.AssemblyLinearVelocity = Vector3.zero
+                    instance.AssemblyAngularVelocity = Vector3.zero
+                    instance.CanTouch = true
+                    C.Spectate(instance)
+                end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
 						local deb = 0
@@ -746,14 +753,16 @@ return function(C,Settings)
                             instance.CanTouch = false
 							local Spectate = C.hrp and (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude < 90
 							task.wait(.4)
-                            if true then
+                            --[[if true then
                                 local target = game:GetService("Workspace").Lobby.KickExploiter.Visual.Position + Vector3.new(0,10,0)
                                 instance.Position = target
+                                instance.AssemblyLinearVelocity = Vector3.zero
+                                instance.AssemblyAngularVelocity = Vector3.zero
                                 instance.CanTouch = true
                                 C.Spectate(game:GetService("Workspace").Lobby.KickExploiter.Visual)
                                 print("MOVED")
                                 return
-                            end
+                            end--]]
 							if instance.Parent then
 								local nearestTbl = {}
 
@@ -797,7 +806,8 @@ return function(C,Settings)
                                         closestParent:SetAttribute("Ignore",true)
                                         setIgnore = true
                                     end
-									C.firetouchinterest(instance,closestBasePart)
+                                    self:MoveBombTo(instance,closestBasePart)
+									--C.firetouchinterest(instance,closestBasePart)
                                     task.wait(2/3)
                                     changedFunct:Disconnect()
                                     if setIgnore then
