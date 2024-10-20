@@ -59,15 +59,17 @@ return function(C,Settings)
         end
         if self.Activate == funct then
             local firstRun = not select(2,...)
-            if not firstRun and C.SavedEvents then
+            if not firstRun then
                 self:ClearData()
-                for key, eventFunct in pairs(self.Events) do
-                    local eventList = C.SavedEvents[key]
-                    if eventList then
-                        print("possible eventdata")
-                        for _, eventData in ipairs(eventList) do
-                            print('eventdata found!')
-                            C.DoActivate(self,eventFunct,table.unpack(eventData))
+                if C.SavedEvents then
+                    for key, eventFunct in pairs(self.Events) do
+                        local eventList = C.SavedEvents[key]
+                        if eventList then
+                            print("possible eventdata")
+                            for _, eventData in ipairs(eventList) do
+                                print('eventdata found!')
+                                C.DoActivate(self,eventFunct,table.unpack(eventData))
+                            end
                         end
                     end
                 end
