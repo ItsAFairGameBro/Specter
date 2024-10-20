@@ -183,12 +183,14 @@ return function(C,Settings)
                                 table.insert(self.Functs, C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
                                     local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
                                     if self:HasAdminAccess(thePlr) then
+                                        print("Message",data.Message)
                                         local msg = data.Message
                                         --print(thePlr,msg)
                                         if not msg then
                                             return
                                         end
                                         if msg:sub(1,1) == "/" then
+                                            print("Ran Cmd",msg)
                                             C.RunCommand(msg, true)
                                         end
                                     end
