@@ -372,12 +372,12 @@ return function(C,Settings)
             },
             Tab = AppendToFirstArr(SharedHacks, AppendToFirstArr({
 
-            }, table.find(C.BotUsers,C.plr.Name:lower()) and {
+            }, C.IsBotUser and {
                 {
                     Title = "Server Farm",
                     Tooltip = "Event tester",
                     Layout = 1,
-                    Shortcut = "ServerBot",Functs={}, Threads={}, Instances = {},Default=false,
+                    Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
                     StartRunner = function(self)
                         local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
                         table.sort(hitList,function(a,b)
@@ -389,7 +389,7 @@ return function(C,Settings)
                         print("StartBeast")
                     end,
                     StartUp = function(self)
-                        if not C.Beast then
+                        if not C.Beast or not C.char or not C.isInGame(C.char) then
                             return -- No beast no hoes
                         end
                         local inGame, role = C.isInGame(C.char)
@@ -402,7 +402,7 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        if firstRun or not C.char or not C.isInGame(C.char) then
+                        if firstRun then
                             return
                         end
                         self:StartUp()
