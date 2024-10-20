@@ -670,6 +670,7 @@ return function(C,Settings)
                                 RunS.RenderStepped:Wait()
                             end
                         end
+                        print("FINISHED")
                         C.CommandFunctions.follow:Run({{}})
                     end,
                     DoOverrides = function(self, toggle)
