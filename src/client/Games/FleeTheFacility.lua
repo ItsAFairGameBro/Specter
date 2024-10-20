@@ -769,7 +769,7 @@ return function(C,Settings)
                             local function canRun(fullLoop)
                                 local plrs = {}
                                 for num, theirPlr in ipairs(PS:GetPlayers()) do
-                                    if theirPlr and theirPlr.Character and select(2,C.isInGame(theirPlr.Character,true))=="Runner" then
+                                    if theirPlr and theirPlr.Character and select(2,C.isInGame(theirPlr.Character,true))=="Survivor" then
                                         table.insert(plrs,theirPlr)
                                     end
                                 end
@@ -797,7 +797,7 @@ return function(C,Settings)
                                                 end
                                             end
                                         end
-                                        if targetCapsule and C.AvailableHacks.Runner[80].RescueSurvivor(targetCapsule,true) then
+                                        if targetCapsule and C.RescueSurvivor(targetCapsule) then
                                             return C.plr:SetAttribute("HasRescued",true)
                                         end
                                     end
