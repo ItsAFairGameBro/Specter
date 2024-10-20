@@ -16,14 +16,12 @@ local MAX_SHOP_ITEM = 10
 
 -- STANDARD FUNCTIONS--
 
-local function AppendToFirstArr(tbl1, tbl2)
+local function AppendToFirstArr(tbl1, tbl2, clone)
     for _, val2 in ipairs(tbl2) do
-        table.insert(tbl1, val2)
+        table.insert(tbl1, table.clone(val2))
     end
     return tbl1
 end
-
-
 
 local function GetSharedHacks(C, Settings)
     local SharedHacks = {
@@ -205,6 +203,15 @@ end
 local function SetUpGame(C, Settings)
     C.GameTimer = RS:WaitForChild("GameTimer")
     C.GameStatus = RS:WaitForChild("GameStatus")
+    function C.CanTarget(self, target)
+        if self.EnTbl.Me and target == C.plr then
+            return true
+        elseif self.EnTbl.Others and target ~= C.plr then
+            return true
+        else
+            return false
+        end
+    end
     local function CleanUpMap()
         C.FreezingPods = {}
         C.Computers = {}
@@ -248,10 +255,10 @@ local function SetUpGame(C, Settings)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
         local function childAdded(inst)
             if inst and inst.Name == "Hammer" then
-                C.BeastPlr, C.BeastChar = theirPlr, theirPlr.Character
+                C.Hammer, C.BeastPlr, C.BeastChar = inst, theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 C.AddObjectConnection(inst, "BeastHammerRemoved", inst.Destroying:Connect(function()
-                    C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil
+                    C.Hammer, C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil, nil
                     C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 end))
                 local CarriedTorso = theirChar:WaitForChild("CarriedTorso",20)
@@ -275,6 +282,7 @@ local function SetUpGame(C, Settings)
 
         local isBeastVal = theTSM:WaitForChild("IsBeast")
         local hpVal = theTSM:WaitForChild("HP")
+        local ragdollVal = theTSM:WaitForChild("Ragdoll")
         local function beastChangedVal(newVal)
             C.FireEvent(newVal and "BeastAdded" or "BeastRemoved",theirPlr == C.plr,theirPlr)
         end
@@ -293,9 +301,16 @@ local function SetUpGame(C, Settings)
             wasInGame = inGame
         end
         C.AddPlayerConnection(theirPlr, hpVal.Changed:Connect(healthChangedVal))
+        local function ragdollChangedVal(newVal)
+            C.FireEvent(newVal and "RagdollAdded" or "RagdollRemoved", theirPlr == C.plr, theirPlr, theirPlr.theirChar)
+        end
+        C.AddPlayerConnection(theirPlr, ragdollVal.Changed:Connect(ragdollChangedVal))
+        if ragdollVal.Value then
+            ragdollChangedVal(ragdollVal.Value)
+        end
     end)
 
-    function C.CapturePlayer(theirChar)
+    function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
             return
         end
@@ -332,6 +347,27 @@ local function SetUpGame(C, Settings)
                 if isOpened then
                     C.RemoteEvent:FireServer("Input", "Trigger", false)
                 end
+            end
+        end
+    end
+    function C.HitSurvivor(theirChar)
+        if not theirChar.PrimaryPart then
+            return
+        end
+        local Dist=(C.Hammer:GetPivot().Position-theirChar.PrimaryPart.Position).magnitude
+        if Dist<15 then
+            local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
+            for num, part in ipairs(theirChar:GetChildren()) do
+                if part:IsA("BasePart") then
+                    local testDist = (part.Position-C.Hammer:GetPivot().Position).Magnitude
+                    if testDist < closestDist then
+                        closestPart, closestDist = part, testDist
+                    end
+                end
+            end
+            if closestPart then
+                C.Hammer.HammerEvent:FireServer("HammerHit", closestPart)
+                return true
             end
         end
     end
@@ -501,6 +537,23 @@ return function(C,Settings)
                         end,
                     }
                 },
+                {
+                    Title = "Auto Hit",
+                    Tooltip = "Automatically hits nearby survivors",
+                    Layout = 1,
+                    Shortcut = "AutoCapture",Threads={},
+                    Activate = function()
+                        
+                    end,
+                    Events = {
+                        RagdollAdded = function(self, theirPlr, theirChar)
+                            if C.CanTarget(self, theirPlr) then
+                                C.HitSurvivor(theirChar)
+                            end
+                        end,
+                    },
+                    Options = {}
+                }
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",

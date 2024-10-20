@@ -7,8 +7,31 @@ return function(C,Settings)
 			
 		end
 	end--]]
-	
+    C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={}}
 	local function FireEvent(name,doExternalConn,...)
+        local SavedTable = C.SaveEvents[name]
+        if SavedTable then
+            local args = table.pack(...)
+            if name:find("Removed") then
+                local del = false
+                for key, val in ipairs(SavedTable) do
+                    if C.AreTablesEqual(val, args) then
+                        table.remove(SavedTable, key)
+                        print("DEL SUCC!")
+                        del = true
+                        break
+                    end
+                end
+                if not del then
+                    warn(`[Events.FireEvent]: {name} has SaveEvent label but does not delete!`)
+                end
+            elseif name:find("Added") then
+                table.insert(SavedTable, args)
+            else
+                warn(`[Events.FireEvent]: Unknown Prefix: {name} doesn't have Added or Removed`)
+            end
+            
+        end
 		if doExternalConn~=nil then
 			if doExternalConn then
 				FireEvent("My"..name,nil,...)

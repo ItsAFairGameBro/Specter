@@ -51,7 +51,22 @@ return function(C,Settings)
 		C.DoActivate(hackTbl,hackTbl.Activate,hackTbl.RealEnabled)
 	end
 	function C.DoActivate(self,funct,...)
-        if self.Activate ~= funct or not select(2,...) then
+        if self.Activate == funct then
+            local firstRun = not select(2,...)
+            if not firstRun then
+                self:ClearData()
+                for key, eventFunct in pairs(self.Events) do
+                    local eventList = C.SavedEvents[key]
+                    if eventList then
+                        print("possible eventdata")
+                        for _, eventData in ipairs(eventList) do
+                            print('eventdata found!')
+                            C.DoActivate(self,eventFunct,table.unpack(eventData))
+                        end
+                    end
+                end
+            end
+        else
             self:ClearData()
         end
 		
