@@ -738,10 +738,10 @@ return function(C,Settings)
 				end,
                 MoveBombTo = function(self,instance,target)
                     instance.CFrame = CFrame.new(target + Vector3.new(0,1,0), target)
-                    instance.AssemblyLinearVelocity = Vector3.zero
+                    instance.AssemblyLinearVelocity = instance.AssemblyLinearVelocity
                     instance.AssemblyAngularVelocity = Vector3.zero
-                    instance.CanTouch = true
-                    C.Spectate(instance)
+                    --instance.CanTouch = true
+                    --C.Spectate(instance)
                 end,
 				Events = {
 					MySeatAdded = function(self,seatPart)
@@ -775,7 +775,9 @@ return function(C,Settings)
 								if self.EnTbl.Plane then
 									table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
 								end
-                                table.insert(nearestTbl,{C.getClosest({noForcefield=true},instance.Position)})
+                                if self.EnTbl.User then
+                                    table.insert(nearestTbl,{C.getClosest({noForcefield=true},instance.Position)})
+                                end
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
 								if closestBasePart then
@@ -838,6 +840,13 @@ return function(C,Settings)
                     MySeatRemoved = C.ReloadHack,
 				},
 				Options = {
+                    {
+						Type = Types.Toggle,
+						Title = "Users",
+						Tooltip = "Allows targets such as individual users.",
+						Layout = 0,Default=true,
+						Shortcut="User",
+					},
 					{
 						Type = Types.Toggle,
 						Title = "Bases",
@@ -855,7 +864,7 @@ return function(C,Settings)
 					{
 						Type = Types.Toggle,
 						Title = "Planes",
-						Tooltip = "Allows targets such as individual users.",
+						Tooltip = "Allows targets such as planes.",
 						Layout = 3,Default=true,
 						Shortcut="Plane",
 					},
