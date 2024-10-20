@@ -205,6 +205,14 @@ end
 local function SetUpGame(C, Settings)
     C.GameTimer = RS:WaitForChild("GameTimer")
     C.GameStatus = RS:WaitForChild("GameStatus")
+    local function CleanUpMap()
+        C.FreezingPods = {}
+        C.Computers = {}
+        C.NormalDoors = {}
+        C.ExitDoors = {}
+        C.Map = nil
+    end
+    CleanUpMap()
     table.insert(C.EventFunctions,function()
         local CurrentMap = RS:WaitForChild("CurrentMap")
 		local function MapAdded(newMap)
@@ -216,8 +224,20 @@ local function SetUpGame(C, Settings)
             end
             if not newMap then
                 C.FireEvent("MapRemoved",nil,C.Map)
-                C.Map = nil
+                CleanUpMap()
                 return
+            end
+            -- ADD FREEZING PODS, COMPUTERS --
+            for _, item in ipairs(newMap:GetChildren()) do
+                if item.Name:sub(1,9) == "FreezePod" then
+                    table.insert(C.FreezingPods, item)
+                elseif item.Name:sub(1,13) == "ComputerTable" then
+                    table.insert(C.Computers, item)
+                elseif item.Name=="SingleDoor" or item.Name=="DoubleDoor" then
+                    table.insert(C.NormalDoors, item)
+                elseif item.Name=="ExitDoor" then
+                    table.insert(C.ExitDoors, item)
+                end
             end
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
@@ -231,10 +251,19 @@ local function SetUpGame(C, Settings)
                 C.BeastPlr, C.BeastChar = theirPlr, theirPlr.Character
                 C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 C.AddObjectConnection(inst, "BeastHammerRemoved", inst.Destroying:Connect(function()
-                    print("BeastHammerRemoved")
-                    C.BeastPlr, C.BeastChar = nil, nil
+                    C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil
                     C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
                 end))
+                local CarriedTorso = theirChar:WaitForChild("CarriedTorso",20)
+                if not CarriedTorso then return end
+                C.CarriedTorso = CarriedTorso
+                local function RopeUpd(newVal)
+                    C.FireEvent(newVal and "BeastRopeAdded" or "BeastRopeRemoved",theirPlr == C.plr,newVal and newVal.Parent or nil)
+                end
+                C.AddObjectConnection(CarriedTorso, "BeastRope", CarriedTorso.Changed:Connect(RopeUpd))
+                if CarriedTorso.Value then
+                    RopeUpd()
+                end
             end
         end
         C.AddObjectConnection(theirChar, "BeastHammerAdded", theirChar.ChildAdded:Connect(childAdded))
@@ -245,18 +274,67 @@ local function SetUpGame(C, Settings)
         local isMe = theirPlr == C.plr
 
         local isBeastVal = theTSM:WaitForChild("IsBeast")
+        local hpVal = theTSM:WaitForChild("HP")
         local function beastChangedVal(newVal)
-            if newVal then
-                C.FireEvent("BeastAdded",theirPlr == C.plr,theirPlr)
-            else
-                C.FireEvent("BeastRemoved",theirPlr == C.plr,theirPlr)
-            end
+            C.FireEvent(newVal and "BeastAdded" or "BeastRemoved",theirPlr == C.plr,theirPlr)
         end
         C.AddPlayerConnection(theirPlr,isBeastVal.Changed:Connect(beastChangedVal))
         if isBeastVal.Value then
             beastChangedVal(isBeastVal.Value)
         end
+        local wasInGame = false
+        local function healthChangedVal(newVal)
+            local inGame = newVal > 0
+            if not wasInGame and inGame then
+                C.FireEvent("SurvivorAdded",theirPlr == C.plr,theirPlr)
+            elseif wasInGame and not inGame then
+                C.FireEvent("SurvivorRemoved",theirPlr == C.plr,theirPlr)
+            end
+            wasInGame = inGame
+        end
+        C.AddPlayerConnection(theirPlr, hpVal.Changed:Connect(healthChangedVal))
     end)
+
+    function C.CapturePlayer(theirChar)
+        if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
+            return
+        end
+        local function isCapsuleOpen(cap)
+            return cap.PrimaryPart and cap:FindFirstChild("PodTrigger") and cap.PodTrigger:FindFirstChild("CapturedTorso") and not cap.PodTrigger.CapturedTorso.Value
+        end
+        local capsule,closestDist=nil,math.huge
+        for _, cap in ipairs(C.FreezingPods) do
+            if isCapsuleOpen(cap) then
+                local dist=(cap.PrimaryPart.Position-theirChar.PrimaryPart.Position).Magnitude
+                if (dist<closestDist) then
+                    capsule,closestDist=cap,dist
+                end
+            end
+        end
+        if not capsule then
+            warn("Capsule Not Found For",theirChar)
+            return false, "Capsule Not Found"
+        end
+        local Trigger = capsule:WaitForChild("PodTrigger",5)
+        local ActionSign = Trigger and Trigger:FindFirstChild("ActionSign")
+        for s=1,3,1 do
+            local isOpened = ActionSign and (ActionSign.Value==11)
+            if not Trigger or not ActionSign or not Trigger:FindFirstChild("CapturedTorso") then
+                return
+            elseif (Trigger and Trigger.CapturedTorso.Value~=nil) then
+                break --we got ourselves a trapped survivor!
+            elseif s~=1 then
+                task.wait(.15)
+            end
+            if Trigger:FindFirstChild("Event") then
+                C.RemoteEvent:FireServer("Input", "Trigger", true, Trigger.Event)
+                C.RemoteEvent:FireServer("Input", "Action", true)
+                if isOpened then
+                    C.RemoteEvent:FireServer("Input", "Trigger", false)
+                end
+            end
+        end
+    end
 end
 
 return function(C,Settings)
@@ -404,34 +482,51 @@ return function(C,Settings)
                 Layout = 20,
             },
             Tab = AppendToFirstArr(SharedHacks, AppendToFirstArr({
-
+                {
+                    Title = "🔨Auto Capture",
+                    Tooltip = "Capture survivors when roped (BEAST ONLY)",
+                    Layout = 1,
+                    Shortcut = "AutoCapture",Functs={},
+                    Activate = function(self, newValue, firstRun)
+                        if firstRun or not newValue then
+                            return
+                        end
+                        if C.CarriedTorso and C.BeastPlr == C.plr and C.CarriedTorso.Value then
+                            self.Events.MyBeastRopeAdded(self)
+                        end
+                    end,
+                    Events = {
+                        MyBeastRopeAdded = function(self,theirChar)
+                            C.CaptureSurvivor(theirChar)
+                        end,
+                    }
+                },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",
                     Tooltip = "Event tester",
-                    Layout = 1,
+                    Layout = 100,
                     Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
                     StartRunner = function(self)
                         local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
                         table.sort(hitList,function(a,b)
                             return a.Name:lower() < b.Name:lower()
                         end)
-                        print(hitList)
+
                     end,
                     StartBeast = function(self)
                         print("StartBeast")
                     end,
                     StartUp = function(self)
+                        C.RemoveAction(self.Shortcut)
                         if not C.BeastChar or not C.char or not C.isInGame(C.char) then
                             return -- No beast no hoes
                         end
                         local inGame, role = C.isInGame(C.char)
                         if inGame then
-                            if role == "Beast" then
-                                self:StartBeast()
-                            else
-                                self:StartRunner()
-                            end
+                            C.AddAction({Title=`ServerFarm: {role}`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
+                                self["Start"..role](self, actionClone, info)
+                            end})
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
