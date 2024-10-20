@@ -69,6 +69,7 @@ return function(C,Settings)
         "MyRagdollAdded", "RagdollAdded", "OthersRagdollAdded",
         "MyRagdollRemoved", "RagdollRemoved", "OthersRagdollRemoved",
         "MyBeastRopeAdded", "BeastRopeAdded", "OthersBeastRopeAdded",
+        "MyBeastRopeRemoved", "BeastRopeRemoved", "OthersBeastRemoved",
         "GameAdded","GameRemoved",--Don't laugh!
 	}
 	function C.BindEvents(hackTbl)
