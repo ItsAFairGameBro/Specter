@@ -746,6 +746,13 @@ return function(C,Settings)
                             instance.CanTouch = false
 							local Spectate = C.hrp and (instance.Position - (self.ComparePos or C.hrp.Position)).Magnitude < 90
 							task.wait(.4)
+                            if true then
+                                local target = game:GetService("Workspace").Lobby.KickExploiter.Visual.Position + Vector3.new(0,10,0)
+                                instance.Position = target
+                                instance.CanTouch = true
+                                print("MOVED")
+                                return
+                            end
 							if instance.Parent then
 								local nearestTbl = {}
 
