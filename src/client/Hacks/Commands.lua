@@ -285,7 +285,7 @@ return function(C,Settings)
                 end,
             },
             Run=function(self,args)
-                local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])[1]
+                local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])
                 if not selectedName then
                     return false,`User Not Found: {args[2]}`--C.CreateSysMessage(`User Not Found: {args[2]}`)
                 end
@@ -313,9 +313,8 @@ return function(C,Settings)
                 else
                     args[3] = nil
                 end
-                print(selectedName)
                 local defaultHumanDesc = selectedName~="no" and
-                    (args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id) or PS:GetHumanoidDescriptionFromUserId(selectedName.UserId))
+                    (args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id) or PS:GetHumanoidDescriptionFromUserId(selectedName[2].UserId))
                 if defaultHumanDesc == nil then
                     return false, "HumanoidDesc returned NULL for all players!"
                 end
