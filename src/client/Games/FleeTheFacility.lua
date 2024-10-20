@@ -389,7 +389,7 @@ return function(C,Settings)
                         print("StartBeast")
                     end,
                     StartUp = function(self)
-                        if not C.Beast or not C.char or not C.isInGame(C.char) then
+                        if not C.BeastChar or not C.char or not C.isInGame(C.char) then
                             return -- No beast no hoes
                         end
                         local inGame, role = C.isInGame(C.char)
