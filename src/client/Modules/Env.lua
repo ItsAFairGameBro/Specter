@@ -284,7 +284,7 @@ return function(C,Settings)
 		if not NoTargetFriends.En then
 			return true,"e"
 		end
-		if NoTargetFriends.RobloxFriends and table.find(C.friends,plr.UserId) then
+		if NoTargetFriends.RobloxFriends and table.find(C.friendnames,plr.Name) then
 			return false,1
 		end
 		if table.find(NoTargetFriends.AdditionalFriends,plr.UserId) then
