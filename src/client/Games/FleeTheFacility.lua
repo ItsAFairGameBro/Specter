@@ -659,14 +659,12 @@ return function(C,Settings)
 
                     end,
                     StartBeast = function(self)
-                        print("Start beast")
                         for _, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false})) do
-                            print(theirPlr)
                             local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
                             if not TSM then
                                 return
                             end
-                            C.CommandFunctions.follow:Run({{theirPlr},5})
+                            warn(C.CommandFunctions.follow:Run({{theirPlr},5}))
                             while theirPlr and theirPlr.Parent and not TSM.Captured.Value do
                                 RunS.RenderStepped:Wait()
                             end
