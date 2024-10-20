@@ -370,7 +370,9 @@ return function(C,Settings)
                 Image = nil, -- Set to nil for game image
                 Layout = 20,
             },
-            Tab = AppendToFirstArr(SharedHacks,{
+            Tab = AppendToFirstArr(SharedHacks, AppendToFirstArr({
+
+            }, table.find(C.BotUsers,C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",
                     Tooltip = "Event tester",
@@ -411,7 +413,8 @@ return function(C,Settings)
                         end,
                     }
                 }
-            })
+            
+            } or {}))
         }
     end
     

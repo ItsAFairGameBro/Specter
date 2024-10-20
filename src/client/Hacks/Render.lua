@@ -62,7 +62,8 @@ return function(C,Settings)
 					local camera = workspace.CurrentCamera
 					local theirPlr,theirChar,instances,theirHumanoid,HRP = table.unpack(instanceData)
 					local theirInGame = C.isInGame and table.pack(C.isInGame(theirChar))
-					if (not camera.CameraSubject or not camera.CameraSubject.Parent) or (theirHumanoid~=camera.CameraSubject and (not theirInGame or
+					if C.enHacks.World.Freecam.En or
+                    (not camera.CameraSubject or not camera.CameraSubject.Parent) or (theirHumanoid~=camera.CameraSubject and (not theirInGame or
 					((theirInGame[3]==nil and select(3,C.isInGame(camera.CameraSubject.Parent))==theirInGame[3]) or
 					(theirInGame[3]~=nil and C.isInGame(camera.CameraSubject.Parent)==theirInGame[1])))) then
 						local isInRange

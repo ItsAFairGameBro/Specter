@@ -762,6 +762,15 @@ return function(C_new,Settings)
 					},
 				},
 			},
+            {
+				Title = "Invisi Cam",
+				Tooltip = "Allows you to zoom through solid objects\nWorks in any zoomable game",
+				Layout = 5,
+				Shortcut = "InvisiCam",
+                Activate = function(self, newValue)
+                    C.SetPartProperty(C.plr, "DevCameraOcclusionMode", self.Shortcut, newValue and Enum.DevCameraOcclusionMode.Invisicam or C)
+                end,
+            },
 		}
 	}
 end

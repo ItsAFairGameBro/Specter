@@ -123,6 +123,7 @@ return function(C,Settings)
 				Tooltip = "Implements several automatic features",
 				Layout = 99,
 				Shortcut = "BotAuto",
+                
 				RejoinDelay = 5,
 				Sending = false,
                 ChatConnected = false,
@@ -149,15 +150,8 @@ return function(C,Settings)
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
-                AllowList = {
-                    ["itsagoodgamebros"] = true,
-                    ["itsagoodgamebro"] = true,
-                    ["lifeisoofs"] = true,
-                    ["theweirdspook"] = true,
-                    ["lexxy4life"] = true,
-                },
-                ShouldConnect = function(self, theirPlr)
-                    return theirPlr.Name:find("SuitedForBans")~=nil or theirPlr.Name == "Biglugger2017" or theirPlr.Name == "sssNsss74" or self.AllowList[theirPlr.Name:lower()] ~= nil
+                HasAdminAccess = function(self, theirPlr)
+                    return table.find(C.AdminUsers, theirPlr.Name:lower())
                 end,
                 Options = {},
 				Events = {
@@ -183,12 +177,12 @@ return function(C,Settings)
                         if theirPlr == C.plr or self.ChatConnected then
                             return -- do not double do it!
                         end
-                        if self:ShouldConnect(theirPlr) then
+                        if self:HasAdminAccess(theirPlr) then
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 table.insert(self.Functs, C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
                                     local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
-                                    if self:ShouldConnect(thePlr) then
+                                    if self:HasAdminAccess(thePlr) then
                                         local msg = data.Message
                                         --print(thePlr,msg)
                                         if not msg then
@@ -367,7 +361,7 @@ return function(C,Settings)
 				},
 			},
 			{
-				Title = "Disable LogService",
+				Title = "❌❌Disable LogService❌❌",
 				Tooltip = "Prevents logs from being viewed or tracked\nNote: this may cause crash on startup!",
 				Layout = 200,
 				Shortcut = "LogServiceProtection",Default=false,
