@@ -425,6 +425,9 @@ return function(C,Settings)
     function C.GetPlayerListOfType(options)
         local list = {}
         for _, theirPlr in ipairs(PS:GetPlayers()) do
+            if theirPlr == C.plr and options.ExcludeMe then
+                continue
+            end
             local theirTSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
             if not theirTSM then
                 print("Not tsm",theirPlr)
@@ -659,7 +662,7 @@ return function(C,Settings)
 
                     end,
                     StartBeast = function(self)
-                        for _, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false})) do
+                        for _, theirPlr in ipairs(C.GetPlayerListOfType({Captured = false, ExcludeMe = true})) do
                             local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
                             if not TSM then
                                 return
