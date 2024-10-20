@@ -726,47 +726,94 @@ return function(C,Settings)
                     Layout = 100,
                     Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
                     WasRunning = false,
+                    FreezeMyself = function(self,canRun,canCapture)
+                        while C.CarriedTorso do
+                            local inRange = (C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<6
+                            if not inRange and not C.myTSM.Captured.Value and (not C.myTSM.Ragdoll.Value or (C.CarriedTorso
+                                and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char)) then
+                                C.DoTeleport(C.BeastChar:GetPivot()*Vector3.new(0,0,-4))
+                            end
+                            local i = 0
+                            while ((C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart")) and ((C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<7)) do
+                                i+=1
+                                if i==10 then
+                                    i = 0
+                                elseif i>1 then
+                                    RunS.RenderStepped:Wait()
+                                end
+                                if not canCapture or canCapture() then
+                                    if not canRun(true) then
+                                        return
+                                    end
+                                    if not C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent and C.char:FindFirstChild("Head") then
+                                        C.HammerEvent:FireServer("HammerHit", C.char.Head)
+                                    end
+                                    if not canRun(true) then
+                                        return
+                                    end
+                                    if C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent
+                                        and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char then
+                                        C.RopeSurvivor(C.char)
+                                    end
+                                end
+                            end
+                            RunS.RenderStepped:Wait()
+                        end
+                    end,
                     StartSurvivor = function(self, actionClone, info)
                         if self.EnTbl.RunType == "Capture" then
                             C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
                         elseif self.EnTbl.RunType == "Rescue" then
-                            local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
-                            table.sort(hitList,function(a, b)
-                                return a.Name:lower() < b.Name:lower()
-                            end)
-                            -- ADD HERE --
-                            local myIndex = table.find(hitList, C.plr)
-                            local friend = hitList[(myIndex - 1) > 0 and myIndex - 1 or (#hitList)]
-                            print(hitList,myIndex,friend)
-                            local friendTSM = friend:WaitForChild("TempPlayerStatsModule")
-                            table.insert(self.Functs, friendTSM:WaitForChild("Captured").Changed:Connect(function()
-                                task.wait(1/3)
-                                local friendChar = friend.Character
-                                for _, freezePod in ipairs(C.FreezingPods) do
-                                    local CapturedTorso = C.StringFind(freezePod, "PodTrigger.CapturedTorso")
-                                    if CapturedTorso and friendChar:IsAncestorOf(CapturedTorso.Value) then
-                                        C.RescueSurvivor(freezePod)
-                                        C.getgenv().Rescued = true
-                                        return
+                            local runnerPlrs={}
+                            local myRunerPlrKey
+                            local function canRun(fullLoop)
+                                local plrs = {}
+                                for num, theirPlr in ipairs(PS:GetPlayers()) do
+                                    if theirPlr and theirPlr.Character and select(2,C.isInGame(theirPlr.Character,true))=="Runner" then
+                                        table.insert(plrs,theirPlr)
                                     end
                                 end
-                            end))
-                            -- Everyone but first player waits
-                            while not C.getgenv().Rescued and myIndex ~= 1 do
-                                task.wait(1/3)
+                                runnerPlrs = table.sort(plrs, function(a, b)
+                                    return a.Name < b.Name
+                                end)
+                                myRunerPlrKey = table.find(runnerPlrs,C.plr)
+
+                                local Ret1 = (C.char and C.human and C.human.Health>0 and C.Camera.CameraSubject==C.human and C.char:FindFirstChild("HumanoidRootPart") and C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart"))
+                                local Ret2 = ((select(2,C.isInGame(C.char,true))=="Survivor") and not C.isCleared)
+                                return (Ret1 and Ret2)
                             end
-                            print("Proceeded to be cooked")
-                            while true do
-                                -- First player gets captured / anyone gets captured after rescuing
-                                while not C.myTSM.Captured.Value and not C.myTSM.Ragdoll.Value do
-                                    C.DoTeleport(CFrame.new(C.BeastChar:GetPivot() * Vector3.new(0,0,3), C.BeastChar:GetPivot().Position))
-                                    task.wait(1/3)
+                            task.spawn(function()
+                                while canRun(true) and not C.plr:GetAttribute("HasRescued") do
+                                    local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
+                                    local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
+                                    if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
+                                        local targetCapsule
+                                        for _, capsule in ipairs(C.FreezingPods) do
+                                            if capsule:FindFirstChild("PodTrigger")~=nil and capsule.Parent then
+                                                local capturedTorso = capsule.PodTrigger.CapturedTorso.Value
+                                                if capturedTorso and capturedTorso.Parent and capturedTorso:IsDescendantOf(myGuyToRescuePlr.Character) then
+                                                    targetCapsule=capsule
+                                                    break
+                                                end
+                                            end
+                                        end
+                                        if targetCapsule and C.AvailableHacks.Runner[80].RescueSurvivor(targetCapsule,true) then
+                                            return C.plr:SetAttribute("HasRescued",true)
+                                        end
+                                    end
+                                    RunS.RenderStepped:Wait()
                                 end
-                                -- First player rescues
-                                while not C.getgenv().Rescued or C.myTSM.Captured.Value or C.myTSM.Ragdoll.Value do
-                                    task.wait(1/3)
+                            end)
+                            local function canCapture()
+                                local keyNeeded = 0
+                                for key, theirPlr in ipairs(runnerPlrs) do
+                                    if not theirPlr:GetAttribute("HasCaptured") then
+                                        keyNeeded = key
+                                    end
                                 end
+                                return (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
                             end
+                            self:GetFreeze(canRun,canCapture)
                         else
                             warn(`[Server Farm]: Unknown RunType: {self.EnTbl.RunType}`)
                         end
