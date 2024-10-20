@@ -531,6 +531,7 @@ return function(C,Settings)
 		if name == "" and not override then
 			return {}
 		end
+        print(tbl,name)
 		name = name:lower()
 		local closestMatch, results = math.huge, {}
 		for index, theirValue in pairs(tbl) do
