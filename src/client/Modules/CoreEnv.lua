@@ -57,7 +57,7 @@ return function(C,Settings)
                 self:ClearData()
                 if C.SaveEvents then
                     for key, eventFunct in pairs(self.Events) do
-                        local eventList = C.SaveEvents[key:gsub("Removed","")]
+                        local eventList = C.SaveEvents[key:gsub("Added","")]
                         if eventList then
                             print("possible eventdata")
                             for _, eventData in ipairs(eventList) do
