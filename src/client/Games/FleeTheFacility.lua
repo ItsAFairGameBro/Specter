@@ -25,7 +25,7 @@ end
 
 
 
-local function Static(C, Settings)
+local function GetSharedHacks(C, Settings)
     local SharedHacks = {
     {
         Title = "Speed Buy",
@@ -163,6 +163,41 @@ local function Static(C, Settings)
             },
         },
     },
+    {
+        Title = "Game Improvements",
+        Tooltip = "Fixes stuff necessary to live💀",
+        Layout = 100,
+        Shortcut = "GameImprovements",
+        Functs = {},
+        Activate = function(self, newValue)
+            if not newValue then
+                return
+            end
+            local ScreenGui = C.PlayerGui:WaitForChild("ScreenGui");
+            local MenusTabFrame = ScreenGui:WaitForChild("MenusTabFrame");
+            local BeastPowerMenuFrame = ScreenGui:WaitForChild("BeastPowerMenuFrame")
+            local SurvivorStartFrame = ScreenGui:WaitForChild("SurvivorStartFrame")
+            local IsCheckingLoadData = C.plr:WaitForChild("IsCheckingLoadData");
+            local function menusTab()
+                MenusTabFrame.Visible=not IsCheckingLoadData.Value
+            end
+            local function beastScreen()
+                BeastPowerMenuFrame.Visible=false
+            end
+            local function survivorScreen()
+                SurvivorStartFrame.Visible=false
+            end
+            table.insert(self.Functs,MenusTabFrame:GetPropertyChangedSignal("Visible"):Connect(menusTab))
+            menusTab()
+            
+            table.insert(self.Functs,BeastPowerMenuFrame:GetPropertyChangedSignal("Visible"):Connect(beastScreen))
+            beastScreen()
+            
+            table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
+            survivorScreen()
+        end,
+    },
+    
     }
     return SharedHacks
 end
@@ -242,7 +277,7 @@ return function(C,Settings)
         end
         return list
     end
-    local SharedHacks = Static(C, Settings)
+    local SharedHacks = GetSharedHacks(C, Settings)
     local function SendWaitRemoteEvent(retType, ...)
         local bindableEvent = Instance.new("BindableEvent")
         local rets
@@ -379,7 +414,7 @@ return function(C,Settings)
                     StartRunner = function(self)
                         local hitList = C.GetPlayerListOfType({Lobby = false, Beast = false, Survivor = true})
                         table.sort(hitList,function(a,b)
-                            return a:lower() < b:lower()
+                            return a.Name:lower() < b.Name:lower()
                         end)
                         print(hitList)
                     end,
