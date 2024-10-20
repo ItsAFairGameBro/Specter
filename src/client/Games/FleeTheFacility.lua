@@ -235,7 +235,7 @@ local function SetUpGame(C, Settings)
                 return
             end
             -- ADD FREEZING PODS, COMPUTERS --
-            for _, item in ipairs(newMap:GetChildren()) do
+            local function newChild(item)
                 if item.Name:sub(1,9) == "FreezePod" then
                     table.insert(C.FreezingPods, item)
                 elseif item.Name:sub(1,13) == "ComputerTable" then
@@ -245,6 +245,10 @@ local function SetUpGame(C, Settings)
                 elseif item.Name=="ExitDoor" then
                     table.insert(C.ExitDoors, item)
                 end
+            end
+            C.AddObjectConnection(newMap, "MapAddedChild", newMap.ChildAdded:Connect(newChild))
+            for _, item in ipairs(newMap:GetChildren()) do
+                newChild(item)
             end
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
