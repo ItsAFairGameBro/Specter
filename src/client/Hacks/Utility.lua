@@ -182,8 +182,9 @@ return function(C,Settings)
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 task.defer(function()
-                                    table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
-                                        print("_SIGNAL")
+                                    game.ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(msg, ...)
+                                        print(msg.Message)
+                                    end)
                                         --[[local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
                                         print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
                                         if thePlr and self:HasAdminAccess(thePlr) then
@@ -198,7 +199,6 @@ return function(C,Settings)
                                                 C.RunCommand(msg, true)
                                             end
                                         end--]]
-                                    end))
                                     print("Waiting For Established Connection22!",theirPlr)
                                 end)
                                 
