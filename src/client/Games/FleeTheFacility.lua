@@ -773,8 +773,8 @@ return function(C,Settings)
                                 end)
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
 
-                                local Ret1 = (C.char and C.human and C.human.Health>0 and C.Camera.CameraSubject==C.human and C.char:FindFirstChild("HumanoidRootPart") and C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart"))
-                                local Ret2 = ((select(2,C.isInGame(C.char,true))=="Survivor") and not C.isCleared)
+                                local Ret1 = (C.char and C.human and C.human.Health>0 and C.Camera.CameraSubject==C.human and C.char:FindFirstChild("HumanoidRootPart") and C.BeastChar)
+                                local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
                                 return (Ret1 and Ret2)
                             end
                             task.spawn(function()
@@ -875,9 +875,6 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        if firstRun then
-                            return
-                        end
                         self:StartUp()
                     end,
                     Completed = function(self)
