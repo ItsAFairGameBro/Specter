@@ -181,6 +181,7 @@ return function(C,Settings)
                             self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 table.insert(self.Functs, C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering").OnClientEvent:Connect(function(data, channel)
+                                    print("_SIGNAL")
                                     local thePlr = Players:GetPlayerByUserId(data.SpeakerUserId)
                                     print(data.SpeakerUserId, thePlr, table.find(C.AdminUsers, theirPlr.Name:lower())~=nil)
                                     if thePlr and self:HasAdminAccess(thePlr) then
