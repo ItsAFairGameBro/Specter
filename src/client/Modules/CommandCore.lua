@@ -90,7 +90,7 @@ return function(C,Settings)
                         args[num] = argumentData.Default
                     end
                 elseif argumentData.Type == "Options" then
-                    local Options = argumentData.Type=="Options" and argumentData.Options or C.checkFriendsPCALLFunction()
+                    local Options = argumentData.Options
                     if not table.find(Options,args[num]) and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
@@ -101,7 +101,8 @@ return function(C,Settings)
                     end
                 elseif argumentData.Type == "Friend" then
                     print(args[num])
-                    local Ret = C.StringStartsWith(C.checkFriendsPCALLFunction(), args[num])[1]
+                    local myfriends = C.checkFriendsPCALLFunction()
+                    local Ret = C.StringStartsWith(myfriends, args[num])[1]
                     if Ret then
                         args[num] = Ret
                     else
