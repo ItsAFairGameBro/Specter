@@ -1588,7 +1588,8 @@ GuiTbl.Actions.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
 GuiTbl.Actions.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.Actions.BorderSizePixel = 0
 GuiTbl.Actions.LayoutOrder = -14
-GuiTbl.Actions.Size = UDim2.new(0.0299999993, 170, 0.0299999993, 200)
+GuiTbl.Actions.Size = UDim2.new(0.0599999987, 150, 0.0799999982, 200)
+GuiTbl.Actions.Visible = false
 GuiTbl.Actions.ZIndex = -50
 
 GuiTbl.HeaderTab_3.Name = "HeaderTab"
