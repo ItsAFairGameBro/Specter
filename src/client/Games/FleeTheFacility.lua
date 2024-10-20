@@ -567,7 +567,12 @@ return function(C,Settings)
                             end
                         end,
                     },
-                    Options = C.AppendToFirstArr({},C.SelectPlayerType,true)
+                    Options = C.AppendToFirstArr({
+
+
+
+                    },
+                    C.SelectPlayerType,true)
                 }
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {

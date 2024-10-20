@@ -53,7 +53,7 @@ return function(C,Settings)
 	function C.DoActivate(self,funct,...)
         if self.Activate == funct then
             local firstRun = not select(2,...)
-            if not firstRun then
+            if not firstRun and C.SavedEvents then
                 self:ClearData()
                 for key, eventFunct in pairs(self.Events) do
                     local eventList = C.SavedEvents[key]
