@@ -803,6 +803,7 @@ return function(C,Settings)
                     end,
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)
+                        C.getgenv().Rescued = nil
                         if not C.BeastChar or not C.char or not C.isInGame(C.char) then
                             return self:DoOverrides(false)-- No beast no hoes
                         end
