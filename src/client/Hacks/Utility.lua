@@ -182,7 +182,7 @@ return function(C,Settings)
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 task.defer(function()
-                                    game.ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(msg, ...)
+                                    DoneFiltering.OnClientEvent:Connect(function(msg, ...)
                                         print(msg.Message)
                                     end)
                                         --[[local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
