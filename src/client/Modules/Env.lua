@@ -42,7 +42,7 @@ return function(C,Settings)
 					elseif myType == "Connection" then
 						print4Instance = `{toStr}; Foreign={
 							"N/A"} Luau={ -- or print4Instance.ForeignState or false
-								print4Instance.LuaConnection or false}` 
+								print4Instance.LuaConnection or false}`
 								.. ("")--print4Instance.Function and (` Function: [{printInstances(print4Instance.Function)}]`) or "")
 					elseif StrFind(toStr,myType,1,true) then
 						print4Instance = toStr
@@ -54,7 +54,7 @@ return function(C,Settings)
 			end
 			return printVal
 		end
-		
+
 		local function addToString(input, depth, noIndent)
 			local fullStr = ""
 			if not noIndent then
@@ -62,17 +62,17 @@ return function(C,Settings)
 			end
 			return fullStr .. string.rep("\t", depth) .. input
 		end
-		
+
 		local function recurseLoopPrint(leftTbl, str, depth, index, warnings)
 			warnings = warnings or {}
 			index = (index or 0)
 			str = str or ""
 			depth = (depth or -1) + 1
-		
+
 			local totalValues = #leftTbl
 			local isDict = totalValues <= 0
 			local addBrackets = not isDict
-		
+
 			for num, val in pairs(leftTbl) do
 				if typeof(num)=="number" and totalValues > 0 and num < totalValues-30 then
 					if not warnings.MaxLimit then
@@ -82,7 +82,7 @@ return function(C,Settings)
 					continue
 				end
 				index += 1
-		
+
 				local isTable = typeof(val) == "table"
 				if isTable then
 					if depth ~= 0 then
@@ -108,7 +108,7 @@ return function(C,Settings)
 						str ..= addToString(printInstances(val), depth, depth == 0) .. ((not isDict and num ~= totalValues) and " " or "")
 					end
 				end
-		
+
 				if index % 40 == 0 then
 					RunS.RenderStepped:Wait()
 				end
@@ -121,7 +121,7 @@ return function(C,Settings)
 			--return Old
 			return C.hookfunction(rawget(tbl,name),new)
 		end
-		
+
 		local DoPrefix = false
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
@@ -143,7 +143,7 @@ return function(C,Settings)
 			OldEnv.warn1(msgToDisplay)
 			return msgToDisplay
 		end)
-		
+
 		--[[task.delay(3,function()
 			print"Hookfunction Hook"
 			C.getgenv().hookfunction = function(orgFunct,newFunct)
@@ -161,7 +161,7 @@ return function(C,Settings)
 		end)--]]
 		C.getgenv().PrintEnvironment = true
 	end
-	
+
 	--Table Functions
 	function C.TblFind(tbl,val)
 		for key, val2 in pairs(tbl) do
@@ -222,7 +222,7 @@ return function(C,Settings)
 			threadTbl[num] = nil
 		end
 	end
-	
+
 	function C.AddGlobalConnection(connection)
 		return connection, C.TblAdd(C.functs,connection)
 	end
@@ -231,7 +231,7 @@ return function(C,Settings)
 		connection:Disconnect()
 		return res
 	end
-	
+
 	function C.AddPlayerConnection(theirPlr, connection)
 		C.playerfuncts[theirPlr] = C.playerfuncts[theirPlr] or {}
 		table.insert(C.playerfuncts[theirPlr], connection)
@@ -249,7 +249,7 @@ return function(C,Settings)
 		C.StopThread(thread)
 		return res
 	end
-	
+
 	function C.AddObjectConnection(instance,key,connection)
 		if not C.objectfuncts[instance] then
 			C.objectfuncts[instance] = {InstanceCleanUp=instance.Destroying:Connect(function()
@@ -290,7 +290,7 @@ return function(C,Settings)
 		if table.find(NoTargetFriends.AdditionalFriends,plr.UserId) then
 			return false,2
 		end
-		
+
 		return true
 	end
 	--Raycast
@@ -300,19 +300,19 @@ return function(C,Settings)
 		options = options or {}
 		local orgOrigin = origin -- save for later
 		local distance = options.distance or 1
-	
+
 		rayParams.CollisionGroup = options.collisionGroup or ""
 		rayParams.FilterType = options.raycastFilterType or Enum.RaycastFilterType.Exclude
 		rayParams.FilterDescendantsInstances = options.ignoreList or {}  -- List of instances to ignore
-	
+
 		local hitPart, hitPosition, hitNormal = nil, nil, nil
 		local didHit = false
-	
+
 		local function customFilter(hitResult,instance)
 			if options.detectionFunction and options.detectionFunction(instance) then
 				return true
 			end
-	
+
 			if options.ignoreInvisibleWalls and instance.Transparency > .9 then
 				return false
 			end
@@ -322,27 +322,27 @@ return function(C,Settings)
 				and (not instance.CanCollide or not PhysicsService:CollisionGroupsAreCollidable(MyCollisionGroup, instance.CollisionGroup)) then
 				return false
 			end
-	
+
 			if options.passFunction and options.passFunction(instance,hitResult) then
 				return false
 			end
-		
+
 			return true
 		end
-	
+
 		local hitResult, hitPosition
 		local curDistance = distance
 		local lastInstance  -- Set a limit to prevent infinite loops
-		
+
 		repeat
 			hitResult = workspace:Raycast(origin, direction * curDistance, rayParams)
-	
+
 			if hitResult then
 				if customFilter(hitResult,hitResult.Instance) then
 					hitPosition = hitResult.Position
 					didHit = true
 				else
-	
+
 					-- Ensure curDistance is always positive and that it didn't hit the same object
 					curDistance -= hitResult.Distance
 					if curDistance <= 0 or lastInstance == hitResult.Instance then
@@ -364,13 +364,13 @@ return function(C,Settings)
 				didHit = false
 				break
 			end
-			
+
 		until didHit
-		
+
 		if not didHit then
 			hitPosition = orgOrigin + direction * distance
 		end
-	
+
 		return didHit and hitResult, hitPosition
 	end
 
@@ -384,7 +384,7 @@ return function(C,Settings)
 		end
 		return copy
 	end
-	
+
 	function C.getCharacterHeight(model)
 		local Humanoid=model:WaitForChild("Humanoid")
 		local RootPart=model:WaitForChild("HumanoidRootPart")
@@ -470,7 +470,7 @@ return function(C,Settings)
 			for i, friendInfo in pairs(info) do
 				table.insert(PlayersFriends, {SortName = friendInfo.Username, UserId = friendInfo.Id})
 			end
-			if not page.IsFinished then 
+			if not page.IsFinished then
 				page:AdvanceToNextPageAsync()
 			else
 				break
@@ -509,7 +509,7 @@ return function(C,Settings)
 
 	function C.checkFriendsPCALLFunction(inputName)
 		local friendsTable = C.friends--.GetFriendsFunct(inputName and 26682673 or C.plr.UserId)
-	
+
 		if inputName then
 			table.sort(friendsTable,function(a,b)
 				local aLen = a.SortName:len()
@@ -522,11 +522,11 @@ return function(C,Settings)
 			return friendsTable
 		end
 	end
-	
+
 	local function Compare(start,needle)
 		return start:lower():find(C.EscapeForStringLibrary(needle)) ~= nil
 	end
-	
+
 	function C.StringStartsWith(tbl,name,override,leaveAsIs)
 		if name == "" and not override then
 			return {}
@@ -597,7 +597,7 @@ return function(C,Settings)
 		end
 		return cStr
 	end
-		
+
 	local UserCache = {}
 	function C.GetUserNameAndId(identification: string|number)
 		local QueryResult, SaveCache
@@ -738,23 +738,23 @@ return function(C,Settings)
 		-- Extract the look vectors (direction) from both CFrames
 		local lookVector1 = cframe1.LookVector
 		local lookVector2 = cframe2.LookVector
-	
+
 		-- Calculate the dot product of the two look vectors
 		local dotProduct = lookVector1:Dot(lookVector2)
-	
+
 		-- Clamp the dot product to avoid numerical inaccuracies
 		dotProduct = math.clamp(dotProduct, -1, 1)
-	
+
 		-- Calculate the angle between the two vectors in radians
 		local angleInRadians = math.acos(dotProduct)
-	
+
 		-- Convert the angle to degrees if needed
 		local angleInDegrees = math.deg(angleInRadians)
-	
+
 		return angleInDegrees
 	end
 	-- Closest Plr
-	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean},location:Vector3)
+	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean,noGame:boolean},location:Vector3)
 		data = data or {}
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char.GetPivot(C.char).Position)
 		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
@@ -769,7 +769,7 @@ return function(C,Settings)
 			local theirChar = v.Character
 			if not theirChar then continue end
 			local isInGame,team
-			if C.isInGame then
+			if C.isInGame and not data.noGame then
 				isInGame,team = C.isInGame(theirChar)
 				if not isInGame then continue end
 			else
@@ -927,7 +927,7 @@ return function(C,Settings)
 			end
 		end
 	end
-	
+
 	function C.SendGeneralMessage(message:string)
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
 			C.StringWait(TCS,"TextChannels.RBXGeneral"):SendAsync(message)
@@ -948,7 +948,7 @@ return function(C,Settings)
 		end
 	end
 	--Function to set instance connection
-	do 
+	do
 		local function DisableInstanceConnections(instance,name,key)
 			assert(key~="Value" and key~="Name",`Unable to assign {instance.Name} the key {key} because {key} is a protected value!`)
 			local signal = instance[name]
@@ -1001,7 +1001,7 @@ return function(C,Settings)
 			end
 		end
 	end
-	
+
 
 	function C.IsInBox(PartCF:CFrame,PartSize:Vector3,Point:Vector3,TwoDim:boolean)
 		local Transform = PartCF:PointToObjectSpace(Point) -- Transform into local space
@@ -1023,11 +1023,11 @@ return function(C,Settings)
 	function C.GetPartGlobalSize(part)
 		local partCFrame = part.CFrame
 		local partSize = part.Size
-	
+
 		-- Calculate the world size by transforming the local size using the part's CFrame and accounting for scale
 		local worldSize = (partCFrame - partCFrame.Position):VectorToWorldSpace(partSize)
 		worldSize = Vector3.new(math.abs(worldSize.X),math.abs(worldSize.Y),math.abs(worldSize.Z))
-			
+
 		return worldSize
 	end
 	function C.ClosestPointOnPartSurface(PartCF, PartSize, Point)
@@ -1092,14 +1092,14 @@ return function(C,Settings)
 			BrickColor.new("Light reddish violet").Color,
 			BrickColor.new("Brick yellow").Color,
 		}
-	
+
 		local value = 0
 		for i = 1, #speaker do
 			local cValue = string.byte(speaker, i)
 			if ((#speaker - i + 1) % 4) >= 2 then cValue = -cValue end
 			value = value + cValue
 		end
-	
+
 		return nameColors[(value % #nameColors) + 1]
 	end
 
@@ -1139,7 +1139,7 @@ return function(C,Settings)
 		{Type="Sec",Duration=1},
 	}
 	function C.FormatTimeFromUnix(osTime,token)
-		local timeNeededTimeStamp	
+		local timeNeededTimeStamp
 		if tonumber(osTime) then
 			timeNeededTimeStamp=DateTime.fromUnixTimestamp(osTime)
 		else
@@ -1237,7 +1237,7 @@ return function(C,Settings)
     function C.ResetCharacter()
         if C.char and C.human and C.human.Health > 0 then
             local saveChar = C.char
-            
+
             if C.char.PrimaryPart then
                 C.char.PrimaryPart.Anchored=true
             end

@@ -776,7 +776,7 @@ return function(C,Settings)
 									table.insert(nearestTbl,{C.getClosestPlane(instance.Position)})
 								end
                                 if self.EnTbl.User then
-                                    table.insert(nearestTbl,{C.getClosest({noForcefield=true},instance.Position)})
+                                    table.insert(nearestTbl,{C.getClosest({noForcefield=true,noGame=true},instance.Position)})
                                 end
 
 								local closestBasePart, distance = C.GetNearestTuple(nearestTbl)
