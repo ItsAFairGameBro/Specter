@@ -440,8 +440,9 @@ return function(C,Settings)
                                         table.insert(options,{putInStep, putInStep})
                                     end
                                 end
-                            elseif mySuggestion.Type == "Options" then
-                                for num, val in ipairs(mySuggestion.Options) do
+                            elseif mySuggestion.Type == "Options" or mySuggestion.Type == "Friend" then
+                                local Options = mySuggestion.Type=="Options" and mySuggestion.Options or C.enHacks.Users.NoTargetFriends.Friends
+                                for num, val in ipairs(Options) do
                                     table.insert(options,{val,val})
                                 end
                             elseif mySuggestion.Type == "User" then
