@@ -388,7 +388,7 @@ return function(C,Settings)
                     if not success then
                         return false, "Http Error "..result
                     elseif not result.Success then
-                        return false, "Http Error "..result.StatusMessage
+                        return false, "Http Error2 "..result.StatusMessage
                     else
                         bodyResult = HS:JSONDecode(result.Body).data;
                         for num = #bodyResult,1,-1 do--for num, val in ipairs(bodyResult) do
