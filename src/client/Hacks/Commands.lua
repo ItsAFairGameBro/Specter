@@ -129,14 +129,17 @@ return function(C,Settings)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
                 local targetHuman = targetChar:FindFirstChild("Humanoid")
+                local oldHumanDesc = targetHuman:FindFirstChild("HumanoidDescription")
                 local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
-                if not targetHuman or targetHuman.Health <=0 or not targetHRP then
+                if not targetHuman or targetHuman.Health <=0 or not targetHRP or not oldHumanDesc then
                     return
                 end
                 if AnimationEffectData then
                     AnimationEffectData:Start(targetChar)
                 end
-
+                for _, prop in ipairs({"HeadScale","BodyTypeScale","DepthScale","HeightScale","ProportionScale","WidthScale"}) do
+                    humanDesc[prop] = oldHumanDesc[prop]
+                end
                 --local wasAnchored = targetHRP.Anchored
                 --humanDesc.Name = "CharacterDesc"
                 if not dontUpdate then
