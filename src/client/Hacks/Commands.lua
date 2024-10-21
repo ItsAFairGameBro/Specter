@@ -277,7 +277,6 @@ return function(C,Settings)
                     if C.hackData.NavalWarefare then
                         task.wait(3)
                     end
-                    print(theirChar, firstRun, currentChar)
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
                         print(theirChar,"first run")
