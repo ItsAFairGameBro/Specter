@@ -340,6 +340,8 @@ return function(C,Settings)
                         C.getgenv().JoinPlayerMorphDesc = savedDescription
                         print("Set Joined To", savedDescription)
                     end
+                else
+                    print("args1",args[1])
                 end
                 if args[1]~="new" then
                     for num, theirPlr in ipairs(args[1]) do
