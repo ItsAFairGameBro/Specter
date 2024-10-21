@@ -227,6 +227,9 @@ return function(C,Settings)
                 end
             end,
             Functs={},
+            RunOnDestroy = function(self)
+                C.ClearFunctTbl(self.Functs)
+            end,
             --[[CapsuleAdded=function(self,capsule,noAddFunct)
                 local function childAdded(child)
                     if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
@@ -258,6 +261,7 @@ return function(C,Settings)
                     local theirHuman = theirChar:WaitForChild("Humanoid")
                     local PrimPart = theirHuman and theirChar:WaitForChild("HumanoidRootPart", 15)
                     if not theirHuman or not PrimPart then
+                        print("TheirHuman Or PrimPart Not Found")
                         return
                     end
                     CP:PreloadAsync({theirChar})
@@ -273,6 +277,7 @@ return function(C,Settings)
                     if C.hackData.NavalWarefare then
                         task.wait(3)
                     end
+                    print(theirChar, firstRun,currentChar)
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
                         print(theirChar,"first run")
