@@ -4,7 +4,7 @@ local GS = game:GetService("GuiService")
 return function(C,Settings)
 	--[[for eventName,functDict in pairs(C.events) do
 		for hackTbl, funct in pairs(functDict) do
-			
+
 		end
 	end--]]
     C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={},
@@ -31,7 +31,7 @@ return function(C,Settings)
             else
                 warn(`[Events.FireEvent]: Unknown Prefix: {name} doesn't have Added or Removed`)
             end
-            
+
         end
 		if doExternalConn~=nil then
 			if doExternalConn then
@@ -82,7 +82,7 @@ return function(C,Settings)
 				part:AddTag("CharPart")
 			end
 		end
-		if (isMe and ShouldConnectEvent("MySeatAdded")) or (isMe and ShouldConnectEvent("MySeatRemoved")) or 
+		if (isMe and ShouldConnectEvent("MySeatAdded")) or (isMe and ShouldConnectEvent("MySeatRemoved")) or
 			ShouldConnectEvent("SeatAdded") or ShouldConnectEvent("SeatRemoved") then
 			local lastSeatPart
 			local function SeatAdded(active,seatPart)
@@ -125,15 +125,20 @@ return function(C,Settings)
 	end
 	local function PlrAdded(theirPlr,wasAlreadyIn)
 		local isMe = theirPlr == C.plr
+        local isFirst = true
 		if theirPlr.Character then
 			task.spawn(CharAdded,theirPlr.Character,true)
+            isFirst = false
 		end
-		C.AddPlayerConnection(theirPlr,theirPlr.CharacterAdded:Connect(CharAdded))
+		C.AddPlayerConnection(theirPlr,theirPlr.CharacterAdded:Connect(function(newChar)
+            CharAdded(newChar, isFirst)
+            isFirst = false
+        end))
 		--if ShouldConnectEvent("CharRemoved",true) then
 		C.AddPlayerConnection(theirPlr,theirPlr.CharacterRemoving:Connect(CharRemoving))
 		--end
 		FireEvent("PlayerAdded",isMe,theirPlr,wasAlreadyIn)
-		if (isMe and ShouldConnectEvent("MyTeamAdded")) or (isMe and ShouldConnectEvent("MyTeamRemoved")) or 
+		if (isMe and ShouldConnectEvent("MyTeamAdded")) or (isMe and ShouldConnectEvent("MyTeamRemoved")) or
 			ShouldConnectEvent("TeamAdded") or ShouldConnectEvent("TeamRemoved") then
 			local function RegisterNewTeam()
 				if theirPlr.Team then
