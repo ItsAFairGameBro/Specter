@@ -219,7 +219,7 @@ local function Static(C,Settings)
                     C.RemoveAction("NavalVotekick")
                     local Genv = C.getgenv()
                     if Genv.NavalKickThread then
-                        C.StopThread(self.KickThread)
+                        C.StopThread(Genv.NavalKickThread)
                         Genv.NavalKickThread = nil
                     end
                     local targetPlr = args[1][1]
