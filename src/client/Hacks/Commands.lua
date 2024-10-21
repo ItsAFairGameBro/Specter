@@ -330,7 +330,7 @@ return function(C,Settings)
                 local savedDescription = selectedName~="no"
                     and C.CommandFunctions.morph:GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
                 --((args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id)) or PS:GetHumanoidDescriptionFromUserId(selectedName.UserId))
-                if args[1]=="new" or args[1]=="others" or args[1]=="all" then
+                if args[2]=="new" or args[2]=="others" or args[2]=="all" then
                     if C.getgenv().JoinPlayerMorphDesc and C.getgenv().JoinPlayerMorphDesc ~= savedDescription then
                         C.getgenv().JoinPlayerMorphDesc:Destroy()
                     end
@@ -340,8 +340,6 @@ return function(C,Settings)
                         C.getgenv().JoinPlayerMorphDesc = savedDescription
                         print("Set Joined To", savedDescription)
                     end
-                else
-                    print("args1",args[1])
                 end
                 if args[1]~="new" then
                     for num, theirPlr in ipairs(args[1]) do
