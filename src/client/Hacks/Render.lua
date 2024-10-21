@@ -29,6 +29,7 @@ return function(C,Settings)
 						if NameTag:FindFirstChild("Username") then
 							NameTag.Username.TextColor3 = Highlight.FillColor
 						end
+                        NameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
 					end
 					if theirHumanoid then
 						theirHumanoid.DisplayDistanceType = NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or Enum.HumanoidDisplayDistanceType.Subject
@@ -48,7 +49,7 @@ return function(C,Settings)
 						raycastFilterType = Enum.RaycastFilterType.Exclude,  -- Choose filter type
 						distance = self.EnTbl.Distance, -- Maximum cast distance
 						detectionFunction = function(part)
-							return theirChar:IsAncestorOf(part)--part:HasTag("CharPart") and 
+							return theirChar:IsAncestorOf(part)--part:HasTag("CharPart") and
 						end,
 						passFunction = function(part)
 							return part:HasTag("CharPart")
@@ -97,7 +98,7 @@ return function(C,Settings)
 						local OldStorage = self.Storage[oldCameraSubject and oldCameraSubject.Parent or nil]
 						oldCameraSubject = workspace.Camera.CameraSubject
 						local NewStorage = self.Storage[oldCameraSubject and oldCameraSubject.Parent or nil]
-						
+
 						if NewStorage then
 							self:RunCheck(NewStorage)
 						end
@@ -124,7 +125,7 @@ return function(C,Settings)
 						local nameTag = C.Examples.NameTagEx:Clone()
 						nameTag:WaitForChild("Username").Text = theirPlr.Name
 						nameTag.Parent = C.UI.ESP
-						nameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
+						--nameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
 						table.insert(self.Instances,nameTag)
 						table.insert(self.Instances,robloxHighlight)
 						local theirHumanoid = theirChar:WaitForChild("Humanoid",1000)
