@@ -831,7 +831,7 @@ return function(C,Settings)
                                     end
                                 end
                                 local Result = (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
-                                print("CanCapture Called2:", Result, "---"
+                                print("CanCapture Called2:", Result, "---",
                                     myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
                             end
