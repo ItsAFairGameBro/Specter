@@ -827,6 +827,7 @@ return function(C,Settings)
                                 for key, theirPlr in ipairs(runnerPlrs) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
                                         keyNeeded = key
+                                        break
                                     end
                                 end
                                 print("CanCapture Called:",myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
