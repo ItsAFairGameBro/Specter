@@ -924,6 +924,17 @@ return function(C,Settings)
 
                         end
                     },
+                    Options = {
+                        {
+                            Type = Types.Dropdown,
+                            Title = "Run Type",
+                            Tooltip = "Which ServerFarm type to run",
+                            Layout = 1, Default = "Rescue",
+                            Shortcut="RunType",
+                            Selections = {"Capture","Rescue"},
+                            Activate = C.ReloadHack,
+                        },
+                    },
                 }
 
 
