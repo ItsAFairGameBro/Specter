@@ -908,9 +908,6 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        if firstRun then
-                            return
-                        end
                         self:StartUp()
                     end,
                     Completed = function(self)
