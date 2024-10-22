@@ -817,7 +817,7 @@ return function(C,Settings)
                                 end
                             end))
                             local function canCapture()
-                                local keyNeeded = 0
+                                local keyNeeded = 1
                                 for key, theirPlr in ipairs(runnerPlrs) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
                                         keyNeeded = key
@@ -850,12 +850,12 @@ return function(C,Settings)
                                     end
                                 end
                             until #MyList == 0
+                            self:Completed()
                         elseif self.EnTbl.RunType == "Rescue" then
                             C.SetActionLabel(actionClone,"[Idle]")
                         else
                             warn(`[C.StartBeast]: Unknown Implementation for StartBeast`)
                         end
-                        self:Completed()
                     end,
                     DoOverrides = function(self, toggle)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
