@@ -978,10 +978,10 @@ return function(C,Settings)
                                 if self:IsAllowed(tradePlr) then
                                     IsTrading = true
                                     C.RemoteEvent:FireServer("AcceptTradeRequest")
-                                    --print("Trade Accepted")
+                                    print("Trade Accepted")
                                 else
                                     C.RemoteEvent:FireServer("CancelTrade")
-                                    --print("Trade Denied:",tradePlr)
+                                    print("Trade Denied:",tradePlr)
                                     IsTrading, tradePlr = false, nil
                                 end
                             elseif main == "StartTrading" then
@@ -1023,16 +1023,16 @@ return function(C,Settings)
                                         C.RemoteEvent:FireServer("AcceptTradeOffer")
                                         task.wait(1/3)
                                     end
-                                    --print("Trade Timed Out!")
+                                    print("Trade Timed Out!")
                                     C.RemoteEvent:FireServer("CancelTrade")
                                     IsTrading, tradePlr = false, nil
                                 end))
 
                             elseif main == "TradeCancelled" then
-                                --print("Trade Cancelled!")
+                                print("Trade Cancelled!")
                                 IsTrading, tradePlr = false, nil
                             elseif main == "TradeVerifying" then
-                                --print("Trade Successfully Complete!")
+                                print("Trade Successfully Complete!")
                                 IsTrading = false
                                 tradePlr = nil
                             end
@@ -1056,6 +1056,8 @@ return function(C,Settings)
                                 print("Sending Trade Request:",tradePlr)
                                 C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
                                 task.wait(3)
+                            else
+                                task.wait(1)
                             end
                         end
 
