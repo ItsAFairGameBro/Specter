@@ -1040,7 +1040,7 @@ return function(C,Settings)
                         table.insert(self.Functs,C.RemoteEvent.OnClientEvent:Connect(RemoteEventReceivedFunction))
                         C.RemoteEvent:FireServer("CancelTrade")
                         task.wait(2)
-                        while true do
+                        while self.EnTbl.AutoSend do
                             if IsTrading then
                                 while IsTrading do
                                     task.wait(1)
