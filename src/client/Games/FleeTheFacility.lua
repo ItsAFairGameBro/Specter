@@ -825,7 +825,7 @@ return function(C,Settings)
                                 end
                             end))
                             local function canCapture()
-                                local keyNeeded = 0
+                                local keyNeeded = 1
                                 for key, theirPlr in ipairs(runnerPlrs) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
                                         keyNeeded = key
@@ -869,7 +869,7 @@ return function(C,Settings)
                         end
                     end,
                     DoOverrides = function(self, toggle)
-                        toggle = toggle and self.EnTbl.RunType == "Survivor"
+                        --toggle = toggle and self.EnTbl.RunType == "Survivor"
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
