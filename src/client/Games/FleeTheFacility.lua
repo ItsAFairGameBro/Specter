@@ -953,7 +953,7 @@ return function(C,Settings)
                                     warn("Survivor",theirPlr,"has no associated survivor key??")
                                     return
                                 end
-                                local theirKeyPlusOne = (theirKey%self.SurvivorList) + 1
+                                local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
                                 print(theirPlr.Name,"Rescued!")
                             end
