@@ -103,12 +103,13 @@ return function(C,Settings)
                     if args[num] == "" then
                         args[num] = ""
                     else
-                        local Ret = C.StringStartsWith(C.friendnames, args[num], true)[1]
+                        local BigRet = C.StringStartsWith(C.friendnames, args[num], true)
+                        local Ret = BigRet[#BigRet]
                         if Ret then
                             args[num] = {UserId=C.friendnamestoids[Ret[2]], UserName= Ret[2]}
                         else
                             canRunFunction = false
-                            C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid friends. No matching username/userid found for {args[num]}`)
+                            C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid friends. No matching username/userid found for {tostring(args[num])}`)
                         end
                     end
                 elseif argumentData.Type=="User" then

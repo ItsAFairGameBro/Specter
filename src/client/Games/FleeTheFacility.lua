@@ -805,9 +805,9 @@ return function(C,Settings)
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
-                                    print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
+                                    --print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
-                                        print("My guy was captured!")
+                                        --print("My guy was captured!")
                                         local targetCapsule
                                         for _, capsule in ipairs(C.FreezingPods) do
                                             if capsule:FindFirstChild("PodTrigger")~=nil and capsule.Parent then
@@ -820,15 +820,15 @@ return function(C,Settings)
                                         end
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
-                                            print("Found Pod, Freeing Status:",Freed)
+                                            --print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
-                                    task.wait(1)
+                                    RunS.RenderStepped:Wait()
                                 end
-                                print("FInished Rescue!")
+                                --print("FInished Rescue!")
                             end))
                             local function canCapture()
-                                task.wait(1.5)
+                                --task.wait(1.5)
                                 local keyNeeded = 1
                                 for key, theirPlr in ipairs(runnerPlrs) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
@@ -837,8 +837,8 @@ return function(C,Settings)
                                     end
                                 end
                                 local Result = (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
-                                print("CanCapture Called2:", Result, "---",
-                                    myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
+                                --print("CanCapture Called2:", Result, "---",
+                                    --myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
                             end
                             self:FreezeMyself(canRun,canCapture)
@@ -941,21 +941,21 @@ return function(C,Settings)
                             self:Completed()
                         end,
                         CapturedAdded = function(self, theirPlr, theirChar)
-                            print(theirPlr,"CAPTURED")
+                            --print(theirPlr,"CAPTURED")
                             theirPlr:SetAttribute("HasCaptured", true)
                         end,
                         CapturedRemoved = function(self, theirPlr, theirChar)
-                            print(theirPlr,"FREED")
+                            --print(theirPlr,"FREED")
                             -- Attribute it to that player
                             if self.SurvivorList then
                                 local theirKey = table.find(self.SurvivorList, theirPlr)
                                 if not theirKey then
-                                    warn("Survivor",theirPlr,"has no associated survivor key??")
+                                    --warn("Survivor",theirPlr,"has no associated survivor key??")
                                     return
                                 end
                                 local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
-                                print(theirPlr.Name,"Rescued!")
+                                --print(theirPlr.Name,"Rescued!")
                             end
                         end,
                     },
