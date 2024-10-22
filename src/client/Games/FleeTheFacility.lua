@@ -713,7 +713,7 @@ return function(C,Settings)
                     Title = "⛹️Auto Rescue",
                     Tooltip = "Capture survivors when roped (SURVIVOR ONLY)",
                     Layout = 4,
-                    Shortcut = "AutoRescue",Functs={},
+                    Shortcut = "AutoRescue",Functs={},Threads = {},
                     Activate = function(self, newValue)
                         if not newValue then
                             return
@@ -725,13 +725,13 @@ return function(C,Settings)
                     Events = {
                         NewFreezingPod = function(self, freezePod)
                             local PodTrigger = freezePod:WaitForChild("PodTrigger",10)
-                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",10)
+                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",30)
                             if CapturedTorso then
-                                table.insert(CapturedTorso.Changed:Connect(function()
+                                table.insert(self.Functs, CapturedTorso.Changed:Connect(function()
                                     C.RescueSurvivor(freezePod)
                                 end) or false)
                                 if CapturedTorso.Value then
-                                    table.insert(self.Functs, task.spawn(C.RescueSurvivor,freezePod))
+                                    table.insert(self.Threads, task.spawn(C.RescueSurvivor,freezePod))
                                 end
                             end
                         end,
