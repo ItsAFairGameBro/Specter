@@ -808,6 +808,7 @@ return function(C,Settings)
                                             local Freed = C.RescueSurvivor(targetCapsule)
                                             print("Found Pod, Freeing Status:",Freed)
                                             if Freed then
+                                                -- Fix: Set the attribute for HasRescued only when the rescue is complete
                                                 return C.plr:SetAttribute("HasRescued",true)
                                             end
                                         end
@@ -822,6 +823,7 @@ return function(C,Settings)
                                         keyNeeded = key
                                     end
                                 end
+                                -- Fix: Ensure the current player waits to freeze themselves after rescuing
                                 return (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
                             end
                             self:FreezeMyself(canRun,canCapture)
@@ -900,6 +902,10 @@ return function(C,Settings)
                         --C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
                         C.DoActivate(self, self.Activate, self.RealEnabled, false)
+                        for _, theirPlr in ipairs(PS:GetPlayers()) do
+                            theirPlr:SetAttribute("HasRescued",nil)
+                            theirPlr:SetAttribute("HasCaptured",nil)
+                        end
                         --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
                     end,
@@ -915,27 +921,11 @@ return function(C,Settings)
                         end,
                         GameRemoved = function(self)
                             self:Completed()
-                            for _, theirPlr in ipairs(PS:GetPlayers()) do
-                                theirPlr:SetAttribute("HasRescued",nil)
-                                theirPlr:SetAttribute("HasCaptured",nil)
-                            end
-                        end,
-                        OthersCapturedAdded = function(self, theirPlr, theirChar)
-                            theirPlr:SetAttribute("HasCaptured",true)
-                        end,
-                    },
-                    Options = {
-                        {
-                            Type = Types.Dropdown,
-                            Title = "Run Type",
-                            Tooltip = "Which ServerFarm type to run",
-                            Layout = 1, Default = "Capture",
-                            Shortcut="RunType",
-                            Selections = {"Capture","Rescue"},
-                            Activate = C.ReloadHack,
-                        },
+
+                        end
                     },
                 }
+
 
             } or {}))
         }
