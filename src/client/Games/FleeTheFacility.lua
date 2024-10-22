@@ -451,7 +451,7 @@ local function SetUpGame(C, Settings)
         end
     end
     function C.WaitForHammer()
-        while not C.Hammer do
+        while not C.Hammer or not C.CarriedTorso do
             task.wait(1)
         end
     end
@@ -805,6 +805,7 @@ return function(C,Settings)
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
+                                    print("TO RESCUE:",myGuyToRescuePlr)
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         print("My guy was captured!")
                                         local targetCapsule
@@ -822,7 +823,7 @@ return function(C,Settings)
                                             print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
-                                    RunS.RenderStepped:Wait()
+                                    task.wait(1)
                                 end
                                 print("FInished Rescue!")
                             end))
