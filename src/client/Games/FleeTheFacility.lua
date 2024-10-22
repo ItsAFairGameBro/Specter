@@ -823,14 +823,13 @@ return function(C,Settings)
                                 end
                             end))
                             local function canCapture()
-                                local keyNeeded = 1
+                                local keyNeeded = 0
                                 for key, theirPlr in ipairs(runnerPlrs) do
-                                    if not theirPlr:GetAttribute("HasCaptured") and runnerPlrs[key%#runnerPlrs+1]:GetAttribute("HasRescued") then
+                                    if not theirPlr:GetAttribute("HasCaptured") then
                                         keyNeeded = key
-                                        break
                                     end
                                 end
-                                -- Fix: Ensure the current player waits to freeze themselves after rescuing
+                                print("CanCapture Called:",myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
                             end
                             self:FreezeMyself(canRun,canCapture)
