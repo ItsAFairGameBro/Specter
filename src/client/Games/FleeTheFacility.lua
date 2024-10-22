@@ -824,6 +824,7 @@ return function(C,Settings)
                                 end
                             end))
                             local function canCapture()
+                                task.wait(1.5)
                                 local keyNeeded = 1
                                 for key, theirPlr in ipairs(runnerPlrs) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
@@ -936,9 +937,11 @@ return function(C,Settings)
                             self:Completed()
                         end,
                         CapturedAdded = function(self, theirPlr, theirChar)
+                            print(theirPlr,"CAPTURED")
                             theirPlr:SetAttribute("HasCaptured", true)
                         end,
                         CapturedRemoved = function(self, theirPlr, theirChar)
+                            print(theirPlr,"FREED")
                             -- Attribute it to that player
                             if self.SurvivorList then
                                 local theirKey = table.find(self.SurvivorList, theirPlr)
