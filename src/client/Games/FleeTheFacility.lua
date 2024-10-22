@@ -909,6 +909,7 @@ return function(C,Settings)
                                     BotActionClone = nil
                                 end
                                 if byReq then
+                                    print("Disabled by request!")
                                     C.DoActivate(self, self.Activate, self.RealEnabled, false)
                                 end
                             end})
