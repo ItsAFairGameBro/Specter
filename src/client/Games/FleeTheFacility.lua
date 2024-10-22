@@ -172,28 +172,30 @@ local function GetSharedHacks(C, Settings)
             if not newValue then
                 return
             end
-            local ScreenGui = C.PlayerGui:WaitForChild("ScreenGui");
-            local MenusTabFrame = ScreenGui:WaitForChild("MenusTabFrame");
-            local BeastPowerMenuFrame = ScreenGui:WaitForChild("BeastPowerMenuFrame")
-            local SurvivorStartFrame = ScreenGui:WaitForChild("SurvivorStartFrame")
-            local IsCheckingLoadData = C.plr:WaitForChild("IsCheckingLoadData");
-            local function menusTab()
-                MenusTabFrame.Visible=not IsCheckingLoadData.Value
-            end
-            local function beastScreen()
-                BeastPowerMenuFrame.Visible=false
-            end
-            local function survivorScreen()
-                SurvivorStartFrame.Visible=false
-            end
-            table.insert(self.Functs,MenusTabFrame:GetPropertyChangedSignal("Visible"):Connect(menusTab))
-            menusTab()
+            if game.PlaceId == 893973440 then
+                local ScreenGui = C.PlayerGui:WaitForChild("ScreenGui");
+                local MenusTabFrame = ScreenGui:WaitForChild("MenusTabFrame");
+                local BeastPowerMenuFrame = ScreenGui:WaitForChild("BeastPowerMenuFrame")
+                local SurvivorStartFrame = ScreenGui:WaitForChild("SurvivorStartFrame")
+                local IsCheckingLoadData = C.plr:WaitForChild("IsCheckingLoadData");
+                local function menusTab()
+                    MenusTabFrame.Visible=not IsCheckingLoadData.Value
+                end
+                local function beastScreen()
+                    BeastPowerMenuFrame.Visible=false
+                end
+                local function survivorScreen()
+                    SurvivorStartFrame.Visible=false
+                end
+                table.insert(self.Functs,MenusTabFrame:GetPropertyChangedSignal("Visible"):Connect(menusTab))
+                menusTab()
 
-            table.insert(self.Functs,BeastPowerMenuFrame:GetPropertyChangedSignal("Visible"):Connect(beastScreen))
-            beastScreen()
+                table.insert(self.Functs,BeastPowerMenuFrame:GetPropertyChangedSignal("Visible"):Connect(beastScreen))
+                beastScreen()
 
-            table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
-            survivorScreen()
+                table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
+                survivorScreen()
+            end
         end,
         Events = {
             MyCharAdded = C.ReloadHack,
