@@ -527,31 +527,7 @@ return function(C,Settings)
             return false, "Timeout Occured"
         end
     end
-    do
-        --local BeastCaveBaseplate = workspace:WaitForChild("BeastCaveBaseplate")
-        local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
-        function C.isInGame(theirChar,isDefacto)
-            local theirPlr = theirChar and PS:GetPlayerFromCharacter(theirChar)
-            if not theirChar or not theirPlr then
-                return false, "Lobby"
-            end
-            local theirTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
-            if theirChar:FindFirstChild("Hammer") or theirTSM.IsBeast.Value then
-                return true, "Beast"
-            elseif theirTSM.Health.Value > 0 then
-                return true, "Survivor"
-            elseif isDefacto then
-                local Location = theirChar:GetPivot().Position
-                if C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, Location, true) then
-                    return false, "Lobby"
-                else
-                    return true, "Survivor"
-                end
-            else
-                return false, "Lobby"
-            end
-        end
-    end
+
 
     function C.GetUserInventory(theirPlr)
         local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
@@ -612,6 +588,31 @@ return function(C,Settings)
     end)
     -- MAIN GAME --
     if game.PlaceId ~= 1738581510 then
+        do
+            --local BeastCaveBaseplate = workspace:WaitForChild("BeastCaveBaseplate")
+            local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
+            function C.isInGame(theirChar,isDefacto)
+                local theirPlr = theirChar and PS:GetPlayerFromCharacter(theirChar)
+                if not theirChar or not theirPlr then
+                    return false, "Lobby"
+                end
+                local theirTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
+                if theirChar:FindFirstChild("Hammer") or theirTSM.IsBeast.Value then
+                    return true, "Beast"
+                elseif theirTSM.Health.Value > 0 then
+                    return true, "Survivor"
+                elseif isDefacto then
+                    local Location = theirChar:GetPivot().Position
+                    if C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, Location, true) then
+                        return false, "Lobby"
+                    else
+                        return true, "Survivor"
+                    end
+                else
+                    return false, "Lobby"
+                end
+            end
+        end
         return {
             Category = {
                 Name = "FleeTheFacility",
