@@ -788,6 +788,7 @@ return function(C,Settings)
                             local myRunerPlrKey
                             local function canRun(fullLoop)
                                 local runnerPlrs = C.GetPlayerListOfType({Survivor = true})
+                                self.SurvivorList = runnerPlrs
                                 table.sort(runnerPlrs, function(a, b)
                                     return a.Name:lower() < b.Name:lower()
                                 end)
@@ -816,20 +817,17 @@ return function(C,Settings)
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
                                             print("Found Pod, Freeing Status:",Freed)
-                                            if Freed then
-                                                -- Fix: Set the attribute for HasRescued only when the rescue is complete
-                                                return C.plr:SetAttribute("HasRescued",true)
-                                            end
                                         end
                                     end
                                     RunS.RenderStepped:Wait()
                                 end
                             end))
                             local function canCapture()
-                                local keyNeeded = 1
+                                local keyNeeded
                                 for key, theirPlr in ipairs(runnerPlrs) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
                                         keyNeeded = key
+                                        break
                                     end
                                 end
                                 -- Fix: Ensure the current player waits to freeze themselves after rescuing
@@ -914,6 +912,7 @@ return function(C,Settings)
                         -- Finished on its own --
                         --C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
+                        self.SurvivorList = nil
                         C.DoActivate(self, self.Activate, self.RealEnabled, false)
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
                             theirPlr:SetAttribute("HasRescued",nil)
@@ -934,8 +933,23 @@ return function(C,Settings)
                         end,
                         GameRemoved = function(self)
                             self:Completed()
-
-                        end
+                        end,
+                        CapturedAdded = function(self, theirPlr, theirChar)
+                            theirPlr:SetAttribute("HasCaptured", true)
+                        end,
+                        CapturedRemoved = function(self, theirPlr, theirChar)
+                            -- Attribute it to that player
+                            if self.SurvivorList then
+                                local theirKey = table.find(self.SurvivorList, theirPlr)
+                                if not theirKey then
+                                    warn("Survivor",theirPlr,"has no associated survivor key??")
+                                    return
+                                end
+                                local theirKeyPlusOne = (theirKey%self.SurvivorList) + 1
+                                self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
+                                print(theirPlr.Name,"Rescued!")
+                            end
+                        end,
                     },
                     Options = {
                         {
