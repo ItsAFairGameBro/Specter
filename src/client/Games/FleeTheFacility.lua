@@ -866,8 +866,8 @@ return function(C,Settings)
                     StartUp = function(self)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
-                        if not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealValue then
-                            print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealValue)
+                        if not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled then
+                            print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
                         self:DoOverrides(true)
