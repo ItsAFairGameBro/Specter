@@ -79,7 +79,7 @@ return function(C,Settings)
             end,
         },
         ["morph"]={
-            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true}},
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"}},
             AfterTxt=" to %s%s",Priority=-3,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
