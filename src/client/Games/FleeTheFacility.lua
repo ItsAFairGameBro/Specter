@@ -746,13 +746,7 @@ return function(C,Settings)
                     WasRunning = false,
                     FreezeMyself = function(self,canRun,canCapture)
                         while C.BeastChar do
-                            local inRange = (C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<6
-                            if not inRange and not C.myTSM.Captured.Value and (not C.myTSM.Ragdoll.Value or (C.CarriedTorso
-                                and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char)) then
-                                C.DoTeleport(C.BeastChar:GetPivot()*Vector3.new(0,0,-4))
-                            else
-                                --print(inRange,C.myTSM.Captured.Value,C.myTSM.Ragdoll.Value,(C.CarriedTorsoand (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char))
-                            end
+
                             local i = 0
                             while ((C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart")) and ((C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<7)) do
                                 i+=1
@@ -765,15 +759,23 @@ return function(C,Settings)
                                     if not canRun(true) then
                                         return
                                     end
-                                    if not C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent and C.char:FindFirstChild("Head") then
-                                        C.HammerEvent:FireServer("HammerHit", C.char.Head)
-                                    end
-                                    if not canRun(true) then
-                                        return
-                                    end
-                                    if C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent
-                                        and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char then
-                                        C.RopeSurvivor(C.char)
+                                    local inRange = (C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<6
+                                    if not inRange then
+                                        if not C.myTSM.Captured.Value and (not C.myTSM.Ragdoll.Value or (C.CarriedTorso
+                                            and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char)) then
+                                            C.DoTeleport(C.BeastChar:GetPivot()*Vector3.new(0,0,-4))
+                                        end
+                                    else
+                                        if not C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent and C.char:FindFirstChild("Head") then
+                                            C.HammerEvent:FireServer("HammerHit", C.char.Head)
+                                        end
+                                        if not canRun(true) then
+                                            return
+                                        end
+                                        if C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent
+                                            and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char then
+                                            C.RopeSurvivor(C.char)
+                                        end
                                     end
                                 end
                             end
@@ -867,6 +869,7 @@ return function(C,Settings)
                         end
                     end,
                     DoOverrides = function(self, toggle)
+                        toggle = toggle and self.EnTbl.RunType == "Survivor"
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
