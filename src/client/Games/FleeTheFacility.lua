@@ -199,13 +199,23 @@ local function GetSharedHacks(C, Settings)
         end,
         Events = {
             MyCharAdded = C.ReloadHack,
-            MapRemoved = function()
+            MapRemoved = function(self)
                 local Torso = C.char and C.char:FindFirstChild("Torso")
                 if Torso then
                     warn("Torso Anchored, Resetting...")
                     C.ResetCharacter()
                 end
+                self.Events.MyBeastHammerRemoved(self)
             end,
+            MyBeastHammerRemoved = function(self)
+                task.wait(1)
+                for num, animTrack in ipairs(C.human:GetPlayingAnimationTracks()) do
+                    if animTrack.Name == "AnimArmIdle" then
+                        animTrack:Stop(0)
+                        print("Stopped AnimHoldIdle")
+                    end
+                end
+            end
         }
     },
 
@@ -377,11 +387,12 @@ local function SetUpGame(C, Settings)
         end
     end
     function C.RopeSurvivor(theirChar)
-        if C.CarriedTorso.Value then
+        local Torso = theirChar:FindFirstChild("Torso")
+        if C.CarriedTorso.Value and Torso then
             return
         end
         C.SetActionLabel(BotActionClone, `Roping {theirChar.Name}`)
-        C.HammerEvent:FireServer("HammerTieUp",theirChar.Torso,theirChar.Torso.NeckAttachment.WorldPosition)
+        C.HammerEvent:FireServer("HammerTieUp",Torso,Torso.NeckAttachment.WorldPosition)
     end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
@@ -704,7 +715,6 @@ return function(C,Settings)
                     end,
                     Events = {
                         MyBeastRopeAdded = function(self,theirChar)
-                            print("Roped!")
                             C.CaptureSurvivor(theirChar)
                         end,
                     },
@@ -899,7 +909,7 @@ return function(C,Settings)
                                     BotActionClone = nil
                                 end
                                 if byReq then
-                                    self:SetValue(false)
+                                    C.DoActivate(self, self.Activate, self.RealEnabled, false)
                                 end
                             end})
                             BotActionClone = myActionClone
