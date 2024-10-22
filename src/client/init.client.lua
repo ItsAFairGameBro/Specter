@@ -30,7 +30,7 @@ C.Executor = executorName
 local function RegisterFunctions()
 	local firetouchinterest = firetouchinterest
 	if not enExecutor.firetouchinterest or not firetouchinterest then
-		
+
 		firetouchinterest = function(part1,part2,number)--creates a fake touch function
 			local thread
 			thread = task.spawn(function(dt)
@@ -132,10 +132,10 @@ local function RegisterFunctions()
 		[Enum.KeyCode.Backspace] = "0x08",
 		[Enum.KeyCode.Tab] = "0x09",
 		-- Add more mappings as needed
-	}	
+	}
 	function C.firekey(keyCode: Enum.KeyCode,enabled: boolean | nil)
 		local virtualKeyCode = keyCodeMap[keyCode]
-    
+
 		if virtualKeyCode then
 			if enabled then
 				VirtualUser:SetKeyDown(virtualKeyCode)
@@ -166,12 +166,12 @@ local function RegisterFunctions()
 	function C.fireproximityprompt(ProximityPrompt, Amount, Skip)
 		assert(ProximityPrompt, "Argument #1 Missing or nil")
 		assert(typeof(ProximityPrompt) == "Instance" and ProximityPrompt:IsA("ProximityPrompt"), "Attempted to fire a Value that is not a ProximityPrompt")
-	
+
 		local HoldDuration = ProximityPrompt.HoldDuration
 		if Skip then
 			ProximityPrompt.HoldDuration = 0
 		end
-	
+
 		for i = 1, Amount or 1 do
 			ProximityPrompt:InputHoldBegin()
 			if Skip then
@@ -214,7 +214,7 @@ local function RegisterFunctions()
 		end
 		return result
 	end
-	
+
 	--Important In-Game Functions
 	function C.GenerateGUID()
 		return HS:GenerateGUID(false)
@@ -268,7 +268,8 @@ C.ChatVersion = TextChatService.ChatVersion.Name
 C.BotUsers = {`lexxy4life`,`theweirdspook`,`lifeisoofs`,`itsagoodgamebro`,`itsagoodgamebros`,`bottingforthewin`}
 C.AdminUsers = {`suitedforbans`,`suitedforbans2`,`suitedforbans3`,`suitedforbans4`,`suitedforbans5`,
 `suitedforbans6`,`suitedforbans7`,`suitedforbans8`,`suitedforbans9`,`suitedforbans10`,`suitedforbans11`,`suitedforbans12`,
-`biglugger2017`,`sssNsss72`,`itsagoodgamebro`,`itsagoodgamebros`,`lifeisoofs`,`averynotafkbot3`,`theweirdspook`,`lexxy4life`}
+`biglugger2017`,`sssNsss72`,`itsagoodgamebro`,`itsagoodgamebros`,`lifeisoofs`,`averynotafkbot3`,`theweirdspook`,`lexxy4life`,
+`yvettecarreno08`}
 if not C.getgenv().PlaceName then
 	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
 end
@@ -545,7 +546,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		for num, methodName in ipairs(methods or {}) do
 			assert(methodName == lower(methodName),`[C.HookMethod]: {toStr(methodName)} is not lowercase!`)
 		end
-		
+
 		local OriginFunct
 		local function CallFunction(self,...)
 			if (lower(getnamecallmethod()) == "getloghistory") then

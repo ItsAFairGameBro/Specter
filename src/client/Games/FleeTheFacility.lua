@@ -569,7 +569,6 @@ return function(C,Settings)
         return InventoryCount, #Inventory
     end
     -- COMMANDS --
-    warn("Inserted command")
     table.insert(C.InsertCommandFunctions,function()
         return {
             ["findtrader"] = {
