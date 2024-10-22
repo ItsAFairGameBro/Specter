@@ -296,7 +296,7 @@ return function(C,Settings)
             },
             Run=function(self,args)
                 self.RealEnabled = true
-                local selectedName = (args[2] == "" and "no") or C.checkFriendsPCALLFunction(args[2])[1]
+                local selectedName = (args[2] == "" and "no") or args[2]--C.checkFriendsPCALLFunction(args[2])[1]
                 selectedName = selectedName ~= "no" and selectedName[2] or selectedName
                 if not selectedName then
                     return false,`User Not Found: {args[2]}`--C.CreateSysMessage(`User Not Found: {args[2]}`)
@@ -304,13 +304,13 @@ return function(C,Settings)
                 local outfitData
                 if args[3] and args[3] ~= "" then
                     if not C.getgenv().Outfits[selectedName.UserId] then
-                        local wasSuccess,err = C.CommandFunctions.outfits:Run({selectedName.SortName})
+                        local wasSuccess,err = C.CommandFunctions.outfits:Run({selectedName.UserName})
                         if not wasSuccess then
                             return false, "Outfit Getter Err " .. tostring(err)
                         end
                     end
                     if not C.getgenv().Outfits[selectedName.UserId] then
-                        return false, `Outfit not found for user {selectedName.SortName}, {selectedName.UserId}`
+                        return false, `Outfit not found for user {selectedName.UserName}, {selectedName.UserId}`
                     end
                     if tonumber(args[3]) then
                         args[3] = tonumber(args[3])
