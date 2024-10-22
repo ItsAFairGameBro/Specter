@@ -212,7 +212,6 @@ local function GetSharedHacks(C, Settings)
                 for num, animTrack in ipairs(C.human:GetPlayingAnimationTracks()) do
                     if animTrack.Name == "AnimArmIdle" then
                         animTrack:Stop(0)
-                        print("Stopped AnimHoldIdle")
                     end
                 end
             end
@@ -325,6 +324,7 @@ local function SetUpGame(C, Settings)
 
         local isBeastVal = theTSM:WaitForChild("IsBeast")
         local hpVal = theTSM:WaitForChild("Health")
+        local escapedVal = theTSM:WaitForChild("Escaped")
         local ragdollVal = theTSM:WaitForChild("Ragdoll")
         local capturedVal = theTSM:WaitForChild("Captured")
         local function beastChangedVal(newVal)
@@ -336,7 +336,7 @@ local function SetUpGame(C, Settings)
         end
         local wasInGame = false
         local function healthChangedVal(newVal)
-            local inGame = newVal > 0
+            local inGame = newVal > 0 and not escapedVal.Value
             if not wasInGame and inGame then
                 C.FireEvent("SurvivorAdded",theirPlr == C.plr,theirPlr)
             elseif wasInGame and not inGame then
