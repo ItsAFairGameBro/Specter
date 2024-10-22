@@ -791,7 +791,9 @@ return function(C,Settings)
                                 runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
                                 self.SurvivorList = runnerPlrs
                                 table.sort(runnerPlrs, function(a, b)
-                                    return a.Name:lower() < b.Name:lower()
+                                    local aLevel = C.StringWait(a, "SavedPlayerStatsModule.Level").Value
+                                    local bLevel = C.StringWait(b, "SavedPlayerStatsModule.Level").Value
+                                    return aLevel < bLevel
                                 end)
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
 
@@ -883,7 +885,7 @@ return function(C,Settings)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
                         if not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled then
-                            print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
+                            --print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
                         self:DoOverrides(true)
