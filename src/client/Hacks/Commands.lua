@@ -17,6 +17,7 @@ local MaxFlingSpeed = 1e6
 
 return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
+    C.getgenv().Outfits = C.getgenv().Outfits or {}
     C.CommandFunctions = {
         ["refresh"]={
             Parameters={},

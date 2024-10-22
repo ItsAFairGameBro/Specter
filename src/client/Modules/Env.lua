@@ -1249,7 +1249,7 @@ return function(C,Settings)
             task.wait(1);
             C.DoTeleport(CFrame.new(1e3,1e-3,1e3))
             task.wait(.25);
-            if not C.char:FindFirstChild("Humanoid") then
+            if C.char:FindFirstChild("Humanoid") then
                 if C.char.Humanoid.Health<=0 then
                     for num,part in ipairs(C.char:GetDescendants()) do
                         if part:IsA("BasePart") then

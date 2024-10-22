@@ -924,6 +924,7 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
+                        print(debug.traceback("CALL"))
                         self:StartUp()
                     end,
                     Completed = function(self)
