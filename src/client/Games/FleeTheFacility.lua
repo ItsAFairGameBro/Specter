@@ -746,9 +746,8 @@ return function(C,Settings)
                     WasRunning = false,
                     FreezeMyself = function(self,canRun,canCapture)
                         while C.BeastChar do
-
                             local i = 0
-                            while ((C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart")) and ((C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<7)) do
+                            while ((C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart"))) do
                                 i+=1
                                 if i==10 then
                                     i = 0
