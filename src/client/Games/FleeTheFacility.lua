@@ -639,7 +639,7 @@ return function(C,Settings)
                         GameAdded = function(self)
                             while true do
                                 C.WaitForHammer()
-                                for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true})) do
+                                for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true,Lobby=false,Beast=false})) do
                                     if C.CanTarget(self, theirPlr) and theirPlr.Character then
                                         C.HitSurvivor(theirPlr.Character)
                                     end
@@ -788,7 +788,7 @@ return function(C,Settings)
                             local runnerPlrs={}
                             local myRunerPlrKey
                             local function canRun(fullLoop)
-                                local runnerPlrs = C.GetPlayerListOfType({Survivor = true})
+                                local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
                                 self.SurvivorList = runnerPlrs
                                 table.sort(runnerPlrs, function(a, b)
                                     return a.Name:lower() < b.Name:lower()
