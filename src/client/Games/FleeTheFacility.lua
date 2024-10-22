@@ -795,6 +795,8 @@ return function(C,Settings)
                                 end)
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
 
+                                if true then return true end
+
                                 local Ret1 = (C.char and C.human and C.human.Health>0 and C.char:FindFirstChild("HumanoidRootPart") and C.Hammer)
                                 local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
                                 return (Ret1 and Ret2)
@@ -822,6 +824,7 @@ return function(C,Settings)
                                     end
                                     RunS.RenderStepped:Wait()
                                 end
+                                print("FInished Rescue!")
                             end))
                             local function canCapture()
                                 task.wait(1.5)
