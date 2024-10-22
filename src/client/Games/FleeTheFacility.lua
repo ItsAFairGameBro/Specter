@@ -199,6 +199,13 @@ local function GetSharedHacks(C, Settings)
         end,
         Events = {
             MyCharAdded = C.ReloadHack,
+            MapRemoved = function()
+                local Torso = C.char and C.char:FindFirstChild("Torso")
+                if Torso then
+                    warn("Torso Anchored, Resetting...")
+                    C.ResetCharacter()
+                end
+            end,
         }
     },
 
