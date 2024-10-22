@@ -823,9 +823,9 @@ return function(C,Settings)
                                 end
                             end))
                             local function canCapture()
-                                local keyNeeded
+                                local keyNeeded = 1
                                 for key, theirPlr in ipairs(runnerPlrs) do
-                                    if not theirPlr:GetAttribute("HasCaptured") then
+                                    if not theirPlr:GetAttribute("HasCaptured") and runnerPlrs[key%#runnerPlrs+1]:GetAttribute("HasRescued") then
                                         keyNeeded = key
                                         break
                                     end
