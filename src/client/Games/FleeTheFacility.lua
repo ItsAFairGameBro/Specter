@@ -744,8 +744,7 @@ return function(C,Settings)
                                 and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char)) then
                                 C.DoTeleport(C.BeastChar:GetPivot()*Vector3.new(0,0,-4))
                             else
-                                print(inRange,C.myTSM.Captured.Value,C.myTSM.Ragdoll.Value,(C.CarriedTorso
-                                    and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char))
+                                --print(inRange,C.myTSM.Captured.Value,C.myTSM.Ragdoll.Value,(C.CarriedTorsoand (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char))
                             end
                             local i = 0
                             while ((C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart")) and ((C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<7)) do
