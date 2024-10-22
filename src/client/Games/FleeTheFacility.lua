@@ -830,8 +830,10 @@ return function(C,Settings)
                                         break
                                     end
                                 end
-                                print("CanCapture Called:",myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
-                                return (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
+                                local Result = (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
+                                print("CanCapture Called2:", Result, "---"
+                                    myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
+                                return Result
                             end
                             self:FreezeMyself(canRun,canCapture)
                         else

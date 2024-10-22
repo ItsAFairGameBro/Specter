@@ -341,7 +341,6 @@ return function(C,Settings)
                         C.getgenv().JoinPlayerMorphDesc = nil
                     else
                         C.getgenv().JoinPlayerMorphDesc = savedDescription
-                        print("Set Joined To", savedDescription)
                     end
                 end
                 if args[1]~="new" then
