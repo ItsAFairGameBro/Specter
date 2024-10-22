@@ -891,10 +891,10 @@ return function(C,Settings)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
                         self.WasRunning = toggle
                     end,
-                    StartUp = function(self)
+                    StartUp = function(self, gameOver)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
-                        if not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled then
+                        if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled then
                             --print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
@@ -930,10 +930,10 @@ return function(C,Settings)
                     end,
                     Completed = function(self)
                         -- Finished on its own --
-                        --C.RemoveAction(self.Shortcut)
+                        self:StartUp(true)
                         C.getgenv().Rescued = nil
                         self.SurvivorList = nil
-                        C.DoActivate(self, self.Activate, self.RealEnabled, false)
+                        --C.DoActivate(self, self.Activate, self.RealEnabled, false)
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
                             theirPlr:SetAttribute("HasRescued",nil)
                             theirPlr:SetAttribute("HasCaptured",nil)
