@@ -788,7 +788,7 @@ return function(C,Settings)
                             local runnerPlrs={}
                             local myRunerPlrKey
                             local function canRun(fullLoop)
-                                local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
+                                runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
                                 self.SurvivorList = runnerPlrs
                                 table.sort(runnerPlrs, function(a, b)
                                     return a.Name:lower() < b.Name:lower()
