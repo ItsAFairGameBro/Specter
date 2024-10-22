@@ -294,8 +294,10 @@ return function(C,Settings)
                     end
                 end,
             },
+            RealEnabled = C.getgenv().MorphEnabled,
             Run=function(self,args)
                 self.RealEnabled = true
+                C.getgenv().MorphEnabled = true
                 local selectedName = (args[2] == "" and "no") or args[2]--C.checkFriendsPCALLFunction(args[2])[1]
                 selectedName = selectedName ~= "no" and selectedName[2] or selectedName
                 if not selectedName then
