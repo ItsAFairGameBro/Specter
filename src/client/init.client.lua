@@ -458,9 +458,11 @@ if not C.isStudio then
 		local informalName = informalSplit[#informalSplit]
 		task.delay(0.1 * (num), C.RunLink, githubLink,gitType,path)
 	end
+    local startWait = os.clock()
 	while ModulesLoaded < #ModulesToPreload do
 		RunS.RenderStepped:Wait()
 	end
+    print(("Module Loading Wait: %.1fs"):format(os.clock() - startWait))
 end
 
 --Load hooks immediately
