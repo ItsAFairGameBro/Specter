@@ -955,6 +955,9 @@ return function(C,Settings)
                             self:Completed()
                         end,
                         GameRemoved = function(self)
+                            C.ClearThreadTbl(self.Threads)
+                        end,
+                        MapRemoved = function(self)
                             self:Completed()
                         end,
                         CapturedAdded = function(self, theirPlr, theirChar)
