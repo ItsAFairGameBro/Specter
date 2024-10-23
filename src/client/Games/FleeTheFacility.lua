@@ -880,7 +880,6 @@ return function(C,Settings)
                                     task.wait(1)
                                 end
                             end
-                            self:Completed()
                         elseif self.EnTbl.RunType == "Rescue" then
                             C.SetActionLabel(actionClone,"[Idle]")
                         else
@@ -929,11 +928,11 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        print(debug.traceback("CALL"))
                         self:StartUp()
                     end,
                     Completed = function(self)
                         -- Finished on its own --
+                        print(debug.traceback("GAME OVER"))
                         self:StartUp(true)
                         C.getgenv().Rescued = nil
                         self.SurvivorList = nil
