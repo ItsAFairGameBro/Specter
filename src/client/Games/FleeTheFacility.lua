@@ -920,7 +920,7 @@ return function(C,Settings)
                                 end
                                 C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
                                 warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                C.ResetCharacter()
+                                --C.ResetCharacter()
                             end))
                         end
                     end,
