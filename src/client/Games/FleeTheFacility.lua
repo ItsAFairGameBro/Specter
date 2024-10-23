@@ -860,7 +860,7 @@ return function(C,Settings)
                     end,
                     StartBeast = function(self, actionClone, info)
                         if self.EnTbl.RunType == "Capture" then
-                            repeat
+                            while true do
                                 local MyList = C.GetPlayerListOfType({Survivor = true, Captured = false, ExcludeMe = true})
                                 for _, theirPlr in ipairs(MyList) do
                                     local TSM = theirPlr:FindFirstChild("TempPlayerStatsModule")
@@ -876,7 +876,10 @@ return function(C,Settings)
                                         i+=1
                                     end
                                 end
-                            until #MyList == 0
+                                if #MyList == 0 then
+                                    task.wait(1)
+                                end
+                            end
                             self:Completed()
                         elseif self.EnTbl.RunType == "Rescue" then
                             C.SetActionLabel(actionClone,"[Idle]")
@@ -889,6 +892,7 @@ return function(C,Settings)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
+                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.Blatant.Fly,self.Shortcut)
                         self.WasRunning = toggle
                     end,
                     StartUp = function(self, gameOver)
