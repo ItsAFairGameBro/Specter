@@ -813,6 +813,8 @@ return function(C,Settings)
                                 local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
                                 return (Ret1 and Ret2)
                             end
+                            canRun()
+                            print("Runners",runnerPlrs)
                             table.insert(self.Threads,task.spawn(function()
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
@@ -961,21 +963,21 @@ return function(C,Settings)
                             self:Completed()
                         end,
                         CapturedAdded = function(self, theirPlr, theirChar)
-                            --print(theirPlr,"CAPTURED")
+                            print(theirPlr,"CAPTURED")
                             theirPlr:SetAttribute("HasCaptured", true)
                         end,
                         CapturedRemoved = function(self, theirPlr, theirChar)
-                            --print(theirPlr,"FREED")
+                            print(theirPlr,"FREED")
                             -- Attribute it to that player
                             if self.SurvivorList then
                                 local theirKey = table.find(self.SurvivorList, theirPlr)
                                 if not theirKey then
-                                    --warn("Survivor",theirPlr,"has no associated survivor key??")
+                                    warn("Survivor",theirPlr,"has no associated survivor key??")
                                     return
                                 end
                                 local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
-                                --print(theirPlr.Name,"Rescued!")
+                                print(theirPlr.Name,"Rescued!")
                             end
                         end,
                     },
