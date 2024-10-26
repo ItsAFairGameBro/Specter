@@ -807,12 +807,12 @@ return function(C,Settings)
                             local myRunerPlrKey
                             local function canRun(fullLoop)
                                 runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
-                                self.SurvivorList = runnerPlrs
                                 table.sort(runnerPlrs, function(a, b)
                                     local aLevel = C.StringWait(a, "SavedPlayerStatsModule.Level").Value
                                     local bLevel = C.StringWait(b, "SavedPlayerStatsModule.Level").Value
                                     return aLevel < bLevel
                                 end)
+                                self.SurvivorList = runnerPlrs
                                 myRunerPlrKey = table.find(runnerPlrs,C.plr)
 
                                 if true then return true end
