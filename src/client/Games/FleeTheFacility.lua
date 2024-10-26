@@ -819,7 +819,9 @@ return function(C,Settings)
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
-                                    print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
+                                    if math.random(1,4) == 1 then
+                                        print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
+                                    end
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         --print("My guy was captured!")
                                         local targetCapsule
@@ -834,7 +836,7 @@ return function(C,Settings)
                                         end
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
-                                            --print("Found Pod, Freeing Status:",Freed)
+                                            print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
                                     RunS.RenderStepped:Wait()
