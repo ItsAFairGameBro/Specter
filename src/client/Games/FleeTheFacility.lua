@@ -935,7 +935,7 @@ return function(C,Settings)
                     end,
                     Completed = function(self)
                         -- Finished on its own --
-                        print(debug.traceback("GAME OVER"))
+                        --print(debug.traceback("GAME OVER"))
                         self:StartUp(true)
                         C.getgenv().Rescued = nil
                         self.SurvivorList = nil
@@ -977,7 +977,7 @@ return function(C,Settings)
                                 end
                                 local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
-                                print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name)
+                                print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name,self.SurvivorList,theirKey,theirKeyPlusOne)
                             end
                         end,
                     },
