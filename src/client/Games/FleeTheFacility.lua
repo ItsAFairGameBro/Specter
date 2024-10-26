@@ -836,6 +836,9 @@ return function(C,Settings)
                                         end
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
+                                            if Freed then
+                                                C.plr:SetAttribute("HasRescued", true)
+                                            end
                                             print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
