@@ -803,7 +803,6 @@ return function(C,Settings)
                         if self.EnTbl.RunType == "Capture" then
                             C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
                         elseif self.EnTbl.RunType == "Rescue" then
-                            local myKey
                             local function canRun(fullLoop)
                                 local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
                                 table.sort(runnerPlrs, function(a, b)
@@ -815,7 +814,8 @@ return function(C,Settings)
                                     return aLevel < bLevel
                                 end)
                                 self.SurvivorList = runnerPlrs
-                                myKey = table.find(self.SurvivorList,C.plr)
+                                self.myKey = table.find(self.SurvivorList,C.plr)
+                                self.rescueKey = (self.myKey%#self.SurvivorList) + 1
 
                                 if true then return true end
 
@@ -827,10 +827,10 @@ return function(C,Settings)
                             print("Runners",self.SurvivorList)
                             table.insert(self.Threads,task.spawn(function()
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
-                                    local GuyToRescueIndex = (myKey%#self.SurvivorList)+1--gets next index and loops over array
-                                    local myGuyToRescuePlr = self.SurvivorList[GuyToRescueIndex]
+                                    --local GuyToRescueIndex = (myKey%#self.SurvivorList)+1--gets next index and loops over array
+                                    local myGuyToRescuePlr = self.SurvivorList[self.rescueKey]
                                     if math.random(1,120) == 1 then
-                                        print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myKey,#self.SurvivorList)
+                                        print("TO RESCUE:",myGuyToRescuePlr,self.rescueKey,self.myKey,#self.SurvivorList)
                                     end
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         --print("My guy was captured!")
@@ -846,9 +846,9 @@ return function(C,Settings)
                                         end
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
-                                            --if Freed then
-                                                --C.plr:SetAttribute("HasRescued", true)
-                                            --end
+                                            if Freed then
+                                                C.plr:SetAttribute("HasRescued", true)
+                                            end
                                             print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
@@ -865,7 +865,7 @@ return function(C,Settings)
                                         break
                                     end
                                 end
-                                local Result = (myKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #self.SurvivorList==1
+                                local Result = (self.myKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #self.SurvivorList==1
                                 --print("CanCapture Called2:", Result, "---",
                                     --myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
@@ -958,7 +958,7 @@ return function(C,Settings)
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
                             theirPlr:SetAttribute("HasRescued",nil)
                             theirPlr:SetAttribute("HasCaptured",nil)
-                            theirPlr:SetAttribute("BeenRescued",nil)
+                            --theirPlr:SetAttribute("BeenRescued",nil)
                         end
                         --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
@@ -993,7 +993,7 @@ return function(C,Settings)
                                 end
                                 local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
-                                theirPlr:SetAttribute("BeenRescued",true)
+                                --theirPlr:SetAttribute("BeenRescued",true)
                                 print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name,self.SurvivorList,theirKey,theirKeyPlusOne)
                             end
                         end,
