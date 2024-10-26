@@ -791,6 +791,14 @@ return function(C,Settings)
                             RunS.RenderStepped:Wait()
                         end
                     end,
+                    HasVerification = function()
+                        for num, theirPlr in ipairs(C.GetPlayerListOfType({Survivor = true,Beast=true,Lobby=false})) do
+                            if not table.find(C.BotUsers, theirPlr.Name:lower()) then
+                                return false
+                            end
+                        end
+                        return true
+                    end,
                     StartSurvivor = function(self, actionClone, info)
                         if self.EnTbl.RunType == "Capture" then
                             C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
@@ -819,10 +827,10 @@ return function(C,Settings)
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
-                                    if math.random(1,4) == 1 then
+                                    if math.random(1,120) == 1 then
                                         print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
                                     end
-                                    if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value and not myGuyToRescuePlr:GetAttribute("BeenRescued") then
+                                    if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         --print("My guy was captured!")
                                         local targetCapsule
                                         for _, capsule in ipairs(C.FreezingPods) do
@@ -836,9 +844,9 @@ return function(C,Settings)
                                         end
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
-                                            if Freed then
-                                                C.plr:SetAttribute("HasRescued", true)
-                                            end
+                                            --if Freed then
+                                                --C.plr:SetAttribute("HasRescued", true)
+                                            --end
                                             print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
@@ -920,7 +928,7 @@ return function(C,Settings)
                                     BotActionClone = nil
                                 end
                                 if byReq then
-                                    print("Disabled by request!")
+                                    --print("Disabled by request!")
                                     C.DoActivate(self, self.Activate, self.RealEnabled, false)
                                 end
                             end})
