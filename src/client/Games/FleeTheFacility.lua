@@ -803,17 +803,19 @@ return function(C,Settings)
                         if self.EnTbl.RunType == "Capture" then
                             C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
                         elseif self.EnTbl.RunType == "Rescue" then
-                            local runnerPlrs={}
-                            local myRunerPlrKey
+                            local myKey
                             local function canRun(fullLoop)
-                                runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
+                                local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
                                 table.sort(runnerPlrs, function(a, b)
                                     local aLevel = C.StringWait(a, "SavedPlayerStatsModule.Level").Value
                                     local bLevel = C.StringWait(b, "SavedPlayerStatsModule.Level").Value
+                                    if aLevel == bLevel then
+                                        return a.Name:lower() < b.Name:lower()
+                                    end
                                     return aLevel < bLevel
                                 end)
                                 self.SurvivorList = runnerPlrs
-                                myRunerPlrKey = table.find(runnerPlrs,C.plr)
+                                myKey = table.find(self.SurvivorList,C.plr)
 
                                 if true then return true end
 
@@ -822,13 +824,13 @@ return function(C,Settings)
                                 return (Ret1 and Ret2)
                             end
                             canRun()
-                            print("Runners",runnerPlrs)
+                            print("Runners",self.SurvivorList)
                             table.insert(self.Threads,task.spawn(function()
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
-                                    local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
-                                    local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
+                                    local GuyToRescueIndex = (myKey%#self.SurvivorList)+1--gets next index and loops over array
+                                    local myGuyToRescuePlr = self.SurvivorList[GuyToRescueIndex]
                                     if math.random(1,120) == 1 then
-                                        print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
+                                        print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myKey,#self.SurvivorList)
                                     end
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         --print("My guy was captured!")
@@ -857,13 +859,13 @@ return function(C,Settings)
                             local function canCapture()
                                 --task.wait(1.5)
                                 local keyNeeded = 1
-                                for key, theirPlr in ipairs(runnerPlrs) do
+                                for key, theirPlr in ipairs(self.SurvivorList) do
                                     if not theirPlr:GetAttribute("HasCaptured") then
                                         keyNeeded = key
                                         break
                                     end
                                 end
-                                local Result = (myRunerPlrKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #runnerPlrs==1
+                                local Result = (myKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #self.SurvivorList==1
                                 --print("CanCapture Called2:", Result, "---",
                                     --myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
