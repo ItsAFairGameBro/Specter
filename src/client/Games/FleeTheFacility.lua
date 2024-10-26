@@ -899,6 +899,7 @@ return function(C,Settings)
                     StartUp = function(self, gameOver)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
+                        self.SurvivorList = nil
                         if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled then
                             --print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
@@ -967,7 +968,6 @@ return function(C,Settings)
                             theirPlr:SetAttribute("HasCaptured", true)
                         end,
                         CapturedRemoved = function(self, theirPlr, theirChar)
-                            print(theirPlr,"FREED")
                             -- Attribute it to that player
                             if self.SurvivorList then
                                 local theirKey = table.find(self.SurvivorList, theirPlr)
@@ -977,7 +977,7 @@ return function(C,Settings)
                                 end
                                 local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
-                                print(theirPlr.Name,"Rescued!")
+                                print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name)
                             end
                         end,
                     },
