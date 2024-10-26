@@ -822,7 +822,7 @@ return function(C,Settings)
                                     if math.random(1,4) == 1 then
                                         print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
                                     end
-                                    if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
+                                    if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value and not myGuyToRescuePlr:GetAttribute("BeenRescued") then
                                         --print("My guy was captured!")
                                         local targetCapsule
                                         for _, capsule in ipairs(C.FreezingPods) do
@@ -945,6 +945,7 @@ return function(C,Settings)
                         for _, theirPlr in ipairs(PS:GetPlayers()) do
                             theirPlr:SetAttribute("HasRescued",nil)
                             theirPlr:SetAttribute("HasCaptured",nil)
+                            theirPlr:SetAttribute("BeenRescued",nil)
                         end
                         --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
@@ -979,6 +980,7 @@ return function(C,Settings)
                                 end
                                 local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
+                                theirPlr:SetAttribute("BeenRescued",true)
                                 print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name,self.SurvivorList,theirKey,theirKeyPlusOne)
                             end
                         end,
