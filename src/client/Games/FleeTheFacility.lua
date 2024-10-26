@@ -819,7 +819,7 @@ return function(C,Settings)
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     local GuyToRescueIndex = (myRunerPlrKey%#runnerPlrs)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = runnerPlrs[GuyToRescueIndex]
-                                    --print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
+                                    print("TO RESCUE:",myGuyToRescuePlr,GuyToRescueIndex,myRunerPlrKey,#runnerPlrs)
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         --print("My guy was captured!")
                                         local targetCapsule
