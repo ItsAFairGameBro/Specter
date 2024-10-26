@@ -913,7 +913,7 @@ return function(C,Settings)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
                         self.SurvivorList = nil
-                        if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled then
+                        if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled or not self:HasVerification() then
                             --print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
