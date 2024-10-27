@@ -391,9 +391,13 @@ return function(C,Settings)
 		if Humanoid.RigType==Enum.HumanoidRigType.R15 then
 			return (0.5 * RootPart.Size.Y) + Humanoid.HipHeight
 		elseif Humanoid.RigType==Enum.HumanoidRigType.R6 then
-			if true then
-				return model:WaitForChild("Left Leg").Size.Y + RootPart.Size.Y + model:WaitForChild("Head").Size.Y/2 + Humanoid.HipHeight
-			end
+            local Head = model:WaitForChild("Head")
+            local LeftLeg = model:WaitForChild("Left Leg")
+			if RootPart and Head and LeftLeg then
+				return LeftLeg.Size.Y + RootPart.Size.Y + Head.Size.Y/2 + Humanoid.HipHeight
+            else
+                return Humanoid.HipHeight -- No parts? What happened-
+            end
 			return model:WaitForChild("Left Leg").Size.Y + (0.5 * RootPart.Size.Y) + Humanoid.HipHeight
 		end
 	end
