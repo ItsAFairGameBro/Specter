@@ -78,7 +78,7 @@ return function(C,Settings)
 							self:SlashPressedOld()
 						else
 							C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
-						end	
+						end
 					end
 				end,
                 Events = {},
@@ -102,7 +102,7 @@ return function(C,Settings)
 							self.BestMessage = errorMessage
 							print((`%s Error Has Occured (%.1f): %s`):format(identification, time(), errorMessage))
 						end
-	
+
 						if KickedButton then
 							KickedButton.Size = UDim2.fromScale(KickedButton.Size.X.Scale,0)
 							KickedButton.AutomaticSize = Enum.AutomaticSize.Y
@@ -111,7 +111,7 @@ return function(C,Settings)
 							end
 							KickedButton.Visible = true
 						end
-	
+
 						-- Debug.Traceback doesn't work for this:
 						task.defer(GS.ClearError,GS)
 						SG:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
@@ -123,7 +123,7 @@ return function(C,Settings)
 				Tooltip = "Implements several automatic features",
 				Layout = 99,
 				Shortcut = "BotAuto",
-                
+
 				RejoinDelay = 5,
 				Sending = false,
                 ChatConnected = false,
@@ -133,7 +133,7 @@ return function(C,Settings)
 					if newValue then
 						table.insert(self.Functs, TeleportService.TeleportInitFailed:Connect(function(player,teleportResult,errorMessage,placeId,teleportOptions)
 							if errorMessage == "Teleport failed due to an unexpected error. Please try teleporting again." then
-								
+
 							end
 							task.wait(2)
 						end))
@@ -198,7 +198,7 @@ return function(C,Settings)
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
                             end
-                            
+
                         end
                     end,
 				},
@@ -216,7 +216,7 @@ return function(C,Settings)
 				Activate = function(self,newValue,firstRun)
 					local EnTbl = self.RealEnabled and self.EnTbl or {}
 					local InputFound = (C.human and C.human.MoveDirection.Magnitude > 1e-5) or C.IsJumping
-					
+
 					--Lock Camera Orientation
 					local LastCameraSubjectChangeSignal, LastCamera
 					local function UpdateCamera()
@@ -238,7 +238,7 @@ return function(C,Settings)
 					end
 					table.insert(self.Functs,workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(UpdateCamera))
 					UpdateCamera()
-					
+
 					self:SetAutoJump()
 
 					--Disable TouchGui (if it exists)
@@ -304,6 +304,15 @@ return function(C,Settings)
 				        C.ResetPartProperty(C.plr,"CameraMinZoomDistance",self.Shortcut)
                         C.ResetPartProperty(C.plr,"CameraMode",self.Shortcut)
                     end
+
+                    -- Spoof TouchEnabled
+                    local tskSpawn = task.spawn
+                    C.HookMethod("__index",self.Shortcut .. "/SpoofKeyboard",newValue and self.EnTbl.SpoofKeyboard and function(theirScript,index,self,...)
+                        if index == "touchenabled" then
+                            tskSpawn(print, "spoofed!")
+                            return "Spoof", {false}
+                        end
+                    end)
 				end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
@@ -360,6 +369,14 @@ return function(C,Settings)
 						Shortcut="NoFirstPerson",
 						Activate = C.ReloadHack,
 					},
+                    {
+						Type = Types.Toggle,
+						Title = "Spoof Keyboard",
+						Tooltip = "Forces only to have keyboard input",
+						Layout = 7,Default=false,
+						Shortcut="SpoofKeyboard",
+						Activate = C.ReloadHack,
+					},
 				},
 			},
 			{
@@ -380,6 +397,6 @@ return function(C,Settings)
 				end
 			}
 		}
-		
+
 	}
 end

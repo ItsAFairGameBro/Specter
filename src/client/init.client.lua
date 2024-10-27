@@ -551,9 +551,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			if (lower(getnamecallmethod()) == "getloghistory") then
-				print("one")
-			end
+			--if (lower(getnamecallmethod()) == "getloghistory") then
+			--	print("one")
+			--end
 			-- Get the method being called
 			local method
 			if HookType=="hookmetamethod" then
@@ -562,6 +562,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				else
 					method = ...
 				end
+                --Basic safety..
 				if lower(method) == "name" then
 					return OriginFunct(self, ...)
 				end
@@ -585,9 +586,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
-			if getnamecallmethod() == "getloghistory" or getnamecallmethod() == "GetLogHistory" then
-				print("LOG",method)
-			end
+			--if getnamecallmethod() == "getloghistory" or getnamecallmethod() == "GetLogHistory" then
+			--	print("LOG",method)
+			--end
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			local isGameScript = not checkcaller()
 			 -- Check if the caller is not a local script
@@ -599,10 +600,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if theirScript~="nullptr" or Override then
 					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
 						if hook == "__index" then
-							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
+							--tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
 							return coroYield -- Return the function to run forever haha!!
 						else
-							tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {theirScript.Name}`)
+							--tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {theirScript.Name}`)
 							coroYield()
 							error("coroutine thread was attempting to be resumed for script "..theirScript.Name)
 							return
