@@ -24,6 +24,48 @@ local function AppendToFirstArr(tbl1, tbl2, clone)
 end
 
 local function GetSharedHacks(C, Settings)
+    function C.sortPlayersByXPThenCredits(plrList)
+		plrList = plrList or PS:GetPlayers()
+
+
+		table.sort(plrList,	function(a,b)
+			local aStats=a:FindFirstChild("SavedPlayerStatsModule")
+			local bStats=b:FindFirstChild("SavedPlayerStatsModule")
+			local doesExistA, doesExistB = aStats and aStats.Parent, bStats and bStats.Parent
+			if doesExistA and not doesExistB then
+				return true
+			elseif not doesExistA and doesExistB then
+				return false
+			end
+			local isABot=table.find(C.BotUsers[a.Name:lower()]) ~= nil
+			local isBBot=table.find(C.BotUsers[b.Name:lower()]) ~= nil
+			if isABot~=isBBot then
+				return isABot and not isBBot
+			end
+			local aLevel = aStats:FindFirstChild("Level")
+			local bLevel = bStats:FindFirstChild("Level")
+			if not aLevel or not bLevel then
+				return aLevel~=nil
+			end
+			if aLevel.Value~=bLevel.Value then
+				return (aLevel.Value>bLevel.Value)
+			end
+			local aXP = aStats:FindFirstChild("Xp")
+			local bXP = bStats:FindFirstChild("Xp")
+			if not aXP or not bXP then
+				return aXP~=nil
+			end
+			if aXP.Value~=bXP.Value then
+				return (aXP.Value>bXP.Value)
+			end
+			if (aStats.Credits.Value ~= bStats.Credits.Value) then
+				return (aStats.Credits.Value>bStats.Credits.Value)
+			end
+			return a.Name:lower() > b.Name:lower()
+		end)
+
+		return plrList
+	end
     local SharedHacks = {
     {
         Title = "Speed Buy",
@@ -805,26 +847,7 @@ return function(C,Settings)
                         elseif self.EnTbl.RunType == "Rescue" then
                             local function canRun(fullLoop)
                                 local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
-                                table.sort(runnerPlrs, function(a, b)
-                                    local aLevel = C.StringWait(a, "SavedPlayerStatsModule.Level").Value
-                                    local bLevel = C.StringWait(b, "SavedPlayerStatsModule.Level").Value
-                                    if aLevel == bLevel then
-                                        local aXP = C.StringWait(a, "SavedPlayerStatsModule.XP").Value
-                                        local bXP = C.StringWait(b, "SavedPlayerStatsModule.XP").Value
-                                        if aXP == bXP then
-                                            local aCredits = C.StringWait(a, "SavedPlayerStatsModule.Credits").Value
-                                            local bCredits = C.StringWait(b, "SavedPlayerStatsModule.Credits").Value
-                                            if aCredits == bCredits then
-                                                return a.Name:lower() < b.Name:lower()
-                                            else
-                                                return aCredits < bCredits
-                                            end
-                                        else
-                                            return aXP < bXP
-                                        end
-                                    end
-                                    return aLevel < bLevel
-                                end)
+                                C.sortPlayersByXPThenCredits(runnerPlrs)
                                 if #runnerPlrs == 0 then
                                     task.spawn(self.Completed, self, false)
                                     return false
@@ -923,6 +946,7 @@ return function(C,Settings)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.Blatant.Fly,self.Shortcut)
                         self.WasRunning = toggle
                     end,
+                    ResetThread = nil,
                     StartUp = function(self, gameOver)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
@@ -947,17 +971,22 @@ return function(C,Settings)
                                 end
                             end})
                             BotActionClone = myActionClone
-                            table.insert(self.Threads,task.delay(30, function()
+                            if self.ResetThread then
+                                C.StopThread(self.ResetThread)
+                            end
+                            self.ResetThread = task.delay(30, function()
                                 if myActionClone ~= BotActionClone then
                                     return
                                 end
                                 C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
                                 warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
                                 C.ResetCharacter()
-                            end))
+                            end)
+                            table.insert(self.Threads,self.ResetThread)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
+                        self.ResetThread = nil
                         self:StartUp()
                     end,
                     Completed = function(self)
