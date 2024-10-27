@@ -306,10 +306,8 @@ return function(C,Settings)
                     end
 
                     -- Spoof TouchEnabled
-                    local tskSpawn = task.spawn
                     C.HookMethod("__index",self.Shortcut .. "/SpoofKeyboard",newValue and self.EnTbl.SpoofKeyboard and function(theirScript,index,self,...)
                         if index == "touchenabled" then
-                            tskSpawn(print, "spoofed!")
                             return "Spoof", {false}
                         end
                     end)
