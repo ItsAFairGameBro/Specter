@@ -947,13 +947,13 @@ return function(C,Settings)
                                 end
                             end})
                             BotActionClone = myActionClone
-                            table.insert(self.Threads,task.delay(309, function()
+                            table.insert(self.Threads,task.delay(30, function()
                                 if myActionClone ~= BotActionClone then
                                     return
                                 end
                                 C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
                                 warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                --C.ResetCharacter()
+                                C.ResetCharacter()
                             end))
                         end
                     end,
@@ -992,7 +992,6 @@ return function(C,Settings)
                             self:Completed()
                         end,
                         CapturedAdded = function(self, theirPlr, theirChar)
-                            print(theirPlr,"CAPTURED")
                             theirPlr:SetAttribute("HasCaptured", true)
                         end,
                         CapturedRemoved = function(self, theirPlr, theirChar)
@@ -1000,13 +999,13 @@ return function(C,Settings)
                             if self.SurvivorList then
                                 local theirKey = table.find(self.SurvivorList, theirPlr)
                                 if not theirKey then
-                                    warn("Survivor",theirPlr,"has no associated survivor key??")
+                                    --warn("Survivor",theirPlr,"has no associated survivor key??")
                                     return
                                 end
                                 local theirKeyPlusOne = ((theirKey-2)%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
                                 --theirPlr:SetAttribute("BeenRescued",true)
-                                print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name,self.SurvivorList,theirKey,theirKeyPlusOne)
+                                --print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name,self.SurvivorList,theirKey,theirKeyPlusOne)
                             end
                         end,
                     },
