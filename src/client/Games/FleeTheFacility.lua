@@ -946,7 +946,7 @@ return function(C,Settings)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.Blatant.Fly,self.Shortcut)
                         self.WasRunning = toggle
                     end,
-                    ResetThread = nil,
+                    --ResetThread = nil,
                     StartUp = function(self, gameOver)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
@@ -960,7 +960,16 @@ return function(C,Settings)
                         if inGame then
                             local myActionClone
                             myActionClone = C.AddAction({Title=`{self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
+                                table.insert(info.Threads, task.delay(30, function()
+                                    if myActionClone ~= BotActionClone then
+                                        return
+                                    end
+                                    C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
+                                    warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
+                                    C.ResetCharacter()
+                                end))
                                 self["Start"..role](self, actionClone, info)
+
                             end, Stop = function(byReq)
                                 if BotActionClone == myActionClone then
                                     BotActionClone = nil
@@ -971,22 +980,10 @@ return function(C,Settings)
                                 end
                             end})
                             BotActionClone = myActionClone
-                            if self.ResetThread then
-                                C.StopThread(self.ResetThread)
-                            end
-                            self.ResetThread = task.delay(30, function()
-                                if myActionClone ~= BotActionClone then
-                                    return
-                                end
-                                C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                C.ResetCharacter()
-                            end)
-                            table.insert(self.Threads,self.ResetThread)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        self.ResetThread = nil
+                        --self.ResetThread = nil
                         self:StartUp()
                     end,
                     Completed = function(self)
