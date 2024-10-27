@@ -847,7 +847,7 @@ return function(C,Settings)
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
                                             if Freed then
-                                                C.plr:SetAttribute("HasRescued", true)
+                                                --C.plr:SetAttribute("HasRescued", true)
                                             end
                                             print("Found Pod, Freeing Status:",Freed)
                                         end
@@ -991,7 +991,7 @@ return function(C,Settings)
                                     warn("Survivor",theirPlr,"has no associated survivor key??")
                                     return
                                 end
-                                local theirKeyPlusOne = (theirKey%#self.SurvivorList) + 1
+                                local theirKeyPlusOne = ((theirKey-2)%#self.SurvivorList) + 1
                                 self.SurvivorList[theirKeyPlusOne]:SetAttribute("HasRescued", true)
                                 --theirPlr:SetAttribute("BeenRescued",true)
                                 print(self.SurvivorList[theirKeyPlusOne],"Rescued",theirPlr.Name,self.SurvivorList,theirKey,theirKeyPlusOne)
