@@ -809,29 +809,40 @@ return function(C,Settings)
                                     local aLevel = C.StringWait(a, "SavedPlayerStatsModule.Level").Value
                                     local bLevel = C.StringWait(b, "SavedPlayerStatsModule.Level").Value
                                     if aLevel == bLevel then
-                                        return a.Name:lower() < b.Name:lower()
+                                        local aXP = C.StringWait(a, "SavedPlayerStatsModule.XP").Value
+                                        local bXP = C.StringWait(b, "SavedPlayerStatsModule.XP").Value
+                                        if aXP == bXP then
+                                            local aCredits = C.StringWait(a, "SavedPlayerStatsModule.Credits").Value
+                                            local bCredits = C.StringWait(b, "SavedPlayerStatsModule.Credits").Value
+                                            if aCredits == bCredits then
+                                                return a.Name:lower() < b.Name:lower()
+                                            else
+                                                return aCredits < bCredits
+                                            end
+                                        else
+                                            return aXP < bXP
+                                        end
                                     end
                                     return aLevel < bLevel
                                 end)
+                                if #runnerPlrs == 0 then
+                                    task.spawn(self.Completed, self, false)
+                                    return false
+                                end
                                 self.SurvivorList = runnerPlrs
                                 self.myKey = table.find(self.SurvivorList,C.plr)
                                 self.rescueKey = (self.myKey%#self.SurvivorList) + 1
-
-                                if true then return true end
 
                                 local Ret1 = (C.char and C.human and C.human.Health>0 and C.char:FindFirstChild("HumanoidRootPart") and C.Hammer)
                                 local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
                                 return (Ret1 and Ret2)
                             end
                             canRun()
-                            print("Runners",self.SurvivorList)
+                            --print("Runners",self.SurvivorList)
                             table.insert(self.Threads,task.spawn(function()
                                 while canRun(true) and not C.plr:GetAttribute("HasRescued") do
                                     --local GuyToRescueIndex = (myKey%#self.SurvivorList)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = self.SurvivorList[self.rescueKey]
-                                    if math.random(1,120) == 1 then
-                                        print("TO RESCUE:",myGuyToRescuePlr,self.rescueKey,self.myKey,#self.SurvivorList)
-                                    end
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
                                         --print("My guy was captured!")
                                         local targetCapsule
@@ -847,9 +858,10 @@ return function(C,Settings)
                                         if targetCapsule then
                                             local Freed = C.RescueSurvivor(targetCapsule)
                                             if Freed then
-                                                --C.plr:SetAttribute("HasRescued", true)
+                                                C.plr:SetAttribute("HasRescued", true)
+                                                break
                                             end
-                                            print("Found Pod, Freeing Status:",Freed)
+                                            --print("Found Pod, Freeing Status:",Freed)
                                         end
                                     end
                                     RunS.RenderStepped:Wait()
@@ -900,7 +912,7 @@ return function(C,Settings)
                         elseif self.EnTbl.RunType == "Rescue" then
                             C.SetActionLabel(actionClone,"[Idle]")
                         else
-                            warn(`[C.StartBeast]: Unknown Implementation for StartBeast`)
+                            warn(`[C.StartBeast]: Unknown Implementation for StartBeast: {self.EnTbl.RunType}`)
                         end
                     end,
                     DoOverrides = function(self, toggle)
