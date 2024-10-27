@@ -553,7 +553,7 @@ return function(C,Settings)
 							return "Spoof", {rawget(Defaults,"WalkSpeed")}
 						end
 					end,{"walkspeed"})
-					if self.EnTbl.Override then
+					if newValue and self.EnTbl.Override then
 						table.insert(self.Functs,C.human:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
 							self:SetProperty()
 						end))
@@ -613,7 +613,7 @@ return function(C,Settings)
 							return "Spoof", {rawget(Defaults,"JumpPower")}
 						end
 					end,{"jumppower"})
-					if self.EnTbl.Override then
+					if newValue and self.EnTbl.Override then
 						table.insert(self.Functs,C.human:GetPropertyChangedSignal("JumpPower"):Connect(function()
 							self:SetProperty()
 						end))
