@@ -37,8 +37,8 @@ local function GetSharedHacks(C, Settings)
 			elseif not doesExistA and doesExistB then
 				return false
 			end
-			local isABot=table.find(C.BotUsers[a.Name:lower()]) ~= nil
-			local isBBot=table.find(C.BotUsers[b.Name:lower()]) ~= nil
+			local isABot=table.find(C.BotUsers, a.Name:lower()) ~= nil
+			local isBBot=table.find(C.BotUsers, b.Name:lower()) ~= nil
 			if isABot~=isBBot then
 				return isABot and not isBBot
 			end
