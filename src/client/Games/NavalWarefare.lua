@@ -258,7 +258,7 @@ local function Static(C,Settings)
                             warn("Votekick",C.GetPlayerName(targetPlr),
                                 "Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.RemoveAction("NavalVotekick")
-                            C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left.` ..
+                            C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left. ` ..
                                 `It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
                                 JustKicked and Color3.fromRGB(0,255) or nil)
@@ -512,8 +512,9 @@ return function(C,Settings)
 											if self.EnTbl.Spectate then
 												C.Spectate(closestBasePart.Parent)
 											end
-                                            if not ConnectionTbl[closestBasePart] then
-                                                local HPChangedFunct = closestBasePart.Parent.HP.Changed:Connect(function(newVal)
+                                            local HP = closestBasePart.Parent:FindFirstChild("HP")
+                                            if not ConnectionTbl[closestBasePart] and HP then
+                                                local HPChangedFunct = HP.Changed:Connect(function(newVal)
                                                     if newVal <= 0 then
                                                         closestBasePart.Parent:SetAttribute("Dead",true)
                                                     end
