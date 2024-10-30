@@ -798,8 +798,10 @@ return function(C,Settings)
                         local toStr = tostring
                         local myTSM = C.myTSM
                         local isAncestorOf = myTSM.IsAncestorOf
+                        local info = debug.info
                         C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
+                                print(info(3, "n"))
                                 local theValue = toStr(self)
                                 if theValue == "Health" then
                                     return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
