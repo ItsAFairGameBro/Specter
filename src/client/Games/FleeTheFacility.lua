@@ -796,12 +796,13 @@ return function(C,Settings)
                     Shortcut = "Spectate",Functs={},Threads = {},
                     Activate = function(self, newValue)
                         local toStr = tostring
-                        local isAncestorOf = C.myTSM.IsAncestorOf
+                        local myTSM = C.myTSM
+                        local isAncestorOf = myTSM.IsAncestorOf
                         C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
                                 local theValue = toStr(self)
                                 if theValue == "Health" then
-                                    return "Spoof", {isAncestorOf(self) and 0 or 100}
+                                    return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
                                 elseif theValue == "IsBeast" then
                                     return "Spoof", {false}
                                 end
