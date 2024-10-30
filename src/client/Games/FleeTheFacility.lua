@@ -801,12 +801,14 @@ return function(C,Settings)
                         local info = debug.info
                         C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
-                                print(info(3, "n"))
-                                local theValue = toStr(self)
-                                if theValue == "Health" then
-                                    return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
-                                elseif theValue == "IsBeast" then
-                                    return "Spoof", {false}
+                                local Line = info(3, "l")
+                                if Line > 700 and Line < 750 then
+                                    local theValue = toStr(self)
+                                    if theValue == "Health" then
+                                        return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
+                                    elseif theValue == "IsBeast" then
+                                        return "Spoof", {false}
+                                    end
                                 end
                             end
                         end,{"value"})
