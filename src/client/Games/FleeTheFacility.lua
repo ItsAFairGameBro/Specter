@@ -798,16 +798,19 @@ return function(C,Settings)
                         local toStr = tostring
                         local myTSM = C.myTSM
                         local isAncestorOf = myTSM.IsAncestorOf
-                        local info = debug.info
+                        local traceback = debug.traceback
+                        local find = string.find
                         C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
-                                local Line = info(3, "slnf")
-                                if Line > 700 and Line < 750 then
-                                    local theValue = toStr(self)
-                                    if theValue == "Health" then
-                                        return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
-                                    elseif theValue == "IsBeast" then
-                                        return "Spoof", {false}
+                                local traceback = traceback()
+                                for _, val in ipairs({704, 712, 726, 712, 735, 739}) do
+                                    if find(traceback,toStr(val)) then
+                                        local theValue = toStr(self)
+                                        if theValue == "Health" then
+                                            return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
+                                        elseif theValue == "IsBeast" then
+                                            return "Spoof", {false}
+                                        end
                                     end
                                 end
                             end
