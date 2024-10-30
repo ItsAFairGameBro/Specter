@@ -789,6 +789,25 @@ return function(C,Settings)
                         end,
                     }
                 },
+                {
+                    Title = "Spectate",
+                    Tooltip = "Always allows spectate, even while in game or in lobby",
+                    Layout = 10,
+                    Shortcut = "Spectate",Functs={},Threads = {},
+                    Activate = function(self, newValue)
+                        local isAncestorOf = C.myTSM.IsAncestorOf
+                        C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
+                            if (tostring(theirScript) == "LocalGuiScript") then
+                                local theValue = tostring(self)
+                                if theValue == "Health" then
+                                    return "Spoof", {isAncestorOf(self) and 0 or 100}
+                                elseif theValue == "IsBeast" then
+                                    return "Spoof", {false}
+                                end
+                            end
+                        end,{"value"})
+                    end,
+                },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",

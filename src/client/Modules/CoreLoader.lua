@@ -28,7 +28,7 @@ return function(C, _SETTINGS)
 	--Load GUI Elements
 	C.LoadModule('GuiElements')
 	if C.Cleared then return end
-	
+
 	if C.SaveIndex == 1 then
 		C:LoadProfile("Default")
 		if C.Cleared then return end
@@ -49,7 +49,7 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game✅`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
 		GameModule = ThisGameTbl.ModuleName
-		table.insert(ModulesToRun,""..GameModule)
+		table.insert(ModulesToRun,GameModule)
 	else
 		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game❌`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
@@ -180,9 +180,9 @@ return function(C, _SETTINGS)
 			TabEx.ZIndex = CategoryEx.LayoutOrder + 100
 
 			if C.Cleared then return end
-			
+
 			--C.UI.Tabs[category.Name] = TabEx
-			
+
 			task.spawn(C.MakeDraggableTab,TabEx,true)
 		else
 			ScrollTab = SettingsTab:WaitForChild("ScrollTab")
@@ -222,7 +222,7 @@ return function(C, _SETTINGS)
             end
             hackData.RealEnabled = enTbl.En
             hackData.Enabled = enTbl.Enabled
-			
+
 
 			--Options Activation
 			local optionsUnused = table.clone(enTbl)
@@ -256,7 +256,7 @@ return function(C, _SETTINGS)
 				C.ButtonClick(HackExpand,UpdateViewSettings)
 				UpdateViewSettings()
 			end
-			
+
 			--Active Logic
 			local HighlightBackground = ButtonEx:WaitForChild("HighlightBackground")
 			local function UpdateButtonColor(started: boolean)
@@ -322,7 +322,7 @@ return function(C, _SETTINGS)
 				hackData:SetValue(not hackData.Enabled)
 			end)
 			--task.spawn(hackData.SetValue,hackData,enTbl.En==true, true)
-			
+
 			--Keybind
 			if name ~= "Settings" then
 				local BindedKey = KeybindButton:WaitForChild("BindedKey")
@@ -346,7 +346,7 @@ return function(C, _SETTINGS)
 							hackData:SetKeybind(nil)
 						end
 					end
-					
+
 					if BindButton ~= ButtonEx then
 						BindButton = ButtonEx
 						KeybindRunFunct = C.AddGlobalConnection(UIS.InputBegan:Connect(function(inputObject,gameProcessed)
@@ -363,7 +363,7 @@ return function(C, _SETTINGS)
 						BindButton = nil
 					end
 				end
-				
+
 				hackData:SetKeybind((enTbl.Keybind and Enum.KeyCode[enTbl.Keybind])
 					or (hackData.Keybind and Enum.KeyCode[hackData.Keybind]))
 				C.ButtonClick(KeybindButton,KeybindClick)
@@ -380,7 +380,7 @@ return function(C, _SETTINGS)
 			end
 
 			UpdateTextSize(ButtonEx,true)
-			
+
 			ButtonEx.Parent = ScrollTab
 		end
 	end
@@ -415,23 +415,23 @@ return function(C, _SETTINGS)
 	end))
 	if C.Cleared then return end
 
-	
+
 
 	C.LoadModule("CommandCore")
 	if C.Cleared then return end
-	
+
 	--Make it appear
 	C.GUI.Parent = C.gethui()
-	
+
 	C.MakeDraggableTab(C.UI.CategoriesFrame)
 
-	
+
 	C.AddNotification("Specter Loaded","Push RShift to open the UI")
-	
+
 	C.StartUp = nil
 	if C.SaveIndex == 1 and C.isStudio then
 		C.PlayerGui:WaitForChild("SpecterGUI"):Destroy()
 	end
-	
+
 	return "Load Successful"
 end
