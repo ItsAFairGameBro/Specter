@@ -801,8 +801,7 @@ return function(C,Settings)
                         local info = debug.info
                         C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
-                                local Line = info(3, "l")
-                                print("Line",Line)
+                                local Line = info(3, "slnf")
                                 if Line > 700 and Line < 750 then
                                     local theValue = toStr(self)
                                     if theValue == "Health" then
