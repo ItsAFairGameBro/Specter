@@ -209,7 +209,7 @@ return function(C, _SETTINGS)
 			local HackExpand = ButtonEx:WaitForChild("HackExpand")
 			local KeybindButton = ButtonEx:WaitForChild("KeybindButton")
 			ButtonEx.Name = hackData.Title
-			ButtonEx.LayoutOrder = hackData.Layout
+			ButtonEx.LayoutOrder = hackData.Layout - (hackData.Title:find("ESP") and 1000 or 0)
 			MainText.Text = hackData.Title
 			assert(hackData.Shortcut,`{hackData.Title} does't have a Shortcut`)
 			local enTbl = enHackTab[hackData.Shortcut] or {}
