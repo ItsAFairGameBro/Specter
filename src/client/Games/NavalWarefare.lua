@@ -307,12 +307,11 @@ local function Static(C,Settings)
                 Alias = {"banmessage"},
                 AfterTxt = " %s",
                 Run = function(self, args)
-                    local LastBanVoteKick = C.getgenv().LastBanVoteKick
-                    if not LastBanVoteKick then
+                    if not C.getgenv().LastBanVoteKick then
                         return false, "Nobody was recently votekicked!"
                     end
-                    local parseMultiLine = getgenv().C.hackData.World.ChatEdit.ParseMultiLine
-                    C.SendGeneralMessage(parseMultiLine(`\\n{LastBanVoteKick} was PERMANENTLY banned from this server!`));
+                    local parseMultiLine = C.hackData.World.ChatEdit.ParseMultiLine
+                    C.SendGeneralMessage(parseMultiLine(`\\n{C.getgenv().LastBanVoteKick} was PERMANENTLY banned from this server!`));
                     C.getgenv().LastBanVoteKick = nil
                 end,
             }
