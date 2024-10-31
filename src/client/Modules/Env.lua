@@ -1264,7 +1264,7 @@ return function(C,Settings)
                     C.char.Humanoid.Health = 0;
                 end
                 task.delay(30,function()
-                    if C.char==saveChar and table.find(C.BotUsers,C.plr.Name:lower())~=nil and C.enHacks.FleeTheFacility.ServerFarm and not C.Cleared then
+                    if C.char==saveChar and table.find(C.BotUsers,C.plr.Name:lower()) and C.enHacks.FleeTheFacility.ServerBot.En and not C.Cleared then
                         C.plr:Kick("Reset Activation Failed")
                     end
                 end)

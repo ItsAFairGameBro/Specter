@@ -989,12 +989,12 @@ return function(C,Settings)
                             local myActionClone
                             myActionClone = C.AddAction({Title=`{self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
                                 table.insert(info.Threads, task.delay(30, function()
-                                    if myActionClone ~= BotActionClone then
+                                    if myActionClone ~= BotActionClone or C.GetAction(info.Name) ~= info then
                                         return
                                     end
                                     C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
                                     warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                    C.ResetCharacter()
+                                    --C.ResetCharacter()
                                 end))
                                 self["Start"..role](self, actionClone, info)
 
