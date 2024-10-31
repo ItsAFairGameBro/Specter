@@ -317,6 +317,11 @@ local function SetUpGame(C, Settings)
             end
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
+            C.AddObjectConnection(newMap, "MapDestroyed", newMap.AncestryChanged:Connect(function()
+                if newMap == CurrentMap.Value then -- Check to see if still valid
+                    CurrentMap.Value = nil -- If so, reset the map value to refresh!
+                end
+            end))
         end
         C.AddGlobalConnection(CurrentMap.Changed:Connect(MapAdded))
         MapAdded(CurrentMap.Value)
