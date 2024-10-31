@@ -31,7 +31,7 @@ return function(C,Settings)
 					end
 					if theirHumanoid then
 						--theirHumanoid.DisplayDistanceType = NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or Enum.HumanoidDisplayDistanceType.Subject
-                        C.SetPartProperty(theirHumanoid, self.Shortcut, NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or C)
+                        C.SetPartProperty(theirHumanoid, "DisplayDistanceType", self.Shortcut, NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or C)
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)
