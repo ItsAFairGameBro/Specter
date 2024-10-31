@@ -9,6 +9,9 @@ local SG = game:GetService('StarterGui')
 local UIS = game:GetService('UserInputService')
 
 local AllowFonts = false
+local strSub = string.sub
+local strFind = string.find
+local strRep = string.rep
 local C
 
 local pi    = math.pi
@@ -631,7 +634,7 @@ return function(C_new,Settings)
 						--if rawget(C,"ChatVersion") == "TextChatService" and false then
 						--	newMessage ..= '\n' .. curMessage
 						--if rawget(C,"ChatVersion") == "LegacyChatService" then
-						newMessage ..= rawget(string,"sub")(rawget(string,"rep")("e",200),#rawget(splitArray,num-1))..curMessage
+						newMessage ..= strSub(strRep(".",88),#rawget(splitArray,num-1)).. strRep(" ", 56) .. curMessage
 						--end-- used to be 155
 					end
 					return newMessage
