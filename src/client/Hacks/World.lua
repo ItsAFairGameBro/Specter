@@ -637,7 +637,10 @@ return function(C_new,Settings)
 						--  newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
 						--end
 						newMessage ..= strSub(strRep(".",88),#rawget(splitArray,num-1)).. strRep(" ", 56) .. curMessage
-					end
+                        if num > 1 then
+                            break
+                        end
+                    end
 					return newMessage
 				end,
 				Activate = function(self,newValue)
