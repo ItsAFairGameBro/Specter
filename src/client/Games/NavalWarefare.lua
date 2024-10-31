@@ -313,6 +313,7 @@ local function Static(C,Settings)
                     local parseMultiLine = C.hackData.World.ChatEdit.ParseMultiLine
                     C.SendGeneralMessage(parseMultiLine(`\\n{C.getgenv().LastBanVoteKick} was PERMANENTLY banned from this server!`));
                     C.getgenv().LastBanVoteKick = nil
+                    return true, "Message Spoofed!"
                 end,
             }
         }
