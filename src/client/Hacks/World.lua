@@ -8,6 +8,7 @@ local CAS = game:GetService("ContextActionService")
 local SG = game:GetService('StarterGui')
 local UIS = game:GetService('UserInputService')
 
+local AllowFonts = false
 local C
 
 local pi    = math.pi
@@ -356,7 +357,7 @@ local PlayerState = {} do
 
 		if cameraFieldOfView then
 			C.Camera.FieldOfView = cameraFieldOfView
-			cameraFieldOfView = nil	
+			cameraFieldOfView = nil
 		end
 		if cameraType then
 			C.Camera.CameraType = cameraType
@@ -376,7 +377,7 @@ local PlayerState = {} do
 		end
 		if mouseBehavior then
 			UIS.MouseBehavior = mouseBehavior
-			mouseBehavior = nil	
+			mouseBehavior = nil
 		end
 	end
 end
@@ -627,11 +628,11 @@ return function(C_new,Settings)
 							continue
 						end
 						curMessage = inBetween .. curMessage
-						if rawget(C,"ChatVersion") == "TextChatService" and false then
-							newMessage ..= '\n' .. curMessage
-						elseif rawget(C,"ChatVersion") == "LegacyChatService" then
-							newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
-						end
+						--if rawget(C,"ChatVersion") == "TextChatService" and false then
+						--	newMessage ..= '\n' .. curMessage
+						--if rawget(C,"ChatVersion") == "LegacyChatService" then
+						newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
+						--end
 					end
 					return newMessage
 				end,
@@ -676,7 +677,7 @@ return function(C_new,Settings)
                     end,{"fireserver","sendasync"})
 				end,
 				Options = {
-					{
+					AllowFonts and {
 						Type = Types.Dropdown,
 						Selections = {"Off","Fancy Font 1", "Fancy Font 2","Bubble Font 1","Bubble Font 2","Bubble Font 3","Small Font 1","Accented Font 1","Accented Font 2"},
 						Title = "Font Bypass",
@@ -712,12 +713,12 @@ return function(C_new,Settings)
 						cameraRot = Vector2.new(cameraCFrame:toEulerAnglesYXZ())
 						cameraPos = cameraCFrame.Position
 						cameraFov = C.Camera.FieldOfView
-					
+
 						velSpring:Reset(Vector3.new())
 						panSpring:Reset(Vector2.new())
 						fovSpring:Reset(0)
-						
-	
+
+
 						PlayerState.Push()
 						RunS:BindToRenderStep("Freecam", Enum.RenderPriority.Camera.Value, StepFreecam)
 						Input.StartCapture()

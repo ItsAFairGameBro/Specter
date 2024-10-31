@@ -1567,7 +1567,7 @@ return function(C,Settings)
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self, eventType, dataTbl)
 						if self == remoteEvent and eventType == "Teleport" then
                             tskSpawn(runFunct, self, dataTbl)
-
+                            
 							return "Cancel"
 						end
 					end,{"fireserver"})

@@ -25,10 +25,10 @@ return function(C,Settings)
 				Layout = 0,Type="NoToggle",
 				Shortcut = "ClearLogs",
 				Activate = function(self,newValue)
-                    local AmntToDestroy = #LS:GetLogHistory()
-                    local ScrollList = C.StringWait(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog")
+                    C.getgenv().LogCutoffTimeStamp = #LS:GetLogHistory()
+                    local ScrollList = C.StringWait(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog", math.huge)
                     if ScrollList then
-                        C.ClearChildren(ScrollList, AmntToDestroy)
+                        C.ClearChildren(ScrollList, C.getgenv().LogCutoffTimeStamp)
                     end
                     
                     --C.getgenv().LogCutoffTimeStamp = os.time() + 1
