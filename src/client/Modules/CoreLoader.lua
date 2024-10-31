@@ -228,6 +228,9 @@ return function(C, _SETTINGS)
 			local optionsUnused = table.clone(enTbl)
 			optionsUnused.En = nil -- Delete, it's useless
 			for num, optionData in ipairs(hackData.Options or {}) do
+                if not optionData then
+                    continue
+                end
 				assert(optionData.Shortcut,`The option {num} on {category}/{hackData.Shortcut} is missing a Shortcut`)
 				optionData.Parent = hackData
 				optionsUnused[optionData.Shortcut] = nil
