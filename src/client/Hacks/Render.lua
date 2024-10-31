@@ -19,8 +19,6 @@ return function(C,Settings)
 				Layout = 1,Default=true,
 				Shortcut = "PlayerHighlight", Threads={}, Functs={}, Instances = {}, Storage={},
 				UpdVisibility = function(self,instances,hasCameraSbj,enabled,theirPlr,theirChar,theirHumanoid: Humanoid,theirIsInGame)
-					--robloxHighlight.FillTransparency = enabled and 0 or 1
-					--robloxHighlight.OutlineTransparency = enabled and 0 or 1
 					local NameTag, Highlight = instances[1], instances[2]
 					NameTag.Enabled = hasCameraSbj and ((self.EnTbl.NameTagVisible=="No Line Of Sight" and enabled) or self.EnTbl.NameTagVisible=="Always")
 					Highlight.Enabled = hasCameraSbj and ((self.EnTbl.HighlightVisible=="No Line Of Sight" and enabled) or self.EnTbl.HighlightVisible=="Always")
@@ -32,7 +30,8 @@ return function(C,Settings)
                         NameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
 					end
 					if theirHumanoid then
-						theirHumanoid.DisplayDistanceType = NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or Enum.HumanoidDisplayDistanceType.Subject
+						--theirHumanoid.DisplayDistanceType = NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or Enum.HumanoidDisplayDistanceType.Subject
+                        C.SetPartProperty(theirHumanoid, self.Shortcut, NameTag.Enabled and Enum.HumanoidDisplayDistanceType.None or C)
 					end
 				end,
 				checkIfInRange = function(self,camera,theirPlr,theirChar,HRP)

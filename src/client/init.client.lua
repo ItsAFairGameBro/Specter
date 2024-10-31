@@ -1,8 +1,5 @@
 --print("Begin Loading Main")
-local waitTime = 3 - time()
-if waitTime > 3 then
-    task.wait(waitTime)
-end
+
 local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
@@ -18,6 +15,10 @@ local VirtualUser = game:GetService("VirtualUser")
 
 local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
+
+if isStudio then
+	task.wait(3 - time())
+end
 
 local C = {}
 local allDisabled = {

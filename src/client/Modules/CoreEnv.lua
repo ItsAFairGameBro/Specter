@@ -75,7 +75,7 @@ return function(C,Settings)
             end
             return
         end
-		
+
 		local header = "Hack/"..self.Parent.Category.Name.."/"..self.Shortcut
 		if self.Type == "OneRun" then
 			if not self.RealEnabled then
@@ -153,13 +153,13 @@ return function(C,Settings)
 						Name = C.getgenv().PlaceName,
 					})
 				end
-				
+
 			--[[else
 					C.getgenv().PreviousServers[1].Time = os.time() -- Update time
 					C.getgenv().PreviousServers[1].Players = #PS:GetPlayers() -- Update players
 				end--]]
 			end
-			
+
 			local EncodedSaveDict2 = HS:JSONEncode({
 				Settings = C.enHacks.Settings,
 				Servers = C.getgenv().PreviousServers,
@@ -249,19 +249,20 @@ return function(C,Settings)
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
 			(TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)):DisplaySystemMessage(message)
 		else
-			SG:SetCore("ChatMakeSystemMessage",  { Text = `[{typeText or "Sys"}] {message}`, Color = color or Color3.fromRGB(255), 
+            typeText = typeText and ("[" .. typeText .. "]:") or "{Sys}"
+			SG:SetCore("ChatMakeSystemMessage",  { Text = `{typeText} {message}`, Color = color or Color3.fromRGB(255),
 				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
 		end
 	end
 	--Yieldable Handler
 	function C.RunFunctionWithYield(func, args, timeout)
 		--RunFunc((Function)func, (Table)args, (Number)timeout)
-	
+
 		local bindableEvent = Instance.new("BindableEvent")
 		C.AddGlobalInstance(bindableEvent)
 		local response
 		local success = false
-	
+
 		-- Coroutine to call the function
 		task.spawn(function()
 			local functionResult
@@ -274,7 +275,7 @@ return function(C,Settings)
 			end)
 			bindableEvent:Fire(success, functionResult)
 		end)
-	
+
 		-- Timer for the timeout
 		task.delay(timeout, function()
 			if not bindableEvent then
@@ -282,11 +283,11 @@ return function(C,Settings)
 			end
 			bindableEvent:Fire(false, "Function call timed out")
 		end)
-	
+
 		-- Wait for either the function to complete or the timeout
 		local success, result = bindableEvent.Event:Wait()
 		bindableEvent:Destroy()
-		
+
 		return success, result
 	end
 	--Destroy Handler
@@ -368,7 +369,7 @@ return function(C,Settings)
 				funct:Disconnect()
 			end
 		end C.forcePropertyFuncts = {} -- clear memory ig
-		
+
 		for actionName, hackTbl in pairs(C.BindedActions) do
 			C.UnbindAction(actionName)
 		end
@@ -381,7 +382,7 @@ return function(C,Settings)
 			C.ClearFunctTbl(dict,true)
 		end
 
-        
+
 
 		for instance, signalData in pairs(C.PartConnections) do
 			for signal, data in pairs(signalData) do
@@ -408,7 +409,7 @@ return function(C,Settings)
                 C.ClearThreadTbl(list.Threads)
             end
 		end
-		
+
 		for key, instance in ipairs(CS:GetTagged("RemoveOnDestroy")) do
 			instance:Destroy()
 		end
@@ -429,18 +430,18 @@ return function(C,Settings)
 				theTime = 0
 			end
 		end
-		
-		
+
+
 		RunS.RenderStepped:Wait()
 		C.getgenv().DestroyEvent:Fire()
-		
+
 		C.DebugMessage("Destroy",`Destroy Success`)
 
 		if C.isStudio then
 			script.Parent.Parent:Destroy()
 		end
 	end
-	
+
 	if not C.getgenv().Instances then
 		C.getgenv().Instances = {}
 	end
