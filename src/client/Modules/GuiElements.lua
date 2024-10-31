@@ -1710,7 +1710,6 @@ GuiTbl.Title.TextScaled = true
 GuiTbl.Title.TextSize = 21
 GuiTbl.Title.TextStrokeTransparency = 0.000
 GuiTbl.Title.TextWrapped = true
-GuiTbl.Title.TextXAlignment = Enum.TextXAlignment.Left
 
 GuiTbl.StopButton.Name = "StopButton"
 GuiTbl.StopButton.Parent = GuiTbl.ActionsEx
@@ -1749,7 +1748,6 @@ GuiTbl.Time.TextScaled = true
 GuiTbl.Time.TextSize = 21
 GuiTbl.Time.TextStrokeTransparency = 0.000
 GuiTbl.Time.TextWrapped = true
-GuiTbl.Time.TextXAlignment = Enum.TextXAlignment.Left
 
 GuiTbl.UIStroke_15.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 GuiTbl.UIStroke_15.Parent = GuiTbl.Time
