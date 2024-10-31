@@ -587,8 +587,8 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
-			if hook == "__namecall" and lower(getnamecallmethod()) == "getloghistory" then
-				tskSpawn(print, "LOG",method, self)
+			if hook == "__namecall" and (lower(getnamecallmethod()) == "getloghistory" or lower(...) == "getloghistory") then
+				tskSpawn(print, "LOG",method, self, ...)
 			end
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			local isGameScript = not checkcaller()
