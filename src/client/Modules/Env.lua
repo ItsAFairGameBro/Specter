@@ -32,7 +32,7 @@ return function(C,Settings)
 					print4Instance = "(Instance) " .. GetFullName(val)
 				elseif myType == "string" then
 					--if tonum(print4Instance) then -- only modify it if it can be a number!
-					print4Instance = `"{print4Instance}"`
+					    --print4Instance = `"{print4Instance}"`
 					--end
 				else
 					local toStr = tostring(print4Instance)

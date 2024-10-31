@@ -514,7 +514,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			return instance
 		end
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
-		local additionalCallerName = {["SayMessageRequest"]=true}
+		local additionalCallerName = {["SayMessageRequest"]=true,["getloghistory"]=true,["getlogHistory"]=true}
 		local additionalMethodName = {["sendasync"]=true}
 		local additionalAvoidLower = {["getlogHistory"] = true}
 

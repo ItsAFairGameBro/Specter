@@ -42,7 +42,7 @@ return function(C,Settings)
                             end
                             return "Override", {Returns}
                         end
-                    end,{"getloghistory"})
+                    end,{"getloghistory","getlogHistory"})
 				end,
 				Options = {
 
