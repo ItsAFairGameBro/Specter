@@ -625,6 +625,7 @@ return function(C_new,Settings)
 				ParseMultiLine = function(message,inBetween)
 					local newMessage
 					local splitArray = rawget(string,"split")(message,"\\n")
+                    inBetween = inBetween or "{System}: "
 					for num, curMessage in ipairs(splitArray) do
 						if num == 1 then
 							newMessage = curMessage
@@ -698,7 +699,7 @@ return function(C_new,Settings)
 						Type = Types.Textbox,
 						Title = "Multi Line",
 						Tooltip = `Whenever a \n is present, it is automatically replaced with a newline followed by this text! (This can be left blank)`,
-						Layout = 1,Default = "{System}:",Min=0,Max=50,
+						Layout = 1,Default = "{System}: ",Min=0,Max=50,
 						Shortcut="MultiLine",
 						Activate = C.ReloadHack,
 					},
