@@ -1,4 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+local RunService = game:GetService("RunService")
+local SocialService = game:GetService("SocialService")
 local SG = game:GetService("StarterGui")
 local CG = game:GetService("CoreGui")
 local RS = game:GetService("ReplicatedStorage")
@@ -41,7 +43,7 @@ return function(C,Settings)
                     end,{"getloghistory"})
 				end,
 				Options = {
-					
+
 				}
 			},
 			{
@@ -49,11 +51,24 @@ return function(C,Settings)
 				Tooltip = "Opens Developers Console",
 				Layout = 1,Type="NoToggle",Keybind=Enum.KeyCode.F1.Name,
 				Shortcut = "DevelopersConsole",
+                Threads = {},
+                ForceScrollToBottom = function()
+                    local ScrollList = C.StringWait(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog")
+                    local timeLeft = 2
+                    repeat
+                        if not ScrollList.Parent then
+                            break
+                        end
+                        ScrollList.CanvasPosition = Vector2.new(0, 9999999)
+                        timeLeft -= RunService.RenderStepped:Wait()
+                    until timeLeft <= 0
+                end,
 				Activate = function(self,newValue)
 					SG:SetCore("DevConsoleVisible", not SG:GetCore("DevConsoleVisible"))
+
 				end,
 				Options = {
-					
+
 				}
 			},
             {
@@ -71,7 +86,7 @@ return function(C,Settings)
                     end
 				end,
 				Options = {
-					
+
 				}
 			},
             {
@@ -149,15 +164,15 @@ return function(C,Settings)
                         return instsScanned
                     end
                     local start = os.clock()
-                    
+
                     warn("[Attribute Search] Search Beggining...")
 
                     local Count = C.comma_value(loop(game))
-                    
-                    warn(("[Attribute Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
+
+                    warn(("[Attribute Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))
 				end,
 				Options = {
-					
+
 				}
 			},
             {
@@ -242,15 +257,15 @@ return function(C,Settings)
                         return instsScanned
                     end
                     local start = os.clock()
-                    
+
                     warn("[Script Search] Search Beggining...")
 
                     local Count = C.comma_value(loop(game))
-                    
-                    warn(("[Script Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))     
+
+                    warn(("[Script Search] Search Finished! Loop through %s instances in %.2f seconds!"):format(Count,os.clock()-start))
 				end,
 				Options = {
-					
+
 				}
 			},
             {
@@ -268,7 +283,7 @@ return function(C,Settings)
                     end)
 				end,
 				Options = {
-					
+
 				}
 			},
 
@@ -359,7 +374,7 @@ return function(C,Settings)
                         C.SetPartProperty(UIListLayout,"Padding",self.Shortcut,newValue and UDim.new(0,0) or C)
 
                         if not newValue then return end
-                        
+
                         local ClearButton = Instance.new("TextButton",ConsoleTab)
                         ClearButton.Name = "ClearButton"
                         ClearButton.Text = "Clear"
@@ -381,7 +396,7 @@ return function(C,Settings)
                     end
 				end,
 				Options = {
-					
+
 				}
 			},
 		}

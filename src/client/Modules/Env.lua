@@ -15,6 +15,8 @@ return function(C,Settings)
 	if not C.getgenv().PrintEnvironment then
 		local OldEnv = {}
 		local GetFullName = workspace.GetFullName
+        local tonum, getType = tonumber, typeof
+        local strRep = string.rep
 		local GetInfo = debug.info
 		local GSub = string.gsub
 		local StrFind = string.find
@@ -25,13 +27,13 @@ return function(C,Settings)
 					printVal ..= " "
 				end
 				local print4Instance = val
-				local myType = typeof(print4Instance)
+				local myType = getType(print4Instance)
 				if myType == "Instance" then
 					print4Instance = "(Instance) " .. GetFullName(val)
 				elseif myType == "string" then
-					if tonumber(print4Instance) and false then -- only modify it if it can be a number!
-						print4Instance = `"{print4Instance}"`
-					end
+					--if tonum(print4Instance) then -- only modify it if it can be a number!
+					print4Instance = `"{print4Instance}"`
+					--end
 				else
 					local toStr = tostring(print4Instance)
 					if myType == "boolean" or myType == "number" then
@@ -60,7 +62,7 @@ return function(C,Settings)
 			if not noIndent then
 				fullStr ..= "\n"
 			end
-			return fullStr .. string.rep("\t", depth) .. input
+			return fullStr .. strRep("\t", depth) .. input
 		end
 
 		local function recurseLoopPrint(leftTbl, str, depth, index, warnings)
@@ -74,7 +76,7 @@ return function(C,Settings)
 			local addBrackets = not isDict
 
 			for num, val in pairs(leftTbl) do
-				if typeof(num)=="number" and totalValues > 0 and num < totalValues-30 then
+				if getType(num)=="number" and totalValues > 0 and num < totalValues-30 then
 					if not warnings.MaxLimit then
 						str ..= addToString("(Maximum Limit Of 30; Only Displaying Last Values)",depth)
 						warnings.MaxLimit = true
@@ -83,7 +85,7 @@ return function(C,Settings)
 				end
 				index += 1
 
-				local isTable = typeof(val) == "table"
+				local isTable = getType(val) == "table"
 				if isTable then
 					if depth ~= 0 then
 						str ..= addToString((addBrackets and "[" or "") .. printInstances(num) .. (addBrackets and "]" or "") .. ": {", depth)
