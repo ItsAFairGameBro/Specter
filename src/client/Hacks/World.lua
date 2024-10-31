@@ -11,6 +11,8 @@ local UIS = game:GetService('UserInputService')
 local AllowFonts = false
 local strSub = string.sub
 local strFind = string.find
+local strgsub = string.gsub
+local strSplit = string.split
 local strRep = string.rep
 local C
 
@@ -624,7 +626,7 @@ return function(C_new,Settings)
 				},
 				ParseMultiLine = function(message,inBetween)
 					local newMessage
-					local splitArray = rawget(string,"split")(message,"\\n")
+					local splitArray = strSplit(strgsub(message,"\n", "\\n"),"\\n")
                     inBetween = inBetween or "{System}: "
 					for num, curMessage in ipairs(splitArray) do
 						if num == 1 then
@@ -637,7 +639,7 @@ return function(C_new,Settings)
 						--if rawget(C,"ChatVersion") == "LegacyChatService" then
 						--  newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
 						--end
-						newMessage ..= strSub(strRep(".",88),#rawget(splitArray,num-1)).. strRep(" ", 56) .. curMessage
+						newMessage ..= strSub(strRep("_",66),#rawget(splitArray,num-1)).. strRep(" ", 56) .. curMessage
                         if num > 1 then
                             break
                         end
