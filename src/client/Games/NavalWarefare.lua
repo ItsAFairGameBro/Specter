@@ -218,11 +218,6 @@ local function Static(C,Settings)
                 KickThread = nil,
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
-                    local Genv = C.getgenv()
-                    if Genv.NavalKickThread then
-                        C.StopThread(Genv.NavalKickThread)
-                        Genv.NavalKickThread = nil
-                    end
                     local targetPlr = args[1][1]
                     if not targetPlr or targetPlr == C.plr then
                         return true, "Stopped!"
@@ -253,6 +248,12 @@ local function Static(C,Settings)
                             C.CreateSysMessage(`Your ban cooldown has expired!`, Color3.fromRGB(255,255))
                         end)
                     end, Time=function()
+                        local Genv = C.getgenv()
+                        if Genv.NavalKickThread then
+                            C.StopThread(Genv.NavalKickThread)
+                            Genv.NavalKickThread = nil
+                        end
+                        
                         local actionClone = info.ActionClone
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
