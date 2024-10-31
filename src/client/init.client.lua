@@ -588,7 +588,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 			if hook == "__namecall" and (lower(getnamecallmethod()) == "getloghistory"
-                or (getVal(...) == "string" and lower(...) == "getloghistory")) then
+                or (getType(...) == "string" and lower(...) == "getloghistory")) then
 				tskSpawn(print, "LOG",method, self, ...)
 			end
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
