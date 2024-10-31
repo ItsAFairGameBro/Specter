@@ -9,6 +9,8 @@ local SG = game:GetService('StarterGui')
 local UIS = game:GetService('UserInputService')
 
 local AllowFonts = false
+local CHAT_MAXLENGTH = 200
+
 local strSub = string.sub
 local strFind = string.find
 local strgsub = string.gsub
@@ -644,7 +646,7 @@ return function(C_new,Settings)
                             break
                         end
                     end
-					return newMessage
+					return strSub(newMessage, 1, CHAT_MAXLENGTH)
 				end,
 				Activate = function(self,newValue)
 					local find, sub, isa = string.find, string.sub, workspace.IsA

@@ -207,6 +207,7 @@ local function Static(C,Settings)
 		return closestPart,closestDist
 	end
     table.insert(C.InsertCommandFunctions,function()
+        local LastBanVoteKick
         local LegitVoteKick = true
         local TimeNeeded = LegitVoteKick and 60 or 3
         return {
@@ -258,6 +259,7 @@ local function Static(C,Settings)
                             warn("Votekick",C.GetPlayerName(targetPlr),
                                 "Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.RemoveAction("NavalVotekick")
+                            LastBanVoteKick = targetPlr.DisplayName
                             C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left. ` ..
                                 `It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,
@@ -293,6 +295,18 @@ local function Static(C,Settings)
                     end}
                     C.AddAction(info)
                     return true, "Started!"
+                end,
+            },
+            ["votekickmessage"] = {
+                Parameters = {},
+                AfterTxt = " %s",
+                Run = function(self, args)
+                    if not LastBanVoteKick then
+                        return false, "Nobody was recently votekicked!"
+                    end
+                    local parseMultiLine = getgenv().C.hackData.World.ChatEdit.ParseMultiLine
+                    C.SendGeneralMessage(parseMultiLine(`\\n{LastBanVoteKick} was PERMANENTLY banned from this server!`));
+                    LastBanVoteKick = nil
                 end,
             }
         }
@@ -1567,7 +1581,7 @@ return function(C,Settings)
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self, eventType, dataTbl)
 						if self == remoteEvent and eventType == "Teleport" then
                             tskSpawn(runFunct, self, dataTbl)
-                            
+
 							return "Cancel"
 						end
 					end,{"fireserver"})
