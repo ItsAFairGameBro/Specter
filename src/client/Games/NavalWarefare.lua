@@ -209,7 +209,7 @@ local function Static(C,Settings)
     table.insert(C.InsertCommandFunctions,function()
         local LastBanVoteKick
         local LegitVoteKick = true
-        local TimeNeeded = LegitVoteKick and 60 or 3
+        local TimeNeeded = LegitVoteKick and 60.4 or 3
         return {
             ["votekick"] = {
                 Parameters={{Type="Player"}},
@@ -282,7 +282,7 @@ local function Static(C,Settings)
                                     if not info.Enabled then return end
                                     actionClone.Title.Text = "Kicking " .. C.GetPlayerName(targetPlr) .. " (".. targetPlr:GetAttribute("KickCounter") .. "/6)"
                                 else
-                                    Genv.LastKick = os.clock() + 2.5
+                                    Genv.LastKick = os.clock() + 1.5
                                     actionClone.Time.Text = "More Time Needed"
                                     task.wait(1)
                                 end
