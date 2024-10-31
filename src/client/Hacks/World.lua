@@ -639,9 +639,10 @@ return function(C_new,Settings)
 				Activate = function(self,newValue)
 					local find, sub, isa = string.find, string.sub, workspace.IsA
 					local gsub, tskSpawn = string.gsub, task.spawn
-					local TranslationTbl = self.FontTranslations[self.EnTbl.ChosenFont]
+                    local CurrentFont = AllowFonts and self.EnTbl.ChosenFont or "Off"
+					local TranslationTbl = self.FontTranslations[CurrentFont]
 					local BetweenMultiLine = self.EnTbl.MultiLine
-					assert(TranslationTbl or self.EnTbl.ChosenFont == "Off", `Chat Bypass Translation Doesn't Contain Proper Font: {self.EnTbl.ChosenFont}`)
+					assert(TranslationTbl or CurrentFont == "Off", `Chat Bypass Translation Doesn't Contain Proper Font: {self.EnTbl.ChosenFont}`)
 					local gmatch = string.gmatch
 					local Input, Output, SeperationCharacter
 					if TranslationTbl then
