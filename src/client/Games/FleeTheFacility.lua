@@ -1040,7 +1040,7 @@ return function(C,Settings)
                             self:Completed()
                         end,
                         GameRemoved = function(self)
-                            C.ClearThreadTbl(self.Threads)
+                            self:Completed()--C.ClearThreadTbl(self.Threads)
                         end,
                         MapRemoved = function(self)
                             self:Completed()
