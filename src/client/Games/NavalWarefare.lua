@@ -228,6 +228,10 @@ local function Static(C,Settings)
                     local info
                     info = {Name="NavalVotekick",Title="Kick Starting", Tags={}, Stop=function()
                         C.ClearFunctTbl(functs,true)
+                        if Genv.NavalKickThread then
+                            C.StopThread(Genv.NavalKickThread)
+                            Genv.NavalKickThread = nil
+                        end
                         Genv.NavalKickThread = task.spawn(function()
                             for _, time in ipairs({45, 30, 15}) do
                                 local TimeLeft = Genv.LastKick - os.clock()
