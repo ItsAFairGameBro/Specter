@@ -25,26 +25,29 @@ return function(C,Settings)
 				Layout = 0,Type="NoToggle",
 				Shortcut = "ClearLogs",
 				Activate = function(self,newValue)
-                    --C.getgenv().LogCutoffTimeStamp = os.time() + 1
-                    --local tblInsert = table.insert
-                    --local tskSpawn = task.spawn
-					--local Old
-                    --Old = C.HookMethod("__namecall",self.Shortcut, function(newSc,method,self)
-                    --    tskSpawn(print, "yooo")
-                    --    if (self == LS) then
-                    --        local LatestTimeStamp = rawget(rawget(C, "getgenv"), "LogCutoffTimeStamp")
-                    --        local Results = Old(self)
-                    --        local Returns = {}
-                    --        for num, item in ipairs(Results) do
-                    --            if (rawget(item, 'timestamp') > LatestTimeStamp) then
-                    --                tblInsert(Returns, item)
-                    --            end
-                    --        end
-                    --        return "Override", {Returns}
-                    --    end
-                    --end,{"getloghistory","getlogHistory"})
-                    local ScrollList = C.StringWait(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog")
-                    C.ClearChildren(ScrollList)
+                    local ScrollList = C.StringFind(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog")
+                    if ScrollList then
+                        C.ClearChildren(ScrollList)
+                    end
+
+                    C.getgenv().LogCutoffTimeStamp = os.time() + 1
+                    local tblInsert = table.insert
+                    local tskSpawn = task.spawn
+					local Old
+                    Old = C.HookMethod("__namecall",self.Shortcut, function(newSc,method,self)
+                        tskSpawn(print, "yooo")
+                        if (self == LS) then
+                            local LatestTimeStamp = rawget(rawget(C, "getgenv"), "LogCutoffTimeStamp")
+                            local Results = Old(self)
+                            local Returns = {}
+                            for num, item in ipairs(Results) do
+                                if (rawget(item, 'timestamp') > LatestTimeStamp) then
+                                    tblInsert(Returns, item)
+                                end
+                            end
+                            return "Override", {Returns}
+                        end
+                    end,{"getloghistory","getlogHistory"})
 				end,
 				Options = {
 
