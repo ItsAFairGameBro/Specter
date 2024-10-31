@@ -52,7 +52,7 @@ return function(C,Settings)
 				Layout = 1,Type="NoToggle",Keybind=Enum.KeyCode.F1.Name,
 				Shortcut = "DevelopersConsole",
                 Threads = {},
-                ForceScrollToBottom = function()
+                ForceScrollToBottom = function(self)
                     local ScrollList = C.StringWait(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog")
                     local timeLeft = 2
                     repeat
@@ -65,7 +65,7 @@ return function(C,Settings)
                 end,
 				Activate = function(self,newValue)
 					SG:SetCore("DevConsoleVisible", not SG:GetCore("DevConsoleVisible"))
-
+                    self:ForceScrollToBottom()
 				end,
 				Options = {
 
