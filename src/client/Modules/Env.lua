@@ -270,10 +270,15 @@ return function(C,Settings)
 		C.objectfuncts[instance][key] = nil
 	end
 	--Clear Children
-	function C.ClearChildren(parent:Instance)
+	function C.ClearChildren(parent:Instance,maxAmnt:number)
+        maxAmnt = maxAmnt or math.huge
 		for _, instance in ipairs(parent:GetChildren()) do
 			if instance:IsA("GuiBase") then
 				instance:Destroy()
+                maxAmnt-=1
+                if maxAmnt == 0 then
+                    break
+                end
 			end
 		end
 	end
