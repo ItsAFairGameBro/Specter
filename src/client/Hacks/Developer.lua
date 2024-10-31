@@ -27,8 +27,10 @@ return function(C,Settings)
 				Activate = function(self,newValue)
                     C.getgenv().LogCutoffTimeStamp = os.time() + 1
                     local tblInsert = table.insert
+                    local tskSpawn = task.spawn
 					local Old
                     Old = C.HookMethod("__namecall",self.Shortcut, function(newSc,method,self)
+                        tskSpawn(print, "yooo")
                         if (self == LS) then
                             local LatestTimeStamp = rawget(rawget(C, "getgenv"), "LogCutoffTimeStamp")
                             local Results = Old(self)
@@ -54,7 +56,7 @@ return function(C,Settings)
                 Threads = {},
                 ForceScrollToBottom = function(self)
                     local ScrollList = C.StringWait(CG,"DevConsoleMaster.DevConsoleWindow.DevConsoleUI.MainView.ClientLog")
-                    local timeLeft = 2
+                    local timeLeft = 1
                     repeat
                         if not ScrollList.Parent then
                             break
