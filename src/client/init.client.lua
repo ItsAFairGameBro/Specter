@@ -557,6 +557,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--end
 			-- Get the method being called
 			local method
+            if (lower(getnamecallmethod() or "") == "getloghistory"
+                or (... and getType(...) == "string" and lower(...) == "getloghistory")) then
+				tskSpawn(print, "LOG", self, ...)
+			end
 			if HookType=="hookmetamethod" then
 				if hook == "__namecall" then
 					method = getnamecallmethod()
@@ -587,10 +591,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
-			if (lower(getnamecallmethod() or "") == "getloghistory"
-                or (... and getType(...) == "string" and lower(...) == "getloghistory")) then
-				tskSpawn(print, "LOG",method, self, ...)
-			end
+
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			local isGameScript = not checkcaller()
 			 -- Check if the caller is not a local script
