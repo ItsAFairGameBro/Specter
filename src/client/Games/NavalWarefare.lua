@@ -222,6 +222,7 @@ local function Static(C,Settings)
                     if not targetPlr or targetPlr == C.plr then
                         return true, "Stopped!"
                     end
+                    local Genv = C.getgenv()
                     local sendList = {targetPlr}
                     local functs = {}
                     local info
@@ -248,12 +249,11 @@ local function Static(C,Settings)
                             C.CreateSysMessage(`Your ban cooldown has expired!`, Color3.fromRGB(255,255))
                         end)
                     end, Time=function()
-                        local Genv = C.getgenv()
+
                         if Genv.NavalKickThread then
                             C.StopThread(Genv.NavalKickThread)
                             Genv.NavalKickThread = nil
                         end
-                        
                         local actionClone = info.ActionClone
                         local JustKicked = false
                         table.insert(functs,targetPlr.AncestryChanged:Connect(function()
