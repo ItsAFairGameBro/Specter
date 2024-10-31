@@ -299,6 +299,7 @@ local function Static(C,Settings)
             },
             ["votekickmessage"] = {
                 Parameters = {},
+                Alias = {"banmessage"},
                 AfterTxt = " %s",
                 Run = function(self, args)
                     local LastBanVoteKick = C.getgenv().LastBanVoteKick
