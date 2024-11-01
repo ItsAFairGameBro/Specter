@@ -170,11 +170,12 @@ return function(C,Settings)
 					local enTbl = self.EnTbl
 
 					local alignOrien, lineVel, vectorForce
-                    local dumpLocation = workspace:FindFirstChildWhichIsA("BasePart",true)
-                    if C.char:IsAncestorOf(dumpLocation) then
-                        dumpLocation = workspace
-                        warn("[Blatant.Fly]: DumpLocation targeted BasePart inside C.char; re-parenting to workspace!")
-                    end
+                    local dumpLocation = workspace
+                    --local dumpLocation = workspace:FindFirstChildWhichIsA("BasePart",true)
+                    --if C.char:IsAncestorOf(dumpLocation) then
+                    --    dumpLocation = workspace
+                    --    warn("[Blatant.Fly]: DumpLocation targeted BasePart inside C.char; re-parenting to workspace!")
+                    --end
 
 					if enTbl.LookDirection then
 						alignOrien = Instance.new("AlignOrientation")
