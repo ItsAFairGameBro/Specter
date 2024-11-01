@@ -340,8 +340,10 @@ return function(C,Settings)
 		local hitResult, hitPosition
 		local curDistance = distance
 		local lastInstance  -- Set a limit to prevent infinite loops
+        local count = 0
 
 		repeat
+            count += 1
 			hitResult = workspace:Raycast(origin, direction * curDistance, rayParams)
 
 			if hitResult then
@@ -361,7 +363,7 @@ return function(C,Settings)
 						break
 					end
 					-- Adjust origin slightly to retry
-					origin = CFrame.new(origin,hitResult.Position) * -Vector3.new(0,0,hitResult.Distance);
+					origin = CFrame.new(origin,hitResult.Position) * Vector3.new(0,0,-hitResult.Distance);
 					lastInstance = hitResult.Instance;
 					if rayParams.FilterType == Enum.RaycastFilterType.Exclude then
 						rayParams:AddToFilter(lastInstance)
@@ -377,6 +379,8 @@ return function(C,Settings)
 		if not didHit then
 			hitPosition = orgOrigin + direction * distance
 		end
+
+        print("Count:",count)
 
 		return didHit and hitResult, hitPosition
 	end
