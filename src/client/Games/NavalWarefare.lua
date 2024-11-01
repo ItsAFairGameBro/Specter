@@ -224,6 +224,7 @@ local function Static(C,Settings)
                         return true, "Stopped!"
                     end
                     local Genv = C.getgenv()
+                    local OrgName = args.OrgArgs[1]
                     local sendList = {targetPlr}
                     local functs = {}
                     local info
@@ -265,7 +266,7 @@ local function Static(C,Settings)
                             warn("Votekick",C.GetPlayerName(targetPlr),
                                 "Completed:",JustKicked and "BANNED" or "LEFT","after",targetPlr:GetAttribute("KickCounter") or 0,"Counters")
                             C.RemoveAction("NavalVotekick")
-                            C.getgenv().LastBanVoteKick = targetPlr.DisplayName
+                            C.getgenv().LastBanVoteKick = OrgName
                             C.CreateSysMessage(`Stopped banning because {C.GetPlayerName(targetPlr)} left. ` ..
                                 `It is {JustKicked and "HIGHLY LIKELY" or "POSSIBLE"} that they were banned!`
                                 .. ` (You voted {targetPlr:GetAttribute("KickCounter") or 0} times)`,

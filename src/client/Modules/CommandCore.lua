@@ -29,6 +29,7 @@ return function(C,Settings)
         for index = 1, 3, 1 do
             args[index] = args[index] or "" -- leave them be empty so it doesn't confuse the game!
         end
+        args.OrgArgs = table.clone(args)
         local command, CommandData = table.unpack(C.StringStartsWith(C.CommandFunctions,inputCommand)[1] or {})
         if CommandData then
             if CommandData.RequiresRefresh and noRefresh then
