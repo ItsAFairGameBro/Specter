@@ -312,8 +312,31 @@ local function Static(C,Settings)
                     if not C.getgenv().LastBanVoteKick then
                         return false, "Nobody was recently votekicked!"
                     end
+                    local brainrot = {
+                        "thought i was a giga chad but the minions had me feeling like a beta banana",
+                        "i tried to grind like a warier but life said nah youre just a goofy goober",
+                        "i wanted to vibe like a wizzard but the goblins made me goofy",
+                        "the grindset was on max then the hamster wheel broke and now im spinning in freefall",
+                        "i wanted to become the goat but the sheep in me went baa instead",
+                        "got that boss energy but my inner gremlin just keeps hiting snooze",
+                        "they told me to chase the bag but i ended up chasing my own shadow",
+                        "i was ready to riz up the universe but the vibes went npc mode",
+                        "i wanted to be a shark but my inner goldfish just keeps swimming in circles",
+                        "started the day as a main character but ended up as a side quest",
+                        "thought i was built diferent then realized i was just built ikea",
+                        "i wanted to play chess in my mind but my thoughts keep defaulting to tic tac toe",
+                        "i tried to big brain the situation but the small brain energy came out swinging",
+                        "i was ready to conquer the world but the universe made me do the macarena",
+                        "i wanted to be a vibe but the cringe got me in a headlock",
+                        "got that 200 iq mindset but life said nah youre back to double digits",
+                        "i tried to level up but the respawn button got stuck on loop",
+                        "i thought i had plot armor but the scriptwriters made me the comic relief",
+                        "i was feeling philisophical but my brain just went boing boing",
+                        "set out to be a sigma but the popcorn guy kept stealing my spotlight"
+                    }
                     local parseMultiLine = C.hackData.World.ChatEdit.ParseMultiLine
-                    C.SendGeneralMessage(parseMultiLine(`\\n{C.getgenv().LastBanVoteKick} was PERMANENTLY banned from this server!`));
+                    local brainrotmsg = brainrot[C.Randomizer:NextInteger(1, #brainrot)]
+                    C.SendGeneralMessage(parseMultiLine(`{brainrotmsg}\\n{C.getgenv().LastBanVoteKick} was PERMANENTLY banned from this server!`));
                     C.getgenv().LastBanVoteKick = nil
                     return true, "Message Spoofed!"
                 end,
