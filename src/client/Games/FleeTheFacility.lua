@@ -971,11 +971,11 @@ return function(C,Settings)
                             warn(`[C.StartBeast]: Unknown Implementation for StartBeast: {self.EnTbl.RunType}`)
                         end
                     end,
-                    DoOverrides = function(self, toggle)
+                    DoOverrides = function(self, toggle, role)
                         --toggle = toggle and self.EnTbl.RunType == "Survivor"
-                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
-                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
-                        C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
+                        C[role == "Beast" and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
+                        C[role == "Beast" and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoRope,self.Shortcut)
+                        C[role == "Beast" and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoCapture,self.Shortcut)
                         C[toggle and "AddOverride" or "RemoveOverride"](C.hackData.Blatant.Fly,self.Shortcut)
                         self.WasRunning = toggle
                     end,
@@ -988,9 +988,9 @@ return function(C,Settings)
                             --print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
-                        self:DoOverrides(true)
                         local inGame, role = C.isInGame(C.char)
                         if inGame then
+                            self:DoOverrides(true, role)
                             local myActionClone
                             myActionClone = C.AddAction({Title=`{self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
                                 table.insert(info.Threads, task.delay(30, function()
