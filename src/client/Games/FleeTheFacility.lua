@@ -970,7 +970,7 @@ return function(C,Settings)
                         else
                             warn(`[C.StartBeast]: Unknown Implementation for StartBeast: {self.EnTbl.RunType}`)
                         end
-                    end,
+                    end,--game:GetService("Players").ItsAGoodGameBros.PlayerGui.MenusScreenGui.TradePostMenuWindow.TradePostMenuLocalScript
                     DoOverrides = function(self, toggle, role)
                         --toggle = toggle and self.EnTbl.RunType == "Survivor"
                         C[role == "Beast" and "AddOverride" or "RemoveOverride"](C.hackData.FleeTheFacility.AutoHit,self.Shortcut)
