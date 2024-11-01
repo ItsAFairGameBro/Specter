@@ -215,6 +215,7 @@ local function Static(C,Settings)
                 Parameters={{Type="Player"}},
                 Alias = {"ban"},
                 AfterTxt = " %s",
+                Priority = 3,
                 KickThread = nil,
                 Run = function(self,args)
                     C.RemoveAction("NavalVotekick")
@@ -305,6 +306,7 @@ local function Static(C,Settings)
             ["votekickmessage"] = {
                 Parameters = {},
                 Alias = {"banmessage"},
+                Priority = -1,
                 AfterTxt = " %s",
                 Run = function(self, args)
                     if not C.getgenv().LastBanVoteKick then
