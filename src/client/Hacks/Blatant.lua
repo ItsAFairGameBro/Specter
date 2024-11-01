@@ -170,7 +170,7 @@ return function(C,Settings)
 					local enTbl = self.EnTbl
 
 					local alignOrien, lineVel, vectorForce
-                    local dumpLocation = workspace
+                    local dumpLocation = C.hrp
                     --local dumpLocation = workspace:FindFirstChildWhichIsA("BasePart",true)
                     --if C.char:IsAncestorOf(dumpLocation) then
                     --    dumpLocation = workspace
