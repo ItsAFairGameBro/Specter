@@ -380,7 +380,6 @@ return function(C,Settings)
 			hitPosition = orgOrigin + direction * distance
 		end
 
-        print("Count:",count)
 
 		return didHit and hitResult, hitPosition
 	end
