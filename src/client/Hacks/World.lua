@@ -641,7 +641,7 @@ return function(C_new,Settings)
 						--if rawget(C,"ChatVersion") == "LegacyChatService" then
 						--  newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
 						--end
-						newMessage ..= strSub(strRep("_",66),#rawget(splitArray,num-1)).. strRep(" ", 44) .. curMessage
+						newMessage ..= strSub(strRep("_",73),#rawget(splitArray,num-1)).. strRep(" ", 44) .. curMessage
                         if num > 1 then
                             break
                         end

@@ -323,7 +323,7 @@ local function Static(C,Settings)
                         "i was ready to riz up the universe but the vibes went npc mode",
                         "i wanted to be a shark but my inner goldfish just keeps swimming in circles",
                         "started the day as a main character but ended up as a side quest",
-                        "thought i was built diferent then realized i was just built ikea",
+                        "thought i was built diferent then realized i was just built like ikea",
                         "i wanted to play chess in my mind but my thoughts keep defaulting to tic tac toe",
                         "i tried to big brain the situation but the small brain energy came out swinging",
                         "i was ready to conquer the world but the universe made me do the macarena",
