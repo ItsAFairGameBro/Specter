@@ -29,6 +29,8 @@
         "getupvalue",
         "getreg",
         "getinfo",
-        "getgc"
+        "getgc",
+        "syn",
+        "cloneref"
     ]
 }

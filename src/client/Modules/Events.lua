@@ -69,12 +69,14 @@ return function(C,Settings)
 		if not centerPart then
 			return
 		end
+        local rootAttachment = centerPart:WaitForChild("RootAttachment")
 		local isMe = C.plr.Character == theirChar
 		if isMe then
 			C.char = theirChar
 			C.human = theirHuman
 			C.animator = theirAnimator
 			C.hrp = centerPart
+            C.rootAttachment = rootAttachment
 		end
 		theirChar:AddTag("Character")
 		for num, part in ipairs(theirChar:GetDescendants()) do

@@ -169,30 +169,43 @@ return function(C,Settings)
 
 					local enTbl = self.EnTbl
 
-					local bodyGyro, bodyVel, bodyForce
-
+					local alignOrien, lineVel, vectorForce
+                    local dumpLocation = workspace:FindFirstChildWhichIsA("BasePart",true)
+                    if C.char:IsAncestorOf(dumpLocation) then
+                        dumpLocation = workspace
+                        warn("[Blatant.Fly]: DumpLocation targeted BasePart inside C.char; re-parenting to workspace!")
+                    end
 
 					if enTbl.LookDirection then
-						bodyGyro = Instance.new("BodyGyro")
-						bodyGyro.maxTorque = Vector3.new(1, 1, 1)*10^6
-						bodyGyro.P = 10^6
-						bodyGyro.D = 800
-						bodyGyro.Name = "BasePart"
-						bodyGyro.Parent = C.hrp
-						table.insert(self.Instances,bodyGyro)
+						alignOrien = Instance.new("AlignOrientation")
+						--alignOrien.MaxTorque = 10^6
+                        alignOrien.Responsiveness = 200 -- Instant turn speed
+                        alignOrien.RigidityEnabled = true -- Instant turn speed
+                        alignOrien.Mode = Enum.OrientationAlignmentMode.OneAttachment
+                        alignOrien.Attachment0 = C.rootAttachment
+						--alignOrien.P = 10^6
+						--alignOrien.D = 800
+						--alignOrien.Name = "BasePart"
+						alignOrien.Parent = dumpLocation
+						table.insert(self.Instances,alignOrien)
 					end
 					if enTbl.Mode == "Physics" then
-						bodyVel = Instance.new("BodyVelocity")
-						bodyVel.maxForce = Vector3.new(1, 1, 1)*10^6
-						bodyVel.P = 10^4
-						bodyVel.Name = "BasePart"
-						bodyVel.Parent = C.hrp
-						table.insert(self.Instances,bodyVel)
+						lineVel = Instance.new("LinearVelocity")
+						lineVel.MaxForce = 10^6
+                        lineVel.RelativeTo = Enum.ActuatorRelativeTo.World
+                        lineVel.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+                        lineVel.Attachment0 = C.rootAttachment
+						--lineVel.P = 10^4
+						--bodyVel.Name = "BasePart"
+						lineVel.Parent = dumpLocation
+						table.insert(self.Instances,lineVel)
 					else
-						bodyForce = Instance.new("BodyForce")
-						bodyForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))
-						bodyForce.Parent = C.hrp--]]
-						table.insert(self.Instances,bodyForce)
+						vectorForce = Instance.new("VectorForce")
+                        vectorForce.RelativeTo = Enum.ActuatorRelativeTo.World
+                        vectorForce.Attachment0 = C.rootAttachment
+						vectorForce.Force = Vector3.new(0,workspace.Gravity * getMass(C.char))
+                        vectorForce.Parent = dumpLocation
+						table.insert(self.Instances,vectorForce)
 					end
 
 					local SaveMode = enTbl.Mode
@@ -229,13 +242,13 @@ return function(C,Settings)
 
 						local newVelocity = (MoveDirection * Vector3.new(enTbl.HorizontalMult,enTbl.VerticalMult,enTbl.HorizontalMult)) * enTbl.Speed * 5
 							* (enTbl.UseWalkSpeed and (C.human.WalkSpeed/C.Defaults.WalkSpeed) or 1)
-						if bodyGyro then
-							bodyGyro.CFrame = cf
+						if alignOrien then
+							alignOrien.CFrame = cf
 						else
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 						end
 						if SaveMode == "Physics" then
-							bodyVel.Velocity = newVelocity
+							lineVel.VectorVelocity = newVelocity
 						elseif SaveMode == "CFrame" then
 							C.DoTeleport(charCF + dt * newVelocity)
 							C.hrp.AssemblyLinearVelocity = Vector3.zero-- + dt * CharacterMass * workspace.Gravity * Vector3.new(0, 1, 0)

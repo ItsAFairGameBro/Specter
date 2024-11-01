@@ -4,7 +4,7 @@ return {
         -- DARK DEX but disabling print
 
         local oldestPrint = print
-        
+
         -- Cloneref support (adds support for JJsploit/Temple/Electron and other sploits that don't have cloneref or really shit versions of it.)
         --loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/CloneRef.lua", true))()
 
@@ -13,12 +13,13 @@ return {
 
         -- Dex with CloneRef Support (made as global)
         getgenv().Bypassed_Dex = game:GetObjects("rbxassetid://9352453730")[1]
+        local Bypassed_Dex = getgenv().Bypassed_Dex
 
         local charset = {}
         for i = 48,  57 do table.insert(charset, string.char(i)) end
         for i = 65,  90 do table.insert(charset, string.char(i)) end
         for i = 97, 122 do table.insert(charset, string.char(i)) end
-        function RandomCharacters(length)
+        local function RandomCharacters(length)
             if length > 0 then
                 return RandomCharacters(length - 1) .. charset[math.random(1, #charset)]
             else
