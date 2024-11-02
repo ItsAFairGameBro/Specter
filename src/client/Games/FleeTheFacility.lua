@@ -702,18 +702,19 @@ return function(C,Settings)
                     Events = {
                         GameAdded = function(self)
                             while true do
+                                print("Running")
                                 C.WaitForHammer()
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true,Lobby=false,Beast=false})) do
                                     if C.CanTarget(self, C.BeastPlr) and theirPlr.Character then
                                         C.HitSurvivor(theirPlr.Character)
                                     end
                                 end
-                                task.wait(1/4)
+                                task.wait(1/2)
                             end
                         end,
                         RagdollRemoved = function(self, theirChar)
                             local theirPlr = PS:GetPlayerFromCharacter(theirChar)
-                            if theirPlr and C.CanTarget(self, theirPlr) and theirPlr.Character then
+                            if theirPlr and C.CanTarget(self, C.BeastPlr) and theirPlr.Character then
                                 C.HitSurvivor(theirPlr.Character)
                             end
                         end,
