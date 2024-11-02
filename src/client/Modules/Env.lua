@@ -186,6 +186,18 @@ return function(C,Settings)
 			return true
 		end
 	end
+    function C.GetFunctionsWithName(properties)
+        for num, funct in ipairs(getgc()) do
+            if typeof(funct) == "function" then-- not C.TblFind(getrenv(), funct) and not C.TblFind(getgenv(), funct) then
+                local idName =debug.info(funct, "n")
+                if #idName>0 then
+                    if idName == properties.Name then
+                        warn("FOUND",idName)
+                    end
+                end
+            end
+        end
+    end
 	function C.GetDictLength(tbl)
 		local num = 0 for _, _ in pairs(tbl) do num+=1 end return num
 	end
@@ -1126,7 +1138,7 @@ return function(C,Settings)
 
 	C.PlayerCoords = {}
 	C.SavedLoc = nil
-    
+
 	function C.SavePlayerCoords(name:string)
 		if not C.SavedLoc and C.char and not C.PlayerCoords[name] then
 			C.SavedPoso = C.char:GetPivot()

@@ -972,6 +972,13 @@ return function(C,Settings)
                                 end
                             end
                         end,{"value"})
+
+                        for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
+                            print("Connected to funct",num)
+                            C.HookMethod(funct,self.Shortcut, function(theirScript,method,funct,...)
+                                task.spawn(print, "Called",...)
+                            end)
+                        end
                     end,
                     Options = {
                         {
@@ -982,6 +989,11 @@ return function(C,Settings)
                             Shortcut="LobbyPlayers",
                             Activate = C.ReloadHack,
                         },
+                    },
+                    Events = {
+                        MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+                            C.DoActivate(self,self.Activate,self.RealEnabled)
+                        end,
                     }
                 },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
