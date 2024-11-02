@@ -821,7 +821,7 @@ return function(C,Settings)
                                             if spoofHP then
                                                 return "Spoof", {spoofHP}
                                             end
-                                        elseif theValue == "IsBeast" then
+                                        elseif theValue == "IsBeast" and isAncestorOf(myTSM, self) then
                                             return "Spoof", {false}
                                         end
                                     end
