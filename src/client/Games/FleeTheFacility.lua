@@ -455,10 +455,6 @@ local function SetUpGame(C, Settings)
             print("1")
             return
         end
-        if not C.char:IsAncestorOf(C.CarriedTorso.Value) then
-            print("2")
-            return
-        end
         for s = 2, 1, -1 do
             if not C.CarriedTorso.Value then
                 print("3")
