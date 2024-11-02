@@ -300,6 +300,7 @@ local function SetUpGame(C, Settings)
             end
             -- ADD FREEZING PODS, COMPUTERS --
             local function newChild(item)
+                task.wait()
                 if item.Name:sub(1,9) == "FreezePod" then
                     table.insert(C.FreezingPods, item)
                     C.FireEvent("NewFreezingPod", item)
@@ -313,7 +314,7 @@ local function SetUpGame(C, Settings)
             end
             C.AddObjectConnection(newMap, "MapAddedChild", newMap.ChildAdded:Connect(newChild))
             for _, item in ipairs(newMap:GetChildren()) do
-                newChild(item)
+                task.spawn(newChild,item)
             end
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
@@ -772,8 +773,8 @@ return function(C,Settings)
                     Tooltip = "Capture survivors when roped (SURVIVOR ONLY)",
                     Layout = 4,
                     Shortcut = "AutoRescue",Functs={},Threads = {},
-                    Activate = function(self, newValue)
-                        if not newValue then
+                    Activate = function(self, newValue, firstRun)
+                        if not newValue or firstRun then
                             return
                         end
                         print("Activated with",#C.FreezingPods,"Pods!")
