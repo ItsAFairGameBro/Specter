@@ -862,6 +862,24 @@ return function(C,Settings)
                     )
                 },
                 {
+                    Title = "Slow Beast",
+                    Tooltip = "Permanently slows the beast",
+                    Layout = 5,
+                    Shortcut = "SlowBeast",
+                    Activate = function(self, newValue)
+                        local OldIndex
+                        OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
+                            if OldIndex(self, "Name") == "DisableCrawl" then
+                                return "Spoof", {false}
+                            end
+                        end,{"value"})
+                    end,
+                    Threads = {},
+                    Events = {
+
+                    }
+                },
+                {
                     Title = "Utility",
                     Tooltip = "Automatically does actions, such as rescuing a survivor or hacking a PC",
                     Layout = 9,
