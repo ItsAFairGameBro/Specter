@@ -803,6 +803,7 @@ return function(C,Settings)
                     Default = true,
                     Shortcut = "FTFUtility",
                     MinigameActivate = function(self)
+                        print("RUNNING---")
                         local minigameResult = C.myTSM:WaitForChild("MinigameResult")
                         local function updateMiniGameResult()
                             if not minigameResult.Value then
