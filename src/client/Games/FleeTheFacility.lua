@@ -995,7 +995,7 @@ return function(C,Settings)
                                 if not subject then
                                     return
                                 end
-                                local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, C.Camera.CameraSubject.Position, true)
+                                local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, subject.Parent.Position, true)
                                 if isInGame then
                                     local Ret = C.Map and FindChild(C.Map, "_LightingSettings") or nil
                                     return "Spoof", {Ret}
