@@ -487,6 +487,32 @@ C.getgenv().SavedHookData = C.getgenv().SavedHookData or {}
 C.getgenv().realhookfunction = C.getgenv().realhookfunction or C.getgenv().hookfunction
 local MetaMethods = {"__index","__namecall","__newindex"}
 local AllowHookMethod = true;
+function C.HookFunc(funct, name, hook)
+    local SavedStorage = getgenv().SavedHookData[funct]
+    if not SavedStorage then
+        if not hook then
+            return
+        end
+        SavedStorage = {Name = name, Hook = hook}
+        local localCheckCaller = C.checkcaller
+        local OldMethod
+        OldMethod = C.hookfunction(funct, hook, function(...)
+            if not localCheckCaller() then
+                local currFunc = rawget(SavedStorage,"Hook")
+                if currFunc then
+                    return currFunc(...)
+                end
+            end
+            return OldMethod(...)
+        end)
+        SavedStorage.OldMethod = OldMethod
+        getgenv().SavedHookData[funct] = SavedStorage
+    else
+        assert(SavedStorage.Name == name, `[C.HookFunction]: {SavedStorage.Name} does not match {name}!`)
+        SavedStorage.Hook = hook
+        return SavedStorage.OldMethod
+    end
+end
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
