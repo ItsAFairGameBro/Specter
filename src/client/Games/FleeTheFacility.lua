@@ -840,12 +840,27 @@ return function(C,Settings)
                 {
                     Title = "Slow Beast",
                     Tooltip = "Permanently slows the beast",
-                    Layout = 3,
+                    Layout = 5,
                     Shortcut = "SlowBeast",
-                    Activate = function(self, newVale, firstRun)
+                    Threads = {},
+                    Events = {
+                        BeastAdded = function(self)
+                            if not C.CanTarget(self, C.BeastChar) then
+                                return
+                            end
+                            local BeastEvent = C.StringWait(C.BeastChar, "BeastPowers.PowersEvent", 5)
+                            while BeastEvent do
+                                BeastEvent:FireServer("Jumped");
+                                RunS.RenderStepped:Wait()
+                            end
+                        end,
+                    },
+                    Options = AppendToFirstArr({
 
-                    end,
-                },
+                        },
+                        C.SelectPlayerType(false, true)
+                        )
+                    },
                 {
                     Title = "Utility",
                     Tooltip = "Automatically does actions, such as rescuing a survivor or hacking a PC",

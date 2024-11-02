@@ -233,14 +233,13 @@ return function(C,Settings)
                         end
                     end,
                     MyCharAdded = function(self,theirPlr,theirChar,firstRun)
-                        if self.EnTbl.HideChar then
+                        if self.RealEnabled and self.EnTbl.HideChar then
                             C.SavePlayerCoords(self.Shortcut)
                             while true do
-                                print("-ENABLED-")
                                 C.DoTeleport(CFrame.new(0,10000,0))
                                 C.hrp.AssemblyLinearVelocity = Vector3.zero
                                 C.hrp.AssemblyAngularVelocity = Vector3.zero
-                                task.wait(1)--RunS.PreSimulation:Wait()
+                                RunS.PreSimulation:Wait()
                             end
                         else
                             C.LoadPlayerCoords(self.Shortcut)
