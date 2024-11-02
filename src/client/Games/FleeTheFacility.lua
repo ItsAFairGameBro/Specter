@@ -859,8 +859,8 @@ return function(C,Settings)
 
                         },
                         C.SelectPlayerType(false, true)
-                        )
-                    },
+                    )
+                },
                 {
                     Title = "Utility",
                     Tooltip = "Automatically does actions, such as rescuing a survivor or hacking a PC",

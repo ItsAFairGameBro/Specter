@@ -434,7 +434,7 @@ return function(C,Settings)
 						return
 					end
                     if not newValue and C.human and C.human.FloorMaterial ~= Enum.Material.Air then
-                        C.human:ChangeState(Enum.HumanoidStateType.Running)
+                        task.delay(0,C.human.ChangeState, C.human, Enum.HumanoidStateType.Running)
                     end
 					if C.human then
 						if newValue and not self.EnTbl.EnClimbing then
