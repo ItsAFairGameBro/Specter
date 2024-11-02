@@ -123,7 +123,7 @@ return function(C,Settings)
 				Tooltip = "Implements several automatic features",
 				Layout = 99,
 				Shortcut = "BotAuto",
-				RejoinDelay = 5,
+				RejoinDelay = 15,
 				Sending = false,
                 ChatConnected = false,
                 Functs = {},
@@ -145,11 +145,10 @@ return function(C,Settings)
                     elseif setfpscap and not firstRun then
                         setfpscap(0)
                     end
-                    if newValue and not firstRun and C.char then
+                    if not firstRun and C.char then
                         table.insert(self.Threads, task.spawn(self.Events.MyCharAdded,self, C.plr, C.char, false))
                     end
                     if not newValue then
-                        C.LoadPlayerCoords(self.Shortcut)
                         self.ChatConnected = false
                         return
                     elseif firstRun then
@@ -238,6 +237,8 @@ return function(C,Settings)
                                 C.hrp.AssemblyAngularVelocity = Vector3.zero
                                 RunS.PreSimulation:Wait()
                             end
+                        else
+                            C.LoadPlayerCoords(self.Shortcut)
                         end
                     end,
 				},
@@ -408,7 +409,7 @@ return function(C,Settings)
 					},
                     {
 						Type = Types.Toggle,
-						Title = "Spoof Keyboard",
+						Title = "No Touchscreen",
 						Tooltip = "Forces only to have keyboard input",
 						Layout = 7,Default=false,
 						Shortcut="SpoofKeyboard",

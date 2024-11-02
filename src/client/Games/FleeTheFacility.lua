@@ -839,6 +839,15 @@ return function(C,Settings)
                     }
                 },
                 {
+                    Title = "Slow Beast",
+                    Tooltip = "Permanently slows the beast",
+                    Layout = 3,
+                    Shortcut = "SlowBeast",
+                    Activate = function(self, newVale, firstRun)
+                        
+                    end,
+                },
+                {
                     Title = "Utility",
                     Tooltip = "Automatically does actions, such as rescuing a survivor or hacking a PC",
                     Layout = 9,
