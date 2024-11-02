@@ -836,7 +836,9 @@ return function(C,Settings)
                         end
                     end,
                     Events = {
-                        MyCharAdded = C.ReloadHack
+                        MyCharAdded = function(self)
+                            self:Activate(true)
+                        end,
                     },
                     Options = {
                         {
