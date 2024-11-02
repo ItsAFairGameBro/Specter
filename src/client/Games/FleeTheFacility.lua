@@ -994,7 +994,6 @@ return function(C,Settings)
                                 local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, workspace.CurrentCamera.CFrame.Position, true)
                                 if isInGame then
                                     local Ret = C.Map and FindChild(C.Map, "_LightingSettings") or nil
-                                    print(Ret)
                                     return "Spoof", {Ret}
                                 else
                                     return "Spoof", {DefaultLighting}
