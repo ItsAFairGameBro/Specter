@@ -991,6 +991,10 @@ return function(C,Settings)
                         local FindChild = workspace.FindFirstChild
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             if name == "_LightingSettings" or name == "DefaultLightingSettings" then
+                                local subject = C.Camera.CameraSubject
+                                if not subject then
+                                    return
+                                end
                                 local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, C.Camera.CameraSubject.Position, true)
                                 if isInGame then
                                     local Ret = C.Map and FindChild(C.Map, "_LightingSettings") or nil
