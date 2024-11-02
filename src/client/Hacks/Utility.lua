@@ -146,7 +146,11 @@ return function(C,Settings)
                         setfpscap(0)
                     end
                     if not firstRun and C.char then
-                        table.insert(self.Threads, task.spawn(self.Events.MyCharAdded,self, C.plr, C.char, false))
+                        if newValue then
+                            table.insert(self.Threads, task.spawn(self.Events.MyCharAdded,self, C.plr, C.char, false))
+                        else
+                            self.Events.MyCharAdded(self, C.plr, C.char, false)
+                        end
                     end
                     if not newValue then
                         self.ChatConnected = false

@@ -452,17 +452,16 @@ local function SetUpGame(C, Settings)
     end
     function C.RemoveRope()
         if not C.Hammer or not C.CarriedTorso then
-            print("1")
             return
         end
-        for s = 2, 1, -1 do
+        for s = 15, 1, -1 do
             if not C.CarriedTorso.Value then
-                print("3")
-                break
+                return
             end
             C.HammerEvent:FireServer("HammerClick", true)
             task.wait(.05)
         end
+        warn(`[C.RemoveRope]: Failed to remove rope {C.CarriedTorso.Value} after 15 tries!`)
     end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
@@ -844,7 +843,7 @@ return function(C,Settings)
                     Layout = 3,
                     Shortcut = "SlowBeast",
                     Activate = function(self, newVale, firstRun)
-                        
+
                     end,
                 },
                 {
