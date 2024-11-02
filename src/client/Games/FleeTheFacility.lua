@@ -287,6 +287,10 @@ local function SetUpGame(C, Settings)
     table.insert(C.EventFunctions,function()
         local CurrentMap = RS:WaitForChild("CurrentMap")
 		local function MapAdded(newMap)
+            if not newMap then
+                CurrentMap.Value = workspace
+                return
+            end
             while (newMap == CurrentMap.Value and C.GameStatus.Value:lower():find("loading")) do
                 C.GameStatus:GetPropertyChangedSignal("Value"):Wait()
             end
@@ -320,7 +324,7 @@ local function SetUpGame(C, Settings)
             C.FireEvent("MapAdded",nil,C.Map)
             C.AddObjectConnection(newMap, "MapDestroyed", newMap.AncestryChanged:Connect(function()
                 if newMap == CurrentMap.Value then -- Check to see if still valid
-                    CurrentMap.Value = nil -- If not, reset the map value to refresh!
+                    CurrentMap.Value = workspace -- If not, reset the map value to refresh!
                 end
             end))
         end
@@ -876,7 +880,7 @@ return function(C,Settings)
                     end,
                     Threads = {},
                     Events = {
-                        BeastHammerAdded = function(self)
+                        MyBeastHammerAdded = function(self)
                             for num, ventPart in ipairs(C.Map:GetDescendants()) do
                                 if ventPart.Name == "VentBlock" or ventPart.Name == "VentBlocks" then
                                     ventPart:Destroy()
