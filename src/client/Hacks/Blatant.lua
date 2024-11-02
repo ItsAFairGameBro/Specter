@@ -429,12 +429,12 @@ return function(C,Settings)
 						end
 					end
 				end,
-				Activate = function(self,newValue)
+				Activate = function(self,newValue,firstRun)
 					if not C.char then
 						return
 					end
                     if not newValue and C.human and C.human.FloorMaterial ~= Enum.Material.Air then
-                        task.delay(0,C.human.ChangeState, C.human, Enum.HumanoidStateType.Running)
+                        task.delay(0,C.human.ChangeState, C.human, Enum.HumanoidStateType.Landed)
                     end
 					if C.human then
 						if newValue and not self.EnTbl.EnClimbing then
