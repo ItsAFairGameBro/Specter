@@ -991,7 +991,9 @@ return function(C,Settings)
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, workspace.CurrentCamera.CFrame.Position, true)
                             if isInGame then
-                                return "Spoof", {OldNamecall(C.Map.FindFirstChild, C.Map, "_LightingSettings")}
+                                local Ret = C.Map and OldNamecall(C.Map.FindFirstChild, C.Map, "_LightingSettings") or nil
+                                print(Ret)
+                                return "Spoof", {Ret}
                             else
                                 return "Spoof", {DefaultLighting}
                             end
