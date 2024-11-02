@@ -356,6 +356,7 @@ local function SetUpGame(C, Settings)
                 if not CarriedTorso then return end
                 C.CarriedTorso = CarriedTorso
                 local function RopeUpd(newVal)
+                    print("RopeAdded",newVal)
                     C.FireEvent(newVal and "BeastRopeAdded" or "BeastRopeRemoved",theirPlr == C.plr,newVal and newVal.Parent or nil)
                 end
                 C.AddObjectConnection(CarriedTorso, "BeastRope", CarriedTorso.Changed:Connect(RopeUpd))
