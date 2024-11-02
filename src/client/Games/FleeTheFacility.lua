@@ -813,23 +813,20 @@ return function(C,Settings)
                         end
                         print("Activated with",#C.FreezingPods,"Pods!")
                         for _, freezePod in ipairs(C.FreezingPods) do
-                            self.Events.NewFreezingPod(self, freezePod)
+                            table.insert(self.Threads,task.spawn(self.Events.NewFreezingPod, self, freezePod))
                         end
                     end,
                     Events = {
                         NewFreezingPod = function(self, freezePod)
-                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",1)
-                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",3)
+                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",100)
+                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",300)
                             if CapturedTorso then
-                                print("Activated!")
                                 table.insert(self.Functs, CapturedTorso.Changed:Connect(function()
                                     C.RescueSurvivor(freezePod)
                                 end) or false)
                                 if CapturedTorso.Value then
                                     table.insert(self.Threads, task.spawn(C.RescueSurvivor,freezePod))
                                 end
-                            else
-                                print("CapturedTorso not found",freezePod)
                             end
                         end,
                     }
