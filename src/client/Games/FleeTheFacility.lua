@@ -977,15 +977,22 @@ return function(C,Settings)
                         local DefaultLighting = RS:WaitForChild("DefaultLightingSettings")
                         for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
                             local Old
+                            local TargetLighting = DefaultLighting
                             Old = C.HookFunc(funct, self.Shortcut, function(lightInstance,...)
                                 --if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
                                     --lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
                                 --else
-                                    lightInstance = DefaultLighting
+                                    lightInstance = TargetLighting
                                 --end
                                 return Old(lightInstance,...)
                             end)
                         end
+                        --local OldNamecall
+                        --OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,...)
+                        --    if lighting then
+
+                        --    end
+                        --end,{"findfirstchild"})
                     end,
                     Options = {
                         {
