@@ -876,7 +876,7 @@ return function(C,Settings)
                     end,
                     Threads = {},
                     Events = {
-                        MyBeastHammerAdded = function(self)
+                        BeastHammerAdded = function(self)
                             for num, ventPart in ipairs(C.Map:GetDescendants()) do
                                 if ventPart.Name == "VentBlock" or ventPart.Name == "VentBlocks" then
                                     ventPart:Destroy()
