@@ -845,7 +845,7 @@ return function(C,Settings)
                     Threads = {},
                     Events = {
                         BeastAdded = function(self)
-                            if not C.CanTarget(self, C.BeastChar) then
+                            if not C.CanTarget(self, C.BeastPlr) then
                                 return
                             end
                             local BeastEvent = C.StringWait(C.BeastChar, "BeastPowers.PowersEvent", 5)
