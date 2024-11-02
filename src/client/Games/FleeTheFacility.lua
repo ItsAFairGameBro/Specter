@@ -784,8 +784,8 @@ return function(C,Settings)
                     end,
                     Events = {
                         NewFreezingPod = function(self, freezePod)
-                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",100)
-                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",300)
+                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",1)
+                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",3)
                             if CapturedTorso then
                                 print("Activated!")
                                 table.insert(self.Functs, CapturedTorso.Changed:Connect(function()
