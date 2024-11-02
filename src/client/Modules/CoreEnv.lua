@@ -52,9 +52,9 @@ return function(C,Settings)
 	end
 	function C.DoActivate(self,funct,...)
         if self.Activate == funct then
+            self:ClearData()
             local firstRun = select(2,...)
             if not firstRun and ... then -- check to see if true
-                self:ClearData()
                 if C.SaveEvents and self.Events then
                     for key, eventFunct in pairs(self.Events) do
                         local eventList = C.SaveEvents[key:gsub("Added","")]
@@ -67,7 +67,7 @@ return function(C,Settings)
                 end
             end
         else
-            self:ClearData()
+            --self:ClearData()
         end
         if not funct then
             if self.Activate ~= funct then
