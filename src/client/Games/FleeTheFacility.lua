@@ -876,9 +876,11 @@ return function(C,Settings)
                     end,
                     Threads = {},
                     Events = {
-                        MapAdded = function(self, map)
-                            for num, ventPart in ipairs(map) do
-                                -- ...
+                        MyBeastHammerAdded = function(self)
+                            for num, ventPart in ipairs(C.Map:GetDescendants()) do
+                                if ventPart.Name == "VentBlock" or ventPart.Name == "VentBlocks" then
+                                    ventPart:Destroy()
+                                end
                             end
                         end,
                     }
