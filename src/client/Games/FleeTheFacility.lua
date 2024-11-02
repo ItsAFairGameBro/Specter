@@ -364,6 +364,7 @@ local function SetUpGame(C, Settings)
                 end
             end
         end
+
         C.AddObjectConnection(theirChar, "BeastHammerAdded", theirChar.ChildAdded:Connect(childAdded))
         childAdded(theirChar:FindFirstChild("Hammer"))
     end)
@@ -442,6 +443,21 @@ local function SetUpGame(C, Settings)
         end
         C.SetActionLabel(BotActionClone, `Roping {theirChar.Name}`)
         C.HammerEvent:FireServer("HammerTieUp",Torso,Torso.NeckAttachment.WorldPosition)
+    end
+    function C.RemoveRope()
+        if not C.Hammer or not C.CarriedTorso then
+            return
+        end
+        if not C.char:IsAncestorOf(C.CarriedTorso.Value) then
+            return
+        end
+        for _= 2, 1, -1 do
+            if C.CarriedTorso.Value==nil then
+                break
+            end
+            C.HammerEvent:FireServer("HammerClick", true)
+            task.wait(.05)
+        end
     end
     function C.CaptureSurvivor(theirChar)
         if C.BeastPlr ~= C.plr or C.BeastChar.CarriedTorso.Value==nil then
@@ -740,6 +756,24 @@ return function(C,Settings)
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Ragdoll=true})) do
                                     self.Events.RagdollAdded(self, theirPlr, theirPlr.Character)
                                 end
+                            end
+                        end,
+                    },
+                    Options = AppendToFirstArr({
+
+                        },
+                        C.SelectPlayerType,true
+                    )
+                },
+                {
+                    Title = "Auto No Rope",
+                    Tooltip = "Automatically removes rope after a delay",
+                    Layout = 4,
+                    Shortcut = "AutoRemoveRope",
+                    Events = {
+                        BeastRopeAdded = function(self, theirChar)
+                            if C.CanTarget(self, C.BeastPlr) then
+                                C.RemoveRope()
                             end
                         end,
                     },
