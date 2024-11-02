@@ -211,7 +211,7 @@ local function GetSharedHacks(C, Settings)
         Shortcut = "GameImprovements",
         Default = true,
         Functs = {},
-        Activate = function(self, newValue)
+        Activate = function(self, newValue, firstRun)
             if not newValue then
                 return
             end
@@ -238,6 +238,16 @@ local function GetSharedHacks(C, Settings)
 
                 table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
                 survivorScreen()
+
+                if firstRun then
+                    return
+                end
+
+                for num, theirPlr in ipairs(PS:GetPlayers()) do
+                    if theirPlr and theirPlr.Character then
+                        task.spawn(self.Events.CharacterAdded, self, theirPlr, theirPlr.Character)
+                    end
+                end
             end
         end,
         Events = {
@@ -256,6 +266,19 @@ local function GetSharedHacks(C, Settings)
                     if animTrack.Name == "AnimArmIdle" then
                         animTrack:Stop(0)
                     end
+                end
+            end,
+            CharacterAdded = function(self, theirPlr, theirChar)
+                local function ChildAdded(basePart)
+                    if basePart:IsA("BasePart") then
+                        if basePart.Name == "Part" and basePart:WaitForChild("RopeConstraint",1/3) then
+                            basePart.RopeConstraint.Enabled = false
+                        end
+                    end
+                end
+                table.insert(self.Functs, theirChar.ChildAdded:Connect(ChildAdded))
+                for num, basePart in ipairs(theirChar:GetChildren()) do
+                    ChildAdded(basePart)
                 end
             end
         }
