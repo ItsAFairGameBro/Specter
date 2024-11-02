@@ -7,6 +7,7 @@ local VU = game:GetService("VirtualUser")
 local TCS = game:GetService("TextChatService")
 local GS = game:GetService("GuiService")
 local PS = game:GetService("Players")
+local LS = game:GetService("Lighting")
 local RS = game:GetService("ReplicatedStorage")
 local SG = game:GetService("StarterGui")
 
@@ -973,11 +974,16 @@ return function(C,Settings)
                             end
                         end,{"value"})
 
+                        local DefaultLighting = LS:WaitForChild("DefaultLightingSettings")
                         for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
                             local Old
-                            Old = C.HookFunc(funct, self.Shortcut, function(...)
-                                print("Called",...)
-                                return Old(...)
+                            Old = C.HookFunc(funct, self.Shortcut, function(lightInstance,...)
+                                if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
+                                    lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
+                                else
+                                    lightInstance = DefaultLighting
+                                end
+                                return Old(lightInstance,...)
                             end)
                         end
                     end,
