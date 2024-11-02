@@ -452,8 +452,8 @@ local function SetUpGame(C, Settings)
         if not C.char:IsAncestorOf(C.CarriedTorso.Value) then
             return
         end
-        for _= 2, 1, -1 do
-            if C.CarriedTorso.Value==nil then
+        for s = 2, 1, -1 do
+            if not C.CarriedTorso.Value then
                 break
             end
             C.HammerEvent:FireServer("HammerClick", true)
@@ -539,24 +539,26 @@ return function(C,Settings)
     if game.PlaceId == 893973440 then
         SetUpGame(C,Settings)
     end
-    C.SelectPlayerType = {
-        {
-            Type = Types.Toggle,
-            Title = "Me",
-            Tooltip = "Whether or not this hack will target you",
-            Layout = -10,Default=true,
-            Shortcut="Me",
-            Activate = C.ReloadHack,
-        },
-        {
-            Type = Types.Toggle,
-            Title = "Others",
-            Tooltip = "Whether or not this hack will target you",
-            Layout = -9,Default=false,
-            Shortcut="Others",
-            Activate = C.ReloadHack,
-        },
-    }
+    function C.SelectPlayerType(meDefault, otherDefault)
+        return {
+            {
+                Type = Types.Toggle,
+                Title = "Me",
+                Tooltip = "Whether or not this hack will target you",
+                Layout = -10,Default=meDefault,
+                Shortcut="Me",
+                Activate = C.ReloadHack,
+            },
+            {
+                Type = Types.Toggle,
+                Title = "Others",
+                Tooltip = "Whether or not this hack will target you",
+                Layout = -9,Default=otherDefault,
+                Shortcut="Others",
+                Activate = C.ReloadHack,
+            },
+        }
+    end
     C.myTSM = C.plr:WaitForChild("TempPlayerStatsModule")
     C.mySSM = C.plr:WaitForChild("SavedPlayerStatsModule")
 
@@ -734,7 +736,7 @@ return function(C,Settings)
                     Options = AppendToFirstArr({
 
                         },
-                        C.SelectPlayerType,true
+                        C.SelectPlayerType(true, false)
                     )
                 },
                 {
@@ -763,7 +765,7 @@ return function(C,Settings)
                     Options = AppendToFirstArr({
 
                         },
-                        C.SelectPlayerType,true
+                        C.SelectPlayerType(true, false)
                     )
                 },
                 {
@@ -781,7 +783,7 @@ return function(C,Settings)
                     Options = AppendToFirstArr({
 
                         },
-                        C.SelectPlayerType,true
+                        C.SelectPlayerType(false, true)
                     )
                 },
                 {
@@ -840,7 +842,6 @@ return function(C,Settings)
                     Default = true,
                     Shortcut = "FTFUtility",
                     MinigameActivate = function(self)
-                        print("RUNNING---")
                         local minigameResultVal = C.myTSM:WaitForChild("MinigameResult")
                         local function updateMiniGameResult()
                             if not minigameResultVal.Value then
