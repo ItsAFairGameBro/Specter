@@ -991,7 +991,7 @@ return function(C,Settings)
                         local FindChild = workspace.FindFirstChild
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             if name == "_LightingSettings" or name == "DefaultLightingSettings" then
-                                local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, workspace.CurrentCamera.CFrame.Position, true)
+                                local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, C.Camera.CameraSubject.Position, true)
                                 if isInGame then
                                     local Ret = C.Map and FindChild(C.Map, "_LightingSettings") or nil
                                     return "Spoof", {Ret}
@@ -999,7 +999,6 @@ return function(C,Settings)
                                     return "Spoof", {DefaultLighting}
                                 end
                             end
-
                         end,{"findfirstchild"})
                     end,
                     Options = {
