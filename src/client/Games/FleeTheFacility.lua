@@ -978,11 +978,11 @@ return function(C,Settings)
                         for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
                             local Old
                             Old = C.HookFunc(funct, self.Shortcut, function(lightInstance,...)
-                                if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
+                                --if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
                                     lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
-                                else
-                                    lightInstance = DefaultLighting
-                                end
+                                --else
+                                    --lightInstance = DefaultLighting
+                                --end
                                 return Old(lightInstance,...)
                             end)
                         end
