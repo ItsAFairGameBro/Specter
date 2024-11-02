@@ -694,11 +694,6 @@ return function(C,Settings)
                     Tooltip = "Automatically ropes nearby survivors",
                     Layout = 1,
                     Shortcut = "AutoHit",Threads={},
-                    Activate = function(self, newValue, firstRun)
-                        if newValue and not firstRun and C.GameActive then
-                            self.Events.GameAdded(self)
-                        end
-                    end,
                     Events = {
                         GameAdded = function(self)
                             while true do

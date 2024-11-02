@@ -53,7 +53,7 @@ return function(C,Settings)
 	function C.DoActivate(self,funct,...)
         if self.Activate == funct then
             local firstRun = select(2,...)
-            if not firstRun then
+            if not firstRun and ... then -- check to see if true
                 self:ClearData()
                 if C.SaveEvents and self.Events then
                     for key, eventFunct in pairs(self.Events) do
