@@ -510,8 +510,8 @@ function C.HookFunc(funct, name, hook)
     else
         assert(SavedStorage.Name == name, `[C.HookFunction]: {SavedStorage.Name} does not match {name}!`)
         SavedStorage.Hook = hook
-        return SavedStorage.OldMethod
     end
+    return SavedStorage.OldMethod
 end
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then

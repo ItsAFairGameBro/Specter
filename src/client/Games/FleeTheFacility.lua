@@ -974,7 +974,6 @@ return function(C,Settings)
                         end,{"value"})
 
                         for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
-                            print("Connected to funct",num)
                             local Old
                             Old = C.HookFunc(funct, self.Shortcut, function(...)
                                 print("Called",...)
