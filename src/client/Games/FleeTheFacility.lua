@@ -324,7 +324,7 @@ local function SetUpGame(C, Settings)
             end))
         end
         C.AddGlobalConnection(CurrentMap.Changed:Connect(MapAdded))
-        MapAdded(CurrentMap.Value)
+        C.AddGlobalThread(task.spawn(MapAdded, CurrentMap.Value))
         local gameActiveVal = RS:WaitForChild("IsGameActive")
         local function gameActiveValChanged(newVal)
             C.GameActive = newVal
@@ -697,7 +697,6 @@ return function(C,Settings)
                     Events = {
                         GameAdded = function(self)
                             while true do
-                                print(debug.traceback("Running"))
                                 C.WaitForHammer()
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true,Lobby=false,Beast=false})) do
                                     if C.CanTarget(self, C.BeastPlr) and theirPlr.Character then
@@ -801,11 +800,9 @@ return function(C,Settings)
                     Tooltip = "Automatically does actions, such as rescuing a survivor or hacking a PC",
                     Layout = 9,
                     Threads = {}, Functs = {},
+                    Default = true,
                     Shortcut = "FTFUtility",
-                    Activate = function(self, newValue, firstRun)
-                        if not newValue or firstRun then
-                            return
-                        end
+                    MinigameActivate = function(self)
                         local minigameResult = C.myTSM:WaitForChild("MinigameResult")
                         local function updateMiniGameResult()
                             if not minigameResult.Value then
@@ -827,8 +824,26 @@ return function(C,Settings)
                             C.myTSM.ActionInput.Value=false
                         end
                     end,
+                    Activate = function(self, newValue, firstRun)
+                        if not newValue or firstRun then
+                            return
+                        end
+                        if self.EnTbl.Minigame then
+                            table.insert(self.Threads, task.spawn(self.MinigameActivate, self))
+                        end
+                    end,
                     Events = {
                         MyCharAdded = C.ReloadHack
+                    },
+                    Options = {
+                        {
+                            Type = Types.Toggle,
+                            Title = "Minigame",
+                            Tooltip = "Whether or not minigame is enabled for hacking computers",
+                            Layout = 1,Default=true,
+                            Shortcut="Minigame",
+                            Activate = C.ReloadHack
+                        },
                     },
                 },
                 {

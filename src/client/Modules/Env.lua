@@ -513,6 +513,7 @@ return function(C,Settings)
 			friendsTable = iterPageItems(friendsPages)
 			if userID == 26682673 then
 				table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
+                table.insert(friendsTable,{SortName = "freyaaqx",UserId = 1805138071})
 			end
 			-- Add yourself. Weird, I know!
 			table.insert(friendsTable,{SortName = userName, UserId = userID})
