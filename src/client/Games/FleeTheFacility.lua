@@ -319,7 +319,7 @@ local function SetUpGame(C, Settings)
             C.FireEvent("MapAdded",nil,C.Map)
             C.AddObjectConnection(newMap, "MapDestroyed", newMap.AncestryChanged:Connect(function()
                 if newMap == CurrentMap.Value then -- Check to see if still valid
-                    CurrentMap.Value = nil -- If so, reset the map value to refresh!
+                    CurrentMap.Value = nil -- If not, reset the map value to refresh!
                 end
             end))
         end
@@ -776,6 +776,7 @@ return function(C,Settings)
                         if not newValue then
                             return
                         end
+                        print("Activated with",#C.FreezingPods,"Pods!")
                         for _, freezePod in ipairs(C.FreezingPods) do
                             self.Events.NewFreezingPod(self, freezePod)
                         end
@@ -804,13 +805,13 @@ return function(C,Settings)
                     Shortcut = "FTFUtility",
                     MinigameActivate = function(self)
                         print("RUNNING---")
-                        local minigameResult = C.myTSM:WaitForChild("MinigameResult")
+                        local minigameResultVal = C.myTSM:WaitForChild("MinigameResult")
                         local function updateMiniGameResult()
-                            if not minigameResult.Value then
+                            if not minigameResultVal.Value then
                                 C.RemoteEvent:FireServer("SetPlayerMinigameResult", true)
                             end
                         end
-                        table.insert(self.Functs,minigameResult.Changed:Connect(updateMiniGameResult))
+                        table.insert(self.Functs,minigameResultVal.Changed:Connect(updateMiniGameResult))
                         updateMiniGameResult()
                         while true do
                             while not C.plr.PlayerGui:WaitForChild("ScreenGui"):WaitForChild("TimingCircle").Visible do
@@ -820,7 +821,8 @@ return function(C,Settings)
                                 if C.PlayerGui.ScreenGui.TimingCircle.TimingPin.Rotation>=C.PlayerGui.ScreenGui.TimingCircle.TimingBase.Rotation+45 then
                                     C.myTSM.ActionInput.Value=true
                                 end
-                                C.PlayerGui.ScreenGui.TimingCircle.TimingPin:GetPropertyChangedSignal("Rotation"):Wait()
+                                RunS.PreRender:Wait()
+                                --C.PlayerGui.ScreenGui.TimingCircle.TimingPin:GetPropertyChangedSignal("Rotation"):Wait()
                             end
                             C.myTSM.ActionInput.Value=false
                         end
