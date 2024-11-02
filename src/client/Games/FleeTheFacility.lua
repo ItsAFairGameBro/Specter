@@ -812,16 +812,17 @@ return function(C,Settings)
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
+                                local isMe = isAncestorOf(myTSM, self)
                                 local traceback = traceback()
                                 for _, val in ipairs({704, 712, 726, 712, 735, 739}) do
                                     if find(traceback,toStr(val)) then
                                         local theValue = toStr(self)
                                         if theValue == "Health" then
-                                            local spoofHP = (isAncestorOf(myTSM, self) and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
+                                            local spoofHP = (isMe and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
                                             if spoofHP then
                                                 return "Spoof", {spoofHP}
                                             end
-                                        elseif theValue == "IsBeast" and isAncestorOf(myTSM, self) then
+                                        elseif theValue == "IsBeast" and isMe then
                                             return "Spoof", {false}
                                         end
                                     end
