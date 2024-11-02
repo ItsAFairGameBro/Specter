@@ -992,6 +992,7 @@ return function(C,Settings)
                     },
                     Events = {
                         MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+                            if firstRun then return end
                             C.DoActivate(self,self.Activate,self.RealEnabled)
                         end,
                     }
