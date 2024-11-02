@@ -783,7 +783,7 @@ return function(C,Settings)
                     end,
                     Events = {
                         NewFreezingPod = function(self, freezePod)
-                            local PodTrigger = freezePod:WaitForChild("PodTrigger",10)
+                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",10)
                             local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",30)
                             if CapturedTorso then
                                 table.insert(self.Functs, CapturedTorso.Changed:Connect(function()
@@ -807,14 +807,20 @@ return function(C,Settings)
                         local isAncestorOf = myTSM.IsAncestorOf
                         local traceback = debug.traceback
                         local find = string.find
-                        C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
+
+                        local lobbyPlrs = self.EnTbl.LobbyPlayers
+                        local OldIndex
+                        OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
                                 local traceback = traceback()
                                 for _, val in ipairs({704, 712, 726, 712, 735, 739}) do
                                     if find(traceback,toStr(val)) then
                                         local theValue = toStr(self)
                                         if theValue == "Health" then
-                                            return "Spoof", {isAncestorOf(myTSM, self) and 0 or 100}
+                                            local spoofHP = (isAncestorOf(myTSM, self) and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
+                                            if spoofHP then
+                                                return "Spoof", {spoofHP}
+                                            end
                                         elseif theValue == "IsBeast" then
                                             return "Spoof", {false}
                                         end
@@ -825,8 +831,13 @@ return function(C,Settings)
                     end,
                     Options = {
                         {
-                            
-                        }
+                            Type = Types.Toggle,
+                            Title = "Lobby Players",
+                            Tooltip = "Whether or not to spectate other lobby players WHEN A GAME IS IN PROGRESS",
+                            Layout = 2,Default=false,
+                            Shortcut="LobbyPlayers",
+                            Activate = C.ReloadHack,
+                        },
                     }
                 },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
