@@ -702,7 +702,7 @@ return function(C,Settings)
                     Events = {
                         GameAdded = function(self)
                             while true do
-                                print("Running")
+                                print(debug.traceback("Running"))
                                 C.WaitForHammer()
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true,Lobby=false,Beast=false})) do
                                     if C.CanTarget(self, C.BeastPlr) and theirPlr.Character then
