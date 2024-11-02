@@ -979,9 +979,9 @@ return function(C,Settings)
                             local Old
                             Old = C.HookFunc(funct, self.Shortcut, function(lightInstance,...)
                                 --if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
-                                    lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
+                                    --lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
                                 --else
-                                    --lightInstance = DefaultLighting
+                                    lightInstance = DefaultLighting
                                 --end
                                 return Old(lightInstance,...)
                             end)
