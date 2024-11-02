@@ -541,6 +541,7 @@ local function SetUpGame(C, Settings)
         end
     end
 end
+local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
 
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
@@ -686,7 +687,6 @@ return function(C,Settings)
     if game.PlaceId ~= 1738581510 then
         do
             --local BeastCaveBaseplate = workspace:WaitForChild("BeastCaveBaseplate")
-            local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
             function C.isInGame(theirChar,isDefacto)
                 local theirPlr = theirChar and PS:GetPlayerFromCharacter(theirChar)
                 if not theirChar or not theirPlr then
@@ -975,24 +975,27 @@ return function(C,Settings)
                         end,{"value"})
 
                         local DefaultLighting = RS:WaitForChild("DefaultLightingSettings")
-                        for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
-                            local Old
-                            --local TargetLighting = DefaultLighting
-                            Old = C.HookFunc(funct, self.Shortcut, function(lightInstance)
-                                --if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
-                                    --lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
-                                --else
-                                    lightInstance = RS.DefaultLightingSettings
-                                --end
-                                return Old(lightInstance)
-                            end)
-                        end
-                        --local OldNamecall
-                        --OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,...)
-                        --    if lighting then
-
-                        --    end
-                        --end,{"findfirstchild"})
+                        --for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
+                        --    local Old
+                        --    --local TargetLighting = DefaultLighting
+                        --    Old = C.HookFunc(funct, self.Shortcut, function(lightInstance)
+                        --        --if C.isInGame(C.Camera.CameraSubject and C.Camera.CameraSubject.Parent, true) then
+                        --            --lightInstance = C.Map and C.Map:FindFirstChild("_LightingSettings")
+                        --        --else
+                        --            lightInstance = RS.DefaultLightingSettings
+                        --        --end
+                        --        return Old(lightInstance)
+                        --    end)
+                        --end
+                        local OldNamecall
+                        OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
+                            local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, workspace.CurrentCamera.CFrame.Position, true)
+                            if isInGame then
+                                return "Spoof", {OldNamecall(C.Map.FindFirstChild, C.Map, "_LightingSettings")}
+                            else
+                                return "Spoof", {DefaultLighting}
+                            end
+                        end,{"findfirstchild"})
                     end,
                     Options = {
                         {
