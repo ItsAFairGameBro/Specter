@@ -146,9 +146,10 @@ return function(C,Settings)
                         setfpscap(0)
                     end
                     if newValue and not firstRun and C.char then
-                        table.insert(self.Threads, task.spawn(self.Events.MyCharAdded(self, C.plr, C.char, false)))
+                        table.insert(self.Threads, task.spawn(self.Events.MyCharAdded,self, C.plr, C.char, false))
                     end
                     if not newValue then
+                        C.LoadPlayerCoords(self.Shortcut)
                         self.ChatConnected = false
                         return
                     elseif firstRun then
@@ -230,8 +231,9 @@ return function(C,Settings)
                     end,
                     MyCharAdded = function(self,theirPlr,theirChar,firstRun)
                         if self.EnTbl.HideChar then
+                            C.SavePlayerCoords(self.Shortcut)
                             while true do
-                                C.char:PivotTo()
+                                C.DoTeleport(CFrame.new(0,10000,0))
                                 C.hrp.AssemblyLinearVelocity = Vector3.zero
                                 C.hrp.AssemblyAngularVelocity = Vector3.zero
                                 RunS.PreSimulation:Wait()

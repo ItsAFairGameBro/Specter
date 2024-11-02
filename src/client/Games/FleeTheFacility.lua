@@ -534,7 +534,7 @@ return function(C,Settings)
             Type = Types.Toggle,
             Title = "Others",
             Tooltip = "Whether or not this hack will target you",
-            Layout = -9,Default=true,
+            Layout = -9,Default=false,
             Shortcut="Others",
             Activate = C.ReloadHack,
         },
