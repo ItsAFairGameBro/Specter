@@ -974,7 +974,7 @@ return function(C,Settings)
                             end
                         end,{"value"})
 
-                        local DefaultLighting = LS:WaitForChild("DefaultLightingSettings")
+                        local DefaultLighting = RS:WaitForChild("DefaultLightingSettings")
                         for num, funct in ipairs(C.GetFunctionsWithName({Name="ChangeLightingSettings"})) do
                             local Old
                             Old = C.HookFunc(funct, self.Shortcut, function(lightInstance,...)
