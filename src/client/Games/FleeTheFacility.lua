@@ -811,7 +811,7 @@ return function(C,Settings)
                         if not newValue or firstRun then
                             return
                         end
-                        print("Activated with",#C.FreezingPods,"Pods!")
+                        --print("Activated with",#C.FreezingPods,"Pods!")
                         for _, freezePod in ipairs(C.FreezingPods) do
                             table.insert(self.Threads,task.spawn(self.Events.NewFreezingPod, self, freezePod))
                         end
