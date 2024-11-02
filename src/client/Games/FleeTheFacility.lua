@@ -875,6 +875,7 @@ return function(C,Settings)
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if OldIndex(self, "Name") == "DisableCrawl" then
+                                print("Spoofed")
                                 return "Spoof", {false}
                             end
                         end,{"value"})
