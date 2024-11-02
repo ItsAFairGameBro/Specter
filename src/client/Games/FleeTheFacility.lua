@@ -783,8 +783,8 @@ return function(C,Settings)
                     end,
                     Events = {
                         NewFreezingPod = function(self, freezePod)
-                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",10)
-                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",30)
+                            local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",100)
+                            local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",300)
                             if CapturedTorso then
                                 table.insert(self.Functs, CapturedTorso.Changed:Connect(function()
                                     C.RescueSurvivor(freezePod)
