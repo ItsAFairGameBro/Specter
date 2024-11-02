@@ -977,7 +977,7 @@ return function(C,Settings)
                             print("Connected to funct",num)
                             local Old
                             Old = C.HookFunc(funct, self.Shortcut, function(...)
-                                task.spawn(print, "Called",...)
+                                print("Called",...)
                                 return Old(...)
                             end)
                         end
