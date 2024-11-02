@@ -452,13 +452,16 @@ local function SetUpGame(C, Settings)
     end
     function C.RemoveRope()
         if not C.Hammer or not C.CarriedTorso then
+            print("1")
             return
         end
         if not C.char:IsAncestorOf(C.CarriedTorso.Value) then
+            print("2")
             return
         end
         for s = 2, 1, -1 do
             if not C.CarriedTorso.Value then
+                print("3")
                 break
             end
             C.HammerEvent:FireServer("HammerClick", true)
