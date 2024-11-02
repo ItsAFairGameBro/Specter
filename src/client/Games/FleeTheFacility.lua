@@ -355,9 +355,14 @@ local function SetUpGame(C, Settings)
                 local CarriedTorso = theirChar:WaitForChild("CarriedTorso",20)
                 if not CarriedTorso then return end
                 C.CarriedTorso = CarriedTorso
+                local LastCarried
                 local function RopeUpd(newVal)
-                    print("RopeAdded",newVal)
-                    C.FireEvent(newVal and "BeastRopeAdded" or "BeastRopeRemoved",theirPlr == C.plr,newVal and newVal.Parent or nil)
+                    if newVal then
+                        C.FireEvent("BeastRopeAdded",theirPlr == C.plr, newVal and newVal.Parent or nil)
+                    else
+                        C.FireEvent("BeastRopeRemoved",theirPlr == C.plr, LastCarried)
+                    end
+                    LastCarried = newVal and newVal.Parent or nil
                 end
                 C.AddObjectConnection(CarriedTorso, "BeastRope", CarriedTorso.Changed:Connect(RopeUpd))
                 if CarriedTorso.Value then
