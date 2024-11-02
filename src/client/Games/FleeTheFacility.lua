@@ -787,12 +787,15 @@ return function(C,Settings)
                             local PodTrigger = freezePod and freezePod:WaitForChild("PodTrigger",100)
                             local CapturedTorso = PodTrigger and PodTrigger:WaitForChild("CapturedTorso",300)
                             if CapturedTorso then
+                                print("Activated!")
                                 table.insert(self.Functs, CapturedTorso.Changed:Connect(function()
                                     C.RescueSurvivor(freezePod)
                                 end) or false)
                                 if CapturedTorso.Value then
                                     table.insert(self.Threads, task.spawn(C.RescueSurvivor,freezePod))
                                 end
+                            else
+                                print("CapturedTorso not found",freezePod)
                             end
                         end,
                     }
