@@ -732,11 +732,10 @@ return function(C,Settings)
                             end
                         end,
                         BeastRopeRemoved = function(self)
-                            task.wait(1/2)
                             if not C.CanTarget(self, C.BeastPlr) then
                                 return
                             end
-                            if not C.LastCaptureTime or (os.clock() - C.LastCaptureTime) > 2 then
+                            if not C.LastCaptureTime or (os.clock() - C.LastCaptureTime) < 1 then
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Ragdoll=true})) do
                                     self.Events.RagdollAdded(self, theirPlr, theirPlr.Character)
                                 end
