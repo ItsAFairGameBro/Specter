@@ -123,11 +123,11 @@ return function(C,Settings)
 				Tooltip = "Implements several automatic features",
 				Layout = 99,
 				Shortcut = "BotAuto",
-
 				RejoinDelay = 5,
 				Sending = false,
                 ChatConnected = false,
                 Functs = {},
+                Threads = {},
 				--[[Functs = {},
 				Activate = function(self, newValue)
 					if newValue then
@@ -140,6 +140,14 @@ return function(C,Settings)
 					end
 				end,--]]
                 Activate = function(self, newValue, firstRun)
+                    if newValue and self.EnTbl.LowerFPS then
+                        setfpscap(10)
+                    elseif setfpscap and not firstRun then
+                        setfpscap(0)
+                    end
+                    if newValue and not firstRun and C.char then
+                        self.Events.MyCharAdded(self, C.plr, C.char, false)
+                    end
                     if not newValue then
                         self.ChatConnected = false
                         return
@@ -153,7 +161,26 @@ return function(C,Settings)
                 HasAdminAccess = function(self, theirPlr)
                     return table.find(C.AdminUsers, theirPlr.Name:lower())
                 end,
-                Options = {},
+                Options = {
+                    setfpscap and {
+                        Type = Types.Toggle,
+                        Default = false,
+                        Title = "FPS Cap",
+                        Tooltip = "Lowers FPS to 10 to allow for other CPU processes",
+                        Layout = 1,
+                        Shortcut="LowerFPS",
+                        Activate=C.ReloadHack,
+                    },
+                    {
+                        Type = Types.Toggle,
+                        Default = false,
+                        Title = "Hide Character",
+                        Tooltip = "Hides your character from visible view, but also unable to interact with anything",
+                        Layout = 2,
+                        Shortcut="HideChar",
+                        Activate=C.ReloadHack,
+                    }
+                },
 				Events = {
 					RbxErrorPrompt = function(self, errorMessage, errorCode, errorIdentification)
 						if self.Sending then
@@ -199,6 +226,16 @@ return function(C,Settings)
                                 warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
                             end
 
+                        end
+                    end,
+                    MyCharAdded = function(self,theirPlr,theirChar,firstRun)
+                        if self.EnTbl.HideChar then
+                            while true do
+                                C.char:PivotTo()
+                                C.hrp.AssemblyLinearVelocity = Vector3.zero
+                                C.hrp.AssemblyAngularVelocity = Vector3.zero
+                                RunS.PreSimulation:Wait()
+                            end
                         end
                     end,
 				},

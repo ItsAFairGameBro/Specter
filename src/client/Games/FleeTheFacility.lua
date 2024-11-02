@@ -327,6 +327,7 @@ local function SetUpGame(C, Settings)
         MapAdded(CurrentMap.Value)
         local gameActiveVal = RS:WaitForChild("IsGameActive")
         local function gameActiveValChanged(newVal)
+            C.GameActive = newVal
             C.FireEvent(newVal and "GameAdded" or "GameRemoved", nil)
         end
         C.AddGlobalConnection(gameActiveVal.Changed:Connect(gameActiveValChanged))
@@ -693,12 +694,17 @@ return function(C,Settings)
                     Tooltip = "Automatically ropes nearby survivors",
                     Layout = 1,
                     Shortcut = "AutoHit",Threads={},
+                    Activate = function(self, newValue, firstRun)
+                        if newValue and not firstRun and C.GameActive then
+                            self.Events.GameAdded(self)
+                        end
+                    end,
                     Events = {
                         GameAdded = function(self)
                             while true do
                                 C.WaitForHammer()
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true,Lobby=false,Beast=false})) do
-                                    if C.CanTarget(self, theirPlr) and theirPlr.Character then
+                                    if C.CanTarget(self, C.BeastPlr) and theirPlr.Character then
                                         C.HitSurvivor(theirPlr.Character)
                                     end
                                 end
