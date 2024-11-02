@@ -828,18 +828,14 @@ return function(C,Settings)
                         end
                     end,
                     Activate = function(self, newValue, firstRun)
-                        if not newValue or firstRun then
+                        if not newValue then
                             return
                         end
                         if self.EnTbl.Minigame then
                             table.insert(self.Threads, task.spawn(self.MinigameActivate, self))
                         end
                     end,
-                    Events = {
-                        MyCharAdded = function(self)
-                            self:Activate(true)
-                        end,
-                    },
+                    Events = {},
                     Options = {
                         {
                             Type = Types.Toggle,
