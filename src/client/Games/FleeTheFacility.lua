@@ -732,6 +732,7 @@ return function(C,Settings)
                             end
                         end,
                         BeastRopeRemoved = function(self)
+                            task.wait(1/2)
                             if not C.CanTarget(self, C.BeastPlr) then
                                 return
                             end
