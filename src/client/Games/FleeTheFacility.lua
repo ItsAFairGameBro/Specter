@@ -800,7 +800,7 @@ return function(C,Settings)
                     Title = "Spectate",
                     Tooltip = "Always allows spectate, even while in game or in lobby",
                     Layout = 10,
-                    Shortcut = "Spectate",Functs={},Threads = {},
+                    Shortcut = "Spectate",
                     Activate = function(self, newValue)
                         local toStr = tostring
                         local myTSM = C.myTSM
@@ -823,6 +823,11 @@ return function(C,Settings)
                             end
                         end,{"value"})
                     end,
+                    Options = {
+                        {
+                            
+                        }
+                    }
                 },
             }, table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
