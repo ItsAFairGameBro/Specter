@@ -862,10 +862,10 @@ return function(C,Settings)
                     )
                 },
                 {
-                    Title = "Slow Beast",
-                    Tooltip = "Permanently slows the beast",
-                    Layout = 5,
-                    Shortcut = "SlowBeast",
+                    Title = "🔨Crawl",
+                    Tooltip = "Always allow the beast to crawl, and go through vents!",
+                    Layout = 6,
+                    Shortcut = "BeastCrawl",
                     Activate = function(self, newValue)
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
@@ -876,7 +876,11 @@ return function(C,Settings)
                     end,
                     Threads = {},
                     Events = {
-
+                        MapAdded = function(self, map)
+                            for num, ventPart in ipairs(map) do
+                                -- ...
+                            end
+                        end,
                     }
                 },
                 {
