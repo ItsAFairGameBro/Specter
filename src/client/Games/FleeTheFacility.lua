@@ -797,6 +797,41 @@ return function(C,Settings)
                     }
                 },
                 {
+                    Title = "Utility",
+                    Tooltip = "Automatically does actions, such as rescuing a survivor or hacking a PC",
+                    Layout = 9,
+                    Threads = {}, Functs = {},
+                    Shortcut = "FTFUtility",
+                    Activate = function(self, newValue, firstRun)
+                        if not newValue or firstRun then
+                            return
+                        end
+                        local minigameResult = C.myTSM:WaitForChild("MinigameResult")
+                        local function updateMiniGameResult()
+                            if not minigameResult.Value then
+                                C.RemoteEvent:FireServer("SetPlayerMinigameResult", true)
+                            end
+                        end
+                        table.insert(self.Functs,minigameResult.Changed:Connect(updateMiniGameResult))
+                        updateMiniGameResult()
+                        while true do
+                            while not C.plr.PlayerGui:WaitForChild("ScreenGui"):WaitForChild("TimingCircle").Visible do
+                                C.plr.PlayerGui:WaitForChild("ScreenGui"):WaitForChild("TimingCircle"):GetPropertyChangedSignal("Visible"):Wait()
+                            end
+                            while C.plr.PlayerGui:WaitForChild("ScreenGui"):WaitForChild("TimingCircle").Visible do
+                                if C.PlayerGui.ScreenGui.TimingCircle.TimingPin.Rotation>=C.PlayerGui.ScreenGui.TimingCircle.TimingBase.Rotation+45 then
+                                    C.myTSM.ActionInput.Value=true
+                                end
+                                C.PlayerGui.ScreenGui.TimingCircle.TimingPin:GetPropertyChangedSignal("Rotation"):Wait()
+                            end
+                            C.myTSM.ActionInput.Value=false
+                        end
+                    end,
+                    Events = {
+                        MyCharAdded = C.ReloadHack
+                    },
+                },
+                {
                     Title = "Spectate",
                     Tooltip = "Always allows spectate, even while in game or in lobby",
                     Layout = 10,
