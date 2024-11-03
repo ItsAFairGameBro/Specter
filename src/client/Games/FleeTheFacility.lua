@@ -454,8 +454,8 @@ local function SetUpGame(C, Settings)
             return
         end
         local Dist=(C.Handle.Position-theirChar.PrimaryPart.Position).magnitude
-        if Dist<15 then
-            local closestPart, closestDist = nil, 10 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
+        if Dist<18 then
+            local closestPart, closestDist = nil, 14 -- Test Success: Hit Part Must Be < 8 Studs of Hammer
             for num, part in ipairs(theirChar:GetChildren()) do
                 if part:IsA("BasePart") then
                     local testDist = (part.Position-C.Handle.Position).Magnitude
@@ -465,10 +465,8 @@ local function SetUpGame(C, Settings)
                 end
             end
             if closestPart then
-            print('prehit')
                 C.SetActionLabel(BotActionClone, `Hitting {theirChar.Name}`)
                 C.HammerEvent:FireServer("HammerHit", closestPart)
-            print('hit')
                 return true
             end
         end
