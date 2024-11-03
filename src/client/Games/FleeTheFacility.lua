@@ -450,6 +450,7 @@ local function SetUpGame(C, Settings)
 
     function C.HitSurvivor(theirChar)
         if not theirChar.PrimaryPart then
+            print('1')
             return
         end
         local Dist=(C.Handle.Position-theirChar.PrimaryPart.Position).magnitude
@@ -464,8 +465,10 @@ local function SetUpGame(C, Settings)
                 end
             end
             if closestPart then
+            print('prehit')
                 C.SetActionLabel(BotActionClone, `Hitting {theirChar.Name}`)
                 C.HammerEvent:FireServer("HammerHit", closestPart)
+            print('hit')
                 return true
             end
         end
