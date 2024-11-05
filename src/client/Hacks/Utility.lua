@@ -201,6 +201,7 @@ return function(C,Settings)
 						if self.Sending then
 							C.Prompt_ButtonTriggerEvent:Fire("Yes")
 							task.wait(0.4)
+                            self.Sending = false
 							C.ServerTeleport(game.PlaceId, nil)
 						end
 					end,
