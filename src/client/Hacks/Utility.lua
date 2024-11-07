@@ -155,8 +155,6 @@ return function(C,Settings)
                     if not newValue then
                         self.ChatConnected = false
                         return
-                    elseif firstRun then
-                        return
                     end
                     for _, theirPlr in ipairs(PS:GetPlayers()) do
                         self.Events.OthersPlayerAdded(self, theirPlr, false)
@@ -206,7 +204,7 @@ return function(C,Settings)
 						end
 					end,
                     OthersPlayerAdded = function(self,theirPlr,firstRun)
-                        if theirPlr == C.plr or self.ChatConnected then
+                        if theirPlr == C.plr or self.ChatConnected or firstRun then
                             return -- do not double do it!
                         end
                         if self:HasAdminAccess(theirPlr) then
@@ -230,7 +228,6 @@ return function(C,Settings)
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
                             end
-
                         end
                     end,
                     MyCharAdded = function(self,theirPlr,theirChar,firstRun)
