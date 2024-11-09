@@ -123,7 +123,7 @@ return function(C,Settings)
 				Tooltip = "Implements several automatic features",
 				Layout = 99,
 				Shortcut = "BotAuto",
-				RejoinDelay = 15,
+				RejoinDelay = 30,
 				Sending = false,
                 ChatConnected = false,
                 Functs = {},
