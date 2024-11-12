@@ -463,7 +463,7 @@ return function(C,Settings)
 						Tooltip = "Irreversibly removes lots of textures to minimize lag",
 						Layout = 9,Default="Off",
 						Shortcut="AntiLag",
-                        Options = {"Off","Destroy"},
+                        Selections = {"Off","Destroy"},
 						Activate = C.ReloadHack,
 					},
                     {
