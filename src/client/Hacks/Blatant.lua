@@ -94,21 +94,30 @@ return function(C,Settings)
 					self:ClearData()
 					self:Activate(false)
 				end,
+                IsAnimationWhitelisted = function(self, animTrack)
+                    if animTrack.Priority.Value > Enum.AnimationPriority.Movement.Value
+                        and animTrack.Priority ~= Enum.AnimationPriority.Core then
+                        return true
+                    elseif animTrack.Animation.Name == "ToolNoneAnim" then
+                        return true
+                    end
+                    local id = tonumber(animTrack.Animation.AnimationId:gmatch("%d+")())
+                    return self.AllowedIds[id]
+                end,
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
-						if not self.AllowedIds[tonumber(v.Animation.AnimationId:gmatch("%d+")())] then
+						if not self:IsAnimationWhitelisted(v) then
                             if v.Looped then
                                 table.insert(self.Anims, v)
                                 v:SetAttribute("OrgSpeed", v.Speed)
                             end
-							v:Stop(1e-1)
-							v:Destroy()
+							v:Stop(0)
 						end
 					end
 				end,
                 StartAnims = function(self)
                     for _, v in ipairs(self.Anims) do
-                        v:Play(0.1, 1, v:GetAttribute("OrgSpeed"))
+                        v:Play(0, 1, v:GetAttribute("OrgSpeed"))
                         v:SetAttribute("OrgSpeed",nil)
                     end
                     self.Anims = {}

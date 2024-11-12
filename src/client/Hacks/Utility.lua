@@ -1,6 +1,7 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
+local Lighting = game:GetService("Lighting")
 local PS = game:GetService("Players")
 local PolicyService = game:GetService("PolicyService")
 local RunS = game:GetService("RunService")
@@ -347,6 +348,11 @@ return function(C,Settings)
                         C.ResetPartProperty(C.plr,"CameraMode",self.Shortcut)
                     end
 
+                    -- Anti Lag
+                    if EnTbl.AntiLag then
+                        task.spawn(self.AntiLag, self)
+                    end
+
                     -- Spoof TouchEnabled
                     C.HookMethod("__index",self.Shortcut .. "/SpoofKeyboard",newValue and self.EnTbl.SpoofKeyboard and function(theirScript,index,self,...)
                         if index == "touchenabled" then
@@ -354,6 +360,48 @@ return function(C,Settings)
                         end
                     end)
 				end,
+                AntiLag = function(self)
+                    local Terrain = workspace:FindFirstChildOfClass('Terrain')
+                    Terrain.WaterWaveSize = 0
+                    Terrain.WaterWaveSpeed = 0
+                    Terrain.WaterReflectance = 0
+                    Terrain.WaterTransparency = 0
+                    Lighting.GlobalShadows = false
+                    Lighting.FogEnd = 9e9
+                    settings().Rendering.QualityLevel = 1
+                    for i,v in pairs(game:GetDescendants()) do
+                        if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                            v.Material = "Plastic"
+                            v.Reflectance = 0
+                        elseif v:IsA("Decal") then
+                            v.Transparency = 1
+                        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                            v.Lifetime = NumberRange.new(0)
+                        elseif v:IsA("Explosion") then
+                            v.BlastPressure = 1
+                            v.BlastRadius = 1
+                        end
+                    end
+                    for i,v in pairs(Lighting:GetDescendants()) do
+                        if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+                            v.Enabled = false
+                        end
+                    end
+                    table.insert(self.Functs,workspace.DescendantAdded:Connect(function(child)
+                        task.spawn(function()
+                            if child:IsA('ForceField') then
+                                RunS.Heartbeat:Wait()
+                                child:Destroy()
+                            elseif child:IsA('Sparkles') then
+                                RunS.Heartbeat:Wait()
+                                child:Destroy()
+                            elseif child:IsA('Smoke') or child:IsA('Fire') then
+                                RunS.Heartbeat:Wait()
+                                child:Destroy()
+                            end
+                        end)
+                    end))
+                end,
                 Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						self:SetAutoJump()
@@ -410,10 +458,19 @@ return function(C,Settings)
 						Activate = C.ReloadHack,
 					},
                     {
+						Type = Types.Dropdown,
+						Title = "Anti Lag",
+						Tooltip = "Irreversibly removes lots of textures to minimize lag",
+						Layout = 9,Default="Off",
+						Shortcut="AntiLag",
+                        Options = {"Off","Destroy"},
+						Activate = C.ReloadHack,
+					},
+                    {
 						Type = Types.Toggle,
 						Title = "No Touchscreen",
 						Tooltip = "Forces only to have keyboard input",
-						Layout = 7,Default=false,
+						Layout = 15,Default=false,
 						Shortcut="SpoofKeyboard",
 						Activate = C.ReloadHack,
 					},
