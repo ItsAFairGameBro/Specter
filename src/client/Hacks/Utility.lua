@@ -381,6 +381,9 @@ return function(C,Settings)
                             v.BlastPressure = 1
                             v.BlastRadius = 1
                         end
+                        if (i%1000 == 0) then
+                            RunS.RenderStepped:Wait()
+                        end
                     end
                     for i,v in pairs(Lighting:GetDescendants()) do
                         if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
