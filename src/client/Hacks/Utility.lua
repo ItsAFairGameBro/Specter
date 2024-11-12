@@ -349,7 +349,7 @@ return function(C,Settings)
                     end
 
                     -- Anti Lag
-                    if EnTbl.AntiLag then
+                    if EnTbl.AntiLag ~= "Off" then
                         task.spawn(self.AntiLag, self)
                     end
 
