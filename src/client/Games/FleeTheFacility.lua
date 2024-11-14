@@ -210,6 +210,7 @@ local function GetSharedHacks(C, Settings)
         Layout = 100,
         Shortcut = "GameImprovements",
         Default = true,
+        TeleportOnFailPos = Vector3.new(103, 8, -435),
         Functs = {},
         Activate = function(self, newValue, firstRun)
             if not newValue then
@@ -259,6 +260,10 @@ local function GetSharedHacks(C, Settings)
                     C.ResetCharacter()
                 end
                 self.Events.MyBeastHammerRemoved(self)
+                if (C.isInGame(C.char)) then
+                    C.DoTeleport(self.TeleportOnFailPos)
+                    warn("Teleported back from the game because game ended, and map was destroyed!")
+                end
             end,
             MyBeastHammerRemoved = function(self)
                 task.wait(1)
