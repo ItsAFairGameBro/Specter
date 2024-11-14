@@ -257,12 +257,14 @@ local function GetSharedHacks(C, Settings)
                 local Torso = C.char and C.char:FindFirstChild("Torso")
                 if Torso then
                     warn("Torso Anchored, Resetting...")
-                    C.ResetCharacter()
+                    task.spawn(C.ResetCharacter)
                 end
                 self.Events.MyBeastHammerRemoved(self)
                 if (C.isInGame(C.char)) then
                     C.DoTeleport(self.TeleportOnFailPos)
                     warn("Teleported back from the game because game ended, and map was destroyed!")
+                else
+                    print("Not in game, all good ✅")
                 end
             end,
             MyBeastHammerRemoved = function(self)
