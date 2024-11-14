@@ -269,6 +269,7 @@ return function(C,Settings)
 	function C.AddObjectConnection(instance,key,connection)
 		if not C.objectfuncts[instance] then
 			C.objectfuncts[instance] = {InstanceCleanUp=instance.Destroying:Connect(function()
+                task.wait(1)
 				C.ClearFunctTbl(C.objectfuncts[instance],true)
 				C.objectfuncts[instance] = nil
 			end)}

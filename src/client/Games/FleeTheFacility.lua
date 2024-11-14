@@ -323,7 +323,7 @@ local function SetUpGame(C, Settings)
                 CurrentMap.Value = workspace
                 return
             end
-            while (newMap == CurrentMap.Value and C.GameStatus.Value:lower():find("loading")) do
+            while (newMap ~= workspace and newMap == CurrentMap.Value and C.GameStatus.Value:lower():find("loading")) do
                 C.GameStatus:GetPropertyChangedSignal("Value"):Wait()
             end
             if newMap ~= CurrentMap.Value then
@@ -355,6 +355,7 @@ local function SetUpGame(C, Settings)
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
             C.AddObjectConnection(newMap, "MapDestroyed", newMap.AncestryChanged:Connect(function()
+                print("MapCleanUp")
                 if newMap == CurrentMap.Value then -- Check to see if still valid
                     CurrentMap.Value = workspace -- If not, reset the map value to refresh!
                 end
