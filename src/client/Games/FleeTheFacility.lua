@@ -245,7 +245,7 @@ local function GetSharedHacks(C, Settings)
 
                 for num, theirPlr in ipairs(PS:GetPlayers()) do
                     if theirPlr and theirPlr.Character then
-                        task.spawn(self.Events.CharacterAdded, self, theirPlr, theirPlr.Character)
+                        task.spawn(self.Events.CharAdded, self, theirPlr, theirPlr.Character)
                     end
                 end
             end
