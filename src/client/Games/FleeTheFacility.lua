@@ -259,13 +259,14 @@ local function GetSharedHacks(C, Settings)
                     warn("Torso Anchored, Resetting...")
                     task.spawn(C.ResetCharacter)
                 end
-                self.Events.MyBeastHammerRemoved(self)
                 if (C.isInGame(C.char)) then
                     C.DoTeleport(self.TeleportOnFailPos)
                     warn("Teleported back from the game because game ended, and map was destroyed!")
                 else
                     print("Not in game, all good ✅")
                 end
+                self.Events.MyBeastHammerRemoved(self)
+
             end,
             MyBeastHammerRemoved = function(self)
                 task.wait(1)
@@ -328,7 +329,7 @@ local function SetUpGame(C, Settings)
             if newMap ~= CurrentMap.Value then
                 return
             end
-            if not newMap then
+            if newMap == workspace then
                 C.FireEvent("MapRemoved",nil,C.Map)
                 CleanUpMap()
                 return
