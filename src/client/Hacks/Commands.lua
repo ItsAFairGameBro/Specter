@@ -307,7 +307,7 @@ return function(C,Settings)
                 local outfitData
                 if args[3] and args[3] ~= "" then
                     if not C.getgenv().Outfits[selectedName.UserId] then
-                        local wasSuccess,err = C.CommandFunctions.outfits:Run({{selectedName}})
+                        local wasSuccess,err = C.CommandFunctions.outfits:Run({selectedName})
                         if not wasSuccess then
                             return false, "Outfit Getter Err " .. tostring(err)
                         end
