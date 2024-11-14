@@ -268,7 +268,7 @@ local function GetSharedHacks(C, Settings)
                     end
                 end
             end,
-            CharacterAdded = function(self, theirPlr, theirChar)
+            CharAdded = function(self, theirPlr, theirChar)
                 local function ChildAdded(basePart)
                     if basePart:IsA("BasePart") then
                         if basePart.Name == "Part" and basePart:WaitForChild("RopeConstraint",1/3) then
