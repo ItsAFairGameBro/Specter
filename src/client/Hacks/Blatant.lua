@@ -104,14 +104,17 @@ return function(C,Settings)
                     local id = tonumber(animTrack.Animation.AnimationId:gmatch("%d+")())
                     return self.AllowedIds[id]
                 end,
+                StopAnimation = function(self, v)
+                    if v.Looped then
+                        table.insert(self.Anims, v)
+                        v:SetAttribute("OrgSpeed", v.Speed)
+                    end
+                    v:Stop(0)
+                end,
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
 						if not self:IsAnimationWhitelisted(v) then
-                            if v.Looped then
-                                table.insert(self.Anims, v)
-                                v:SetAttribute("OrgSpeed", v.Speed)
-                            end
-							v:Stop(0)
+                            self:StopAnimation(v)
 						end
 					end
 				end,
@@ -272,8 +275,8 @@ return function(C,Settings)
 
 					table.insert(self.Functs,RunS.PreSimulation:Connect(onUpdate))
 					local function animatorPlayedFunction(animTrack)
-						if not self.AllowedIds[tonumber(animTrack.Animation.AnimationId:gmatch("%d+")())] then
-							animTrack:Stop(1e-1)
+                        if not self:IsAnimationWhitelisted(animTrack) then
+                            self:StopAnimation(animTrack)
 						end
 					end
 					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
