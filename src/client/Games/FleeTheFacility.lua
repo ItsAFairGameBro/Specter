@@ -260,10 +260,10 @@ local function GetSharedHacks(C, Settings)
                     task.spawn(C.ResetCharacter)
                 end
                 if (C.isInGame(C.char)) then
-                    --C.DoTeleport(self.TeleportOnFailPos)
+                    C.DoTeleport(self.TeleportOnFailPos)
                     warn("Teleported back from the game because game ended, and map was destroyed!")
-                else
-                    print("Not in game, all good ✅")
+                --else
+                    --print("Not in game, all good ✅")
                 end
                 self.Events.MyBeastHammerRemoved(self)
 
