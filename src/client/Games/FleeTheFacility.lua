@@ -255,12 +255,12 @@ local function GetSharedHacks(C, Settings)
             MyCharAdded = C.ReloadHack,
             MapRemoved = function(self)
                 local Torso = C.char and C.char:FindFirstChild("Torso")
-                if Torso then
-                    warn("Torso Anchored, Resetting...")
+                if Torso.Anchored or C.char:FindFirstChild("RopeConstraint", true) then
+                    warn((Torso.Anchored and "Torso Anchored" or "RopeConstraint Found" ) .. " Anchored, Resetting...")
                     task.spawn(C.ResetCharacter)
                 end
                 if (C.isInGame(C.char)) then
-                    C.DoTeleport(self.TeleportOnFailPos)
+                    --C.DoTeleport(self.TeleportOnFailPos)
                     warn("Teleported back from the game because game ended, and map was destroyed!")
                 else
                     print("Not in game, all good ✅")

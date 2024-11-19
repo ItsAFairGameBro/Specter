@@ -830,5 +830,28 @@ return function(C,Settings)
                 return self.Parent.fling:Run(args,true)
             end
         },
+        --["nick"]={
+        --    Parameters={{Type="Players"},{Type="String",Min=1, Max = 20,Optional = true}},
+        --    Run = function(self, args)
+        --        local nickName = args[2]
+        --        if nickName == "" then
+        --            for num, theirPlr in ipairs(args[1]) do
+        --                self.PlayerInstances[theirPlr] = nil
+        --            end
+        --        else
+        --            for num, theirPlr in ipairs(args[1]) do
+        --                self.PlayerInstances[theirPlr] = self.PlayerInstances[theirPlr] or {}
+        --            end
+        --        end
+        --        C.ClearFunctTbl(self.Functs)
+        --        local function NewInsert(newChild)
+        --            if (newChild:IsA("TextLabel") and newChild.Text == )
+        --        end
+        --        table.insert(self.Functs, game.DescendantAdded:Connect())
+        --    end,
+        --    PlayerInstances = {},
+        --    PlayerConnections = {},
+        --    Functs = {},
+        --},
     }
 end

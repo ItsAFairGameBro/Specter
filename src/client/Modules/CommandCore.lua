@@ -121,6 +121,17 @@ return function(C,Settings)
                         canRunFunction = false
                         C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows valid users. No matching username/userid found for {args[num]}`)
                     end
+                elseif argumentData.Type == "String" then
+                    local min = argumentData.Min or 1
+                    local max = argumentData.Max or 1000
+                    if (args[num]:len() < min or args[num]:len() > max) then
+                        if argumentData.Optional then
+                            args[num] = false
+                        else
+                            canRunFunction = false
+                            C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows text with length between {min} and {max}!`)
+                        end
+                    end
                 elseif argumentData.Type=="" then
                     --do nothing
                 elseif argumentData.Type~=false then
