@@ -58,6 +58,7 @@ return function(C,Settings)
 		return Settings.ConnectAllEvents or C.events[name]~=nil
 	end
 	C.FireEvent = FireEvent
+    local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress
 	local function CharAdded(theirChar,wasAlreadyIn)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
 		local theirHuman = theirChar:WaitForChild("Humanoid",1e5)
@@ -69,7 +70,7 @@ return function(C,Settings)
 		if not centerPart then
 			return
 		end
-        local rootAttachment = centerPart:WaitForChild("RootAttachment")
+        local rootAttachment = HasAttachment and centerPart:WaitForChild("RootAttachment")
 		local isMe = C.plr.Character == theirChar
 		if isMe then
 			C.char = theirChar
