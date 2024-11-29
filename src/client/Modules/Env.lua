@@ -13,6 +13,7 @@ local RunS = game:GetService("RunService")
 return function(C,Settings)
 	--Print Environment
 	if not C.getgenv().PrintEnvironment then
+        local MAXIMUM_ARRAY_PRINT = 200
 		local OldEnv = {}
 		local GetFullName = workspace.GetFullName
         local tonum, getType = tonumber, typeof
@@ -76,9 +77,9 @@ return function(C,Settings)
 			local addBrackets = not isDict
 
 			for num, val in pairs(leftTbl) do
-				if getType(num)=="number" and totalValues > 0 and num < totalValues-30 then
+				if getType(num)=="number" and totalValues > 0 and num < totalValues-MAXIMUM_ARRAY_PRINT then
 					if not warnings.MaxLimit then
-						str ..= addToString("(Maximum Limit Of 30; Only Displaying Last Values)",depth)
+						str ..= addToString(`(Maximum Limit Of {MAXIMUM_ARRAY_PRINT}; Only Displaying Last Values)`,depth)
 						warnings.MaxLimit = true
 					end
 					continue

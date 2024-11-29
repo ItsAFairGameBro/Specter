@@ -255,7 +255,7 @@ local function GetSharedHacks(C, Settings)
             MyCharAdded = C.ReloadHack,
             MapRemoved = function(self)
                 local Torso = C.char and C.char:FindFirstChild("Torso")
-                if Torso.Anchored or C.char:FindFirstChild("RopeConstraint", true) then
+                if Torso and (Torso.Anchored or C.char:FindFirstChild("RopeConstraint", true)) then
                     warn((Torso.Anchored and "Torso Anchored" or "RopeConstraint Found" ) .. " Anchored, Resetting...")
                     task.spawn(C.ResetCharacter)
                 end
@@ -1341,7 +1341,7 @@ return function(C,Settings)
                     Tooltip = "Automatically trades with \"trusted\" users!",
                     Layout = 1,
                     Shortcut = "InstaTrade",Functs={}, Threads={}, Instances = {},Default=false,
-                    whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage","z_baeby","yvettecarreno08"},
+                    whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage","z_baeby","yvettecarreno08","kitcat4681"},
                     lastSend = 0,
                     IsAllowed = function(self,theirPlr)
                         return table.find(self.whitelistedUsers,theirPlr.Name:lower()) or table.find(C.AdminUsers, theirPlr.Name:lower())
@@ -1473,6 +1473,18 @@ return function(C,Settings)
                             Shortcut="AutoSend",
                             Activate = C.ReloadHack,
                         },
+                        {
+                            Type = Types.Dropdown,
+                            Title = "Send Type",
+                            Tooltip = "Specifies the type of items to send.",
+                            Layout = 2,Default = false,
+                            Shortcut="SendType",
+                            Options = {"Halloween 2024"},
+                            Activate = C.ReloadHack,
+                        },
+                    },
+                    SendTypeIdentifiers={
+
                     },
                 },
             }
