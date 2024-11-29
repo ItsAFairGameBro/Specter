@@ -684,8 +684,15 @@ return function(C,Settings)
                 Run = function(self,args)
                     local SearchUser = args[1][1]:lower()
                     local TimeStart = os.clock()
+                    local TradeLocalScript = C.PlayerGui:FindFirstChild("TradePostMenuLocalScript", true)
+                    if TradeLocalScript then
+                        TradeLocalScript.Enabled = false
+                    end
 
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
+                    if TradeLocalScript then
+                        TradeLocalScript.Enabled = false
+                    end
                     if not result then
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
