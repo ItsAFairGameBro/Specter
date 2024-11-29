@@ -691,7 +691,7 @@ return function(C,Settings)
 
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
                     if TradeLocalScript then
-                        TradeLocalScript.Enabled = false
+                        TradeLocalScript.Enabled = true
                     end
                     if not result then
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
