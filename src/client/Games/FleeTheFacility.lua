@@ -690,9 +690,6 @@ return function(C,Settings)
                     end
 
                     local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
-                    if TradeLocalScript then
-                        TradeLocalScript.Enabled = true
-                    end
                     if not result then
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
@@ -717,6 +714,9 @@ return function(C,Settings)
                         if count%8==0 then
                             task.wait(1/7)
                         end
+                    end
+                    if TradeLocalScript and TradeLocalScript.Parent then
+                        TradeLocalScript.Enabled = true
                     end
                     return true, found and `In {found}` or `Not Found`, os.clock() - TimeStart
                 end,
