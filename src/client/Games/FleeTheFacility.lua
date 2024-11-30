@@ -679,16 +679,17 @@ return function(C,Settings)
     -- COMMANDS --
     table.insert(C.InsertCommandFunctions,function()
         return {
-            -- ["addwhitelist"] = {
-            --     Parameters={{Type="Player", ExcludeMe = true}}
-            --     Alias = {},
-            --     AfterTxt = "",
-            --     Run = function(self, args)
-            --         local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
-            --         table.insert(list, args[1][1].Name)
-            --         print(list)
-            --     end
-            -- },
+            ["addwhitelist"] = {
+                Parameters={{Type="Player", ExcludeMe = true}}
+                Alias = {},
+                AfterTxt = " %s in %.1fs",
+                Run = function(self, args)
+                    local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
+                    table.insert(list, args[1][1].Name)
+                    print(list)
+                    return true, "", 0
+                end,
+            },
             ["findtrader"] = {
                 Parameters={{Type="User"}},
                 Alias = {},
