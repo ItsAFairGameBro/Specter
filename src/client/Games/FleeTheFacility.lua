@@ -688,7 +688,7 @@ return function(C,Settings)
                     table.insert(list, args[1][1].Name)
                     print(list)
                 end
-            }
+            },
             ["findtrader"] = {
                 Parameters={{Type="User"}},
                 Alias = {},
