@@ -682,12 +682,25 @@ return function(C,Settings)
             ["addwhitelist"] = {
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
-                AfterTxt = " %s in %.1fs",
+                AfterTxt = "",
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
                     table.insert(list, args[1][1].Name)
                     print(list)
-                    return true, "", 0
+                    return true
+                end,
+            },
+            ["removewhitelist"] = {
+                Parameters={{Type="Player", ExcludeMe = true}},
+                Alias = {},
+                AfterTxt = "",
+                Run = function(self, args)
+                    local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
+                    if not C.TblRemove(list, args[1][1].Name) then
+                       return false, `{args[1][1].Name} is not whitelisted!` 
+                    end
+                    print(list)
+                    return true
                 end,
             },
             ["findtrader"] = {
