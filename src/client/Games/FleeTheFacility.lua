@@ -712,9 +712,9 @@ return function(C,Settings)
                             found = gameID
                             break
                         end
-                        if count%8==0 then
-                            task.wait(1/7)
-                        end
+                        -- if count%8==0 then
+                        --     task.wait(1/7)
+                        -- end
                     end
                     if TradeLocalScript and TradeLocalScript.Parent then
                         TradeLocalScript.Enabled = true
