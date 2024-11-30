@@ -74,6 +74,7 @@ local function GetSharedHacks(C, Settings)
         Layout = 0,
         Shortcut = "SpeedBuy",
         IgnoreList = {"Series 1H", "Series 1G"},
+        
         Process = function(self, actionClone, info)
             C.SetActionLabel(actionClone, "Loading Modules...")
 
@@ -1346,6 +1347,14 @@ return function(C,Settings)
                     IsAllowed = function(self,theirPlr)
                         return table.find(self.whitelistedUsers,theirPlr.Name:lower()) or table.find(C.AdminUsers, theirPlr.Name:lower())
                     end,
+                    GetItemListing = function(self, internalName)
+                        for name, listings in pairs(self.SendTypeIdentifiers) do
+                            if table.find(listings, internalName) then
+                                return name
+                            end
+                        end
+                        return "Unlisted"
+                    end,
                     Activate = function(self,newValue,firstRun)
                         if not newValue then
                             return
@@ -1378,10 +1387,14 @@ return function(C,Settings)
                                 IsTrading = true
                                 table.insert(self.Threads, task.spawn(function()
                                     local theirInventory = C.GetUserInventory(tradePlr)
+                                    local sendType = self.EnTbl.SendType
 
                                     local myInventory = C.GetUserInventory()
                                     for name, count in pairs(myInventory) do
                                         local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
+                                        if sendType ~= "Any" and sendType ~= self:GetItemListing(name) then
+                                            newCount = 0
+                                        end
                                         myInventory[name] = newCount>0 and newCount or nil
                                     end
                                     task.wait(1/2)
@@ -1479,12 +1492,33 @@ return function(C,Settings)
                             Tooltip = "Specifies the type of items to send.",
                             Layout = 2,Default = false,
                             Shortcut="SendType",
-                            Options = {"Halloween 2024"},
+                            Options = {"Any", "Unlisted", "Halloween 2024"},
                             Activate = C.ReloadHack,
                         },
                     },
                     SendTypeIdentifiers={
-
+                        ["Halloween 2024"] = {
+                            [1] = "Ghal0075",
+                            [2] = "Ghal0076",
+                            [3] = "Ghal0077",
+                            [4] = "Ghal0078",
+                            [5] = "Ghal0079",
+                            [6] = "Ghal0080",
+                            [7] = "Ghal0081",
+                            [8] = "Ghal0082",
+                            [9] = "Ghal0083",
+                            [10] = "Ghal0084",
+                            [11] = "Hhal0075",
+                            [12] = "Hhal0076",
+                            [13] = "Hhal0077",
+                            [14] = "Hhal0078",
+                            [15] = "Hhal0079",
+                            [16] = "Hhal0080",
+                            [17] = "Hhal0081",
+                            [18] = "Hhal0082",
+                            [19] = "Hhal0083",
+                            [20] = "Hhal0084",
+                        },
                     },
                 },
             }
