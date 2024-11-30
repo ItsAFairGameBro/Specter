@@ -695,7 +695,7 @@ return function(C,Settings)
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
                     if SearchUser:lower() == "random" then
-                        local namesList = dict[C.Randomizer:NextInteger(1, #dict)].namesList
+                        local namesList = C.GetRandomDict(dict).Val.namesList
                         SearchUser = namesList[C.Randomizer:NextInteger(1,#namesList)]
                     end
                     local found, count = false, 0

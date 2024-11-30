@@ -204,6 +204,16 @@ return function(C,Settings)
 	function C.GetDictLength(tbl)
 		local num = 0 for _, _ in pairs(tbl) do num+=1 end return num
 	end
+    function C.GetRandomDict(tbl)
+        local idx = C.Randomizer:NextInteger(1, C.GetDictLength(tbl))
+        local num = 0
+        for k, v in pairs(tbl) do
+            num+=1
+            if (num == idx) then
+                return {Key = k, Val = v}
+            end
+        end
+    end
 	function C.DictFind(tbl,val)
 		for name, val2 in pairs(tbl) do
 			if val2 == val then
