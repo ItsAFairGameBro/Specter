@@ -1491,7 +1491,7 @@ return function(C,Settings)
                                     print("Sending Trade Request:",tradePlr)
                                     C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
                                 elseif lastTradePlr then
-                                    task.spawn(C.Prompt, `Trade Completed!`,`All necessary items were traded with {lastTradePlr.Name}`,`Ok`))
+                                    task.spawn(C.Prompt, `Trade Completed!`,`All necessary items were traded with {lastTradePlr.Name}`,`Ok`)
                                     lastTradePlr = nil
                                 end
                                 task.wait(3)
