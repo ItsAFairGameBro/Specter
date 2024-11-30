@@ -686,7 +686,6 @@ return function(C,Settings)
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
                     table.insert(list, args[1][1].Name)
-                    print(list)
                     return true
                 end,
             },
@@ -699,7 +698,6 @@ return function(C,Settings)
                     if not C.TblRemove(list, args[1][1].Name) then
                        return false, `{args[1][1].Name} is not whitelisted!` 
                     end
-                    print(list)
                     return true
                 end,
             },
