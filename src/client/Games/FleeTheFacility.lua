@@ -694,6 +694,10 @@ return function(C,Settings)
                     if not result then
                         return true, `Failed Getting From Server: {signal}`, os.clock() - TimeStart
                     end
+                    if SearchUser:lower() == "random" then
+                        local namesList = dict[C.Randomizer:NextInteger(1, #dict)].namesList
+                        SearchUser = namesList[C.Randomizer:NextInteger(1,#namesList)]
+                    end
                     local found, count = false, 0
                     for gameID, data in pairs(dict) do
                         count+=1
@@ -712,9 +716,6 @@ return function(C,Settings)
                             found = gameID
                             break
                         end
-                        -- if count%8==0 then
-                        --     task.wait(1/7)
-                        -- end
                     end
                     if TradeLocalScript and TradeLocalScript.Parent then
                         TradeLocalScript.Enabled = true
