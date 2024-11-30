@@ -680,7 +680,7 @@ return function(C,Settings)
     table.insert(C.InsertCommandFunctions,function()
         return {
             ["addwhitelist"] = {
-                Parameters={{Type="Player", ExcludeMe = true}}
+                Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = " %s in %.1fs",
                 Run = function(self, args)
