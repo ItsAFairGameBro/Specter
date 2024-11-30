@@ -1382,6 +1382,20 @@ return function(C,Settings)
                         end
                         return "Unlisted"
                     end,
+                    GetTradableItems = function(self, tradePlr)
+                        local theirInventory = C.GetUserInventory(tradePlr)
+                        local sendType = self.EnTbl.SendType
+
+                        local myInventory = C.GetUserInventory()
+                        for name, count in pairs(myInventory) do
+                            local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
+                            if sendType ~= "Any" and sendType ~= self:GetItemListing(name) then
+                                newCount = 0
+                            end
+                            myInventory[name] = newCount>0 and newCount or nil
+                        end
+                        return myInventory
+                    end,
                     Activate = function(self,newValue,firstRun)
                         if not newValue then
                             return
@@ -1390,13 +1404,14 @@ return function(C,Settings)
                         table.insert(self.Instances, ReceiveEvent)
 
                         local IsTrading = false
-                        local tradePlr
+                        local tradePlr, lastTradePlr
                         local function RemoteEventReceivedFunction(main,sec,third)
                             if main=="StartTradeCoolDown" then
                                 self.lastSend=os.clock()
                             end
                             if main=="RecieveTradeRequest" and not IsTrading then
                                 tradePlr=PS:GetPlayerByUserId(sec)
+                                lastTradePlr = tradePlr
                                 if self:IsAllowed(tradePlr) then
                                     IsTrading = true
                                     C.RemoteEvent:FireServer("AcceptTradeRequest")
@@ -1413,22 +1428,12 @@ return function(C,Settings)
                                 end
                                 IsTrading = true
                                 table.insert(self.Threads, task.spawn(function()
-                                    local theirInventory = C.GetUserInventory(tradePlr)
-                                    local sendType = self.EnTbl.SendType
-
-                                    local myInventory = C.GetUserInventory()
-                                    for name, count in pairs(myInventory) do
-                                        local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
-                                        if sendType ~= "Any" and sendType ~= self:GetItemListing(name) then
-                                            newCount = 0
-                                        end
-                                        myInventory[name] = newCount>0 and newCount or nil
-                                    end
+                                    local tradableItems = self:GetTradableItems(tradePlr)
                                     task.wait(1/2)
                                     if not self.EnTbl.ReceiveOnly then
                                         local ItemsToSend = 4
                                         local sendArr = {}
-                                        for name, count in pairs(myInventory) do
+                                        for name, count in pairs(tradableItems) do
                                             while count > 0 do
                                                 table.insert(sendArr,  name)
                                                 count -=1
@@ -1475,12 +1480,20 @@ return function(C,Settings)
 
                             for _, theirPlr in ipairs(PS:GetPlayers()) do
                                 if self:IsAllowed(theirPlr) then
-                                    tradePlr = theirPlr
+                                    local tradableItems = self:GetTradableItems(tradePlr)
+                                    if (C.GetDictLength(tradableItems) > 0) then
+                                        tradePlr = theirPlr
+                                    end
                                 end
                             end
                             if not IsTrading and tradePlr then
-                                print("Sending Trade Request:",tradePlr)
-                                C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
+                                if tradePlr then
+                                    print("Sending Trade Request:",tradePlr)
+                                    C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
+                                elseif lastTradePlr then
+                                    task.spawn(C.Prompt, `Trade Completed!`,`All necessary items were traded with {lastTradePlr.Name}`,`Ok`))
+                                    lastTradePlr = nil
+                                end
                                 task.wait(3)
                             else
                                 task.wait(1)
