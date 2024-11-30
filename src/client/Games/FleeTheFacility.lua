@@ -1494,7 +1494,7 @@ return function(C,Settings)
                             Tooltip = "Specifies the type of items to send.",
                             Layout = 2,Default = false,
                             Shortcut="SendType",
-                            Options = {"Any", "Unlisted", "Halloween 2024"},
+                            Selections = {"Any", "Unlisted", "Halloween 2024"},
                             Activate = C.ReloadHack,
                         },
                     },
