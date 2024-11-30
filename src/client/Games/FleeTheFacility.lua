@@ -575,11 +575,12 @@ local function SetUpGame(C, Settings)
         end
     end
 end
-local LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
 
 return function(C,Settings)
     C.RemoteEvent = RS:WaitForChild("RemoteEvent")
+    local LobbyOBWall
     if game.PlaceId == 893973440 then
+        LobbyOBWall = workspace:WaitForChild("LobbyOBWall")
         SetUpGame(C,Settings)
     end
     function C.SelectPlayerType(meDefault, otherDefault)
