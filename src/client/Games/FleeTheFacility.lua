@@ -683,6 +683,7 @@ return function(C,Settings)
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = "",
+                Priority = -10,
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
                     table.insert(list, args[1][1].Name)
@@ -693,6 +694,7 @@ return function(C,Settings)
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = "",
+                Priority = -10,
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
                     if not C.TblRemove(list, args[1][1].Name) then
@@ -705,6 +707,7 @@ return function(C,Settings)
                 Parameters={{Type="User"}},
                 Alias = {},
                 AfterTxt = " %s in %.1fs",
+                Priority = -7,
                 Run = function(self,args)
                     local SearchUser = args[1][1]:lower()
                     local TimeStart = os.clock()
