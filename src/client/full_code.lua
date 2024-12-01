@@ -256,7 +256,7 @@ C.instances = {} -- global instances
 C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
-C.preloadedModule = {{
+C.preloadedModule = {
     ["Games/Bloxburg"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
 local Players = game:GetService("Players")
@@ -17747,7 +17747,7 @@ end
         Load(Bypassed_Dex)
     end,
 }]],
-}}
+}
 C.forcePropertyFuncts = {}
 C.BindedActions = {} -- key binds
 C.CharacterAddedEventFuncts = {}

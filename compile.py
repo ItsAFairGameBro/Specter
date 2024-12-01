@@ -93,7 +93,7 @@ modules = list_lua_files(base_folder)
 # Replace with
 # C.preloadedModule = {[key] = `code`}
 
-data = data.replace("C.preloadedModule = {}", "C.preloadedModule = {" + dict_to_luau_table(modules) + "}")
+data = data.replace("C.preloadedModule = {}", "C.preloadedModule = " + dict_to_luau_table(modules))
 
 writeFile = open("C:\\Users\\ryanb\\Documents\\ROBLOX\\Specter\\src\\client\\full_code.lua", "w", encoding="utf-8")
 writeFile.write(data)
