@@ -727,16 +727,19 @@ return function(C,Settings)
 	end
 
 	-- Cancel thread
+    local function GetStatus(thread)
+        return coroutine.status(thread)
+    end
 	function C.StopThread(thread)
-		local Status = coroutine.status(thread)
+		local Status = GetStatus(thread)
 		if Status ~= "dead" then
 			C.DebugMessage("Thread",`Stopping thread {tostring(thread)}, current status: {Status}`)
 			local success, result = pcall(coroutine.close,thread)
-			if not success then
+			if not success and GetStatus(thread) ~= "dead" then
                 task.delay(1, function()
                     local Res = C.StopThread(thread)
                     if not Res then
-                        warn(`Failed to stop thread {tostring(thread)} (Status: {Status}); {result}. Retrying IN 1s`)
+                        warn(`Failed to stop thread {tostring(thread)} (Status: {GetStatus(thread)}); {result}. Retrying IN 1s`)
                     end
                 end)
                 return false
