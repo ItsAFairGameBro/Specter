@@ -686,7 +686,7 @@ return function(C,Settings)
                 Priority = -10,
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
-                    table.insert(list, args[1][1].Name)
+                    C.TblAdd(list, args[1][1].Name:lower())
                     return true
                 end,
             },
@@ -1394,6 +1394,7 @@ return function(C,Settings)
                             end
                             myInventory[name] = newCount>0 and newCount or nil
                         end
+                        print(tradePlr,#myInventory)
                         return myInventory
                     end,
                     Activate = function(self,newValue,firstRun)
