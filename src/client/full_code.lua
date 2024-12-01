@@ -17901,6 +17901,7 @@ local LoadedModules = {}
 local PreCached = false
 for key, val in pairs(C.preloadedModule) do
     PreCached = true
+    print("Precached Enabled")
     break
 end
 function GetModule(path: string)
