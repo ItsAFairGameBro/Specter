@@ -13,6 +13,7 @@ local VirtualUser = game:GetService("VirtualUser")
 
 --print("services loaded")
 
+local PreCached = true
 local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
 
@@ -407,12 +408,6 @@ end
 
 C.SaveModules = {}
 local LoadedModules = {}
-local PreCached = false
-for key, val in pairs(C.preloadedModule) do
-    PreCached = true
-    print("Precached Enabled")
-    break
-end
 function GetModule(path: string)
     -- All paths start from src and to the lua file
 	-- local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
