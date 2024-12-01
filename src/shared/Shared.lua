@@ -7,8 +7,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Spect
 --]]
 --SCRIPT GITHUB LINK:
 local gitType = "blob" -- use 'blob' for more recent updates, or 'raw' for more consistency/loading speed
-local githubLink = "https://github.com/ItsAFairGameBro/Specter/blob/main/src/client/init.client.lua"--paste your script here
+local githubLink = "https://github.com/ItsAFairGameBro/Specter/blob/main/src/client/full_code.lua"--paste your script here
 
+print("Loading Experimental Link")
 
 --GLOBAL SETTINGS DATA:
 GlobalSettings = {
