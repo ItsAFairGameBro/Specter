@@ -415,6 +415,7 @@ function GetModule(path: string)
 	else
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
+        assert(C.preloadedModule[path], `{path} does not have a preloaded module!`)
 		local result = C.preloadedModule[path] or C.RunLink(githubLink,gitType,path)
         if not C.preloadedModule[path] then
             C.preloadedModule[path] = result
