@@ -683,10 +683,12 @@ return function(C,Settings)
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = "",
-                Priority = -10,
+                Priority = -1000,
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
-                    C.TblAdd(list, args[1][1].Name:lower())
+                    if not C.TblAdd(list, args[1][1].Name:lower()) then
+                        return false, `{args[1][1].Name} is already in the list`
+                    end
                     return true
                 end,
             },
@@ -694,7 +696,7 @@ return function(C,Settings)
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = "",
-                Priority = -10,
+                Priority = -1000,
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
                     if not C.TblRemove(list, args[1][1].Name) then
@@ -1372,6 +1374,9 @@ return function(C,Settings)
                     whitelistedUsers = {"queen_bestiesforlife","itsagoodgamebros","facilitystorage","z_baeby","yvettecarreno08","kitcat4681"},
                     lastSend = 0,
                     IsAllowed = function(self,theirPlr)
+                        if theirPlr == C.plr then
+                            return false
+                        end
                         return table.find(self.whitelistedUsers,theirPlr.Name:lower()) or table.find(C.AdminUsers, theirPlr.Name:lower())
                     end,
                     GetItemListing = function(self, internalName)
@@ -1560,6 +1565,26 @@ return function(C,Settings)
                             [18] = "Hhal0082",
                             [19] = "Hhal0083",
                             [20] = "Hhal0084",
+                            [21] = "Ghal0091",
+                            [22] = "Hhal0091",
+                            [23] = "Ghal0087",
+                            [24] = "Hhal0087",
+                            [25] = "Ghal0086",
+                            [26] = "Hhal0086",
+                            [27] = "Ghal0093",
+                            [28] = "Hhal0093",
+                            [29] = "Ghal0094",
+                            [30] = "Hhal0094",
+                            [31] = "Ghal0089",
+                            [32] = "Hhal0089",
+                            [33] = "Ghal0090",
+                            [34] = "Hhal0090",
+                            [35] = "Ghal0092",
+                            [36] = "Hhal0092",
+                            [37] = "Ghal0088",
+                            [38] = "Hhal0088",
+                            [39] = "Ghal0085",
+                            [40] = "Hhal0085",
                         },
                     },
                 },
