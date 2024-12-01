@@ -456,7 +456,7 @@ end
 --print("modules p reload")
 
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
-if not C.isStudio then
+if not C.isStudio and not PreCached then
 	for num, module in ipairs(ModulesToPreload) do
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
