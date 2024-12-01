@@ -17898,7 +17898,11 @@ end
 
 C.SaveModules = {}
 local LoadedModules = {}
-
+local PreCached = false
+for key, val in pairs(C.preloadedModule) do
+    PreCached = true
+    break
+end
 function GetModule(path: string)
     -- All paths start from src and to the lua file
 	-- local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
@@ -17909,12 +17913,13 @@ function GetModule(path: string)
 		local githubLink = C.BaseUrl .. "/%s.lua"
         assert(C.preloadedModule[path], `{path} does not have a preloaded module!`)
 		local result = C.preloadedModule[path]
-        if not LoadedModules[path] then
+        if PreCached and not LoadedModules[path] then
             LoadedModules[path] = true
             result = loadstring(result)()
             C.preloadedModule[path] = result
+        elseif not PreCached and not result then
+            result = C.RunLink(githubLink,gitType,path)
         end
-        -- local result = C.preloadedModule[path] and loadstring(C.preloadedModule[path]) or C.RunLink(githubLink,gitType,path)
 		if typeof(result) == "function" then
 			return result(C,Settings)
 		else
