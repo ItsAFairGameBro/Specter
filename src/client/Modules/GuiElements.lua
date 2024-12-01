@@ -3330,7 +3330,7 @@ return function(C, Settings)
 
 
 	--Load Settings Loader
-	C.ExtraOptions = C.LoadModule("HackOptions")
+	C.ExtraOptions = C.LoadModule("Modules/HackOptions")
 
 	C.UI.CategoriesFrame = CategoriesFrame
 	C.UI.TabsFrame = TabsFrame

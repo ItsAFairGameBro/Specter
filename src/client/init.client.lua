@@ -407,16 +407,17 @@ end
 
 C.SaveModules = {}
 
-function GetModule(moduleName: string)
-	local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
+function GetModule(path: string)
+    -- All paths start from src and to the lua file
+	-- local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
 	if isStudio then
 		return require(C.StringWait(script,path,nil,"/"))(C, Settings)
 	else
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
-		local result = C.preloadedModule[moduleName] or C.RunLink(githubLink,gitType,path)
-        if not C.preloadedModule[moduleName] then
-            C.preloadedModule[moduleName] = result
+		local result = C.preloadedModule[path] or C.RunLink(githubLink,gitType,path)
+        if not C.preloadedModule[path] then
+            C.preloadedModule[path] = result
         end
 		if typeof(result) == "function" then
 			return result(C,Settings)
@@ -802,5 +803,5 @@ end--]]
 
 
 --Load AntiCheat Immediately!
-C.LoadModule("AntiCheat")
-return C.LoadModule("CoreLoader")
+C.LoadModule("Modules/AntiCheat")
+return C.LoadModule("Modules/CoreLoader")

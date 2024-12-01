@@ -20,13 +20,13 @@ local KeybindRunFunct,BindButton
 
 return function(C, _SETTINGS)
 	--Load Locale Environment
-	C.LoadModule('Env')
+	C.LoadModule('Modules/Env')
 	if C.Cleared then return end
     --Load Core Env
-	C.LoadModule('CoreEnv')
+	C.LoadModule('Modules/CoreEnv')
     if C.Cleared then return end
 	--Load GUI Elements
-	C.LoadModule('GuiElements')
+	C.LoadModule('Modules/GuiElements')
 	if C.Cleared then return end
 
 	if C.SaveIndex == 1 then
@@ -35,7 +35,7 @@ return function(C, _SETTINGS)
 	end
 	if C.Cleared then return end
 	--Load Binds and such
-	C.LoadModule("Binds")
+	C.LoadModule("Modules/Binds")
 	--Load Current Profile, But Only If We're The First
 	--Load Category Buttons & Tabs
 	--C.UI.Tabs = {}
@@ -392,7 +392,7 @@ return function(C, _SETTINGS)
 	C.LoadModule("Hacks/Commands")
 
 	--Load Events
-	C.LoadModule("Events")
+	C.LoadModule("Modules/Events")
 	if C.Cleared then return end
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
@@ -420,7 +420,7 @@ return function(C, _SETTINGS)
 
 
 
-	C.LoadModule("CommandCore")
+	C.LoadModule("Modules/CommandCore")
 	if C.Cleared then return end
 
 	--Make it appear
