@@ -1480,9 +1480,10 @@ return function(C,Settings)
 
                             for _, theirPlr in ipairs(PS:GetPlayers()) do
                                 if self:IsAllowed(theirPlr) then
-                                    local tradableItems = self:GetTradableItems(tradePlr)
+                                    local tradableItems = self:GetTradableItems(theirPlr)
                                     if (C.GetDictLength(tradableItems) > 0) then
                                         tradePlr = theirPlr
+                                        break
                                     end
                                 end
                             end
