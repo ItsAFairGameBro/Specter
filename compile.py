@@ -80,7 +80,7 @@ def list_lua_files(base_folder):
                 # Get the relative path of the Lua file from the base folder
                 relative_path = os.path.relpath(os.path.join(root, file), base_folder)
                 cur_file = open(root + "\\" + file, "r", encoding='utf-8')
-                lua_files[relative_path.replace("\\", "/")] = cur_file.read() # Ensure Unix-style paths
+                lua_files[relative_path.replace("\\", "/").replace(".lua","")] = cur_file.read() # Ensure Unix-style paths
     
     return lua_files
 
