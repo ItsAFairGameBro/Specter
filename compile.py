@@ -73,12 +73,13 @@ import os
 def list_lua_files(base_folder):
     """Recursively find all Lua files in a folder and its subfolders, and format their paths."""
     lua_files = {}
+    ignore_list = ["full_code.lua", "init.client.lua"]
     
     for root, _, files in os.walk(base_folder):
         for file in files:
-            if file.endswith(".lua"):
+            relative_path = os.path.relpath(os.path.join(root, file), base_folder)
+            if file.endswith(".lua") and not relative_path in ignore_list:
                 # Get the relative path of the Lua file from the base folder
-                relative_path = os.path.relpath(os.path.join(root, file), base_folder)
                 cur_file = open(root + "\\" + file, "r", encoding='utf-8')
                 lua_files[relative_path.replace("\\", "/").replace(".lua","")] = cur_file.read() # Ensure Unix-style paths
     
