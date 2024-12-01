@@ -17911,7 +17911,7 @@ function GetModule(path: string)
 		local result = C.preloadedModule[path]
         if not LoadedModules[path] then
             LoadedModules[path] = true
-            result = loadstring(result)
+            result = loadstring(result)()
             C.preloadedModule[path] = result
         end
         -- local result = C.preloadedModule[path] and loadstring(C.preloadedModule[path]) or C.RunLink(githubLink,gitType,path)
