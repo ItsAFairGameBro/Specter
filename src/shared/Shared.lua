@@ -9,8 +9,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Spect
 local gitType = "blob" -- use 'blob' for more recent updates, or 'raw' for more consistency/loading speed
 local githubLink = "https://github.com/ItsAFairGameBro/Specter/blob/main/src/client/full_code.lua"--paste your script here
 
-print("Loading Experimental Link")
-
 --GLOBAL SETTINGS DATA:
 GlobalSettings = {
 	botModeEnabled = true, -- Whether or not you are using the bots to grind (select accounts only)
