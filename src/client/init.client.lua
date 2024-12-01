@@ -406,6 +406,7 @@ end
 --print("3")
 
 C.SaveModules = {}
+local LoadedModules = {}
 
 function GetModule(path: string)
     -- All paths start from src and to the lua file
@@ -416,10 +417,13 @@ function GetModule(path: string)
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
         assert(C.preloadedModule[path], `{path} does not have a preloaded module!`)
-		local result = C.preloadedModule[path] and loadstring(C.preloadedModule[path]) or C.RunLink(githubLink,gitType,path)
-        if not C.preloadedModule[path] then
+		local result = C.preloadedModule[path]
+        if not LoadedModules[path] then
+            LoadedModules[path] = true
+            result = loadstring(result)
             C.preloadedModule[path] = result
         end
+        -- local result = C.preloadedModule[path] and loadstring(C.preloadedModule[path]) or C.RunLink(githubLink,gitType,path)
 		if typeof(result) == "function" then
 			return result(C,Settings)
 		else
