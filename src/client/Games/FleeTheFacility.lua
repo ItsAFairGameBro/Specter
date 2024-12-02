@@ -662,9 +662,11 @@ return function(C,Settings)
         end
     end
     local SetsRarityValue = {
+        [0] = 750, -- Unknown Rarity (Bundle)
         [1] = 100, -- Common Rarity (Crate)
-        [2] = 200, -- Rare Rarity (Crate)
-        [3] = 400, -- Legendary 
+        [2] = 200, -- Uncommon Rarity (Crate)
+        [3] = 400, -- Rare Rarity (Crate)
+        [4] = 700, -- Legendary Rarity (Crate)
     }
     function C.GetCreditsValue(sets)
         local value = 0
@@ -676,7 +678,11 @@ return function(C,Settings)
         return value
     end
     function C.GetUserInventory(theirPlr)
-        local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
+        local RequestName = (theirPlr and theirPlr ~= C.plr) and "GetOtherPlayerInventory" or "GetPlayerInventory"
+
+        if RequestName == "GetOtherPlayerInventory" and game.PlaceId == 893973440 then -- Cannot view inventory in main game!!
+            return {}
+        end
 
         local Success, Res, Inventory
         repeat
@@ -690,12 +696,33 @@ return function(C,Settings)
         InventoryCount["H0001"], InventoryCount["G0001"] = nil, nil
         return InventoryCount, #Inventory
     end
+    local LevelingXpCurve
+    function C.GetTotalXP(theirPlr)
+        local theirSSM = theirPlr:WaitForChild("SavedPlayerStatsModule")
+        LevelingXpCurve = LevelingXpCurve or C.require(RS:WaitForChild("LevelingXpCurve"))
+        local TotXP = theirSSM.XP.Value
+        for s = 1, theirSSM.Level.Value, 1 do
+            TotXP += LevelingXpCurve[s]
+        end
+        return TotXP
+    end
     function C.GetUserStats(theirPlr)
+        local Results = {
+            Assets = 0,
+            Credits = 0,
+            NetWorth = 0,
+            XP = 0,
+            Level = 0,
+        }
         local theirSSM = theirPlr:WaitForChild("SavedPlayerStatsModule")
         if theirSSM then
-            local Results = {}
-            Results.Credits = 0
+            Results.Assets = C.GetCreditsValue(C.GetUserInventory(theirPlr))
+            Results.Credits = theirSSM.Credits.Value
+            Results.NetWorth = Results.Assets + Results.Credits
+            Results.XP = C.GetTotalXP(theirPlr)
+            Results.Level = theirSSM.Level.Value
         end
+        return Results
     end
     -- COMMANDS --
     table.insert(C.InsertCommandFunctions,function()
@@ -770,6 +797,25 @@ return function(C,Settings)
                         TradeLocalScript.Enabled = true
                     end
                     return true, found and `In {found}` or `Not Found`, os.clock() - TimeStart
+                end,
+            },
+            ["stats"] = {
+                Parameters={{Type="Players"}},
+                Alias = {},
+                AfterTxt = " Results in %.1fs:",
+                Priority = -7,
+                Run = function(self, args)
+                    local clockStart = os.clock()
+                    local displayTxt = ``
+                    for num, theirPlr in ipairs(args[1]) do
+                        local Stats = C.GetUserStats(theirPlr)
+                        displayTxt += `({Stats.Level}) {theirPlr.Name}:\n`
+                        Stats.Level = nil
+                        for key, val in ipairs(Stats) do
+                            displayTxt += `\t{key}: {val}\n`
+                        end
+                    end
+                    return os.clock() - clockStart, displayTxt
                 end,
             }
         }
