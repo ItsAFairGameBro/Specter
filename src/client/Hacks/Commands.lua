@@ -306,18 +306,36 @@ return function(C,Settings)
                     end
                     if foundChar then
                         print("Found Freeze",foundChar)
-                        local currentChar = C.getgenv().currentDesc[theirPlr.Name]
-                        if not currentChar then
-                            return
+                        local BodyColors = foundChar:FindFirstChildWhichIsA("BodyColors")
+                        self.Events.CharAdded(self, theirPlr, foundChar, true)
+                    end
+                end,
+                MapAdded = function(self, Map)
+                    for _, capsule in ipairs(C.FreezingPods) do
+                        local function childAdded(child)
+                            if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
+                                local humanDesc = C.getgenv().currentDesc[child.Name]
+                                if humanDesc then
+                                    task.wait(.3)
+                                    local orgColor = child:WaitForChild("Head").Color
+                                    local myClone = humanDesc:Clone()
+                                    for num, prop in ipairs({"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}) do
+                                        myClone[prop] = orgColor
+                                    end
+                                    self:MorphPlayer(child,myClone,true,true)
+                                    DS:AddItem(myClone,15)
+                                end
+                            end
                         end
-                        currentChar = currentChar:Clone()
-                        local targetHuman = foundChar:FindFirstChild("Humanoid")
-                        local oldHumanDesc = targetHuman:FindFirstChild("HumanoidDescription")
-                        for _, prop in ipairs({"HeadScale","BodyTypeScale","DepthScale","HeightScale","ProportionScale","WidthScale"}) do
-                            currentChar[prop] = oldHumanDesc[prop]
+
+                        if not false then
+                            table.insert(C.CommandFunctions.morph.Functs,capsule.ChildAdded:Connect(childAdded))
                         end
-                        self:MorphPlayer(theirChar,currentChar,true,true)
-                        currentChar:Destroy()
+                        if not capsule:FindFirstChild("PodTrigger") then
+                            for num, child in ipairs(capsule:GetChildren()) do
+                                task.spawn(childAdded,child)
+                            end
+                        end
                     end
                 end,
             },
