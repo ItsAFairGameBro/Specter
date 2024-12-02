@@ -809,10 +809,10 @@ return function(C,Settings)
                     local displayTxt = ``
                     for num, theirPlr in ipairs(args[1]) do
                         local Stats = C.GetUserStats(theirPlr)
-                        displayTxt += `({Stats.Level}) {theirPlr.Name}:\n`
+                        displayTxt = displayTxt .. `({Stats.Level}) {theirPlr.Name}:\n`
                         Stats.Level = nil
                         for key, val in ipairs(Stats) do
-                            displayTxt += `\t{key}: {val}\n`
+                            displayTxt = displayTxt .. `\t{key}: {val}\n`
                         end
                     end
                     return os.clock() - clockStart, displayTxt
