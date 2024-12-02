@@ -2587,7 +2587,7 @@ return function(C,Settings)
         LevelingXpCurve = LevelingXpCurve or C.require(RS:WaitForChild("LevelingXpCurve"))
         local TotXP = theirSSM.Xp.Value
         for s = 1, theirSSM.Level.Value, 1 do
-            TotXP += LevelingXpCurve[s]
+            TotXP += LevelingXpCurve[s] or 4000
         end
         return TotXP
     end
