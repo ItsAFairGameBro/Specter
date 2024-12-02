@@ -7498,10 +7498,27 @@ return function(C,Settings)
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
                             --print(theirChar,"first run set to",JoinPlayerMorphDesc)
-                            C.CommandFunctions.morph:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
+                            self:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
                         end
                     elseif currentChar then
-                        C.CommandFunctions.morph:MorphPlayer(theirChar,currentChar,true,not firstRun)
+                        self:MorphPlayer(theirChar,currentChar,true,not firstRun)
+                    end
+                end,
+                CapturedRemoved = function(self, theirPlr, theirChar)
+                    task.wait(1)
+                    local foundChar
+                    for _, freezePod in ipairs(C.FreezingPods) do
+                        local theChar = freezePod:FindFirstChild(theirPlr.Name, true)
+                        if theChar then
+                            foundChar = theChar
+                            break
+                        end
+                    end
+                    if foundChar then
+                        print("Found Freeze",foundChar)
+                        self.Events.CharAdded(self, theirPlr, foundChar, true)
+                    else
+                        print("No Child Found",theirPlr)
                     end
                 end,
             },
