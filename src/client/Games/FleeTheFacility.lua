@@ -700,7 +700,7 @@ return function(C,Settings)
     function C.GetTotalXP(theirPlr)
         local theirSSM = theirPlr:WaitForChild("SavedPlayerStatsModule")
         LevelingXpCurve = LevelingXpCurve or C.require(RS:WaitForChild("LevelingXpCurve"))
-        local TotXP = theirSSM.XP.Value
+        local TotXP = theirSSM.Xp.Value
         for s = 1, theirSSM.Level.Value, 1 do
             TotXP += LevelingXpCurve[s]
         end
