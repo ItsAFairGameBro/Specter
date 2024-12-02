@@ -657,7 +657,7 @@ return function(C,Settings)
         if rets then
             return true, table.unpack(rets)
         else
-            warn("Timeout occured for yield signal",retType)
+            warn("Timeout occured for yield signal",retType,...)
             return false, "Timeout Occured"
         end
     end
@@ -687,6 +687,9 @@ return function(C,Settings)
         local Success, Res, Inventory
         repeat
             Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and theirPlr.UserId or nil)
+            if not Success and not theirPlr.Parent then
+                return {}
+            end
         until Success
         local InventoryCount = {}
 
