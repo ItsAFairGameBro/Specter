@@ -2697,7 +2697,7 @@ return function(C,Settings)
                         displayTxt = displayTxt .. `({Stats.Level}) {theirPlr.Name}:\n`
                         Stats.Level = nil
                         for key, val in pairs(Stats) do
-                            displayTxt = displayTxt .. `\t{key}: {val}\n`
+                            displayTxt = displayTxt .. `\t{key}: {C.FormatLargeNumber(val)}\n`
                         end
                     end
                     return true, os.clock() - clockStart, displayTxt
@@ -12774,6 +12774,18 @@ return function(C,Settings)
 			end
 		end
 	end
+    -- Labeling large numbers
+    function C.FormatLargeNumber(value)
+        local suffixes = {"", "K", "M", "B", "T"}
+        local index = 1
+
+        while value >= 1000 and index < #suffixes do
+            value = value / 1000
+            index = index + 1
+        end
+
+        return string.format("%.2f%s", value, suffixes[index])
+    end
 	--Update Targeting
 	function C.CanTargetPlayer(plr, includeSelf)
 		if plr == C.plr then

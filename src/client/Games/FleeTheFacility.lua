@@ -812,7 +812,7 @@ return function(C,Settings)
                         displayTxt = displayTxt .. `({Stats.Level}) {theirPlr.Name}:\n`
                         Stats.Level = nil
                         for key, val in pairs(Stats) do
-                            displayTxt = displayTxt .. `\t{key}: {val}\n`
+                            displayTxt = displayTxt .. `\t{key}: {C.FormatLargeNumber(val)}\n`
                         end
                     end
                     return true, os.clock() - clockStart, displayTxt
