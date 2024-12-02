@@ -662,7 +662,9 @@ return function(C,Settings)
         end
     end
     local SetsRarityValue = {
-        [1] = 
+        [1] = 100, -- Common Rarity (Crate)
+        [2] = 200, -- Rare Rarity (Crate)
+        [3] = 400, -- Legendary 
     }
     function C.GetCreditsValue(sets)
         local value = 0
