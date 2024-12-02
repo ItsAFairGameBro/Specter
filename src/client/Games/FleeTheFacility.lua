@@ -714,7 +714,7 @@ return function(C,Settings)
         local setsTotal = 0
         for key, qty in pairs(Sets) do
             if key:sub(1,1) == "H" then -- for hammers only
-                setsTotal += math.min(qty, Sets["G" .. key:sub(2)])
+                setsTotal += math.min(qty, Sets["G" .. key:sub(2)] or 0)
             end
         end
         return setsTotal
