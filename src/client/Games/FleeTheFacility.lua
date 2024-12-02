@@ -687,7 +687,7 @@ return function(C,Settings)
 
         local Success, Res, Inventory
         repeat
-            Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, theirPlr and theirPlr.UserId or nil)
+            Success, Res, Inventory = SendWaitRemoteEvent(RequestName, RequestName, RequestName=="GetOtherPlayerInventory" and theirPlr.UserId or nil)
             if not Success and not theirPlr.Parent then
                 return {}
             end
@@ -811,7 +811,7 @@ return function(C,Settings)
                 Run = function(self, args)
                     local clockStart = os.clock()
                     local displayTxt = ``
-                    for num, theirPlr in ipairs(args[1]) do
+                    for num, theirPlr in ipairs(C.sortPlayersByXPThenCredits(args[1])) do
                         if num ~= 1 then
                             task.wait(1/20)
                         end
