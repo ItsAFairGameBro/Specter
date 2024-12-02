@@ -2555,10 +2555,10 @@ return function(C,Settings)
     }
     function C.GetCreditsValue(sets)
         local value = 0
-        for _, setName in ipairs(sets) do
+        for setName, qty in pairs(sets) do
             local ItemHammer = C.StringWait(RS,`ItemDatabase.{setName}`)
             local Rarity = ItemHammer:GetAttribute("Rarity")
-            value += SetsRarityValue[Rarity] or -9999999999
+            value += qty * (SetsRarityValue[Rarity] or -9999999999)
         end
         return value
     end
@@ -2693,6 +2693,9 @@ return function(C,Settings)
                     local clockStart = os.clock()
                     local displayTxt = ``
                     for num, theirPlr in ipairs(args[1]) do
+                        if num ~= 1 then
+                            task.wait(1/20)
+                        end
                         local Stats = C.GetUserStats(theirPlr)
                         displayTxt = displayTxt .. `({Stats.Level}) {theirPlr.Name}:\n`
                         Stats.Level = nil
