@@ -7505,7 +7505,7 @@ return function(C,Settings)
                     end
                 end,
                 CapturedRemoved = function(self, theirPlr, theirChar)
-                    task.wait()
+                    task.wait(1)
                     local foundChar
                     for _, freezePod in ipairs(C.FreezingPods) do
                         local theChar = freezePod:FindFirstChild(theirPlr.Name, true)
@@ -7516,7 +7516,18 @@ return function(C,Settings)
                     end
                     if foundChar then
                         print("Found Freeze",foundChar)
-                        self.Events.CharAdded(self, theirPlr, foundChar, true)
+                        local currentChar = C.getgenv().currentDesc[theirPlr.Name]
+                        if not currentChar then
+                            return
+                        end
+                        currentChar = currentChar:Clone()
+                        local targetHuman = foundChar:FindFirstChild("Humanoid")
+                        local oldHumanDesc = targetHuman:FindFirstChild("HumanoidDescription")
+                        for _, prop in ipairs({"HeadScale","BodyTypeScale","DepthScale","HeightScale","ProportionScale","WidthScale"}) do
+                            currentChar[prop] = oldHumanDesc[prop]
+                        end
+                        self:MorphPlayer(theirChar,currentChar,true,true)
+                        currentChar:Destroy()
                     end
                 end,
             },
