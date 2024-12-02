@@ -7505,7 +7505,7 @@ return function(C,Settings)
                     end
                 end,
                 CapturedRemoved = function(self, theirPlr, theirChar)
-                    task.wait(1)
+                    task.wait()
                     local foundChar
                     for _, freezePod in ipairs(C.FreezingPods) do
                         local theChar = freezePod:FindFirstChild(theirPlr.Name, true)
@@ -7517,8 +7517,6 @@ return function(C,Settings)
                     if foundChar then
                         print("Found Freeze",foundChar)
                         self.Events.CharAdded(self, theirPlr, foundChar, true)
-                    else
-                        print("No Child Found",theirPlr)
                     end
                 end,
             },
