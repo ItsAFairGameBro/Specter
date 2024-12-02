@@ -811,7 +811,7 @@ return function(C,Settings)
                         local Stats = C.GetUserStats(theirPlr)
                         displayTxt = displayTxt .. `({Stats.Level}) {theirPlr.Name}:\n`
                         Stats.Level = nil
-                        for key, val in ipairs(Stats) do
+                        for key, val in pairs(Stats) do
                             displayTxt = displayTxt .. `\t{key}: {val}\n`
                         end
                     end
