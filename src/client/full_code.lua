@@ -2595,6 +2595,15 @@ return function(C,Settings)
         end
         return TotXP
     end
+    function C.GetSetsCount(Sets)
+        local setsTotal = 0
+        for key, qty in pairs(Sets) do
+            if key:sub(1,1) == "H" then -- for hammers only
+                setsTotal += math.min(qty, Sets["G" .. key:sub(2)])
+            end
+        end
+        return setsTotal
+    end
     function C.GetUserStats(theirPlr)
         local Results = {
             Assets = 0,
@@ -2605,7 +2614,9 @@ return function(C,Settings)
         }
         local theirSSM = theirPlr:WaitForChild("SavedPlayerStatsModule")
         if theirSSM then
-            Results.Assets = C.GetCreditsValue(C.GetUserInventory(theirPlr))
+            local UserInventory = C.GetUserInventory(theirPlr)
+            Results.Assets = C.GetCreditsValue(UserInventory)
+            Results.Sets = C.GetSetsCount(UserInventory)
             Results.Credits = theirSSM.Credits.Value
             Results.NetWorth = Results.Assets + Results.Credits
             Results.XP = C.GetTotalXP(theirPlr)
