@@ -802,7 +802,7 @@ return function(C,Settings)
             ["stats"] = {
                 Parameters={{Type="Players"}},
                 Alias = {},
-                AfterTxt = " Results in %.1fs:",
+                AfterTxt = " Results in %.1fs:\n%s",
                 Priority = -7,
                 Run = function(self, args)
                     local clockStart = os.clock()
