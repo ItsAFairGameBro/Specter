@@ -146,7 +146,7 @@ return function(C,Settings)
                     local wasSuccess = returns[1]
                     table.remove(returns,1)
                     local displayNameCommand = command:sub(1,1):upper() .. command:sub(2)
-                    if wasSuccess then
+                    if wasSuccess == true then
                         local Length = ChosenPlr and #ChosenPlr
                         local playersAffected = typeof(ChosenPlr) == "table" and (Length>1 and Length .. " Players" or tostring(ChosenPlr[1]))
                             --(typeof(ChosenPlr)=="Instance" and (ChosenPlr==C.plr and ChosenPlr.Name) or ChosenPlr.Name)

@@ -815,7 +815,7 @@ return function(C,Settings)
                             displayTxt = displayTxt .. `\t{key}: {val}\n`
                         end
                     end
-                    return os.clock() - clockStart, displayTxt
+                    return true, os.clock() - clockStart, displayTxt
                 end,
             }
         }
