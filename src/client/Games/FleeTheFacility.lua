@@ -74,7 +74,7 @@ local function GetSharedHacks(C, Settings)
         Layout = 0,
         Shortcut = "SpeedBuy",
         IgnoreList = {"Series 1H", "Series 1G"},
-        
+
         Process = function(self, actionClone, info)
             C.SetActionLabel(actionClone, "Loading Modules...")
 
@@ -191,7 +191,7 @@ local function GetSharedHacks(C, Settings)
                 Type = Types.Slider,
                 Title = "Event Crates",
                 Tooltip = "How much of every event crate to buy!",
-                Layout = 1,Default = 1,
+                Layout = 1,Default = 10,
                 Min = 0, Max=10, Digits=0,
                 Shortcut="EventCrateQty",
             },
@@ -199,7 +199,7 @@ local function GetSharedHacks(C, Settings)
                 Type = Types.Slider,
                 Title = "Event Bundles",
                 Tooltip = "How much of every event bundle to buy!",
-                Layout = 2,Default = 1,
+                Layout = 2,Default = 10,
                 Min = 0, Max=10, Digits=0,
                 Shortcut="EventBundleQty",
             },
@@ -280,8 +280,11 @@ local function GetSharedHacks(C, Settings)
             CharAdded = function(self, theirPlr, theirChar)
                 local function ChildAdded(basePart)
                     if basePart:IsA("BasePart") then
-                        if basePart.Name == "Part" and basePart:WaitForChild("RopeConstraint",1/3) then
-                            basePart.RopeConstraint.Enabled = false
+                        if basePart.Name == "Part" then
+                            local Rope = basePart:WaitForChild("RopeConstraint",1/3)
+                            if Rope then
+                                Rope.Enabled = false
+                            end
                         end
                     end
                 end
@@ -356,7 +359,6 @@ local function SetUpGame(C, Settings)
             C.Map = newMap
             C.FireEvent("MapAdded",nil,C.Map)
             C.AddObjectConnection(newMap, "MapDestroyed", newMap.AncestryChanged:Connect(function()
-                print("MapCleanUp")
                 if newMap == CurrentMap.Value then -- Check to see if still valid
                     CurrentMap.Value = workspace -- If not, reset the map value to refresh!
                 end
@@ -460,7 +462,7 @@ local function SetUpGame(C, Settings)
 
     function C.HitSurvivor(theirChar)
         if not theirChar.PrimaryPart then
-            print('1')
+            print('Hit stopped because {theirChar.Name} does not have a primary part!')
             return
         end
         local Dist=(C.Handle.Position-theirChar.PrimaryPart.Position).magnitude
@@ -659,8 +661,18 @@ return function(C,Settings)
             return false, "Timeout Occured"
         end
     end
-
-
+    local SetsRarityValue = {
+        [1] = 
+    }
+    function C.GetCreditsValue(sets)
+        local value = 0
+        for _, setName in ipairs(sets) do
+            local ItemHammer = C.StringWait(RS,`ItemDatabase.{setName}`)
+            local Rarity = ItemHammer:GetAttribute("Rarity")
+            value += SetsRarityValue[Rarity] or -9999999999
+        end
+        return value
+    end
     function C.GetUserInventory(theirPlr)
         local RequestName = theirPlr and "GetOtherPlayerInventory" or "GetPlayerInventory"
 
@@ -675,6 +687,13 @@ return function(C,Settings)
         end
         InventoryCount["H0001"], InventoryCount["G0001"] = nil, nil
         return InventoryCount, #Inventory
+    end
+    function C.GetUserStats(theirPlr)
+        local theirSSM = theirPlr:WaitForChild("SavedPlayerStatsModule")
+        if theirSSM then
+            local Results = {}
+            Results.Credits = 0
+        end
     end
     -- COMMANDS --
     table.insert(C.InsertCommandFunctions,function()
@@ -700,7 +719,7 @@ return function(C,Settings)
                 Run = function(self, args)
                     local list = C.hackData.FleeTheFacility.InstaTrade.whitelistedUsers
                     if not C.TblRemove(list, args[1][1].Name) then
-                       return false, `{args[1][1].Name} is not whitelisted!` 
+                       return false, `{args[1][1].Name} is not whitelisted!`
                     end
                     return true
                 end,

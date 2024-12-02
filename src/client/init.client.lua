@@ -5,7 +5,6 @@ local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
 local HS = game:GetService("HttpService")
 local CG = game:GetService("CoreGui")
-local HS = game:GetService("HttpService")
 local SP = game:GetService("StarterPlayer")
 local MPS = game:GetService("MarketplaceService")
 local TextChatService = game:GetService("TextChatService")
@@ -458,6 +457,7 @@ end
 local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
 if not C.isStudio and not PreCached then
 	for num, module in ipairs(ModulesToPreload) do
+
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
 		local path = module:find("/") and module or ("Modules/"..module)
