@@ -7520,31 +7520,28 @@ return function(C,Settings)
                         self.Events.CharAdded(self, theirPlr, foundChar, true)
                     end
                 end,
-                MapAdded = function(self, Map)
-                    for _, capsule in ipairs(C.FreezingPods) do
-                        local function childAdded(child)
-                            if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
-                                local humanDesc = C.getgenv().currentDesc[child.Name]
-                                if humanDesc then
-                                    CP:PreloadAsync({child})
-                                    local orgColor = child:WaitForChild("Head").Color
-                                    local myClone = humanDesc:Clone()
-                                    for num, prop in ipairs({"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}) do
-                                        myClone[prop] = orgColor
-                                    end
-                                    self:MorphPlayer(child,myClone,true,true)
-                                    DS:AddItem(myClone,15)
+                NewFreezingPod = function(self, capsule)
+                    local function childAdded(child)
+                        if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
+                            local humanDesc = C.getgenv().currentDesc[child.Name]
+                            if humanDesc then
+                                CP:PreloadAsync({child})
+                                local orgColor = child:WaitForChild("Head").Color
+                                local myClone = humanDesc:Clone()
+                                for num, prop in ipairs({"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}) do
+                                    myClone[prop] = orgColor
                                 end
+                                self:MorphPlayer(child,myClone,true,true)
+                                DS:AddItem(myClone,15)
                             end
                         end
+                    end
 
-                        if not false then
-                            table.insert(C.CommandFunctions.morph.Functs,capsule.ChildAdded:Connect(childAdded))
-                        end
-                        if not capsule:FindFirstChild("PodTrigger") then
-                            for num, child in ipairs(capsule:GetChildren()) do
-                                task.spawn(childAdded,child)
-                            end
+
+                    table.insert(self.Functs,capsule.ChildAdded:Connect(childAdded))
+                    if not capsule:WaitForChild("PodTrigger",.5) then
+                        for num, child in ipairs(capsule:GetChildren()) do
+                            task.spawn(childAdded,child)
                         end
                     end
                 end,
