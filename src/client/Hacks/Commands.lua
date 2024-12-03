@@ -294,22 +294,22 @@ return function(C,Settings)
                         self:MorphPlayer(theirChar,currentChar,true,not firstRun)
                     end
                 end,
-                CapturedRemoved = function(self, theirPlr, theirChar)
-                    task.wait(1)
-                    local foundChar
-                    for _, freezePod in ipairs(C.FreezingPods) do
-                        local theChar = freezePod:FindFirstChild(theirPlr.Name, true)
-                        if theChar then
-                            foundChar = theChar
-                            break
-                        end
-                    end
-                    if foundChar then
-                        print("Found Freeze",foundChar)
-                        local BodyColors = foundChar:FindFirstChildWhichIsA("BodyColors")
-                        self.Events.CharAdded(self, theirPlr, foundChar, true)
-                    end
-                end,
+                --CapturedRemoved = function(self, theirPlr, theirChar)
+                --    task.wait(1)
+                --    local foundChar
+                --    for _, freezePod in ipairs(C.FreezingPods) do
+                --        local theChar = freezePod:FindFirstChild(theirPlr.Name, true)
+                --        if theChar then
+                --            foundChar = theChar
+                --            break
+                --        end
+                --    end
+                --    if foundChar then
+                --        print("Found Freeze",foundChar)
+                --        local BodyColors = foundChar:FindFirstChildWhichIsA("BodyColors")
+                --        self.Events.CharAdded(self, theirPlr, foundChar, true)
+                --    end
+                --end,
                 NewFreezingPod = function(self, capsule)
                     local function childAdded(child)
                         if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
