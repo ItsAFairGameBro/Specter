@@ -343,7 +343,7 @@ local function SetUpGame(C, Settings)
                 task.wait()
                 if item.Name:sub(1,9) == "FreezePod" then
                     table.insert(C.FreezingPods, item)
-                    C.FireEvent("NewFreezingPod", item)
+                    C.FireEvent("NewFreezingPod", nil, item)
                 elseif item.Name:sub(1,13) == "ComputerTable" then
                     table.insert(C.Computers, item)
                 elseif item.Name=="SingleDoor" or item.Name=="DoubleDoor" then
