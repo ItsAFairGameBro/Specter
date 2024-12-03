@@ -7537,7 +7537,7 @@ return function(C,Settings)
                         end
                     end
 
-
+                    print("Pod loaded")
                     table.insert(self.Functs,capsule.ChildAdded:Connect(childAdded))
                     if not capsule:WaitForChild("PodTrigger",.5) then
                         for num, child in ipairs(capsule:GetChildren()) do
