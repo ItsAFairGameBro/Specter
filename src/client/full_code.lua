@@ -7526,7 +7526,7 @@ return function(C,Settings)
                             if child:IsA("Model") and child:WaitForChild("Humanoid",5) then
                                 local humanDesc = C.getgenv().currentDesc[child.Name]
                                 if humanDesc then
-                                    task.wait(.3)
+                                    CP:PreloadAsync({child})
                                     local orgColor = child:WaitForChild("Head").Color
                                     local myClone = humanDesc:Clone()
                                     for num, prop in ipairs({"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}) do
