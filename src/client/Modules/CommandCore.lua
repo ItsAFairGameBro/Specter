@@ -59,7 +59,7 @@ return function(C,Settings)
                         end
                         args[num] = "new"
                     else
-                        local ChosenPlr = select(2,table.unpack(C.StringStartsWith(PS:GetPlayers(),args[1])[1] or {}))
+                        local ChosenPlr = select(2,table.unpack(C.StringStartsWith(PS:GetPlayers(),args[num])[1] or {}))
                         if ChosenPlr then
                             args[num] = {ChosenPlr}
                         else
@@ -92,7 +92,7 @@ return function(C,Settings)
                     end
                 elseif argumentData.Type == "Options" then
                     local Options = argumentData.Options
-                    local ChosenOption = select(2,table.unpack(C.StringStartsWith(Options,args[1])[1] or {}))
+                    local ChosenOption = select(2,table.unpack(C.StringStartsWith(Options,args[num])[1] or {}))
                     if not ChosenOption and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
