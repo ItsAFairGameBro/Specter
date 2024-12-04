@@ -13387,7 +13387,7 @@ return function(C,Settings)
 		if name == "" and not override then
 			return {}
 		end
-		name = name:lower():gsub("%s",""):gsub("[^%w_]+","_")
+		name = name:lower():gsub("[%s%.]+","")
 		local closestMatch, results = math.huge, {}
 		for index, theirValue in pairs(tbl) do
 			local itsIndex = tostring((typeof(theirValue)=="table" and (theirValue.SortName or theirValue[2] or theirValue[1])) or (typeof(index)=="number" and theirValue) or index)
