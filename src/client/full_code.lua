@@ -11603,6 +11603,7 @@ local PS = game:GetService("Players")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
     local Serializer = C.LoadModule("Modules/Serializer")
+    C.getgenv().currentDesc = C.getgenv().currentDesc or {}
 	function C.API(service,method,tries,...)
 		assert(typeof(tries)=="number" or tries==nil,"[C.API]: Tries parameter must be a number")
 		tries = tries or 3
@@ -11795,6 +11796,7 @@ return function(C,Settings)
                 for userName, encodedData in pairs(decoded2.MorphData or {}) do
                     C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
                 end
+                C.getgenv().serializedDesc = decoded2.MorphData or {}
 			end
 			if not C.isfile(path) then
 				C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
@@ -11808,7 +11810,7 @@ return function(C,Settings)
 			for key, val in pairs(decoded.Hacks) do
 				C.enHacks[key] = val
 			end
-            C.getgenv().currentDesc = C.getgenv().currentDesc or {}
+
 
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
