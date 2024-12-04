@@ -7294,7 +7294,7 @@ return function(C,Settings)
         },
         ["bodycolor"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="BodyColor"}},
-            Alias = {"color"},
+            Alias = {"colorplr"},
             AfterTxt = "%s",
             Run = function(self, args)
                 local SetDesc = Instance.new()
