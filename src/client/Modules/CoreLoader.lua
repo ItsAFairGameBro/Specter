@@ -391,8 +391,6 @@ return function(C, _SETTINGS)
 	--Load Commands
 	C.LoadModule("Hacks/Commands")
 
-	--Load Events
-	C.LoadModule("Modules/Events")
 	if C.Cleared then return end
 	for name, modData in pairs(C.hackData) do
 		for shortcut, data in pairs(modData) do
@@ -422,6 +420,9 @@ return function(C, _SETTINGS)
 
 	C.LoadModule("Modules/CommandCore")
 	if C.Cleared then return end
+    --Load Events
+	C.LoadModule("Modules/Events")
+    if C.Cleared then return end
 
 	--Make it appear
 	C.GUI.Parent = C.gethui()
