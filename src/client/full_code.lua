@@ -7363,7 +7363,11 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
-                        C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
+                        if humanDesc ~= C.getgenv().JoinPlayerMorphDesc then
+                            C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
+                        else
+                            C.getgenv().serializedDesc[targetChar.Name] = nil
+                        end
                     else
                         C.getgenv().currentDesc[targetChar.Name] = nil
                         C.getgenv().serializedDesc[targetChar.Name] = nil
@@ -7502,7 +7506,7 @@ return function(C,Settings)
                         if JoinPlayerMorphDesc then
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
-                            C.getgenv().serializedDesc[theirPlr.Name] = Serializer.serialize(JoinPlayerMorphDesc)
+                            --C.getgenv().serializedDesc[theirPlr.Name] = Serializer.serialize(JoinPlayerMorphDesc)
                             --print(theirChar,"first run set to",JoinPlayerMorphDesc)
                             self:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
                         end
@@ -7598,8 +7602,10 @@ return function(C,Settings)
                     end
                     if selectedName=="no" then
                         C.getgenv().JoinPlayerMorphDesc = nil
+                        C.getgenv().serializedDesc.new = nil
                     else
                         C.getgenv().JoinPlayerMorphDesc = savedDescription
+                        C.getgenv().serializedDesc.new = Serializer.serialize(C.getgenv().JoinPlayerMorphDesc)
                     end
                 end
                 if args[1]~="new" then
