@@ -92,7 +92,7 @@ return function(C,Settings)
                     end
                 elseif argumentData.Type == "Options" then
                     local Options = argumentData.Options
-                    local ChosenOption = select(2,table.unpack(C.StringStartsWith(Options,args[num])[1] or {}))
+                    local ChosenOption = C.StringStartsWith(Options,args[num])[1]
                     if not ChosenOption and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
@@ -100,6 +100,8 @@ return function(C,Settings)
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)
                         end
+                    else
+                        args[num] = ChosenOption[2]
                     end
                 elseif argumentData.Type == "Friend" then
                     if args[num] == "" then
