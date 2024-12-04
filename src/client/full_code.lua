@@ -7667,7 +7667,7 @@ return function(C,Settings)
                 for _, property in ipairs(BodyColorPropertyNames) do
                     SetDesc[property] = AppliedColor
                 end
-                return C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args, SetDesc)
+                return C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args[1], SetDesc)
             end,
         },
         ["morph"]={
