@@ -11757,9 +11757,8 @@ return function(C,Settings)
 				end--]]
 			end
             local MorphsData
-            do
-                MorphsData = C.getgenv().serializedDesc or {}
-            end
+            MorphsData = C.getgenv().serializedDesc or {}
+
 
 			local EncodedSaveDict2 = HS:JSONEncode({
 				Settings = C.enHacks.Settings,
