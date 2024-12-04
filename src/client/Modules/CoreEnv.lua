@@ -7,7 +7,6 @@ local PS = game:GetService("Players")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
     local Serializer = C.LoadModule("Modules/Serializer")
-    local Commands = C.LoadModule("Hacks/Commands")
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
 	function C.API(service,method,tries,...)
 		assert(typeof(tries)=="number" or tries==nil,"[C.API]: Tries parameter must be a number")
@@ -202,7 +201,7 @@ return function(C,Settings)
                     C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
                 end
                 C.getgenv().serializedDesc = decoded2.MorphData or {}
-                C.CommandFunctions.morph.Enabled = decoded2.MorphData and C.GetDictLength(decoded2.MorphData) > 0
+                C.getgenv().MorphEnabled = C.getgenv().MorphEnabled or (decoded2.MorphData and C.GetDictLength(decoded2.MorphData) > 0)
 			end
 			if not C.isfile(path) then
 				C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
