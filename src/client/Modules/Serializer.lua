@@ -588,7 +588,11 @@ local function serialize_property(p)
 		value = p
 
 	elseif _type == "number" then
-		value = p
+        if value == math.floor(value) then
+            value = p
+        else
+            value = ("%.3f"):format(p)
+        end
 
 	elseif _type == "boolean" then
 		value = p
@@ -711,7 +715,7 @@ local function deserialize_property(property, prop_name, instance)
 		result = value
 
 	elseif prop_type == "number" then
-		result = ("%.3f"):format(value)
+		result = value
 
 	elseif prop_type == "boolean" then
 		result = value
