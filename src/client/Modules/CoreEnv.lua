@@ -6,7 +6,7 @@ local TCS = game:GetService("TextChatService")
 local PS = game:GetService("Players")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
-    local Serializer = C.GetModule("Serializer")
+    local Serializer = C.LoadModule("Modules/Serializer")
 	function C.API(service,method,tries,...)
 		assert(typeof(tries)=="number" or tries==nil,"[C.API]: Tries parameter must be a number")
 		tries = tries or 3

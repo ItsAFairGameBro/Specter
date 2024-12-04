@@ -17,7 +17,7 @@ local MaxRelativeDist = 50
 local MaxFlingSpeed = 1e6
 
 return function(C,Settings)
-    local Serializer = C.GetModule("Serializer")
+    local Serializer = C.LoadModule("Modules/Serializer")
     C.getgenv().serializedDesc = C.getgenv().serializedDesc or {}
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.getgenv().Outfits = C.getgenv().Outfits or {}
