@@ -1,6 +1,7 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local GuiService = game:GetService("GuiService")
 local PhysicsService = game:GetService("PhysicsService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunS = game:GetService("RunService")
 local TS = game:GetService("TweenService")
 local PS = game:GetService("Players")
@@ -16,6 +17,8 @@ local MaxRelativeDist = 50
 local MaxFlingSpeed = 1e6
 
 return function(C,Settings)
+    local Serializer = C.GetModule("Serializer")
+    C.getgenv().serializedDesc = C.getgenv().serializedDesc or {}
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.getgenv().Outfits = C.getgenv().Outfits or {}
     C.CommandFunctions = {
@@ -150,10 +153,12 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
+                        C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
                     else
                         C.getgenv().currentDesc[targetChar.Name] = nil
+                        C.getgenv().serializedDesc[targetChar.Name] = nil
                     end
-                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc)
+                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0
                 end
                 local isR6 = targetHuman.RigType == Enum.HumanoidRigType.R6
 
@@ -287,6 +292,7 @@ return function(C,Settings)
                         if JoinPlayerMorphDesc then
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
+                            C.getgenv().serializedDesc[theirPlr.Name] = Serializer.serialize(JoinPlayerMorphDesc)
                             --print(theirChar,"first run set to",JoinPlayerMorphDesc)
                             self:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
                         end
@@ -322,7 +328,6 @@ return function(C,Settings)
                                     myClone[prop] = orgColor
                                 end
                                 self:MorphPlayer(child,myClone,true,true)
-                                print(child,"Complete!")
                                 DS:AddItem(myClone,15)
                             end
                         end

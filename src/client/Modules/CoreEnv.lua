@@ -6,6 +6,7 @@ local TCS = game:GetService("TextChatService")
 local PS = game:GetService("Players")
 local SG = game:GetService("StarterGui")
 return function(C,Settings)
+    local Serializer = C.GetModule("Serializer")
 	function C.API(service,method,tries,...)
 		assert(typeof(tries)=="number" or tries==nil,"[C.API]: Tries parameter must be a number")
 		tries = tries or 3
@@ -159,10 +160,15 @@ return function(C,Settings)
 					C.getgenv().PreviousServers[1].Players = #PS:GetPlayers() -- Update players
 				end--]]
 			end
+            local MorphsData
+            do
+                MorphsData = C.getgenv().serializedDesc or {}
+            end
 
 			local EncodedSaveDict2 = HS:JSONEncode({
 				Settings = C.enHacks.Settings,
 				Servers = C.getgenv().PreviousServers,
+                MorphData = MorphsData
 			})
 			--General Storage Folder Link
 
@@ -204,6 +210,10 @@ return function(C,Settings)
 			for key, val in pairs(decoded.Hacks) do
 				C.enHacks[key] = val
 			end
+            C.getgenv().currentDesc = C.getgenv().currentDesc or {}
+            for userName, encodedData in pairs(decoded.MorphData) do
+                C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
+            end
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
 		C.DebugMessage("SaveSystem",`Result: {tostring(success)}; {tostring(result)}`)
