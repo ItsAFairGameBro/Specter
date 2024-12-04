@@ -11479,6 +11479,7 @@ return function(C,Settings)
                     else
                         args[num] = ChosenOption[2]
                     end
+                    print("Color res:",ChosenOption)
                 elseif argumentData.Type == "Friend" then
                     if args[num] == "" then
                         args[num] = ""
