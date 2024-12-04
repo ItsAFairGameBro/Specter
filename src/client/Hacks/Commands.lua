@@ -443,7 +443,7 @@ return function(C,Settings)
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
                 {Type="Options",Default="white",Options=BodyColorsArray}},
             Alias = {"color"},
-            AfterTxt = " to %s%s",
+            AfterTxt = " to %s!",
             Run = function(self, args)
                 local SetDesc
                 if args[1] == "new" then
@@ -457,7 +457,11 @@ return function(C,Settings)
                 for _, property in ipairs(BodyColorPropertyNames) do
                     SetDesc[property] = AppliedColor
                 end
-                return C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args[1], SetDesc)
+                local r1, r2 = C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args[1], SetDesc)
+                if not r1 then
+                    return r1, r2
+                end
+                return true, args[2]
             end,
         },
         ["morph"]={
