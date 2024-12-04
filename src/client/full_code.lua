@@ -18422,10 +18422,10 @@ local function serialize_property(p)
 		value = p
 
 	elseif _type == "Vector3" then
-		value = {p.X, p.Y, p.Z}
+		value = {serialize_property(p.X), serialize_property(p.Y), serialize_property(p.Z)}
 
 	elseif _type == "Color3" then
-		value = {p.R, p.G, p.B}
+		value = {serialize_property(p.R), serialize_property(p.G), serialize_property(p.B)}
 
 	elseif _type == "EnumItem" then
 		value = p.Value
@@ -18443,9 +18443,11 @@ local function serialize_property(p)
 
 	elseif _type == "CFrame" then
 		value = table_pack(p:GetComponents())
-
+        for key, val in ipairs(value) do
+            value[key] = serialize_property(val)
+        end
 	elseif _type == "Vector2" then
-		value = {p.X, p.Y}
+		value = {serialize_property(p.X), serialize_property(p.Y)}
 
 	elseif _type == "ColorSequence" then
 		value = {}
@@ -18455,11 +18457,11 @@ local function serialize_property(p)
 			local kp = kps[i]
 			local kpc = kp.Value
 
-			value[i] = {kp.Time, kpc.R, kpc.G, kpc.B}
+			value[i] = {serialize_property(kp.Time), serialize_property(kpc.R), serialize_property(kpc.G), serialize_property(kpc.B)}
 		end
 
 	elseif _type == "NumberRange" then
-		value = {p.Min, p.Max}
+		value = {serialize_property(p.Min), serialize_property(p.Max)}
 
 	elseif _type == "NumberSequence" then
 		value = {}
@@ -18468,7 +18470,7 @@ local function serialize_property(p)
 		for i in kps do
 			local kp = kps[i]
 
-			value[i] = {kp.Time, kp.Value, kp.Envelope}
+			value[i] = {serialize_property(kp.Time), serialize_property(kp.Value), serialize_property(kp.Envelope)}
 		end
 
 	end
