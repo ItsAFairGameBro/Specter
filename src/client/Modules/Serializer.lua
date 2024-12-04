@@ -453,6 +453,39 @@ local MUTABLE_PROPERTIES = {
 
 		"CFrame"
 	},
+    HumanoidDescription = {
+        "AccessoryBlob",
+        "BodyTypeScale",
+        "ClimbAnimation",
+        "DepthScale",
+        "Face",
+        "FallAnimation",
+        "GraphicTShirt",
+        "Head",
+        "HeadColor",
+        "HeadScale",
+        "HeightScale",
+        "IdleAnimation",
+        "JumpAnimation",
+        "LeftArm",
+        "LeftArmColor",
+        "LeftLeg",
+        "LeftLegColor",
+        "MoodAnimation",
+        "Pants",
+        "ProportionScale",
+        "RightArm",
+        "RightArmColor",
+        "RightLeg",
+        "RightLegColor",
+        "RunAnimation",
+        "Shirt",
+        "SwimAnimation",
+        "Torso",
+        "TorsoColor",
+        "WalkAnimation",
+        "WidthScale"
+    }
 }
 
 local IV_CLASSNAMES = {}
