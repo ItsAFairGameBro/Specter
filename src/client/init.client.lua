@@ -423,6 +423,8 @@ function GetModule(path: string)
             C.preloadedModule[path] = result
         elseif not PreCached and not result then
             result = C.RunLink(githubLink,gitType,path)
+        elseif result then
+            error(`Module Path Load Failed: {path}`)
         end
 		if typeof(result) == "function" then
 			return result(C,Settings)
