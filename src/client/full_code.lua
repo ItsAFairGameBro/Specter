@@ -11792,6 +11792,9 @@ return function(C,Settings)
 				local decoded2 = HS:JSONDecode(rawFile2)
 				C.enHacks.Settings = decoded2.Settings
 				C.getgenv().PreviousServers = decoded2.Servers
+                for userName, encodedData in pairs(decoded2.MorphData or {}) do
+                    C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
+                end
 			end
 			if not C.isfile(path) then
 				C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
@@ -11806,9 +11809,7 @@ return function(C,Settings)
 				C.enHacks[key] = val
 			end
             C.getgenv().currentDesc = C.getgenv().currentDesc or {}
-            for userName, encodedData in pairs(decoded.MorphData or {}) do
-                C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
-            end
+
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
 		C.DebugMessage("SaveSystem",`Result: {tostring(success)}; {tostring(result)}`)
