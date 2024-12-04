@@ -92,7 +92,8 @@ return function(C,Settings)
                     end
                 elseif argumentData.Type == "Options" then
                     local Options = argumentData.Options
-                    if not table.find(Options,args[num]) and canRunFunction then
+                    local ChosenOption = select(2,table.unpack(C.StringStartsWith(Options,args[1])[1] or {}))
+                    if not ChosenOption and canRunFunction then
                         if args[num] == "" and argumentData.Default then
                             args[num] = argumentData.Default
                         else
