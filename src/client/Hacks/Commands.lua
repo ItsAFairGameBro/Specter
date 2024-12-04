@@ -153,8 +153,7 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
-                        local serializedResult = Serializer.serialize(humanDesc)
-                        if serializedResult ~= C.getgenv().serializedDesc.new then
+                        if not C.getgenv().currentDesc.new or humanDesc.Name ~= C.getgenv().currentDesc.new.Name then
                             C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
                         else
                             C.getgenv().serializedDesc[targetChar.Name] = nil

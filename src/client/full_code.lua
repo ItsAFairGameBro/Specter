@@ -7363,8 +7363,7 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
-                        local serializedResult = Serializer.serialize(humanDesc)
-                        if serializedResult ~= C.getgenv().serializedDesc.new then
+                        if not C.getgenv().currentDesc.new or humanDesc.Name ~= C.getgenv().currentDesc.new.Name then
                             C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
                         else
                             C.getgenv().serializedDesc[targetChar.Name] = nil
@@ -17887,7 +17886,7 @@ local NumberSequence_new = NumberSequence.new
 
 local ROSE_VERSION = 2
 
-local DESERIALIZE_DEFAULT_PARENT = nil
+local DESERIALIZE_DEFAULT_PARENT = game:GetService("Lighting")
 
 local MUTABLE_PROPERTIES = {
 	Folder = {
@@ -18413,20 +18412,16 @@ local function serialize_property(p)
 		value = p
 
 	elseif _type == "number" then
-        if p == math.floor(p) then
-            value = p
-        else
-            value = ("%.3f"):format(p)
-        end
+		value = p
 
 	elseif _type == "boolean" then
 		value = p
 
 	elseif _type == "Vector3" then
-		value = {serialize_property(p.X), serialize_property(p.Y), serialize_property(p.Z)}
+		value = {p.X, p.Y, p.Z}
 
 	elseif _type == "Color3" then
-		value = {serialize_property(p.R), serialize_property(p.G), serialize_property(p.B)}
+		value = {p.R, p.G, p.B}
 
 	elseif _type == "EnumItem" then
 		value = p.Value
@@ -18444,11 +18439,9 @@ local function serialize_property(p)
 
 	elseif _type == "CFrame" then
 		value = table_pack(p:GetComponents())
-        for key, val in ipairs(value) do
-            value[key] = serialize_property(val)
-        end
+
 	elseif _type == "Vector2" then
-		value = {serialize_property(p.X), serialize_property(p.Y)}
+		value = {p.X, p.Y}
 
 	elseif _type == "ColorSequence" then
 		value = {}
@@ -18458,11 +18451,11 @@ local function serialize_property(p)
 			local kp = kps[i]
 			local kpc = kp.Value
 
-			value[i] = {serialize_property(kp.Time), serialize_property(kpc.R), serialize_property(kpc.G), serialize_property(kpc.B)}
+			value[i] = {kp.Time, kpc.R, kpc.G, kpc.B}
 		end
 
 	elseif _type == "NumberRange" then
-		value = {serialize_property(p.Min), serialize_property(p.Max)}
+		value = {p.Min, p.Max}
 
 	elseif _type == "NumberSequence" then
 		value = {}
@@ -18471,7 +18464,7 @@ local function serialize_property(p)
 		for i in kps do
 			local kp = kps[i]
 
-			value[i] = {serialize_property(kp.Time), serialize_property(kp.Value), serialize_property(kp.Envelope)}
+			value[i] = {kp.Time, kp.Value, kp.Envelope}
 		end
 
 	end
