@@ -711,7 +711,7 @@ local function deserialize_property(property, prop_name, instance)
 		result = value
 
 	elseif prop_type == "number" then
-		result = value
+		result = ("%.3f"):format(value)
 
 	elseif prop_type == "boolean" then
 		result = value

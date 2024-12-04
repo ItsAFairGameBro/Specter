@@ -7363,7 +7363,8 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
-                        if humanDesc ~= C.getgenv().JoinPlayerMorphDesc then
+                        local serializedResult = Serializer.serialize(humanDesc)
+                        if serializedResult ~= C.getgenv().serializedDesc.new then
                             C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
                         else
                             C.getgenv().serializedDesc[targetChar.Name] = nil
@@ -18534,7 +18535,7 @@ local function deserialize_property(property, prop_name, instance)
 		result = value
 
 	elseif prop_type == "number" then
-		result = value
+		result = ("%.3f"):format(value)
 
 	elseif prop_type == "boolean" then
 		result = value
