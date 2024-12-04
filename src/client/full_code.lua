@@ -18267,13 +18267,17 @@ local MUTABLE_PROPERTIES = {
 		"CFrame"
 	},
     HumanoidDescription = {
-        "AccessoryBlob",
+        "BackAccessory",
         "BodyTypeScale",
         "ClimbAnimation",
         "DepthScale",
         "Face",
+        "FaceAccessory",
         "FallAnimation",
+        "FrontAccessory",
         "GraphicTShirt",
+        "HairAccessory",
+        "HatAccessory",
         "Head",
         "HeadColor",
         "HeadScale",
@@ -18285,6 +18289,7 @@ local MUTABLE_PROPERTIES = {
         "LeftLeg",
         "LeftLegColor",
         "MoodAnimation",
+        "NeckAccessory",
         "Pants",
         "ProportionScale",
         "RightArm",
@@ -18293,9 +18298,11 @@ local MUTABLE_PROPERTIES = {
         "RightLegColor",
         "RunAnimation",
         "Shirt",
+        "ShouldersAccessory",
         "SwimAnimation",
         "Torso",
         "TorsoColor",
+        "WaistAccessory",
         "WalkAnimation",
         "WidthScale"
     }
