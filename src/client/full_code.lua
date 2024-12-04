@@ -7294,7 +7294,7 @@ return function(C,Settings)
         },
         ["bodycolor"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="BodyColor"}},
-            Alias = {"colorplr"},
+            Alias = {"color"},
             AfterTxt = "%s",
             Run = function(self, args)
                 local SetDesc = Instance.new()
@@ -11615,6 +11615,7 @@ return function(C,Settings)
             assert(C.CommandFunctions[aliasName]==nil, `[CommandCore]: Duplicate AliasName: {aliasName} from the command {shortcut}: {warn(C.CommandFunctions[aliasName])}`)
             C.CommandFunctions[aliasName] = commandTbl
         end
+        commandTbl.Alias = nil
         C.BindEvents(commandTbl)
     end
 end]=],
