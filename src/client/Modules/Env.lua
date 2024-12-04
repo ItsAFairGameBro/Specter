@@ -578,7 +578,7 @@ return function(C,Settings)
 	end
 
 	local function Compare(start,needle)
-		return start:lower():find(C.EscapeForStringLibrary(needle:gsub("%s",""):gsub("[^%w_]+","_"))) ~= nil
+		return start:lower():gsub("%s",""):gsub("[^%w_]+","_"):find(C.EscapeForStringLibrary(needle)) ~= nil
 	end
 
 	function C.StringStartsWith(tbl,name,override,leaveAsIs)
