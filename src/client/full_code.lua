@@ -7292,6 +7292,17 @@ return function(C,Settings)
                 return true,"Successful"
             end,
         },
+        ["bodycolor"] = {
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="BodyColor"}},
+            Alias = {"color"},
+            AfterTxt = "%s",
+            Run = function(self, args)
+                local SetDesc = Instance.new()
+                if args[1] == "new" then
+
+                end
+            end,
+        },
         ["morph"]={
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"}},
             AfterTxt=" to %s%s",Priority=-3,
@@ -7557,8 +7568,6 @@ return function(C,Settings)
             },
             RealEnabled = C.getgenv().MorphEnabled,
             Run=function(self,args)
-                self.RealEnabled = true
-                C.getgenv().MorphEnabled = true
                 local selectedName = (args[2] == "" and "no") or args[2]--C.checkFriendsPCALLFunction(args[2])[1]
                 selectedName = selectedName ~= "no" and selectedName[2] or selectedName
                 if not selectedName then
@@ -7596,11 +7605,23 @@ return function(C,Settings)
                 local savedDescription = selectedName~="no"
                     and C.CommandFunctions.morph:GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
                 --((args[3] and PS:GetHumanoidDescriptionFromOutfitId(outfitData.id)) or PS:GetHumanoidDescriptionFromUserId(selectedName.UserId))
-                if args[1]=="new" or #args[1] > 1 then
+                if args[3] and not outfitData then
+                    return false, `Outfit {args[3]} not found!`
+                end
+                local ret, str = self:SetPlayersToDescription(args[1], savedDescription)
+                if not ret then
+                    return false, str
+                end
+                return true,args[2]=="" and "nothing" or selectedName.UserName,outfitData and (" " ..outfitData.name) or ""
+            end,
+            SetPlayersToDescription = function(self, players, savedDescription)
+                self.RealEnabled = true
+                C.getgenv().MorphEnabled = true
+                if players=="new" or #players > 1 then
                     if C.getgenv().JoinPlayerMorphDesc and C.getgenv().JoinPlayerMorphDesc ~= savedDescription then
                         C.getgenv().JoinPlayerMorphDesc:Destroy()
                     end
-                    if selectedName=="no" then
+                    if not savedDescription then
                         C.getgenv().JoinPlayerMorphDesc = nil
                         C.getgenv().serializedDesc.new = nil
                     else
@@ -7608,19 +7629,16 @@ return function(C,Settings)
                         C.getgenv().serializedDesc.new = Serializer.serialize(C.getgenv().JoinPlayerMorphDesc)
                     end
                 end
-                if args[1]~="new" then
-                    for num, theirPlr in ipairs(args[1]) do
-                        if args[3] and not outfitData then
-                            return false, `Outfit {args[3]} not found for player {theirPlr.Name}`
-                        end
-                        local desc2Apply = (selectedName =="no" and PS:GetHumanoidDescriptionFromUserId(theirPlr.UserId))
-                            or self:GetHumanoidDesc(selectedName.UserId,args[3] and outfitData.id)
+                if players~="new" then
+                    for num, theirPlr in ipairs(players) do
+
+                        local desc2Apply = savedDescription or PS:GetHumanoidDescriptionFromUserId(theirPlr.UserId)
                         if not desc2Apply then
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
                         end
                         if theirPlr.Character then
                             task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,selectedName == "no")
-                        elseif selectedName ~= "no" then
+                        elseif not savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
                                 C.getgenv().currentDesc[theirPlr.Name]:Destroy()
@@ -7635,7 +7653,7 @@ return function(C,Settings)
                         --(selectedName=="no" and theirPlr.UserId or PS:GetUserIdFromNameAsync(selectedName)))
                     end
                 end
-                return true,args[2]=="" and "nothing" or selectedName.UserName,outfitData and (" " ..outfitData.name) or ""
+                return true
             end
         },
         ["unmorph"]={
