@@ -454,7 +454,7 @@ return function(C,Settings)
                 SetDesc = SetDesc or Instance.new("HumanoidDescription")
                 -- Apply Color Transformation
                 local AppliedColor = BodyColorsDictionary[args[2]]
-                for _, property in ipairs(BodyColorsArray) do
+                for _, property in ipairs(BodyColorPropertyNames) do
                     SetDesc[property] = AppliedColor
                 end
                 return C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args, SetDesc)
