@@ -419,7 +419,9 @@ function GetModule(path: string)
 		local result = C.preloadedModule[path]
         if PreCached and not LoadedModules[path] then
             LoadedModules[path] = true
-            result = loadstring(result)()
+            result = loadstring(result)
+            assert(result, `Compiler Error: {path}`)
+            result = result()
             C.preloadedModule[path] = result
         elseif not PreCached and not result then
             result = C.RunLink(githubLink,gitType,path)
