@@ -578,14 +578,14 @@ return function(C,Settings)
 	end
 
 	local function Compare(start,needle)
-		return start:lower():find(C.EscapeForStringLibrary(needle)) ~= nil
+		return start:gsub(" ",""):lower():find(C.EscapeForStringLibrary(needle)) ~= nil
 	end
 
 	function C.StringStartsWith(tbl,name,override,leaveAsIs)
 		if name == "" and not override then
 			return {}
 		end
-		name = name:lower()
+		name = name:lower():gsub(" ","")
 		local closestMatch, results = math.huge, {}
 		for index, theirValue in pairs(tbl) do
 			local itsIndex = tostring((typeof(theirValue)=="table" and (theirValue.SortName or theirValue[2] or theirValue[1])) or (typeof(index)=="number" and theirValue) or index)
