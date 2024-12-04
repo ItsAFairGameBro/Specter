@@ -588,7 +588,7 @@ local function serialize_property(p)
 		value = p
 
 	elseif _type == "number" then
-        if value == math.floor(value) then
+        if p == math.floor(p) then
             value = p
         else
             value = ("%.3f"):format(p)
