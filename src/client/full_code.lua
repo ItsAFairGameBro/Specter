@@ -7363,7 +7363,7 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
-                        if not C.getgenv().currentDesc.new or humanDesc.Name ~= C.getgenv().currentDesc.new.Name then
+                        if not C.getgenv().JoinPlayerMorphDesc or humanDesc.Name ~= C.getgenv().JoinPlayerMorphDesc.Name then
                             C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
                         else
                             C.getgenv().serializedDesc[targetChar.Name] = nil
@@ -11800,7 +11800,11 @@ return function(C,Settings)
 				C.enHacks.Settings = decoded2.Settings
 				C.getgenv().PreviousServers = decoded2.Servers
                 for userName, encodedData in pairs(decoded2.MorphData or {}) do
-                    C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
+                    if userName ~= "new" then
+                        C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
+                    else
+                        C.getgenv().JoinPlayerMorphDesc = Serializer.deserialize(encodedData)
+                    end
                 end
                 C.getgenv().serializedDesc = decoded2.MorphData or {}
                 C.getgenv().MorphEnabled = C.getgenv().MorphEnabled or (decoded2.MorphData and C.GetDictLength(decoded2.MorphData) > 0)
@@ -17886,7 +17890,7 @@ local NumberSequence_new = NumberSequence.new
 
 local ROSE_VERSION = 2
 
-local DESERIALIZE_DEFAULT_PARENT = game:GetService("Lighting")
+local DESERIALIZE_DEFAULT_PARENT = nil
 
 local MUTABLE_PROPERTIES = {
 	Folder = {

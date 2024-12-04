@@ -153,7 +153,7 @@ return function(C,Settings)
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
-                        if not C.getgenv().currentDesc.new or humanDesc.Name ~= C.getgenv().currentDesc.new.Name then
+                        if not C.getgenv().JoinPlayerMorphDesc or humanDesc.Name ~= C.getgenv().JoinPlayerMorphDesc.Name then
                             C.getgenv().serializedDesc[targetChar.Name] = Serializer.serialize(humanDesc)
                         else
                             C.getgenv().serializedDesc[targetChar.Name] = nil

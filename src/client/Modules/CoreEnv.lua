@@ -198,7 +198,11 @@ return function(C,Settings)
 				C.enHacks.Settings = decoded2.Settings
 				C.getgenv().PreviousServers = decoded2.Servers
                 for userName, encodedData in pairs(decoded2.MorphData or {}) do
-                    C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
+                    if userName ~= "new" then
+                        C.getgenv().currentDesc[userName] = Serializer.deserialize(encodedData)
+                    else
+                        C.getgenv().JoinPlayerMorphDesc = Serializer.deserialize(encodedData)
+                    end
                 end
                 C.getgenv().serializedDesc = decoded2.MorphData or {}
                 C.getgenv().MorphEnabled = C.getgenv().MorphEnabled or (decoded2.MorphData and C.GetDictLength(decoded2.MorphData) > 0)
