@@ -17887,7 +17887,7 @@ local NumberSequence_new = NumberSequence.new
 
 local ROSE_VERSION = 2
 
-local DESERIALIZE_DEFAULT_PARENT = game:GetService("Lighting")
+local DESERIALIZE_DEFAULT_PARENT = nil
 
 local MUTABLE_PROPERTIES = {
 	Folder = {
@@ -18278,6 +18278,7 @@ local MUTABLE_PROPERTIES = {
 		"CFrame"
 	},
     HumanoidDescription = {
+        "Name",
         "BackAccessory",
         "BodyTypeScale",
         "ClimbAnimation",
