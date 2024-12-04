@@ -13370,7 +13370,7 @@ return function(C,Settings)
 			table.sort(friendsTable,function(a,b)
 				local aLen = a.SortName:len()
 				local bLen = b.SortName:len()
-				return aLen < bLen
+				return aLen  bLen
 			end)
 			local results = C.StringStartsWith(friendsTable,inputName)
 			return results
@@ -13426,12 +13426,12 @@ return function(C,Settings)
 					return C.GetDictLength(aValue) > C.GetDictLength(bValue)
 				end
 			elseif aType == "string" and bType == "string" then
-				return aValue:lower() > bValue:lower()
+				return aValue:lower() < bValue:lower()
 			elseif (aType == "number" and bType == "number")
 				or (aType == "function" and bType == "function") then
 				return aValue > bValue
 			elseif  aType == "Instance" and bType == "Instance" then
-				return aValue.Name:lower() > bValue.Name:lower()
+				return aValue.Name:lower() < bValue.Name:lower()
 			else
 				error("[C.StringStartsWith]: error - unknown types: "..typeof(aValue).." and "..typeof(bValue))
 			end
