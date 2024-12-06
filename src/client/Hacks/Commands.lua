@@ -188,9 +188,9 @@ return function(C,Settings)
                     local currentDesc = C.getgenv().currentDesc[targetChar.Name]
                     if currentDesc and humanDesc~=currentDesc then
                         if currentDesc:GetAttribute("HeadColor_OriginalValue") then
-                            print("Applying same color")
                             for _, property in ipairs(BodyColorPropertyNames) do
                                 C.SetPartProperty(humanDesc, property, "BodyColor", currentDesc[property])
+                                print("Set Color To",currentDesc[property])
                             end
                         end
                         currentDesc:Destroy()
