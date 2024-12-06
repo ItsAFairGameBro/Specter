@@ -134,6 +134,9 @@ return function(C,Settings)
 		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
 			OldEnv.warn1(msgToDisplay)
+            if (msgToDisplay == "") then
+                print(debug.traceback())
+            end
 			return msgToDisplay
 		end)
 		OldEnv.print2 = BasicHookFunction(C.getrenv(), "print", function(...)
