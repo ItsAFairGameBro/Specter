@@ -373,6 +373,9 @@ return function(C,Settings)
 		C.DebugMessage("Destroy",`Destroy 2`)
 
 		for instance, propertiesTbl in pairs(C.forcePropertyFuncts) do
+            if instance:IsA("HumanoidDescription") then
+                continue -- Ignore HumanoidDescriptions, they persist across the deletions!
+            end
 			for attr, val in pairs(instance:GetAttributes()) do
 				if attr:find("_Request_") or attr:find("_RequestCount") then
 					--do nothing, it will be cleared
