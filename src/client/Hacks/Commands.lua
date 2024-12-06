@@ -135,7 +135,7 @@ return function(C,Settings)
                 desc.Name = userID .. (outfitId and ("/"..outfitId) or "")
                 return  desc
             end,
-            DoAnimationEffect = nil,--"Fade",
+            DoAnimationEffect = "Fade",
             AnimationEffectFunctions={
                 Fade = {
                     Tween = function(self,targetChar,loopList,visible,instant)
@@ -187,6 +187,12 @@ return function(C,Settings)
                 if not dontUpdate then
                     local currentDesc = C.getgenv().currentDesc[targetChar.Name]
                     if currentDesc and humanDesc~=currentDesc then
+                        if currentDesc:GetAttribute("HeadColor_OriginalValue") then
+                            print("Applying same color")
+                            for _, property in ipairs(BodyColorPropertyNames) do
+                                C.SetPartProperty(humanDesc, property, "BodyColor", currentDesc[property], true, true)
+                            end
+                        end
                         currentDesc:Destroy()
                     end
                     if not isDefault then
