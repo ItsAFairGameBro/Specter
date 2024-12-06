@@ -96,7 +96,7 @@ return function(C,Settings)
             end,
         },
         ["cloth"] = C.hackData.Developer and {
-            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true}},
             AfterTxt = " to nothing!",
             Run = function(self, args)
                 local SetDesc
@@ -115,7 +115,7 @@ return function(C,Settings)
                 end
                 return true, args[2]
             end,
-        },
+        } or nil,
         ["bodycolor"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
                 {Type="Options",Options=BodyColorsNamesArray,Optional=true}},
