@@ -140,11 +140,26 @@ return function(C,Settings)
 						end))
 					end
 				end,--]]
+                FPSRate = 10,
+                SetFPS = function(self, enabled)
+                    if enabled then
+                        setfpscap(self.FPSRate) -- enable FPS cap
+                    else
+                        setfpscap(0) -- disable FPS cap
+                    end
+                end,
                 Activate = function(self, newValue, firstRun)
                     if newValue and self.EnTbl.LowerFPS then
-                        setfpscap(10)
+                        self:SetFPS(true)
+                        local timePassed = time()
+                        if (timePassed < 15) then
+                            task.delay(15 - timePassed, function()
+                                self:SetFPS(true)
+                                C.AddNotification("FPS Cap", "FPS Cap Added After Delayed Start")
+                            end)
+                        end
                     elseif setfpscap and not firstRun then
-                        setfpscap(0)
+                        self:SetFPS(false)
                     end
                     if not firstRun and C.char then
                         if newValue then
