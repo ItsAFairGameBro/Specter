@@ -7408,6 +7408,7 @@ return function(C,Settings)
                 }
             },
             Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army"},
+            BannedHeadlessItems = {12064732367},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
@@ -7494,6 +7495,14 @@ return function(C,Settings)
                     humanDesc.Head = 15093053680
                     humanDesc.Face = 0
                     HeadlessActive = true
+                    local Accessories = humanDesc:GetAccessories(true)
+                    for key = #Accessories, 1, -1 do
+                        local accessory = Accessories[key]
+                        if table.find(self.BannedHeadlessItems, accessory.AssetId) then
+                            table.remove(Accessories,key)
+                        end
+                    end
+                    humanDesc:SetAccessories(Accessories, true)
                 end
                 local AnimationUpdateConnection
                 if AnimationEffectData and AnimationEffectData.Update then
