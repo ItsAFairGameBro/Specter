@@ -2156,12 +2156,8 @@ local function GetSharedHacks(C, Settings)
                 end
                 if not C.CameraSubject or C.CameraSubject:IsA("BasePart") then
                     C.Spectate() -- Spectate yourself
-                else
-                    print("Nothing wrong",C.CameraSubject)
-                    warn(C.CameraSubject.ClassName)
                 end
                 self.Events.MyBeastHammerRemoved(self)
-
             end,
             MyBeastHammerRemoved = function(self)
                 task.wait(1)
