@@ -210,10 +210,7 @@ return function(C,Settings)
                         if myCurrentDesc:GetAttribute("HeadColor_OriginalValue") then
                             for _, property in ipairs(BodyColorPropertyNames) do
                                 local SetValue = myCurrentDesc:GetAttribute(property .. "_Request_BodyColor")
-                                humanDesc[property] = SetValue
-                            end
-                            for key, val in pairs(myCurrentDesc:GetAttributes()) do
-                                humanDesc[key] = val
+                                C.SetPartProperty(humanDesc, property, "BodyColor", SetValue, true, true)
                             end
                         end
                         myCurrentDesc:Destroy()
@@ -248,7 +245,7 @@ return function(C,Settings)
                 C.AddGlobalInstance(newHuman)
                 local Instances2Restore = {}
                 for num, accessory in ipairs(targetChar:GetDescendants()) do
-                    if C.CommandFunctions.morph.RestoreInstances[accessory.Name] then
+                    if self.RestoreInstances[accessory.Name] then
                         accessory.Parent = workspace
                         C.AddGlobalInstance(accessory)
                         table.insert(Instances2Restore,accessory)
@@ -271,9 +268,11 @@ return function(C,Settings)
                         C.CommandFunctions.morph.CapsuleAdded(capsule,true)
                     end
                 end
+                local HeadlessActive = false
                 if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, tonumber(humanDesc.Name:split("/")[1])) then
                     humanDesc.Head = 15093053680
                     humanDesc.Face = 0
+                    HeadlessActive = true
                 end
                 local AnimationUpdateConnection
                 if AnimationEffectData and AnimationEffectData.Update then
@@ -296,6 +295,13 @@ return function(C,Settings)
                     if instance.Parent then
                         instance.Parent = targetChar
                         C.RemoveGlobalInstance(instance)
+                    end
+                end
+                if HeadlessActive then
+                    for _, obj in ipairs(targetChar:GetDescendants()) do
+                        if obj:IsA("Decal") and obj.Parent and obj.Parent.Name == "Head" then
+                            obj:Destroy()
+                        end
                     end
                 end
                 newHuman.Parent = nil
@@ -360,7 +366,7 @@ return function(C,Settings)
                     end
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
-                        --print(theirChar,"first run")
+                        print(theirChar,"first run: joinplayerrmorphdesc")
                         if JoinPlayerMorphDesc then
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
