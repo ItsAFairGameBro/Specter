@@ -94,8 +94,8 @@ return function(C,Settings)
                     local Options = argumentData.Options
                     local ChosenOption = C.StringStartsWith(Options,args[num])[1]
                     if not ChosenOption and canRunFunction then
-                        if args[num] == "" and argumentData.Default then
-                            args[num] = argumentData.Default
+                        if args[num] == "" and (argumentData.Default or argumentData.Optional) then
+                            args[num] = argumentData.Default or nil
                         else
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)

@@ -7318,7 +7318,7 @@ return function(C,Settings)
         },
         ["bodycolor"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
-                {Type="Options",Default="White",Options=BodyColorsNamesArray}},
+                {Type="Options",Options=BodyColorsNamesArray,Optional=true}},
             Alias = {"color"},
             AfterTxt = " to %s!",
             Run = function(self, args)
@@ -7330,9 +7330,9 @@ return function(C,Settings)
                 end
                 SetDesc = SetDesc or Instance.new("HumanoidDescription")
                 -- Apply Color Transformation
-                local AppliedColor = BodyColorsColorArray[args[2]] or BrickColor.new(args[2]).Color
+                local AppliedColor = args[2] and (BodyColorsColorArray[args[2]] or BrickColor.new(args[2]).Color) or C
                 for _, property in ipairs(BodyColorPropertyNames) do
-                    SetDesc[property] = AppliedColor
+                    C.SetPartProperty(SetDesc, property, "BodyColor", AppliedColor, true, true)
                 end
                 local r1, r2 = C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args[1], SetDesc)
                 if not r1 then
@@ -7465,6 +7465,7 @@ return function(C,Settings)
                 end
                 if not isDefault and humanDesc.Head ~= 86498048 and table.find(self.Headless, tonumber(humanDesc.Name:split("/")[1])) then
                     humanDesc.Head = 15093053680
+                    humanDesc.Face = 0
                 end
                 local AnimationUpdateConnection
                 if AnimationEffectData and AnimationEffectData.Update then
@@ -11156,8 +11157,8 @@ return function(C,Settings)
                     local Options = argumentData.Options
                     local ChosenOption = C.StringStartsWith(Options,args[num])[1]
                     if not ChosenOption and canRunFunction then
-                        if args[num] == "" and argumentData.Default then
-                            args[num] = argumentData.Default
+                        if args[num] == "" and (argumentData.Default or argumentData.Optional) then
+                            args[num] = argumentData.Default or nil
                         else
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)
