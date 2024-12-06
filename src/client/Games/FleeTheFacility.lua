@@ -1484,7 +1484,7 @@ return function(C,Settings)
                                 newCount = 0
                             end
                             myInventory[name] = newCount>0 and newCount or nil
-                            tot+=newCount
+                            tot+=newCount or 0
                         end
                         print(tradePlr,tot)
                         return myInventory
