@@ -135,7 +135,7 @@ return function(C,Settings)
                 desc.Name = userID .. (outfitId and ("/"..outfitId) or "")
                 return  desc
             end,
-            DoAnimationEffect = "Fade",
+            DoAnimationEffect = nil, --"Fade",
             AnimationEffectFunctions={
                 Fade = {
                     Tween = function(self,targetChar,loopList,visible,instant)
@@ -156,13 +156,33 @@ return function(C,Settings)
                     end,
                     Start = function(self,targetChar)
                         self:Tween(targetChar,targetChar:GetDescendants(),false,false)
-                        task.wait(2)
+                        task.wait(1)
                     end,
                     Update = function(self,targetChar,part)
                        self:Tween(targetChar,{part},false,true)
                     end,
                     End = function(self,targetChar)
                        self:Tween(targetChar,targetChar:GetDescendants(),true,false)
+                    end,
+                },
+                Bury = {
+                    Tween = function(self,targetChar,visible,instant)
+                        local newTransparency = visible and 0 or 1
+                        local property = "HipHeight"
+                        local theirHuman = targetChar:WaitForChild("Humanoid")
+                        if theirHuman then
+                            TS:Create(theirHuman, TweenInfo.new(1), {[property] = (visible and 0 or -C.getHumanoidHeight(targetChar))}):Play()
+                        end
+                    end,
+                    Start = function(self,targetChar)
+                        self:Tween(targetChar,false,false)
+                        task.wait(2)
+                    end,
+                    Update = function(self,targetChar,part)
+
+                    end,
+                    End = function(self,targetChar)
+                       self:Tween(targetChar,true,false)
                     end,
                 }
             },
@@ -191,7 +211,6 @@ return function(C,Settings)
                             for _, property in ipairs(BodyColorPropertyNames) do
                                 local SetValue = myCurrentDesc:GetAttribute(property .. "_Request_BodyColor")
                                 C.SetPartProperty(humanDesc, property, "BodyColor", SetValue, true, true)
-                                print("Set Color To",SetValue)
                             end
                         end
                         myCurrentDesc:Destroy()
@@ -346,7 +365,7 @@ return function(C,Settings)
                             --print(theirChar,"first run set to",JoinPlayerMorphDesc)
                             self:MorphPlayer(theirChar,JoinPlayerMorphDesc,false,true)
                         end
-                    elseif currentChar then
+                    elseif not firstRun and currentChar then
                         self:MorphPlayer(theirChar,currentChar,true,not firstRun)
                     end
                 end,
