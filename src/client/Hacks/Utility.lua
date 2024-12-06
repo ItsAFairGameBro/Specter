@@ -229,7 +229,6 @@ return function(C,Settings)
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
-                                    assert(thePlr, `Chatted Player Not Found! UserId: {data.SpeakerUserId}\nMessage: {data.Message}`)
                                     if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
                                         local msg = data.Message
                                         if not msg then
@@ -240,7 +239,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end))
-                                print("Chat Connected Because Of User",theirPlr)
+                                --print("Chat Connected Because Of User",theirPlr)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)

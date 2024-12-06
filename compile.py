@@ -1,7 +1,11 @@
 import os
 import re
 import urllib
+import time
+import sys
 from pathlib import Path
+
+startTime = time.time()
 
 # Get the current script's directory
 current_dir = Path(__file__).parent
@@ -91,3 +95,5 @@ data = data.replace("C.preloadedModule = {}", "C.preloadedModule = " + dict_to_l
 # Write to the output file
 with open(output_file_path, "w", encoding="utf-8") as write_file:
     write_file.write(data)
+
+print(f"Successfully compiled in {time.time() - startTime:.2f} seconds")

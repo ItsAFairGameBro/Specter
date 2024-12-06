@@ -2102,29 +2102,32 @@ local function GetSharedHacks(C, Settings)
             if not newValue then
                 return
             end
-            if game.PlaceId == 893973440 then
+            if game.PlaceId == 893973440 then -- Game
                 local ScreenGui = C.PlayerGui:WaitForChild("ScreenGui");
                 local MenusTabFrame = ScreenGui:WaitForChild("MenusTabFrame");
                 local BeastPowerMenuFrame = ScreenGui:WaitForChild("BeastPowerMenuFrame")
                 local SurvivorStartFrame = ScreenGui:WaitForChild("SurvivorStartFrame")
+                local GameResultsFrame = ScreenGui:WaitForChild("GameResultsFrame")
+                local PersonalResultsFrame = ScreenGui:WaitForChild("PersonalResultsFrame")
+                local BlackoutLoadingFrame1 = C.StringWait(C.PlayerGui, "BlackOutScreenGui.BlackOutFrame")
+                local BlackoutLoadingFrame2 = C.StringWait(C.PlayerGui, "BlackOutScreenGui.WhitelistBlackOutFrame")
                 local IsCheckingLoadData = C.plr:WaitForChild("IsCheckingLoadData");
                 local function menusTab()
                     MenusTabFrame.Visible=not IsCheckingLoadData.Value
                 end
-                local function beastScreen()
-                    BeastPowerMenuFrame.Visible=false
+                local function KeepInvisible(frame)
+                    frame.Visible = false
+                    table.insert(self.Functs, frame:GetPropertyChangedSignal("Visible"):Connect(function()
+                        frame.Visible = false
+                    end))
                 end
-                local function survivorScreen()
-                    SurvivorStartFrame.Visible=false
-                end
-                table.insert(self.Functs,MenusTabFrame:GetPropertyChangedSignal("Visible"):Connect(menusTab))
-                menusTab()
-
-                table.insert(self.Functs,BeastPowerMenuFrame:GetPropertyChangedSignal("Visible"):Connect(beastScreen))
-                beastScreen()
-
-                table.insert(self.Functs,SurvivorStartFrame:GetPropertyChangedSignal("Visible"):Connect(survivorScreen))
-                survivorScreen()
+                KeepInvisible(MenusTabFrame)
+                KeepInvisible(BeastPowerMenuFrame)
+                KeepInvisible(SurvivorStartFrame)
+                KeepInvisible(GameResultsFrame)
+                KeepInvisible(PersonalResultsFrame)
+                KeepInvisible(BlackoutLoadingFrame1)
+                KeepInvisible(BlackoutLoadingFrame2)
 
                 if firstRun then
                     return
@@ -2177,8 +2180,12 @@ local function GetSharedHacks(C, Settings)
                 for num, basePart in ipairs(theirChar:GetChildren()) do
                     ChildAdded(basePart)
                 end
+                local AdButton = C.StringWait(C.PlayerGui, "ScreenGui.AdPlushButton", 3)
+                if AdButton then
+                    AdButton.Visible = false
+                end
             end
-        }
+        },
     },
 
     }
@@ -3462,6 +3469,9 @@ return function(C,Settings)
                                     if (C.GetDictLength(tradableItems) > 0) then
                                         tradePlr = theirPlr
                                         break
+                                    elseif theirPlr == lastTradePlr then
+                                        task.spawn(C.Prompt, `Trade Completed!`,`All necessary items were traded with {lastTradePlr.Name}`,`Ok`)
+                                        lastTradePlr = nil
                                     end
                                 end
                             end
@@ -3469,9 +3479,6 @@ return function(C,Settings)
                                 if tradePlr then
                                     print("Sending Trade Request:",tradePlr)
                                     C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
-                                elseif lastTradePlr then
-                                    task.spawn(C.Prompt, `Trade Completed!`,`All necessary items were traded with {lastTradePlr.Name}`,`Ok`)
-                                    lastTradePlr = nil
                                 end
                                 task.wait(3)
                             else
@@ -9531,7 +9538,6 @@ return function(C,Settings)
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
-                                    assert(thePlr, `Chatted Player Not Found! UserId: {data.SpeakerUserId}\nMessage: {data.Message}`)
                                     if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
                                         local msg = data.Message
                                         if not msg then
@@ -9542,7 +9548,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end))
-                                print("Chat Connected Because Of User",theirPlr)
+                                --print("Chat Connected Because Of User",theirPlr)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
