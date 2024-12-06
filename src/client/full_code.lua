@@ -7316,6 +7316,27 @@ return function(C,Settings)
                 return true,"Successful"
             end,
         },
+        ["cloth"] = C.hackData.Developer and {
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
+            AfterTxt = " to nothing!",
+            Run = function(self, args)
+                local SetDesc
+                if args[1] == "new" then
+                    SetDesc = C.getgenv().JoinPlayerMorphDesc
+                else
+                    SetDesc = C.getgenv().currentDesc[args[1][1].Name]
+                end
+                SetDesc = SetDesc or Instance.new("HumanoidDescription")
+                -- Apply Transformation
+                SetDesc.Shirt = 0
+                SetDesc.Pants = 0
+                local r1, r2 = C.CommandFunctions.morph.SetPlayersToDescription(C.CommandFunctions.morph, args[1], SetDesc)
+                if not r1 then
+                    return r1, r2
+                end
+                return true, args[2]
+            end,
+        },
         ["bodycolor"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
                 {Type="Options",Options=BodyColorsNamesArray,Optional=true}},
@@ -7408,7 +7429,7 @@ return function(C,Settings)
                 }
             },
             Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army"},
-            BannedHeadlessItems = {12064732367},
+            BannedHeadlessItems = {16687323428,12064732367},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
