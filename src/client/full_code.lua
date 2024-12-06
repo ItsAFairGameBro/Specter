@@ -2154,6 +2154,12 @@ local function GetSharedHacks(C, Settings)
                 --else
                     --print("Not in game, all good ✅")
                 end
+                if not C.CameraSubject or C.CameraSubject:IsA("BasePart") then
+                    C.Spectate() -- Spectate yourself
+                else
+                    print("Nothing wrong",C.CameraSubject)
+                    warn(C.CameraSubject.ClassName)
+                end
                 self.Events.MyBeastHammerRemoved(self)
 
             end,
