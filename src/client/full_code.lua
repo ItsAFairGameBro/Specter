@@ -9451,14 +9451,17 @@ return function(C,Settings)
                     end
                 end,
                 Activate = function(self, newValue, firstRun)
+                    if not newValue then
+                        self.ChatConnected = false
+                    end
                     if newValue and self.EnTbl.LowerFPS then
                         self:SetFPS(true)
                         local timePassed = time()
                         if (timePassed < 15) then
-                            task.delay(15 - timePassed, function()
+                            table.insert(self.Threads, task.delay(15 - timePassed, function()
                                 self:SetFPS(true)
                                 C.AddNotification("FPS Cap", "FPS Cap Added After Delayed Start")
-                            end)
+                            end))
                         end
                     elseif setfpscap and not firstRun then
                         self:SetFPS(false)
@@ -9469,13 +9472,6 @@ return function(C,Settings)
                         else
                             self.Events.MyCharAdded(self, C.plr, C.char, false)
                         end
-                    end
-                    if not newValue then
-                        self.ChatConnected = false
-                        return
-                    end
-                    for _, theirPlr in ipairs(PS:GetPlayers()) do
-                        self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
                 HasAdminAccess = function(self, theirPlr)
@@ -9522,7 +9518,7 @@ return function(C,Settings)
 						end
 					end,
                     OthersPlayerAdded = function(self,theirPlr,firstRun)
-                        if theirPlr == C.plr or self.ChatConnected or firstRun then
+                        if self.ChatConnected then
                             return -- do not double do it!
                         end
                         if self:HasAdminAccess(theirPlr) then
@@ -9541,7 +9537,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end))
-                                --print("Waiting For Established Connection22!",theirPlr)
+                                print("Chat Connected Because Of User",theirPlr)
                             else
                                 C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
                                 warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
