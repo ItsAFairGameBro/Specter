@@ -7411,7 +7411,7 @@ return function(C,Settings)
                         if currentDesc:GetAttribute("HeadColor_OriginalValue") then
                             print("Applying same color")
                             for _, property in ipairs(BodyColorPropertyNames) do
-                                C.SetPartProperty(humanDesc, property, "BodyColor", currentDesc[property], true, true)
+                                C.SetPartProperty(humanDesc, property, "BodyColor", currentDesc[property])
                             end
                         end
                         currentDesc:Destroy()
