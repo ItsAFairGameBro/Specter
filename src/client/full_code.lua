@@ -7430,7 +7430,7 @@ return function(C,Settings)
                     if myCurrentDesc and humanDesc~=myCurrentDesc then
                         if myCurrentDesc:GetAttribute("HeadColor_OriginalValue") then
                             for _, property in ipairs(BodyColorPropertyNames) do
-                                local SetValue = myCurrentDesc:GetAttribute(property .. "_Request_BodyColor")
+                                local SetValue = myCurrentDesc[property]--:GetAttribute(property .. "_Request_BodyColor")
                                 C.SetPartProperty(humanDesc, property, "BodyColor", SetValue, true, true)
                             end
                         end
