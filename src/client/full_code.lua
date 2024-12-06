@@ -9451,9 +9451,6 @@ return function(C,Settings)
                     end
                 end,
                 Activate = function(self, newValue, firstRun)
-                    if not newValue then
-                        self.ChatConnected = false
-                    end
                     if newValue and self.EnTbl.LowerFPS then
                         self:SetFPS(true)
                         local timePassed = time()
@@ -9472,6 +9469,13 @@ return function(C,Settings)
                         else
                             self.Events.MyCharAdded(self, C.plr, C.char, false)
                         end
+                    end
+                    if not newValue then
+                        self.ChatConnected = false
+                        return
+                    end
+                    for _, theirPlr in ipairs(PS:GetPlayers()) do
+                        self.Events.OthersPlayerAdded(self, theirPlr, false)
                     end
                 end,
                 HasAdminAccess = function(self, theirPlr)
@@ -9518,7 +9522,7 @@ return function(C,Settings)
 						end
 					end,
                     OthersPlayerAdded = function(self,theirPlr,firstRun)
-                        if self.ChatConnected then
+                        if theirPlr == C.plr or self.ChatConnected or firstRun then
                             return -- do not double do it!
                         end
                         if self:HasAdminAccess(theirPlr) then
@@ -9527,6 +9531,7 @@ return function(C,Settings)
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
+                                    assert(thePlr, `Chatted Player Not Found! UserId: {data.SpeakerUserId}\nMessage: {data.Message}`)
                                     if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
                                         local msg = data.Message
                                         if not msg then
@@ -11718,8 +11723,10 @@ return function(C,Settings)
 	end
 	function C.DoActivate(self,funct,...)
         if self.Activate == funct then
-            self:ClearData()
             local firstRun = select(2,...)
+            if not firstRun then
+                self:ClearData()
+            end
             if not firstRun and ... then -- check to see if true
                 if C.SaveEvents and self.Events then
                     for key, eventFunct in pairs(self.Events) do
