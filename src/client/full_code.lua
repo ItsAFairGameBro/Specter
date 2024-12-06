@@ -7406,15 +7406,15 @@ return function(C,Settings)
                 --local wasAnchored = targetHRP.Anchored
                 --humanDesc.Name = "CharacterDesc"
                 if not dontUpdate then
-                    local currentDesc = C.getgenv().currentDesc[targetChar.Name]
-                    if currentDesc and humanDesc~=currentDesc then
-                        if currentDesc:GetAttribute("HeadColor_OriginalValue") then
+                    local myCurrentDesc = C.getgenv().currentDesc[targetChar.Name]
+                    if myCurrentDesc and humanDesc~=myCurrentDesc then
+                        if myCurrentDesc:GetAttribute("HeadColor_OriginalValue") then
                             for _, property in ipairs(BodyColorPropertyNames) do
-                                C.SetPartProperty(humanDesc, property, "BodyColor", currentDesc[property])
-                                print("Set Color To",currentDesc[property])
+                                C.SetPartProperty(humanDesc, property, "BodyColor", myCurrentDesc[property])
+                                print("Set Color To",myCurrentDesc[property])
                             end
                         end
-                        currentDesc:Destroy()
+                        myCurrentDesc:Destroy()
                     end
                     if not isDefault then
                         C.getgenv().currentDesc[targetChar.Name] = humanDesc
