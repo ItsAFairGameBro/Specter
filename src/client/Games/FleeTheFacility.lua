@@ -1477,14 +1477,14 @@ return function(C,Settings)
                         local sendType = self.EnTbl.SendType
 
                         local myInventory = C.GetUserInventory()
-                        local tot
+                        local tot = 0
                         for name, count in pairs(myInventory) do
                             local newCount = math.min(count - self.EnTbl.KeepAmount, 10 - (theirInventory[name] or 0))
                             if sendType ~= "Any" and sendType ~= self:GetItemListing(name) then
                                 newCount = 0
                             end
                             myInventory[name] = newCount>0 and newCount or nil
-                            tot+=newCount or 0
+                            tot+=(newCount or 0)
                         end
                         print(tradePlr,tot)
                         return myInventory
