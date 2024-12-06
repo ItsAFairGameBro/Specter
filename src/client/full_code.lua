@@ -7228,13 +7228,15 @@ local AS = game:GetService("AssetService")
 local MaxRelativeDist = 50
 local MaxFlingSpeed = 1e6
 
-local BodyColorsArray = {}
+local BodyColorsNamesArray = {}
+local BodyColorsColorArray = {}
 local InvalidBrickColor = BrickColor.new(0) -- Creates invalid brickcolor
 
 for i = 1, 1032 do
     local BrickColorValue = BrickColor.new(i)
     if BrickColorValue ~= InvalidBrickColor then
-        table.insert(BodyColorsArray, BrickColorValue)
+        table.insert(BodyColorsNamesArray, BrickColorValue.Name)
+        BodyColorsColorArray[BrickColorValue.Name] = BrickColorValue.Color
     end
 end
 local BodyColorPropertyNames = {"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}
@@ -7307,7 +7309,7 @@ return function(C,Settings)
         },
         ["bodycolor"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
-                {Type="Options",Default="White",Options=BodyColorsArray}},
+                {Type="Options",Default="White",Options=BodyColorsNamesArray}},
             Alias = {"color"},
             AfterTxt = " to %s!",
             Run = function(self, args)
@@ -7319,7 +7321,7 @@ return function(C,Settings)
                 end
                 SetDesc = SetDesc or Instance.new("HumanoidDescription")
                 -- Apply Color Transformation
-                local AppliedColor = BrickColor.new(args[2]).Color
+                local AppliedColor = BodyColorsColorArray[args[2]]
                 for _, property in ipairs(BodyColorPropertyNames) do
                     SetDesc[property] = AppliedColor
                 end
