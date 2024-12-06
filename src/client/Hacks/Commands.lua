@@ -24,7 +24,7 @@ for i = 1, 1032 do
     local BrickColorValue = BrickColor.new(i)
     if BrickColorValue ~= InvalidBrickColor then
         table.insert(BodyColorsNamesArray, BrickColorValue.Name)
-        BodyColorsColorArray[BrickColorValue.Name] = BrickColorValue.Color
+        --BodyColorsColorArray[BrickColorValue.Name] = BrickColorValue.Color
     end
 end
 local BodyColorPropertyNames = {"LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor","HeadColor"}
@@ -109,7 +109,7 @@ return function(C,Settings)
                 end
                 SetDesc = SetDesc or Instance.new("HumanoidDescription")
                 -- Apply Color Transformation
-                local AppliedColor = BodyColorsColorArray[args[2]]
+                local AppliedColor = BodyColorsColorArray[args[2]] or BrickColor.new(args[2]).Color
                 for _, property in ipairs(BodyColorPropertyNames) do
                     SetDesc[property] = AppliedColor
                 end
