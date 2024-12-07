@@ -1,3 +1,9 @@
+--[[
+    Chat Bypasser
+    -> Bypasses the chat with prefixed phrases AND allows for easy chats
+    -> Only excutes once
+    -> Glitches Specter V2 commands
+--]]
 return {
     Name = "Chat Bypass",
     ScriptRun = function()
