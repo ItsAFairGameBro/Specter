@@ -75,7 +75,9 @@ return function(C,Settings)
         "MyCapturedRemoved", "CapturedRemoved", "OthersCapturedRemoved",
         "MySurvivorRescued", "SurvivorRescued", "OthersSurvivorRescued",
         "GameAdded","GameRemoved",--Don't laugh!
-        "NewFreezingPod"
+        "NewFreezingPod",
+
+        "TowerAdded", "TowerRemoved"
 	}
 	function C.BindEvents(hackTbl)
 		for name, funct in pairs(hackTbl.Events or {}) do

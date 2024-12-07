@@ -9,7 +9,8 @@ return function(C,Settings)
 	end--]]
     C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={},
                     MyBeast={}, Beast={}, OthersBeast={},
-                    Game={}, BeastRope={}}
+                    Game={}, BeastRope={},
+                    TowerAdded={}}
 	local function FireEvent(name,doExternalConn,...)
         local SavedTable = C.SaveEvents[name:gsub("Added",""):gsub("Removed","")]
         if SavedTable then

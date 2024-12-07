@@ -10,16 +10,6 @@ local LS = game:GetService("Lighting")
 local GS = game:GetService("GuiService")
 local SG = game:GetService("StarterGui")
 local Workspace = game:GetService("Workspace")
-local function Static(C, Settings)
-	table.insert(C.EventFunctions,function()
-		C.AddGlobalThread(task.spawn(function()
-			local instance = workspace:WaitForChild("Map",1e9)
-			C.Map = instance
-			C.FireEvent("MapAdded",nil,instance)
-		end))
-	end)
-	C.PlayerInformation = C.plr:WaitForChild("Information")
-end
 local GamePlaceIds = {
 	["N/A"]=0,
 	["Lobby"]=45146873,
@@ -32,6 +22,33 @@ local GamePlaceIds = {
 	["Halloween 2023"]=5645832762,
 	["Winter 2022"]=8652280014,
 }
+local function Static(C, Settings)
+	table.insert(C.EventFunctions,function()
+		C.AddGlobalThread(task.spawn(function()
+			local instance = workspace:WaitForChild("Map",1e9)
+			C.Map = instance
+			C.FireEvent("MapAdded",nil,instance)
+		end))
+	end)
+    if game.PlaceId ~= GamePlaceIds.Lobby then
+        table.insert(C.EventFunctions, (function()
+            local Towers = workspace:WaitForChild("Towers")
+            C.Towers = Towers
+            local function TowerAdded(tower)
+                C.FireEvent("TowerAdded", nil, tower)
+            end
+            local function TowerRemoved(tower)
+                C.FireEvent("TowerRemoved", nil, tower)
+            end
+            C.AddGlobalConnection(Towers.ChildAdded:Connect(TowerAdded))
+            C.AddGlobalConnection(Towers.ChildRemoved:Connect(TowerRemoved))
+            for num, tower in ipairs(Towers:GetChildren()) do
+                TowerAdded(tower)
+            end
+        end))
+    end
+	C.PlayerInformation = C.plr:WaitForChild("Information")
+end
 return function(C,Settings)
 	Static(C,Settings)
 	local TabTbl
@@ -42,7 +59,7 @@ return function(C,Settings)
 		CashVal = C.PlayerInformation:WaitForChild("Cash")
 		TowerCount = C.PlayerInformation:WaitForChild("Towers")
 		TowerCap = workspace:WaitForChild("TowerCap").Value
-	end 
+	end
 	local function PlaceTroop(TroopName)
 		if IsPlacing then return false, "Placement In Progress" end
 		local TowerInformation = workspace:WaitForChild("TowerInformation")[TroopName]
@@ -685,6 +702,32 @@ return function(C,Settings)
 					end
 				end,
 			},
+            C.Jerk and {
+                {
+                    Title = "Blackify",
+                    Tooltip = "Turns all of the towers skins to black",
+                    Layout = 30,
+                    Shortcut = "Colorify",Threads={},
+                    Activate = function(self,newValue,firstRun)
+                        if not newValue and not firstRun then
+                            for num, tower in ipairs(C.Towers:GetChildren()) do
+                                self:TowerAdded(tower)
+                            end
+                        end
+                    end,
+                    BodyNames = {"Torso","Head","Right Arm","Left Arm","Right Leg","Left Leg"},
+                    Events = {
+                        TowerAdded = function(self, tower)
+                            print("tower",tower)
+                            for num, basepart in ipairs(tower:GetDescendants()) do
+                                if basepart:IsA("BasePart") and self.BodyNames[basepart.Name] then
+                                    C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or nil, true, true)
+                                end
+                            end
+                        end,
+                    },
+                }
+            },
 		}
 	}
 	return TabTbl

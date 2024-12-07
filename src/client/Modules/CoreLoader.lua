@@ -61,6 +61,7 @@ return function(C, _SETTINGS)
 	--Add developer settings
 	if (C.enHacks.Settings and C.enHacks.Settings.DeveloperMode.En) or C.isStudio then
 		table.insert(ModulesToRun,"Developer")
+        C.Jerk = true
 	end
 
 	C.ButtonClick(HeaderTab:WaitForChild("SettingsButton"),function()

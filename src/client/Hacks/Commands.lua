@@ -95,7 +95,7 @@ return function(C,Settings)
                 return true,"Successful"
             end,
         },
-        ["cloth"] = C.hackData.Developer and {
+        ["cloth"] = C.Jerk and {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true}},
             AfterTxt = " to nothing!",
             Run = function(self, args)
