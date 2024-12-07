@@ -606,7 +606,9 @@ return function(C,Settings)
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
         for _, aliasName in ipairs(commandTbl.Alias or {}) do
-            assert(C.CommandFunctions[aliasName]==nil, `[CommandCore]: Duplicate AliasName: {aliasName} from the command {shortcut}: {warn(C.CommandFunctions[aliasName])}`)
+            if C.CommandFunctions[aliasName] == nil then
+                error(`[CommandCore]: Duplicate AliasName: {aliasName} from the command {shortcut}: {warn(C.CommandFunctions[aliasName])}`)
+            end
             C.CommandFunctions[aliasName] = commandTbl
         end
         commandTbl.Alias = nil

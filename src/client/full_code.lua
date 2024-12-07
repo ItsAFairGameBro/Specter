@@ -11732,7 +11732,9 @@ return function(C,Settings)
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
         for _, aliasName in ipairs(commandTbl.Alias or {}) do
-            assert(C.CommandFunctions[aliasName]==nil, `[CommandCore]: Duplicate AliasName: {aliasName} from the command {shortcut}: {warn(C.CommandFunctions[aliasName])}`)
+            if C.CommandFunctions[aliasName] == nil then
+                error(`[CommandCore]: Duplicate AliasName: {aliasName} from the command {shortcut}: {warn(C.CommandFunctions[aliasName])}`)
+            end
             C.CommandFunctions[aliasName] = commandTbl
         end
         commandTbl.Alias = nil
@@ -18924,7 +18926,7 @@ C.AdminUsers = {`suitedforbans`,`suitedforbans2`,`suitedforbans3`,`suitedforbans
 if not C.getgenv().PlaceName then
 	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
 end
-C.Debugs = {All = true,
+C.Debugs = {All = false,
 	Destroy = false,
 	Module = false,
 	Load = false,
