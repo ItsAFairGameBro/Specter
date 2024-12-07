@@ -3079,7 +3079,22 @@ return function(C,Settings)
                     Layout = 100,
                     Shortcut = "ServerBot",Functs={}, Threads={}, Default=true,
                     WasRunning = false,
-                    FreezeMyself = function(self,canRun,canCapture)
+                    RefreshPlayers = function(self)
+                        local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
+                        C.sortPlayersByXPThenCredits(runnerPlrs)
+                        self.SurvivorList = runnerPlrs
+                        self.myKey = table.find(self.SurvivorList,C.plr)
+                        if #runnerPlrs == 0 or not self.myKey then
+                            task.spawn(self.Completed, self, false)
+                            return false
+                        end
+                        self.rescueKey = (self.myKey%#self.SurvivorList) + 1
+
+                        local Ret1 = (C.char and C.human and C.human.Health>0 and C.char:FindFirstChild("HumanoidRootPart") and C.Hammer)
+                        local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
+                        return (Ret1 and Ret2)
+                    end,
+                    FreezeMyself = function(self,canCapture)
                         while C.BeastChar do
                             local i = 0
                             while ((C.BeastChar and C.BeastChar:FindFirstChild("HumanoidRootPart"))) do
@@ -3090,9 +3105,6 @@ return function(C,Settings)
                                     RunS.RenderStepped:Wait()
                                 end
                                 if not canCapture or canCapture() then
-                                    if not canRun(true) then
-                                        return
-                                    end
                                     local inRange = (C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<6
                                     if not inRange then
                                         if not C.myTSM.Captured.Value and (not C.myTSM.Ragdoll.Value or (C.CarriedTorso
@@ -3102,9 +3114,6 @@ return function(C,Settings)
                                     else
                                         if not C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent and C.char:FindFirstChild("Head") then
                                             C.HammerEvent:FireServer("HammerHit", C.char.Head)
-                                        end
-                                        if not canRun(true) then
-                                            return
                                         end
                                         if C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent
                                             and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char then
@@ -3128,25 +3137,14 @@ return function(C,Settings)
                         if self.EnTbl.RunType == "Capture" then
                             C.SetActionLabel(actionClone,"[Idle] Waiting To Get Captured")
                         elseif self.EnTbl.RunType == "Rescue" then
-                            local function canRun(fullLoop)
-                                local runnerPlrs = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})
-                                C.sortPlayersByXPThenCredits(runnerPlrs)
-                                if #runnerPlrs == 0 then
-                                    task.spawn(self.Completed, self, false)
-                                    return false
-                                end
-                                self.SurvivorList = runnerPlrs
-                                self.myKey = table.find(self.SurvivorList,C.plr)
-                                self.rescueKey = (self.myKey%#self.SurvivorList) + 1
-
-                                local Ret1 = (C.char and C.human and C.human.Health>0 and C.char:FindFirstChild("HumanoidRootPart") and C.Hammer)
-                                local Ret2 = ((select(2,C.isInGame(C.char))=="Survivor") and not C.Cleared)
-                                return (Ret1 and Ret2)
-                            end
-                            canRun()
                             --print("Runners",self.SurvivorList)
+                            table.insert(self.Threads, task.spawn(function()
+                                while self:RefreshPlayers() do
+                                    task.wait(1/4)
+                                end
+                            end))
                             table.insert(self.Threads,task.spawn(function()
-                                while canRun(true) and not C.plr:GetAttribute("HasRescued") do
+                                while not C.plr:GetAttribute("HasRescued") do
                                     --local GuyToRescueIndex = (myKey%#self.SurvivorList)+1--gets next index and loops over array
                                     local myGuyToRescuePlr = self.SurvivorList[self.rescueKey]
                                     if myGuyToRescuePlr and myGuyToRescuePlr.TempPlayerStatsModule.Captured.Value then
@@ -3188,7 +3186,7 @@ return function(C,Settings)
                                     --myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
                             end
-                            self:FreezeMyself(canRun,canCapture)
+                            self:FreezeMyself(canCapture)
                         else
                             warn(`[Server Farm]: Unknown RunType: {self.EnTbl.RunType}`)
                         end
