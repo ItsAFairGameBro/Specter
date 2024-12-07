@@ -132,6 +132,7 @@ const replacedData = data.replace(
 // Write to the output file
 fs.writeFileSync(outputFilePath, replacedData, 'utf-8');
 
-console.log(`Successfully compiled in ${(Date.now() - startTime) / 1000} seconds`);
 
-await sleep(1000);
+sleep(3000);
+
+console.log(`Successfully compiled in ${(Date.now() - startTime) / 1000} seconds`);
