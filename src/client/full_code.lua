@@ -7739,7 +7739,7 @@ return function(C,Settings)
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
                         end
                         if theirPlr.Character then
-                            task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,selectedName == "no")
+                            task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,savedDescription == nil)
                         elseif not savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
@@ -14908,7 +14908,7 @@ return function(C,Settings)
 		return Settings.ConnectAllEvents or C.events[name]~=nil
 	end
 	C.FireEvent = FireEvent
-    -- local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress
+    local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress
 	local function CharAdded(theirChar,wasAlreadyIn)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
 		local theirHuman = theirChar:WaitForChild("Humanoid",1e5)

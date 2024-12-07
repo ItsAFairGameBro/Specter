@@ -58,7 +58,7 @@ return function(C,Settings)
 		return Settings.ConnectAllEvents or C.events[name]~=nil
 	end
 	C.FireEvent = FireEvent
-    -- local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress
+    local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress
 	local function CharAdded(theirChar,wasAlreadyIn)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
 		local theirHuman = theirChar:WaitForChild("Humanoid",1e5)

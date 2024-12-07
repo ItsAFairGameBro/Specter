@@ -520,7 +520,7 @@ return function(C,Settings)
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
                         end
                         if theirPlr.Character then
-                            task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,selectedName == "no")
+                            task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,savedDescription == nil)
                         elseif not savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
