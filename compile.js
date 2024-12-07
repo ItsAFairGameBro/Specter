@@ -103,11 +103,9 @@ function listLuaFiles(baseFolder) {
                 entry.name.endsWith('.lua') &&
                 !ignoreList.includes(entry.name)
             ) {
-                const relativePath = path.relative(baseFolder, entryPath);
-                const key = url
-                    .pathToFileURL(relativePath)
-                    .pathname.replace(/\\/g, '/')
-                    .replace('.lua', '');
+                // Get the relative path and convert it to a forward-slash format
+                const relativePath = path.relative(baseFolder, entryPath).replace(/\\/g, '/');
+                const key = relativePath.replace(/\.lua$/, ''); // Remove the .lua extension
                 luaFiles[key] = fs.readFileSync(entryPath, 'utf-8');
             }
         });
@@ -131,8 +129,5 @@ const replacedData = data.replace(
 
 // Write to the output file
 fs.writeFileSync(outputFilePath, replacedData, 'utf-8');
-
-
-sleep(3000);
 
 console.log(`Successfully compiled in ${(Date.now() - startTime) / 1000} seconds`);

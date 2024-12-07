@@ -257,7 +257,7 @@ C.friends = {}
 C.playerfuncts = {} -- player connections
 C.objectfuncts = {} -- instance connections
 C.preloadedModule = {
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/Bloxburg"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+    ["Games/Bloxburg"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
 local Players = game:GetService("Players")
 local RunS = game:GetService("RunService")
@@ -1439,7 +1439,7 @@ return function (C,Settings)
         }
     }
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/Doomspire"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+    ["Games/Doomspire"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
@@ -1527,7 +1527,7 @@ end
 
 
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/FlagWars"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+    ["Games/FlagWars"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
 local RunS = game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
@@ -1883,7 +1883,7 @@ end
 
 
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/FleeTheFacility"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Games/FleeTheFacility"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
@@ -3572,7 +3572,7 @@ return function(C,Settings)
 	}
 end
 ]],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/MurderMystery"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Games/MurderMystery"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
@@ -4048,7 +4048,7 @@ return function(C,Settings)
         }
     }
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/NavalWarefare"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Games/NavalWarefare"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
 local RunS = game:GetService("RunService")
@@ -5689,7 +5689,7 @@ return function(C,Settings)
 	}
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/PassBomb"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Games/PassBomb"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
@@ -5804,7 +5804,7 @@ return function(C,Settings)
 	}
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Games/TowerBattles"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Games/TowerBattles"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
@@ -6495,7 +6495,7 @@ return function(C,Settings)
 	}
 	return TabTbl
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Blatant"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+    ["Hacks/Blatant"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
 local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
@@ -7217,7 +7217,7 @@ return function(C,Settings)
 	}
 end
 ]],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Commands"] = [=[local ChangeHistoryService = game:GetService("ChangeHistoryService")
+    ["Hacks/Commands"] = [=[local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local GuiService = game:GetService("GuiService")
 local PhysicsService = game:GetService("PhysicsService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -8237,7 +8237,7 @@ return function(C,Settings)
         --},
     }
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Developer"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Hacks/Developer"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local RunService = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
 local SG = game:GetService("StarterGui")
@@ -8650,7 +8650,7 @@ return function(C,Settings)
 	}
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Friends"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
+    ["Hacks/Friends"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 local PS = game:GetService("Players")
 return function(C,Settings)
 	return {
@@ -8735,7 +8735,7 @@ return function(C,Settings)
 	}
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Render"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Hacks/Render"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local CS = game:GetService("CollectionService")
@@ -9225,7 +9225,7 @@ return function(C,Settings)
 		}
 	}
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Scrapped"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Hacks/Scrapped"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local CG = game:GetService("CoreGui")
 return function(C,Settings)
 	return {
@@ -9354,7 +9354,7 @@ return function(C,Settings)
 	}
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Settings"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Hacks/Settings"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
@@ -9373,7 +9373,7 @@ return function(C,Settings)
 		}
 	}
 end]],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/Utility"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Hacks/Utility"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
 local Lighting = game:GetService("Lighting")
@@ -9891,7 +9891,7 @@ return function(C,Settings)
 	}
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Hacks/World"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+    ["Hacks/World"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local TCS = game:GetService("TextChatService")
 local RS = game:GetService"ReplicatedStorage"
 local PS = game:GetService"Players"
@@ -10939,7 +10939,7 @@ C.objectfuncts = {} -- instance connections
 		}
 	}
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/AntiCheat"] = [=[local DS = game:GetService("Debris")
+    ["Modules/AntiCheat"] = [=[local DS = game:GetService("Debris")
 local RunService = game:GetService("RunService")
 local SC = game:GetService("ScriptContext")
 local LS = game:GetService("LogService")
@@ -11251,7 +11251,7 @@ return function(C,Settings)
         end
     end
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/Binds"] = [[local UIS = game:GetService("UserInputService")
+    ["Modules/Binds"] = [[local UIS = game:GetService("UserInputService")
 local CAS = game:GetService("ContextActionService")
 local TS = game:GetService("TweenService")
 return function(C,Settings)
@@ -11382,7 +11382,7 @@ return function(C,Settings)
 	C.BindAction("hackdelete",CheckDeleteButton,Enum.KeyCode.Delete)
 end
 ]],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/CommandCore"] = [=[local HttpService = game:GetService("HttpService")
+    ["Modules/CommandCore"] = [=[local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
 local TCS = game:GetService("TextChatService")
 local RunS = game:GetService("RunService")
@@ -11997,7 +11997,7 @@ return function(C,Settings)
         C.BindEvents(commandTbl)
     end
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/CoreEnv"] = [=[local CS = game:GetService("CollectionService")
+    ["Modules/CoreEnv"] = [=[local CS = game:GetService("CollectionService")
 local GuiService = game:GetService("GuiService")
 local HS = game:GetService("HttpService")
 local RunS = game:GetService("RunService")
@@ -12512,7 +12512,7 @@ return function(C,Settings)
     end)
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/CoreLoader"] = [[local TS = game:GetService("TweenService")
+    ["Modules/CoreLoader"] = [[local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
@@ -12954,7 +12954,7 @@ return function(C, _SETTINGS)
 	return "Load Successful"
 end
 ]],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/Env"] = [=[local CAS = game:GetService("ContextActionService")
+    ["Modules/Env"] = [=[local CAS = game:GetService("ContextActionService")
 local CS = game:GetService("CollectionService")
 local PhysicsService = game:GetService("PhysicsService")
 local PS = game:GetService("Players")
@@ -14848,7 +14848,7 @@ return C.LoadModule("Modules/CoreLoader"), '%', '^', '*', '(', ')', '.', '[', ']
         end
     end
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/Events"] = [=[local PS = game:GetService("Players")
+    ["Modules/Events"] = [=[local PS = game:GetService("Players")
 local GS = game:GetService("GuiService")
 
 return function(C,Settings)
@@ -15055,7 +15055,7 @@ return function(C,Settings)
 	end
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/GuiElements"] = [=[local PolicyService = game:GetService("PolicyService")
+    ["Modules/GuiElements"] = [=[local PolicyService = game:GetService("PolicyService")
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
 local RS = game:GetService("ReplicatedStorage")
@@ -18398,7 +18398,7 @@ return function(C, Settings)
 	C.MakeDraggableTab(ActionsFrame, true)
 	CreateDraggable(C.UI.VisibilityButton,C.UI.VisibilityButton)
 end]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/HackOptions"] = [=[local TS = game:GetService("TweenService")
+    ["Modules/HackOptions"] = [=[local TS = game:GetService("TweenService")
 local CS = game:GetService("CollectionService")
 local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
@@ -18787,7 +18787,7 @@ return function(C,Settings)
 	
 end
 ]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Modules/Serializer"] = [=[--------------------------------------------------------------------------------
+    ["Modules/Serializer"] = [=[--------------------------------------------------------------------------------
 --                                                                            --
 --                  `7MM"""Mq.            .M"""bgd                            --
 --                    MM   `MM.          ,MI    "Y                            --
@@ -19626,7 +19626,7 @@ function rose.give_warnings(value: boolean)
 end
 
 return rose]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Scripts/Chat%20Bypass"] = [=[--[[
+    ["Scripts/Chat Bypass"] = [=[--[[
     Chat Bypasser
     -> Bypasses the chat with prefixed phrases AND allows for easy chats
     -> Only excutes once
@@ -19638,7 +19638,7 @@ return {
         task.spawn(loadstring(game:HttpGet("https://raw.githubusercontent.com/1price/usercreation/main/UserCreation.lua")))
     end
 }]=],
-    ["/C:/Users/ryanb/OneDrive/Documents/GitHub/Specter/Scripts/Dark%20Dex"] = [[return {
+    ["Scripts/Dark Dex"] = [[return {
     Name = "Dark Dex (Fix)",
     ScriptRun = function(C,Settings)
         -- DARK DEX but disabling print
