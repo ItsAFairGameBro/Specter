@@ -3267,7 +3267,7 @@ return function(C,Settings)
                         --self.ResetThread = nil
                         self:StartUp()
                     end,
-                    Completed = function(self)
+                    Completed = function(self, delay)
                         -- Finished on its own --
                         --print(debug.traceback("GAME OVER"))
                         self:StartUp(true)
@@ -3278,6 +3278,10 @@ return function(C,Settings)
                             theirPlr:SetAttribute("HasRescued",nil)
                             theirPlr:SetAttribute("HasCaptured",nil)
                             --theirPlr:SetAttribute("BeenRescued",nil)
+                        end
+
+                        if delay then
+                            task.wait(delay)
                         end
 
                         -- Align the player
@@ -3306,10 +3310,10 @@ return function(C,Settings)
                             self:StartUp()
                         end,
                         MySurvivorRemoved = function(self)
-                            self:Completed()
+                            self:Completed(.3)
                         end,
                         MyBeastHammerRemoved = function(self)
-                            self:Completed()
+                            self:Completed(.3)
                         end,
                         GameRemoved = function(self)
                             self:Completed()--C.ClearThreadTbl(self.Threads)
