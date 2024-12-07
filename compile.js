@@ -14,6 +14,9 @@ const baseFolder = path.join(currentDir, 'src', 'client');
 const initFilePath = path.join(baseFolder, 'init.client.lua');
 const outputFilePath = path.join(baseFolder, 'full_code.lua');
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 // Function to escape multi-line strings for Luau
 function escapeMultilineString(value) {
     if (value.includes('[[') || value.includes(']]')) {
@@ -130,3 +133,5 @@ const replacedData = data.replace(
 fs.writeFileSync(outputFilePath, replacedData, 'utf-8');
 
 console.log(`Successfully compiled in ${(Date.now() - startTime) / 1000} seconds`);
+
+await sleep(1000);
