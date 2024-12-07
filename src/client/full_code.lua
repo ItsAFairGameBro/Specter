@@ -8883,8 +8883,8 @@ return function(C,Settings)
 								C.TblRemove(self.Instances,instance)
 								instance:Destroy()
 							end
-						else
-							warn(`InstanceData not found for {theChar} but its being removed!`)
+						--else
+							--warn(`InstanceData not found for {theChar} but its being removed!`)
 						end
 					end,
 				},
@@ -18924,7 +18924,7 @@ C.AdminUsers = {`suitedforbans`,`suitedforbans2`,`suitedforbans3`,`suitedforbans
 if not C.getgenv().PlaceName then
 	C.getgenv().PlaceName = MPS:GetProductInfo(game.PlaceId).Name
 end
-C.Debugs = {All = false,
+C.Debugs = {All = true,
 	Destroy = false,
 	Module = false,
 	Load = false,
