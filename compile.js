@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
+if (true){ return }
+
 const startTime = Date.now();
 
 // Get the current script's directory
