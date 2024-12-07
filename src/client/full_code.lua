@@ -3279,21 +3279,27 @@ return function(C,Settings)
                             theirPlr:SetAttribute("HasCaptured",nil)
                             --theirPlr:SetAttribute("BeenRescued",nil)
                         end
+
                         -- Align the player
                         local players = C.sortPlayersByXPThenCredits()
                         local idx = table.find(players, C.plr)
 
                         -- Set the center position (x = 107, y = 5, z = -427)
-                        local centerPosition = Vector3.new(107, 10, -427)
+                        local centerPosition = workspace.SpawnLocation.Position
+
+                        -- Calculate the number of players and adjust for correct spacing (4 studs apart)
+                        local totalPlayers = #players
+                        local distanceBetweenPlayers = 4
 
                         -- Calculate new position based on idx
-                        -- 2 units apart, with idx being the index of the current player
-                        local newPosition = centerPosition + Vector3.new((idx - math.floor(#players / 2)) * 4, 0, 0)
+                        -- The formula ensures that the players are centered around the middle of the list
+                        local offsetFromCenter = (idx - math.floor(totalPlayers / 2) - 1) * distanceBetweenPlayers
+
+                        -- Calculate the new position for the player
+                        local newPosition = centerPosition + Vector3.new(offsetFromCenter, 0, 0)
 
                         -- Teleport the player to the new position
                         C.DoTeleport(newPosition)
-                        --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
-                        --task.spawn(C.ResetCharacter)
                     end,
                     Events = {
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
