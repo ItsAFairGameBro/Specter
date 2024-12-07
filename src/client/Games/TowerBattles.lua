@@ -719,9 +719,11 @@ return function(C,Settings)
                 Events = {
                     TowerAdded = function(self, tower)
                         print("tower",tower)
+                        task.wait(1/2)
                         for num, basepart in ipairs(tower:GetDescendants()) do
                             if basepart:IsA("BasePart") and self.BodyNames[basepart.Name] then
-                                C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or nil, true, true)
+                                print("body part",basepart)
+                                C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or nil, true)
                             end
                         end
                     end,
