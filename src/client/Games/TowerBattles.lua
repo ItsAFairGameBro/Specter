@@ -709,9 +709,9 @@ return function(C,Settings)
                 Layout = 30,
                 Shortcut = "Colorify",Threads={},
                 Activate = function(self,newValue,firstRun)
-                    if not newValue and not firstRun then
+                    if not firstRun then
                         for num, tower in ipairs(C.Towers:GetChildren()) do
-                            self.Events.TowerAdded(self, tower)
+                            task.spawn(self.Events.TowerAdded, self, tower)
                         end
                     end
                 end,
