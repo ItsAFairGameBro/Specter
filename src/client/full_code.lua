@@ -6508,31 +6508,30 @@ return function(C,Settings)
 					end
 				end,
 			},
-            C.Jerk and {
-                {
-                    Title = "Blackify",
-                    Tooltip = "Turns all of the towers skins to black",
-                    Layout = 30,
-                    Shortcut = "Colorify",Threads={},
-                    Activate = function(self,newValue,firstRun)
-                        if not newValue and not firstRun then
-                            for num, tower in ipairs(C.Towers:GetChildren()) do
-                                self:TowerAdded(tower)
+            C.Jerk and
+            {
+                Title = "Blackify",
+                Tooltip = "Turns all of the towers skins to black",
+                Layout = 30,
+                Shortcut = "Colorify",Threads={},
+                Activate = function(self,newValue,firstRun)
+                    if not newValue and not firstRun then
+                        for num, tower in ipairs(C.Towers:GetChildren()) do
+                            self:TowerAdded(tower)
+                        end
+                    end
+                end,
+                BodyNames = {"Torso","Head","Right Arm","Left Arm","Right Leg","Left Leg"},
+                Events = {
+                    TowerAdded = function(self, tower)
+                        print("tower",tower)
+                        for num, basepart in ipairs(tower:GetDescendants()) do
+                            if basepart:IsA("BasePart") and self.BodyNames[basepart.Name] then
+                                C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or nil, true, true)
                             end
                         end
                     end,
-                    BodyNames = {"Torso","Head","Right Arm","Left Arm","Right Leg","Left Leg"},
-                    Events = {
-                        TowerAdded = function(self, tower)
-                            print("tower",tower)
-                            for num, basepart in ipairs(tower:GetDescendants()) do
-                                if basepart:IsA("BasePart") and self.BodyNames[basepart.Name] then
-                                    C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or nil, true, true)
-                                end
-                            end
-                        end,
-                    },
-                }
+                },
             },
 		}
 	}
