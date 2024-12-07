@@ -2394,7 +2394,7 @@ local function SetUpGame(C, Settings)
                 return
             end
             C.HammerEvent:FireServer("HammerClick", true)
-            task.wait(.05)
+            RunS.RenderStepped:Wait()
         end
         warn(`[C.RemoveRope]: Failed to remove rope {C.CarriedTorso.Value} after 15 tries!`)
     end
@@ -2420,7 +2420,7 @@ local function SetUpGame(C, Settings)
             return false, "Capsule Not Found"
         end
         C.LastCaptureTime = os.clock()
-        task.wait(1/3)
+        RunS.RenderStepped:Wait()
         local Trigger = capsule:WaitForChild("PodTrigger",5)
         local ActionSign = Trigger and Trigger:FindFirstChild("ActionSign")
         for s=1,3,1 do
@@ -2430,7 +2430,7 @@ local function SetUpGame(C, Settings)
             elseif (Trigger and Trigger.CapturedTorso.Value~=nil) then
                 break --we got ourselves a trapped survivor!
             elseif s~=1 then
-                task.wait(.15)
+                RunS.RenderStepped:Wait()
             end
             if Trigger:FindFirstChild("Event") then
                 C.RemoteEvent:FireServer("Input", "Trigger", true, Trigger.Event)
@@ -2460,9 +2460,9 @@ local function SetUpGame(C, Settings)
             if isOpened then
                 C.RemoteEvent:FireServer("Input", "Trigger", false)
             end
-            task.wait(.075)
+            RunS.RenderStepped:Wait()
             C.RemoteEvent:FireServer("Input", "Action", false)
-            task.wait(.075)
+            RunS.RenderStepped:Wait()
         end
     end
     function C.WaitForHammer()
@@ -2777,10 +2777,10 @@ return function(C,Settings)
                                 C.WaitForHammer()
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Survivor=true,Lobby=false,Beast=false})) do
                                     if C.CanTarget(self, C.BeastPlr) and theirPlr.Character then
-                                        C.HitSurvivor(theirPlr.Character)
+                                        task.spawn(C.HitSurvivor, theirPlr.Character)
                                     end
                                 end
-                                task.wait(1/2)
+                                RunS.RenderStepped:Wait()
                             end
                         end,
                         RagdollRemoved = function(self, theirChar)
@@ -2814,7 +2814,7 @@ return function(C,Settings)
                             end
                             if not C.LastCaptureTime or (os.clock() - C.LastCaptureTime) < 1 then
                                 for _, theirPlr in ipairs(C.GetPlayerListOfType({Ragdoll=true})) do
-                                    self.Events.RagdollAdded(self, theirPlr, theirPlr.Character)
+                                    task.spawn(self.Events.RagdollAdded, self, theirPlr, theirPlr.Character)
                                 end
                             end
                         end,
@@ -3097,7 +3097,7 @@ return function(C,Settings)
                                     if not inRange then
                                         if not C.myTSM.Captured.Value and (not C.myTSM.Ragdoll.Value or (C.CarriedTorso
                                             and (C.CarriedTorso.Value and C.CarriedTorso.Value.Parent)~=C.char)) then
-                                            C.DoTeleport(C.BeastChar:GetPivot()*Vector3.new(0,0,-4))
+                                            C.DoTeleport(C.BeastChar:GetPivot()*Vector3.new(0,0,-1))
                                         end
                                     else
                                         if not C.myTSM.Ragdoll.Value and C.BeastChar and C.BeastChar.Parent and C.char:FindFirstChild("Head") then
