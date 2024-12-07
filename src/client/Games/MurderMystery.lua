@@ -127,7 +127,7 @@ return function(C,Settings)
                     C.RemoveOverride(C.hackData.Blatant.Noclip, self.Shortcut)
 				end,
 				Options = {
-					
+
 				}
 			},
             {
@@ -159,7 +159,7 @@ return function(C,Settings)
                     for i = 0, 360, 360/12 do
                         local dir = getRaycastDirection(i)
                         local hitResult, hitPosition = C.Raycast(charPosition, dir + charPosition, options)
-                        
+
                         local distance = (hitPosition - charPosition).Magnitude
                         if distance > maxDistance then
                             maxDistance = distance
@@ -217,7 +217,7 @@ return function(C,Settings)
                                 if canShoot then
                                     task.wait(C.plr:GetNetworkPing() * 2)
                                 end
-                                
+
                                 LastTeleport = os.clock()
                             end
                             if canShoot and (not LastClick or os.clock() - LastClick >= 1 + ShotDelay) then
@@ -316,7 +316,9 @@ return function(C,Settings)
                             end
                         end
                         table.insert(self.Functs,Backpack.ChildAdded:Connect(BackpackAdded))
-                        table.insert(self.Functs,C.char.ChildAdded:Connect(BackpackAdded))
+                        if C.char then
+                            table.insert(self.Functs,C.char.ChildAdded:Connect(BackpackAdded))
+                        end
                         for num, item in ipairs(Backpack:GetChildren()) do
                             task.spawn(BackpackAdded,item,true)
                         end
@@ -333,7 +335,7 @@ return function(C,Settings)
                             table.insert(self.Functs,C.Map.ChildAdded:Connect(MapAdded))
                             for num, item in ipairs(C.Map:GetChildren()) do
                                 task.spawn(MapAdded,item)
-                            end    
+                            end
                         end
                     end
                 end,
@@ -402,7 +404,7 @@ return function(C,Settings)
 				Shortcut = "DisableKillbricks",
                 Activate = function(self,newValue)
                     self.Events.MapAdded(self)
-                end, 
+                end,
                 Events = {
                     MapAdded = function(self)
                         if not C.Map then

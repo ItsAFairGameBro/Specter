@@ -1394,6 +1394,19 @@ return function(C,Settings)
                             theirPlr:SetAttribute("HasCaptured",nil)
                             --theirPlr:SetAttribute("BeenRescued",nil)
                         end
+                        -- Align the player
+                        local players = C.sortPlayersByXPThenCredits()
+                        local idx = table.find(players, C.plr)
+
+                        -- Set the center position (x = 107, y = 5, z = -427)
+                        local centerPosition = Vector3.new(107, 5, -427)
+
+                        -- Calculate new position based on idx
+                        -- 2 units apart, with idx being the index of the current player
+                        local newPosition = centerPosition + Vector3.new((idx - math.floor(#players / 2)) * 2, 0, 0)
+
+                        -- Teleport the player to the new position
+                        C.DoTeleport(newPosition)
                         --task.delay(2, C.DoTeleport, workspace.SpawnLocation:GetPivot())
                         --task.spawn(C.ResetCharacter)
                     end,
