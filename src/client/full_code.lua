@@ -6527,7 +6527,7 @@ return function(C,Settings)
                         task.wait(1/2)
                         for num, basepart in ipairs(tower:GetDescendants()) do
                             if basepart:IsA("BasePart") and table.find(self.BodyNames,basepart.Name) then
-                                C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or nil, true)
+                                C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and Color3.fromRGB(50, 35, 25) or C, true)
                             end
                         end
                     end,
