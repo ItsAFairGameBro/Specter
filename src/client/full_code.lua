@@ -5900,14 +5900,12 @@ local function Static(C, Settings)
                         C.AddOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
                         table.insert(self.Threads, task.spawn(function()
                             while true do
-                                print("Starting new traversal!")
                                 C.DoTeleport(Nodes.Start.Position)
                                 local index = 1
                                 while true do
                                     local current = Nodes:FindFirstChild(tostring(index))
                                     if not current then
                                         if index == "Finish" then
-                                            print("Traversal complete!")
                                             break
                                         else
                                             index = "Finish"
@@ -5917,11 +5915,13 @@ local function Static(C, Settings)
                                     if typeof(index) == "number" then
                                         index+=1
                                     end
-                                    C.human:MoveTo(current.centAt.WorldPosition)
-                                    C.human.MoveToFinished:Wait()
+                                    local target = current.centAt.WorldPosition
+                                    while ((target - C.hrp.Position)/Vector3.new(1,math.huge,1)).Magnitude > .4 do
+                                        C.human:MoveTo(target)
+                                        task.wait(1/5)
+                                    end
                                 end
                             end
-                            print("Wut, exited out of loop?")
                         end))
                         return true, ""
                     end,
