@@ -828,7 +828,7 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.PrimaryPart.Anchored = false
-                    FakeRig:ScaleTo(math.pow((Rig:GetExtentsSize() / FakeRig:GetExtentsSize()).Magnitude), 1/3)
+                    FakeRig:ScaleTo(math.pow((Rig:GetExtentsSize() / FakeRig:GetExtentsSize()).Magnitude, 1/3))
                     FakeRig.Parent = zombie
                     FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
                 end,
