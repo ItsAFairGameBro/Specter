@@ -802,6 +802,7 @@ return function(C,Settings)
             {
                 Title = "Morph",
                 Tooltip = "Morphs all to the hot avatar",
+                Shortcut = "Morph",
                 Layout = 40,
                 Threads = {},
                 Functs = {},
