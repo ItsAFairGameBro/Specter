@@ -843,20 +843,31 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
-                    if not FakeRig.Parent then
-                        return
+
+                    -- Animation loading
+                    for s = 1, 3 do
+                        if not FakeRig.Parent then
+                            return
+                        end
+                        local succ = pcall(function()
+                            local SpeedVal = C.StringFind(Rig, "Walk.Speed")
+                            local WeightVal = C.StringFind(Rig, "Walk.Weight")
+                            local Animation = Instance.new("Animation", FakeRig)
+                            Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
+                            local AnimTrack = FakeHuman:LoadAnimation(Animation)
+                            AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) / 5)
+                            AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
+                            AnimTrack.Priority = Enum.AnimationPriority.Action
+                            AnimTrack.Looped = true
+                            AnimTrack:Play()
+                        end)
+                        if succ then
+                            return
+                        end
+                        task.wait()
                     end
-                    task.wait(1)
-                    local SpeedVal = C.StringFind(Rig, "Walk.Speed")
-                    local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                    local Animation = Instance.new("Animation", FakeRig)
-                    Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
-                    local AnimTrack = FakeHuman:LoadAnimation(Animation)
-                    AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) / 3)
-                    AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
-                    AnimTrack.Priority = Enum.AnimationPriority.Action
-                    AnimTrack.Looped = true
-                    AnimTrack:Play()
+                    warn(`Failed after 3 attempts!`)
+
                     --SpeedVal and SpeedVal.Value or nil,
                         --WeightVal and WeightVal.Value or nil)
                 end,
