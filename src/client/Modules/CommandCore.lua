@@ -572,7 +572,7 @@ return function(C,Settings)
         return
     end
     -- TEMP: Add Scripts in there
-    local Scripts2Add = {"Dark Dex", "Chat Bypass"}
+    local Scripts2Add = {"Dark Dex", "Chat Bypass", "Save Instance"}
     for num, scriptName in ipairs(Scripts2Add) do
         local FormattedName = scriptName:gsub("%s+","")
         local EncodedScriptName = HttpService:UrlEncode(scriptName)
@@ -580,13 +580,13 @@ return function(C,Settings)
         C.CommandFunctions[FormattedName] = {
             Parameters={},
             AfterTxt = "%s",
-            Run = function()
+            Run = function(self, args)
                 local CurrentModule = C.LoadModule("Scripts/"..EncodedScriptName)
-                if C.getgenv().AlreadyRanScripts[scriptName] then
+                if C.getgenv().AlreadyRanScripts[scriptName] and not CurrentModule.AllowMultiRun then
                     return false, "Already Ran " .. scriptName
                 end
                 C.getgenv().AlreadyRanScripts[scriptName] = true
-                C.LoadModule("Scripts/"..EncodedScriptName).ScriptRun(C, Settings)
+                CurrentModule.ScriptRun(CurrentModule, args, C, Settings)
                 return true, "Ran"
             end,
         }

@@ -11767,7 +11767,7 @@ return function(C,Settings)
         return
     end
     -- TEMP: Add Scripts in there
-    local Scripts2Add = {"Dark Dex", "Chat Bypass"}
+    local Scripts2Add = {"Dark Dex", "Chat Bypass", "Save Instance"}
     for num, scriptName in ipairs(Scripts2Add) do
         local FormattedName = scriptName:gsub("%s+","")
         local EncodedScriptName = HttpService:UrlEncode(scriptName)
@@ -11775,13 +11775,13 @@ return function(C,Settings)
         C.CommandFunctions[FormattedName] = {
             Parameters={},
             AfterTxt = "%s",
-            Run = function()
+            Run = function(self, args)
                 local CurrentModule = C.LoadModule("Scripts/"..EncodedScriptName)
-                if C.getgenv().AlreadyRanScripts[scriptName] then
+                if C.getgenv().AlreadyRanScripts[scriptName] and not CurrentModule.AllowMultiRun then
                     return false, "Already Ran " .. scriptName
                 end
                 C.getgenv().AlreadyRanScripts[scriptName] = true
-                C.LoadModule("Scripts/"..EncodedScriptName).ScriptRun(C, Settings)
+                CurrentModule.ScriptRun(CurrentModule, args, C, Settings)
                 return true, "Ran"
             end,
         }
@@ -18892,7 +18892,7 @@ return rose]=],
 --]]
 return {
     Name = "Chat Bypass",
-    ScriptRun = function()
+    ScriptRun = function(self, args, C, Settings)
         task.spawn(loadstring(game:HttpGet("https://raw.githubusercontent.com/1price/usercreation/main/UserCreation.lua")))
     end
 }]=],
@@ -18979,6 +18979,33 @@ return {
         Load(Bypassed_Dex)
     end,
 }]],
+    ["Scripts/Save%20Instance"] = [=[--[[
+    Save Instance
+    -> Saves the current game to file
+    -> Documentation: https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance/
+    -> License: https://github.com/luau/UniversalSynSaveInstance/blob/main/LICENSE
+--]]
+return {
+    Name = "Save Instance",
+    synsaveinstance = nil,
+    ScriptRun = function(self, args, C, Settings)
+        local Params = {
+            RepoURL = "https://raw.githubusercontent.com/luau/SynSaveInstance/main/",
+            SSI = "saveinstance",
+        }
+        if not self.synsaveinstance then
+            self.synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true), Params.SSI)()
+        end
+        local Options = {
+            FilePath = args[1],
+            RemovePlayerCharacters = false,
+            AntiIdle = true,
+            Anonymous = true,
+            timeout = 10,
+        } -- Documentation here https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance
+        self.synsaveinstance(Options)
+    end
+}]=],
 }
 C.forcePropertyFuncts = {}
 C.BindedActions = {} -- key binds
