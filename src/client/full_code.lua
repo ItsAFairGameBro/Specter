@@ -6659,9 +6659,13 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.PrimaryPart.Anchored = false
-                    FakeRig:ScaleTo(math.pow((Rig:GetExtentsSize() / FakeRig:GetExtentsSize()).Magnitude, 1/3))
+                    FakeRig:ScaleTo(math.pow((Rig.PrimaryPart.Size / FakeRig.PrimaryPart.Size).Magnitude, 1/3))
                     FakeRig.Parent = zombie
-                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
+                    task.wait(1/2)
+                    local SpeedVal = C.StringFind(Rig, "Walk.Speed")
+                    local WeightVal = C.StringFind(Rig, "Walk.Weight")
+                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(SpeedVal and SpeedVal.Value or nil,
+                        WeightVal and WeightVal.Value or nil)
                 end,
                 Activate = function(self, newValue)
                     if newValue then
