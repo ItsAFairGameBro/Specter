@@ -890,7 +890,7 @@ return function(C,Settings)
                         local succ, err = pcall(function()
                             local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                             local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                            local SpeedMult = C.StringWait(Block, "Speed")
+                            local SpeedMult = C.StringWait(zombie, "Block.Speed")
                             local Animation = Instance.new("Animation", FakeRig)
                             Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
                             local AnimTrack = FakeHuman:LoadAnimation(Animation)
