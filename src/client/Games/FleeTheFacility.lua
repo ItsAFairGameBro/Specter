@@ -1425,10 +1425,10 @@ return function(C,Settings)
                             self:StartUp()
                         end,
                         MySurvivorRemoved = function(self)
-                            self:Completed(.3)
+                            self:Completed(1)
                         end,
                         MyBeastHammerRemoved = function(self)
-                            self:Completed(.3)
+                            self:Completed(2)
                         end,
                         GameRemoved = function(self)
                             self:Completed()--C.ClearThreadTbl(self.Threads)
