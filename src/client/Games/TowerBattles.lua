@@ -822,12 +822,11 @@ return function(C,Settings)
                         end
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
+                    FakeRig:PivotTo(zombie:GetPivot())
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block
                     RigWeld.Part1 = FakeRig.Torso
-                    RigWeld.CFrame = CFrame.new()
                     RigWeld.Parent = FakeRig
-                    FakeRig:PivotTo(zombie:GetPivot())
                     FakeRig.PrimaryPart.Anchored = true
                     FakeRig.Parent = zombie
                     FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
