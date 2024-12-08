@@ -5832,6 +5832,7 @@ end
     ["Games/TowerBattles"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local DS = game:GetService("Debris")
+local Players = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
 local UIS = game:GetService("UserInputService")
@@ -6637,15 +6638,22 @@ return function(C,Settings)
                 Layout = 40,
                 Threads = {},
                 Functs = {},
+                Instances = {},
                 ZombieInserted = function(self, zombie)
                     local Rig = zombie:WaitForChild("Rig", 30)
                     if not Rig then
                         return
                     end
-                    local Animator = Rig:FindFirstChildOfClass("Animator", true)
-                    local ZombHuman = Rig:FindFirstChild("Humanoid") or Instance.new("Humanoid", Rig)
-                    ZombHuman:ApplyDescription(C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription"))
-                    Animator.Parent = ZombHuman
+                    local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
+                    for num, part in ipairs(Rig:GetDescendants()) do
+                        if part:IsA("BasePart") or part:IsA("Mesh") then
+                            C.SetPartProperty(part, "Transparency", "MorphTransparency", 1)
+                        end
+                    end
+                    local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply)
+                    FakeRig.PrimaryPart.Anchored = true
+                    FakeRig.Humanoid.Animator:Play(Rig.Walk)
+                    FakeRig.Parent = zombie
                 end,
                 Activate = function(self, newValue)
                     if newValue then
