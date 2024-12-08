@@ -6642,7 +6642,7 @@ return function(C,Settings)
                     if not Rig then
                         return
                     end
-                    local ZombHuman = zombie:FindFirstChild("Humanoid") or Instance.new("Humanoid", zombie)
+                    local ZombHuman = Rig:FindFirstChild("Humanoid") or Instance.new("Humanoid", Rig)
                     ZombHuman:ApplyDescription(C.human:FindFirstChildOfClass("HumanoidDescription"))
                 end,
                 Activate = function(self, newValue)
