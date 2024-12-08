@@ -853,7 +853,7 @@ return function(C,Settings)
                     -- Body colors
                     for num, basepart in ipairs(Rig:GetChildren()) do
                         if basepart:IsA("BasePart") then
-                            local otherPart = FakeRig:FindFirstChild(basepart)
+                            local otherPart = FakeRig:FindFirstChild(basepart.Name)
                             if otherPart then
                                 otherPart.Color = basepart.Color
                             end
