@@ -819,7 +819,10 @@ return function(C,Settings)
                             C.SetPartProperty(part, "Transparency", "MorphTransparency", 1)
                         end
                     end
+                    local RigWeld = Instance.new("Weld")
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
+                    RigWeld.Part0 = FakeRig.PrimaryPart
+                    RigWeld.Part1 = zombie.PrimaryPart
                     FakeRig.PrimaryPart.Anchored = true
                     FakeRig.Humanoid.Animator:Play(Rig.Walk)
                     FakeRig.Parent = zombie
