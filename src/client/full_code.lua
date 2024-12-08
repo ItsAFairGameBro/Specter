@@ -5888,8 +5888,10 @@ local function Static(C, Settings)
                     Run = function(self, args)
                         C.ClearThreadTbl(self.Threads)
                         if args[1] == 0 then
+                            self.Parent.scale:Run({1})
                             return
                         end
+                        self.Parent.scale:Run({1/3})
                         table.insert(self.Threads, task.spawn(function()
                             while true do
                                 local Nodes = C.Map[C.plr.Team.Name .. "Nodes"]
@@ -5913,6 +5915,7 @@ local function Static(C, Settings)
                                 end
                             end
                         end))
+                        return true
                     end,
                     RunOnDestroy = function(self)
                         C.ClearThreadTbl(self.Threads)
