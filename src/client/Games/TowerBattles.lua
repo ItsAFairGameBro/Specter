@@ -842,10 +842,10 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
-                    task.wait()
                     if not FakeRig.Parent then
                         return
                     end
+                    task.wait(1)
                     local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
                     local AnimTrack = FakeHuman.Animator:LoadAnimation(Rig.Walk)
@@ -854,7 +854,6 @@ return function(C,Settings)
                     AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
                     AnimTrack.Priority = Enum.AnimationPriority.Action
                     AnimTrack.Looped = true
-                    print(AnimTrack)
                     --SpeedVal and SpeedVal.Value or nil,
                         --WeightVal and WeightVal.Value or nil)
                 end,
