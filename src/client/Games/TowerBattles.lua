@@ -821,8 +821,9 @@ return function(C,Settings)
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local RigWeld = Instance.new("WeldConstraint", FakeRig)
-                    RigWeld.Part0 = FakeRig.PrimaryPart
-                    RigWeld.Part1 = zombie.PrimaryPart
+                    RigWeld.Part0 = zombie.PrimaryPart
+                    RigWeld.Part1 = FakeRig.PrimaryPart
+                    RigWeld.CFrame = CFrame.new()
                     FakeRig.Parent = zombie
                     FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
                 end,
