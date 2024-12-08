@@ -46,6 +46,49 @@ local function Static(C, Settings)
                 TowerAdded(tower)
             end
         end))
+        table.insert(C.InsertCommandFunctions, function()
+
+            return {
+                ["zombiewalk"]={
+                    Parameters = {{Type="Number",Min=0,Max=10,Default=0}},
+                    Alias = {},
+                    AfterTxt = "",
+                    Threads = {},
+                    Run = function(self, args)
+                        C.ClearThreadTbl(self.Threads)
+                        if args[1] == 0 then
+                            return
+                        end
+                        table.insert(self.Threads, task.spawn(function()
+                            while true do
+                                local Nodes = C.Map[C.plr.Team.Name .. "Nodes"]
+                                C.DoTeleport(Nodes.Start.Position)
+                                local index = 1
+                                while true do
+                                    local current = Nodes:FindFirstChild(tostring(index))
+                                    if not current then
+                                        if index == "Finish" then
+                                            break
+                                        else
+                                            index = "Finish"
+                                            continue
+                                        end
+                                    end
+                                    if typeof(index) == "number" then
+                                        index+=1
+                                    end
+                                    C.human:MoveTo(current.centAt.WorldPosition)
+                                    C.human.MoveToFinished:Wait()
+                                end
+                            end
+                        end))
+                    end,
+                    RunOnDestroy = function(self)
+                        C.ClearThreadTbl(self.Threads)
+                    end,
+                }
+            }
+        end)
     end
 	C.PlayerInformation = C.plr:WaitForChild("Information")
 end

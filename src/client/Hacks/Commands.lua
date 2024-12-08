@@ -144,7 +144,7 @@ return function(C,Settings)
         ["size"] = {
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
                 {Type="Number",Min=0.1,Max=10,Default=1}},
-            Alias = {},
+            Alias = {"scale"},
             AfterTxt = " to %s!",
             Run = function(self, args)
                 for num, theirPlr in ipairs(args[1]) do
