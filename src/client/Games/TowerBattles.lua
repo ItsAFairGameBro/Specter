@@ -103,6 +103,7 @@ local function Static(C, Settings)
                             C.ResetPartProperty(C.human, "WalkSpeed", "ZombieWalk")
                             if C.hrp and C.human then
                                 C.human:MoveTo(C.hrp.Position)
+                                C.human.WalkSpeed = C.Defaults.WalkSpeed
                             end
                         end
                     end
