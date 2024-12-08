@@ -850,7 +850,7 @@ return function(C,Settings)
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
-                    FakeHuman.DisplayName = zombie.Name
+                    FakeHuman.DisplayName = `` --zombie.Name
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
                             part.CollisionGroup = "Zombies"
@@ -862,7 +862,7 @@ return function(C,Settings)
                     end
                     local ScaleDif = Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X
                     FakeRig:ScaleTo(ScaleDif)
-                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) - 0.4, 0))
+                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) - 0.9, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
