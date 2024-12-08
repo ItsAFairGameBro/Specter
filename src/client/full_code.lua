@@ -6679,12 +6679,12 @@ return function(C,Settings)
                     task.wait(1)
                     local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                    local AnimTrack = FakeHuman.Animator:LoadAnimation(Rig.Walk)
-                    AnimTrack:Play()
+                    local AnimTrack = FakeHuman:LoadAnimation(Rig.Walk)
                     AnimTrack:AdjustSpeed(SpeedVal and SpeedVal.Value or 1)
                     AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
                     AnimTrack.Priority = Enum.AnimationPriority.Action
                     AnimTrack.Looped = true
+                    AnimTrack:Play()
                     --SpeedVal and SpeedVal.Value or nil,
                         --WeightVal and WeightVal.Value or nil)
                 end,
