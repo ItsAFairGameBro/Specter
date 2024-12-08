@@ -6655,6 +6655,7 @@ return function(C,Settings)
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
+                    FakeRig.PrimaryPart.Name = "Block"
                     FakeHuman.DisplayName = zombie.Name
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
@@ -6669,7 +6670,7 @@ return function(C,Settings)
                     FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, .4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
-                    RigWeld.Part0 = Rig.PrimaryPart
+                    RigWeld.Part0 = Rig:FindFirstChild("FakeBlock")
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
