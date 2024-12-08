@@ -850,7 +850,6 @@ return function(C,Settings)
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
-                    FakeRig.PrimaryPart.Name = "Block"
                     FakeHuman.DisplayName = zombie.Name
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
