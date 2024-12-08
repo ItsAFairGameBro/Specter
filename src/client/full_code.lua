@@ -6655,13 +6655,15 @@ return function(C,Settings)
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
+                    FakeHuman.DisplayName = zombie.Name
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
                             part.CollisionGroup = "Zombies"
                         end
                     end
+                    FakeRig.Animator:Destroy()
                     FakeRig:ScaleTo((Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X))
-                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, 1, 0))
+                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, .4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Rig.PrimaryPart
@@ -6674,7 +6676,13 @@ return function(C,Settings)
                     end
                     local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                    FakeHuman.Animator:LoadAnimation(Rig.Walk):Play()
+                    local AnimTrack = FakeHuman.Animator:LoadAnimation(Rig.Walk)
+                    AnimTrack:Play()
+                    AnimTrack.Speed = SpeedVal and SpeedVal.Value or 1
+                    AnimTrack.Weight = WeightVal and WeightVal.Value or 1
+                    AnimTrack.Priority = Enum.AnimationPriority.Action
+                    AnimTrack.Looped = true
+                    print(AnimTrack)
                     --SpeedVal and SpeedVal.Value or nil,
                         --WeightVal and WeightVal.Value or nil)
                 end,
