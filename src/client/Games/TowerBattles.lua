@@ -827,7 +827,7 @@ return function(C,Settings)
                             part.CollisionGroup = "Zombies"
                         end
                     end
-                    FakeRig:ScaleTo(math.pow((Rig.PrimaryPart.Size / FakeRig.PrimaryPart.Size).Magnitude, 1/3))
+                    FakeRig:ScaleTo((Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X))
                     FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, 1, 0))
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block
