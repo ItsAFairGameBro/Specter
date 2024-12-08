@@ -6639,6 +6639,17 @@ return function(C,Settings)
                 Threads = {},
                 Functs = {},
                 Instances = {},
+                ApplyInvis = function(self, zombie, enabled)
+                    local Rig = zombie:FindFirstChild("Rig")
+                    if not Rig then
+                        return
+                    end
+                    for num, part in ipairs(Rig:GetDescendants()) do
+                        if part:IsA("BasePart") or part:IsA("Mesh") or part:IsA("Texture") then
+                            C.SetPartProperty(part, "Transparency", "MorphTransparency", enabled and 1 or C)
+                        end
+                    end
+                end,
                 ZombieInserted = function(self, zombie)
                     local Rig = zombie:WaitForChild("Rig", 30)
                     if not Rig then
@@ -6648,11 +6659,7 @@ return function(C,Settings)
                     local Block = Rig:WaitForChild("Block") or Rig.PrimaryPart
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
                     Block.Transparency = 0.5
-                    for num, part in ipairs(Rig:GetDescendants()) do
-                        if part:IsA("BasePart") or part:IsA("Mesh") or part:IsA("Texture") then
-                            C.SetPartProperty(part, "Transparency", "MorphTransparency", 1)
-                        end
-                    end
+                    self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
                     FakeRig.PrimaryPart.Name = "Block"
@@ -6674,6 +6681,15 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
+                    -- Body colors
+                    for num, basepart in ipairs(Rig:GetChildren()) do
+                        if basepart:IsA("BasePart") then
+                            local otherPart = FakeRig:FindFirstChild(basepart)
+                            if otherPart then
+                                otherPart.Color = basepart.Color
+                            end
+                        end
+                    end
 
                     -- Animation loading
                     for s = 1, 3 do
@@ -6703,15 +6719,20 @@ return function(C,Settings)
                         --WeightVal and WeightVal.Value or nil)
                 end,
                 Activate = function(self, newValue)
+                    local WaveTeam = C.StringWait(workspace, "Wave.Blue", math.huge)
                     if newValue then
-                        local WaveTeam = C.StringWait(workspace, "Wave.Blue", math.huge)
                         table.insert(self.Functs, WaveTeam.ChildAdded:Connect(function(new)
                             self:ZombieInserted(new)
                         end))
                         for _, zomb in ipairs(WaveTeam:GetChildren()) do
                             table.insert(self.Threads, task.spawn(self.ZombieInserted, self, zomb))
                         end
+                    else
+                        for _, zomb in ipairs(WaveTeam:GetChildren()) do
+                            self:ApplyInvis(zomb, false)
+                        end
                     end
+
                 end,
             },
 		}
