@@ -7427,6 +7427,20 @@ return function(C,Settings)
                 return true, args[2]
             end,
         },
+        ["size"] = {
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},
+                {Type="Number",Min=0.1,Max=10,Default=1}},
+            Alias = {},
+            AfterTxt = " to %s!",
+            Run = function(self, args)
+                for num, theirPlr in ipairs(args[1]) do
+                    if theirPlr and theirPlr.Character then
+                        theirPlr.Character:ScaleTo(args[2])
+                    end
+                end
+                return true, args[2]
+            end,
+        },
         ["morph"]={
             Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"}},
             AfterTxt=" to %s%s",Priority=-3,
