@@ -206,7 +206,7 @@ return function(C,Settings)
                         local property = "HipHeight"
                         local theirHuman = targetChar:WaitForChild("Humanoid")
                         if theirHuman then
-                            TS:Create(theirHuman, TweenInfo.new(1), {[property] = (visible and 0 or -C.getHumanoidHeight(targetChar))}):Play()
+                            TS:Create(theirHuman, TweenInfo.new(1), {[property] = (visible and 0 or -C.getCharacterHeight(targetChar))}):Play()
                         end
                     end,
                     Start = function(self,targetChar)
@@ -701,7 +701,7 @@ return function(C,Settings)
 
 
 
-                    -- * CFrame.new(0,C.getHumanoidHeight(C.char),dist))
+                    -- * CFrame.new(0,C.getCharacterHeight(C.char),dist))
                     --task.wait()
                     --end
                     --if isFollowing == theirPlr then

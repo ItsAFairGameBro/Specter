@@ -761,7 +761,7 @@ return function (C,Settings)
                                         else
                                             C.SetActionLabel(actionClone, "Delivering")
                                             --C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
-                                            
+
                                         end
                                         --if StaticCust.Occupied.Value == CurrentCustomer and CurrentCustomer then
                                             --StaticCust.Occupied.Value = nil
@@ -777,7 +777,7 @@ return function (C,Settings)
                                 else
                                     C.human:MoveTo(CurrentCustomer:GetPivot()*Vector3.new(0,0,-4))
                                 end
-                                
+
                                 return "Wait",0
                             else
                                 if HasValid then
@@ -1011,7 +1011,7 @@ return function (C,Settings)
                     botData.Parent = self
                     local jobHandler = C.JobHandler
                     local jobModule = C.require(C.StringWait(C.plr,"PlayerScripts.Modules.JobHandler."..jobName))
-                    
+
                     if botData.Part then
                         local instance = C.StringWait(jobModule.Model,botData.Part)
                         botData.Location = {CFrame = instance.CFrame, Size = instance.Size}
@@ -1030,7 +1030,7 @@ return function (C,Settings)
                     local myWorkstation
                     local function TeleportToStation()
                         C.SetActionLabel(actionClone,"Going To Station")
-                        
+
                         C.DoTeleport(botData.Location.CFrame.Rotation + C.RandomPointOnPart(botData.Location.CFrame,botData.Location.Size))
                     end
                     while info.Enabled do
@@ -1046,7 +1046,7 @@ return function (C,Settings)
                         actionClone = actionClone or C.AddAction(info)
                         while C.char and not C.IsBusy() and ((jobHandler:GetJob() ~= jobName and not false)--botData.ProximityOnly)
                             or (botData.Location and (botData.Location.CFrame.Position - C.char:GetPivot().Position).Magnitude > 500)) do
-                            while not C.Cleared and (not actionClone or not pcall(C.SetActionLabel,actionClone,"TextChatService") 
+                            while not C.Cleared and (not actionClone or not pcall(C.SetActionLabel,actionClone,"TextChatService")
                                 or not actionClone.Parent or info ~= C.getgenv().ActionsList[info.Name]) do
                                 warn("Stil Running After Deadline")
                                 task.wait()
@@ -1140,7 +1140,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,C.getHumanoidHeight(C.char),0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,C.getCharacterHeight(C.char),0))
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
@@ -1154,7 +1154,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,C.getHumanoidHeight(C.char),0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot().Position + Vector3.new(0,C.getCharacterHeight(C.char),0))
                         else
                             C.FireServer("Interact",{Target=Object,Path=1})
                         end
@@ -1168,7 +1168,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getHumanoidHeight(C.char),0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getCharacterHeight(C.char),0))
                         else
                             if not Object.ObjectData.IsOn.Value then
                                 -- Turn on the TV
@@ -1200,7 +1200,7 @@ return function (C,Settings)
                             if C.Attachment then
                                 C.CharacterHandler:SendDetach()
                             end
-                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getHumanoidHeight(C.char),0))
+                            C.DoTeleport(Object.ObjectModel:GetPivot() * Vector3.new(0,0,-6) + Vector3.new(0,C.getCharacterHeight(C.char),0))
                         else
                             --print(C.HotbarUI.Hotbar.EquipData)
                             --MeshId == "rbxassetid://485263557"
@@ -6694,7 +6694,7 @@ return function(C,Settings)
                     end
                     local ScaleDif = Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X
                     FakeRig:ScaleTo(ScaleDif)
-                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getHumanoidHeight(FakeRig) - 0.4, 0))
+                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) - 0.4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
@@ -7703,7 +7703,7 @@ return function(C,Settings)
                         local property = "HipHeight"
                         local theirHuman = targetChar:WaitForChild("Humanoid")
                         if theirHuman then
-                            TS:Create(theirHuman, TweenInfo.new(1), {[property] = (visible and 0 or -C.getHumanoidHeight(targetChar))}):Play()
+                            TS:Create(theirHuman, TweenInfo.new(1), {[property] = (visible and 0 or -C.getCharacterHeight(targetChar))}):Play()
                         end
                     end,
                     Start = function(self,targetChar)
@@ -8198,7 +8198,7 @@ return function(C,Settings)
 
 
 
-                    -- * CFrame.new(0,C.getHumanoidHeight(C.char),dist))
+                    -- * CFrame.new(0,C.getCharacterHeight(C.char),dist))
                     --task.wait()
                     --end
                     --if isFollowing == theirPlr then
