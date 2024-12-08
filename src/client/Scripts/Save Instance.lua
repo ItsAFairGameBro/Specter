@@ -21,6 +21,7 @@ return {
             RemovePlayerCharacters = false,
             AntiIdle = true,
             Anonymous = true,
+            noscripts = not getgenv().decompile,
             timeout = 10,
         } -- Documentation here https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance
         self.synsaveinstance(Options)

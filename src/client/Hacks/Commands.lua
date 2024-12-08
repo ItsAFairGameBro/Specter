@@ -410,7 +410,7 @@ return function(C,Settings)
                     end
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
-                        print(theirChar,"first run: joinplayerrmorphdesc")
+                        --print(theirChar,"first run: joinplayerrmorphdesc")
                         if JoinPlayerMorphDesc then
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc

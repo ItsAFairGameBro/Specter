@@ -6680,7 +6680,9 @@ return function(C,Settings)
                     task.wait(1)
                     local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                    local AnimTrack = FakeHuman:LoadAnimation(Rig.Walk)
+                    local Animation = Instance.new("Animation", FakeRig)
+                    Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
+                    local AnimTrack = FakeHuman:LoadAnimation(Animation)
                     AnimTrack:AdjustSpeed(SpeedVal and SpeedVal.Value or 1)
                     AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
                     AnimTrack.Priority = Enum.AnimationPriority.Action
@@ -7839,7 +7841,7 @@ return function(C,Settings)
                     end
                     if firstRun and not currentChar then
                         local JoinPlayerMorphDesc = C.getgenv().JoinPlayerMorphDesc
-                        print(theirChar,"first run: joinplayerrmorphdesc")
+                        --print(theirChar,"first run: joinplayerrmorphdesc")
                         if JoinPlayerMorphDesc then
                             JoinPlayerMorphDesc = JoinPlayerMorphDesc:Clone()
                             C.getgenv().currentDesc[theirPlr.Name] = JoinPlayerMorphDesc
@@ -19159,6 +19161,7 @@ return {
             RemovePlayerCharacters = false,
             AntiIdle = true,
             Anonymous = true,
+            noscripts = not getgenv().decompile,
             timeout = 10,
         } -- Documentation here https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance
         self.synsaveinstance(Options)
