@@ -5933,6 +5933,9 @@ local function Static(C, Settings)
                         if hardReset then
                             self.Parent.scale:Run({{C.plr}, 1})
                             C.ResetPartProperty(C.human, "WalkSpeed", "ZombieWalk")
+                            if C.hrp and C.human then
+                                C.human:MoveTo(C.hrp.Position)
+                            end
                         end
                     end
                 }
@@ -6598,8 +6601,8 @@ return function(C,Settings)
             {
                 Title = "Blackify",
                 Tooltip = "Turns all of the towers skins to black",
-                Layout = 30,
-                Shortcut = "Colorify",Threads={},
+                Layout = 35,
+                Shortcut = "Colorify",Threads={}, Functs = {},
                 Activate = function(self,newValue,firstRun)
                     if not firstRun then
                         for num, tower in ipairs(C.Towers:GetChildren()) do
@@ -6611,13 +6614,47 @@ return function(C,Settings)
                 Events = {
                     TowerAdded = function(self, tower)
                         task.wait(1/2)
-                        for num, basepart in ipairs(tower:GetDescendants()) do
+                        local function PartAdded(basepart)
                             if basepart:IsA("BasePart") and table.find(self.BodyNames,basepart.Name) then
+---@diagnostic disable-next-line: invalid-class-name
                                 C.SetPartProperty(basepart, "Color", "Colorify", self.RealEnabled and BrickColor.new("Medium brown").Color or C, true)
                             end
                         end
+                        for num, basepart in ipairs(tower:GetDescendants()) do
+                            PartAdded(basepart)
+                        end
+                        if self.RealEnabled then
+                            table.insert(self.Functs, tower.DescendantAdded:Connect(PartAdded))
+                        end
                     end,
                 },
+            },
+            C.Jerk and
+            {
+                Title = "Morph",
+                Tooltip = "Morphs all to the hot avatar",
+                Layout = 40,
+                Threads = {},
+                Functs = {},
+                ZombieInserted = function(self, zombie)
+                    local Rig = zombie:WaitForChild("Rig", 30)
+                    if not Rig then
+                        return
+                    end
+                    local ZombHuman = zombie:FindFirstChild("Humanoid") or Instance.new("Humanoid", zombie)
+                    ZombHuman:ApplyDescription(C.human:FindFirstChildOfClass("HumanoidDescription"))
+                end,
+                Activate = function(self, newValue)
+                    if newValue then
+                        local WaveTeam = C.StringWait(workspace, "Wave.Blue", math.huge)
+                        table.insert(self.Functs, WaveTeam.ChildAdded:Connect(function(new)
+                            self:ZombeInserted(new)
+                        end))
+                        for _, zomb in ipairs(WaveTeam:GetChildren()) do
+                            table.insert(self.Threads, task.spawn(self.ZombeInserted, self, zomb))
+                        end
+                    end
+                end,
             },
 		}
 	}
