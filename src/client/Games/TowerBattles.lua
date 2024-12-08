@@ -890,19 +890,15 @@ return function(C,Settings)
                         local succ = pcall(function()
                             local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                             local WeightVal = C.StringFind(Rig, "Walk.Weight")
+                            local SpeedMult = C.StringFind(Block, "Speed")
                             local Animation = Instance.new("Animation", FakeRig)
                             Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
                             local AnimTrack = FakeHuman:LoadAnimation(Animation)
-                            AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) / 5)
+                            AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) * SpeedMult.Value)
                             AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
-                            if SpeedVal then
-                                table.insert(self.Functs, SpeedVal.Changed:Connect(function()
-                                    AnimTrack:AdjustSpeed(SpeedVal.Value / 5)
-                                end))
-                            end
-                            if WeightVal then
-                                table.insert(self.Functs, WeightVal.Changed:Connect(function()
-                                    AnimTrack:AdjustWeight(WeightVal.Value)
+                            if SpeedMult.Value then
+                                table.insert(self.Functs, SpeedMult.Changed:Connect(function()
+                                    AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) * SpeedMult.Value)
                                 end))
                             end
                             AnimTrack.Priority = Enum.AnimationPriority.Action
