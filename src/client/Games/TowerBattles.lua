@@ -811,8 +811,10 @@ return function(C,Settings)
                 ZombieInserted = function(self, zombie)
                     local Rig = zombie:WaitForChild("Rig", 30)
                     if not Rig then
+                        warn("Rig not found")
                         return
                     end
+                    local Block = Rig:WaitForChild("Block") or Rig.PrimaryPart
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
                     for num, part in ipairs(Rig:GetDescendants()) do
                         if part:IsA("BasePart") or part:IsA("Mesh") or part:IsA("Texture") then
@@ -821,11 +823,12 @@ return function(C,Settings)
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local RigWeld = Instance.new("WeldConstraint")
-                    RigWeld.Part0 = zombie.PrimaryPart
-                    RigWeld.Part1 = FakeRig.PrimaryPart
+                    RigWeld.Part0 = Block
+                    RigWeld.Part1 = FakeRig.Torso
                     RigWeld.CFrame = CFrame.new()
                     RigWeld.Parent = FakeRig
                     FakeRig:PivotTo(zombie:GetPivot())
+                    FakeRig.PrimaryPart.Anchored = true
                     FakeRig.Parent = zombie
                     FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
                 end,
