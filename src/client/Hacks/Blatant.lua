@@ -441,6 +441,17 @@ return function(C,Settings)
 						end
 					end
 				end,
+                SetExtraStructure = function(structure, en)
+                    for num, part in ipairs(structure:GetDescendants()) do
+						if part:IsA("BasePart") then
+							if en then
+								C.SetPartProperty(part,"CanCollide","NoClip",false,true)
+							else--part, propertyName, requestName, value, alwaysSet
+								C.ResetPartProperty(part,"CanCollide","NoClip")
+							end
+						end
+					end
+                end,
 				Activate = function(self,newValue,firstRun)
 					if not C.char then
 						return
@@ -455,8 +466,12 @@ return function(C,Settings)
 							C.human:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
 						end
 					end
+                    if not firstRun and C.SeatPart then
+                        self.Events.MySeatAdded(self, C.SeatPart)
+                    end
 					self.Update(newValue)
 					if not newValue then
+                        self.Events.MySeatRemoved(self, C.SeatPart)
 						return
 					end
 					table.insert(self.Functs,RunS.Stepped:Connect(self.Update))
@@ -468,6 +483,16 @@ return function(C,Settings)
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
 						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
+                    MySeatAdded = function(self, seat)
+                        if seat then
+                            self.SetExtraStructure(seat.Parent, true)
+                        end
+                    end,
+                    MySeatRemoved = function(self, seat)
+                        if seat then
+                            self.SetExtraStructure(seat.Parent, false)
+                        end
+                    end,
 				},
 				Options = {
 					{
