@@ -816,12 +816,14 @@ return function(C,Settings)
                     end
                     local Block = Rig:WaitForChild("Block") or Rig.PrimaryPart
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
+                    Block.Transparency = 0.5
                     for num, part in ipairs(Rig:GetDescendants()) do
                         if part:IsA("BasePart") or part:IsA("Mesh") or part:IsA("Texture") then
                             C.SetPartProperty(part, "Transparency", "MorphTransparency", 1)
                         end
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
+                    local FakeHuman = FakeRig:WaitForChild("Humanoid")
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
                             part.CollisionGroup = "Zombies"
@@ -835,10 +837,14 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
-                    task.wait(1/2)
+                    task.wait()
+                    if not FakeRig.Parent then
+                        return
+                    end
                     local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play()--SpeedVal and SpeedVal.Value or nil,
+                    FakeHuman.Animator:LoadAnimation(Rig.Walk):Play()
+                    --SpeedVal and SpeedVal.Value or nil,
                         --WeightVal and WeightVal.Value or nil)
                 end,
                 Activate = function(self, newValue)
