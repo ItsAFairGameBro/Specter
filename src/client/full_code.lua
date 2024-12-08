@@ -6582,6 +6582,24 @@ return function(C,Settings)
 					end
 				end,
 			},
+            {
+                Title = "Auto Buy",
+                Tooltip = "Automatically buys all available skins in the shop, as well as their towers, if affordable",
+                Layout = 20,
+                Shortcut = "AutoBuy", Threads = {},
+                PurchaseTower = function(self, towerName)
+                    local res = game.Workspace.BuyTower:InvokeServer(towerName);
+                    if res == "Bought" then
+                        C.CreateSysMessage(`Purchase of (Tower) {towerName} is sucessful!`)
+                    else
+                    C.CreateSysMessage(`Purchase of (Tower) {towerName} failed: {res} `)
+                    end
+                    C.CreateSysMessage(`Purchase of (Tower) {towerName} is {res=="Bought" and "successful" or "FAILED: " .. res}`, res=="Bought")
+                end,
+                Activate = function(self, newValue, firstRun)
+
+                end,
+            },
 			{
 				Title = "Fix Teleport Back",
 				Tooltip = "Sometimes when the game crashes, it doesn't teleport all users back. This fixes it!",
@@ -6704,6 +6722,16 @@ return function(C,Settings)
                             local AnimTrack = FakeHuman:LoadAnimation(Animation)
                             AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) / 5)
                             AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
+                            if SpeedVal then
+                                table.insert(self.Functs, SpeedVal.Changed:Connect(function()
+                                    AnimTrack:AdjustSpeed(SpeedVal.Value / 5)
+                                end))
+                            end
+                            if WeightVal then
+                                table.insert(self.Functs, WeightVal.Changed:Connect(function()
+                                    AnimTrack:AdjustWeight(WeightVal.Value)
+                                end))
+                            end
                             AnimTrack.Priority = Enum.AnimationPriority.Action
                             AnimTrack.Looped = true
                             AnimTrack:Play()
