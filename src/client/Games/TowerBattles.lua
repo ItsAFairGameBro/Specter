@@ -898,7 +898,7 @@ return function(C,Settings)
                                 return WeightVal and WeightVal.Value or 1
                             end
                             local function GetSpeed()
-                                return ((SpeedVal and SpeedVal.Value or 1) * (SpeedMult.Value) * (1/3))
+                                return ((SpeedVal and SpeedVal.Value or 1) * (1 / SpeedMult.Value) * (1/3))
                             end
                             if SpeedMult then
                                 table.insert(self.Functs, SpeedMult.Changed:Connect(function()
