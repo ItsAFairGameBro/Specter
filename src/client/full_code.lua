@@ -5897,7 +5897,7 @@ local function Static(C, Settings)
                             return false, "Map Not Yet Loaded!"
                         end
                         self.Parent.scale:Run({{C.plr}, 1/3})
-                        C.AddOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
+                        C.SetPartProperty(C.human, "WalkSpeed", "ZombieWalk", args[2])
                         table.insert(self.Threads, task.spawn(function()
                             while true do
                                 C.DoTeleport(Nodes.Start.Position)
@@ -5932,7 +5932,7 @@ local function Static(C, Settings)
                         C.ClearThreadTbl(self.Threads)
                         if hardReset then
                             self.Parent.scale:Run({{C.plr}, 1})
-                            C.RemoveOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
+                            C.ResetPartProperty(C.human, "WalkSpeed", "ZombieWalk")
                         end
                     end
                 }
