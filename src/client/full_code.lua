@@ -6681,8 +6681,8 @@ return function(C,Settings)
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
                     local AnimTrack = FakeHuman.Animator:LoadAnimation(Rig.Walk)
                     AnimTrack:Play()
-                    AnimTrack.Speed = SpeedVal and SpeedVal.Value or 1
-                    AnimTrack.Weight = WeightVal and WeightVal.Value or 1
+                    AnimTrack:AdjustSpeed(SpeedVal and SpeedVal.Value or 1)
+                    AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
                     AnimTrack.Priority = Enum.AnimationPriority.Action
                     AnimTrack.Looped = true
                     print(AnimTrack)
