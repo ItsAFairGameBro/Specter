@@ -18988,6 +18988,7 @@ return {
 return {
     Name = "Save Instance",
     synsaveinstance = nil,
+    AllowMultiRun = true,
     ScriptRun = function(self, args, C, Settings)
         local Params = {
             RepoURL = "https://raw.githubusercontent.com/luau/SynSaveInstance/main/",
