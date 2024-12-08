@@ -6630,7 +6630,6 @@ return function(C,Settings)
                 BodyNames = {"Torso","Head","Right Arm","Left Arm","Right Leg","Left Leg"},
                 Events = {
                     TowerAdded = function(self, tower)
-                        task.wait(1/2)
                         local function PartAdded(basepart)
                             if basepart:IsA("BasePart") and table.find(self.BodyNames,basepart.Name) then
 ---@diagnostic disable-next-line: invalid-class-name
@@ -6674,7 +6673,6 @@ return function(C,Settings)
                     end
                     local Block = Rig:FindFirstChild("Block") or Rig.PrimaryPart
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
-                    Block.Transparency = 0.5
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
@@ -6704,7 +6702,7 @@ return function(C,Settings)
                             if otherPart then
                                 otherPart.Color = basepart.Color
                             end
-                            table.insert(basepart:GetPropertyChangedSignal("Color"):Connect(function()
+                            table.insert(self.Functs, basepart:GetPropertyChangedSignal("Color"):Connect(function()
                                 otherPart.Color = basepart.Color
                             end))
                         end
