@@ -5882,7 +5882,7 @@ local function Static(C, Settings)
 
             return {
                 ["zombiewalk"]={
-                    Parameters = {{Type="Number",Min=0,Max=10,Default=0}},
+                    Parameters = {{Type="Number",Min=0,Max=100,Default=0}},
                     Alias = {},
                     AfterTxt = "ing",
                     Threads = {},
@@ -6696,7 +6696,7 @@ return function(C,Settings)
                     FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, .4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
-                    RigWeld.Part0 = Rig:FindFirstChild("FakeBlock")
+                    RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
