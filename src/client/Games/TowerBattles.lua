@@ -900,7 +900,7 @@ return function(C,Settings)
                             local function GetSpeed()
                                 return ((SpeedVal and SpeedVal.Value or 1) * (1 / SpeedMult.Value))
                             end
-                            if SpeedMult.Value then
+                            if SpeedMult then
                                 table.insert(self.Functs, SpeedMult.Changed:Connect(function()
                                     AnimTrack:AdjustSpeed(GetSpeed())
                                 end))
