@@ -811,8 +811,10 @@ return function(C,Settings)
                     if not Rig then
                         return
                     end
+                    local Animator = Rig:FindFirstChildOfClass("Animator", true)
                     local ZombHuman = Rig:FindFirstChild("Humanoid") or Instance.new("Humanoid", Rig)
-                    ZombHuman:ApplyDescription(C.human:FindFirstChildOfClass("HumanoidDescription"))
+                    ZombHuman:ApplyDescription(C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription"))
+                    Animator.Parent = ZombHuman
                 end,
                 Activate = function(self, newValue)
                     if newValue then
