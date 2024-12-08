@@ -5892,17 +5892,22 @@ local function Static(C, Settings)
                         else
                             self:Reset()
                         end
+                        local Nodes = C.StringFind(C.Map,`{C.plr.Team.Name}Nodes`)
+                        if not Nodes then
+                            return false, "Map Not Yet Loaded!"
+                        end
                         self.Parent.scale:Run({{C.plr}, 1/3})
                         C.AddOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
                         table.insert(self.Threads, task.spawn(function()
                             while true do
-                                local Nodes = C.Map[C.plr.Team.Name .. "Nodes"]
+                                print("Starting new traversal!")
                                 C.DoTeleport(Nodes.Start.Position)
                                 local index = 1
                                 while true do
                                     local current = Nodes:FindFirstChild(tostring(index))
                                     if not current then
                                         if index == "Finish" then
+                                            print("Traversal complete!")
                                             break
                                         else
                                             index = "Finish"
@@ -5916,6 +5921,7 @@ local function Static(C, Settings)
                                     C.human.MoveToFinished:Wait()
                                 end
                             end
+                            print("Wut, exited out of loop?")
                         end))
                         return true, ""
                     end,
@@ -11414,8 +11420,8 @@ return function(C,Settings)
                     table.remove(returns,1)
                     local displayNameCommand = command:sub(1,1):upper() .. command:sub(2)
                     if wasSuccess == true then
-                        local Length = ChosenPlr and #ChosenPlr
-                        local playersAffected = typeof(ChosenPlr) == "table" and (Length>1 and Length .. " Players" or tostring(ChosenPlr[1]))
+                        local Length = typeof(ChosenPlr)=="table" and #ChosenPlr
+                        local playersAffected = Length and (Length>1 and Length .. " Players" or tostring(ChosenPlr[1]))
                             --(typeof(ChosenPlr)=="Instance" and (ChosenPlr==C.plr and ChosenPlr.Name) or ChosenPlr.Name)
                            -- or (ChosenPlr:sub(1,1):upper() ..
                             --    ChosenPlr:sub(2,ChosenPlr:sub(ChosenPlr:len())=="s" and ChosenPlr:len()-1 or ChosenPlr:len()))

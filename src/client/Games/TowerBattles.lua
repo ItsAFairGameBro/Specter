@@ -61,17 +61,22 @@ local function Static(C, Settings)
                         else
                             self:Reset()
                         end
+                        local Nodes = C.StringFind(C.Map,`{C.plr.Team.Name}Nodes`)
+                        if not Nodes then
+                            return false, "Map Not Yet Loaded!"
+                        end
                         self.Parent.scale:Run({{C.plr}, 1/3})
                         C.AddOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
                         table.insert(self.Threads, task.spawn(function()
                             while true do
-                                local Nodes = C.Map[C.plr.Team.Name .. "Nodes"]
+                                print("Starting new traversal!")
                                 C.DoTeleport(Nodes.Start.Position)
                                 local index = 1
                                 while true do
                                     local current = Nodes:FindFirstChild(tostring(index))
                                     if not current then
                                         if index == "Finish" then
+                                            print("Traversal complete!")
                                             break
                                         else
                                             index = "Finish"
@@ -85,6 +90,7 @@ local function Static(C, Settings)
                                     C.human.MoveToFinished:Wait()
                                 end
                             end
+                            print("Wut, exited out of loop?")
                         end))
                         return true, ""
                     end,
