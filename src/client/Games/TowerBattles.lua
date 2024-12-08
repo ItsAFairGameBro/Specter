@@ -818,10 +818,10 @@ return function(C,Settings)
                     if newValue then
                         local WaveTeam = C.StringWait(workspace, "Wave.Blue", math.huge)
                         table.insert(self.Functs, WaveTeam.ChildAdded:Connect(function(new)
-                            self:ZombeInserted(new)
+                            self:ZombieInserted(new)
                         end))
                         for _, zomb in ipairs(WaveTeam:GetChildren()) do
-                            table.insert(self.Threads, task.spawn(self.ZombeInserted, self, zomb))
+                            table.insert(self.Threads, task.spawn(self.ZombieInserted, self, zomb))
                         end
                     end
                 end,
