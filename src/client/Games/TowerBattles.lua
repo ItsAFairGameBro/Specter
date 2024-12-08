@@ -55,13 +55,14 @@ local function Static(C, Settings)
                     AfterTxt = "ing",
                     Threads = {},
                     Run = function(self, args)
-                        C.ClearThreadTbl(self.Threads)
                         if args[1] == 0 then
-                            self.Parent.scale:Run({{C.plr}, 1})
+                            self:Reset(true)
                             return true
+                        else
+                            self:Reset()
                         end
                         self.Parent.scale:Run({{C.plr}, 1/3})
-                        C.AddOverride(C.hackData.Blatant.Walkspeed, "zombiewalk")
+                        C.AddOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
                         table.insert(self.Threads, task.spawn(function()
                             while true do
                                 local Nodes = C.Map[C.plr.Team.Name .. "Nodes"]
@@ -87,9 +88,16 @@ local function Static(C, Settings)
                         end))
                         return true, ""
                     end,
-                    RunOnDestroy = function(self)
-                        C.ClearThreadTbl(self.Threads)
+                    RunOnDestroy = function(self,softReset)
+                        self:Reset(true)
                     end,
+                    Reset = function(self, hardReset)
+                        C.ClearThreadTbl(self.Threads)
+                        if hardReset then
+                            self.Parent.scale:Run({{C.plr}, 1})
+                            C.RemoveOverride(C.hackData.Blatant.WalkSpeed, "zombiewalk")
+                        end
+                    end
                 }
             }
         end)
