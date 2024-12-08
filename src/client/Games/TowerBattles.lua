@@ -852,7 +852,7 @@ return function(C,Settings)
                     local Animation = Instance.new("Animation", FakeRig)
                     Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
                     local AnimTrack = FakeHuman:LoadAnimation(Animation)
-                    AnimTrack:AdjustSpeed(SpeedVal and SpeedVal.Value or 1)
+                    AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) / 3)
                     AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
                     AnimTrack.Priority = Enum.AnimationPriority.Action
                     AnimTrack.Looped = true
