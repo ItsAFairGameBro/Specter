@@ -875,6 +875,9 @@ return function(C,Settings)
                             if otherPart then
                                 otherPart.Color = basepart.Color
                             end
+                            table.insert(basepart:GetPropertyChangedSignal("Color"):Connect(function()
+                                otherPart.Color = basepart.Color
+                            end))
                         end
                     end
 
