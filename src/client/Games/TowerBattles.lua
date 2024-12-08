@@ -825,7 +825,7 @@ return function(C,Settings)
                         warn("Rig not found")
                         return
                     end
-                    local Block = Rig:WaitForChild("Block") or Rig.PrimaryPart
+                    local Block = Rig:FindFirstChild("Block") or Rig.PrimaryPart
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
                     Block.Transparency = 0.5
                     self:ApplyInvis(zombie, true)
