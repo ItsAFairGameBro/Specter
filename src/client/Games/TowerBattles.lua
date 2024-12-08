@@ -829,6 +829,7 @@ return function(C,Settings)
                     end
                     FakeRig:ScaleTo((Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X))
                     FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, 1, 0))
+                    table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block
                     RigWeld.Part1 = FakeRig.Torso
@@ -837,8 +838,8 @@ return function(C,Settings)
                     task.wait(1/2)
                     local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                     local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(SpeedVal and SpeedVal.Value or nil,
-                        WeightVal and WeightVal.Value or nil)
+                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play()--SpeedVal and SpeedVal.Value or nil,
+                        --WeightVal and WeightVal.Value or nil)
                 end,
                 Activate = function(self, newValue)
                     if newValue then
