@@ -5905,20 +5905,20 @@ local function Static(C, Settings)
                                 while true do
                                     local current = Nodes:FindFirstChild(tostring(index))
                                     if not current then
-                                        if index == "Finish" then
-                                            break
-                                        else
-                                            index = "Finish"
-                                            continue
-                                        end
+                                        index = "Finish"
+                                        continue
                                     end
                                     if typeof(index) == "number" then
                                         index+=1
                                     end
                                     local target = current.centAt.WorldPosition
-                                    while ((target - C.hrp.Position)/Vector3.new(1,math.huge,1)).Magnitude > 1 do
-                                        C.human:MoveTo(target)
-                                        task.wait(1/5)
+                                    --while ((target - C.hrp.Position)/Vector3.new(1,math.huge,1)).Magnitude > 1 do
+                                    C.human:MoveTo(target)
+                                    --task.wait(1/5)
+                                    --end
+                                    C.human.MoveToFinished:Wait()
+                                    if index == "Finish" then
+                                        break
                                     end
                                 end
                             end
