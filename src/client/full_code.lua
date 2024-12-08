@@ -5883,15 +5883,16 @@ local function Static(C, Settings)
                 ["zombiewalk"]={
                     Parameters = {{Type="Number",Min=0,Max=10,Default=0}},
                     Alias = {},
-                    AfterTxt = "",
+                    AfterTxt = "ing",
                     Threads = {},
                     Run = function(self, args)
                         C.ClearThreadTbl(self.Threads)
                         if args[1] == 0 then
                             self.Parent.scale:Run({{C.plr}, 1})
-                            return
+                            return true
                         end
                         self.Parent.scale:Run({{C.plr}, 1/3})
+                        C.AddOverride(C.hackData.Blatant.Walkspeed, "zombiewalk")
                         table.insert(self.Threads, task.spawn(function()
                             while true do
                                 local Nodes = C.Map[C.plr.Team.Name .. "Nodes"]
@@ -5915,7 +5916,7 @@ local function Static(C, Settings)
                                 end
                             end
                         end))
-                        return true
+                        return true, ""
                     end,
                     RunOnDestroy = function(self)
                         C.ClearThreadTbl(self.Threads)
