@@ -89,6 +89,10 @@ local function Static(C, Settings)
                                         break
                                     end
                                 end
+                                local TeamVal = workspace:WaitForChild(C.plr.Team.Name)
+                                local MaxTeamVal = workspace:WaitForChild(C.plr.Team.Name .. "Max").Value
+                                local Damage = 4
+                                TeamVal.Value = MaxTeamVal - ((MaxTeamVal - TeamVal.Value + Damage) % MaxTeamVal)
                             end
                         end))
                         return true, ""
