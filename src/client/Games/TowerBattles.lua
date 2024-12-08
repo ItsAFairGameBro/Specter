@@ -911,12 +911,11 @@ return function(C,Settings)
                         end)
                         if succ then
                             return
-                        else
-                            warn(err)
+                        elseif s == 3 then
+                            warn(`Animation Failed To Load For Character {zombie}: {err}`)
                         end
                         task.wait()
                     end
-                    warn(`Failed after 3 attempts!`)
 
                     --SpeedVal and SpeedVal.Value or nil,
                         --WeightVal and WeightVal.Value or nil)
