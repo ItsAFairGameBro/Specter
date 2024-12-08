@@ -6718,26 +6718,32 @@ return function(C,Settings)
                         if not FakeRig.Parent then
                             return
                         end
-                        local succ = pcall(function()
+                        local succ, err = pcall(function()
                             local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                             local WeightVal = C.StringFind(Rig, "Walk.Weight")
                             local SpeedMult = C.StringFind(Block, "Speed")
                             local Animation = Instance.new("Animation", FakeRig)
                             Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
                             local AnimTrack = FakeHuman:LoadAnimation(Animation)
-                            AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) * SpeedMult.Value)
-                            AnimTrack:AdjustWeight(WeightVal and WeightVal.Value or 1)
+                            local function GetWeight()
+                                return WeightVal and WeightVal.Value or 1
+                            end
+                            local function GetSpeed()
+                                return ((SpeedVal and SpeedVal.Value or 1) * (1 / SpeedMult.Value))
+                            end
                             if SpeedMult.Value then
                                 table.insert(self.Functs, SpeedMult.Changed:Connect(function()
-                                    AnimTrack:AdjustSpeed((SpeedVal and SpeedVal.Value or 1) * SpeedMult.Value)
+                                    AnimTrack:AdjustSpeed(GetSpeed())
                                 end))
                             end
                             AnimTrack.Priority = Enum.AnimationPriority.Action
                             AnimTrack.Looped = true
-                            AnimTrack:Play()
+                            AnimTrack:Play(0, GetWeight(), GetSpeed())
                         end)
                         if succ then
                             return
+                        else
+                            warn(err)
                         end
                         task.wait()
                     end
