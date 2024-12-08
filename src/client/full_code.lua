@@ -6664,7 +6664,7 @@ return function(C,Settings)
                     FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, 1, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
-                    RigWeld.Part0 = Block
+                    RigWeld.Part0 = Rig.PrimaryPart
                     RigWeld.Part1 = FakeRig.Torso
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
