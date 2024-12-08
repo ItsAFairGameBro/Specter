@@ -283,7 +283,7 @@ C.Debugs = {All = false,
 	Thread = false,
 	SaveSystem = false,
 	RenderHighlight=false,
-	AntiCheat = false,
+	AntiCheat = true,
 }
 --print("2")
 
