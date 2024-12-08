@@ -6661,7 +6661,10 @@ return function(C,Settings)
                             part.CollisionGroup = "Zombies"
                         end
                     end
-                    FakeRig.Animator:Destroy()
+                    local localScript = FakeRig:FindFirstChildWhichIsA("LocalScript", true)
+                    if localScript then
+                        localScript:Destroy()
+                    end
                     FakeRig:ScaleTo((Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X))
                     FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, .4, 0))
                     table.insert(self.Instances, FakeRig)
