@@ -6655,8 +6655,8 @@ return function(C,Settings)
                     RigWeld.Part0 = FakeRig.PrimaryPart
                     RigWeld.Part1 = zombie.PrimaryPart
                     FakeRig.PrimaryPart.Anchored = true
-                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
                     FakeRig.Parent = zombie
+                    FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
                 end,
                 Activate = function(self, newValue)
                     if newValue then
