@@ -827,7 +827,7 @@ return function(C,Settings)
                             part.CollisionGroup = "Zombies"
                         end
                     end
-                    FakeRig:PivotTo(zombie:GetPivot())
+                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, 1, 0))
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block
                     RigWeld.Part1 = FakeRig.Torso
