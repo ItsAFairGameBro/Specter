@@ -6646,7 +6646,7 @@ return function(C,Settings)
                     end
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
                     for num, part in ipairs(Rig:GetDescendants()) do
-                        if part:IsA("BasePart") or part:IsA("Mesh") then
+                        if part:IsA("BasePart") or part:IsA("Mesh") or part:IsA("Texture") then
                             C.SetPartProperty(part, "Transparency", "MorphTransparency", 1)
                         end
                     end
@@ -6656,6 +6656,7 @@ return function(C,Settings)
                     RigWeld.Part1 = FakeRig.PrimaryPart
                     RigWeld.CFrame = CFrame.new()
                     RigWeld.Parent = FakeRig
+                    FakeRig:PivotTo(zombie:GetPivot())
                     FakeRig.Parent = zombie
                     FakeRig.Humanoid.Animator:LoadAnimation(Rig.Walk):Play(Rig.Walk.Speed.Value, Rig.Walk.Weight.Value)
                 end,
