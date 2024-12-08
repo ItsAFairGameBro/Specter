@@ -822,6 +822,11 @@ return function(C,Settings)
                         end
                     end
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
+                    for num, part in ipairs(FakeRig:GetChildren()) do
+                        if part:IsA("BasePart") then
+                            part.CollisionGroup = "Zombies"
+                        end
+                    end
                     FakeRig:PivotTo(zombie:GetPivot())
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block
