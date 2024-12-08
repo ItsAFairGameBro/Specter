@@ -5897,7 +5897,7 @@ local function Static(C, Settings)
                             return false, "Map Not Yet Loaded!"
                         end
                         self.Parent.scale:Run({{C.plr}, 1/3})
-                        C.SetPartProperty(C.human, "WalkSpeed", "ZombieWalk", args[2])
+                        C.SetPartProperty(C.human, "WalkSpeed", "ZombieWalk", args[1])
                         table.insert(self.Threads, task.spawn(function()
                             while true do
                                 C.DoTeleport(Nodes.Start.Position)
