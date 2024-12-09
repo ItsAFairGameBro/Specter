@@ -126,7 +126,11 @@ return function(C,Settings)
 	if game.PlaceId ~= GamePlaceIds.Lobby then
 		CashVal = C.PlayerInformation:WaitForChild("Cash")
 		TowerCount = C.PlayerInformation:WaitForChild("Towers")
-		TowerCap = workspace:WaitForChild("TowerCap").Value
+        local TowerCapVal = workspace:WaitForChild("TowerCap")
+		TowerCap = TowerCapVal.Value
+        C.AddGlobalConnection(TowerCap:GetPropertyChangedSignal("Value"):Connect(function()
+            TowerCap = TowerCapVal.Value
+        end))
 	end
 	local function PlaceTroop(TroopName)
 		if IsPlacing then return false, "Placement In Progress" end
