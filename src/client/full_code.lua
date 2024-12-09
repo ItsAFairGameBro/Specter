@@ -6604,7 +6604,7 @@ return function(C,Settings)
                 Shortcut = "AutoBuy", Threads = {},
                 PurchaseTower = function(self, towerName)
                     -- Owner Check
-                    if (C.GetStat(towerName)) then
+                    if (1 <= C.GetStat(towerName)) then
                         print(`Already Owned Tower: {towerName}`)
                         return true
                     end
@@ -6627,7 +6627,7 @@ return function(C,Settings)
                     local skin = itemVal.Value
                     local TowerName, SkinName = table.unpack(skin:split("."))
                     -- Owner Check
-                    if (C.GetStat(`{TowerName}.Skin.{SkinName}`)) then
+                    if (1 <= C.GetStat(`{TowerName}.Skin.{SkinName}`)) then
                         print(`Already Owned Skin: {TowerName}'s {SkinName}`)
                         return true
                     end
