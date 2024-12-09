@@ -6267,8 +6267,8 @@ return function(C,Settings)
 						while NeedsToCollectVal.Value and not self.EnTbl.IgnoreReward do
 							NeedsToCollectVal.Changed:Wait()
 						end
-                        local AutoBuy = self.Parent.AutoBuy
-                        while AutoBuy.RealEnabled and AutoBuy.Purchasing do
+                        local AutoBuyTbl = C.hackData.TowerBattles.AutoBuy
+                        while AutoBuyTbl.RealEnabled and AutoBuyTbl.Purchasing do
                             task.wait(1)
                         end
 						local JoinLocation = GamePlaceIds[self.EnTbl.Gamemode]
