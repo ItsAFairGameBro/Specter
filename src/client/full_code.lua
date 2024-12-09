@@ -6695,7 +6695,7 @@ return function(C,Settings)
                     end
                     local ScaleDif = Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X
                     FakeRig:ScaleTo(ScaleDif)
-                    FakeRig:PivotTo(Block:GetPivot() + Vector3.new(0, -.3, 0))-- + Vector3.new(0, C.getCharacterHeight(FakeRig)*1.5 - 1.4, 0))
+                    FakeRig:PivotTo(Block:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) -.3, 0))-- + Vector3.new(0, C.getCharacterHeight(FakeRig)*1.5 - 1.4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
