@@ -774,6 +774,7 @@ return function(C,Settings)
                 PurchaseTower = function(self, towerName)
                     -- Owner Check
                     if (C.GetStat(towerName)) then
+                        print(`Already Owned Tower: {towerName}`)
                         return true
                     end
                     local CreditsNeeded = C.StringWait(workspace, `TowerInformation.{towerName}.ShopInfo.CreditCost`).Value
@@ -781,6 +782,7 @@ return function(C,Settings)
                         warn(`Not enough credits to purchase {towerName}; needed: {CreditsNeeded}`)
                         return false
                     end
+                    print(`Buying Tower {towerName}`)
                     local res = game.Workspace.BuyTower:InvokeServer(towerName);
                     if res == "Bought" then
                         C.CreateSysMessage(`Purchase of (Tower) {towerName} is sucessful!`)
@@ -795,6 +797,7 @@ return function(C,Settings)
                     local TowerName, SkinName = table.unpack(skin:split("."))
                     -- Owner Check
                     if (C.GetStat(`{TowerName}.Skin.{SkinName}`)) then
+                        print(`Already Owned Skin: {TowerName}'s {SkinName}`)
                         return true
                     end
                     -- Tower Check
@@ -808,6 +811,7 @@ return function(C,Settings)
                         -- Purchase
                         local itemID = itemVal.Name:gmatch("Item%d")()
                         assert(itemID, `Failed to parse Item# (i.e. Item3) from {itemVal.Name}`)
+                        print(`Buying Skin {itemID} ({itemVal.Name})`)
                         local res = workspace:WaitForChild("BuyDailyItem"):InvokeServer(itemID);
                         if res == "Bought" then
                             C.CreateSysMessage(`Purchase of (Skin) {TowerName}: {skin} is sucessful!`)
@@ -831,7 +835,7 @@ return function(C,Settings)
                     end
                 end,
             },
-			{
+			game.PlaceId ~= GamePlaceIds.Lobby and {
 				Title = "Fix Teleport Back",
 				Tooltip = "Sometimes when the game crashes, it doesn't teleport all users back. This fixes it!",
 				Layout = 30,
