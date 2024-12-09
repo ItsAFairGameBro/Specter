@@ -6683,7 +6683,7 @@ return function(C,Settings)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
                     FakeHuman.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
                     FakeHuman.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
-                    FakeHuman:ChangeState(Enum.HumanoidStateType.Physics)
+                    --FakeHuman:ChangeState(Enum.HumanoidStateType.Physics)
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
                             part.CollisionGroup = "Zombies"
