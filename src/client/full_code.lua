@@ -6623,12 +6623,12 @@ return function(C,Settings)
                 end,
                 PurchaseSkin = function(self, itemVal: Instance)
                     local skin = itemVal.Value
+                    local TowerName, SkinName = table.unpack(skin:split("."))
                     -- Owner Check
-                    if (C.GetStat(skin)) then
+                    if (C.GetStat(`{TowerName}.Skin.{SkinName}`)) then
                         return true
                     end
                     -- Tower Check
-                    local TowerName, SkinName = table.unpack(skin:split("."))
                     if self:PurchaseTower(TowerName) then
                         -- Credits Check
                         local res = workspace:WaitForChild("BuyDailyItem"):InvokeServer(skin);
