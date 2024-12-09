@@ -6631,7 +6631,15 @@ return function(C,Settings)
                     -- Tower Check
                     if self:PurchaseTower(TowerName) then
                         -- Credits Check
-                        local res = workspace:WaitForChild("BuyDailyItem"):InvokeServer(skin);
+                        local CostRequired = itemVal.Cost.Value
+                        if (C.GetStat("Credits") < CostRequired) then
+                            warn(`Not enough credits to purchase {TowerName}'s {SkinName}; needed: {CostRequired}`)
+                            return false
+                        end
+                        -- Purchase
+                        local itemID = itemVal.Name:gmatch("Item%d")()
+                        assert(itemID, `Failed to parse Item# (i.e. Item3) from {itemVal.Name}`)
+                        local res = workspace:WaitForChild("BuyDailyItem"):InvokeServer(itemID);
                         if res == "Bought" then
                             C.CreateSysMessage(`Purchase of (Skin) {TowerName}: {skin} is sucessful!`)
                             return true
