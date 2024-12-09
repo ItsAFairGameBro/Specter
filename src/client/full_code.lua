@@ -6708,7 +6708,6 @@ return function(C,Settings)
                             local otherPart = FakeRig:FindFirstChild(basepart.Name)
                             if otherPart then
                                 otherPart.Color = basepart.Color
-                                otherPart.Transparency = basepart.Transparency
                                 table.insert(self.Functs, basepart:GetPropertyChangedSignal("Color"):Connect(function()
                                     otherPart.Color = basepart.Color
                                 end))
