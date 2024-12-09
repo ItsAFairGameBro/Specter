@@ -7627,11 +7627,12 @@ local MaxFlingSpeed = 1e6
 
 local BodyColorsNamesArray = {}
 local BodyColorsColorArray = {["Dark brown"] = Color3.fromRGB(50, 39, 29),
-    ["Dark brown3"] = Color3.fromRGB(40, 30, 20),
-    ["Dark brown4"] = Color3.fromRGB(30, 25, 15),
-    ["Dark brown5"] = Color3.fromRGB(25, 20, 10),
-    ["Dark brown6"] = Color3.fromRGB(20, 15, 5),
-    ["Dark brown7"] = Color3.fromRGB(15, 10, 5),
+    ["Dark brown2"] = Color3.fromRGB(40, 30, 20),
+    ["Dark brown3"] = Color3.fromRGB(30, 25, 15),
+    ["Brownish black"] = Color3.fromRGB(25, 20, 10),
+    ["Brownish black2"] = Color3.fromRGB(20, 15, 5),
+    ["Very black"] = Color3.fromRGB(15, 10, 5),
+    ["Pure black"] = Color3.fromRGB(0, 0, 0),
 }
 for key in pairs(BodyColorsColorArray) do table.insert(BodyColorsNamesArray, key) end
 local InvalidBrickColor = BrickColor.new(0) -- Creates invalid brickcolor
