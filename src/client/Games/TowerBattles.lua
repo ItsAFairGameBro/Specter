@@ -436,6 +436,10 @@ return function(C,Settings)
 						while NeedsToCollectVal.Value and not self.EnTbl.IgnoreReward do
 							NeedsToCollectVal.Changed:Wait()
 						end
+                        local AutoBuy = self.Parent.AutoBuy
+                        while AutoBuy.RealEnabled and AutoBuy.Purchasing do
+                            task.wait(1)
+                        end
 						local JoinLocation = GamePlaceIds[self.EnTbl.Gamemode]
 						assert(JoinLocation,`Invalid JoinLocation: `..self.EnTbl.Gamemode)
 						C.ServerTeleport(JoinLocation, nil)
@@ -774,7 +778,7 @@ return function(C,Settings)
                 PurchaseTower = function(self, towerName)
                     -- Owner Check
                     if (1 <= C.GetStat(towerName)) then
-                        print(`Already Owned Tower: {towerName}`)
+                        --print(`Already Owned Tower: {towerName}`)
                         return true
                     end
                     local CreditsNeeded = C.StringWait(workspace, `TowerInformation.{towerName}.ShopInfo.CreditCost`).Value
@@ -782,7 +786,7 @@ return function(C,Settings)
                         warn(`Not enough credits to purchase {towerName}; needed: {CreditsNeeded}`)
                         return false
                     end
-                    print(`Buying Tower {towerName}`)
+                    --print(`Buying Tower {towerName}`)
                     local res = game.Workspace.BuyTower:InvokeServer(towerName);
                     if res == "Bought" then
                         C.CreateSysMessage(`Purchase of (Tower) {towerName} is sucessful!`)
@@ -797,7 +801,7 @@ return function(C,Settings)
                     local TowerName, SkinName = table.unpack(skin:split("."))
                     -- Owner Check
                     if (1 <= C.GetStat(`{TowerName}.Skin.{SkinName}`)) then
-                        print(`Already Owned Skin: {TowerName}'s {SkinName}`)
+                        --print(`Already Owned Skin: {TowerName}'s {SkinName}`)
                         return true
                     end
                     -- Tower Check
@@ -811,7 +815,7 @@ return function(C,Settings)
                         -- Purchase
                         local itemID = itemVal.Name:gmatch("Item%d")()
                         assert(itemID, `Failed to parse Item# (i.e. Item3) from {itemVal.Name}`)
-                        print(`Buying Skin {itemID} ({itemVal.Name})`)
+                        --print(`Buying Skin {itemID} ({itemVal.Name})`)
                         local res = workspace:WaitForChild("BuyDailyItem"):InvokeServer(itemID);
                         if res == "Bought" then
                             C.CreateSysMessage(`Purchase of (Skin) {TowerName}: {skin} is sucessful!`)
@@ -823,15 +827,21 @@ return function(C,Settings)
                     end
                     return false
                 end,
+                Purchasing = true,
                 Activate = function(self, newValue, firstRun)
-                    -- Purchase Daily Items
-                    local InformationHub = C.StringWait(workspace, "GlobalInformation")
-                    for dailyItemIdx = 1, 3, 1 do
-                        local ItemVal = InformationHub:WaitForChild(`DailyItem{dailyItemIdx}`)
-                        local Res = self:PurchaseSkin(ItemVal)
-                        if not Res then
-                            warn(`Stopped after purchase failed!`)
+                    self.Purchasing = newValue
+                    if newValue then
+                        -- Purchase Daily Items
+                        local InformationHub = C.StringWait(workspace, "GlobalInformation")
+                        for dailyItemIdx = 1, 3, 1 do
+                            local ItemVal = InformationHub:WaitForChild(`DailyItem{dailyItemIdx}`)
+                            local Res = self:PurchaseSkin(ItemVal)
+                            if not Res then
+                                --warn(`Stopped after purchase failed!`)
+                            end
                         end
+
+                        self.Purchasing = false
                     end
                 end,
             },
