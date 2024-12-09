@@ -862,7 +862,7 @@ return function(C,Settings)
                     end
                     local ScaleDif = Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X
                     FakeRig:ScaleTo(ScaleDif)
-                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) - 1.1, 0))
+                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) - 1.4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
@@ -898,7 +898,7 @@ return function(C,Settings)
                                 return WeightVal and WeightVal.Value or 1
                             end
                             local function GetSpeed()
-                                return ((SpeedVal and SpeedVal.Value or 1) * (1 / SpeedMult.Value) * (1/3) / ScaleDif)
+                                return ((SpeedVal and SpeedVal.Value or 1) * (.1 / SpeedMult.Value) * (1/3) / ScaleDif)
                             end
                             if SpeedMult then
                                 table.insert(self.Functs, SpeedMult.Changed:Connect(function()
