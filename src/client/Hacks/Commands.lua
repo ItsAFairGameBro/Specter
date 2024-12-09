@@ -24,7 +24,7 @@ local BodyColorsColorArray = {["Dark brown"] = Color3.fromRGB(50, 39, 29),
     ["Dark brown6"] = Color3.fromRGB(20, 15, 5),
     ["Dark brown7"] = Color3.fromRGB(15, 10, 5),
 }
-for key in pairs(BodyColorsColorArray) do table.insert(BodyColorsColorArray, key) end
+for key in pairs(BodyColorsColorArray) do table.insert(BodyColorsNamesArray, key) end
 local InvalidBrickColor = BrickColor.new(0) -- Creates invalid brickcolor
 
 for i = 1, 1032 do
