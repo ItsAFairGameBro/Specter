@@ -5968,7 +5968,7 @@ return function(C,Settings)
 		TowerCount = C.PlayerInformation:WaitForChild("Towers")
         local TowerCapVal = workspace:WaitForChild("TowerCap")
 		TowerCap = TowerCapVal.Value
-        C.AddGlobalConnection(TowerCap:GetPropertyChangedSignal("Value"):Connect(function()
+        C.AddGlobalConnection(TowerCapVal:GetPropertyChangedSignal("Value"):Connect(function()
             TowerCap = TowerCapVal.Value
         end))
 	end
