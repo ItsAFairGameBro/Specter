@@ -1,5 +1,6 @@
 local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
+local CollectionService = game:GetService("CollectionService")
 local DS = game:GetService("Debris")
 local RunS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
@@ -1398,7 +1399,6 @@ return function(C,Settings)
                         if delay then
                             task.wait(delay)
                         end
-
                         -- Align the player
                         local players = C.sortPlayersByXPThenCredits()
                         local idx = table.find(players, C.plr)
@@ -1435,6 +1435,14 @@ return function(C,Settings)
                         end,
                         MapRemoved = function(self)
                             self:Completed()
+                            for num, theirChar in ipairs(CollectionService:GetTagged("Character")) do
+                                local animator = C.StringFind(theirChar, "Humanoid.Animator")
+                                if animator then
+                                    for num, animTrack in ipairs(animator:GetPlayingAnimationTracks()) do
+                                        animTrack:Stop(0)
+                                    end
+                                end
+                            end
                         end,
                         CapturedAdded = function(self, theirPlr, theirChar)
                             theirPlr:SetAttribute("HasCaptured", true)
