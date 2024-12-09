@@ -6233,6 +6233,18 @@ return function(C,Settings)
 
 		return true
 	end
+    function C.GetStat(name)
+        local Loaded = C.plr:WaitForChild("LOADED")
+        if not Loaded then
+            return
+        end
+        while Loaded.Value ~= 0 do
+            Loaded:GetPropertyChangedSignal("Value"):Wait()
+        end
+        local SaveFolder = C.plr:WaitForChild("StuffToSave")
+        local Val = SaveFolder:WaitForChild(name)
+        return Val.Value
+    end
 	TabTbl = {
 		Category = {
 			Name = "TowerBattles",
@@ -6585,22 +6597,61 @@ return function(C,Settings)
 					end
 				end,
 			},
-            {
+            game.PlaceId == GamePlaceIds.Lobby and {
                 Title = "Auto Buy",
                 Tooltip = "Automatically buys all available skins in the shop, as well as their towers, if affordable",
                 Layout = 20,
                 Shortcut = "AutoBuy", Threads = {},
                 PurchaseTower = function(self, towerName)
+                    -- Owner Check
+                    if (C.GetStat(towerName)) then
+                        return true
+                    end
+                    local CreditsNeeded = C.StringWait(workspace, `TowerInformation.{towerName}.ShopInfo.CreditCost`).Value
+                    if (C.GetStat("Credits") < CreditsNeeded) then
+                        warn(`Not enough credits to purchase {towerName}; needed: {CreditsNeeded}`)
+                        return false
+                    end
                     local res = game.Workspace.BuyTower:InvokeServer(towerName);
                     if res == "Bought" then
                         C.CreateSysMessage(`Purchase of (Tower) {towerName} is sucessful!`)
+                        return true
                     else
-                    C.CreateSysMessage(`Purchase of (Tower) {towerName} failed: {res} `)
+                        C.CreateSysMessage(`Purchase of (Tower) {towerName} failed: {res}!`, Color3.fromRGB(255))
+                        return false
                     end
-                    C.CreateSysMessage(`Purchase of (Tower) {towerName} is {res=="Bought" and "successful" or "FAILED: " .. res}`, res=="Bought")
+                end,
+                PurchaseSkin = function(self, itemVal: Instance)
+                    local skin = itemVal.Value
+                    -- Owner Check
+                    if (C.GetStat(skin)) then
+                        return true
+                    end
+                    -- Tower Check
+                    local TowerName, SkinName = table.unpack(skin:split("."))
+                    if self:PurchaseTower(TowerName) then
+                        -- Credits Check
+                        local res = workspace:WaitForChild("BuyDailyItem"):InvokeServer(skin);
+                        if res == "Bought" then
+                            C.CreateSysMessage(`Purchase of (Skin) {TowerName}: {skin} is sucessful!`)
+                            return true
+                        else
+                            C.CreateSysMessage(`Purchase of (Skin) {TowerName}: {SkinName} failed: {res}!`, Color3.fromRGB(255))
+                            return false
+                        end
+                    end
+                    return false
                 end,
                 Activate = function(self, newValue, firstRun)
-
+                    -- Purchase Daily Items
+                    local InformationHub = C.StringWait(workspace, "GlobalInformation")
+                    for dailyItemIdx = 1, 3, 1 do
+                        local ItemVal = InformationHub:WaitForChild(`DailyItem{dailyItemIdx}`)
+                        local Res = self:PurchaseSkin(ItemVal)
+                        if not Res then
+                            warn(`Stopped after purchase failed!`)
+                        end
+                    end
                 end,
             },
 			{
@@ -6619,7 +6670,7 @@ return function(C,Settings)
 					end
 				end,
 			},
-            C.Jerk and
+            C.Jerk and game.PlaceId ~= GamePlaceIds.Lobby and
             {
                 Title = "Blackify",
                 Tooltip = "Turns all of the towers skins to black",
@@ -6650,7 +6701,7 @@ return function(C,Settings)
                     end,
                 },
             },
-            C.Jerk and
+            C.Jerk and game.PlaceId ~= GamePlaceIds.Lobby and
             {
                 Title = "Morph",
                 Tooltip = "Morphs all to the hot avatar",
