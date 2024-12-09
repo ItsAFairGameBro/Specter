@@ -1404,7 +1404,8 @@ return function(C,Settings)
                         local idx = table.find(players, C.plr)
 
                         -- Set the center position (x = 107, y = 5, z = -427)
-                        local centerPosition = workspace.SpawnLocation.Position
+                        local centerPosition = workspace.SpawnLocation.Position +
+                            Vector3.new(0, -C.GetPartGlobalSize(workspace.SpawnLocation).Y + C.getCharacterHeight(C.char), 0)
 
                         -- Calculate the number of players and adjust for correct spacing (4 studs apart)
                         local totalPlayers = #players
