@@ -6681,8 +6681,8 @@ return function(C,Settings)
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
-                    FakeHuman.HumanoidDisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
-                    FakeHuman.HumanoidHealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
+                    FakeHuman.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+                    FakeHuman.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
                     FakeHuman:ChangeState(Enum.HumanoidStateType.Physics)
                     for num, part in ipairs(FakeRig:GetChildren()) do
                         if part:IsA("BasePart") then
