@@ -6693,7 +6693,7 @@ return function(C,Settings)
                     end
                     local ScaleDif = Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X
                     FakeRig:ScaleTo(ScaleDif)
-                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig) - 1.4, 0))
+                    FakeRig:PivotTo(zombie:GetPivot() + Vector3.new(0, ScaleDif - 1.4, 0))
                     table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
@@ -6706,10 +6706,12 @@ return function(C,Settings)
                             local otherPart = FakeRig:FindFirstChild(basepart.Name)
                             if otherPart then
                                 otherPart.Color = basepart.Color
+                                otherPart.Transparency = basepart.Transparency
+                                table.insert(self.Functs, basepart:GetPropertyChangedSignal("Color"):Connect(function()
+                                    otherPart.Color = basepart.Color
+                                end))
                             end
-                            table.insert(self.Functs, basepart:GetPropertyChangedSignal("Color"):Connect(function()
-                                otherPart.Color = basepart.Color
-                            end))
+
                         end
                     end
 
