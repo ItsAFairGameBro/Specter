@@ -352,7 +352,7 @@ return function(C,Settings)
                 if HeadlessActive then
                     for _, obj in ipairs(targetChar:GetDescendants()) do
                         if obj:IsA("Decal") and obj.Parent and obj.Parent.Name == "Head" then
-                            obj:Destroy()
+                            obj.TextureId = "rbxassetid://0"
                         end
                     end
                 end

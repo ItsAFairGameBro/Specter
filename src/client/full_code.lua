@@ -6381,12 +6381,17 @@ return function(C,Settings)
 							if self.EnTbl.PickMap == mapType then
 								selMap = mapStat
 								break
-							elseif self.EnTbl.PickMap == "Longest Of 3" then
+							elseif self.EnTbl.PickMap == "Longest Of 3" or self.EnTbl.PickMap:gmatch("At Least %d+ Length")() then
 								if not selMap or maxLength < mapData.Length.Value then
 									selMap, maxLength = mapStat, mapData.Length.Value
 								end
 							end
 						end
+                        if selMap and self.EnTbl.PickMap:gmatch("At Least %d+ Length")() then
+                            if maxLength < self.EnTbl.PickMap:gmatch("%d+")() then
+                                selMap = nil
+                            end
+                        end
 						if selMap then
 							workspace.Vote:InvokeServer(selMap.Name)
 							workspace.SkipWaitVote:InvokeServer()
@@ -6539,7 +6544,7 @@ return function(C,Settings)
 						Tooltip = "In survival, vetos until chosen map is found.",
 						Layout = 1,Default="Borderlands",
 						Shortcut="PickMap",
-						Selections = {"Nothing","Midnight Road","Borderlands","Longest Of 3"},
+						Selections = {"Nothing","Midnight Road","Borderlands","Longest Of 3","At Least 200 Length"},
 					},
 					{
 						Type = Types.Dropdown,
@@ -7961,7 +7966,7 @@ return function(C,Settings)
                 if HeadlessActive then
                     for _, obj in ipairs(targetChar:GetDescendants()) do
                         if obj:IsA("Decal") and obj.Parent and obj.Parent.Name == "Head" then
-                            obj:Destroy()
+                            obj.TextureId = "rbxassetid://0"
                         end
                     end
                 end
