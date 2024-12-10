@@ -548,7 +548,7 @@ return function(C,Settings)
 							end
 						end
                         if selMap and self.EnTbl.PickMap:gmatch("At Least %d+ Length")() then
-                            if maxLength < self.EnTbl.PickMap:gmatch("%d+")() then
+                            if maxLength < tonumber(self.EnTbl.PickMap:gmatch("%d+")()) then
                                 selMap = nil
                             end
                         end
