@@ -954,14 +954,16 @@ return function(C,Settings)
                     RigWeld.Parent = FakeRig
                     FakeRig.Parent = zombie
                     -- Body colors
-                    for num, basepart in ipairs(Rig:GetChildren()) do
-                        if basepart:IsA("BasePart") then
-                            local otherPart = FakeRig:FindFirstChild(basepart.Name)
-                            if otherPart then
-                                otherPart.Color = basepart.Color
-                                table.insert(self.Functs, basepart:GetPropertyChangedSignal("Color"):Connect(function()
+                    if self.EnTbl.CustomColors then
+                        for num, basepart in ipairs(Rig:GetChildren()) do
+                            if basepart:IsA("BasePart") then
+                                local otherPart = FakeRig:FindFirstChild(basepart.Name)
+                                if otherPart then
                                     otherPart.Color = basepart.Color
-                                end))
+                                    table.insert(self.Functs, basepart:GetPropertyChangedSignal("Color"):Connect(function()
+                                        otherPart.Color = basepart.Color
+                                    end))
+                                end
                             end
                         end
                     end
@@ -1020,6 +1022,16 @@ return function(C,Settings)
                     end
 
                 end,
+                Options = {
+                    {
+						Type = Types.Toggle,
+						Title = "Custom Colors",
+						Tooltip = "Changes the color of the zombies' skin to be that of the original zombie",
+						Layout = 1,Default=true,
+						Shortcut="CustomColors",
+						Activate = C.ReloadHack,
+					},
+                },
             },
 		}
 	}
