@@ -182,6 +182,7 @@ return function(C,Settings)
 		[266] = "Connection",
 		[267] = "Kick",
 		[277] = "Connection",
+        [285] = "Connection",
 		[288] = "Shut Down",
 		[769] = "Teleport Failed",
 	}
