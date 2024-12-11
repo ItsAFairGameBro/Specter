@@ -931,6 +931,7 @@ return function(C,Settings)
                     local Desc2Apply = (C.getgenv().currentDesc[C.plr.Name] or C.human:FindFirstChildOfClass("HumanoidDescription")):Clone()
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
+                    table.insert(self.Instances, FakeRig)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
                     FakeHuman.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
                     FakeHuman.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
@@ -947,7 +948,6 @@ return function(C,Settings)
                     local ScaleDif = Rig.PrimaryPart.Size.X / FakeRig.PrimaryPart.Size.X
                     FakeRig:ScaleTo(ScaleDif)
                     FakeRig:PivotTo(Block:GetPivot() + Vector3.new(0, C.getCharacterHeight(FakeRig)/2 -.45, 0))-- + Vector3.new(0, C.getCharacterHeight(FakeRig)*1.5 - 1.4, 0))
-                    table.insert(self.Instances, FakeRig)
                     local RigWeld = Instance.new("WeldConstraint")
                     RigWeld.Part0 = Block--:FindFirstChild("FakeBlock")
                     RigWeld.Part1 = FakeRig.Torso
