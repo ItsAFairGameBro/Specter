@@ -6698,16 +6698,22 @@ return function(C,Settings)
 				Title = "Fix Teleport Back",
 				Tooltip = "Sometimes when the game crashes, it doesn't teleport all users back. This fixes it!",
 				Layout = 30,
-				Shortcut = "FixTeleportBack",Threads={},
+				Shortcut = "FixTeleportBack",Threads={},Functs={},
+                AnnouncementChanged = function(self,name)
+                    while name == "Teleporting everybody back to the Lobby..." do
+						C.API(C.ServerTeleport,nil,1,GamePlaceIds.Lobby)
+						task.wait(5)
+					end
+                end,
 				Activate = function(self,newValue,firstRun)
 					if not newValue then
                         return
                     end
 					local Announce = C.StringWait(workspace,"Waves.Anounce")
-					while Announce.Value == "Teleporting everybody back to the Lobby..." do
-						C.API(C.ServerTeleport,nil,1,GamePlaceIds.Lobby)
-						task.wait(5)
-					end
+                    table.insert(self.Functs, Announce.Changed:Connect(function(val)
+                        table.insert(task.spawn(self.AnnouncementChanged,self,val))
+                    end))
+                    self:AnnouncementChanged(Announce.Value)
 				end,
 			},
             C.Jerk and game.PlaceId ~= GamePlaceIds.Lobby and
