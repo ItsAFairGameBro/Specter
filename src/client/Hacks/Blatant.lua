@@ -445,7 +445,7 @@ return function(C,Settings)
                     for num, part in ipairs(structure:GetDescendants()) do
 						if part:IsA("BasePart") then
 							if en then
-								C.SetPartProperty(part,"CanCollide","NoClip",false,true)
+								C.SetPartProperty(part,"CanCollide","NoClip",false)
 							else--part, propertyName, requestName, value, alwaysSet
 								C.ResetPartProperty(part,"CanCollide","NoClip")
 							end

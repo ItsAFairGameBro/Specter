@@ -975,7 +975,7 @@ return function(C,Settings)
                     end
 
                     -- Animation loading
-                    for s = 1, 3 do
+                    for s = 1, 5 do
                         if not FakeRig.Parent then
                             return
                         end
