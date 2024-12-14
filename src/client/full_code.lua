@@ -6711,7 +6711,7 @@ return function(C,Settings)
                     end
 					local Announce = C.StringWait(workspace,"Waves.Anounce")
                     table.insert(self.Functs, Announce.Changed:Connect(function(val)
-                        table.insert(task.spawn(self.AnnouncementChanged,self,val))
+                        table.insert(self.Threads, task.spawn(self.AnnouncementChanged,self,val))
                     end))
                     self:AnnouncementChanged(Announce.Value)
 				end,
@@ -6822,7 +6822,7 @@ return function(C,Settings)
                         local succ, err = pcall(function()
                             local SpeedVal = C.StringFind(Rig, "Walk.Speed")
                             local WeightVal = C.StringFind(Rig, "Walk.Weight")
-                            local SpeedMult = C.StringWait(zombie, "Block.Speed")
+                            local SpeedMult = C.StringFind(zombie, "Block.Speed")
                             local Animation = Instance.new("Animation", FakeRig)
                             Animation.AnimationId = "http://www.roblox.com/asset/?id=180426354"
                             local AnimTrack = FakeHuman:LoadAnimation(Animation)
