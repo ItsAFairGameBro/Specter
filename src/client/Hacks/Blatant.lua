@@ -484,6 +484,7 @@ return function(C,Settings)
 						C.DoActivate(self,self.Activate,self.RealEnabled)
 					end,
                     MySeatAdded = function(self, seat)
+                        task.wait(2)
                         if seat then
                             self.SetExtraStructure(seat.Parent, true)
                         end
