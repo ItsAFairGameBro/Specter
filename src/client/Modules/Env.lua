@@ -768,8 +768,13 @@ return function(C,Settings)
 	-- Teleport
 	function C.DoTeleport(NewLocation: CFrame | Vector3)
 		if C.human and C.human.SeatPart and C.VehicleTeleport then
-			C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
-			C.VehicleTeleport(C.human.SeatPart.Parent,NewLocation)
+            if C.VehicleTeleport then
+                C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
+			    C.VehicleTeleport(C.human.SeatPart.Parent,NewLocation)
+            else
+                C.hackData.Blatant.AutoTeleportBack.LastLoc = NewLocation
+                C.human.SeatPart.Parent:TranslateBy(NewLocation - C.human.SeatPart.Position)
+            end
 		elseif C.char then
 			if typeof(NewLocation) == "Vector3" then
 				NewLocation = CFrame.new(NewLocation) * C.char:GetPivot().Rotation
