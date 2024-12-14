@@ -7427,8 +7427,11 @@ return function(C,Settings)
 
 					if (self.EnTbl.AlwaysTeleport or hitResult) and C.char.PrimaryPart then
 						local OrientX,OrientY,OrientZ = C.char:GetPivot():toEulerAnglesXYZ()
-
-						C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
+                        if C.SeatPart then
+                            C.DoTeleport(hitPosition + Vector3.new(0,C.getCharacterHeight(C.char)))
+                        else
+                            C.DoTeleport(CFrame.new(hitPosition) * CFrame.Angles(OrientX,OrientY,OrientZ) + Vector3.new(0,C.getCharacterHeight(C.char)))
+                        end
 					end
 				end,
 				Options = {
