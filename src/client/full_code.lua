@@ -6907,7 +6907,7 @@ return function(C,Settings)
 				Layout = 1,
 				Shortcut = "DisableKillparts",Functs={},
 				Activate = function(self,newValue,firstRun)
-					if not newValue or not firstRun then
+					if firstRun then
                         return
                     end
                     if C.char then
