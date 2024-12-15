@@ -1469,7 +1469,7 @@ return function(C,Settings)
                     local MyPairPlr = C.char.Pair.Value
                     local MyPairChar = MyPairPlr.Character
                     C.CommandFunctions["teleport"]:Run({{MyPairPlr}})
-                    task.wait(.5)
+                    task.wait()
                     C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
 				end,
 			},
