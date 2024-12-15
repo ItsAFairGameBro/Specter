@@ -36,13 +36,14 @@ return function(C,Settings)
                     --
                     --task.wait()
                     C.SavePlayerCoords(self.Shortcut)
-                    C.CommandFunctions["follow"]:Run({{MyPairPlr},0})
+                    --C.CommandFunctions["follow"]:Run({{MyPairPlr},0})
                     while self:CanCarry() do
+                        C.DoTeleport(MyPairChar:GetPivot())
                         C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt, 1, true)
                         --RunS.RenderStepped:Wait()
                         task.wait(1/8)
                     end
-                    C.CommandFunctions["follow"]:Run({{C.plr},0})
+                    --C.CommandFunctions["follow"]:Run({{C.plr},0})
                     C.LoadPlayerCoords(self.Shortcut)
 				end,
 			},
