@@ -1463,14 +1463,26 @@ return function(C,Settings)
 				Title = "Grab Teammate",
 				Tooltip = "Automatically grabs teammate",
 				Layout = 1,Type="NoToggle",
-				Shortcut = "GrabTeammate",Functs={},
+				Shortcut = "GrabTeammate",Threads={},
+                CanCarry = function(self)
+                    local CanCarryBool = C.char.IsCarrying.Value or C.char.BeingCarried.Value
+                    return CanCarryBool
+                end,
 				Activate = function(self,newValue,firstRun)
-                    local CanCarry = C.char.IsCarrying.Value or C.char.BeingCarried.Value
+                    if not self:CanCarry() then
+                        return
+                    end
                     local MyPairPlr = C.char.Pair.Value
                     local MyPairChar = MyPairPlr.Character
-                    --C.CommandFunctions["teleport"]:Run({{MyPairPlr}})
+                    --
                     --task.wait()
-                    C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
+                    C.SavePlayerCoords(self.Shortcut)
+                    while self:CanCarry() do
+                        C.CommandFunctions["teleport"]:Run({{MyPairPlr}})
+                        C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
+                        RunS.RenderStepped:Wait()
+                    end
+                    C.LoadPlayerCoords(self.Shortcut)
 				end,
 			},
 		}
