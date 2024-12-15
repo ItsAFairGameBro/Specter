@@ -1465,8 +1465,8 @@ return function(C,Settings)
 				Layout = 1,Type="NoToggle",
 				Shortcut = "GrabTeammate",Threads={},
                 CanCarry = function(self)
-                    local CanCarryBool = C.char.IsCarrying.Value or C.char.BeingCarried.Value
-                    return CanCarryBool
+                    local HasCarry = C.char.IsCarrying.Value or C.char.BeingCarried.Value
+                    return not HasCarry
                 end,
 				Activate = function(self,newValue,firstRun)
                     if not self:CanCarry() then
