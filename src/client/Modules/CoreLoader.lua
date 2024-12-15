@@ -13,6 +13,7 @@ local GamesWithModules = {
 	[495693931] = {ModuleName = "Doomspire", GameName = "Doomspire Brickbattle"},
     [372226183] = {ModuleName = "FleeTheFacility", GameName = "Flee The Facility"},
     [703124385] = {ModuleName =  "TowerOfHell", GameName = "Tower Of Hell"},
+    [4967899845] = {ModuleName = "CarryMe", GameName = "Carry Me"},
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
