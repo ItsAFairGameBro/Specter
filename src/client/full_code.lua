@@ -1479,7 +1479,7 @@ return function(C,Settings)
                     C.SavePlayerCoords(self.Shortcut)
                     C.CommandFunctions["follow"]:Run({{MyPairPlr},0})
                     while self:CanCarry() do
-                        C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
+                        C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt, 1, true)
                         --RunS.RenderStepped:Wait()
                         task.wait(1/8)
                     end
