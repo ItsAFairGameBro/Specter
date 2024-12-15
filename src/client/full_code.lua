@@ -1482,7 +1482,7 @@ return function(C,Settings)
                         C.DoTeleport(MyPairChar:GetPivot())
                         C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt, 1, true)
                         --RunS.RenderStepped:Wait()
-                        task.wait(1/8)
+                        task.wait(1/12)
                     end
                     --C.CommandFunctions["follow"]:Run({{C.plr},0})
                     C.LoadPlayerCoords(self.Shortcut)
