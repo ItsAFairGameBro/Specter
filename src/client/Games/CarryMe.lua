@@ -27,7 +27,7 @@ return function(C,Settings)
                     local CanCarry = C.char.IsCarrying.Value or C.char.BeingCarried.Value
                     local MyPairPlr = C.char.Pair.Value
                     local MyPairChar = MyPairPlr.Character
-                    C.CommandFunctions["teleport"]:Run({MyPairPlr})
+                    C.CommandFunctions["teleport"]:Run({{MyPairPlr}})
                     task.wait(.5)
                     C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
 				end,
