@@ -25,12 +25,11 @@ return function(C,Settings)
 				Shortcut = "GrabTeammate",Functs={},
 				Activate = function(self,newValue,firstRun)
                     local CanCarry = C.char.IsCarrying.Value or C.char.BeingCarried.Value
-                    local MyPair = C.char.Pair.Value
-                    local MyPairPlr = Players:GetPlayerFromCharacter(MyPair)
-                    print(MyPair, MyPairPlr)
+                    local MyPairPlr = C.char.Pair.Value
+                    local MyPairChar = MyPairPlr.Character
                     C.CommandFunctions["teleport"]:Run({MyPairPlr})
                     task.wait(.5)
-                    C.fireproximityprompt(MyPair.HumanoidRootPart.ProximityPrompt)
+                    C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
 				end,
 			},
 		}
