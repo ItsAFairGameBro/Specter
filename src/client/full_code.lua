@@ -1462,12 +1462,13 @@ return function(C,Settings)
 			{
 				Title = "Grab Teammate",
 				Tooltip = "Automatically grabs teammate",
-				Layout = 1,
+				Layout = 1,Type="NoToggle",
 				Shortcut = "GrabTeammate",Functs={},
 				Activate = function(self,newValue,firstRun)
                     local CanCarry = C.char.IsCarrying.Value or C.char.BeingCarried.Value
                     local MyPair = C.char.Pair.Value
                     local MyPairPlr = Players:GetPlayerFromCharacter(MyPair)
+                    print(MyPair, MyPairPlr)
                     C.CommandFunctions["teleport"]:Run({MyPairPlr})
                     task.wait(.5)
                     C.fireproximityprompt(MyPair.HumanoidRootPart.ProximityPrompt)
