@@ -6883,6 +6883,50 @@ return function(C,Settings)
 	}
 	return TabTbl
 end]=],
+    ["Games/TowerOfHell"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+
+local DS = game:GetService("Debris")
+local RunS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local VU = game:GetService("VirtualUser")
+local TCS = game:GetService("TextChatService")
+local GS = game:GetService("GuiService")
+local SG = game:GetService("StarterGui")
+return function(C,Settings)
+	return {
+		Category = {
+			Name = "TowerOfHell",
+			Title = "Tower Of Hell",
+			Image = nil, -- Set to nil for game image
+			Layout = 20,
+		},
+		Tab = {
+			{
+				Title = "Disable Killparts",
+				Tooltip = "Automatically disables all killparts",
+				Layout = 1,
+				Shortcut = "DisableKillparts",Functs={},
+				Activate = function(self,newValue,firstRun)
+					if not newValue or not firstRun then
+                        return
+                    end
+                    if C.char then
+                        self.Events.MyCharAdded(self,C.plr,C.char,false)
+                    end
+				end,
+                Events = {
+					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
+                        local killScript = C.char:WaitForChild("KillScript")
+                        if killScript then
+                            killScript.Enabled = not self.RealEnabled
+                        end
+					end,
+				},
+			},
+		}
+
+	}
+end]],
     ["Hacks/Blatant"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",UserList="UserList"}
 
 local RunS = game:GetService("RunService")
@@ -12711,6 +12755,7 @@ local GamesWithModules = {
 	[39559307] = {ModuleName = "TowerBattles", GameName = "Tower Battles"},
 	[495693931] = {ModuleName = "Doomspire", GameName = "Doomspire Brickbattle"},
     [372226183] = {ModuleName = "FleeTheFacility", GameName = "Flee The Facility"},
+    [703124385] = {ModuleName =  "TowerOfHell", GameName = "Tower Of Hell"},
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
