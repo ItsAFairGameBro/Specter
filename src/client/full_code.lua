@@ -1481,7 +1481,7 @@ return function(C,Settings)
                         C.CommandFunctions["teleport"]:Run({{MyPairPlr}})
                         C.fireproximityprompt(MyPairChar.HumanoidRootPart.ProximityPrompt)
                         --RunS.RenderStepped:Wait()
-                        task.wait(1/4)
+                        task.wait(1/8)
                     end
                     C.LoadPlayerCoords(self.Shortcut)
 				end,
