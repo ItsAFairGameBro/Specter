@@ -207,7 +207,8 @@ return function(C,Settings)
                     return
                 end
                 local channels = TCS:WaitForChild("TextChannels")
-                local myChannel = channels.RBXGeneral
+                local myChannel = channels:FindFirstChild("RBXGeneral") or channels:FindFirstChild("General")
+                assert(myChannel, "General chat channel not found!")
                 local targetChannelTB = chatBar.Parent.Parent.TargetChannelChip
                 if targetChannelTB.Visible then
                     local theirUser = targetChannelTB.Text:sub(5,targetChannelTB.Text:len()-1)
