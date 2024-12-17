@@ -2166,7 +2166,9 @@ local function GetSharedHacks(C, Settings)
                 `Are you sure that you want to buy these hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N")
             info.CanCancel -= 1
             if CanContinue then
-                C.hackData.FleeTheFacility.InstaTrade:SetValue(false) -- Disable the trading mechanism while we buy bundles!
+                if C.hackData.FleeTheFacility.InstaTrade then
+                    C.hackData.FleeTheFacility.InstaTrade:SetValue(false) -- Disable the trading mechanism while we buy bundles!
+                end
                 for n, data in ipairs(ItemsToBuy) do
                     GetItemWhileNotLimit(table.unpack(data))
                 end
