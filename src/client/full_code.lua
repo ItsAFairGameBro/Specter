@@ -1952,6 +1952,77 @@ local SG = game:GetService("StarterGui")
 
 
 local MAX_SHOP_ITEM = 10
+local IN_START_PLACE = game.PlaceId == 893973440
+local SETS_DISPLAY = {
+    ["Halloween 2024"] = {
+        [1] = "Ghal0075",
+        [2] = "Ghal0076",
+        [3] = "Ghal0077",
+        [4] = "Ghal0078",
+        [5] = "Ghal0079",
+        [6] = "Ghal0080",
+        [7] = "Ghal0081",
+        [8] = "Ghal0082",
+        [9] = "Ghal0083",
+        [10] = "Ghal0084",
+        [11] = "Hhal0075",
+        [12] = "Hhal0076",
+        [13] = "Hhal0077",
+        [14] = "Hhal0078",
+        [15] = "Hhal0079",
+        [16] = "Hhal0080",
+        [17] = "Hhal0081",
+        [18] = "Hhal0082",
+        [19] = "Hhal0083",
+        [20] = "Hhal0084",
+        [21] = "Ghal0091",
+        [22] = "Hhal0091",
+        [23] = "Ghal0087",
+        [24] = "Hhal0087",
+        [25] = "Ghal0086",
+        [26] = "Hhal0086",
+        [27] = "Ghal0093",
+        [28] = "Hhal0093",
+        [29] = "Ghal0094",
+        [30] = "Hhal0094",
+        [31] = "Ghal0089",
+        [32] = "Hhal0089",
+        [33] = "Ghal0090",
+        [34] = "Hhal0090",
+        [35] = "Ghal0092",
+        [36] = "Hhal0092",
+        [37] = "Ghal0088",
+        [38] = "Hhal0088",
+        [39] = "Ghal0085",
+        [40] = "Hhal0085",
+    },
+    ["Autumn 2024"] = {
+        [1] = "Gaut0001",
+        [2] = "Gaut0002",
+        [3] = "Gaut0003",
+        [4] = "Gaut0004",
+        [5] = "Gaut0005",
+        [6] = "Gaut0006",
+        [7] = "Gaut0007",
+        [8] = "Gaut0008",
+        [9] = "Gaut0009",
+        [10] = "Gaut0010",
+        [11] = "Haut0001",
+        [12] = "Haut0002",
+        [13] = "Haut0003",
+        [14] = "Haut0004",
+        [15] = "Haut0005",
+        [16] = "Haut0006",
+        [17] = "Haut0007",
+        [18] = "Haut0008",
+        [19] = "Haut0009",
+        [20] = "Haut0010",
+        [21] = "Gaut0011",
+        [22] = "Haut0011",
+        [23] = "Gaut0012",
+        [24] = "Haut0012",
+    },
+}
 local BotActionClone
 
 -- STANDARD FUNCTIONS--
@@ -2156,7 +2227,7 @@ local function GetSharedHacks(C, Settings)
             if not newValue then
                 return
             end
-            if game.PlaceId == 893973440 then -- Game
+            if IN_START_PLACE then -- Game
                 local ScreenGui = C.PlayerGui:WaitForChild("ScreenGui");
                 local MenusTabFrame = ScreenGui:WaitForChild("MenusTabFrame");
                 local BeastPowerMenuFrame = ScreenGui:WaitForChild("BeastPowerMenuFrame")
@@ -2690,7 +2761,7 @@ return function(C,Settings)
     -- COMMANDS --
     table.insert(C.InsertCommandFunctions,function()
         return {
-            ["addwhitelist"] = {
+            ["addwhitelist"] = not IN_START_PLACE and {
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = "",
@@ -2703,7 +2774,7 @@ return function(C,Settings)
                     return true
                 end,
             },
-            ["removewhitelist"] = {
+            ["removewhitelist"] = not IN_START_PLACE and {
                 Parameters={{Type="Player", ExcludeMe = true}},
                 Alias = {},
                 AfterTxt = "",
@@ -2716,7 +2787,7 @@ return function(C,Settings)
                     return true
                 end,
             },
-            ["findtrader"] = {
+            ["findtrader"] = IN_START_PLACE and {
                 Parameters={{Type="User"}},
                 Alias = {},
                 AfterTxt = " %s in %.1fs",
@@ -3603,54 +3674,11 @@ return function(C,Settings)
                             Tooltip = "Specifies the type of items to send.",
                             Layout = 2,Default = false,
                             Shortcut="SendType",
-                            Selections = {"Any", "Unlisted", "Halloween 2024"},
+                            Selections = {"Any", "Unlisted", "Halloween 2024", "Autumn 2024"},
                             Activate = C.ReloadHack,
                         },
                     },
-                    SendTypeIdentifiers={
-                        ["Halloween 2024"] = {
-                            [1] = "Ghal0075",
-                            [2] = "Ghal0076",
-                            [3] = "Ghal0077",
-                            [4] = "Ghal0078",
-                            [5] = "Ghal0079",
-                            [6] = "Ghal0080",
-                            [7] = "Ghal0081",
-                            [8] = "Ghal0082",
-                            [9] = "Ghal0083",
-                            [10] = "Ghal0084",
-                            [11] = "Hhal0075",
-                            [12] = "Hhal0076",
-                            [13] = "Hhal0077",
-                            [14] = "Hhal0078",
-                            [15] = "Hhal0079",
-                            [16] = "Hhal0080",
-                            [17] = "Hhal0081",
-                            [18] = "Hhal0082",
-                            [19] = "Hhal0083",
-                            [20] = "Hhal0084",
-                            [21] = "Ghal0091",
-                            [22] = "Hhal0091",
-                            [23] = "Ghal0087",
-                            [24] = "Hhal0087",
-                            [25] = "Ghal0086",
-                            [26] = "Hhal0086",
-                            [27] = "Ghal0093",
-                            [28] = "Hhal0093",
-                            [29] = "Ghal0094",
-                            [30] = "Hhal0094",
-                            [31] = "Ghal0089",
-                            [32] = "Hhal0089",
-                            [33] = "Ghal0090",
-                            [34] = "Hhal0090",
-                            [35] = "Ghal0092",
-                            [36] = "Hhal0092",
-                            [37] = "Ghal0088",
-                            [38] = "Hhal0088",
-                            [39] = "Ghal0085",
-                            [40] = "Hhal0085",
-                        },
-                    },
+                    SendTypeIdentifiers=SETS_DISPLAY,
                 },
             }
         )
