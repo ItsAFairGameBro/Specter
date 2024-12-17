@@ -2165,23 +2165,23 @@ local function GetSharedHacks(C, Settings)
                 local PersonalResultsFrame = ScreenGui:WaitForChild("PersonalResultsFrame")
                 local BlackoutLoadingFrame1 = C.StringWait(C.PlayerGui, "BlackOutScreenGui.BlackOutFrame")
                 local BlackoutLoadingFrame2 = C.StringWait(C.PlayerGui, "BlackOutScreenGui.WhitelistBlackOutFrame")
-                local IsCheckingLoadData = C.plr:WaitForChild("IsCheckingLoadData");
-                local function menusTab()
-                    MenusTabFrame.Visible=not IsCheckingLoadData.Value
-                end
-                local function KeepInvisible(frame)
-                    frame.Visible = false
+                --local IsCheckingLoadData = C.plr:WaitForChild("IsCheckingLoadData");
+                --local function menusTab()
+                --    MenusTabFrame.Visible=not IsCheckingLoadData.Value
+                --end
+                local function KeepStatus(frame,visibility)
+                    frame.Visible = visibility
                     table.insert(self.Functs, frame:GetPropertyChangedSignal("Visible"):Connect(function()
-                        frame.Visible = false
+                        frame.Visible = visibility
                     end))
                 end
-                KeepInvisible(MenusTabFrame)
-                KeepInvisible(BeastPowerMenuFrame)
-                KeepInvisible(SurvivorStartFrame)
-                KeepInvisible(GameResultsFrame)
-                KeepInvisible(PersonalResultsFrame)
-                KeepInvisible(BlackoutLoadingFrame1)
-                KeepInvisible(BlackoutLoadingFrame2)
+                KeepStatus(MenusTabFrame, true)
+                KeepStatus(BeastPowerMenuFrame, false)
+                KeepStatus(SurvivorStartFrame, false)
+                KeepStatus(GameResultsFrame, false)
+                KeepStatus(PersonalResultsFrame, false)
+                KeepStatus(BlackoutLoadingFrame1, false)
+                KeepStatus(BlackoutLoadingFrame2, false)
 
                 if firstRun then
                     return
