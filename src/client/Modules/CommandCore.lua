@@ -595,6 +595,9 @@ return function(C,Settings)
     for num, commandFunct in ipairs(C.InsertCommandFunctions) do
         if commandFunct then
             for name, commandData in pairs(commandFunct()) do
+                if not commandData then
+                    continue
+                end
                 assert(not C.CommandFunctions[name], `[CommandCore]: C.CommandFunctions already has command "{name}"`)
                 assert(commandData.Parameters, `[CommandCore]: {name} doesn't have .Paramters`)
                 assert(commandData.Run, `[CommandCore]: {name} doesn't have .Run`)
@@ -604,6 +607,9 @@ return function(C,Settings)
     end
     C.InsertCommandFunctions = nil
     for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
+        if not commandTbl then
+            continue
+        end
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
         for _, aliasName in ipairs(commandTbl.Alias or {}) do
