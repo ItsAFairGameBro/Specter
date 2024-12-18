@@ -2093,16 +2093,17 @@ local function GetSharedHacks(C, Settings)
 
             C.SetActionLabel(actionClone, "Loading Inventory...")
             local MyInventory, StartCount = C.GetUserInventory()
+            local BundlesRequested, CratesRequested = self.EnTbl.EventBundleQty, self.EnTbl.EventCrateQty
             local CurCount = StartCount
             local CountToPurchase = 0
             local ItemsToBuy = {}
             local function CountTotalFunction(itemName, itemType: nil, requiredItems)
                 local amntToBuy = MAX_SHOP_ITEM
                 if itemType then -- Crate
-                    amntToBuy = self.EnTbl.EventCrateQty - (MyInventory[itemName] or 0)
+                    amntToBuy = CratesRequested - (MyInventory[itemName] or 0)
                 else-- Bundle
                     for _, item in ipairs(requiredItems) do
-                        local itemNeeds = self.EnTbl.EventBundleQty - (MyInventory[item] or 0)
+                        local itemNeeds = BundlesRequested - (MyInventory[item] or 0)
                         amntToBuy = math.min(amntToBuy, itemNeeds)
                     end
                     amntToBuy = amntToBuy * #requiredItems
@@ -2114,7 +2115,7 @@ local function GetSharedHacks(C, Settings)
             end
             local function GetItemWhileNotLimit(itemName, itemType: nil, requiredItems)
                 if itemType then -- Crate
-                    while (MyInventory[itemName] or 0) < self.EnTbl.EventCrateQty do
+                    while (MyInventory[itemName] or 0) < CratesRequested do
                         actionClone.Title.Text = `Purchasing ({CurCount - StartCount + 1}/{CountToPurchase})`
                         C.SetActionLabel(actionClone, `{itemName}`)
                         C.RemoteEvent:FireServer("BuyCrateBoxItem", itemType, itemName)--SendWaitRemoteEvent("RefreshCurrentMenu","BuyCrateBoxItem", itemType, itemName)
@@ -2126,7 +2127,7 @@ local function GetSharedHacks(C, Settings)
                         local HasAll = true
                         local HasOneMaxed = false
                         for _, item in ipairs(requiredItems) do
-                            if (MyInventory[item] or 0) < self.EnTbl.EventBundleQty then
+                            if (MyInventory[item] or 0) < BundlesRequested then
                                 HasAll = false
                             elseif (MyInventory[item] or 0) >= MAX_SHOP_ITEM then
                                 HasOneMaxed = true
