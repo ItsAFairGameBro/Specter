@@ -1603,9 +1603,14 @@ return function(C,Settings)
                         return myInventory
                     end,
                     Activate = function(self,newValue,firstRun)
+                        C.RemoveAction(self.Shortcut)
                         if not newValue then
                             return
                         end
+                        local info = {Title = "Insta Trade", Name = self.Shortcut, Stop = function()
+                            self:SetValue(false)
+                        end}
+                        local actionClone = C.AddAction(info)
                         local ReceiveEvent=Instance.new("BindableEvent")
                         table.insert(self.Instances, ReceiveEvent)
 
@@ -1634,6 +1639,7 @@ return function(C,Settings)
                                 end
                                 IsTrading = true
                                 table.insert(self.Threads, task.spawn(function()
+                                    C.SetActionLabel(actionClone, `Loading...`)
                                     local tradableItems = self:GetTradableItems(tradePlr)
                                     task.wait(1/2)
                                     if not self.EnTbl.ReceiveOnly then
@@ -1652,12 +1658,16 @@ return function(C,Settings)
                                         end
                                         C.RemoteEvent:FireServer("SendMyTradeOffer", sendArr)
                                     end
-                                    task.wait(3)
+                                    for s = 3, 1, -1 do
+                                        C.SetActionLabel(actionClone, `Wait {s}`)
+                                        task.wait(1)
+                                    end
                                     for s = 30, 1, -1 do
                                         if not IsTrading then
                                             return
                                         end
                                         C.RemoteEvent:FireServer("AcceptTradeOffer")
+                                        C.SetActionLabel(actionClone, `Waiting For Accepting`)
                                         task.wait(1/3)
                                     end
                                     print("Trade Timed Out!")
@@ -1700,8 +1710,12 @@ return function(C,Settings)
                                 if tradePlr then
                                     print("Sending Trade Request:",tradePlr)
                                     C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
+                                    C.SetActionLabel(actionClone, `Requesting {tradePlr}`)
                                 end
                                 task.wait(3)
+                            elseif not IsTrading and not tradePlr then
+                                C.SetActionLabel(actionClone, `Idling`)
+                                task.wait(1)
                             else
                                 task.wait(1)
                             end
