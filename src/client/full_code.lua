@@ -3545,8 +3545,10 @@ return function(C,Settings)
                         if not newValue then
                             return
                         end
-                        local info = {Title = "Insta Trade", Name = self.Shortcut, Stop = function()
-                            self:SetValue(false)
+                        local info = {Title = "Insta Trade", Name = self.Shortcut, Stop = function(byRequest)
+                            if byRequest then
+                                self:SetValue(false)
+                            end
                         end}
                         local actionClone = C.AddAction(info)
                         local ReceiveEvent=Instance.new("BindableEvent")
