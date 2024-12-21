@@ -317,7 +317,7 @@ function C.StringWait(start,path,timeout,seperationChar)
 		if next then
 			current = next
 		else
-			warn("C.StringWait failed to find "..v.." in "..next:GetFullName().." from "..tostring(start))
+			warn(`C.StringWait failed to find {v} in {next} from {start}`)
 			return
 		end
 	end

@@ -1622,12 +1622,14 @@ return function(C,Settings)
                             end
                             if main=="RecieveTradeRequest" and not IsTrading then
                                 tradePlr=PS:GetPlayerByUserId(sec)
-                                lastTradePlr = tradePlr
                                 if self:IsAllowed(tradePlr) then
                                     IsTrading = true
+                                    lastTradePlr = tradePlr
                                     C.RemoteEvent:FireServer("AcceptTradeRequest")
                                     print("Trade Accepted")
+                                    C.SetActionLabel(actionClone, `Accepting Trade: {tradePlr.Name}`)
                                 else
+                                    C.SetActionLabel(actionClone, `Denying Trade: {tradePlr.Name}`)
                                     C.RemoteEvent:FireServer("CancelTrade")
                                     print("Trade Denied:",tradePlr)
                                     IsTrading, tradePlr = false, nil
@@ -1638,8 +1640,8 @@ return function(C,Settings)
                                     return
                                 end
                                 IsTrading = true
+                                C.SetActionLabel(actionClone, `Loading...`)
                                 table.insert(self.Threads, task.spawn(function()
-                                    C.SetActionLabel(actionClone, `Loading...`)
                                     local tradableItems = self:GetTradableItems(tradePlr)
                                     task.wait(1/2)
                                     if not self.EnTbl.ReceiveOnly then
@@ -1686,7 +1688,7 @@ return function(C,Settings)
                         end
                         table.insert(self.Functs,C.RemoteEvent.OnClientEvent:Connect(RemoteEventReceivedFunction))
                         C.RemoteEvent:FireServer("CancelTrade")
-                        task.wait(2)
+                        task.wait()
                         while self.EnTbl.AutoSend do
                             if IsTrading then
                                 while IsTrading do
@@ -1710,7 +1712,7 @@ return function(C,Settings)
                                 if tradePlr then
                                     print("Sending Trade Request:",tradePlr)
                                     C.RemoteEvent:FireServer("SendTradeRequest", tradePlr.UserId)
-                                    C.SetActionLabel(actionClone, `Requesting {tradePlr}`)
+                                    C.SetActionLabel(actionClone, `Requesting {tradePlr.Name}`)
                                 end
                                 task.wait(3)
                             elseif not IsTrading and not tradePlr then
