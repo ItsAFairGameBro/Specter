@@ -358,23 +358,26 @@ local function GetSharedHacks(C, Settings)
                 end
             end,
             CharAdded = function(self, theirPlr, theirChar)
-                local function ChildAdded(basePart)
-                    if basePart:IsA("BasePart") then
-                        if basePart.Name == "Part" then
-                            local Rope = basePart:WaitForChild("RopeConstraint",1/3)
-                            if Rope then
-                                Rope.Enabled = false
+                if IN_START_PLACE then -- AdPlushButton and RopeConstraints only found in main game!
+                    local function ChildAdded(basePart)
+                        if basePart:IsA("BasePart") then
+                            if basePart.Name == "Part" then
+                                local Rope = basePart:WaitForChild("RopeConstraint",1/3)
+                                if Rope then
+                                    Rope.Enabled = false
+                                end
                             end
                         end
                     end
-                end
-                table.insert(self.Functs, theirChar.ChildAdded:Connect(ChildAdded))
-                for num, basePart in ipairs(theirChar:GetChildren()) do
-                    ChildAdded(basePart)
-                end
-                local AdButton = C.StringWait(C.PlayerGui, "ScreenGui.AdPlushButton", 3)
-                if AdButton then
-                    AdButton.Visible = false
+                    table.insert(self.Functs, theirChar.ChildAdded:Connect(ChildAdded))
+                    for num, basePart in ipairs(theirChar:GetChildren()) do
+                        ChildAdded(basePart)
+                    end
+
+                    local AdButton = C.StringWait(C.PlayerGui, "ScreenGui.AdPlushButton", 3)
+                    if AdButton then
+                        AdButton.Visible = false
+                    end
                 end
             end
         },
