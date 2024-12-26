@@ -2917,7 +2917,7 @@ return function(C,Settings)
                     return true, "Done", os.clock() - StartTime
                 end,
             },
-            ["devgetsets"] = C.enHacks.Settings.DeveloperMode.En and {
+            ["devgeteventsets"] = C.enHacks.Settings.DeveloperMode.En and {
                 Parameters = {},
                 Alias = {},
                 AfterTxt = " Copied",
@@ -2967,6 +2967,9 @@ return function(C,Settings)
                                 table.insert(Items, item)
                             end
                         end
+                    end
+                    if #Items == 0 then
+                        return false, "No Event Sets Found!"
                     end
 
                     local Year = DateTime.now():ToLocalTime().Year
