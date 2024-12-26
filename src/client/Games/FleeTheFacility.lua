@@ -926,13 +926,13 @@ return function(C,Settings)
             ["purchase"] = {
                 Parameters={},
                 Alias = {},
-                AfterTxt = " %s",
+                AfterTxt = " %s In %.2f",
                 Priority = -10,
                 Run = function(self, args)
                     -- Set override flag
                     local StartTime = os.clock()
                     C.hackData.FleeTheFacility.SpeedBuy:SetValue(true, false, true)
-                    return true, " Done In %.2f", os.clock() - StartTime
+                    return true, "Done", os.clock() - StartTime
                 end,
             },
         }

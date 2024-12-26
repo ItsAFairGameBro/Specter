@@ -298,7 +298,7 @@ return function(C, _SETTINGS)
 					MainText.TextColor3 = Color3.fromRGB(255,255,255)
 				end)
 			end
-			function hackData:SetValue(value,started)
+			function hackData:SetValue(value,started,...)
 				if (value == hackData.Enabled or C.Cleared) and not started then
 					return--no change, don't bother!
 				end
@@ -320,7 +320,7 @@ return function(C, _SETTINGS)
 				if ((hackData.Activate and hackData.RealEnabled) or hackData.AlwaysActivate or not started
 					or (not started and hackData.Type == "NoToggle"))
 					and (not started or not hackData.DontActivate) then
-					C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started)
+					C.DoActivate(hackData,hackData.Activate, hackData.RealEnabled, started, ...)
 				end
 			end
 			hackData.Override = hackData.Override or {}
