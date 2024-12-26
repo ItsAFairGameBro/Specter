@@ -935,6 +935,63 @@ return function(C,Settings)
                     return true, "Done", os.clock() - StartTime
                 end,
             },
+            ["devgetsets"] = C.enHacks.Settings.DeveloperMode.En and {
+                Parameters = {},
+                Alias = {},
+                AfterTxt = " Copied",
+                Priority = -100,
+                Run = function(self, args)
+                    --[[
+                        GETS THE SETS AND PUTS TO CLIPBOARD
+                    ]]
+
+                    local RS = game:GetService("ReplicatedStorage")
+                    local AllowedPrefixes = {"Halloween", "Christmas", "Spring", "Easter"}
+                    local CurrentPrefix = nil
+                    local ShopBundles = C.require(RS.ShopBundles)
+                    local Items = {}
+                    local function isValid(name,isBundle)
+                        if isBundle then
+                            return true
+                        end
+                        local DidFind = false
+                        for _, prefix in ipairs(AllowedPrefixes) do
+                            if name:lower():find(prefix:lower()) then
+                                DidFind = prefix
+                            end
+                        end
+                        if (DidFind) then
+                            if not CurrentPrefix then
+                                CurrentPrefix = DidFind
+                            elseif CurrentPrefix ~= DidFind then
+                                error(`{CurrentPrefix} and {DidFind} are two different prefixes that should not co-exist!`)
+                            end
+                        end
+                        return DidFind ~= false
+                    end
+
+                    local ShopCrates = C.require(RS.ShopCrates)
+                    for name, itemData in pairs(ShopCrates) do
+                        if isValid(name) then
+                            for num2, item in ipairs(itemData.Prizes) do
+                                table.insert(Items, item)
+                            end
+                        end
+                    end
+                    for name, itemData in pairs(ShopBundles) do
+                        assert(name == itemData.Name, `Bundle Name ({itemData.Name}) and Bundle Key ({name}) are different!`)
+                        if isValid(itemData.Name, true) then
+                            for num2, item in ipairs(itemData.Items) do
+                                table.insert(Items, item)
+                            end
+                        end
+                    end
+
+                    local Year = DateTime.now():ToLocalTime().Year
+
+                    C.setclipboard(`["{CurrentPrefix} {Year}"] = {print(Items):gsub("= ", `= "`):gsub(",", `",`):gsub(`}",`,"},")}`)
+                end
+            }
         }
     end)
     -- MAIN GAME --
