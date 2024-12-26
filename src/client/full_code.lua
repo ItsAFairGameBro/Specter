@@ -2972,6 +2972,7 @@ return function(C,Settings)
                     local Year = DateTime.now():ToLocalTime().Year
 
                     C.setclipboard(`["{CurrentPrefix} {Year}"] = {print(Items):gsub("= ", `= "`):gsub(",", `",`):gsub(`}",`,"},")}`)
+                    return true
                 end
             }
         }
