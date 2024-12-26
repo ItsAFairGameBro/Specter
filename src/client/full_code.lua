@@ -2085,7 +2085,7 @@ local function GetSharedHacks(C, Settings)
         Shortcut = "SpeedBuy",
         IgnoreList = {"Series 1H", "Series 1G"},
 
-        Process = function(self, actionClone, info)
+        Process = function(self, actionClone, info, override)
             C.SetActionLabel(actionClone, "Loading Modules...")
 
             local Crates = require(RS.ShopCrates)
@@ -2163,8 +2163,8 @@ local function GetSharedHacks(C, Settings)
 
             -- Dummy Check / Confirmation
             info.CanCancel += 1
-            local CanContinue = CountToPurchase > 0 and C.Prompt(`Purchase {CountToPurchase} Items`,
-                `Are you sure that you want to buy these hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N")
+            local CanContinue = override or (CountToPurchase > 0 and C.Prompt(`Purchase {CountToPurchase} Items`,
+                `Are you sure that you want to buy these hammers and gems?\nIf you are unsure, configure this under "Speed Buy".`, "Y/N"))
             info.CanCancel -= 1
             if CanContinue then
                 if C.hackData.FleeTheFacility.InstaTrade then
@@ -2183,7 +2183,7 @@ local function GetSharedHacks(C, Settings)
 
             self:SetValue(false)
         end,
-        Activate = function(self, enabled, firstRun)
+        Activate = function(self, enabled, firstRun, override)
             C.RemoveAction(self.Shortcut)
             if not enabled then
                 return
@@ -2193,7 +2193,7 @@ local function GetSharedHacks(C, Settings)
             end
 
             local info = {Name = self.Shortcut, Title = "Purchasing", CanCancel = 0, Tags = {"RemoveOnDestroy"}, Threads = {}, Time = function(actionClone, info)
-                self:Process(actionClone, info)
+                self:Process(actionClone, info, override)
             end, Stop = function(byRequest)
                 self:SetValue(false)
             end}
@@ -2860,7 +2860,19 @@ return function(C,Settings)
                     end
                     return true, os.clock() - clockStart, displayTxt
                 end,
-            }
+            },
+            ["purchase"] = {
+                Parameters={},
+                Alias = {},
+                AfterTxt = " %s",
+                Priority = -10,
+                Run = function(self, args)
+                    -- Set override flag
+                    local StartTime = os.clock()
+                    C.hackData.FleeTheFacility.SpeedBuy:SetValue(true, false, true)
+                    return true, " Done In %.2f", os.clock() - StartTime
+                end,
+            },
         }
     end)
     -- MAIN GAME --
