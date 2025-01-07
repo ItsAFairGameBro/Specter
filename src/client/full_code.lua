@@ -7000,6 +7000,7 @@ return function(C,Settings)
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     table.insert(self.Instances, FakeRig)
+                    C.PostApplyHumanoidDescription(FakeRig, Desc2Apply)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
                     FakeHuman.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
                     FakeHuman.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
@@ -7945,8 +7946,11 @@ return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.getgenv().Outfits = C.getgenv().Outfits or {}
     function C.ApplyHumanoidDescription(humanoid, description)
-        local targetChar = humanoid.Parent
         humanoid:ApplyHumanoidDescription()
+        C.PostApplyHumanoidDescription(humanoid, description)
+    end
+    function C.PostApplyHumanoidDescription(humanoid, description)
+        local targetChar = humanoid.Parent
         local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
         if description.Shirt == 9254017270 then -- Banned Shirt
             theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"

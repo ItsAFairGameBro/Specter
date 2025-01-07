@@ -43,8 +43,11 @@ return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.getgenv().Outfits = C.getgenv().Outfits or {}
     function C.ApplyHumanoidDescription(humanoid, description)
-        local targetChar = humanoid.Parent
         humanoid:ApplyHumanoidDescription()
+        C.PostApplyHumanoidDescription(humanoid, description)
+    end
+    function C.PostApplyHumanoidDescription(humanoid, description)
+        local targetChar = humanoid.Parent
         local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
         if description.Shirt == 9254017270 then -- Banned Shirt
             theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"

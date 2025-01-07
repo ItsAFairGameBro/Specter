@@ -938,6 +938,7 @@ return function(C,Settings)
                     self:ApplyInvis(zombie, true)
                     local FakeRig = Players:CreateHumanoidModelFromDescription(Desc2Apply, Enum.HumanoidRigType.R6)
                     table.insert(self.Instances, FakeRig)
+                    C.PostApplyHumanoidDescription(FakeRig, Desc2Apply)
                     local FakeHuman = FakeRig:WaitForChild("Humanoid")
                     FakeHuman.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
                     FakeHuman.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
