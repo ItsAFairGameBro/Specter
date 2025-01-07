@@ -7946,7 +7946,7 @@ return function(C,Settings)
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.getgenv().Outfits = C.getgenv().Outfits or {}
     function C.ApplyHumanoidDescription(humanoid, description)
-        humanoid:ApplyHumanoidDescription(description)
+        humanoid:ApplyDescription(description)
         C.PostApplyHumanoidDescription(humanoid, description)
     end
     function C.PostApplyHumanoidDescription(humanoid, description)
