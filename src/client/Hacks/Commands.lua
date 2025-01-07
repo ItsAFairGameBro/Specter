@@ -42,6 +42,14 @@ return function(C,Settings)
     C.getgenv().serializedDesc = C.getgenv().serializedDesc or {}
     C.getgenv().currentDesc = C.getgenv().currentDesc or {}
     C.getgenv().Outfits = C.getgenv().Outfits or {}
+    function C.ApplyHumanoidDescription(humanoid, description)
+        local targetChar = humanoid.Parent
+        humanoid:ApplyHumanoidDescription()
+        local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
+        if description.Shirt == 9254017270 then -- Banned Shirt
+            theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
+        end
+    end
     C.CommandFunctions = {
         ["refresh"]={
             Parameters={},
@@ -334,19 +342,12 @@ return function(C,Settings)
                         end
                     end)
                 end
-                while not pcall(newHuman.ApplyDescriptionReset,newHuman,humanDesc) do
-                    task.wait(1)
-                end
+
+                C.ApplyHumanoidDescription(newHuman, humanDesc)
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
-                local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
-                if humanDesc.Shirt == 9254017270 then -- Banned Shirt
-                    theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
-                    print("set banned shirt")
-                else
-                    print("shirt set to",humanDesc.Shirt)
-                end
+
                 if oldChar_ForceField and oldChar_ForceField.Parent then
                     oldChar_ForceField.Parent = targetChar:FindFirstChild("HumanoidRootPart")
                 end
