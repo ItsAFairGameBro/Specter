@@ -343,6 +343,9 @@ return function(C,Settings)
                 local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
                 if humanDesc.Shirt == 144076358 then -- Banned Shirt
                     theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
+                    print("set banned shirt")
+                else
+                    print("shirt set to",humanDesc.Shirt)
                 end
                 if oldChar_ForceField and oldChar_ForceField.Parent then
                     oldChar_ForceField.Parent = targetChar:FindFirstChild("HumanoidRootPart")
