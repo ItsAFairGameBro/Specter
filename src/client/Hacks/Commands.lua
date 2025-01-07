@@ -341,7 +341,7 @@ return function(C,Settings)
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
                 local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
-                if humanDesc.Shirt == 144076358 then -- Banned Shirt
+                if humanDesc.Shirt == 9254017270 then -- Banned Shirt
                     theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
                     print("set banned shirt")
                 else
