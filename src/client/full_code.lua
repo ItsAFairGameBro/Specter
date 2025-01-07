@@ -8242,6 +8242,10 @@ return function(C,Settings)
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
+                local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
+                if 144076358 == targetChar.Shirt then
+                    theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
+                end
                 if oldChar_ForceField and oldChar_ForceField.Parent then
                     oldChar_ForceField.Parent = targetChar:FindFirstChild("HumanoidRootPart")
                 end
