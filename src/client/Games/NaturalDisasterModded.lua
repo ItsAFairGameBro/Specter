@@ -27,8 +27,8 @@ return function(C,Settings)
                     local toStr = tostring
                     local tskSpawn = task.spawn
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,...)
-						if toStr(self) == "TrackDamage" then
-                            tskSpawn(print, "Cancelled dmg:",...)
+						if toStr(self) == "TrackDamage" or toStr(self) == "DmgEvent" then
+                            tskSpawn(print, "Cancelled dmg:",self,...)
 							return "Cancel"
 						end
 					end,{"fireserver"})
