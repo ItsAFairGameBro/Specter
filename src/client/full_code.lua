@@ -4304,6 +4304,46 @@ return function(C,Settings)
         }
     }
 end]=],
+    ["Games/NaturalDisasterModded"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+
+local DS = game:GetService("Debris")
+local Players = game:GetService("Players")
+local PolicyService = game:GetService("PolicyService")
+local RunS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local VU = game:GetService("VirtualUser")
+local TCS = game:GetService("TextChatService")
+local GS = game:GetService("GuiService")
+local SG = game:GetService("StarterGui")
+return function(C,Settings)
+	return {
+		Category = {
+			Name = "NaturalDisasterModded",
+			Title = "Natural Disaster Survival: Modded",
+			Image = nil, -- Set to nil for game image
+			Layout = 20,
+		},
+		Tab = {
+			{
+				Title = "Disable Fall Damage",
+				Tooltip = "Removes your fall damage!",
+				Layout = 1,
+				Shortcut = "DisableFallDamage",Threads={},
+				Activate = function(self,newValue,firstRun)
+                    local toStr = tostring
+                    local tskSpawn = task.spawn
+                    C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,...)
+						if toStr(self) == "TrackDamage" then
+                            tskSpawn(print, "Cancelled dmg:",...)
+							return "Cancel"
+						end
+					end,{"invokeserver"})
+				end,
+			},
+		}
+
+	}
+end]],
     ["Games/NavalWarefare"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 local CG = game:GetService("CoreGui")
 local UIS = game:GetService("UserInputService")
@@ -12998,6 +13038,7 @@ local GamesWithModules = {
     [372226183] = {ModuleName = "FleeTheFacility", GameName = "Flee The Facility"},
     [703124385] = {ModuleName =  "TowerOfHell", GameName = "Tower Of Hell"},
     [4967899845] = {ModuleName = "CarryMe", GameName = "Carry Me"},
+    [707649342] = {ModuleName = "NaturalDisasterModded", GameName = "Natural Disaster Survival: Modded"},
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
