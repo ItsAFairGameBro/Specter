@@ -4337,7 +4337,7 @@ return function(C,Settings)
                             tskSpawn(print, "Cancelled dmg:",...)
 							return "Cancel"
 						end
-					end,{"invokeserver"})
+					end,{"fireserver"})
 				end,
 			},
 		}
