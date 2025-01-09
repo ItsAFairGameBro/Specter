@@ -4333,7 +4333,7 @@ return function(C,Settings)
                     local toStr = tostring
                     local tskSpawn = task.spawn
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,...)
-						if toStr(self) == "TrackDamage" or toStr(self) == "DmgEvent" then
+						if toStr(self) == "DmgEvent" then
                             tskSpawn(print, "Cancelled dmg:",toStr(self),...)
 							return "Yield"
 						end
