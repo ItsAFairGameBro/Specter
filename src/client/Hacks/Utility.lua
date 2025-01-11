@@ -367,8 +367,9 @@ return function(C,Settings)
                     table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
                         if input.UserInputType == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
                             task.wait(.5)
-                            if mousemoveabs then
+                            if mousemoveabs and setPoso then
                                 mousemoveabs(setPoso.X, setPoso.Y)
+                                setPoso = nil
                                 print("MOVED")
                             end
                         end
