@@ -175,7 +175,7 @@ return function(C,Settings)
             end,
         },
         ["morph"]={
-            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"}},
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"},{Type="Outfit"}},
             AfterTxt=" to %s%s",Priority=-3,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
@@ -240,7 +240,7 @@ return function(C,Settings)
                     end,
                 }
             },
-            Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army"},
+            Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906,1805138071},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army","freya"},
             BannedHeadlessItems = {16687323428,12064732367},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
@@ -498,7 +498,7 @@ return function(C,Settings)
                         end
                     end
                     if not C.getgenv().Outfits[selectedName.UserId] then
-                        return false, `Outfit not found for user {selectedName.UserName}, {selectedName.UserId}`
+                        return false, `Outfit not found for user {selectedName.UserName}, {selectedName.UserId}. Use the /outfits command to retrieve outfits`
                     end
                     if tonumber(args[3]) then
                         args[3] = tonumber(args[3])
@@ -594,7 +594,6 @@ return function(C,Settings)
                 if not C.getgenv().Outfits[selectedName.UserId] then
                     local success,result = pcall(C.request,{Url="https://avatar.roblox.com/v1/users/"..selectedName.UserId.."/outfits",Method="GET",
                         Cookies={[".ROBLOSECURITY"]=C.AuthenticationTokens[C.Randomizer:NextInteger(1,#C.AuthenticationTokens)]}})
-                    print("Getting Outfit!")
                     if not success then
                         return false, "Http Error "..result
                     elseif not result.Success then
@@ -611,8 +610,6 @@ return function(C,Settings)
                         end
                         C.getgenv().Outfits[selectedName.UserId] = bodyResult;
                     end
-                else
-                    print("Using Cache!")
                 end
                 for num, val in ipairs(bodyResult) do
                     results..="\n"..num.."/"..val.name

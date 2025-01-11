@@ -2769,7 +2769,7 @@ return function(C, Settings)
 			if isValidPress(inputObject) and not TouchConn then
 				StartedClicking = false
 				local diffTime = FirstClick and os.clock() - FirstClick
-				if diffTime and diffTime > 0.03 and diffTime < 1.5 and (FirstClickCoords-inputObject.Position).Magnitude < 15 then
+				if diffTime and diffTime > 0.03 and diffTime < 15 and (FirstClickCoords-inputObject.Position).Magnitude < 15 then
 					funct()
 				end
 			end

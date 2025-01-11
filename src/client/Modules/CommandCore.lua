@@ -135,7 +135,7 @@ return function(C,Settings)
                             C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows text with length between {min} and {max}!`)
                         end
                     end
-                elseif argumentData.Type=="" then
+                elseif argumentData.Type=="" or argumentData.Type == "Outfit" then
                     --do nothing
                 elseif argumentData.Type~=false then
                     canRunFunction = false
@@ -418,6 +418,7 @@ return function(C,Settings)
                     local currentWord,currentWordIndex = getCurrentWordAndIndex(Words,chatBar.CursorPosition-1)--minus one for the command ;
                     local commands = C.StringStartsWith(C.CommandFunctions,firstCommand,true)
                     CurrentWordIndex = currentWordIndex
+                    local LastWord = Words[currentWordIndex - 1]
                     local options = {}
                     if currentWordIndex == 1 then
                         for num, list in ipairs(commands) do
@@ -479,6 +480,16 @@ return function(C,Settings)
                                 end
                             elseif mySuggestion.Type == "User" then
                                 -- No suggestions available
+                            elseif mySuggestion.Type == "Outfit" then
+                                local plrData = C.checkFriendsPCALLFunction(LastWord or "")[1]
+                                if plrData then
+                                    print("PLrData Found!",plrData.SortName,plrData.Name)
+                                    if C.getgenv().Outfits[plrData.UserId] then
+                                        for num, val in ipairs(C.getgenv().Outfits[plrData.UserId]) do
+                                            table.insert(options,{val.id,val.SortName})
+                                        end
+                                    end
+                                end
                             else
                                 assert(not mySuggestion.Type, `(CommandCore.RegisterNewChatBar.textUpd): Suggestion Type Not Yet Implented for {mySuggestion.Type}`)
                             end

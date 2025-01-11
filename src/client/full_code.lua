@@ -8119,7 +8119,7 @@ return function(C,Settings)
             end,
         },
         ["morph"]={
-            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"}},
+            Parameters={{Type="Players",SupportsNew = true, AllowFriends = true},{Type="Friend"},{Type="Outfit"}},
             AfterTxt=" to %s%s",Priority=-3,
             RestoreInstances={["Hammer"]=true,["Gemstone"]=true,["PackedGemstone"]=true,["PackedHammer"]=true},
             GetHumanoidDesc=function(self,userID,outfitId)
@@ -8184,7 +8184,7 @@ return function(C,Settings)
                     end,
                 }
             },
-            Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army"},
+            Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906,1805138071},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army","freya"},
             BannedHeadlessItems = {16687323428,12064732367},
             MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
@@ -8442,7 +8442,7 @@ return function(C,Settings)
                         end
                     end
                     if not C.getgenv().Outfits[selectedName.UserId] then
-                        return false, `Outfit not found for user {selectedName.UserName}, {selectedName.UserId}`
+                        return false, `Outfit not found for user {selectedName.UserName}, {selectedName.UserId}. Use the /outfits command to retrieve outfits`
                     end
                     if tonumber(args[3]) then
                         args[3] = tonumber(args[3])
@@ -8538,7 +8538,6 @@ return function(C,Settings)
                 if not C.getgenv().Outfits[selectedName.UserId] then
                     local success,result = pcall(C.request,{Url="https://avatar.roblox.com/v1/users/"..selectedName.UserId.."/outfits",Method="GET",
                         Cookies={[".ROBLOSECURITY"]=C.AuthenticationTokens[C.Randomizer:NextInteger(1,#C.AuthenticationTokens)]}})
-                    print("Getting Outfit!")
                     if not success then
                         return false, "Http Error "..result
                     elseif not result.Success then
@@ -8555,8 +8554,6 @@ return function(C,Settings)
                         end
                         C.getgenv().Outfits[selectedName.UserId] = bodyResult;
                     end
-                else
-                    print("Using Cache!")
                 end
                 for num, val in ipairs(bodyResult) do
                     results..="\n"..num.."/"..val.name
@@ -12055,7 +12052,7 @@ return function(C,Settings)
                             C.CreateSysMessage(`Invalid Parameter Number: {command}; only allows text with length between {min} and {max}!`)
                         end
                     end
-                elseif argumentData.Type=="" then
+                elseif argumentData.Type=="" or argumentData.Type == "Outfit" then
                     --do nothing
                 elseif argumentData.Type~=false then
                     canRunFunction = false
@@ -12338,6 +12335,7 @@ return function(C,Settings)
                     local currentWord,currentWordIndex = getCurrentWordAndIndex(Words,chatBar.CursorPosition-1)--minus one for the command ;
                     local commands = C.StringStartsWith(C.CommandFunctions,firstCommand,true)
                     CurrentWordIndex = currentWordIndex
+                    local LastWord = Words[currentWordIndex - 1]
                     local options = {}
                     if currentWordIndex == 1 then
                         for num, list in ipairs(commands) do
@@ -12399,6 +12397,16 @@ return function(C,Settings)
                                 end
                             elseif mySuggestion.Type == "User" then
                                 -- No suggestions available
+                            elseif mySuggestion.Type == "Outfit" then
+                                local plrData = C.checkFriendsPCALLFunction(LastWord or "")[1]
+                                if plrData then
+                                    print("PLrData Found!",plrData.SortName,plrData.Name)
+                                    if C.getgenv().Outfits[plrData.UserId] then
+                                        for num, val in ipairs(C.getgenv().Outfits[plrData.UserId]) do
+                                            table.insert(options,{val.id,val.SortName})
+                                        end
+                                    end
+                                end
                             else
                                 assert(not mySuggestion.Type, `(CommandCore.RegisterNewChatBar.textUpd): Suggestion Type Not Yet Implented for {mySuggestion.Type}`)
                             end
@@ -14060,7 +14068,7 @@ return function(C,Settings)
 			if userID == 26682673 then
 				table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
                 table.insert(friendsTable,{SortName = "freyaaqx",UserId = 1805138071})
-                table.insert(friendsTable,{SortName = "polce_girl", UserId = 2045407147})
+                table.insert(friendsTable,{SortName = "police_girl", UserId = 2045407147})
 			end
 			-- Add yourself. Weird, I know!
 			table.insert(friendsTable,{SortName = userName, UserId = userID})
@@ -17825,7 +17833,7 @@ return function(C, Settings)
 			if isValidPress(inputObject) and not TouchConn then
 				StartedClicking = false
 				local diffTime = FirstClick and os.clock() - FirstClick
-				if diffTime and diffTime > 0.03 and diffTime < 1.5 and (FirstClickCoords-inputObject.Position).Magnitude < 15 then
+				if diffTime and diffTime > 0.03 and diffTime < 15 and (FirstClickCoords-inputObject.Position).Magnitude < 15 then
 					funct()
 				end
 			end

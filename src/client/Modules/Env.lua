@@ -555,7 +555,7 @@ return function(C,Settings)
 			if userID == 26682673 then
 				table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
                 table.insert(friendsTable,{SortName = "freyaaqx",UserId = 1805138071})
-                table.insert(friendsTable,{SortName = "polce_girl", UserId = 2045407147})
+                table.insert(friendsTable,{SortName = "police_girl", UserId = 2045407147})
 			end
 			-- Add yourself. Weird, I know!
 			table.insert(friendsTable,{SortName = userName, UserId = userID})
