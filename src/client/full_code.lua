@@ -10490,7 +10490,7 @@ return function(C,Settings)
 
                     table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
                         if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
-                            UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                            --UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
                             print("LOCK")
                             setPoso = input.Position
                         end
