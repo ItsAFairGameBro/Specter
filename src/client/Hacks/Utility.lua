@@ -339,14 +339,16 @@ return function(C,Settings)
 						tb.Position = UDim2.new(-1, 0,-1, 0)
 						tb.AnchorPoint = Vector2.new(1, 1)
 						tb:CaptureFocus()
-                        task.delay(.5,function()
-                            if tb:IsFocused() then
-                                tb:ReleaseFocus()
-                            end
-                            print("Textbox Fixed!")
-                            -- Remove next frame to allow for smooth transition!
-						    DS:AddItem(tb,1)
-                        end)
+                        RunS.RenderStepped:Wait()
+                        RunS.RenderStepped:Wait()
+                        RunS.RenderStepped:Wait()
+
+                        if tb:IsFocused() then
+                            tb:ReleaseFocus()
+                        end
+                        print("Textbox Fixed!")
+                        -- Remove next frame to allow for smooth transition!
+                        DS:AddItem(tb,0)
 
 						--warn("Textbox Select")
 					end
