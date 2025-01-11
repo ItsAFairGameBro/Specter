@@ -603,7 +603,7 @@ return function(C,Settings)
                         for num = #bodyResult,1,-1 do--for num, val in ipairs(bodyResult) do
                             local val = bodyResult[num];
                             if val.isEditable then
-                                val.SortName = val.name
+                                val.SortName = val.name:gsub(" ","_")
                             else
                                 table.remove(bodyResult,num)
                             end

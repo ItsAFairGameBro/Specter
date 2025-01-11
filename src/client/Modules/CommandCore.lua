@@ -485,10 +485,8 @@ return function(C,Settings)
                                 if bigRet[#bigRet] then
                                     local plrId = C.friendnamestoids[bigRet[#bigRet][2]]
                                     if plrId then
-                                        print("PLrData Found!",plrId,LastWord)
                                         if C.getgenv().Outfits[plrId] then
                                             for num, val in ipairs(C.getgenv().Outfits[plrId]) do
-                                                print(val)
                                                 table.insert(options,{val.id,val.SortName})
                                             end
                                         end
