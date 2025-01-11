@@ -12398,7 +12398,7 @@ return function(C,Settings)
                             elseif mySuggestion.Type == "User" then
                                 -- No suggestions available
                             elseif mySuggestion.Type == "Outfit" then
-                                local plrData = C.checkFriendsPCALLFunction(LastWord or "")[1]
+                                local plrData = C.StringStartsWith(C.friendnames, LastWord, true)
                                 if plrData then
                                     print("PLrData Found!",plrData,LastWord)
                                     if C.getgenv().Outfits[plrData.UserId] then
