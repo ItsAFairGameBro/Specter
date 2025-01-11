@@ -503,7 +503,7 @@ return function(C,Settings)
                     if tonumber(args[3]) then
                         args[3] = tonumber(args[3])
                     else
-                        local list = C.StringStartsWith(C.getgenv().Outfits[selectedName.UserId], args[3])
+                        local list = C.StringStartsWith(C.getgenv().Outfits[selectedName.UserId], args[3]:gsub("_"," "))
                         if #list == 0 then
                             return false, "Outfit Name Not Found ("..tostring(args[3])..")"
                         end
@@ -594,6 +594,7 @@ return function(C,Settings)
                 if not C.getgenv().Outfits[selectedName.UserId] then
                     local success,result = pcall(C.request,{Url="https://avatar.roblox.com/v1/users/"..selectedName.UserId.."/outfits",Method="GET",
                         Cookies={[".ROBLOSECURITY"]=C.AuthenticationTokens[C.Randomizer:NextInteger(1,#C.AuthenticationTokens)]}})
+                    print("Getting Outfit!")
                     if not success then
                         return false, "Http Error "..result
                     elseif not result.Success then
@@ -610,6 +611,8 @@ return function(C,Settings)
                         end
                         C.getgenv().Outfits[selectedName.UserId] = bodyResult;
                     end
+                else
+                    print("Using Cache!")
                 end
                 for num, val in ipairs(bodyResult) do
                     results..="\n"..num.."/"..val.name
