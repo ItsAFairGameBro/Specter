@@ -10486,18 +10486,23 @@ return function(C,Settings)
 					end
                     --
                     local UserInputService = game:GetService("UserInputService")
+                    local setPoso
 
                     table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
                         if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
                             UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
                             print("LOCK")
+                            setPoso = input.Position
                         end
                     end))
 
                     table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
                         if input.UserInputType == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
-                            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
-                            print("UNLOCK")
+                            task.wait(.5)
+                            if mousemoveabs then
+                                mousemoveabs(setPoso.X, setPoso.Y)
+                                print("MOVED")
+                            end
                         end
                     end))
 
