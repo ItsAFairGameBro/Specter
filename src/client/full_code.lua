@@ -10484,6 +10484,23 @@ return function(C,Settings)
 
 						--warn("Textbox Select")
 					end
+                    --
+                    local UserInputService = game:GetService("UserInputService")
+
+                    table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                        if input == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
+                            UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                            print("LOCK")
+                        end
+                    end))
+
+                    table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
+                        if input == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
+                            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+                            print("UNLOCK")
+                        end
+                    end))
+
 
                     -- Infinite Zoom
                     if EnTbl.NoZoomLimit then
