@@ -352,28 +352,30 @@ return function(C,Settings)
 
 						--warn("Textbox Select")
 					end
-                    --
-                    local UserInputService = game:GetService("UserInputService")
-                    local setPoso
+                    --[EXPERIMENTAL] [FAILED]: Lock the mouse when right clicking
+                    --[[if EnTbl.MouseFix and mousemoveabs then
+                        local UserInputService = game:GetService("UserInputService")
+                        local setPoso
 
-                    table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
-                        if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
-                            --UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
-                            print("LOCK")
-                            setPoso = input.Position
-                        end
-                    end))
-
-                    table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
-                        if input.UserInputType == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
-                            task.wait(.5)
-                            if mousemoveabs and setPoso then
-                                mousemoveabs(setPoso.X, setPoso.Y)
-                                setPoso = nil
-                                print("MOVED")
+                        table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                            if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
+                                --UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                                print("LOCK")
+                                setPoso = input.Position
                             end
-                        end
-                    end))
+                        end))
+
+                        table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
+                            if input.UserInputType == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
+                                task.wait(.5)
+                                if mousemoveabs and setPoso then
+                                    mousemoveabs(setPoso.X, setPoso.Y)
+                                    setPoso = nil
+                                    print("MOVED")
+                                end
+                            end
+                        end))
+                    end]]
 
 
                     -- Infinite Zoom

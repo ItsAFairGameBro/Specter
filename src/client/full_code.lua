@@ -223,7 +223,8 @@ local function RegisterFunctions()
 end
 
 RegisterFunctions() -- Loads Studio and Hack Compatiblity
-
+C.AuthenticationTokens = {"E1A20E20BC76E4DEEBEAC13AAFA9A5C033DCD7073FD11265C333B100F358FA6032CD1D08E717A2BA76B2C25B904152CDABDFCF16AC0649C6DBAB767A91731273AC084CF3375EA436519D6BEA35FDB8B73E4948CE576D703451CE9662ED9ED19F96437AAF9E7DB5F6B8AFB6483E397D203553853708FB594601A1D52DADB80D4EEC9AFE7D189B935A31B31598A5C2B5EA827C5BE16683C9110A3CCD2BFCB129E580621F85065910477CDFBA4AB94B68500C41BCB333B4A78DCC5066596E69F465AB8E9EF21E279B7E30DF9302CD765A6296A1DC4BF7467D06F2FB5781923E4E6828F8DB5F3554F54C73B6FA0C926C8ED7BF39FD6A1FCF19AB2EFC15B049AE7A234E4DD5F87A3D448DC6089DEEA14AC246854E63C058F46571D9D6F3809C4579F6695956F44FD691574C52BDDF8797DDC1933AA1E596048353421A62D0CFB056DBB20B69F0F18121CE218BBBB0134F263EEAF0E5673D77E28E7FB730D83748342EF92C00048A703FD83513728EEACC8F4E6980FB1ADB87C445080AA529C45A46EDA6FA135371CABA0BC1B75B072FBF1462A0DC61424569EA18ED29B0687408ADBD9ED634F4C3038B47F7693B60DA0E9BC6656B6D6C83A97604CE1…",}
+    --"5B517736612854890E25C0953E3A73761C4E295EDDC7EA35D1D9F881CB9CD0077B2D8E195F593BC08AE0351C42ED60786BE49DC7886291E4679F1704044BAE257A0CB596CB6D8787FDD4201D5F34E90F2226DE8E6BFE80DB5C04B4496CB1928E73101B81EB8CF9DA265F0847C0ECF21D545C38EB95D1993C22407C19A8626A426C46FEA8F0FB94EA64CE84EAD75F574F2B25AB51035B0BF8E69F126CD61352B3CDF1138E9E70C41D6D6B821E8E1D97CF1BDD8E7297D19135DE47C65E96ECFDF019076B7C425CCFD4D090C0B96038C44D4C0AECF75A174EA961615BD35052CEADBAA28B7D428D5C357D0808E2723972A2558A50C320576F83CD82FADBDB3C5182D7856A837F03DF04237BB698D132B8EF8BE8A60E7F177F001FD25A672375CC639F9BA4680430071EBCB6483ADA3718D3611E6DC21C2B72EF335C35BC66A7A31446D96FEFCF31B3D2CD23865EAA56F618A3C22F0F5938084CB9256531550135DEAB9DAF31243C0062E503EEA7BF941DFF606AE24F2DA0ACDD45D37045CCF924DB170DC31ED0826EFF863ED70724A3B1D917E38E0B5713EE89191EC9032C2403E99D2DDF0E3A62CEFB6D98FD0277EBEFE34864DD350459D3AE9CA"}
 C.isStudio = isStudio
 C.plr = PS.LocalPlayer
 C.StartUp = true
@@ -8536,7 +8537,7 @@ return function(C,Settings)
                 local results,bodyResult = "",C.getgenv().Outfits[selectedName.UserId]
                 if not C.getgenv().Outfits[selectedName.UserId] then
                     local success,result = pcall(C.request,{Url="https://avatar.roblox.com/v1/users/"..selectedName.UserId.."/outfits",Method="GET",
-                        Cookies={[".ROBLOSECURITY"]="5B517736612854890E25C0953E3A73761C4E295EDDC7EA35D1D9F881CB9CD0077B2D8E195F593BC08AE0351C42ED60786BE49DC7886291E4679F1704044BAE257A0CB596CB6D8787FDD4201D5F34E90F2226DE8E6BFE80DB5C04B4496CB1928E73101B81EB8CF9DA265F0847C0ECF21D545C38EB95D1993C22407C19A8626A426C46FEA8F0FB94EA64CE84EAD75F574F2B25AB51035B0BF8E69F126CD61352B3CDF1138E9E70C41D6D6B821E8E1D97CF1BDD8E7297D19135DE47C65E96ECFDF019076B7C425CCFD4D090C0B96038C44D4C0AECF75A174EA961615BD35052CEADBAA28B7D428D5C357D0808E2723972A2558A50C320576F83CD82FADBDB3C5182D7856A837F03DF04237BB698D132B8EF8BE8A60E7F177F001FD25A672375CC639F9BA4680430071EBCB6483ADA3718D3611E6DC21C2B72EF335C35BC66A7A31446D96FEFCF31B3D2CD23865EAA56F618A3C22F0F5938084CB9256531550135DEAB9DAF31243C0062E503EEA7BF941DFF606AE24F2DA0ACDD45D37045CCF924DB170DC31ED0826EFF863ED70724A3B1D917E38E0B5713EE89191EC9032C2403E99D2DDF0E3A62CEFB6D98FD0277EBEFE34864DD350459D3AE9CA"}})
+                        Cookies={[".ROBLOSECURITY"]=C.AuthenticationTokens[C.Randomizer:NextInteger(1,#C.AuthenticationTokens)]}})
                     if not success then
                         return false, "Http Error "..result
                     elseif not result.Success then
@@ -10484,28 +10485,30 @@ return function(C,Settings)
 
 						--warn("Textbox Select")
 					end
-                    --
-                    local UserInputService = game:GetService("UserInputService")
-                    local setPoso
+                    --[EXPERIMENTAL] [FAILED]: Lock the mouse when right clicking
+                    --[[if EnTbl.MouseFix and mousemoveabs then
+                        local UserInputService = game:GetService("UserInputService")
+                        local setPoso
 
-                    table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
-                        if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
-                            --UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
-                            print("LOCK")
-                            setPoso = input.Position
-                        end
-                    end))
-
-                    table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
-                        if input.UserInputType == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
-                            task.wait(.5)
-                            if mousemoveabs and setPoso then
-                                mousemoveabs(setPoso.X, setPoso.Y)
-                                setPoso = nil
-                                print("MOVED")
+                        table.insert(self.Functs,UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                            if input.UserInputType == Enum.UserInputType.MouseButton2 and not gameProcessed and UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
+                                --UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                                print("LOCK")
+                                setPoso = input.Position
                             end
-                        end
-                    end))
+                        end))
+
+                        table.insert(self.Functs,UserInputService.InputEnded:Connect(function(input, gameProcessed)
+                            if input.UserInputType == Enum.UserInputType.MouseButton2 and UserInputService.MouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
+                                task.wait(.5)
+                                if mousemoveabs and setPoso then
+                                    mousemoveabs(setPoso.X, setPoso.Y)
+                                    setPoso = nil
+                                    print("MOVED")
+                                end
+                            end
+                        end))
+                    end]]
 
 
                     -- Infinite Zoom
