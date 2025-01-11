@@ -12400,7 +12400,7 @@ return function(C,Settings)
                             elseif mySuggestion.Type == "Outfit" then
                                 local plrData = C.checkFriendsPCALLFunction(LastWord or "")[1]
                                 if plrData then
-                                    print("PLrData Found!",plrData.SortName,plrData.Name,LastWord)
+                                    print("PLrData Found!",plrData,LastWord)
                                     if C.getgenv().Outfits[plrData.UserId] then
                                         for num, val in ipairs(C.getgenv().Outfits[plrData.UserId]) do
                                             print(val)
