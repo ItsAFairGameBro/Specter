@@ -334,16 +334,20 @@ return function(C,Settings)
 
 					--Fix Keyboard
 					if EnTbl.FixKeyboard and not UIS:GetFocusedTextBox() and not InputFound then
+
 						local tb = Instance.new("TextBox",C.PlayerGui)
 						tb.Position = UDim2.new(-1, 0,-1, 0)
 						tb.AnchorPoint = Vector2.new(1, 1)
 						tb:CaptureFocus()
-						RunS.RenderStepped:Wait()
-						if tb:IsFocused() then
-							tb:ReleaseFocus()
-						end
-						-- Remove next frame to allow for smooth transition!
-						DS:AddItem(tb,0)
+                        task.delay(.5,function()
+                            if tb:IsFocused() then
+                                tb:ReleaseFocus()
+                            end
+                            print("Textbox Fixed!")
+                            -- Remove next frame to allow for smooth transition!
+						    DS:AddItem(tb,1)
+                        end)
+
 						--warn("Textbox Select")
 					end
 
