@@ -20144,6 +20144,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				--end
 				if theirScript~="nullptr" or Override then
 					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
+                        print("BAC_")
 						if hook == "__index" then
 							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {toStr(theirScript)}`)
 							return coroYield -- Return the function to run forever haha!!
