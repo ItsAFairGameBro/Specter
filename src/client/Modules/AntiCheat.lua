@@ -171,6 +171,7 @@ return function(C,Settings)
                 C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", C.newcclosure(function(theirScript,method,funct,...)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
+                        error("BAC_3")
                         task.spawn(C.DebugMessage,"AntiCheat",`TASK SPAWN YIELD ON SCR: {theirScript:GetFullName()}!`)
                         workspace:WaitForChild("SUCKMYBALLS3")
                         return "Yield"
@@ -179,6 +180,7 @@ return function(C,Settings)
                 C.HookMethod("__namecall","AntiCheat5",C.newcclosure(function(theirScript,method,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
+                        error("BAC_2")
                         task.spawn(C.DebugMessage,"AntiCheat",`YIELDING NAMECALL FOR SCR: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()}`)
                         workspace:WaitForChild("SUCKMYBALLS2")
                         return "Yield"
@@ -187,6 +189,7 @@ return function(C,Settings)
                 C.HookMethod("__index","AntiCheat5",C.newcclosure(function(theirScript,index,self,...)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
+                        error("BAC_1")
                         task.spawn(C.DebugMessage,"AntiCheat",`YIELDING INDEXCALL: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()} INDEX: {index}`)
                         workspace:WaitForChild("SUCKMYBALLS")
                         return "Yield"
