@@ -1609,7 +1609,7 @@ local function Static(C,Settings)
             C.Map = workspace:WaitForChild("Normal")
             C.FireEvent("MapAdded",nil,C.Map)
             C.AddObjectConnection(C.Map,"MapRemoved",C.Map.Destroying:Connect(function()
-                
+
                 C.FireEvent("MapRemoved",nil,C.Map)
             end))
         end
@@ -1666,7 +1666,7 @@ return function (C,Settings)
                     SetStat(config,"TotalRecoilMax",0)
                     SetStat(config,"MinSpread",0)
                     SetStat(config,"MaxSpread",0)
-                    SetStat(config,"ShotCooldown",0)
+                    SetStat(config,"ShotCooldown",0.5)
                     SetStat(config,"Cooldown",0)
                     SetStat(config,"SwingCooldown",0)
                     SetStat(config,"HitRate",0)
@@ -1718,7 +1718,7 @@ return function (C,Settings)
                                     setVal(arg2,"d",rawget(arg2,"d")*3)
                                     setVal(arg2,"maxDist",rawget(arg2,"maxDist")*3)
                                 end
-                                
+
 
                                 --[[dataTbl["p"] = ClosestHead.Position
                                 dataTbl["d"] = Distance
@@ -1732,7 +1732,7 @@ return function (C,Settings)
                                 return "Cancel"--do nothing lol, don't kill yaself!
                             end
                         end
-                        
+
                     end,{"fireserver"})
                 end,
                 Options = {
@@ -1776,7 +1776,7 @@ return function (C,Settings)
                                 -- Doesn't matter, do nothing!
                             end
                         end
-                        
+
                     end,{"fireserver"})
                 end
             },
@@ -1918,7 +1918,7 @@ return function (C,Settings)
 					end,
                 }
             },
-            
+
             --[[
                 local args = {
                     [1] = "Shovel",
@@ -1927,7 +1927,7 @@ return function (C,Settings)
 
                 game:GetService("ReplicatedStorage").Events.Dig:FireServer(unpack(args))
             ]]
-            
+
         },
     }
 end
