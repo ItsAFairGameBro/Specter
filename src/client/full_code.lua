@@ -20145,10 +20145,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				if theirScript~="nullptr" or Override then
 					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
 						if hook == "__index" then
-							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {theirScript.Name}`)
+							tskSpawn(debFunct,"AntiCheat",`Sending yielding forever function for script {toStr(theirScript)}`)
 							return coroYield -- Return the function to run forever haha!!
 						else
-							tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {theirScript.Name}`)
+							tskSpawn(debFunct,"AntiCheat",`Yielding forever on script {toStr(theirScript)}`)
 							workspace:WaitForChild("POO POO PEE PEE")--coroYield()
 							error("coroutine thread was attempting to be resumed for script "..theirScript.Name)
 							return
