@@ -4336,7 +4336,7 @@ return function(C,Settings)
                     C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,...)
 						if toStr(self) == "DmgEvent" then
                             tskSpawn(print, "Cancelled dmg:",toStr(self),...)
-							return "Yield"
+							return "Override", {self, -10}
 						end
 					end,{"fireserver"})
 				end,
