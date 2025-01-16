@@ -11626,14 +11626,14 @@ return function(C,Settings)
                                 --print("Pass",self,arg)
                          --   end
                         --end
-                        
-                        
+
+
                         if arg1 == 0 then
                             return -- Run it
                         else
                             local argCount = (arg1~=nil and 1 or 0) + #({...})
                             print("CANCELLING TWO WITH ",method,self,"argcount:",argCount,"arg1:",arg1[1])
-                            
+
                             task.defer(NewMessage.FireServer,NewMessage,"A-1","RSSERV MTHD")
                         end
                         return "Cancel"
@@ -11644,6 +11644,7 @@ return function(C,Settings)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
                         task.spawn(C.DebugMessage,"AntiCheat",`TASK SPAWN YIELD ON SCR: {theirScript:GetFullName()}!`)
+                        workspace:WaitForChild("SUCKMYBALLS3")
                         return "Yield"
                     end
                 end))
@@ -11651,6 +11652,7 @@ return function(C,Settings)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
                         task.spawn(C.DebugMessage,"AntiCheat",`YIELDING NAMECALL FOR SCR: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()}`)
+                        workspace:WaitForChild("SUCKMYBALLS2")
                         return "Yield"
                     end
                 end),{"fireserver"})
@@ -11658,6 +11660,7 @@ return function(C,Settings)
                     local MySelf = tostring(self)
                     if (MySelf == "RemoteEvent" or MySelf == "NewMessage") then
                         task.spawn(C.DebugMessage,"AntiCheat",`YIELDING INDEXCALL: {theirScript:GetFullName()} ATTEMPT: {self:GetFullName()} INDEX: {index}`)
+                        workspace:WaitForChild("SUCKMYBALLS")
                         return "Yield"
                     end
                 end),{"fireserver"})
