@@ -311,6 +311,14 @@ return function(C,Settings)
 			end
 		end
 	end
+	-- Shuffling arrays
+	function C.Shuffle<V>(source: { V }):{ V }
+		for i = #source, 2, -1 do
+			local j = C.Randomizer:NextInteger(1, i)
+			source[i], source[j] = source[j], source[i]
+		end
+		return source
+	end
     -- Labeling large numbers
     function C.FormatLargeNumber(value)
         local suffixes = {"", "K", "M", "B", "T"}

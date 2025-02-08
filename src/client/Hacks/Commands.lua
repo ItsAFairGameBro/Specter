@@ -83,10 +83,11 @@ return function(C,Settings)
             end,
         },
         ["spectate"]={
-            Parameters={{Type="Player"}},
+            Parameters={{Type="Players"}},
             AfterTxt=" %s",
             RequiresRefresh=true,
             Functs = {},
+            Threads = {},
             RunOnDestroy = function(self)
                 C.ClearFunctTbl(self.Functs)
                 C.Spectate()
@@ -97,10 +98,7 @@ return function(C,Settings)
                     C.Spectate(theirChar)
                 end
             end,
-            Run=function(self,args)
-                self:RunOnDestroy()
-
-                local theirPlr = args[1][1]
+            SinglePlayer = function(self, theirPlr)
                 table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
                     self:TheirCharAdded(theirPlr, newChar)
                 end))
@@ -110,6 +108,25 @@ return function(C,Settings)
                 end))
                 if theirPlr.Character then
                     self:TheirCharAdded(theirPlr, theirPlr.Character)
+                end
+            end,
+            MultiPlayer = function(self, players)
+                while true do
+                    C.Shuffle(players)
+                    for _, theirPlr in ipairs(players) do
+                        self:SinglePlayer(theirPlr)
+                        task.wait(4)
+                        C.ClearFunctTbl(self.Functs)
+                    end
+                end
+            end,
+            Run=function(self,args)
+                self:RunOnDestroy()
+
+                if #args[1] == 1 then
+                    self:SinglePlayer(args[1][1])
+                else
+                    table.insert(self.Threads,task.spawn(self.MultiPlayer, self, args[1]))
                 end
                 return true,"Successful"
             end,
