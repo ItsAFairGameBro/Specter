@@ -26,7 +26,7 @@ return function(C,Settings)
     local CheckIfValid
     -- Here's where the anti cheat stuff is done
     local AntiCheat = {
-        {
+        { -- ADONTIS ANTI CHEAT
             Run = function(self)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
@@ -67,7 +67,7 @@ return function(C,Settings)
                 return true -- indicate that the anti cheat is successful
             end,
             KeepGoing = false, RunOnce = true,
-            GameIds = {1069466626,495693931},
+            GameIds = {1069466626,495693931,2719766208},
             PlaceIds = {},
         },
         {
@@ -274,7 +274,7 @@ return function(C,Settings)
                 end)
             end,
             KeepGoing = false, RunOnce = true,
-            GameIds = {3734304510,2719766208},PlaceIds={}, 
+            GameIds = {3734304510},PlaceIds={}, 
         },
         {
             Run = function(self)
