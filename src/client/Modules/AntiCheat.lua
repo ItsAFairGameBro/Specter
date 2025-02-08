@@ -274,7 +274,7 @@ return function(C,Settings)
                 end)
             end,
             KeepGoing = false, RunOnce = true,
-            GameIds = {3734304510,2719766208},PlaceIds={},
+            GameIds = {3734304510,2719766208},PlaceIds={}, 
         },
         {
             Run = function(self)
