@@ -67,7 +67,7 @@ return function(C,Settings)
                 return true -- indicate that the anti cheat is successful
             end,
             KeepGoing = false, RunOnce = true,
-            GameIds = {1069466626,495693931,2719766208},
+            GameIds = {1069466626,495693931},--,2719766208},
             PlaceIds = {},
         },
         {
