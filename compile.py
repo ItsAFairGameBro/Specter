@@ -1,6 +1,6 @@
 import os
 import re
-import urllib
+from urllib import parse
 import time
 import sys
 from pathlib import Path
@@ -78,7 +78,7 @@ def list_lua_files(base_folder):
             relative_path = Path(root).joinpath(file).relative_to(base_folder)
             if file.endswith(".lua") and relative_path.name not in ignore_list:
                 with open(base_folder / relative_path, "r", encoding="utf-8") as cur_file:
-                    key = urllib.parse.quote(str(relative_path.with_suffix("")).replace("\\", "/"))
+                    key = parse.quote(str(relative_path.with_suffix("")).replace("\\", "/"))
                     lua_files[key] = cur_file.read()
     return lua_files
 
