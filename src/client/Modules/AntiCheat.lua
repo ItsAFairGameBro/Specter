@@ -10,7 +10,7 @@ local function Static(C,Settings)
     local wait4Child = game.WaitForChild
     local function yieldForeverFunct(...)
         C.DebugMessage("AntiCheat",debug.traceback('AntiCheat Disabled Successfully'))
-        wait4Child(game,"SuckMyPp",math.huge)
+        wait4Child(game,"SuckMyPps",math.huge)
         return true
     end
     return yieldForeverFunct
