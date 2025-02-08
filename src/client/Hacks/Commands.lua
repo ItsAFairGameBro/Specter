@@ -90,6 +90,7 @@ return function(C,Settings)
             Threads = {},
             RunOnDestroy = function(self)
                 C.ClearFunctTbl(self.Functs)
+                C.ClearThreadTbl(self.Threads)
                 C.Spectate()
             end,
             TheirCharAdded = function(self, theirPlr, theirChar)
