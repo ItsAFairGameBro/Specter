@@ -8059,7 +8059,7 @@ return function(C,Settings)
                     C.Shuffle(players)
                     for _, theirPlr in ipairs(players) do
                         self:SinglePlayer(theirPlr)
-                        task.wait(2)
+                        task.wait(1.9)
                         C.ClearFunctTbl(self.Functs)
                     end
                 end
