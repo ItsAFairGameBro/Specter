@@ -11176,7 +11176,7 @@ return function(C_new,Settings)
                         else-- Found, so delete it!
                             table.remove(self.Messages, foundIndex)
 						end
-						-- print(theirPlr.Name, msg)
+						print(theirPlr.Name, msg)
                     end))
                 end,
                 Messages = {},
