@@ -493,7 +493,7 @@ return function(C_new,Settings)
                             self:AddToChat(theirPlr)
                         end
                     end
-                    if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                    if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
                         -- C.CreateSysMessage(`[Chat Spy]: Chat Spy doesn't support the new roblox chat version: {Enum.ChatVersion.TextChatService.Name}`)
                         local function newTCS(obj)
 							if obj:IsA("TextChannel") then
@@ -504,6 +504,11 @@ return function(C_new,Settings)
 								end))
 							end
 						end
+						for _, channel in ipairs(TCS:GetDescendants()) do
+							newTCS(channel)
+						end
+						table.insert(self.Functs, TCS.DescendantAdded:Connect(newTCS))
+
 					else
 						-- Message detection (old)
 						local newMessageEvent = C.StringWait(RS,"DefaultChatSystemChatEvents.OnNewMessage")
