@@ -100,12 +100,15 @@ return function(C,Settings)
                 end
             end,
             SinglePlayer = function(self, theirPlr)
+                C.ClearFunctTbl(self.Functs)
                 table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
                     self:TheirCharAdded(theirPlr, newChar)
                 end))
                 table.insert(self.Functs, theirPlr.AncestryChanged:Connect(function()
-                    C.CreateSysMessage(`Stopped spectating because {C.GetPlayerName(theirPlr)} left`, Color3.fromRGB(0,255,255))
-                    self:Run({{C.plr}})
+                    if C.Camera.CameraSubject and C.Camera.CameraSubject.Parent == theirPlr.Character then
+                        C.CreateSysMessage(`Stopped spectating because {C.GetPlayerName(theirPlr)} left`, Color3.fromRGB(0,255,255))
+                        self:Run({{C.plr}})
+                    end
                 end))
                 if theirPlr.Character then
                     self:TheirCharAdded(theirPlr, theirPlr.Character)
@@ -117,7 +120,6 @@ return function(C,Settings)
                     for _, theirPlr in ipairs(players) do
                         self:SinglePlayer(theirPlr)
                         task.wait(1.9)
-                        C.ClearFunctTbl(self.Functs)
                     end
                 end
             end,

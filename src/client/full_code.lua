@@ -2311,6 +2311,26 @@ local function GetSharedHacks(C, Settings)
                         task.spawn(self.Events.CharAdded, self, theirPlr, theirPlr.Character)
                     end
                 end
+
+                -- Reload tab list
+                local empty = true
+                for num, bar in ipairs({"A","B","C","D"})
+                    local textlabel = C.StringWait(C.PlayerGui, `ScreenGui.StatusBars.HealthBar{bar}`)
+                    if textlabel and textlabel.Text ~= "" then
+                        empty = false
+                        break
+                    end
+                end
+                if empty then
+                    local list = {}
+                    for num, theirPlr in ipairs(PS:GetPlayers()) do
+                        local inGame, theirRole = C.isInGame(theirPlr.Character)
+                        if inGame and theirRole == "Survivor" then
+                            table.insert(list, theirPlr)
+                        end
+                    end
+                    C.fireconnection(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
+                end
             end
         end,
         Events = {
@@ -2357,10 +2377,10 @@ local function GetSharedHacks(C, Settings)
                         ChildAdded(basePart)
                     end
 
-                    local AdButton = C.StringWait(C.PlayerGui, "ScreenGui.AdPlushButton", 3)
-                    if AdButton then
-                        AdButton.Visible = false
-                    end
+                    -- local AdButton = C.StringWait(C.PlayerGui, "ScreenGui.AdPlushButton", 3)
+                    -- if AdButton then
+                    --     AdButton.Visible = false
+                    -- end
                 end
             end
         },
@@ -8044,12 +8064,15 @@ return function(C,Settings)
                 end
             end,
             SinglePlayer = function(self, theirPlr)
+                C.ClearFunctTbl(self.Functs)
                 table.insert(self.Functs, theirPlr.CharacterAdded:Connect(function(newChar)
                     self:TheirCharAdded(theirPlr, newChar)
                 end))
                 table.insert(self.Functs, theirPlr.AncestryChanged:Connect(function()
-                    C.CreateSysMessage(`Stopped spectating because {C.GetPlayerName(theirPlr)} left`, Color3.fromRGB(0,255,255))
-                    self:Run({{C.plr}})
+                    if C.Camera.CameraSubject and C.Camera.CameraSubject.Parent == theirPlr.Character then
+                        C.CreateSysMessage(`Stopped spectating because {C.GetPlayerName(theirPlr)} left`, Color3.fromRGB(0,255,255))
+                        self:Run({{C.plr}})
+                    end
                 end))
                 if theirPlr.Character then
                     self:TheirCharAdded(theirPlr, theirPlr.Character)
@@ -8061,7 +8084,6 @@ return function(C,Settings)
                     for _, theirPlr in ipairs(players) do
                         self:SinglePlayer(theirPlr)
                         task.wait(1.9)
-                        C.ClearFunctTbl(self.Functs)
                     end
                 end
             end,
@@ -19876,7 +19898,7 @@ function C.StringWait(start,path,timeout,seperationChar)
 		if next then
 			current = next
 		else
-			warn(debug.traceback(`C.StringWait failed to find {v} in {current} from {start} (timeout = {timeout}`))
+			warn(debug.traceback(`C.StringWait failed to find {v} in {current} from {start} (timeout = {timeout})`))
 			return
 		end
 	end

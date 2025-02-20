@@ -318,7 +318,7 @@ function C.StringWait(start,path,timeout,seperationChar)
 		if next then
 			current = next
 		else
-			warn(debug.traceback(`C.StringWait failed to find {v} in {current} from {start} (timeout = {timeout}`))
+			warn(debug.traceback(`C.StringWait failed to find {v} in {current} from {start} (timeout = {timeout})`))
 			return
 		end
 	end
