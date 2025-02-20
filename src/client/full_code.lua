@@ -12862,10 +12862,14 @@ return function(C,Settings)
 	end
 	--Chat
 	function C.CreateSysMessage(message,color,typeText)
+		typeText = typeText and ("[" .. typeText .. "]:") or "{Sys}"
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
-			(TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)):DisplaySystemMessage(message)
+			color = color or Color3.fromRGB(255,255,255);
+			local channel = TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
+			message = `{typeText} <font color=RGB({color.R*255},{color.G*255},{color.B})>{message}</font>`
+			print(message)
+			channel:DisplaySystemMessage(message, 'systemMessage');
 		else
-            typeText = typeText and ("[" .. typeText .. "]:") or "{Sys}"
 			SG:SetCore("ChatMakeSystemMessage",  { Text = `{typeText} {message}`, Color = color or Color3.fromRGB(255),
 				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
 		end
@@ -13105,9 +13109,11 @@ return function(C,Settings)
 	end
 	C.DebugMessage("Load",`Waiting To Load Finished`)
 	isWaiting = false
-    task.spawn(function()
-        C.writefile("SpecterV2.lua", `loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua"))()`)
-    end)
+	if not C.IsStudio then
+		task.spawn(function()
+			C.writefile("SpecterV2.lua", `loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua"))()`)
+		end)
+	end
 end
 ]=],
     ["Modules/CoreLoader"] = [[local TS = game:GetService("TweenService")
@@ -19965,7 +19971,12 @@ function GetModule(path: string)
     -- All paths start from src and to the lua file
 	-- local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
 	if isStudio then
-		return require(C.StringWait(script,path,nil,"/"))(C, Settings)
+		local moduleRet = require(C.StringWait(script,path,nil,"/"))
+		if typeof(moduleRet) == "function" then
+			return moduleRet(C, Settings)
+		else
+			return moduleRet
+		end
 	else
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"

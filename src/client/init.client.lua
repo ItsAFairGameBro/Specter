@@ -412,7 +412,12 @@ function GetModule(path: string)
     -- All paths start from src and to the lua file
 	-- local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
 	if isStudio then
-		return require(C.StringWait(script,path,nil,"/"))(C, Settings)
+		local moduleRet = require(C.StringWait(script,path,nil,"/"))
+		if typeof(moduleRet) == "function" then
+			return moduleRet(C, Settings)
+		else
+			return moduleRet
+		end
 	else
 		local gitType = "blob"
 		local githubLink = C.BaseUrl .. "/%s.lua"
