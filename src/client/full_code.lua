@@ -11179,25 +11179,37 @@ return function(C_new,Settings)
                     end))
                 end,
                 Messages = {},
+				InsertMsg = function(self, userID, msgLEN)
+					local Message = userID .. '\r' .. msgLEN
+					local Index = #self.Messages + 1
+					table.insert(self.Messages, Message)
+					task.delay(10, C.TblRemove, self.Messages, Message)
+				end,
 				Activate = function(self,newValue)
-                    if TCS.ChatVersion ~= Enum.ChatVersion.LegacyChatService then
-                        C.CreateSysMessage(`[Chat Spy]: Chat Spy doesn't support the new roblox chat version: {Enum.ChatVersion.TextChatService.Name}`)
-                        return
-                    end
-                    if not newValue then return end
+					if not newValue then return end
 					for num, theirPlr in ipairs(PS:GetPlayers()) do
                         if theirPlr ~= C.plr then
                             self:AddToChat(theirPlr)
                         end
                     end
-                    -- Message detection
-                    local newMessageEvent = C.StringWait(RS,"DefaultChatSystemChatEvents.OnNewMessage")
-                    table.insert(self.Functs, newMessageEvent.OnClientEvent:Connect(function(data, channel)
-                        local Message = data.SpeakerUserId .. '\r' .. data.MessageLength
-                        local Index = #self.Messages + 1
-                        table.insert(self.Messages, Message)
-                        task.delay(10, C.TblRemove, self.Messages, Message)
-                    end))
+                    if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                        -- C.CreateSysMessage(`[Chat Spy]: Chat Spy doesn't support the new roblox chat version: {Enum.ChatVersion.TextChatService.Name}`)
+                        local function newTCS(obj)
+							if obj:IsA("TextChannel") then
+								table.insert(self.Functs, obj.MessageReceived:Connect(function(textChatMessage: TextChatMessage)
+									if textChatMessage.TextSource then
+										self:InsertMsg(textChatMessage.TextSource.UserId, textChat.Text:len())
+									end
+								end))
+							end
+						end
+					else
+						-- Message detection (old)
+						local newMessageEvent = C.StringWait(RS,"DefaultChatSystemChatEvents.OnNewMessage")
+						table.insert(self.Functs, newMessageEvent.OnClientEvent:Connect(function(data, channel)
+							self:InsertMsg(data.SpeakerUserId, data.MessageLength)
+						end))
+                    end
 				end,
                 Events = {
                     OthersPlayerAdded=function(self,theirPlr,firstRun)
