@@ -442,10 +442,10 @@ return function(C_new,Settings)
                 AddToChat = function(self,theirPlr)
                     local DefaultChatSystemChatEvents = RS:WaitForChild("DefaultChatSystemChatEvents",10)
                     local Config = {public = false}
-                    if not DefaultChatSystemChatEvents then
-                        return
-                    end
-                    local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
+                    -- if not DefaultChatSystemChatEvents then
+                    --     return
+                    -- end
+                    -- local getmsg = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering")
                     table.insert(self.Functs,theirPlr.Chatted:Connect(function(msg)
                         msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ') -- CLIP THE MESSAGE (important!)
                         --[[
@@ -476,7 +476,7 @@ return function(C_new,Settings)
                         else-- Found, so delete it!
                             table.remove(self.Messages, foundIndex)
 						end
-						print(theirPlr.Name, msg)
+						-- print(theirPlr.Name, msg)
                     end))
                 end,
                 Messages = {},
