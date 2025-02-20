@@ -2313,14 +2313,14 @@ local function GetSharedHacks(C, Settings)
                 end
 
                 -- Reload tab list
-                local empty = true
-                for num, bar in ipairs({"A","B","C","D"})
-                    local textlabel = C.StringWait(C.PlayerGui, `ScreenGui.StatusBars.HealthBar{bar}`)
-                    if textlabel and textlabel.Text ~= "" then
-                        empty = false
-                        break
-                    end
-                end
+                -- local empty = true
+                -- for num, bar in ipairs({"A","B","C","D"})
+                --     local textlabel = C.StringWait(C.PlayerGui, `ScreenGui.StatusBars.HealthBar{bar}`)
+                --     if textlabel and textlabel.Text ~= "" then
+                --         empty = false
+                --         break
+                --     end
+                -- end
                 -- if empty then
                 --     local list = {}
                 --     for num, theirPlr in ipairs(PS:GetPlayers()) do
