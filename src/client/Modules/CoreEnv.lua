@@ -269,7 +269,7 @@ return function(C,Settings)
 		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
 			color = color or Color3.fromRGB(255,255,255);
 			local channel = TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
-			message = (`%s <font color=RGB(%.2f,%.2f,%.2f)>%s</font>`):format(typeText, color.R*255, color.G*255, color.B*255, message)
+			message = (`%s <font color="rgb(%.0f,%.0f,%.0f)">%s</font>`):format(typeText, color.R*255, color.G*255, color.B*255, message)
 			C.setclipboard(message)
 			channel:DisplaySystemMessage(message, 'systemMessage');
 		else
