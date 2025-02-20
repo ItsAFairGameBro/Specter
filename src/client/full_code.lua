@@ -3293,6 +3293,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end
+                                print(traceback)
                             end
                         end,{"value"})
 
