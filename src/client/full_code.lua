@@ -2321,19 +2321,19 @@ local function GetSharedHacks(C, Settings)
                         break
                     end
                 end
-                if empty then
-                    local list = {}
-                    for num, theirPlr in ipairs(PS:GetPlayers()) do
-                        local inGame, theirRole = C.isInGame(theirPlr.Character)
-                        if inGame and theirRole == "Survivor" then
-                            table.insert(list, theirPlr)
-                        end
-                    end
-                    C.fireconnection(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
-                    print("Fired")
-                else
-                    print("Not empty, not fired")
-                end
+                -- if empty then
+                --     local list = {}
+                --     for num, theirPlr in ipairs(PS:GetPlayers()) do
+                --         local inGame, theirRole = C.isInGame(theirPlr.Character)
+                --         if inGame and theirRole == "Survivor" then
+                --             table.insert(list, theirPlr)
+                --         end
+                --     end
+                --     C.fireconnection(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
+                --     print("Fired")
+                -- else
+                --     print("Not empty, not fired")
+                -- end
             end
         end,
         Events = {
