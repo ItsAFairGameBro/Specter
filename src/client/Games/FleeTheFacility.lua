@@ -391,6 +391,9 @@ local function GetSharedHacks(C, Settings)
                         end
                     end
                     C.fireconnection(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
+                    print("Fired")
+                else
+                    print("Not empty, not fired!")
                 end
             end
         end,
