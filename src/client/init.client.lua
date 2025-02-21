@@ -581,7 +581,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			end)
 			print("HOOKED DEBUG.INFO")
 		end--]]
-		local inCall = false
+		local callDepth = 0
 		local myHooks = {}
 
 		C.getgenv().SavedHookData[hook] = myHooks
@@ -596,11 +596,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			if inCall then
+			if callDepth > 10 then
 				warn(`InCall occured with args:`,self,...)
 				return OriginFunct(self, ...)
 			else
-				inCall = true
+				callDepth += 1
 			end
 			-- Get the method being called
 			local method
@@ -671,17 +671,23 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 							local isRunning = true
 							tskDelay(3, function()
 								if isRunning then
+									isRunning = false
+									callDepth -= 1
 									warn(`[C.{HookType}]: Hook is taking > 3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
 								end
 							end)
 							local operation,returnData = getVal(list,3)(theirScript,method,self,...)
+							if not isRunning then
+								warn(`[C.{HookType}]: Hook RESUMED > 3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
+								return OriginFunct(self, ...)
+							end
 							isRunning = false
 							if operation then
 								if operation == "Override" or operation == "FireSeperate" then
 									assert(typeof(getVal(returnData,1)) == typeof(self),
 										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
 								end
-								inCall = false
+								callDepth -= 1
 								if operation == "Spoof" then
 									return tblUnpack(returnData)
 								elseif operation == "Override" then
@@ -698,14 +704,14 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 									end
 								else
 									warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Function Run!`)
-									break
+									return OriginFunct(self, ...)
 								end
 							end
 						end
 					end
                 end
             end
-			inCall = false
+			callDepth -= 1
 			return OriginFunct(self,...)
 		end
 		--[[if HookType == "hookfunction" and typeof(hook) == "string" and source then -- we'll do this the old way then!
