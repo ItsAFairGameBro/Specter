@@ -445,6 +445,9 @@ return function(C,Settings)
 	end
 
 	function C.getCharacterHeight(model)
+		if not model then
+			return 0
+		end
 		local Humanoid=model:WaitForChild("Humanoid")
 		local RootPart=model:WaitForChild("HumanoidRootPart")
 		if Humanoid.RigType==Enum.HumanoidRigType.R15 then

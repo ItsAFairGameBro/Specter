@@ -390,7 +390,7 @@ local function GetSharedHacks(C, Settings)
                             table.insert(list, theirPlr)
                         end
                     end
-                    C.fireconnection(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
+                    C.firesignal(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
                     print("Fired")
                 else
                     print("Not empty, not fired")
@@ -1338,23 +1338,23 @@ return function(C,Settings)
                         local lobbyPlrs = self.EnTbl.LobbyPlayers
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
-                            -- if (toStr(theirScript) == "LocalGuiScript") then
-                            --     local isMe = isAncestorOf(myTSM, self)
-                            --     local traceback = traceback()
-                            --     for _, val in ipairs({704, 712, 726, 712, 735, 739}) do
-                            --         if find(traceback,toStr(val)) then
-                            --             local theValue = toStr(self)
-                            --             if theValue == "Health" then
-                            --                 local spoofHP = (isMe and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
-                            --                 if spoofHP then
-                            --                     return "Spoof", {spoofHP}
-                            --                 end
-                            --             elseif theValue == "IsBeast" and isMe then
-                            --                 return "Spoof", {false}
-                            --             end
-                            --         end
-                            --     end
-                            -- end
+                            if (toStr(theirScript) == "LocalGuiScript") then
+                                local isMe = isAncestorOf(myTSM, self)
+                                local traceback = traceback()
+                                for _, val in ipairs({704, 712, 726, 712, 735, 739}) do
+                                    if find(traceback,toStr(val)) then
+                                        local theValue = toStr(self)
+                                        if theValue == "Health" then
+                                            local spoofHP = (isMe and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
+                                            if spoofHP then
+                                                return "Spoof", {spoofHP}
+                                            end
+                                        elseif theValue == "IsBeast" and isMe then
+                                            return "Spoof", {false}
+                                        end
+                                    end
+                                end
+                            end
                         end,{"value"})
 
                         local DefaultLighting = RS:WaitForChild("DefaultLightingSettings")

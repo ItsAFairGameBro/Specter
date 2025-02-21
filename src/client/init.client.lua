@@ -544,6 +544,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local checkcaller = C.checkcaller
 		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
+		local orgToStr = tostring
 		local strLen, toStr = string.len, function(instance)
 			local myType = getType(instance);
 			if (myType == "table") then
@@ -553,7 +554,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			elseif myType == "number" or myType == "string" then
 				return instance
 			end
-			return instance
+			return orgToStr(instance)
 		end
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
 		local additionalCallerName = {["SayMessageRequest"]=true,["getloghistory"]=true,["getlogHistory"]=true}
@@ -580,8 +581,9 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			end)
 			print("HOOKED DEBUG.INFO")
 		end--]]
-
+		local inCall = false
 		local myHooks = {}
+
 		C.getgenv().SavedHookData[hook] = myHooks
 
 		local HookType = ((source or typeof(hook)=="function") and "hookfunction")
@@ -594,20 +596,22 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			--if (lower(getnamecallmethod()) == "getloghistory") then
-			--	print("one")
-			--end
+			if inCall then
+				return OriginFunct(self, ...)
+			else
+				inCall = true
+			end
 			-- Get the method being called
 			local method
-            if (lower(getnamecallmethod() or "") == "getloghistory"
-                or (... and getType(...) == "string" and lower(...) == "getloghistory")) then
-				tskSpawn(print, "LOG", self, ...)
-			end
+            -- if (lower(getnamecallmethod() or "") == "getloghistory"
+            --     or (... and getType(...) == "string" and lower(...) == "getloghistory")) then
+			-- 	tskSpawn(print, "LOG", self, ...)
+			-- end
 			if HookType=="hookmetamethod" then
 				if hook == "__namecall" then
 					method = getnamecallmethod()
 				else
-					method = ...
+					method = (...)
 				end
                 --Basic safety..
 				if lower(method) == "name" then
@@ -635,7 +639,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--end
 
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
-			local isGameScript = not checkcaller()
+			local isGameScript = true--not checkcaller()
 			 -- Check if the caller is not a local script
 			 if isGameScript or Override then
                 local theirScript = getcallingscript() or "nullptr"
@@ -676,6 +680,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 									assert(typeof(getVal(returnData,1)) == typeof(self),
 										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
 								end
+								inCall = false
 								if operation == "Spoof" then
 									return tblUnpack(returnData)
 								elseif operation == "Override" then
@@ -692,12 +697,14 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 									end
 								else
 									warn(`[C.{HookType}]: Unknown Operation for {name}: {operation}. Letting Function Run!`)
+									break
 								end
 							end
 						end
 					end
                 end
             end
+			inCall = false
 			return OriginFunct(self,...)
 		end
 		--[[if HookType == "hookfunction" and typeof(hook) == "string" and source then -- we'll do this the old way then!
