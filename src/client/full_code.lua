@@ -11698,7 +11698,7 @@ return function(C,Settings)
                         return "Cancel"
                     end
                 end)--]]
-                for sc in ipairs(C.getrunningscripts()) do
+                for _, sc in ipairs(C.getrunningscripts()) do
                     if sc.Name == "BAC_" then
                         C.setclipboard(decompile(sc))
                         break
