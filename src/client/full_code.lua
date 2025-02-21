@@ -11701,6 +11701,7 @@ return function(C,Settings)
                 for _, sc in ipairs(C.getrunningscripts()) do
                     if sc.Name == "BAC_" or sc.Name == "BAC" then
                         print("FOUND BACK")
+                        sc.Parent = C.PlayerScripts
                         C.setclipboard(getgenv().decompile(sc))
                         break
                     else
