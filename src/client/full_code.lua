@@ -20182,8 +20182,12 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			if find(traceback(), "function CallFunction") ~= nil then--callDepth > 10 then
+			if find(traceback(nil, 2), "function CallFunction") ~= nil then--callDepth > 10 then
 				-- setclipboard(traceback("CALL"))
+				warn(find(traceback(`Recursion prevented: {callDepth}`)),self,...)
+				return OriginFunct(self, ...)
+			elseif callDepth > 100 then
+				warn(find(traceback(`InCall limited exceeded: {callDepth}`)),self,...)
 				return OriginFunct(self, ...)
 			else
 				-- if callDepth > 2 then
