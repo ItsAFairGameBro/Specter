@@ -20143,7 +20143,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			return orgToStr(instance)
 		end
 		local getcallingscript,getnamecallmethod,lower,tblFind,tblPack,tblUnpack = C.getcallingscript,getnamecallmethod,string.lower,table.find,table.pack,unpack
-		local additionalCallerName = {["SayMessageRequest"]=true,["getloghistory"]=true,["getlogHistory"]=true}
+		local additionalCallerName = {["SayMessageRequest"]=true,["getloghistory"]=true,["getlogHistory"]=true,["Value"]=true}
 		local additionalMethodName = {["sendasync"]=true}
 		local additionalAvoidLower = {["getlogHistory"] = true}
 
@@ -20206,6 +20206,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			elseif HookType == "hookfunction" then
 				method = self
 			end
+			print("1")
 			if method and getType(method) == "string" then
 				if not rawget(additionalAvoidLower, method) then
 					method = lower(method)
@@ -20220,18 +20221,21 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					getVal(C,"setclipboard")(method)
 				end
 			end
+			print("2")
 			--if getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method) or toStr(self) == "RBXGeneral" then
 			--	tskSpawn(print,self,method,checkcaller(),getVal(additionalMethodName,method))
 			--end
 
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
 			local isGameScript = true--not checkcaller()
+			print("3")
 			 -- Check if the caller is not a local script
 			 if isGameScript or Override then
                 local theirScript = getcallingscript() or "nullptr"
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {toStr(method)}`)
 				--end
+				print("4")
 				if theirScript~="nullptr" or Override then
 					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
                         error("BAC_")
