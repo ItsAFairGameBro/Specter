@@ -20183,7 +20183,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local OriginFunct
 		local function CallFunction(self,...)
 			if callDepth > 10 then
-				warn(`InCall occured with args:`,self,...)
+				warn(traceback(`InCall occured with args:`),self,...)
 				return OriginFunct(self, ...)
 			else
 				callDepth += 1
