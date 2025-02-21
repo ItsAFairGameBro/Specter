@@ -531,12 +531,11 @@ function C.HookFunc(funct, name, hook)
 end
 local callDepth = 0
 function C.GetPropertySafe(instance, property)
-    local mt = getmetatable(instance)
-	local isHooked = C.getgenv().SavedHookData["__index"]
+	local hookIndex = rawget(rawget(rawget(C,"getgenv")(),"SavedHookData"),"__index")
 	if not isHooked then
 		return instance[property]
 	else
-		local originalIndex = C.getgenv().SavedHookData["__index"].OldFunction -- Access original __index
+		local originalIndex = rawget(hookIndex,"OldFunction") -- Access original __index
 		return originalIndex(instance, property)	
 	end
 end
