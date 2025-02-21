@@ -3275,7 +3275,7 @@ return function(C,Settings)
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
-                                if debug.info(3, "n") == "" then
+                                if debug.info(3, "n") ~= "" then
                                     return
                                 end
                                 local isMe = isAncestorOf(myTSM, self)
