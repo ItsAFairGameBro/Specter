@@ -1370,17 +1370,18 @@ return function(C,Settings)
                         --end
                         local OldNamecall
                         local FindChild = workspace.FindFirstChild
+                        local getraw = rawget
                         local GetProp = C.GetPropertySafe
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             if name == "_LightingSettings" or name == "DefaultLightingSettings" then
-                                local subject = GetProp(GetProp(C,"Camera"),"CameraSubject")
+                                local subject = GetProp(getraw(C,"Camera"),"CameraSubject")
                                 if not subject then
                                     return
                                 end
                                 local theirPos = GetProp(GetProp(GetProp(subject,"Parent"),"PrimaryPart"),"Position")
-                                local isInGame = not C.IsInBox(GetProp(LobbyOBWall,"CFrame"), GetProp(LobbyOBWall,"Size"), theirPos, true)
+                                local isInGame = not getraw(C,"IsInBox")(GetProp(LobbyOBWall,"CFrame"), GetProp(LobbyOBWall,"Size"), theirPos, true)
                                 if isInGame then
-                                    local Ret = GetProp(C,"Map") and FindChild(GetProp(C,"Map"), "_LightingSettings") or nil
+                                    local Ret = getraw(C,"Map") and FindChild(getraw(C,"Map"), "_LightingSettings") or nil
                                     return "Spoof", {Ret}
                                 else
                                     return "Spoof", {DefaultLighting}
