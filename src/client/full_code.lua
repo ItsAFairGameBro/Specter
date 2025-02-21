@@ -15145,8 +15145,13 @@ return function(C,Settings)
 			end
 			return
 		elseif ErrorMessage:len() == 0 then
-			print("Blank Code Ignored For ErrorCode:",ErrorCode)
-			return
+			while ErrorMessage:len() == 0 do
+				print("Blank Code Ignored For ErrorCode:",ErrorCode)
+				task.wait(.5)
+				ErrorMessage = GS:GetErrorMessage()
+			end
+			-- 
+			-- return
 		end
 		FireEvent("RbxErrorPrompt", nil, ErrorMessage, ErrorCode, ErrorIdentification)
 	end
