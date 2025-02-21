@@ -1338,7 +1338,7 @@ return function(C,Settings)
                             if (toStr(theirScript) == "LocalGuiScript") then
                                 local isMe = isAncestorOf(myTSM, self)
                                 local traceback = traceback()
-                                for _, val in ipairs({704, 712, 726, 712, 735, 739}) do
+                                for _, val in ipairs({744,591}) do--{704, 712, 726, 712, 735, 739}) do
                                     if find(traceback,toStr(val)) then
                                         local theValue = toStr(self)
                                         if theValue == "Health" then
@@ -1351,7 +1351,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end
-                                print(traceback)
+                                print(traceback, debug.info(2, "n"))
                             end
                         end,{"value"})
 
