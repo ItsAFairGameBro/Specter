@@ -1351,7 +1351,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end
-                                print(traceback, debug.info(2, "n"))
+                                print(traceback, debug.info(3, "n"))
                             end
                         end,{"value"})
 
