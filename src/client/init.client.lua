@@ -603,7 +603,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				-- setclipboard(traceback("CALL"))
 				warn(traceback(`Recursion prevented: {callDepth}`),self,...)
 				return OriginFunct(self, ...)
-			elseif callDepth > 100 then
+			elseif callDepth >= 100 and false then
 				if not exceeded then
 					exceeded = true
 					warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
