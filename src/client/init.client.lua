@@ -598,9 +598,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local function CallFunction(self,...)
 			if callDepth > 10 then
 				-- setclipboard(traceback("CALL"))
-				warn(traceback(`InCall occured with args:`),self,...)
 				return OriginFunct(self, ...)
 			else
+				if callDepth > 2 then
+					warn(traceback(`InCall occured with args: {callDepth}`),self,...)
+				end
 				callDepth = callDepth + 1
 			end
 			-- Get the method being called
