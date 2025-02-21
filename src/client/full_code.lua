@@ -20123,8 +20123,9 @@ function C.GetPropertySafe(instance, property)
 		return originalIndex(instance, property)
 	end
 end
+local DISABLEDHOOKS = true
 function C.HookMethod(hook, name, runFunct, methods, source)
-	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
+	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) or DISABLEDHOOKS then
 		return
     elseif not AllowHookMethod then
         warn("Hook Method Disabled; Attempt For:",hook,name)
