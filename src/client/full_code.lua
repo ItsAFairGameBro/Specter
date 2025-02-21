@@ -11699,9 +11699,12 @@ return function(C,Settings)
                     end
                 end)--]]
                 for _, sc in ipairs(C.getrunningscripts()) do
-                    if sc.Name == "BAC_" then
+                    if sc.Name == "BAC_" or sc.Name == "BAC" then
+                        print("FOUND BACK")
                         C.setclipboard(decompile(sc))
                         break
+                    else
+                        print("Wtv:",sc)
                     end
                 end
                 C.plr:Kick("l bozo")
