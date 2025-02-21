@@ -3279,9 +3279,6 @@ return function(C,Settings)
                                     return
                                 end
                                 local isMe = isAncestorOf(myTSM, self)
-                                -- local traceback = traceback()
-                                -- for _, val in ipairs({744,591}) do--{704, 712, 726, 712, 735, 739}) do
-                                    -- if find(traceback,toStr(val)) then
                                 local theValue = toStr(self)
                                 if theValue == "Health" then
                                     local spoofHP = (isMe and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
@@ -3291,9 +3288,6 @@ return function(C,Settings)
                                 elseif theValue == "IsBeast" and isMe then
                                     return "Spoof", {false}
                                 end
-                                    -- end
-                                -- end
-                                -- print(traceback, debug.info(3, "n"))
                             end
                         end,{"value"})
 
@@ -11623,7 +11617,7 @@ return function(C,Settings)
             GameIds = {},
             PlaceIds = {352947107},
         },
-        {
+        { -- TOWER OF HELL
             Run = function(self)
                 local localScript1 = C.StringWait(C.plr,"PlayerScripts.LocalScript",30)
 				local localScript2 = C.StringWait(C.plr,"PlayerScripts.LocalScript2",30)
@@ -11671,7 +11665,7 @@ return function(C,Settings)
             GameIds = {3150475059},
             PlaceIds = {},
         },
-        {
+        { -- FLAG WARS
             Run = function(self)
                 --[[local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
@@ -11745,7 +11739,7 @@ return function(C,Settings)
                 end))--]]
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {1160789089},PlaceIds={}
+            GameIds = {},PlaceIds={} -- 1160789089
         },
         {
             Run = function(self)

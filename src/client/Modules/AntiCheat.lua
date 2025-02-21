@@ -86,7 +86,7 @@ return function(C,Settings)
             GameIds = {},
             PlaceIds = {352947107},
         },
-        {
+        { -- TOWER OF HELL
             Run = function(self)
                 local localScript1 = C.StringWait(C.plr,"PlayerScripts.LocalScript",30)
 				local localScript2 = C.StringWait(C.plr,"PlayerScripts.LocalScript2",30)
@@ -134,7 +134,7 @@ return function(C,Settings)
             GameIds = {3150475059},
             PlaceIds = {},
         },
-        {
+        { -- FLAG WARS
             Run = function(self)
                 --[[local NewMessage = C.StringWait(RS,"Events.AntiCheatRemotes.NewMessage")
                 C.HookNamecall("AntiCheat5",{"fireserver","invokeserver"},function(theirScript,method,self,arg1,...)
@@ -208,7 +208,7 @@ return function(C,Settings)
                 end))--]]
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {1160789089},PlaceIds={}
+            GameIds = {},PlaceIds={} -- 1160789089
         },
         {
             Run = function(self)
