@@ -20139,7 +20139,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			if (myType == "table") then
 				return "tbl"
 			elseif myType == "Instance" then
-				return instance.Name
+				return orgToStr(instance)
 			elseif myType == "number" or myType == "string" then
 				return instance
 			end
