@@ -20186,6 +20186,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				return OriginFunct(self, ...)
 			else
 				inCall = true
+				print(self)
 			end
 			-- Get the method being called
 			local method
