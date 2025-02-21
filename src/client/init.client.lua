@@ -531,12 +531,12 @@ function C.HookFunc(funct, name, hook)
 end
 local callDepth = 0
 function C.GetPropertySafe(instance, property)
-	local hookIndex = rawget(rawget(rawget(C,"getgenv")(),"SavedHookData"),"__index")
-	if not isHooked then
+	local indexHook = rawget(rawget(rawget(C,"getgenv")(),"SavedHookData"),"__index")
+	if not indexHook then
 		return instance[property]
 	else
-		local originalIndex = rawget(hookIndex,"OldFunction") -- Access original __index
-		return originalIndex(instance, property)	
+		local originalIndex = rawget(indexHook,"OldFunction") -- Access original __index
+		return originalIndex(instance, property)
 	end
 end
 function C.HookMethod(hook, name, runFunct, methods, source)
