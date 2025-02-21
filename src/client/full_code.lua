@@ -11224,6 +11224,8 @@ return function(C_new,Settings)
 							if obj:IsA("TextChannel") then
 								table.insert(self.Functs, obj.MessageReceived:Connect(function(textChatMessage: TextChatMessage)
 									if textChatMessage.TextSource then
+										local mod = C.GetModule("Modules/Serializer")
+										print(mod.serialize(textChat))
 										self:InsertMsg(textChatMessage.TextSource.UserId, textChat.Text:len())
 									end
 								end))
