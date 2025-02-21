@@ -169,7 +169,7 @@ return function(C,Settings)
                 end)--]]
                 for _, sc in ipairs(C.getrunningscripts()) do
                     if sc.Name == "BAC_" or sc.Name == "BAC" then
-                        print("FOUND BACK")
+                        print("FOUND BACK",sc)
                         -- sc.Parent = C.PlayerScripts
                         -- C.setclipboard(getgenv().decompile(sc))
                         break
@@ -177,7 +177,7 @@ return function(C,Settings)
                         print("Wtv:",sc)
                     end
                 end
-                C.plr:Kick("l bozo")
+                -- C.plr:Kick("l bozo")
                 C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", C.newcclosure(function(theirScript,method,funct,...)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
