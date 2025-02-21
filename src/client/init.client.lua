@@ -545,6 +545,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local checkcaller = C.checkcaller
 		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
+		local traceback = debug.traceback
 		local orgToStr = tostring
 		local strLen, toStr = string.len, function(instance)
 			local myType = getType(instance);
