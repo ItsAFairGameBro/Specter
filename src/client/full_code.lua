@@ -20115,6 +20115,7 @@ function C.HookFunc(funct, name, hook)
     end
     return SavedStorage.OldMethod
 end
+local callDepth = 0
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
@@ -20167,7 +20168,6 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			end)
 			print("HOOKED DEBUG.INFO")
 		end--]]
-		local callDepth = 0
 		local myHooks = {}
 
 		C.getgenv().SavedHookData[hook] = myHooks
@@ -20183,11 +20183,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local OriginFunct
 		local function CallFunction(self,...)
 			if callDepth > 10 then
-				setclipboard(traceback("CALL"))
+				-- setclipboard(traceback("CALL"))
 				warn(traceback(`InCall occured with args:`),self,...)
 				return OriginFunct(self, ...)
 			else
-				callDepth += 1
+				callDepth = callDepth + 1
 			end
 			-- Get the method being called
 			local method
@@ -20259,7 +20259,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 							tskDelay(3, function()
 								if isRunning then
 									isRunning = false
-									callDepth -= 1
+									callDepth = callDepth - 1
 									warn(`[C.{HookType}]: Hook is taking > 3 seconds to run with id = {name}; method = {method}; orgScript = {theirScript}`)
 								end
 							end)
@@ -20274,7 +20274,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 									assert(typeof(getVal(returnData,1)) == typeof(self),
 										`Invalid Override Argument 1; Expected same type as self {self} with id = {name}; method = {method}; origin = {theirScript}`)
 								end
-								callDepth -= 1
+								callDepth = callDepth - 1
 								if operation == "Spoof" then
 									return tblUnpack(returnData)
 								elseif operation == "Override" then
@@ -20298,7 +20298,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					end
                 end
             end
-			callDepth -= 1
+			callDepth = callDepth - 1
 			return OriginFunct(self,...)
 		end
 		--[[if HookType == "hookfunction" and typeof(hook) == "string" and source then -- we'll do this the old way then!
