@@ -11698,7 +11698,13 @@ return function(C,Settings)
                         return "Cancel"
                     end
                 end)--]]
-
+                for sc in ipairs(C.getrunningscripts()) do
+                    if sc.Name == "BAC_" then
+                        C.setclipboard(decompile(sc))
+                        break
+                    end
+                end
+                C.plr:Kick("l bozo")
                 C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", C.newcclosure(function(theirScript,method,funct,...)
                     local Args = table.pack(...)
                     if not theirScript.Parent or theirScript.Name == "BAC_" then
@@ -11739,7 +11745,7 @@ return function(C,Settings)
                 end))--]]
             end,
             KeepGoing = false, RunOnce = false,
-            GameIds = {},PlaceIds={} -- 1160789089
+            GameIds = {1160789089},PlaceIds={} -- 
         },
         {
             Run = function(self)
