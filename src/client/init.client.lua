@@ -546,6 +546,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local gmatch, gsub, getType = string.gmatch, string.gsub, typeof
 		local getVal, setVal = rawget, rawset
 		local traceback = debug.traceback
+		local strFind = string.find
 		local orgToStr = tostring
 		local strLen, toStr = string.len, function(instance)
 			local myType = getType(instance);
@@ -597,12 +598,12 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 
 		local OriginFunct
 		local function CallFunction(self,...)
-			if find(traceback(nil, 2), "function CallFunction") ~= nil then--callDepth > 10 then
+			if strFind(traceback(nil, 2), "function CallFunction") ~= nil then--callDepth > 10 then
 				-- setclipboard(traceback("CALL"))
-				warn(find(traceback(`Recursion prevented: {callDepth}`)),self,...)
+				warn(traceback(`Recursion prevented: {callDepth}`),self,...)
 				return OriginFunct(self, ...)
 			elseif callDepth > 100 then
-				warn(find(traceback(`InCall limited exceeded: {callDepth}`)),self,...)
+				warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
 				return OriginFunct(self, ...)
 			else
 				-- if callDepth > 2 then
