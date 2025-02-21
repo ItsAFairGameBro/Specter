@@ -597,6 +597,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 		local OriginFunct
 		local function CallFunction(self,...)
 			if inCall then
+				warn(`InCall occured with args:`,self,...)
 				return OriginFunct(self, ...)
 			else
 				inCall = true
