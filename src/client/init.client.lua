@@ -603,7 +603,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				warn(traceback(`Recursion prevented: {callDepth}`),self,...)
 				return OriginFunct(self, ...)
 			elseif callDepth > 100 then
-				warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
+				-- warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
 				return OriginFunct(self, ...)
 			else
 				-- if callDepth > 2 then
