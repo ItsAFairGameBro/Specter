@@ -584,6 +584,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			end)
 			print("HOOKED DEBUG.INFO")
 		end--]]
+		local exceeded = false
 		local myHooks = {}
 
 		C.getgenv().SavedHookData[hook] = myHooks
@@ -603,7 +604,10 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 				warn(traceback(`Recursion prevented: {callDepth}`),self,...)
 				return OriginFunct(self, ...)
 			elseif callDepth > 100 then
-				-- warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
+				if not exceeded then
+					exceeded = true
+					warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
+				end
 				return OriginFunct(self, ...)
 			else
 				-- if callDepth > 2 then
