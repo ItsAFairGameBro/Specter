@@ -530,6 +530,16 @@ function C.HookFunc(funct, name, hook)
     return SavedStorage.OldMethod
 end
 local callDepth = 0
+function C.GetPropertySafe(instance, property)
+    local mt = getmetatable(instance)
+	local isHooked = C.getgenv().SavedHookData["__index"]
+	if not isHooked then
+		return instance[property]
+	else
+		local originalIndex = C.getgenv().SavedHookData["__index"].OldFunction -- Access original __index
+		return originalIndex(instance, property)	
+	end
+end
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
@@ -609,12 +619,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
 				end
 				return OriginFunct(self, ...)
-			else
 				-- if callDepth > 2 then
 					-- warn(find(traceback(`InCall occured with args: {callDepth}`)),self,...)
 				-- end
-				callDepth = callDepth + 1
 			end
+			callDepth = callDepth + 1
 			-- Get the method being called
 			local method
             -- if (lower(getnamecallmethod() or "") == "getloghistory"

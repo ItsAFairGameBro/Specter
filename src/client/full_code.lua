@@ -2330,9 +2330,6 @@ local function GetSharedHacks(C, Settings)
                         end
                     end
                     C.firesignal(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
-                    print("Fired")
-                else
-                    print("Not empty, not fired")
                 end
             end
         end,
@@ -3293,6 +3290,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end
+                                print(traceback)
                             end
                         end,{"value"})
 
@@ -3311,13 +3309,15 @@ return function(C,Settings)
                         --end
                         local OldNamecall
                         local FindChild = workspace.FindFirstChild
+                        local GetProp = C.GetPropertySafe
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             if name == "_LightingSettings" or name == "DefaultLightingSettings" then
                                 local subject = C.Camera.CameraSubject
                                 if not subject then
                                     return
                                 end
-                                local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, subject.Parent:GetPivot().Position, true)
+                                local theirPos = GetProp(GetProp(GetProp(subject,"Parent"),"PrimaryPart"),"Position")
+                                local isInGame = not C.IsInBox(GetProp(LobbyOBWall,"CFrame"), GetProp(LobbyOBWall,"Size"), theirPos, true)
                                 if isInGame then
                                     local Ret = C.Map and FindChild(C.Map, "_LightingSettings") or nil
                                     return "Spoof", {Ret}
@@ -20116,6 +20116,16 @@ function C.HookFunc(funct, name, hook)
     return SavedStorage.OldMethod
 end
 local callDepth = 0
+function C.GetPropertySafe(instance, property)
+    local mt = getmetatable(instance)
+	local isHooked = C.getgenv().SavedHookData["__index"]
+	if not isHooked then
+		return instance[property]
+	else
+		local originalIndex = C.getgenv().SavedHookData["__index"].OldFunction -- Access original __index
+		return originalIndex(instance, property)	
+	end
+end
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) then
 		return
@@ -20195,12 +20205,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 					warn(traceback(`InCall limited exceeded: {callDepth}`),self,...)
 				end
 				return OriginFunct(self, ...)
-			else
 				-- if callDepth > 2 then
 					-- warn(find(traceback(`InCall occured with args: {callDepth}`)),self,...)
 				-- end
-				callDepth = callDepth + 1
 			end
+			callDepth = callDepth + 1
 			-- Get the method being called
 			local method
             -- if (lower(getnamecallmethod() or "") == "getloghistory"

@@ -391,9 +391,6 @@ local function GetSharedHacks(C, Settings)
                         end
                     end
                     C.firesignal(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
-                    print("Fired")
-                else
-                    print("Not empty, not fired")
                 end
             end
         end,
@@ -1354,6 +1351,7 @@ return function(C,Settings)
                                         end
                                     end
                                 end
+                                print(traceback)
                             end
                         end,{"value"})
 
@@ -1372,13 +1370,15 @@ return function(C,Settings)
                         --end
                         local OldNamecall
                         local FindChild = workspace.FindFirstChild
+                        local GetProp = C.GetPropertySafe
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             if name == "_LightingSettings" or name == "DefaultLightingSettings" then
                                 local subject = C.Camera.CameraSubject
                                 if not subject then
                                     return
                                 end
-                                local isInGame = not C.IsInBox(LobbyOBWall.CFrame, LobbyOBWall.Size, subject.Parent:GetPivot().Position, true)
+                                local theirPos = GetProp(GetProp(GetProp(subject,"Parent"),"PrimaryPart"),"Position")
+                                local isInGame = not C.IsInBox(GetProp(LobbyOBWall,"CFrame"), GetProp(LobbyOBWall,"Size"), theirPos, true)
                                 if isInGame then
                                     local Ret = C.Map and FindChild(C.Map, "_LightingSettings") or nil
                                     return "Spoof", {Ret}
