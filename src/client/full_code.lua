@@ -20266,11 +20266,11 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			local isGameScript = true--not checkcaller()
 			 -- Check if the caller is not a local script
 			 if isGameScript or Override then
-                local theirScript = getcallingscript() or "nullptr"
+                local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {toStr(method)}`)
 				--end
-				if theirScript~="nullptr" or Override then
+				if theirScript or Override or true then
 					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
                         error("BAC_")
 						if hook == "__index" then
