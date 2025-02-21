@@ -511,7 +511,7 @@ return function(C,Settings)
 	end
 	C.DebugMessage("Load",`Waiting To Load Finished`)
 	isWaiting = false
-	if not C.IsStudio then
+	if not C.isStudio then
 		task.spawn(function()
 			C.writefile("SpecterV2.lua", `loadstring(game:HttpGet("https://raw.githubusercontent.com/ItsAFairGameBro/Specter/main/src/shared/Shared.lua"))()`)
 		end)

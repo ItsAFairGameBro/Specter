@@ -17,7 +17,7 @@ local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
 
 if isStudio then
-	task.wait(3 - time())
+	task.wait(.3 - time())
 end
 
 local C = {}
@@ -662,14 +662,14 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 			--end
 
 			local Override = getVal(additionalCallerName,toStr(self)) or getVal(additionalMethodName,method)
-			local isGameScript = true--not checkcaller()
+			local isGameScript = not checkcaller()
 			 -- Check if the caller is not a local script
 			 if isGameScript or Override then
                 local theirScript = getcallingscript()
 				--if not theirScript and "WalkSpeed"==({...})[1] then
 				--	tskSpawn(print,`method walkspeed {toStr(method)}`)
 				--end
-				if theirScript or Override or true then
+				if theirScript or Override then
 					if gameId == 1160789089 and toStr(theirScript) == "BAC_" then
                         error("BAC_")
 						if hook == "__index" then
