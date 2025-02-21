@@ -10576,6 +10576,7 @@ return function(C,Settings)
                     -- Spoof TouchEnabled
                     C.HookMethod("__index",self.Shortcut .. "/SpoofKeyboard",newValue and self.EnTbl.SpoofKeyboard and function(theirScript,index,self,...)
                         if index == "touchenabled" then
+							print("sp00f t0uch")
                             return "Spoof", {false}
                         end
                     end)
@@ -11698,16 +11699,17 @@ return function(C,Settings)
                         return "Cancel"
                     end
                 end)--]]
-                for _, sc in ipairs(C.getrunningscripts()) do
-                    if sc.Name == "BAC_" or sc.Name == "BAC" then
-                        print("FOUND BACK",sc)
-                        -- sc.Parent = C.PlayerScripts
-                        -- C.setclipboard(getgenv().decompile(sc))
-                        break
-                    else
-                        print("Wtv:",sc)
-                    end
-                end
+                -- for _, sc in ipairs(C.getrunningscripts()) do
+                --     if sc.Name == "BAC_" or sc.Name == "BAC" then
+                --         print("FOUND BACK",sc)
+                --         sc = sc:Clone()
+                --         sc.Parent = C.PlayerScripts
+                --         C.setclipboard(getgenv().decompile(sc))
+                --         break
+                --     else
+                --         print("Wtv:",sc)
+                --     end
+                -- end
                 -- C.plr:Kick("l bozo")
                 C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", C.newcclosure(function(theirScript,method,funct,...)
                     local Args = table.pack(...)
@@ -20138,7 +20140,7 @@ function C.GetPropertySafe(instance, property)
 		return originalIndex(instance, property)
 	end
 end
-local DISABLEDHOOKS = true
+local DISABLEDHOOKS = false
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) or DISABLEDHOOKS then
 		return

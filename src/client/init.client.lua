@@ -539,7 +539,7 @@ function C.GetPropertySafe(instance, property)
 		return originalIndex(instance, property)
 	end
 end
-local DISABLEDHOOKS = true
+local DISABLEDHOOKS = false
 function C.HookMethod(hook, name, runFunct, methods, source)
 	if C.isStudio or (not C.getgenv().SavedHookData[hook] and not runFunct) or DISABLEDHOOKS then
 		return

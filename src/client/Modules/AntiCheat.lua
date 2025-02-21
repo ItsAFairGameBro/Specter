@@ -167,16 +167,17 @@ return function(C,Settings)
                         return "Cancel"
                     end
                 end)--]]
-                for _, sc in ipairs(C.getrunningscripts()) do
-                    if sc.Name == "BAC_" or sc.Name == "BAC" then
-                        print("FOUND BACK",sc)
-                        -- sc.Parent = C.PlayerScripts
-                        -- C.setclipboard(getgenv().decompile(sc))
-                        break
-                    else
-                        print("Wtv:",sc)
-                    end
-                end
+                -- for _, sc in ipairs(C.getrunningscripts()) do
+                --     if sc.Name == "BAC_" or sc.Name == "BAC" then
+                --         print("FOUND BACK",sc)
+                --         sc = sc:Clone()
+                --         sc.Parent = C.PlayerScripts
+                --         C.setclipboard(getgenv().decompile(sc))
+                --         break
+                --     else
+                --         print("Wtv:",sc)
+                --     end
+                -- end
                 -- C.plr:Kick("l bozo")
                 C.HookMethod(C.getrenv().task.spawn,"AntiCheat5", C.newcclosure(function(theirScript,method,funct,...)
                     local Args = table.pack(...)

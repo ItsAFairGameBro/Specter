@@ -402,6 +402,7 @@ return function(C,Settings)
                     -- Spoof TouchEnabled
                     C.HookMethod("__index",self.Shortcut .. "/SpoofKeyboard",newValue and self.EnTbl.SpoofKeyboard and function(theirScript,index,self,...)
                         if index == "touchenabled" then
+							print("sp00f t0uch")
                             return "Spoof", {false}
                         end
                     end)
