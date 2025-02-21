@@ -20251,6 +20251,7 @@ function C.HookMethod(hook, name, runFunct, methods, source)
 							continue
 						end
 						local indexes = getVal(list,2)
+						print("Indexes",indexes)
 						if not indexes or tblFind(indexes,method) then -- Authorization
 							--myPrint("Authorized",theirScript)
 							local isRunning = true
