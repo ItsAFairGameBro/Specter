@@ -744,7 +744,7 @@ return function(C,Settings)
                 end
                 return true, os.clock() - start
             end
-        },
+        } or nil,
         ["animation"]={
             Alias = {"dance"},
             Parameters={{Type="Instance",Root="char",Optional=true},{Type="Number",Min=0,Max=10,Default=1}},

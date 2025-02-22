@@ -660,9 +660,7 @@ return function(C,Settings)
     end
     C.InsertCommandFunctions = nil
     for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
-        if not commandTbl then
-            continue
-        end
+        assert(commandTbl, `CommandTbl must exist or be nil: {commandTbl}`)
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
         for _, aliasName in ipairs(commandTbl.Alias or {}) do
