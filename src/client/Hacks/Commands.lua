@@ -691,9 +691,14 @@ return function(C,Settings)
                         C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, true, true)
                     end
                     if not selfCall then
+                        local deb = false
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
-                            warn("Text change", child.Name)
+                            if deb then return end
+                            deb = true
+                            warn("Text change", child.Name, child.Text)
+                            child:SetAttribute("Text" .. "_OriginalValue", child.Text)
                             self:DescendantAdded(child, true) -- Call it again without a function
+                            deb = false
                         end))
                     end
                 end
