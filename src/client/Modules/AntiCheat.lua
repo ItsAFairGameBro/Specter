@@ -78,14 +78,14 @@ return function(C,Settings)
                 -- end)
                 -- 
                 
-                local oldSpawn
-                oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
-                    local traceback = debug.traceback()
-                    -- if debug.info(2,"n").Name == "Client"
-                    return oldSpawn(function(...)
-                        print("Hi",...)
-                    end,...)
-                end)
+                -- local oldSpawn
+                -- oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
+                --     local traceback = debug.traceback()
+                --     -- if debug.info(2,"n").Name == "Client"
+                --     return oldSpawn(function(...)
+                --         print("Hi",...)
+                --     end,...)
+                -- end)
                 waitFunct(5)
                 task.spawn(Functs.Kill,"DEATH")
                 if true then return end
