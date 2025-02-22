@@ -8,39 +8,26 @@ local function getMass(model)
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
 local function getMoveDirection(globalVector2, cf, verticalInput)
-    -- Extract input components from global Vector2
-    local inputX = globalVector2.X  -- Left/Right
-    local inputZ = globalVector2.Z  -- Forward/Back
-    
-    -- Get camera's orientation vectors
-    local lookVector = cf.LookVector
-    local rightVector = cf.RightVector
-    
-    -- Flatten the forward direction to remove vertical component
-    local flatForward = Vector3.new(lookVector.X, 0, lookVector.Z)
-    if flatForward.Magnitude > 0 then
-        flatForward = flatForward.Unit
-    end
-    
-    -- Flatten the right direction to ensure no vertical influence
-    local flatRight = Vector3.new(rightVector.X, 0, rightVector.Z)
-    if flatRight.Magnitude > 0 then
-        flatRight = flatRight.Unit
-    end
-    
-    -- Compute movement direction
-    local moveDirection = (flatRight * inputX) + (flatForward * -inputZ)
-    
-    -- Apply vertical input
-    moveDirection = moveDirection + Vector3.new(0, verticalInput, 0)
+    -- Extract yaw rotation from the camera's CFrame
+    local cameraYaw = cf.Rotation - Vector3.new(cf.Rotation.X, 0, cf.Rotation.Z)
 
-    -- Normalize if there's movement
-    if moveDirection.Magnitude > 0 then
-        moveDirection = moveDirection.Unit
+    -- Convert Vector2 input into a Vector3 (keeping Y as 0)
+    local moveDirection = Vector3.new(globalVector2.X, 0, -globalVector2.Y)
+
+    -- Rotate the movement vector using only the Y rotation of the camera
+    local rotatedDirection = cf:VectorToWorldSpace(moveDirection)
+
+    -- Apply vertical input for up/down movement
+    rotatedDirection = rotatedDirection + Vector3.new(0, verticalInput, 0)
+
+    -- Normalize the result to keep movement speed consistent
+    if rotatedDirection.Magnitude > 0 then
+        rotatedDirection = rotatedDirection.Unit
     end
-    
-    return moveDirection
+
+    return rotatedDirection
 end
+
 
 return function(C,Settings)
 	return {
