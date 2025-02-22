@@ -11744,7 +11744,7 @@ return function(C,Settings)
                     end
                     return false
                 end
-                for _, tbl in ipairs(C.getgc()) do
+                for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
                         if tbl["task.spawn"] and tbl["require"] then
                             print("FOUND TABLE")
@@ -11764,7 +11764,7 @@ return function(C,Settings)
                     -- local traceback = debug.traceback()
                     -- if debug.info(2,"n").Name == "Client"
                 -- end)
-                task.spawn(Functs.Kill,"DEATH")
+                -- task.spawn(Functs.Kill,"DEATH")
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
                 --     print("CRASH STOPPED",...)
@@ -11772,7 +11772,7 @@ return function(C,Settings)
                 -- end)
                 local Old
                 local waitFunct = task.wait
-                waitFunct(3)
+                -- waitFunct(3)
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
                         print(1,getcallingscript())
