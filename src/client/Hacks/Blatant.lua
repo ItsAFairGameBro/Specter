@@ -7,39 +7,26 @@ local function getMass(model)
 
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
-local function getMoveDirection(inputVector2, cf)
+local function getMoveDirection(globalVector2, camera)
+    -- Get camera's CFrame
+    local cf = camera.CFrame
     
-    -- Extract camera direction vectors
-    local lookVector = cf.LookVector
-    local rightVector = cf.RightVector
-    local upVector = cf.UpVector
+    -- Extract the global 2D vector components (x, 0, z)
+    local globalDirection = Vector3.new(globalVector2.X, 0, globalVector2.Z)
     
-    -- Convert Vector2 input (x, z) to Vector3 movement
-    -- Assuming inputVector2 is your Vector2 stored in Vector3 with y=0
-    local moveX = inputVector2.X  -- Horizontal movement (left/right)
-    local moveZ = inputVector2.Z  -- Forward/backward movement
-    
-    -- Create base movement vector in XZ plane
-    local moveDirection = Vector3.new(0, 0, 0)
-    
-    -- Horizontal movement (based on camera's right vector)
-    moveDirection = moveDirection + (rightVector * moveX)
-    
-    -- Forward/backward movement (based on camera's look vector)
-    -- Project lookVector onto XZ plane to keep it horizontal
-    local flatLook = Vector3.new(lookVector.X, 0, lookVector.Z).Unit
-    moveDirection = moveDirection + (flatLook * -moveZ)
-    
-    -- Optional: Add vertical movement if you have a separate input
-    -- For example, if using keyboard (Space/Shift) or another control
-    -- moveDirection = moveDirection + (upVector * verticalInput)
-    
-    -- Normalize the vector if magnitude > 0 to maintain consistent speed
-    if moveDirection.Magnitude > 0 then
-        moveDirection = moveDirection.Unit
+    -- If the vector is zero, return zero vector
+    if globalDirection.Magnitude == 0 then
+        return Vector3.new(0, 0, 0)
     end
     
-    return moveDirection
+    -- Get the camera's orientation as a rotation matrix
+    -- Remove position component by using only the rotation
+    local cameraRotation = cf - cf.Position
+    
+    -- Rotate the global vector by the camera's orientation
+    local rotatedDirection = cameraRotation:VectorToWorldSpace(globalDirection)
+    
+    return rotatedDirection
 end
 return function(C,Settings)
 	return {
