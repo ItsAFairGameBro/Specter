@@ -8647,7 +8647,7 @@ return function(C,Settings)
                 return true,math.floor(time()/60), time()%60, time()
             end,
         },
-        ["nickname"]={
+        ["nickname"]=not C.isStudio and {
             Alias = {"nick"},
             Parameters={{Type="Players"}},
             AfterTxt=" in %.1fs",
@@ -8679,7 +8679,7 @@ return function(C,Settings)
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
                             if deb then return end
                             deb = true
-                            warn("Text change", child.Name, child.Text)
+                            -- warn("Text change", child.Name, child.Text)
                             child:SetAttribute("Text" .. "_OriginalValue", child.Text)
                             self:DescendantAdded(child, true) -- Call it again without a function
                             deb = false
@@ -8690,7 +8690,10 @@ return function(C,Settings)
             RunOnDestroy = function(self,selfRun)
                 C.ClearFunctTbl(self.Functs)
             end,
-            SearchLocations = {C.PlayerGui, C.StringWait(CG,"RobloxGui"), C.StringWait(CG,"RoactAppExperimentProvider"), workspace},
+            SearchLocations = {C.PlayerGui,
+                not C.isStudio and C.StringWait(CG,"RobloxGui"),
+                not C.isStudio and C.StringWait(CG,"RoactAppExperimentProvider"),
+                workspace},
             Run = function(self, args)
                 local start = os.clock()
                 local wasRunning = #self.Functs > 0
