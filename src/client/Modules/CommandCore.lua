@@ -101,8 +101,7 @@ return function(C,Settings)
                         args[num] = argumentData.Default
                     end
                 elseif argumentData.Type == "Instance" then
-                    local Options = argumentData.Options
-                    local Root = C[Options.Root]
+                    local Root = C[argumentData.Root]
                     assert(Root,`{args[num]} root not found: {Options.Root}`)
                     local ChosenOption = C.StringStartsWith(PerformRootSearch(Root),args[num])[1]
                     if not ChosenOption and canRunFunction then
