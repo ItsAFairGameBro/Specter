@@ -705,6 +705,9 @@ return function(C,Settings)
             end,
             RunOnDestroy = function(self,selfRun)
                 C.ClearFunctTbl(self.Functs)
+                if not selfRun then
+                    C.getgenv().OverrideUserData = nil
+                end
             end,
             SearchLocations = {C.PlayerGui,
                 not C.isStudio and C.StringWait(CG,"RobloxGui"),
