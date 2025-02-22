@@ -709,6 +709,7 @@ return function(C,Settings)
             SearchLocations = {C.PlayerGui, C.StringWait(CG,"RobloxGui"), C.StringWait(CG,"RoactAppExperimentProvider"), workspace},
             Run = function(self, args)
                 local start = os.clock()
+                local wasRunning = #self.Functs
                 self:RunOnDestroy(true)
                 C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
@@ -727,11 +728,17 @@ return function(C,Settings)
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
                         self:DescendantAdded(child)
                     end))
-                    for num, child in ipairs(searchLoc:GetDescendants()) do
+                    if not wasRunning then
+                        for num, child in ipairs(searchLoc:GetDescendants()) do
+                            self:DescendantAdded(child)
+                        end
+                    end
+                end
+                if wasRunning then
+                    for _, tb in ipairs(C.getgenv().UsernameOrDisplay) do
                         self:DescendantAdded(child)
                     end
                 end
-                
                 return true, os.clock() - start
             end
         },
