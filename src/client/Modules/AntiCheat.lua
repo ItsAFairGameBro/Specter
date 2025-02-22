@@ -38,24 +38,26 @@ return function(C,Settings)
                 local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
-                        return yieldForeverFunct()
+                        return Old(task.spawn(function()
+                            print("Canceled!") 
+                        end))
                     end
                     return Old(funct,...)
                 end)
-                local Old2
-                Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
-                    if CheckIfValid() then
-                        return yieldForeverFunct()
-                    end
-                    return Old2(funct,...)
-                end)
-                local Old3
-                Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
-                    if CheckIfValid() then
-                        return yieldForeverFunct()
-                    end
-                    return Old3(funct,...)
-                end)
+                -- local Old2
+                -- Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
+                --     if CheckIfValid() then
+                --         return yieldForeverFunct()
+                --     end
+                --     return Old2(funct,...)
+                -- end)
+                -- local Old3
+                -- Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
+                --     if CheckIfValid() then
+                --         return yieldForeverFunct()
+                --     end
+                --     return Old3(funct,...)
+                -- end)
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
                     tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)
