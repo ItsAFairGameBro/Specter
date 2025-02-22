@@ -8747,6 +8747,8 @@ return function(C,Settings)
                 self:RunOnDestroy(true)
                 if args[1] then
                     self.PlayingAnim = C.animator:LoadAnimation(args[1])
+                    self.PlayingAnim.Priority = Enum.AnimationPriority.Action4
+                    self.PlayingAnim.Looped = true
                     self.PlayingAnim:Play(0.1, 1, args[2])
                 end
                 return true
