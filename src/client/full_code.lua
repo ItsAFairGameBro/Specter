@@ -8671,12 +8671,12 @@ return function(C,Settings)
                         end
                     end
                     if Modified or wasSet then
-                        print("CHANGED")
+                        print("CHANGED",child.Name)
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, false, true)
                         -- C.setclipboard(child:GetFullName())
                     end
-                    if not selfCall then
+                    if not selfCall and not Modified then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
                             -- print("TXT CHANGED",child)
                             self:DescendantAdded(child, true) -- Call it again without a function
