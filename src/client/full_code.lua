@@ -8665,25 +8665,21 @@ return function(C,Settings)
                         local newUser = C.getgenv().OverrideUserData[theirPlr.UserId]
                         if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
                             Modified = true
-                            
                             newText = newText:gsub(theirPlr.Name, newUser.Name):gsub(theirPlr.DisplayName, newUser.DisplayName)
                         end
                     end
                     if Modified or wasSet then
-                        -- print("CHANGED",child.Name,newText)
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, true)
                     end
                     if not selfCall and not Modified then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
-                            -- print("TXT CHANGED",child)
                             self:DescendantAdded(child, true) -- Call it again without a function
                         end))
                     end
                 end
             end,
             RunOnDestroy = function(self,selfRun)
-                print("Clearing", #self.Functs, "functions")
                 C.ClearFunctTbl(self.Functs)
             end,
             SearchLocations = {C.PlayerGui, CG, workspace},
