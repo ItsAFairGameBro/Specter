@@ -8652,8 +8652,8 @@ return function(C,Settings)
             Parameters={{Type="Players"}},
             AfterTxt=" in %.1fs",
             Functs = {},
-            DescendantAdded=function(self, child, noFunct)
-                if child:IsDescendantOf(C.MainGui) or child:GetFullName():lower():find("dev") then
+            DescendantAdded=function(self, child, selfCall)
+                if not selfCall and (child:IsDescendantOf(C.MainGui) or child:GetFullName():lower():find("dev")) then
                     return
                 end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
@@ -8675,7 +8675,7 @@ return function(C,Settings)
                         C.SetPartProperty(child, "Text", "nickname", newText, false, true)
                         -- C.setclipboard(child:GetFullName())
                     end
-                    if not noFunct then
+                    if not selfCall then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
                             -- print("TXT CHANGED",child)
                             self:DescendantAdded(child, true) -- Call it again without a function
