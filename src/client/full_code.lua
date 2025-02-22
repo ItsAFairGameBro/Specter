@@ -7471,7 +7471,7 @@ return function(C,Settings)
 								up -= 1
 							end
 						end
-						MoveDirection = (cf.UpVector * up + MoveDirection)
+						MoveDirection = (Vector3.yAxis * up + MoveDirection)
 
 						if (MoveDirection:Dot(MoveDirection) > 0) then
 							MoveDirection = MoveDirection.Unit
