@@ -62,11 +62,12 @@ return function(C,Settings)
                     end
                     return false
                 end
-                -- waitFunct = hookfunction(task.wait, function()
-                --     while true do
-                --         coroutine.yield() -- Infinite yield
-                --     end
-                -- end)
+                waitFunct = hookfunction(coroutine.wrap, function()
+                    print(traceback("Yielding"))
+                    while true do
+                        coroutine.yield() -- Infinite yield
+                    end
+                end)
                 local theTbl
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
