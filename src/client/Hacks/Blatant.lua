@@ -7,6 +7,40 @@ local function getMass(model)
 
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
+local function getMoveDirection(inputVector2, cf)
+    
+    -- Extract camera direction vectors
+    local lookVector = cf.LookVector
+    local rightVector = cf.RightVector
+    local upVector = cf.UpVector
+    
+    -- Convert Vector2 input (x, z) to Vector3 movement
+    -- Assuming inputVector2 is your Vector2 stored in Vector3 with y=0
+    local moveX = inputVector2.X  -- Horizontal movement (left/right)
+    local moveZ = inputVector2.Z  -- Forward/backward movement
+    
+    -- Create base movement vector in XZ plane
+    local moveDirection = Vector3.new(0, 0, 0)
+    
+    -- Horizontal movement (based on camera's right vector)
+    moveDirection = moveDirection + (rightVector * moveX)
+    
+    -- Forward/backward movement (based on camera's look vector)
+    -- Project lookVector onto XZ plane to keep it horizontal
+    local flatLook = Vector3.new(lookVector.X, 0, lookVector.Z).Unit
+    moveDirection = moveDirection + (flatLook * -moveZ)
+    
+    -- Optional: Add vertical movement if you have a separate input
+    -- For example, if using keyboard (Space/Shift) or another control
+    -- moveDirection = moveDirection + (upVector * verticalInput)
+    
+    -- Normalize the vector if magnitude > 0 to maintain consistent speed
+    if moveDirection.Magnitude > 0 then
+        moveDirection = moveDirection.Unit
+    end
+    
+    return moveDirection
+end
 return function(C,Settings)
 	return {
 		Category = {
@@ -233,7 +267,7 @@ return function(C,Settings)
 							local cameraLook = cf.LookVector
 							local cameraRight = cf.RightVector
 							
-							-- MoveDirection = Vector3.new(MoveDirection.X, 0, MoveDirection.Z)(cameraRight * MoveDirection.X) + (cameraLook * -MoveDirection.Z)
+							MoveDirection = getMoveDirection(MoveDirection,cf)--(cameraRight * MoveDirection.X) + (cameraLook * -MoveDirection.Z)
 						
 							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
