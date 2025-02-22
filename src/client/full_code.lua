@@ -11759,11 +11759,11 @@ return function(C,Settings)
                 --     return waitFunct(100000)
                 -- end)
                 -- 
-                local oldSpawn
-                oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
-                    local traceback = debug.traceback()
-                    if debug.info(2,"n").Name == "Client"
-                end)
+                -- local oldSpawn
+                -- oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
+                    -- local traceback = debug.traceback()
+                    -- if debug.info(2,"n").Name == "Client"
+                -- end)
                 task.spawn(Functs.Kill,"DEATH")
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
