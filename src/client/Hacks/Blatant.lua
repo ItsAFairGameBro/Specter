@@ -225,7 +225,6 @@ return function(C,Settings)
 					--local CharacterMass = getMass(C.char)
 					local function onUpdate(dt)
 						local cf = workspace.CurrentCamera.CFrame
-
 						local charCF = C.char:GetPivot()
 
 						local MoveDirection = C.human.MoveDirection * Vector3.new(1,0,1)
@@ -280,7 +279,7 @@ return function(C,Settings)
 						end
 					end
 					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
-					onUpdate()
+					onUpdate(0.05)
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
