@@ -67,6 +67,7 @@ return function(C,Settings)
                 --         coroutine.yield() -- Infinite yield
                 --     end
                 -- end)
+                local theTbl
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
                         if rawget(tbl,"Handlers") and rawget(tbl,"Disconnect") then
@@ -74,6 +75,7 @@ return function(C,Settings)
                             -- rawset(tbl,"spawn", function()
                             --     print("Nope not spawning")
                             -- end)
+                            theTbl = tbl
                             setmetatable(tbl, {
                                 __index = function(self, ind)
                                     if ind == "Kill" then
@@ -103,7 +105,7 @@ return function(C,Settings)
                 -- end)
                 waitFunct(5)
                 print("DEATH STARTING")
-                task.spawn(Functs.Kill,"DEATH")
+                theTbl.Kill("FUDGE")
                 if true then return end
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
