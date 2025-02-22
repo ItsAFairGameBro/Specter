@@ -8693,7 +8693,7 @@ return function(C,Settings)
             SearchLocations = {C.PlayerGui, C.StringWait(CG,"RobloxGui"), C.StringWait(CG,"RoactAppExperimentProvider"), workspace},
             Run = function(self, args)
                 local start = os.clock()
-                local wasRunning = #self.Functs
+                local wasRunning = #self.Functs > 0
                 self:RunOnDestroy(true)
                 C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
