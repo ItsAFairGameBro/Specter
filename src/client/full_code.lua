@@ -7449,8 +7449,8 @@ return function(C,Settings)
 							local camUp = cf.UpVector          -- Up direction relative to camera
 							
 							-- Extract 2D input components from global MoveDirection
-							local forwardInput = -MoveDirection.Z  -- Z is forward/back (W/S), negate because Roblox Z is backward
-							local rightInput = MoveDirection.X     -- X is left/right (A/D)
+							local forwardInput = -MoveDirection.X  -- Z is forward/back (W/S), negate because Roblox Z is backward
+							local rightInput = MoveDirection.Z     -- X is left/right (A/D)
 							
 							-- Construct the 3D direction by applying 2D inputs to camera vectors
 							-- Use camLook for forward/back (includes vertical component naturally)
