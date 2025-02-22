@@ -9,6 +9,7 @@ local SP = game:GetService("StarterPlayer")
 local MPS = game:GetService("MarketplaceService")
 local TextChatService = game:GetService("TextChatService")
 local VirtualUser = game:GetService("VirtualUser")
+local LS = game:GetService("Lighting")
 
 --print("services loaded")
 
@@ -194,8 +195,8 @@ local function RegisterFunctions()
 	C.getinstances = isStudio and function () return game:GetDescendants() end or getinstances
 	C.request = not isStudio and request
 	C.isfolder = not isStudio and isfolder
-	C.readfile = not isStudio and readfile
-	C.isfile = not isStudio and isfile
+	C.readfile = isStudio and function(path) local mod = C.StringFind(LS, `Files/{path}`, "/") return mod and C.require(mod) end or readfile
+	C.isfile = isStudio and function(path) return C.readfile(path) ~= false end or isfile
 	C.makefolder = not isStudio and makefolder
 	C.writefile = not isStudio and writefile
 	C.setscriptable = not isStudio and setscriptable
@@ -7409,7 +7410,7 @@ return function(C,Settings)
                     --    warn("[Blatant.Fly]: DumpLocation targeted BasePart inside C.char; re-parenting to workspace!")
                     --end
 
-					if enTbl.LookDirection and enTbl.Mode == "Physics" then
+					if enTbl.LookDirection and (enTbl.Mode == "Velocity" or enTbl.Mode == "Physics") then
 						alignOrien = Instance.new("AlignOrientation")
 						--alignOrien.MaxTorque = 10^6
                         alignOrien.Responsiveness = 200 -- Instant turn speed
@@ -7488,7 +7489,7 @@ return function(C,Settings)
 						if alignOrien then
 							alignOrien.CFrame = cf
 						elseif enTbl.LookDirection then
-							C.hrp.AssemblyAngularVelocity = self:GetRotation(C.hrp.CFrame.LookVector, cf.LookVector)
+							self:GetRotation(C.hrp.CFrame.LookVector, cf.LookVector)
 						else
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 						end
@@ -7513,23 +7514,6 @@ return function(C,Settings)
 					end
 					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
 					onUpdate(0.05)
-				end,
-				GetRotation = function(self, currentLook, targetLook)
-					-- Calculate the rotation axis and angle
-					local axis = currentLook:Cross(targetLook)
-					local angle = math.acos(math.clamp(currentLook:Dot(targetLook), -1, 1)) -- Clamp to avoid NaN
-
-					-- Prevent tiny oscillations by checking if angle is very small
-					if angle < 0.01 then -- Threshold in radians (~0.57 degrees)
-						return Vector3.new(0,0,0)
-					end
-
-					-- Proportional control: speed reduces as we get closer
-					local maxSpeed = 10 -- Maximum rotation speed (adjust as needed)
-					local proportionalSpeed = maxSpeed * (angle / math.pi) -- Scales speed from 0 to maxSpeed
-
-					-- Apply the angular velocity
-					return axis.Unit * proportionalSpeed
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)
@@ -8661,6 +8645,62 @@ return function(C,Settings)
             Run=function(self,args)
                 return true,math.floor(time()/60), time()%60, time()
             end,
+        },
+        ["nickname"]={
+            Alias = {"nick"},
+            Parameters={{Type="Players"}},
+            AfterTxt="Changed name in %.1fs",
+            Functs = {},
+            DescendantAdded=function(child)
+                if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
+                    local orgContent = C.GetPartProperty(child, "Text")
+                    local newText = orgContent
+                    local searchContent = orgContent:lower()
+                    local Modified = false
+                    for num, theirPlr in ipairs(PS:GetPlayers()) do
+                        local newUser = C.getgenv().OverrideUserData[theirPlr.UserId]
+                        if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
+                            Modified = true
+                            
+                            newText = newText:gsub(theirPlr.DisplayName, newUser.DisplayName):gsub(theirPlr.Name, newUser.Name)
+                        end
+                    end
+                    if Modified then
+                        C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
+                        C.SetPartProperty(child, "Text", "nickname", newText)
+                    end
+                end
+            end,
+            RunOnDestroy = function(self)
+                C.ClearFunctTbl(self.Functs)
+            end,
+            Run = function(self, args)
+                local start = os.clock()
+                self:RunOnDestroy()
+                C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
+                C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
+
+                local username = args[2]
+                local display = args[3] or username
+                for _, theirPlr in ipairs(args[1]) do
+                    if username ~= "" then
+                        C.getgenv().OverrideUserData[theirPlr.UserId] = {Name = username, DisplayName = display}
+                    else
+                        C.getgenv().OverrideUserData[theirPlr.UserId] = nil
+                    end
+                end
+                
+                print(args[3] == "")
+                                
+                
+                table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)
+                    self:DescendantAdded(child)
+                end))
+                for num, child in ipairs(C.PlayerGui:GetDescendants()) do
+                    self:DescendantAdded(child)
+                end
+                return true, os.clock() - start
+            end
         },
         ["follow"]={
             Parameters={{Type="Player"},{Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=5}, {Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=0}},
@@ -10103,12 +10143,31 @@ return function(C,Settings)
 					C.setscriptable(C.plr,"Name",false)
 					C.setscriptable(C.plr,"DisplayName",false)
 				end,
-				DescendantAdded=function(newDescendant)
-					if newDescendant:IsA("TextLabel") then
-						
+				Set2 = function()
+
+				end,
+				DescendantAdded=function(child)
+					if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
+						local orgContent = C.GetPartProperty(child, "Text")
+						local searchContent = orgContent:lower()
+						local Modified = false
+						for num, theirPlr in ipairs(PS:GetPlayers()) do
+							local newUser = C.getgenv().OverrideData[theirPlr.UserId]
+							if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
+								Modified = true
+								
+								orgContent = orgContent:gsub(theirPlr.DisplayName, newUser[2]):gsub(theirPlr.Name, newUser[1])
+							end
+						end
+						if Modified then
+							C.TblAdd(C.getgenv().UsernameOrDisplay, child)
+
+						end
 					end
 				end,
 				Activate = function(self,newValue)
+					C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
+					C.getgenv().OverrideData = C.getgenv().OverrideData or {}
 					if self.RealEnabled then
 						self:Set(self.EnTbl.Username,self.EnTbl.DisplayName)
 						table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)
@@ -10555,7 +10614,7 @@ return function(C,Settings)
                         if tb:IsFocused() then
                             tb:ReleaseFocus()
                         end
-                        print("Textbox Fixed!")
+                        -- print("Textbox Fixed!")
                         -- Remove next frame to allow for smooth transition!
                         DS:AddItem(tb,0)
 
@@ -12853,7 +12912,7 @@ return function(C,Settings)
 		return success, result
 	end
 	function C:LoadProfile(profileName:string)
-		if not C.readfile or not C.writefile then
+		if not C.readfile then
 			C.AddNotification("Profiles Not Supported","Your exploit engine does not support readfile/writefile, meaning saved profiles cannot save/load!")
 			return
 		end
@@ -13073,8 +13132,6 @@ return function(C,Settings)
 		for key, dict in pairs(C.objectfuncts) do
 			C.ClearFunctTbl(dict,true)
 		end
-
-
 
 		for instance, signalData in pairs(C.PartConnections) do
 			for signal, data in pairs(signalData) do

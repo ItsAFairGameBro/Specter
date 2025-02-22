@@ -42,12 +42,31 @@ return function(C,Settings)
 					C.setscriptable(C.plr,"Name",false)
 					C.setscriptable(C.plr,"DisplayName",false)
 				end,
-				DescendantAdded=function(newDescendant)
-					if newDescendant:IsA("TextLabel") then
-						
+				Set2 = function()
+
+				end,
+				DescendantAdded=function(child)
+					if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
+						local orgContent = C.GetPartProperty(child, "Text")
+						local searchContent = orgContent:lower()
+						local Modified = false
+						for num, theirPlr in ipairs(PS:GetPlayers()) do
+							local newUser = C.getgenv().OverrideData[theirPlr.UserId]
+							if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
+								Modified = true
+								
+								orgContent = orgContent:gsub(theirPlr.DisplayName, newUser[2]):gsub(theirPlr.Name, newUser[1])
+							end
+						end
+						if Modified then
+							C.TblAdd(C.getgenv().UsernameOrDisplay, child)
+
+						end
 					end
 				end,
 				Activate = function(self,newValue)
+					C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
+					C.getgenv().OverrideData = C.getgenv().OverrideData or {}
 					if self.RealEnabled then
 						self:Set(self.EnTbl.Username,self.EnTbl.DisplayName)
 						table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)

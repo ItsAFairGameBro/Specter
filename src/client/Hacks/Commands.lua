@@ -662,6 +662,62 @@ return function(C,Settings)
                 return true,math.floor(time()/60), time()%60, time()
             end,
         },
+        ["nickname"]={
+            Alias = {"nick"},
+            Parameters={{Type="Players"}},
+            AfterTxt="Changed name in %.1fs",
+            Functs = {},
+            DescendantAdded=function(child)
+                if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
+                    local orgContent = C.GetPartProperty(child, "Text")
+                    local newText = orgContent
+                    local searchContent = orgContent:lower()
+                    local Modified = false
+                    for num, theirPlr in ipairs(PS:GetPlayers()) do
+                        local newUser = C.getgenv().OverrideUserData[theirPlr.UserId]
+                        if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
+                            Modified = true
+                            
+                            newText = newText:gsub(theirPlr.DisplayName, newUser.DisplayName):gsub(theirPlr.Name, newUser.Name)
+                        end
+                    end
+                    if Modified then
+                        C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
+                        C.SetPartProperty(child, "Text", "nickname", newText)
+                    end
+                end
+            end,
+            RunOnDestroy = function(self)
+                C.ClearFunctTbl(self.Functs)
+            end,
+            Run = function(self, args)
+                local start = os.clock()
+                self:RunOnDestroy()
+                C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
+                C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
+
+                local username = args[2]
+                local display = args[3] or username
+                for _, theirPlr in ipairs(args[1]) do
+                    if username ~= "" then
+                        C.getgenv().OverrideUserData[theirPlr.UserId] = {Name = username, DisplayName = display}
+                    else
+                        C.getgenv().OverrideUserData[theirPlr.UserId] = nil
+                    end
+                end
+                
+                print(args[3] == "")
+                                
+                
+                table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)
+                    self:DescendantAdded(child)
+                end))
+                for num, child in ipairs(C.PlayerGui:GetDescendants()) do
+                    self:DescendantAdded(child)
+                end
+                return true, os.clock() - start
+            end
+        },
         ["follow"]={
             Parameters={{Type="Player"},{Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=5}, {Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=0}},
             AfterTxt="",

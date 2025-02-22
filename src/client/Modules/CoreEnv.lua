@@ -186,7 +186,7 @@ return function(C,Settings)
 		return success, result
 	end
 	function C:LoadProfile(profileName:string)
-		if not C.readfile or not C.writefile then
+		if not C.readfile then
 			C.AddNotification("Profiles Not Supported","Your exploit engine does not support readfile/writefile, meaning saved profiles cannot save/load!")
 			return
 		end
@@ -406,8 +406,6 @@ return function(C,Settings)
 		for key, dict in pairs(C.objectfuncts) do
 			C.ClearFunctTbl(dict,true)
 		end
-
-
 
 		for instance, signalData in pairs(C.PartConnections) do
 			for signal, data in pairs(signalData) do

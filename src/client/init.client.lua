@@ -9,6 +9,7 @@ local SP = game:GetService("StarterPlayer")
 local MPS = game:GetService("MarketplaceService")
 local TextChatService = game:GetService("TextChatService")
 local VirtualUser = game:GetService("VirtualUser")
+local LS = game:GetService("Lighting")
 
 --print("services loaded")
 
@@ -194,8 +195,8 @@ local function RegisterFunctions()
 	C.getinstances = isStudio and function () return game:GetDescendants() end or getinstances
 	C.request = not isStudio and request
 	C.isfolder = not isStudio and isfolder
-	C.readfile = not isStudio and readfile
-	C.isfile = not isStudio and isfile
+	C.readfile = isStudio and function(path) local mod = C.StringFind(LS, `Files/{path}`, "/") return mod and C.require(mod) end or readfile
+	C.isfile = isStudio and function(path) return C.readfile(path) ~= false end or isfile
 	C.makefolder = not isStudio and makefolder
 	C.writefile = not isStudio and writefile
 	C.setscriptable = not isStudio and setscriptable

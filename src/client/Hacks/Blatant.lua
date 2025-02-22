@@ -195,7 +195,7 @@ return function(C,Settings)
                     --    warn("[Blatant.Fly]: DumpLocation targeted BasePart inside C.char; re-parenting to workspace!")
                     --end
 
-					if enTbl.LookDirection and enTbl.Mode == "Physics" then
+					if enTbl.LookDirection and (enTbl.Mode == "Velocity" or enTbl.Mode == "Physics") then
 						alignOrien = Instance.new("AlignOrientation")
 						--alignOrien.MaxTorque = 10^6
                         alignOrien.Responsiveness = 200 -- Instant turn speed
@@ -274,7 +274,7 @@ return function(C,Settings)
 						if alignOrien then
 							alignOrien.CFrame = cf
 						elseif enTbl.LookDirection then
-							C.hrp.AssemblyAngularVelocity = self:GetRotation(C.hrp.CFrame.LookVector, cf.LookVector)
+							self:GetRotation(C.hrp.CFrame.LookVector, cf.LookVector)
 						else
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 						end
@@ -299,23 +299,6 @@ return function(C,Settings)
 					end
 					table.insert(self.Functs,C.animator.AnimationPlayed:Connect(animatorPlayedFunction))
 					onUpdate(0.05)
-				end,
-				GetRotation = function(self, currentLook, targetLook)
-					-- Calculate the rotation axis and angle
-					local axis = currentLook:Cross(targetLook)
-					local angle = math.acos(math.clamp(currentLook:Dot(targetLook), -1, 1)) -- Clamp to avoid NaN
-
-					-- Prevent tiny oscillations by checking if angle is very small
-					if angle < 0.01 then -- Threshold in radians (~0.57 degrees)
-						return Vector3.new(0,0,0)
-					end
-
-					-- Proportional control: speed reduces as we get closer
-					local maxSpeed = 10 -- Maximum rotation speed (adjust as needed)
-					local proportionalSpeed = maxSpeed * (angle / math.pi) -- Scales speed from 0 to maxSpeed
-
-					-- Apply the angular velocity
-					return axis.Unit * proportionalSpeed
 				end,
 				Events = {
 					MyCharAdded=function(self,theirPlr,theirChar,firstRun)

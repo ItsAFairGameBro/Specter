@@ -346,7 +346,7 @@ return function(C,Settings)
                         if tb:IsFocused() then
                             tb:ReleaseFocus()
                         end
-                        print("Textbox Fixed!")
+                        -- print("Textbox Fixed!")
                         -- Remove next frame to allow for smooth transition!
                         DS:AddItem(tb,0)
 
