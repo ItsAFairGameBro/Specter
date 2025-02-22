@@ -11713,14 +11713,33 @@ return function(C,Settings)
     local CanPass = true
     local PassEvent = Instance.new("BindableEvent")
     C.AddGlobalInstance(PassEvent)
+    local function FindFunction(funcNames)
+        local found, required = 0, C.GetDictLength(funcNames)
+        local functsFound = {}
+        for _, funct in ipairs(C.getreg()) do
+            if typeof(funct) == "function" then
+                local name = debug.info(funct, "n")
+                if table.find(funcNames, name) then
+                    functsFound[name] = funct
+                    found+=1
+                    if found == required then
+                        break
+                    end
+                end
+            end
+        end
+        return functsFound
+    end
     -- Here's where the anti cheat stuff is done
     local AntiCheat = {
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
                 CanPass = false
+                local Functs = FindFunction({"Kill"})
+                print(Functs)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
-                    if (strFind(traceback, "Anti") and not strFind(traceback, "function __index")) then
+                    if ((strFind(traceback, "Anti") or strFind(traceback,"Service")) and not strFind(traceback, "function __index")) then
                         return true
                     end
                     return false
@@ -12019,6 +12038,7 @@ return function(C,Settings)
                 cheatTbl.Run(cheatTbl)
                 while not CanPass do
                     PassEvent.Event:Wait()
+                    CanPass = true
                 end
                 C.getgenv()["AntiCheat"..num] = true
             end
