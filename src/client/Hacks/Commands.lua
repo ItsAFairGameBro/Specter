@@ -685,6 +685,7 @@ return function(C,Settings)
                     if Modified then
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", newText)
+                        print("Changed",child,"to",newText)
                     end
                 end
             end,
