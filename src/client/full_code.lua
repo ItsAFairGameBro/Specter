@@ -11736,13 +11736,17 @@ return function(C,Settings)
             Run = function(self)
                 CanPass = false
                 local Functs = FindFunction({"Kill"})
-                print(Functs)
+                print(Functs.Kill)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
                     if ((strFind(traceback, "Anti") or strFind(traceback,"Service")) and not strFind(traceback, "function __index")) then
                         return true
                     end
                     return false
+                end
+                local OldKill = hookfunction(Functs.Kill, function(...)
+                    print("KILL STOPPED",...)
+                    return waitFunct(100000)
                 end
                 local Old
                 local waitFunct = task.wait
@@ -11773,6 +11777,7 @@ return function(C,Settings)
                     end
                     return Old3(funct,...)
                 end)
+                
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
                     tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)
