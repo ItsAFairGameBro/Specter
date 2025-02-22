@@ -11734,7 +11734,7 @@ return function(C,Settings)
     local AntiCheat = {
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
-                -- CanPass = false
+                CanPass = false
                 local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
                 print(Functs.Kill)
                 CheckIfValid = function()
@@ -11767,7 +11767,8 @@ return function(C,Settings)
                         print("Hi",...)
                     end,...)
                 end)
-                -- task.spawn(Functs.Kill,"DEATH")
+                task.spawn(Functs.Kill,"DEATH")
+                if true then return end
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
                 --     print("CRASH STOPPED",...)
