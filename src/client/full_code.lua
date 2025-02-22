@@ -11748,9 +11748,9 @@ return function(C,Settings)
                     if typeof(tbl) == "table" then
                         if tbl["task.spawn"] and tbl["require"] then
                             print("FOUND TABLE")
-                            tbl["spawn"] = function()
+                            rawset(tbl,"spawn", function()
                                 print("Nope not spawning")
-                            end
+                            end)
                         end
                     end
                 end
