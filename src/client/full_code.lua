@@ -8664,7 +8664,7 @@ return function(C,Settings)
                         if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
                             Modified = true
                             
-                            newText = newText:gsub(theirPlr.DisplayName, newUser.DisplayName):gsub(theirPlr.Name, newUser.Name)
+                            newText = newText:gsub(theirPlr.Name, newUser.Name):gsub(theirPlr.DisplayName, newUser.DisplayName)
                         end
                     end
                     if Modified then
@@ -8685,7 +8685,7 @@ return function(C,Settings)
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
 
                 local username = args[2]
-                local display = args[3]=="" and args[3] or username
+                local display = args[3]~="" and args[3] or username
                 for _, theirPlr in ipairs(args[1]) do
                     if username ~= "" then
                         C.getgenv().OverrideUserData[theirPlr.UserId] = {Name = username, DisplayName = display}
