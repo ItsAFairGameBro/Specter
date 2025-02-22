@@ -8667,8 +8667,9 @@ return function(C,Settings)
                         end
                     end
                     if Modified then
-                        C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
+                        -- C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", newText, false, true)
+                        C.setclipboard(child:GetFullName())
                     elseif not noFunct then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
                             print("TXT CHANGED",child)
@@ -8680,11 +8681,11 @@ return function(C,Settings)
             RunOnDestroy = function(self)
                 C.ClearFunctTbl(self.Functs)
             end,
-            SearchLocations = {C.PlayerGui, CG, workspace},
+            SearchLocations = {game},--{C.PlayerGui, CG, workspace},
             Run = function(self, args)
                 local start = os.clock()
                 self:RunOnDestroy()
-                C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
+                -- C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
 
                 local username = args[2]
