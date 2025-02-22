@@ -8660,7 +8660,6 @@ return function(C,Settings)
                     local Modified = false
                     for num, theirPlr in ipairs(PS:GetPlayers()) do
                         local newUser = C.getgenv().OverrideUserData[theirPlr.UserId]
-                        print(newUser)
                         if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
                             Modified = true
                             
