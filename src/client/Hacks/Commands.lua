@@ -669,6 +669,9 @@ return function(C,Settings)
             AfterTxt=" in %.1fs",
             Functs = {},
             DescendantAdded=function(self, child, noFunct)
+                if child:IsDescendantOf(C.MainGui) or child:GetFullName():lower():find("dev") then
+                    return
+                end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
                     local orgContent, wasSet = C.GetPartProperty(child, "Text")
                     local newText = orgContent
@@ -683,6 +686,7 @@ return function(C,Settings)
                         end
                     end
                     if Modified or wasSet then
+                        print("CHANGED")
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", newText, false, true)
                         -- C.setclipboard(child:GetFullName())
