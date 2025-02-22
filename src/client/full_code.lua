@@ -11746,7 +11746,7 @@ return function(C,Settings)
                 end
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
-                        if tbl["task.spawn"] and tbl["require"] then
+                        if rawget(tbl,"task.spawn") and rawget(tbl,"require") then
                             print("FOUND TABLE")
                             rawset(tbl,"spawn", function()
                                 print("Nope not spawning")
