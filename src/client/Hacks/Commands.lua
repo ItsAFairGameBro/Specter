@@ -729,13 +729,13 @@ return function(C,Settings)
                         self:DescendantAdded(child)
                     end))
                     if not wasRunning then
-                        for num, child in ipairs(searchLoc:GetDescendants()) do
+                        for _, child in ipairs(searchLoc:GetDescendants()) do
                             self:DescendantAdded(child)
                         end
                     end
                 end
                 if wasRunning then
-                    for _, tb in ipairs(C.getgenv().UsernameOrDisplay) do
+                    for _, child in ipairs(C.getgenv().UsernameOrDisplay) do
                         self:DescendantAdded(child)
                     end
                 end
