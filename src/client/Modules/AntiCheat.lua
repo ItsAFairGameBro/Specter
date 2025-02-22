@@ -43,7 +43,7 @@ return function(C,Settings)
                 local waitFunct = task.wait
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
-                        print(getcallingscript())
+                        print(1,getcallingscript())
                         return waitFunct(100000)-- return Old(function(...)
                         --     print("Canceled!",...)
                         -- end,...)
@@ -53,7 +53,7 @@ return function(C,Settings)
                 local Old2
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                     if CheckIfValid() then
-                        print(getcallingscript())
+                        print(2,getcallingscript())
                         return waitFunct(100000)--yieldForeverFunct()
                     end
                     return Old2(funct,...)
@@ -61,7 +61,7 @@ return function(C,Settings)
                 local Old3
                 Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
                     if CheckIfValid() then
-                        print(getcallingscript())
+                        print(3,getcallingscript())
                         return waitFunct(100000)
                     end
                     return Old3(funct,...)
