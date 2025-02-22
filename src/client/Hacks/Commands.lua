@@ -272,6 +272,7 @@ return function(C,Settings)
                 if not targetHuman or targetHuman.Health <=0 or not targetHRP or not oldHumanDesc then
                     return
                 end
+                local wasSpectating = targetHuman == C.Camera.CameraSubject
                 if AnimationEffectData then
                     AnimationEffectData:Start(targetChar)
                 end
@@ -371,8 +372,8 @@ return function(C,Settings)
                 oldHuman.Parent = targetChar
                 newHuman:Destroy()
                 RunS.RenderStepped:Wait()
-                if workspace.CurrentCamera.CameraSubject == newHuman then
-                    workspace.CurrentCamera.CameraSubject = oldHuman
+                if wasSpectating then
+                    C.Camera.CameraSubject = oldHuman
                 end
 
                 if oldChar_ForceField and oldChar_ForceField.Parent then
