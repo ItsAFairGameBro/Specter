@@ -9789,7 +9789,7 @@ return function(C,Settings)
 						robloxHighlight.Adornee = theirChar
 						robloxHighlight.Parent = C.GUI
 						local nameTag = C.Examples.NameTagEx:Clone()
-						local Override = C.getgenv().OverrideUserData and C.getgenv().OVerrideUserData[theirPlr.UserId]
+						local Override = C.getgenv().OverrideUserData and C.getgenv().OverrideUserData[theirPlr.UserId]
 						nameTag:WaitForChild("Username").Text = Override and Override.Name or theirPlr.Name
 						nameTag.Parent = C.UI.ESP
 						--nameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
