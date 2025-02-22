@@ -8353,6 +8353,7 @@ return function(C,Settings)
 
                 C.ApplyHumanoidDescription(newHuman, humanDesc)
                 oldHuman.Parent = targetChar
+                newHuman:Destroy()
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
@@ -8373,8 +8374,6 @@ return function(C,Settings)
                         end
                     end
                 end
-                newHuman.Parent = nil
-                DS:AddItem(newHuman,3)
                 if AnimationEffectData then
                     AnimationEffectData:End(targetChar)
                 end
