@@ -230,22 +230,19 @@ return function(C,Settings)
 
 						local MoveDirection = C.human.MoveDirection
 						if MoveDirection.Magnitude > 0 then
-							-- Convert world space MoveDirection to camera space
-							-- Get camera orientation vectors
-							local camLook = cf.LookVector  -- Forward direction of camera
-							local camRight = cf.RightVector  -- Right direction of camera
+							local camLook = cf.LookVector      -- Full 3D forward direction
+							local camRight = cf.RightVector    -- Right direction relative to camera
+							local camUp = cf.UpVector          -- Up direction relative to camera
 							
-							-- Since MoveDirection is in world XZ plane, we need to interpret it relative to camera
-							-- Forward/back uses camera's look vector (including up/down)
-							-- Left/right uses camera's right vector (horizontal-ish)
+							-- Extract 2D input components from global MoveDirection
+							local forwardInput = -MoveDirection.Z  -- Z is forward/back (W/S), negate because Roblox Z is backward
+							local rightInput = MoveDirection.X     -- X is left/right (A/D)
 							
-							-- Project MoveDirection onto world XZ plane components
-							local forwardInput = MoveDirection.Z  -- -1 to 1 (W/S keys)
-							local rightInput = MoveDirection.X    -- -1 to 1 (A/D keys)
-							
-							-- Transform into camera space
-							-- Use full LookVector (includes Y) instead of flattening it
-							MoveDirection = (camLook * -forwardInput + camRight * rightInput)
+							-- Construct the 3D direction by applying 2D inputs to camera vectors
+							-- Use camLook for forward/back (includes vertical component naturally)
+							-- Use camRight for strafing (keeps horizontal-ish movement)
+							MoveDirection = (camLook * forwardInput) + (camRight * rightInput)
+						
 							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
 						else
