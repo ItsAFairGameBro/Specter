@@ -722,6 +722,7 @@ return function(C,Settings)
                                 
                 for _, searchLoc in ipairs(self.SearchLocations) do
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
+                        task.wait(1)
                         self:DescendantAdded(child)
                     end))
                     for num, child in ipairs(searchLoc:GetDescendants()) do
