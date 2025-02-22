@@ -69,11 +69,22 @@ return function(C,Settings)
                 end)
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
-                        if rawget(tbl,"task") and typeof(rawget(tbl,"require")) == "function" then
-                            print("FOUND TABLE")
-                            rawset(tbl,"spawn", function()
-                                print("Nope not spawning")
-                            end)
+                        if rawget(tbl,"Handlers") and rawget(tbl,"Disconnect") then
+                            -- print("FOUND TABLE")
+                            -- rawset(tbl,"spawn", function()
+                            --     print("Nope not spawning")
+                            -- end)
+                            local client = getfenv().client
+                            setmetatable(client, {
+                                __index = function(self, ind)
+                                    if ind == "Kill" then
+                                        print(ind)
+                                        return function(info)
+                                            print("Kill neutralized: " .. tostring(info))
+                                        end
+                                    end
+                                end
+                            })
                         end
                     end
                 end
