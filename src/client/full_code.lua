@@ -8654,7 +8654,7 @@ return function(C,Settings)
             Functs = {},
             DescendantAdded=function(self, child, noFunct)
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
-                    local orgContent = C.GetPartProperty(child, "Text")
+                    local orgContent, wasSet = C.GetPartProperty(child, "Text")
                     local newText = orgContent
                     local searchContent = orgContent:lower()
                     local Modified = false
@@ -8666,8 +8666,8 @@ return function(C,Settings)
                             newText = newText:gsub(theirPlr.Name, newUser.Name):gsub(theirPlr.DisplayName, newUser.DisplayName)
                         end
                     end
-                    if Modified then
-                        -- C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
+                    if Modified or wasSet then
+                        C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", newText, false, true)
                         C.setclipboard(child:GetFullName())
                     elseif not noFunct then
@@ -8678,14 +8678,14 @@ return function(C,Settings)
                     end
                 end
             end,
-            RunOnDestroy = function(self)
+            RunOnDestroy = function(self,selfRun)
                 C.ClearFunctTbl(self.Functs)
             end,
-            SearchLocations = {game},--{C.PlayerGui, CG, workspace},
+            SearchLocations = {C.PlayerGui, CG, workspace},
             Run = function(self, args)
                 local start = os.clock()
-                self:RunOnDestroy()
-                -- C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
+                self:RunOnDestroy(true)
+                C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
 
                 local username = args[2]
@@ -14615,9 +14615,9 @@ return function(C,Settings)
 	function C.GetPartProperty(part, propertyName)
 		local value = part:GetAttribute(propertyName .. "_OriginalValue")
 		if value ~= nil then
-			return value
+			return value, true
 		end
-		return part[propertyName]
+		return part[propertyName], false
 	end
 	-- Function to set the property with an option to always set it
 	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet, noFunction)

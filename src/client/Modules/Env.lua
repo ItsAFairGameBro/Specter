@@ -917,9 +917,9 @@ return function(C,Settings)
 	function C.GetPartProperty(part, propertyName)
 		local value = part:GetAttribute(propertyName .. "_OriginalValue")
 		if value ~= nil then
-			return value
+			return value, true
 		end
-		return part[propertyName]
+		return part[propertyName], false
 	end
 	-- Function to set the property with an option to always set it
 	function C.SetPartProperty(part, propertyName, requestName, value, alwaysSet, noFunction)
