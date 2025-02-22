@@ -12150,6 +12150,13 @@ return function(C,Settings)
         C.getgenv().lastCommands = C.savedCommands
     end
     local options
+    local function PerformRootSearch(Root)
+        for _, instance in ipairs(Root:GetDescendants()) do
+            if instance:IsA("Animation") then
+                table.insert(options,{instance.Name, instance.Name})
+            end
+        end
+    end
     function C.RunCommand(inputMsg,shouldSave,noRefresh,canYield)
         if shouldSave then
             table.insert(C.savedCommands,1,inputMsg)
@@ -12165,6 +12172,7 @@ return function(C,Settings)
             args[index] = args[index] or "" -- leave them be empty so it doesn't confuse the game!
         end
         args.OrgArgs = table.clone(args)
+        
         local command, CommandData = table.unpack(C.StringStartsWith(C.CommandFunctions,inputCommand)[1] or {})
         if CommandData then
             if CommandData.RequiresRefresh and noRefresh then
@@ -12227,7 +12235,9 @@ return function(C,Settings)
                     end
                 elseif argumentData.Type == "Instance" then
                     local Options = argumentData.Options
-                    local ChosenOption = C.StringStartsWith(options,args[num])[1]
+                    local Root = C[Options.Root]
+                    assert(Root,`{args[num]} root not found: {Options.Root}`)
+                    local ChosenOption = C.StringStartsWith(PerformRootSearch(Root),args[num])[1]
                     if not ChosenOption and canRunFunction then
                         if args[num] == "" and (argumentData.Default or argumentData.Optional) then
                             args[num] = argumentData.Default or nil
@@ -12633,11 +12643,7 @@ return function(C,Settings)
                             elseif mySuggestion.Type == "Instance" then
                                 local Root = C[mySuggestion.Root]
                                 assert(Root,`Root {mySuggestion.Root} not found!`)
-                                for _, instance in ipairs(Root:GetDescendants()) do
-                                    if instance:IsA("Animation") then
-                                        table.insert(options,{instance.Name, instance.Name})
-                                    end
-                                end
+                                PerformRootSearch(Root)
                             elseif mySuggestion.Type == "Options" then
                                 for num, val in ipairs(mySuggestion.Options) do
                                     table.insert(options,{val,val})
