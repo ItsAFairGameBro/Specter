@@ -11748,12 +11748,12 @@ return function(C,Settings)
                     end
                     return false
                 end
-                hookfunction(coroutine.wrap, function()
-                    print(debug.traceback("Yielding"))
-                    while true do
-                        coroutine.yield() -- Infinite yield
-                    end
-                end)
+                -- hookfunction(coroutine.wrap, function()
+                --     print(debug.traceback("Yielding"))
+                --     while true do
+                --         coroutine.yield() -- Infinite yield
+                --     end
+                -- end)
                 local theTbl
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
@@ -11762,7 +11762,7 @@ return function(C,Settings)
                             setreadonly(tbl, false)
                             for key, val in pairs(tbl) do
                                 rawset(tbl, key, nil)
-                                print("--REM: " .. val)
+                                print("--REM: " .. key)
                             end
                             table.freeze(tbl)
                             
