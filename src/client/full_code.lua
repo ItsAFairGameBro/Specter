@@ -8726,6 +8726,26 @@ return function(C,Settings)
                 return true, os.clock() - start
             end
         },
+        ["animation"]={
+            Alias = {"dance"},
+            Parameters={{Type="Instance",Root="char",Optional=true},{Type="Number",Min=0,Max=10,Default=1}},
+            AfterTxt=" in %.1fs",
+            Functs = {},
+            PlayingAnim = nil,
+            RunOnDestroy = function(self,selfCalled)
+                if self.PlayingAnim then
+                    self.PlayingAnim:Stop()
+                    self.PlayingAnim = nil
+                end
+            end,
+            Run = function(self, args)
+                self:RunOnDestroy(true)
+                if args[1] then
+                    self.PlayingAnim = C.animator:LoadAnimation(args[1])
+                    self.PlayingAnim:Play(0.1, 1, args[2])
+                end
+            end,
+        },
         ["follow"]={
             Parameters={{Type="Player"},{Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=5}, {Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=0}},
             AfterTxt="",
@@ -12204,6 +12224,31 @@ return function(C,Settings)
                     elseif argumentData.Default then
                         args[num] = argumentData.Default
                     end
+                elseif argumentData.Type == "Instance" then
+                    local Options = argumentData.Options
+                    local ChosenOption = C.StringStartsWith(options,args[num])[1]
+                    if not ChosenOption and canRunFunction then
+                        if args[num] == "" and (argumentData.Default or argumentData.Optional) then
+                            args[num] = argumentData.Default or nil
+                        else
+                            canRunFunction = false
+                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not optional`)
+                        end
+                    elseif canRunFunction then
+                        local instance = C[argumentData.Root]
+                        if not instance then
+                            C.CreateSysMessage(`Invalid Parameter Options: Instance root {argumentData.Root} not found`)
+                            canRunFunction = false
+                        else
+                            instance = instance:FindFirstChild(ChosenOption, true)
+                            if not instance then
+                                C.CreateSysMessage(`Invalid Parameter Options: Animation {ChosenOption} not found!`)
+                                canRunFunction = false
+                            else
+                                args[num] = instance
+                            end
+                        end
+                    end
                 elseif argumentData.Type == "Options" then
                     local Options = argumentData.Options
                     local ChosenOption = C.StringStartsWith(Options,args[num])[1]
@@ -12212,7 +12257,7 @@ return function(C,Settings)
                             args[num] = argumentData.Default or nil
                         else
                             canRunFunction = false
-                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not valid option`)
+                            C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not optional`)
                         end
                     else
                         args[num] = ChosenOption[2]
@@ -12366,6 +12411,7 @@ return function(C,Settings)
         if C.Cleared then
             return
         end
+        local options
         local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
         local DidSet = 0
         local Connections = {}
@@ -12533,7 +12579,7 @@ return function(C,Settings)
                     local commands = C.StringStartsWith(C.CommandFunctions,firstCommand,true)
                     CurrentWordIndex = currentWordIndex
                     local LastWord = Words[currentWordIndex - 1]
-                    local options = {}
+                    options = {}
                     if currentWordIndex == 1 then
                         for num, list in ipairs(commands) do
                             local command, CommandData = table.unpack(list)
@@ -12582,6 +12628,14 @@ return function(C,Settings)
                                     end
                                     if not isIn then
                                         table.insert(options,{putInStep, putInStep})
+                                    end
+                                end
+                            elseif mySuggestion.Type == "Instance" then
+                                local Root = C[mySuggestion.Root]
+                                assert(Root,`Root {mySuggestion.Root} not found!`)
+                                for _, instance in ipairs(Root:GetDescendants()) do
+                                    if instance:IsA("Animation") then
+                                        table.insert(options,{instance.Name, instance.Name})
                                     end
                                 end
                             elseif mySuggestion.Type == "Options" then

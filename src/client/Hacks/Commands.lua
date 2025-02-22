@@ -742,6 +742,26 @@ return function(C,Settings)
                 return true, os.clock() - start
             end
         },
+        ["animation"]={
+            Alias = {"dance"},
+            Parameters={{Type="Instance",Root="char",Optional=true},{Type="Number",Min=0,Max=10,Default=1}},
+            AfterTxt=" in %.1fs",
+            Functs = {},
+            PlayingAnim = nil,
+            RunOnDestroy = function(self,selfCalled)
+                if self.PlayingAnim then
+                    self.PlayingAnim:Stop()
+                    self.PlayingAnim = nil
+                end
+            end,
+            Run = function(self, args)
+                self:RunOnDestroy(true)
+                if args[1] then
+                    self.PlayingAnim = C.animator:LoadAnimation(args[1])
+                    self.PlayingAnim:Play(0.1, 1, args[2])
+                end
+            end,
+        },
         ["follow"]={
             Parameters={{Type="Player"},{Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=5}, {Type="Number",Min=-MaxRelativeDist,Max=MaxRelativeDist,Default=0}},
             AfterTxt="",
