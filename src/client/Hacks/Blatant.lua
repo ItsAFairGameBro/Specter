@@ -222,6 +222,7 @@ return function(C,Settings)
 					end
 
 					local SaveMode = enTbl.Mode
+					local idx = 0
 					--local CharacterMass = getMass(C.char)
 					local function onUpdate(dt)
 						local cf = workspace.CurrentCamera.CFrame
@@ -237,6 +238,11 @@ return function(C,Settings)
 							MoveDirection = MoveDirection.Unit
 						else
 							MoveDirection = Vector3.zero
+						end
+						idx+=1
+						if idx == 20 then
+							idx = 0
+							print(MoveDirection)
 						end
 						local up = 0
 						if enTbl.UseExtraKeybinds then
