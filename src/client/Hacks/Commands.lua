@@ -669,7 +669,7 @@ return function(C,Settings)
             AfterTxt=" in %.1fs",
             Functs = {},
             DescendantAdded=function(self, child, selfCall)
-                if not selfCall and (child:IsDescendantOf(C.MainGui) or child:GetFullName():lower():find("dev")) then
+                if not selfCall and (child:IsDescendantOf(C.MainGui)) then
                     return
                 end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
