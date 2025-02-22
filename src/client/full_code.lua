@@ -8653,7 +8653,7 @@ return function(C,Settings)
             AfterTxt=" in %.1fs",
             Functs = {},
             DescendantAdded=function(self, child, selfCall)
-                if not selfCall and (child:IsDescendantOf(C.GUI)) then
+                if not selfCall and (child:IsDescendantOf(C.GUI) or child:IsDescendantOf()) then
                     return
                 end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
@@ -8685,7 +8685,7 @@ return function(C,Settings)
             RunOnDestroy = function(self,selfRun)
                 C.ClearFunctTbl(self.Functs)
             end,
-            SearchLocations = {C.PlayerGui, CG, workspace},
+            SearchLocations = {C.PlayerGui, C.StringWait(CG,"RobloxGui"), C.StringWait(CG,"RoactAppExperimentProvider"), workspace},
             Run = function(self, args)
                 local start = os.clock()
                 self:RunOnDestroy(true)
