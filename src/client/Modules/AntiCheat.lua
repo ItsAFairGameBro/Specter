@@ -54,7 +54,9 @@ return function(C,Settings)
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                     if CheckIfValid() then
                         print(2,getcallingscript())
-                        return waitFunct(100000)--yieldForeverFunct()
+                        return function()
+                            waitFunct(100000)
+                        end--yieldForeverFunct()
                     end
                     return Old2(funct,...)
                 end)
