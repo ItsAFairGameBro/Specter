@@ -11744,27 +11744,18 @@ return function(C,Settings)
                     end
                     return false
                 end
+                Functs.Kill("DEATH")
                 local OldKill = hookfunction(Functs.Kill, function(...)
                     print("KILL STOPPED",...)
                     return waitFunct(100000)
                 end)
+
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
                 --     print("CRASH STOPPED",...)
                 --     return waitFunct(100000)
                 -- end)
                 local Old
                 local waitFunct = task.wait
-                OldKill("IM AN OLD MAN!");
-                if true then return end
-                hookfunction(C.getrenv().spawn, function(...)
-                    if CheckIfValid() then
-                        print(1,getcallingscript())
-                        return waitFunct(100000)-- return Old(function(...)
-                        --     print("Canceled!",...)
-                        -- end,...)
-                    end
-                    return Old(funct,...)
-                end)
                 waitFunct(3)
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
