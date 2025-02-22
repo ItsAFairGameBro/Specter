@@ -11747,7 +11747,7 @@ return function(C,Settings)
                 local OldKill = hookfunction(Functs.Kill, function(...)
                     print("KILL STOPPED",...)
                     return waitFunct(100000)
-                end
+                end)
                 local Old
                 local waitFunct = task.wait
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
