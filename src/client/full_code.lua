@@ -8691,10 +8691,10 @@ return function(C,Settings)
                 C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
 
-                local username = args[2] or nil
-                local display = args[3]~="" and args[3] or username
+                local username = args[2]:gsub("_"," ") or nil
+                local display = args[3]~="" and args[3]:gsub("_"," ") or username
                 for _, theirPlr in ipairs(args[1]) do
-                    if username then
+                    if username~="" then
                         C.getgenv().OverrideUserData[theirPlr.UserId] = {Name = username, DisplayName = display}
                     else
                         C.getgenv().OverrideUserData[theirPlr.UserId] = nil
