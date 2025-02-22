@@ -11739,15 +11739,30 @@ return function(C,Settings)
                 print(Functs.Kill)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
-                    if ((strFind(traceback, "Anti") or strFind(traceback,"Service")) and not strFind(traceback, "function __index")) then
+                    if ((strFind(traceback, "Anti") or strFind(traceback,"Service") or strFind(traceback, "Kill")) and not strFind(traceback, "function __index")) then
                         return true
                     end
                     return false
                 end
-                
-                local OldKill = hookfunction(Functs.Kill, function(...)
-                    print("KILL STOPPED",...)
-                    return waitFunct(100000)
+                for _, tbl in ipairs(C.getgc()) do
+                    if typeof(tbl) == "table" then
+                        if tbl["task.spawn"] and tbl["require"] then
+                            print("FOUND TABLE")
+                            tbl["spawn"] = function()
+                                print("Nope not spawning")
+                            end
+                        end
+                    end
+                end
+                -- local OldKill = hookfunction(Functs.Kill, function(...)
+                --     print("KILL STOPPED",...)
+                --     return waitFunct(100000)
+                -- end)
+                -- 
+                local oldSpawn
+                oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
+                    local traceback = debug.traceback()
+                    if debug.info(2,"n").Name == "Client"
                 end)
                 task.spawn(Functs.Kill,"DEATH")
 
