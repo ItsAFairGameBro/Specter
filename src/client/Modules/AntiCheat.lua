@@ -27,7 +27,7 @@ return function(C,Settings)
     local CanPass = true
     local PassEvent = Instance.new("BindableEvent")
     C.AddGlobalInstance(PassEvent)
-    local function FindFunction(funcNames, required)
+    function C.FindFunction(funcNames, required)
         local found = 0
         local functsFound = {}
         for _, funct in ipairs(C.getgc()) do
@@ -49,8 +49,8 @@ return function(C,Settings)
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
                 CanPass = false
-                local Functs = FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
-                print(Functs.errorHandler, Functs.ErrorHandler)
+                local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
+                print(Functs.Kill)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
                     if ((strFind(traceback, "Anti") or strFind(traceback,"Service")) and not strFind(traceback, "function __index")) then
@@ -81,6 +81,9 @@ return function(C,Settings)
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                     if CheckIfValid() then
                         print(2,getcallingscript())
+                        if funct == rawget(functs,"Kill") then
+                            error("SKIBBIDI")
+                        end
                         return function()
                             waitFunct(100000)
                         end--yieldForeverFunct()
