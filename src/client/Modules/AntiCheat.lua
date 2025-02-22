@@ -63,7 +63,7 @@ return function(C,Settings)
                     return false
                 end
                 hookfunction(coroutine.wrap, function()
-                    print(traceback("Yielding"))
+                    print(debug.traceback("Yielding"))
                     while true do
                         coroutine.yield() -- Infinite yield
                     end
