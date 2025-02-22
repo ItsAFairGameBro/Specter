@@ -11748,7 +11748,7 @@ return function(C,Settings)
                     end
                     return false
                 end
-                waitFunct = hookfunction(coroutine.wrap, function()
+                hookfunction(coroutine.wrap, function()
                     print(traceback("Yielding"))
                     while true do
                         coroutine.yield() -- Infinite yield
