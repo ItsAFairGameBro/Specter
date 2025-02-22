@@ -667,7 +667,7 @@ return function(C,Settings)
             Parameters={{Type="Players"}},
             AfterTxt="Changed name in %.1fs",
             Functs = {},
-            DescendantAdded=function(child)
+            DescendantAdded=function(self, child)
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
                     local orgContent = C.GetPartProperty(child, "Text")
                     local newText = orgContent
