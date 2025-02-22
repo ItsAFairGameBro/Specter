@@ -685,9 +685,9 @@ return function(C,Settings)
                     if Modified then
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", newText, false, true)
-                        print("Changed",child,"to",newText)
                     elseif not noFunct then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
+                            print("TXT CHANGED",child)
                             self:DescendantAdded(child, true) -- Call it again without a function
                         end))
                     end
