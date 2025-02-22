@@ -8726,6 +8726,9 @@ return function(C,Settings)
                         self:DescendantAdded(child)
                     end
                 end
+                if C.hackData.Render.PlayerHighlight.RealEnabled then
+                    C.ReloadHack(C.hackData.Render.PlayerHighlight)
+                end
                 return true, os.clock() - start
             end
         } or nil,
@@ -9786,7 +9789,8 @@ return function(C,Settings)
 						robloxHighlight.Adornee = theirChar
 						robloxHighlight.Parent = C.GUI
 						local nameTag = C.Examples.NameTagEx:Clone()
-						nameTag:WaitForChild("Username").Text = theirPlr.Name
+						local Override = C.getgenv().OverrideUserData and C.getgenv().OVerrideUserData[theirPlr.UserId]
+						nameTag:WaitForChild("Username").Text = Override and Override.Name or theirPlr.Name
 						nameTag.Parent = C.UI.ESP
 						--nameTag.Adornee = theirChar:FindFirstChild("Head") or theirChar.PrimaryPart
 						table.insert(self.Instances,nameTag)
@@ -15056,6 +15060,9 @@ return function(C,Settings)
 		end
 	end
     function C.GetPlayerName(plr: Player)
+		-- GetPlayerName uses original name!
+		-- local Override = C.getgenv().OverrideUserData
+		-- local Display, Name = Override and Override.DisplayName or plr.DisplayName, Override and Override.Name or plr.Name
         if plr.DisplayName == plr.Name then
             return plr.Name
         else

@@ -742,6 +742,9 @@ return function(C,Settings)
                         self:DescendantAdded(child)
                     end
                 end
+                if C.hackData.Render.PlayerHighlight.RealEnabled then
+                    C.ReloadHack(C.hackData.Render.PlayerHighlight)
+                end
                 return true, os.clock() - start
             end
         } or nil,

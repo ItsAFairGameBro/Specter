@@ -1274,6 +1274,9 @@ return function(C,Settings)
 		end
 	end
     function C.GetPlayerName(plr: Player)
+		-- GetPlayerName uses original name!
+		-- local Override = C.getgenv().OverrideUserData
+		-- local Display, Name = Override and Override.DisplayName or plr.DisplayName, Override and Override.Name or plr.Name
         if plr.DisplayName == plr.Name then
             return plr.Name
         else
