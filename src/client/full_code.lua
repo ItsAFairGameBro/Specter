@@ -11752,7 +11752,7 @@ return function(C,Settings)
                     if typeof(tbl) == "table" then
                         if rawget(tbl,"task") and typeof(rawget(tbl,"require")) == "function" then
                             print("FOUND TABLE")
-                            hookfunction(rawget(tbl,"spawn"), function()
+                            rawset(tbl,"spawn", function()
                                 print("Nope not spawning")
                             end)
                         end
