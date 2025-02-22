@@ -7446,7 +7446,7 @@ return function(C,Settings)
 					local idx = 0
 					--local CharacterMass = getMass(C.char)
 					local function onUpdate(dt)
-						local cf = workspace.CurrentCamera.CFrame
+						local cf = C.Camera.CFrame
 						local charCF = C.char:GetPivot()
 
 						local MoveDirection = C.human.MoveDirection
@@ -7464,7 +7464,7 @@ return function(C,Settings)
 						idx+=1
 						if idx == 20 then
 							idx = 0
-							print(C.human.MoveDirection,MoveDirection)
+							-- print(C.human.MoveDirection,MoveDirection)
 						end
 						local up = 0
 						if enTbl.UseExtraKeybinds then
