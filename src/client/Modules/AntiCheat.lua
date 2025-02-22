@@ -37,11 +37,11 @@ return function(C,Settings)
                 end
                 local Old
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
-                    -- if CheckIfValid() then
-                    --     return Old(task.spawn(function()
-                    --         print("Canceled!") 
-                    --     end))
-                    -- end
+                    if CheckIfValid() then
+                        return Old(function(...)
+                            print("Canceled!",...)
+                        end,...)
+                    end
                     return Old(funct,...)
                 end)
                 task.wait(100)
