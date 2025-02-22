@@ -16,6 +16,7 @@ return function(C,Settings)
         C.savedCommands = {}
         C.getgenv().lastCommands = C.savedCommands
     end
+    local options
     function C.RunCommand(inputMsg,shouldSave,noRefresh,canYield)
         if shouldSave then
             table.insert(C.savedCommands,1,inputMsg)
@@ -278,7 +279,6 @@ return function(C,Settings)
         if C.Cleared then
             return
         end
-        local options
         local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
         local DidSet = 0
         local Connections = {}
