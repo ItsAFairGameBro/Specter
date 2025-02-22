@@ -7444,8 +7444,8 @@ return function(C,Settings)
 
 						local MoveDirection = C.human.MoveDirection
 						if MoveDirection.Magnitude > 0 then
-							local cameraLook = Camera.CFrame.LookVector
-							local cameraRight = Camera.CFrame.RightVector
+							local cameraLook = cf.LookVector
+							local cameraRight = cf.RightVector
 							
 							MoveDirection = (cameraRight * MoveDirection.X) + (cameraLook * MoveDirection.Z)
 							MoveDirection = Vector3.new(MoveDirection.X, 0, MoveDirection.Z).Unit						
