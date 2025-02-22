@@ -8354,6 +8354,7 @@ return function(C,Settings)
                 C.ApplyHumanoidDescription(newHuman, humanDesc)
                 oldHuman.Parent = targetChar
                 newHuman:Destroy()
+                RunS.RenderStepped:Wait()
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
