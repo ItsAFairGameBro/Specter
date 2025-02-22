@@ -8652,7 +8652,7 @@ return function(C,Settings)
             Parameters={{Type="Players"}},
             AfterTxt=" in %.1fs",
             Functs = {},
-            DescendantAdded=function(self, child)
+            DescendantAdded=function(self, child, noFunct)
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
                     local orgContent = C.GetPartProperty(child, "Text")
                     local newText = orgContent
@@ -8670,6 +8670,10 @@ return function(C,Settings)
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
                         C.SetPartProperty(child, "Text", "nickname", newText, false, true)
                         print("Changed",child,"to",newText)
+                    elseif not noFunct then
+                        table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
+                            self:DescendantAdded(child, true) -- Call it again without a function
+                        end))
                     end
                 end
             end,
@@ -8695,7 +8699,6 @@ return function(C,Settings)
                                 
                 for _, searchLoc in ipairs(self.SearchLocations) do
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
-                        task.wait()
                         self:DescendantAdded(child)
                     end))
                     for num, child in ipairs(searchLoc:GetDescendants()) do
