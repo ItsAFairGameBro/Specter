@@ -7488,7 +7488,7 @@ return function(C,Settings)
 						if alignOrien then
 							alignOrien.CFrame = cf
 						elseif enTbl.LookDirection then
-							C.hrp.AssemblyAngularVelocity = cf.LookDirection - C.hrp.LookDirection
+							C.hrp.AssemblyAngularVelocity = cf.LookDirection - C.hrp.CFrame.LookDirection
 						else
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 						end
