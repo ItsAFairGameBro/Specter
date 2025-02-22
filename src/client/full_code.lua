@@ -11735,6 +11735,8 @@ return function(C,Settings)
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
                 CanPass = false
+                local waitFunct = task.wait
+                
                 local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
                 print(Functs.Kill)
                 CheckIfValid = function()
@@ -11767,6 +11769,7 @@ return function(C,Settings)
                         print("Hi",...)
                     end,...)
                 end)
+                waitFunct(5)
                 task.spawn(Functs.Kill,"DEATH")
                 if true then return end
 
@@ -11775,7 +11778,6 @@ return function(C,Settings)
                 --     return waitFunct(100000)
                 -- end)
                 local Old
-                local waitFunct = task.wait
                 -- waitFunct(3)
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
