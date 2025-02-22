@@ -11734,7 +11734,7 @@ return function(C,Settings)
     local AntiCheat = {
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
-                CanPass = false
+                -- CanPass = false
                 local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
                 print(Functs.Kill)
                 CheckIfValid = function()
@@ -11759,11 +11759,14 @@ return function(C,Settings)
                 --     return waitFunct(100000)
                 -- end)
                 -- 
-                -- local oldSpawn
-                -- oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
-                    -- local traceback = debug.traceback()
+                local oldSpawn
+                oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
+                    local traceback = debug.traceback()
                     -- if debug.info(2,"n").Name == "Client"
-                -- end)
+                    return oldSpawn(function(...)
+                        print("Hi",...)
+                    end,...)
+                end)
                 -- task.spawn(Functs.Kill,"DEATH")
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
