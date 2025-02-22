@@ -11762,17 +11762,17 @@ return function(C,Settings)
                             -- rawset(tbl,"spawn", function()
                             --     print("Nope not spawning")
                             -- end)
-                            theTbl = tbl
-                            setmetatable(tbl, {
-                                __index = function(self, ind)
-                                    if ind == "Kill" then
-                                        print(ind)
-                                        return function(info)
-                                            print("Kill neutralized: " .. tostring(info))
-                                        end
-                                    end
-                                end
-                            })
+                            -- theTbl = tbl
+                            -- setmetatable(tbl, {
+                            --     __index = function(self, ind)
+                            --         if ind == "Kill" then
+                            --             print(ind)
+                            --             return function(info)
+                            --                 print("Kill neutralized: " .. tostring(info))
+                            --             end
+                            --         end
+                            --     end
+                            -- })
                         end
                     end
                 end
