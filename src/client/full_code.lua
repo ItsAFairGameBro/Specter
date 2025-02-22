@@ -11730,6 +11730,7 @@ return function(C,Settings)
                     end
                     return Old(funct,...)
                 end)
+                task.wait(100)
                 -- local Old2
                 -- Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                 --     if CheckIfValid() then
