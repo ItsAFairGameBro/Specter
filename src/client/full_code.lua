@@ -7316,6 +7316,7 @@ return function(C,Settings)
                 IsAnimationWhitelisted = function(self, animTrack)
                     if animTrack.Priority.Value > Enum.AnimationPriority.Movement.Value
                         and animTrack.Priority ~= Enum.AnimationPriority.Core then
+						print("Allowed:",animTrack.Animation.Name,animationTrack.Priority)
                         return true
                     elseif animTrack.Animation.Name == "ToolNoneAnim" then
                         return true
@@ -7452,7 +7453,7 @@ return function(C,Settings)
 							local cameraLook = cf.LookVector
 							local cameraRight = cf.RightVector
 							
-							MoveDirection = getMoveDirection(MoveDirection,cf)--(cameraRight * MoveDirection.X) + (cameraLook * -MoveDirection.Z)
+							MoveDirection = getMoveDirection(MoveDirection,cf)
 						
 							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
