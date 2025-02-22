@@ -368,10 +368,10 @@ return function(C,Settings)
                 end
 
                 C.ApplyHumanoidDescription(newHuman, humanDesc)
+                oldHuman.Parent = targetChar
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
-                oldHuman.Parent = targetChar
 
                 if oldChar_ForceField and oldChar_ForceField.Parent then
                     oldChar_ForceField.Parent = targetChar:FindFirstChild("HumanoidRootPart")
