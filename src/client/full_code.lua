@@ -11755,7 +11755,7 @@ return function(C,Settings)
                 local Old
                 local waitFunct = task.wait
                 OldKill("IM AN OLD MAN!");
-                return
+                if true then return end
                 hookfunction(C.getrenv().spawn, function(...)
                     if CheckIfValid() then
                         print(1,getcallingscript())
