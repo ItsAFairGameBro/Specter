@@ -681,7 +681,7 @@ return function(C,Settings)
                         local newUser = C.getgenv().OverrideUserData[theirPlr.UserId]
                         if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
                             Modified = true
-                            newText = newText:gsub(theirPlr.Name, newUser.Name):gsub(theirPlr.DisplayName, newUser.DisplayName)
+                            newText = newText:gsub("@" .. theirPlr.Name, newUser.Name):gsub(theirPlr.DisplayName, newUser.DisplayName):gsub(theirPlr.Name, newUser.Name)
                         end
                     end
                     if Modified or wasSet then
