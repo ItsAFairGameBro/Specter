@@ -7222,7 +7222,7 @@ local function getMass(model)
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
 local function getMoveDirection(globalVector2, cf)
-	globalVector2 = C.hrp.CFrame:VectorToObjectSpace(globalVector2)
+	globalVector2 = cf:VectorToObjectSpace(globalVector2)
     -- Extract input components from global Vector2 (stored as Vector3)
     local inputX = globalVector2.X  -- Left/Right input
     local inputZ = globalVector2.Z  -- Forward/Back input
