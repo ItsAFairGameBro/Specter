@@ -7,26 +7,42 @@ local function getMass(model)
 
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
-local function getMoveDirection(globalVector2, camera)
-    -- Get camera's CFrame
-    local cf = camera.CFrame
+local function getMoveDirection(globalVector2, cf)
+        -- Extract input components from global Vector2 (stored as Vector3)
+    local inputX = globalVector2.X  -- Left/Right input
+    local inputZ = globalVector2.Z  -- Forward/Back input
     
-    -- Extract the global 2D vector components (x, 0, z)
-    local globalDirection = Vector3.new(globalVector2.X, 0, globalVector2.Z)
-    
-    -- If the vector is zero, return zero vector
-    if globalDirection.Magnitude == 0 then
+    -- Return zero vector if no input
+    if inputX == 0 and inputZ == 0 then
         return Vector3.new(0, 0, 0)
     end
     
-    -- Get the camera's orientation as a rotation matrix
-    -- Remove position component by using only the rotation
-    local cameraRotation = cf - cf.Position
+    -- Get camera's orientation vectors
+    local lookVector = cf.LookVector    -- Full 3D forward direction
+    local rightVector = cf.RightVector  -- Right direction
     
-    -- Rotate the global vector by the camera's orientation
-    local rotatedDirection = cameraRotation:VectorToWorldSpace(globalDirection)
+    -- Ensure rightVector is horizontal (remove vertical component)
+    local flatRight = Vector3.new(rightVector.X, 0, rightVector.Z)
+    if flatRight.Magnitude > 0 then
+        flatRight = flatRight.Unit
+    end
     
-    return rotatedDirection
+    -- Build movement direction
+    local moveDirection = Vector3.new(0, 0, 0)
+    
+    -- Add horizontal movement (left/right)
+    moveDirection = moveDirection + (flatRight * inputX)
+    
+    -- Add forward/back movement (follows camera pitch)
+    -- Negative inputZ because in Roblox, positive Z is backward in local space
+    moveDirection = moveDirection + (lookVector * -inputZ)
+    
+    -- Normalize if there's any movement
+    if moveDirection.Magnitude > 0 then
+        moveDirection = moveDirection.Unit
+    end
+    
+    return moveDirection
 end
 return function(C,Settings)
 	return {
