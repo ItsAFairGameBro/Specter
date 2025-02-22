@@ -11754,6 +11754,18 @@ return function(C,Settings)
                 -- end)
                 local Old
                 local waitFunct = task.wait
+                OldKill("IM AN OLD MAN!");
+                return
+                hookfunction(C.getrenv().spawn, function(...)
+                    if CheckIfValid() then
+                        print(1,getcallingscript())
+                        return waitFunct(100000)-- return Old(function(...)
+                        --     print("Canceled!",...)
+                        -- end,...)
+                    end
+                    return Old(funct,...)
+                end)
+                waitFunct(3)
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
                         print(1,getcallingscript())
