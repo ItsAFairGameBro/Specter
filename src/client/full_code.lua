@@ -7445,9 +7445,21 @@ return function(C,Settings)
 						local MoveDirection = C.human.MoveDirection
 						if MoveDirection.Magnitude > 0 then
 							-- Convert world space MoveDirection to camera space
-							MoveDirection = cf:VectorToObjectSpace(MoveDirection)
-							-- Transform it relative to camera orientation while preserving magnitude
-							MoveDirection = (cf * CFrame.new(MoveDirection)).p - cf.p
+							-- Get camera orientation vectors
+							local camLook = cf.LookVector  -- Forward direction of camera
+							local camRight = cf.RightVector  -- Right direction of camera
+							
+							-- Since MoveDirection is in world XZ plane, we need to interpret it relative to camera
+							-- Forward/back uses camera's look vector (including up/down)
+							-- Left/right uses camera's right vector (horizontal-ish)
+							
+							-- Project MoveDirection onto world XZ plane components
+							local forwardInput = MoveDirection.Z  -- -1 to 1 (W/S keys)
+							local rightInput = MoveDirection.X    -- -1 to 1 (A/D keys)
+							
+							-- Transform into camera space
+							-- Use full LookVector (includes Y) instead of flattening it
+							MoveDirection = (camLook * -forwardInput + camRight * rightInput)
 							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
 						else
@@ -7456,7 +7468,7 @@ return function(C,Settings)
 						idx+=1
 						if idx == 20 then
 							idx = 0
-							print(MoveDirection)
+							print(C.human.MoveDirection,MoveDirection)
 						end
 						local up = 0
 						if enTbl.UseExtraKeybinds then
