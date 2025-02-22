@@ -64,7 +64,7 @@ return function(C,Settings)
                 end
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
-                        if rawget(tbl,"task") and rawget(tbl,"require") then
+                        if rawget(tbl,"task") and typeof(rawget(tbl,"require")) == "function" then
                             print("FOUND TABLE")
                             hookfunction(rawget(tbl,"spawn"), function()
                                 print("Nope not spawning")
