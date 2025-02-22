@@ -7221,25 +7221,50 @@ local function getMass(model)
 
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
-local function getMoveDirection(globalVector2, cf, verticalInput)
-    -- Extract yaw rotation from the camera's CFrame
-    local cameraYaw = cf.Rotation - Vector3.new(cf.Rotation.X, 0, cf.Rotation.Z)
-
-    -- Convert Vector2 input into a Vector3 (keeping Y as 0)
-    local moveDirection = Vector3.new(globalVector2.X, 0, globalVector2.Z)
-
-    -- Rotate the movement vector using only the Y rotation of the camera
-    local rotatedDirection = cf:VectorToWorldSpace(moveDirection)
-
-    -- Apply vertical input for up/down movement
-    rotatedDirection = rotatedDirection + Vector3.new(0, verticalInput, 0)
-
-    -- Normalize the result to keep movement speed consistent
-    if rotatedDirection.Magnitude > 0 then
-        rotatedDirection = rotatedDirection.Unit
+local function getMoveDirection(globalVector2, cf)
+	globalVector2 = C.hrp.CFrame:VectorToObjectSpace(globalVector2)
+    -- Extract input components from global Vector2 (stored as Vector3)
+    local inputX = globalVector2.X  -- Left/Right input
+    local inputZ = globalVector2.Z  -- Forward/Back input
+    
+    -- Return zero vector if no input
+    if inputX == 0 and inputZ == 0 then
+        return Vector3.new(0, 0, 0)
     end
-
-    return rotatedDirection
+    
+    -- Get camera's CFrame components
+    local lookVector = cf.LookVector  -- Forward direction
+    local rightVector = cf.RightVector -- Right direction
+    local upVector = cf.UpVector      -- Up direction
+    
+    -- Create base direction from inputs (in horizontal plane)
+    local baseDirection = Vector3.new(inputX, 0, inputZ)
+    if baseDirection.Magnitude == 0 then
+        return Vector3.new(0, 0, 0)
+    end
+    
+    -- Normalize the base input direction
+    baseDirection = baseDirection.Unit
+    
+    -- Convert 2D input to 3D direction using camera orientation
+    local moveDirection = Vector3.new(0, 0, 0)
+    
+    -- Apply right movement (horizontal)
+    moveDirection = moveDirection + (rightVector * baseDirection.X)
+    
+    -- Apply forward movement (includes pitch from camera)
+    moveDirection = moveDirection + (lookVector * -baseDirection.Z) -- Negative Z for Roblox convention
+    
+    -- If you want to add explicit up/down control, you could:
+    -- Add a separate input for vertical movement or modify based on camera pitch
+    -- For example: moveDirection = moveDirection + (upVector * verticalInput)
+    
+    -- Normalize the final direction
+    if moveDirection.Magnitude > 0 then
+        moveDirection = moveDirection.Unit
+    end
+    
+    return moveDirection
 end
 
 
