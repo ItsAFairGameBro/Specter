@@ -748,12 +748,14 @@ return function(C,Settings)
         ["animation"]={
             Alias = {"dance"},
             Parameters={{Type="Instance",Root="char",Optional=true},{Type="Number",Min=0,Max=10,Default=1}},
-            AfterTxt=" in %.1fs",
+            AfterTxt=" ran",
             Functs = {},
             PlayingAnim = nil,
             RunOnDestroy = function(self,selfCalled)
                 if self.PlayingAnim then
-                    self.PlayingAnim:Stop()
+                    if self.PlayingAnim.IsPlaying then
+                        self.PlayingAnim:Stop()
+                    end
                     self.PlayingAnim = nil
                 end
             end,
@@ -763,6 +765,7 @@ return function(C,Settings)
                     self.PlayingAnim = C.animator:LoadAnimation(args[1])
                     self.PlayingAnim:Play(0.1, 1, args[2])
                 end
+                return true
             end,
         },
         ["follow"]={

@@ -8732,12 +8732,14 @@ return function(C,Settings)
         ["animation"]={
             Alias = {"dance"},
             Parameters={{Type="Instance",Root="char",Optional=true},{Type="Number",Min=0,Max=10,Default=1}},
-            AfterTxt=" in %.1fs",
+            AfterTxt=" ran",
             Functs = {},
             PlayingAnim = nil,
             RunOnDestroy = function(self,selfCalled)
                 if self.PlayingAnim then
-                    self.PlayingAnim:Stop()
+                    if self.PlayingAnim.IsPlaying then
+                        self.PlayingAnim:Stop()
+                    end
                     self.PlayingAnim = nil
                 end
             end,
@@ -8747,6 +8749,7 @@ return function(C,Settings)
                     self.PlayingAnim = C.animator:LoadAnimation(args[1])
                     self.PlayingAnim:Play(0.1, 1, args[2])
                 end
+                return true
             end,
         },
         ["follow"]={
@@ -12154,11 +12157,13 @@ return function(C,Settings)
     end
     local options
     local function PerformRootSearch(Root)
+        local tbl = {}
         for _, instance in ipairs(Root:GetDescendants()) do
             if instance:IsA("Animation") then
-                table.insert(options,{instance.Name, instance.Name})
+                table.insert(tbl,{instance.Name, instance.Name})
             end
         end
+        return tbl
     end
     function C.RunCommand(inputMsg,shouldSave,noRefresh,canYield)
         if shouldSave then
@@ -12239,7 +12244,7 @@ return function(C,Settings)
                 elseif argumentData.Type == "Instance" then
                     local Root = C[argumentData.Root]
                     assert(Root,`{args[num]} root not found: {argumentData.Root}`)
-                    local ChosenOption = C.StringStartsWith(PerformRootSearch(Root),args[num])[1]
+                    local ChosenOption = args[num] ~= "" and C.StringStartsWith(PerformRootSearch(Root),args[num], true)[1]
                     if not ChosenOption and canRunFunction then
                         if args[num] == "" and (argumentData.Default or argumentData.Optional) then
                             args[num] = argumentData.Default or nil
@@ -12253,9 +12258,9 @@ return function(C,Settings)
                             C.CreateSysMessage(`Invalid Parameter Options: Instance root {argumentData.Root} not found`)
                             canRunFunction = false
                         else
-                            instance = instance:FindFirstChild(ChosenOption, true)
+                            instance = instance:FindFirstChild(ChosenOption[2][1], true)
                             if not instance then
-                                C.CreateSysMessage(`Invalid Parameter Options: Animation {ChosenOption} not found!`)
+                                C.CreateSysMessage(`Invalid Parameter Options: Animation {ChosenOption[2][1]} not found!`)
                                 canRunFunction = false
                             else
                                 args[num] = instance
@@ -12645,7 +12650,7 @@ return function(C,Settings)
                             elseif mySuggestion.Type == "Instance" then
                                 local Root = C[mySuggestion.Root]
                                 assert(Root,`Root {mySuggestion.Root} not found!`)
-                                PerformRootSearch(Root)
+                                options = PerformRootSearch(Root)
                             elseif mySuggestion.Type == "Options" then
                                 for num, val in ipairs(mySuggestion.Options) do
                                     table.insert(options,{val,val})
