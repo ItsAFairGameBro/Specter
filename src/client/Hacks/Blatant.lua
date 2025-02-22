@@ -12,7 +12,7 @@ local function getMoveDirection(globalVector2, cf, verticalInput)
     local cameraYaw = cf.Rotation - Vector3.new(cf.Rotation.X, 0, cf.Rotation.Z)
 
     -- Convert Vector2 input into a Vector3 (keeping Y as 0)
-    local moveDirection = Vector3.new(globalVector2.X, 0, -globalVector2.Y)
+    local moveDirection = Vector3.new(globalVector2.X, 0, globalVector2.Z)
 
     -- Rotate the movement vector using only the Y rotation of the camera
     local rotatedDirection = cf:VectorToWorldSpace(moveDirection)
