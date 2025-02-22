@@ -71,11 +71,11 @@ return function(C,Settings)
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
                         if rawget(tbl,"indexInstance") and rawget(tbl,"newindexInstance") then
-                            print("FOUND TABLE",isreadonly(tbl))
+                            C.DebugMessage(`AntiCheat`, "FOUND TABLE: " .. tostring(tbl))
                             setreadonly(tbl, false)
                             for key, val in pairs(tbl) do
                                 rawset(tbl, key, nil)
-                                print("--REM: " .. key)
+                                C.DebugMessage(`AntiCheat`, "\tREM: " .. key)
                             end
                             table.freeze(tbl)
                             
@@ -110,8 +110,6 @@ return function(C,Settings)
                 --         print("Hi",...)
                 --     end,...)
                 -- end)
-                waitFunct(5)
-                print("STARTING")
                 -- theTbl.Kill("FUDGE")
                 -- if true then return end
 
