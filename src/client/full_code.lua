@@ -7448,7 +7448,7 @@ return function(C,Settings)
 							local cameraRight = cf.RightVector
 							
 							MoveDirection = (cameraRight * MoveDirection.X) + (cameraLook * MoveDirection.Z)
-							MoveDirection = Vector3.new(MoveDirection.X, 0, MoveDirection.Z).Unit						
+							MoveDirection = Vector3.new(MoveDirection.X, 0, MoveDirection.Z).Unit
 						
 							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
@@ -7472,7 +7472,7 @@ return function(C,Settings)
 								up -= 1
 							end
 						end
-						-- MoveDirection = (cf.UpVector * up + MoveDirection)
+						MoveDirection = (cf.UpVector * up + MoveDirection)
 
 						if (MoveDirection:Dot(MoveDirection) > 0) then
 							MoveDirection = MoveDirection.Unit
