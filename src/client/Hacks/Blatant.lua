@@ -258,7 +258,7 @@ return function(C,Settings)
 								up -= 1
 							end
 						end
-						MoveDirection = (cf.UpVector * up + MoveDirection)
+						-- MoveDirection = (cf.UpVector * up + MoveDirection)
 
 						if (MoveDirection:Dot(MoveDirection) > 0) then
 							MoveDirection = MoveDirection.Unit
