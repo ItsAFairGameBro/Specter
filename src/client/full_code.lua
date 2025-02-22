@@ -11756,7 +11756,7 @@ return function(C,Settings)
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
                         if rawget(tbl,"Handlers") and rawget(tbl,"Disconnect") then
-                            -- print("FOUND TABLE")
+                            print("FOUND TABLE")
                             -- rawset(tbl,"spawn", function()
                             --     print("Nope not spawning")
                             -- end)
