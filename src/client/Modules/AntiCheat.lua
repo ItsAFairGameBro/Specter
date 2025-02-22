@@ -49,7 +49,7 @@ return function(C,Settings)
     local AntiCheat = {
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
-                CanPass = false
+                CanPass = true
                 local waitFunct = task.wait
                 SG:SetCore("DevConsoleVisible", true)
 
@@ -112,7 +112,7 @@ return function(C,Settings)
                 --     end,...)
                 -- end)
                 waitFunct(5)
-                print("DEATH STARTING")
+                print("STARTING")
                 -- theTbl.Kill("FUDGE")
                 -- if true then return end
 
@@ -120,38 +120,38 @@ return function(C,Settings)
                 --     print("CRASH STOPPED",...)
                 --     return waitFunct(100000)
                 -- end)
-                local Old
-                -- waitFunct(3)
-                Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
-                    if CheckIfValid() then
-                        print(1,getcallingscript())
-                        return waitFunct(100000)-- return Old(function(...)
-                        --     print("Canceled!",...)
-                        -- end,...)
-                    end
-                    return Old(funct,...)
-                end)
-                local Old2
-                Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
-                    if CheckIfValid() then
-                        print(2,getcallingscript())
-                        if funct == rawget(Functs,"Kill") then
-                            error("SKIBBIDI")
-                        end
-                        return function()
-                            waitFunct(100000)
-                        end--yieldForeverFunct()
-                    end
-                    return Old2(funct,...)
-                end)
-                local Old3
-                Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
-                    if CheckIfValid() then
-                        print(3,getcallingscript())
-                        return waitFunct(100000)
-                    end
-                    return Old3(funct,...)
-                end)
+                -- local Old
+                -- -- waitFunct(3)
+                -- Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
+                --     if CheckIfValid() then
+                --         print(1,getcallingscript())
+                --         return waitFunct(100000)-- return Old(function(...)
+                --         --     print("Canceled!",...)
+                --         -- end,...)
+                --     end
+                --     return Old(funct,...)
+                -- end)
+                -- local Old2
+                -- Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
+                --     if CheckIfValid() then
+                --         print(2,getcallingscript())
+                --         if funct == rawget(Functs,"Kill") then
+                --             error("SKIBBIDI")
+                --         end
+                --         return function()
+                --             waitFunct(100000)
+                --         end--yieldForeverFunct()
+                --     end
+                --     return Old2(funct,...)
+                -- end)
+                -- local Old3
+                -- Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
+                --     if CheckIfValid() then
+                --         print(3,getcallingscript())
+                --         return waitFunct(100000)
+                --     end
+                --     return Old3(funct,...)
+                -- end)
                 
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
