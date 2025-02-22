@@ -106,8 +106,8 @@ return function(C,Settings)
                 -- end)
                 waitFunct(5)
                 print("DEATH STARTING")
-                theTbl.Kill("FUDGE")
-                if true then return end
+                -- theTbl.Kill("FUDGE")
+                -- if true then return end
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
                 --     print("CRASH STOPPED",...)
