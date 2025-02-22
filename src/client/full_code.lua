@@ -7322,14 +7322,14 @@ return function(C,Settings)
                         return true
                     end
                     local id = tonumber(animTrack.Animation.AnimationId:gmatch("%d+")())
-                    return self.AllowedIds[id]
+                    return self.AllowedIds[id] ~= nil
                 end,
                 StopAnimation = function(self, v)
                     if v.Looped then
                         table.insert(self.Anims, v)
                         v:SetAttribute("OrgSpeed", v.Speed)
                     end
-                    v:Stop(0)
+                    v:Stop()
                 end,
 				StopAllAnims=function(self)
 					for i, v in pairs(C.animator:GetPlayingAnimationTracks()) do
