@@ -11760,8 +11760,7 @@ return function(C,Settings)
                             -- rawset(tbl,"spawn", function()
                             --     print("Nope not spawning")
                             -- end)
-                            local client = getfenv().client
-                            setmetatable(client, {
+                            setmetatable(tbl, {
                                 __index = function(self, ind)
                                     if ind == "Kill" then
                                         print(ind)
