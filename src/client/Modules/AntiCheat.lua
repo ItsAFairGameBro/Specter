@@ -24,10 +24,14 @@ return function(C,Settings)
     local tskSpawn, strFind = task.spawn, string.find
     local yieldForeverFunct = Static(C,Settings)
     local CheckIfValid
+    local CanPass = true
+    local PassEvent = Instance.new("BindableEvent")
+    C.AddGlobalInstance(PassEvent)
     -- Here's where the anti cheat stuff is done
     local AntiCheat = {
         { -- ADONTIS ANTI CHEAT
             Run = function(self)
+                CanPass = false
                 CheckIfValid = function()
                     local traceback = debug.traceback()
                     if (strFind(traceback, "Anti") and not strFind(traceback, "function __index")) then
@@ -39,26 +43,27 @@ return function(C,Settings)
                 local waitFunct = task.wait
                 Old = hookfunction(C.getrenv().task.spawn, function(funct,...)
                     if CheckIfValid() then
+                        print(getcallingscript())
                         return waitFunct(100000)-- return Old(function(...)
                         --     print("Canceled!",...)
                         -- end,...)
                     end
                     return Old(funct,...)
                 end)
-                local Old2
-                Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
-                    if CheckIfValid() then
-                        return waitFunct(100000)--yieldForeverFunct()
-                    end
-                    return Old2(funct,...)
-                end)
-                local Old3
-                Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
-                    if CheckIfValid() then
-                        return waitFunct(100000)
-                    end
-                    return Old3(funct,...)
-                end)
+                -- local Old2
+                -- Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
+                --     if CheckIfValid() then
+                --         return waitFunct(100000)--yieldForeverFunct()
+                --     end
+                --     return Old2(funct,...)
+                -- end)
+                -- local Old3
+                -- Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
+                --     if CheckIfValid() then
+                --         return waitFunct(100000)
+                --     end
+                --     return Old3(funct,...)
+                -- end)
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
                     tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)
@@ -322,6 +327,9 @@ return function(C,Settings)
             if not cheatTbl.RunOnce or not C.getgenv()["AntiCheat"..num] then
                 C.DebugMessage("AntiCheat",`Method {num} Activated`)
                 cheatTbl.Run(cheatTbl)
+                while not CanPass do
+                    PassEvent.Event:Wait()
+                end
                 C.getgenv()["AntiCheat"..num] = true
             end
             if not cheatTbl.KeepGoing then
@@ -329,4 +337,6 @@ return function(C,Settings)
             end
         end
     end
+    C.RemoveGlobalInstance(PassEvent)
+    PassEvent:Destroy()
 end
