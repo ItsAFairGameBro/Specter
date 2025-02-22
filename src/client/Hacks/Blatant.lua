@@ -274,14 +274,14 @@ return function(C,Settings)
 						if alignOrien then
 							alignOrien.CFrame = cf
 						elseif enTbl.LookDirection then
-							C.hrp.AssemblyAngularVelocity = cf.LookDirection - C.hrp.CFrame.LookDirection
+							C.hrp.AssemblyAngularVelocity = cf.LookVector - C.hrp.CFrame.LookVector
 						else
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 						end
 						if SaveMode == "Physics" then
 							lineVel.VectorVelocity = newVelocity
 						elseif SaveMode == "CFrame" then
-							C.DoTeleport(CFrame.new(charCF + dt * newVelocity, cf.LookDirection))
+							C.DoTeleport(CFrame.new(charCF + dt * newVelocity, cf.LookVector))
 							C.hrp.AssemblyLinearVelocity = Vector3.zero-- + dt * CharacterMass * workspace.Gravity * Vector3.new(0, 1, 0)
 							--C.hrp.AssemblyAngularVelocity = Vector3.zero
 							--bodyVel.Velocity = Vector3.new(0,newVelocity.Y,0)
