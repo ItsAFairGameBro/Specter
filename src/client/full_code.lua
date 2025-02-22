@@ -7441,9 +7441,13 @@ return function(C,Settings)
 						local cf = workspace.CurrentCamera.CFrame
 						local charCF = C.char:GetPivot()
 
-						local MoveDirection = C.human.MoveDirection-- * Vector3.new(1,0,1)
-						if MoveDirection:Dot(MoveDirection) > 0 then
-							-- MoveDirection = (cf * CFrame.new((CFrame.new(cf.p, cf.p + Vector3.new(cf.lookVector.x, 0, cf.lookVector.z)):VectorToObjectSpace(MoveDirection)))).p - cf.p;
+						local MoveDirection = C.human.MoveDirection
+						if MoveDirection.Magnitude > 0 then
+							-- Convert world space MoveDirection to camera space
+							MoveDirection = cf:VectorToObjectSpace(MoveDirection)
+							-- Transform it relative to camera orientation while preserving magnitude
+							MoveDirection = (cf * CFrame.new(MoveDirection)).p - cf.p
+							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
 						else
 							MoveDirection = Vector3.zero
