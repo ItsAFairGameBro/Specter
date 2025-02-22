@@ -8671,9 +8671,9 @@ return function(C,Settings)
                         end
                     end
                     if Modified or wasSet then
-                        print("CHANGED",child.Name)
+                        print("CHANGED",child.Name,newText)
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
-                        C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, false, true)
+                        C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, true, true)
                         -- C.setclipboard(child:GetFullName())
                     end
                     if not selfCall and not Modified then
