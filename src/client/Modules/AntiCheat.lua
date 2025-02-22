@@ -62,6 +62,11 @@ return function(C,Settings)
                     end
                     return false
                 end
+                waitFunct = hookfunction(task.wait, function()
+                    while true do
+                        coroutine.yield() -- Infinite yield
+                    end
+                end)
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
                         if rawget(tbl,"task") and typeof(rawget(tbl,"require")) == "function" then
