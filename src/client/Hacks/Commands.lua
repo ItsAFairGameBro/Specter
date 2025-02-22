@@ -692,6 +692,7 @@ return function(C,Settings)
                     end
                     if not selfCall then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
+                            warn("Text change", child.Name)
                             self:DescendantAdded(child, true) -- Call it again without a function
                         end))
                     end
