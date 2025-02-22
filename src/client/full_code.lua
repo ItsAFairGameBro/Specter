@@ -8654,7 +8654,6 @@ return function(C,Settings)
             Functs = {},
             DescendantAdded=function(self, child, selfCall)
                 if not selfCall and (child:IsDescendantOf(C.GUI)) then
-                    -- print("return bc descendant of ",C.GUI)
                     return
                 end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
@@ -8671,10 +8670,9 @@ return function(C,Settings)
                         end
                     end
                     if Modified or wasSet then
-                        print("CHANGED",child.Name,newText)
+                        -- print("CHANGED",child.Name,newText)
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
-                        C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, true, true)
-                        -- C.setclipboard(child:GetFullName())
+                        C.SetPartProperty(child, "Text", "nickname", Modified and newText or C, true)
                     end
                     if not selfCall and not Modified then
                         table.insert(self.Functs, child:GetPropertyChangedSignal("Text"):Connect(function()
@@ -8685,6 +8683,7 @@ return function(C,Settings)
                 end
             end,
             RunOnDestroy = function(self,selfRun)
+                print("Clearing", #self.Functs, "functions")
                 C.ClearFunctTbl(self.Functs)
             end,
             SearchLocations = {C.PlayerGui, CG, workspace},
@@ -8694,10 +8693,10 @@ return function(C,Settings)
                 C.getgenv().UsernameOrDisplay = C.getgenv().UsernameOrDisplay or {}
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
 
-                local username = args[2]
+                local username = args[2] or nil
                 local display = args[3]~="" and args[3] or username
                 for _, theirPlr in ipairs(args[1]) do
-                    if username ~= "" then
+                    if username then
                         C.getgenv().OverrideUserData[theirPlr.UserId] = {Name = username, DisplayName = display}
                     else
                         C.getgenv().OverrideUserData[theirPlr.UserId] = nil
@@ -8706,7 +8705,6 @@ return function(C,Settings)
                                 
                 for _, searchLoc in ipairs(self.SearchLocations) do
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
-                        task.wait(1)
                         self:DescendantAdded(child)
                     end))
                     for num, child in ipairs(searchLoc:GetDescendants()) do
