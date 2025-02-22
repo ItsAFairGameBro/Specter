@@ -11736,20 +11736,22 @@ return function(C,Settings)
                     end
                     return Old(funct,...)
                 end)
-                -- local Old2
-                -- Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
-                --     if CheckIfValid() then
-                --         return waitFunct(100000)--yieldForeverFunct()
-                --     end
-                --     return Old2(funct,...)
-                -- end)
-                -- local Old3
-                -- Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
-                --     if CheckIfValid() then
-                --         return waitFunct(100000)
-                --     end
-                --     return Old3(funct,...)
-                -- end)
+                local Old2
+                Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
+                    if CheckIfValid() then
+                        print(getcallingscript())
+                        return waitFunct(100000)--yieldForeverFunct()
+                    end
+                    return Old2(funct,...)
+                end)
+                local Old3
+                Old3 = hookfunction(C.getrenv().xpcall, function(funct,...)
+                    if CheckIfValid() then
+                        print(getcallingscript())
+                        return waitFunct(100000)
+                    end
+                    return Old3(funct,...)
+                end)
                 --[[local Old2 = rawget(C.getrenv(), "xpcall")
                 rawset(C.getrenv(),"xpcall", function(funct, ...)
                     tskSpawn(C.DebugMessage,`AntiCheat`,`Called from context: {debug.traceback()}`)
