@@ -7221,43 +7221,41 @@ local function getMass(model)
 
 	return model.PrimaryPart and model.PrimaryPart.AssemblyMass or 0;
 end
-local function getMoveDirection(globalVector2, cf)
-        -- Extract input components from global Vector2 (stored as Vector3)
-    local inputX = globalVector2.X  -- Left/Right input
-    local inputZ = globalVector2.Z  -- Forward/Back input
-    
-    -- Return zero vector if no input
-    if inputX == 0 and inputZ == 0 then
-        return Vector3.new(0, 0, 0)
-    end
+local function getMoveDirection(globalVector2, cf, verticalInput)
+    -- Extract input components from global Vector2
+    local inputX = globalVector2.X  -- Left/Right
+    local inputZ = globalVector2.Z  -- Forward/Back
     
     -- Get camera's orientation vectors
-    local lookVector = cf.LookVector    -- Full 3D forward direction
-    local rightVector = cf.RightVector  -- Right direction
+    local lookVector = cf.LookVector
+    local rightVector = cf.RightVector
     
-    -- Ensure rightVector is horizontal (remove vertical component)
+    -- Flatten the forward direction to remove vertical component
+    local flatForward = Vector3.new(lookVector.X, 0, lookVector.Z)
+    if flatForward.Magnitude > 0 then
+        flatForward = flatForward.Unit
+    end
+    
+    -- Flatten the right direction to ensure no vertical influence
     local flatRight = Vector3.new(rightVector.X, 0, rightVector.Z)
     if flatRight.Magnitude > 0 then
         flatRight = flatRight.Unit
     end
     
-    -- Build movement direction
-    local moveDirection = Vector3.new(0, 0, 0)
+    -- Compute movement direction
+    local moveDirection = (flatRight * inputX) + (flatForward * -inputZ)
     
-    -- Add horizontal movement (left/right)
-    moveDirection = moveDirection + (flatRight * inputX)
-    
-    -- Add forward/back movement (follows camera pitch)
-    -- Negative inputZ because in Roblox, positive Z is backward in local space
-    moveDirection = moveDirection + (lookVector * -inputZ)
-    
-    -- Normalize if there's any movement
+    -- Apply vertical input
+    moveDirection = moveDirection + Vector3.new(0, verticalInput, 0)
+
+    -- Normalize if there's movement
     if moveDirection.Magnitude > 0 then
         moveDirection = moveDirection.Unit
     end
     
     return moveDirection
 end
+
 return function(C,Settings)
 	return {
 		Category = {
