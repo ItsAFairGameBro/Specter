@@ -233,7 +233,7 @@ return function(C,Settings)
 							local cameraLook = cf.LookVector
 							local cameraRight = cf.RightVector
 							
-							MoveDirection = (cameraRight * MoveDirection.X) + (cameraLook * -MoveDirection.Z)
+							-- MoveDirection = Vector3.new(MoveDirection.X, 0, MoveDirection.Z)(cameraRight * MoveDirection.X) + (cameraLook * -MoveDirection.Z)
 						
 							-- Normalize to get unit vector
 							MoveDirection = MoveDirection.Unit
