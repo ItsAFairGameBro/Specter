@@ -8653,8 +8653,8 @@ return function(C,Settings)
             AfterTxt=" in %.1fs",
             Functs = {},
             DescendantAdded=function(self, child, selfCall)
-                if not selfCall and (child:IsDescendantOf(C.MainGui)) then
-                    print("return bc descendant of ",C.MainGui)
+                if not selfCall and (child:IsDescendantOf(C.GUI)) then
+                    -- print("return bc descendant of ",C.GUI)
                     return
                 end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
