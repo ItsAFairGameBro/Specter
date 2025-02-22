@@ -30,7 +30,7 @@ return function(C,Settings)
     local function FindFunction(funcNames)
         local found, required = 0, 100--C.GetDictLength(funcNames)
         local functsFound = {}
-        for _, funct in ipairs(C.getreg()) do
+        for _, funct in ipairs(C.getgc()) do
             if typeof(funct) == "function" then
                 local name = debug.info(funct, "n")
                 if table.find(funcNames, name) then
