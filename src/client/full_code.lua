@@ -11713,7 +11713,6 @@ return function(C,Settings)
     local CheckIfValid
     local CanPass = true
     local PassEvent = Instance.new("BindableEvent")
-    C.AddGlobalInstance(PassEvent)
     function C.FindFunction(funcNames, required)
         local found = 0
         local functsFound = {}
@@ -12113,7 +12112,6 @@ return function(C,Settings)
             end
         end
     end
-    C.RemoveGlobalInstance(PassEvent)
     PassEvent:Destroy()
 end]=],
     ["Modules/Binds"] = [[local UIS = game:GetService("UserInputService")
