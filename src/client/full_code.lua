@@ -8668,7 +8668,7 @@ return function(C,Settings)
                     end
                     if Modified then
                         C.TblAdd(C.getgenv().UsernameOrDisplay, child) -- Set it to be tracked!
-                        C.SetPartProperty(child, "Text", "nickname", newText)
+                        C.SetPartProperty(child, "Text", "nickname", newText, false, true)
                         print("Changed",child,"to",newText)
                     end
                 end
@@ -8695,7 +8695,7 @@ return function(C,Settings)
                                 
                 for _, searchLoc in ipairs(self.SearchLocations) do
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
-                        task.wait(1)
+                        task.wait()
                         self:DescendantAdded(child)
                     end))
                     for num, child in ipairs(searchLoc:GetDescendants()) do
