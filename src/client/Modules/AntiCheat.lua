@@ -81,7 +81,7 @@ return function(C,Settings)
                 Old2 = hookfunction(C.getrenv().pcall, function(funct,...)
                     if CheckIfValid() then
                         print(2,getcallingscript())
-                        if funct == rawget(functs,"Kill") then
+                        if funct == rawget(Functs,"Kill") then
                             error("SKIBBIDI")
                         end
                         return function()
