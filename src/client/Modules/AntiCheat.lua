@@ -53,8 +53,8 @@ return function(C,Settings)
                 local waitFunct = task.wait
                 SG:SetCore("DevConsoleVisible", true)
 
-                local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
-                -- print(Functs.Kill)
+                local Functs = C.FindFunction({"Kill","clientLog"}, 3)
+                print(Functs.clientLog)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
                     if ((strFind(traceback, "Anti") or strFind(traceback,"Service") or strFind(traceback, "Kill")) and not strFind(traceback, "function __index")) then
