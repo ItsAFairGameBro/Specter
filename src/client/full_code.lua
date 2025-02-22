@@ -7996,6 +7996,7 @@ local CP = game:GetService("ContentProvider")
 local SG = game:GetService("StarterGui")
 local HS = game:GetService("HttpService")
 local AS = game:GetService("AssetService")
+local CG = game:GetService("CoreGui")
 
 local MaxRelativeDist = 50
 local MaxFlingSpeed = 1e6
@@ -8649,7 +8650,7 @@ return function(C,Settings)
         ["nickname"]={
             Alias = {"nick"},
             Parameters={{Type="Players"}},
-            AfterTxt="Changed name in %.1fs",
+            AfterTxt=" in %.1fs",
             Functs = {},
             DescendantAdded=function(self, child)
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
@@ -8674,6 +8675,7 @@ return function(C,Settings)
             RunOnDestroy = function(self)
                 C.ClearFunctTbl(self.Functs)
             end,
+            SearchLocations = {C.PlayerGui, CG, workspace},
             Run = function(self, args)
                 local start = os.clock()
                 self:RunOnDestroy()
@@ -8681,7 +8683,7 @@ return function(C,Settings)
                 C.getgenv().OverrideUserData = C.getgenv().OverrideUserData or {}
 
                 local username = args[2]
-                local display = args[3] or username
+                local display = args[3]=="" and args[3] or username
                 for _, theirPlr in ipairs(args[1]) do
                     if username ~= "" then
                         C.getgenv().OverrideUserData[theirPlr.UserId] = {Name = username, DisplayName = display}
@@ -8689,16 +8691,16 @@ return function(C,Settings)
                         C.getgenv().OverrideUserData[theirPlr.UserId] = nil
                     end
                 end
-                
-                print(args[3] == "")
                                 
-                
-                table.insert(self.Functs,C.PlayerGui.DescendantAdded:Connect(function(child)
-                    self:DescendantAdded(child)
-                end))
-                for num, child in ipairs(C.PlayerGui:GetDescendants()) do
-                    self:DescendantAdded(child)
+                for _, searchLoc in ipairs(self.SearchLocations) do
+                    table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
+                        self:DescendantAdded(child)
+                    end))
+                    for num, child in ipairs(searchLoc:GetDescendants()) do
+                        self:DescendantAdded(child)
+                    end
                 end
+                
                 return true, os.clock() - start
             end
         },
