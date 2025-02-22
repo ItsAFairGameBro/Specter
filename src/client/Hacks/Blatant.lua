@@ -195,7 +195,7 @@ return function(C,Settings)
                     --    warn("[Blatant.Fly]: DumpLocation targeted BasePart inside C.char; re-parenting to workspace!")
                     --end
 
-					if enTbl.LookDirection then
+					if enTbl.LookDirection and enTbl.Mode == "Physics" then
 						alignOrien = Instance.new("AlignOrientation")
 						--alignOrien.MaxTorque = 10^6
                         alignOrien.Responsiveness = 200 -- Instant turn speed
@@ -273,6 +273,8 @@ return function(C,Settings)
 							* (enTbl.UseWalkSpeed and (C.human.WalkSpeed/C.Defaults.WalkSpeed) or 1)
 						if alignOrien then
 							alignOrien.CFrame = cf
+						elseif enTbl.LookDirection then
+							C.hrp.AssemblyAngularVelocity = cf.Rotation - C.hrp.Rotation
 						else
 							C.hrp.AssemblyAngularVelocity = Vector3.zero
 						end
