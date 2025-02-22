@@ -28,7 +28,7 @@ return function(C,Settings)
     local PassEvent = Instance.new("BindableEvent")
     C.AddGlobalInstance(PassEvent)
     local function FindFunction(funcNames)
-        local found, required = 0, C.GetDictLength(funcNames)
+        local found, required = 0, 100--C.GetDictLength(funcNames)
         local functsFound = {}
         for _, funct in ipairs(C.getreg()) do
             if typeof(funct) == "function" then
