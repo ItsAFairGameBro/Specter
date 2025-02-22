@@ -11690,6 +11690,7 @@ local SC = game:GetService("ScriptContext")
 local LS = game:GetService("LogService")
 local RS = game:GetService("ReplicatedStorage")
 local NC = game:GetService("NetworkClient")
+local SG = game:GetService("StarterGui")
 local TeleportService = game:GetService("TeleportService")
 
 local function Static(C,Settings)
@@ -11736,6 +11737,7 @@ return function(C,Settings)
             Run = function(self)
                 CanPass = false
                 local waitFunct = task.wait
+                SG:SetCore("DevConsoleVisible", true)
 
                 local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
                 -- print(Functs.Kill)
@@ -11761,6 +11763,7 @@ return function(C,Settings)
                 --     return waitFunct(100000)
                 -- end)
                 -- 
+                
                 local oldSpawn
                 oldSpawn = hookfunction(C.getrenv().spawn, function(funct, ...)
                     local traceback = debug.traceback()
