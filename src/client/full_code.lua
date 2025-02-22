@@ -8292,7 +8292,7 @@ return function(C,Settings)
 
                 local oldHuman = targetHuman
                 local newHuman = oldHuman:Clone()--(isR6 and false) and Instance.new("Humanoid") or oldHuman:Clone()----oldHuman:Clone()
-
+                oldHuman.Parent = nil
 
                 local newHuman_Animator = newHuman:FindFirstChild("Animator")
                 if newHuman_Animator then
@@ -8355,6 +8355,7 @@ return function(C,Settings)
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
+                oldHuman.Parent = targetChar
 
                 if oldChar_ForceField and oldChar_ForceField.Parent then
                     oldChar_ForceField.Parent = targetChar:FindFirstChild("HumanoidRootPart")
@@ -11736,17 +11737,17 @@ return function(C,Settings)
             Run = function(self)
                 CanPass = true
                 local waitFunct = task.wait
-                SG:SetCore("DevConsoleVisible", true)
+                -- SG:SetCore("DevConsoleVisible", true)
 
-                local Functs = C.FindFunction({"Kill","clientLog"}, 3)
-                print(Functs.clientLog)
-                CheckIfValid = function()
-                    local traceback = debug.traceback()
-                    if ((strFind(traceback, "Anti") or strFind(traceback,"Service") or strFind(traceback, "Kill")) and not strFind(traceback, "function __index")) then
-                        return true
-                    end
-                    return false
-                end
+                -- local Functs = C.FindFunction({"Kill","clientLog"}, 3)
+                -- print(Functs.clientLog)
+                -- CheckIfValid = function()
+                --     local traceback = debug.traceback()
+                --     if ((strFind(traceback, "Anti") or strFind(traceback,"Service") or strFind(traceback, "Kill")) and not strFind(traceback, "function __index")) then
+                --         return true
+                --     end
+                --     return false
+                -- end
                 -- hookfunction(coroutine.wrap, function()
                 --     print(debug.traceback("Yielding"))
                 --     while true do

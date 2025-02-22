@@ -308,7 +308,7 @@ return function(C,Settings)
 
                 local oldHuman = targetHuman
                 local newHuman = oldHuman:Clone()--(isR6 and false) and Instance.new("Humanoid") or oldHuman:Clone()----oldHuman:Clone()
-
+                oldHuman.Parent = nil
 
                 local newHuman_Animator = newHuman:FindFirstChild("Animator")
                 if newHuman_Animator then
@@ -371,6 +371,7 @@ return function(C,Settings)
                 if workspace.CurrentCamera.CameraSubject == newHuman then
                     workspace.CurrentCamera.CameraSubject = oldHuman
                 end
+                oldHuman.Parent = targetChar
 
                 if oldChar_ForceField and oldChar_ForceField.Parent then
                     oldChar_ForceField.Parent = targetChar:FindFirstChild("HumanoidRootPart")
