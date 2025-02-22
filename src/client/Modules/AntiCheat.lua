@@ -58,11 +58,12 @@ return function(C,Settings)
                     end
                     return false
                 end
-                Functs.Kill("DEATH")
+                
                 local OldKill = hookfunction(Functs.Kill, function(...)
                     print("KILL STOPPED",...)
                     return waitFunct(100000)
                 end)
+                task.spawn(Functs.Kill,"DEATH")
 
                 -- local OldKill = hookfunction(Functs.errorHandler or Functs.ErrorHandler, function(...)
                 --     print("CRASH STOPPED",...)
