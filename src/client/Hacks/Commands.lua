@@ -371,7 +371,6 @@ return function(C,Settings)
                 C.ApplyHumanoidDescription(newHuman, humanDesc)
                 oldHuman.Parent = targetChar
                 newHuman:Destroy()
-                RunS.RenderStepped:Wait()
                 if wasSpectating then
                     C.Camera.CameraSubject = oldHuman
                 end
