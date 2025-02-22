@@ -8654,6 +8654,7 @@ return function(C,Settings)
             Functs = {},
             DescendantAdded=function(self, child, selfCall)
                 if not selfCall and (child:IsDescendantOf(C.MainGui)) then
+                    print("return bc descendant of ",C.MainGui)
                     return
                 end
                 if child:IsA("TextLabel") or child:IsA("TextButton") or child:IsA("TextBox") then
