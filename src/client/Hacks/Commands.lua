@@ -676,6 +676,7 @@ return function(C,Settings)
                     local Modified = false
                     for num, theirPlr in ipairs(PS:GetPlayers()) do
                         local newUser = C.getgenv().OverrideUserData[theirPlr.UserId]
+                        print(newUser)
                         if newUser and (searchContent:find(theirPlr.Name:lower()) ~= nil or searchContent:find(theirPlr.DisplayName:lower()) ~= nil) then
                             Modified = true
                             
@@ -711,6 +712,7 @@ return function(C,Settings)
                                 
                 for _, searchLoc in ipairs(self.SearchLocations) do
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
+                        task.wait(1)
                         self:DescendantAdded(child)
                     end))
                     for num, child in ipairs(searchLoc:GetDescendants()) do
