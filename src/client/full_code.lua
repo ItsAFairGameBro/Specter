@@ -11736,9 +11736,9 @@ return function(C,Settings)
             Run = function(self)
                 CanPass = false
                 local waitFunct = task.wait
-                
+
                 local Functs = C.FindFunction({"Kill","errorHandler","ErrorHandler"}, 3)
-                print(Functs.Kill)
+                -- print(Functs.Kill)
                 CheckIfValid = function()
                     local traceback = debug.traceback()
                     if ((strFind(traceback, "Anti") or strFind(traceback,"Service") or strFind(traceback, "Kill")) and not strFind(traceback, "function __index")) then
@@ -11748,9 +11748,9 @@ return function(C,Settings)
                 end
                 for _, tbl in ipairs(C.getgc(true)) do
                     if typeof(tbl) == "table" then
-                        if rawget(tbl,"task.spawn") and rawget(tbl,"require") then
+                        if rawget(tbl,"task") and rawget(tbl,"require") then
                             print("FOUND TABLE")
-                            rawset(tbl,"spawn", function()
+                            hookfunction(rawget(tbl,"spawn"), function()
                                 print("Nope not spawning")
                             end)
                         end
