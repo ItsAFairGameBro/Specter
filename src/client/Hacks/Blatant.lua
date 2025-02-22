@@ -102,7 +102,7 @@ return function(C,Settings)
                 IsAnimationWhitelisted = function(self, animTrack)
                     if animTrack.Priority.Value > Enum.AnimationPriority.Movement.Value
                         and animTrack.Priority ~= Enum.AnimationPriority.Core then
-						print("Allowed:",animTrack.Animation.Name,animationTrack.Priority)
+						print("Allowed:",animTrack.Animation.Name,animTrack.Priority)
                         return true
                     elseif animTrack.Animation.Name == "ToolNoneAnim" then
                         return true

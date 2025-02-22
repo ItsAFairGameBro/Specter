@@ -32,6 +32,8 @@
         "getgc",
         "syn",
         "cloneref",
-        "setfpscap"
+        "setfpscap",
+        "isreadonly",
+        "setreadonly"
     ]
 }
