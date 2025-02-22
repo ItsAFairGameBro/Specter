@@ -17,7 +17,7 @@ local isStudio = RunS:IsStudio()
 local PrintName = "[Module Loader]"
 
 if isStudio then
-	task.wait(.3 - time())
+	task.wait(1 - time())
 end
 
 local C = {}
