@@ -8696,7 +8696,7 @@ return function(C,Settings)
             end,
             SearchLocations = {C.PlayerGui,
                 not C.isStudio and C.StringWait(CG,"RobloxGui"),
-                not C.isStudio and C.StringWait(CG,"RoactAppExperimentProvider"),
+                not C.isStudio and C.StringWait(CG,"RoactAppExperimentProvider",0),
                 workspace},
             Run = function(self, args)
                 local start = os.clock()
@@ -8716,6 +8716,9 @@ return function(C,Settings)
                 end
                                 
                 for _, searchLoc in ipairs(self.SearchLocations) do
+                    if not searchLoc then
+                        continue
+                    end
                     table.insert(self.Functs,searchLoc.DescendantAdded:Connect(function(child)
                         self:DescendantAdded(child)
                     end))
