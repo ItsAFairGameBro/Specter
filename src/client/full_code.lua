@@ -8696,7 +8696,7 @@ return function(C,Settings)
             end,
             SearchLocations = {C.PlayerGui,
                 not C.isStudio and C.StringWait(CG,"RobloxGui"),
-                not C.isStudio and C.StringWait(CG,"RoactAppExperimentProvider",0),
+                not C.isStudio and C.StringFind(CG,"RoactAppExperimentProvider"),
                 workspace},
             Run = function(self, args)
                 local start = os.clock()
