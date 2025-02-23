@@ -309,7 +309,6 @@ return function(C,Settings)
 
                 local oldHuman = targetHuman
                 local newHuman = oldHuman:Clone()--(isR6 and false) and Instance.new("Humanoid") or oldHuman:Clone()----oldHuman:Clone()
-                oldHuman.Parent = nil
 
                 local newHuman_Animator = newHuman:FindFirstChild("Animator")
                 if newHuman_Animator then
@@ -319,6 +318,7 @@ return function(C,Settings)
 
                 newHuman.Name = "FakeHuman"
                 newHuman.Parent = targetChar
+                oldHuman.Parent = nil
                 C.AddGlobalInstance(newHuman)
                 local Instances2Restore = {}
                 for num, accessory in ipairs(targetChar:GetDescendants()) do

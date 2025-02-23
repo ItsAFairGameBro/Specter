@@ -2469,7 +2469,7 @@ local function SetUpGame(C, Settings)
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
         local function childAdded(inst)
-            if inst and inst.Name == "Hammer" then
+            if inst and inst.Name == "Hammer" and inst:FindFirstChild("HammerEvent") then
                 local Handle = inst:WaitForChild("Handle",100)
                 local HammerEvent = inst:WaitForChild("HammerEvent", 100)
                 if not Handle or not HammerEvent then
@@ -2503,7 +2503,10 @@ local function SetUpGame(C, Settings)
         end
 
         C.AddObjectConnection(theirChar, "BeastHammerAdded", theirChar.ChildAdded:Connect(childAdded))
-        childAdded(theirChar:FindFirstChild("Hammer"))
+        local hammerMaybe = theirChar:FindFirstChild("HammerEvent",true)
+        if hammerMaybe then
+            childAdded(hammerMaybe.Parent)
+        end
     end)
     table.insert(C.PlayerAddedEventFuncts, function(theirPlr, wasAlreadyIn)
         local theTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
@@ -2641,7 +2644,7 @@ local function SetUpGame(C, Settings)
     function C.RescueSurvivor(capsule)
         if not capsule or not capsule:FindFirstChild("PodTrigger")
 					or not capsule.PodTrigger.CapturedTorso.Value then return end
-        if C.char:FindFirstChild("Hammer")~=nil or C.myTSM.Health.Value <= 0 then return end
+        if C.BeastChar == C.char or C.myTSM.Health.Value <= 0 then return end
         local Trigger=capsule:FindFirstChild("PodTrigger")
         if not Trigger then return end
         C.SetActionLabel(BotActionClone, `Rescuing {capsule.PodTrigger.CapturedTorso.Value.Parent.Name}`)
@@ -3012,7 +3015,7 @@ return function(C,Settings)
                     return false, "Lobby"
                 end
                 local theirTSM = theirPlr:WaitForChild("TempPlayerStatsModule")
-                if theirChar:FindFirstChild("Hammer") or theirTSM.IsBeast.Value then
+                if C.BeastChar == theirChar or theirTSM.IsBeast.Value then
                     return true, "Beast"
                 elseif theirTSM.Health.Value > 0 then
                     return true, "Survivor"
@@ -8293,7 +8296,6 @@ return function(C,Settings)
 
                 local oldHuman = targetHuman
                 local newHuman = oldHuman:Clone()--(isR6 and false) and Instance.new("Humanoid") or oldHuman:Clone()----oldHuman:Clone()
-                oldHuman.Parent = nil
 
                 local newHuman_Animator = newHuman:FindFirstChild("Animator")
                 if newHuman_Animator then
@@ -8303,6 +8305,7 @@ return function(C,Settings)
 
                 newHuman.Name = "FakeHuman"
                 newHuman.Parent = targetChar
+                oldHuman.Parent = nil
                 C.AddGlobalInstance(newHuman)
                 local Instances2Restore = {}
                 for num, accessory in ipairs(targetChar:GetDescendants()) do
