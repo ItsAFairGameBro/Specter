@@ -2342,11 +2342,11 @@ local function GetSharedHacks(C, Settings)
                     end
                     C.firesignal(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
                 end
-                local TradingPostButton = C.StringWait(C.PlayerGui,"ScreenGui.MenusTabFrame.TradingPostButton",10)
+                local TradingPostButton = C.StringWait(C.PlayerGui,"ScreenGui.MenusTabFrame.TradingPostButton",20)
                 if TradingPostButton then
                     C.SetPartProperty(TradingPostButton,"Visible",self.Shortcut,newValue or C)
                 else
-                    warn("TRADINGPOSTBUTTON NOT FOUND")
+                    warn("[FTF.GameImprovements] Trading Post Button NOT FOUND")
                 end
             end
         end,
@@ -3361,7 +3361,7 @@ return function(C,Settings)
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
-                                if debug.info(3, "n") ~= "" then
+                                if debug.info(4, "n") ~= "" then
                                     return
                                 end
                                 local isMe = isAncestorOf(myTSM, self)
@@ -10826,7 +10826,7 @@ return function(C,Settings)
                     -- Spoof TouchEnabled
                     C.HookMethod("__index",self.Shortcut .. "/SpoofKeyboard",newValue and self.EnTbl.SpoofKeyboard and function(theirScript,index,self,...)
                         if index == "touchenabled" then
-							print("sp00f t0uch")
+							-- print("sp00f t0uch")
                             return "Spoof", {false}
                         end
                     end)
