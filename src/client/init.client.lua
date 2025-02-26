@@ -79,6 +79,27 @@ local function RegisterFunctions()
 	C.hookmetamethod = isStudio and function() return end or hookmetamethod
 	C.newcclosure = isStudio and function(funct) return funct end or newcclosure
 	C.gethui = isStudio and function() return C.PlayerGui end or gethui
+	C.getgenv().setfpscap_function = nil
+	C.setfpscap = setfpscap or function(TARGET_FRAME_RATE)
+		assert(TARGET_FRAME_RATE, "[C.setfpscap]: TARGET_FRAME_RATE is nil or false!")
+
+		if C.getgenv().setfpscap_function then
+			C.RemoveGlobalConnection(C.getgenv().setfpscap_function)
+		end
+		if TARGET_FRAME_RATE == 0 or not TARGET_FRAME_RATE then
+			C.getgenv().setfpscap_function = nil
+		else
+			local frameStart = os.clock()
+			C.getgenv().setfpscap_function = C.AddGlobalConnection(RunS.PreSimulation:Connect(function()
+				while os.clock() - frameStart < 1 / TARGET_FRAME_RATE do
+					-- We do nothing until the target time has elapsed
+				end
+			
+				-- Mark the start of the next frame right before this one is rendered
+				frameStart = os.clock()
+			end))
+		end
+	end
 	C.firetouchinterest = function(part1,part2,number)
 		if not firetouchinterest then
 			return

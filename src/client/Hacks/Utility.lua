@@ -143,9 +143,9 @@ return function(C,Settings)
                 FPSRate = 10,
                 SetFPS = function(self, enabled)
                     if enabled then
-                        setfpscap(self.FPSRate) -- enable FPS cap
+                        C.setfpscap(self.FPSRate) -- enable FPS cap
                     else
-                        setfpscap(0) -- disable FPS cap
+                        C.setfpscap(0) -- disable FPS cap
                     end
                 end,
                 Activate = function(self, newValue, firstRun)
@@ -158,7 +158,7 @@ return function(C,Settings)
                                 C.AddNotification("FPS Cap", "FPS Cap Added After Delayed Start")
                             end))
                         end
-                    elseif setfpscap and not firstRun then
+                    elseif C.setfpscap and not firstRun then
                         self:SetFPS(false)
                     end
                     if not firstRun and C.char then
@@ -180,7 +180,7 @@ return function(C,Settings)
                     return table.find(C.AdminUsers, theirPlr.Name:lower())
                 end,
                 Options = {
-                    setfpscap and {
+                    C.setfpscap and {
                         Type = Types.Toggle,
                         Default = false,
                         Title = "FPS Cap",
