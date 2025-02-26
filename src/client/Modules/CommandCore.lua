@@ -227,18 +227,12 @@ return function(C,Settings)
     local hasNewChat = TCS.ChatVersion == Enum.ChatVersion.TextChatService
 
     local function registerNewChatBar(_,firstRun)
-        local sendButton = hasNewChat and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
+        local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
         chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
             "Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar" or "ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox")
-
+        if not chatBar then return end
         local sendTheMessage
         if hasNewChat then
-            sendButton.Visible = false
-            local mySendButton = sendButton:Clone()
-            mySendButton.Parent = sendButton.Parent
-            mySendButton.Visible = true
-            mySendButton.Name = "MySendButton"
-            C.AddGlobalInstance(mySendButton)
             sendTheMessage = function(message,dontSetTB)
                 message = typeof(message)=="string" and message or chatBar.Text
                 if message == "" then
@@ -273,17 +267,27 @@ return function(C,Settings)
                     chatBar.Text = ""
                 end
             end
-            mySendButton.MouseButton1Up:Connect(sendTheMessage)
-            mySendButton.Destroying:Connect(function()
-                if sendButton then
-                    sendButton.Visible = true
-                end
-            end)
+            if sendButton then
+                sendButton.Visible = false
+                local mySendButton = sendButton:Clone()
+                mySendButton.Parent = sendButton.Parent
+                mySendButton.Visible = true
+                mySendButton.Name = "MySendButton"
+                C.AddGlobalInstance(mySendButton)
+                mySendButton.MouseButton1Up:Connect(sendTheMessage)
+                mySendButton.Destroying:Connect(function()
+                    if sendButton then
+                        sendButton.Visible = true
+                    end
+                end)
+            end
         end
         local connectionsFuncts = {}
-        for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
-            connection:Disable()
-            table.insert(connectionsFuncts,connection)
+        if chatBar then
+            for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
+                connection:Disable()
+                table.insert(connectionsFuncts,connection)
+            end
         end
         local lastText
         local lastUpd = -5

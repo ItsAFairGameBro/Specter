@@ -2068,6 +2068,16 @@ local SETS_DISPLAY = {
         [39] = "Ghal0085",
         [40] = "Hhal0085",
     },
+    ["Valentine 2025"] = {
+        [1] = "Gval0006",
+        [2] = "Hval0006",
+        [3] = "Gval0005",
+        [4] = "Hval0005",
+        [5] = "Gval0002",
+        [6] = "Hval0002",
+        [7] = "Gval0003",
+        [8] = "Hval0003",
+    },
 }
 local BotActionClone
 
@@ -2908,6 +2918,9 @@ return function(C,Settings)
                     return true, found and `In {found}` or `Not Found`, os.clock() - TimeStart
                 end,
             },
+            ["stalktrader"] = IN_START_PLACE and {
+
+            },
             ["stats"] = {
                 Parameters={{Type="Players"}},
                 Alias = {},
@@ -2942,7 +2955,7 @@ return function(C,Settings)
                     return true, "Done", os.clock() - StartTime
                 end,
             },
-            ["devgeteventsets"] = C.enHacks.Settings.DeveloperMode.En and {
+            ["devgeteventsets"] = C.Jerk and {
                 Parameters = {},
                 Alias = {},
                 AfterTxt = " Copied",
@@ -2953,33 +2966,45 @@ return function(C,Settings)
                     ]]
 
                     local RS = game:GetService("ReplicatedStorage")
-                    local AllowedPrefixes = {"Halloween", "Christmas", "Spring", "Easter"}
+                    local holiday_map = {
+                        ["hal"] = "Halloween",
+                        ["mas"] = "Christmas",
+                        ["pat"] = "Patrick",
+                        ["ani"] = "Anniversary",
+                        ["val"] = "Valentine",
+                        ["spr"] = "Spring",
+                        ["sum"] = "Summer",
+                        ["eas"] = "Easter",
+                        ["aut"] = "Autumn",
+                        ["lny"] = "Lunar"
+                    }
                     local CurrentPrefix = nil
                     local ShopBundles = C.require(RS.ShopBundles)
                     local Items = {}
-                    local function isValid(name,isBundle)
-                        if isBundle then
-                            return true
-                        end
-                        local DidFind = false
-                        for _, prefix in ipairs(AllowedPrefixes) do
-                            if name:lower():find(prefix:lower()) then
-                                DidFind = prefix
+                    local function getEventName(name)
+                        local code = string.sub(name, 2, 4)
+                        for key, value in pairs(holiday_map) do
+                            if code == key then
+                                return value
                             end
                         end
-                        if (DidFind) then
+                        return nil
+                    end
+                    local function isValid(name,isBundle)
+                        local DidFind = getEventName(name)
+                        if DidFind then
                             if not CurrentPrefix then
                                 CurrentPrefix = DidFind
                             elseif CurrentPrefix ~= DidFind then
                                 error(`{CurrentPrefix} and {DidFind} are two different prefixes that should not co-exist!`)
                             end
                         end
-                        return DidFind ~= false
+                        return DidFind ~= nil
                     end
 
                     local ShopCrates = C.require(RS.ShopCrates)
                     for name, itemData in pairs(ShopCrates) do
-                        if isValid(name) then
+                        if isValid(itemData.Prizes[1]) then
                             for num2, item in ipairs(itemData.Prizes) do
                                 table.insert(Items, item)
                             end
@@ -2987,14 +3012,11 @@ return function(C,Settings)
                     end
                     for name, itemData in pairs(ShopBundles) do
                         assert(name == itemData.Name, `Bundle Name ({itemData.Name}) and Bundle Key ({name}) are different!`)
-                        if isValid(itemData.Name, true) then
+                        if isValid(itemData.Items[1], true) then
                             for num2, item in ipairs(itemData.Items) do
                                 table.insert(Items, item)
                             end
                         end
-                    end
-                    if #Items == 0 then
-                        return false, "No Event Sets Found!"
                     end
 
                     local Year = DateTime.now():ToLocalTime().Year
@@ -3456,8 +3478,8 @@ return function(C,Settings)
                                     end
                                 end
                                 local Result = (self.myKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #self.SurvivorList==1
-                                --print("CanCapture Called2:", Result, "---",
-                                    --myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
+                                print("CanCapture Called2:", Result, "---",
+                                    myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
                             end
                             self:FreezeMyself(canCapture)
@@ -12481,18 +12503,12 @@ return function(C,Settings)
     local hasNewChat = TCS.ChatVersion == Enum.ChatVersion.TextChatService
 
     local function registerNewChatBar(_,firstRun)
-        local sendButton = hasNewChat and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
+        local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
         chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
             "Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar" or "ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox")
-
+        if not chatBar then return end
         local sendTheMessage
         if hasNewChat then
-            sendButton.Visible = false
-            local mySendButton = sendButton:Clone()
-            mySendButton.Parent = sendButton.Parent
-            mySendButton.Visible = true
-            mySendButton.Name = "MySendButton"
-            C.AddGlobalInstance(mySendButton)
             sendTheMessage = function(message,dontSetTB)
                 message = typeof(message)=="string" and message or chatBar.Text
                 if message == "" then
@@ -12527,17 +12543,27 @@ return function(C,Settings)
                     chatBar.Text = ""
                 end
             end
-            mySendButton.MouseButton1Up:Connect(sendTheMessage)
-            mySendButton.Destroying:Connect(function()
-                if sendButton then
-                    sendButton.Visible = true
-                end
-            end)
+            if sendButton then
+                sendButton.Visible = false
+                local mySendButton = sendButton:Clone()
+                mySendButton.Parent = sendButton.Parent
+                mySendButton.Visible = true
+                mySendButton.Name = "MySendButton"
+                C.AddGlobalInstance(mySendButton)
+                mySendButton.MouseButton1Up:Connect(sendTheMessage)
+                mySendButton.Destroying:Connect(function()
+                    if sendButton then
+                        sendButton.Visible = true
+                    end
+                end)
+            end
         end
         local connectionsFuncts = {}
-        for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
-            connection:Disable()
-            table.insert(connectionsFuncts,connection)
+        if chatBar then
+            for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
+                connection:Disable()
+                table.insert(connectionsFuncts,connection)
+            end
         end
         local lastText
         local lastUpd = -5
@@ -20211,7 +20237,7 @@ function C.DebugMessage(type,message)
 end
 
 function C.StringWait(start,path,timeout,seperationChar)
-	if not start then return end
+	if not start or (C.isStudio and start == CG) then return end
 	local current = start
 	local pathTbl = path:split(seperationChar or ".")
 	for i,v in ipairs(pathTbl) do

@@ -311,7 +311,7 @@ function C.DebugMessage(type,message)
 end
 
 function C.StringWait(start,path,timeout,seperationChar)
-	if not start then return end
+	if not start or (C.isStudio and start == CG) then return end
 	local current = start
 	local pathTbl = path:split(seperationChar or ".")
 	for i,v in ipairs(pathTbl) do
