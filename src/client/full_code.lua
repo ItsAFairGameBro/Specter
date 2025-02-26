@@ -2479,7 +2479,7 @@ local function SetUpGame(C, Settings)
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
         local function childAdded(inst)
-            if inst and inst.Name == "Hammer" and inst:FindFirstChild("HammerEvent") then
+            if inst and inst.Name == "Hammer" then
                 local Handle = inst:WaitForChild("Handle",100)
                 local HammerEvent = inst:WaitForChild("HammerEvent", 100)
                 if not Handle or not HammerEvent then
@@ -10639,8 +10639,8 @@ return function(C,Settings)
                             return -- do not double do it!
                         end
                         if self:HasAdminAccess(theirPlr) then
-                            self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+								self.ChatConnected = true
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)

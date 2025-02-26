@@ -539,7 +539,7 @@ local function SetUpGame(C, Settings)
     end)
     table.insert(C.CharacterAddedEventFuncts, function(theirPlr, theirChar, theirHuman)
         local function childAdded(inst)
-            if inst and inst.Name == "Hammer" and inst:FindFirstChild("HammerEvent") then
+            if inst and inst.Name == "Hammer" then
                 local Handle = inst:WaitForChild("Handle",100)
                 local HammerEvent = inst:WaitForChild("HammerEvent", 100)
                 if not Handle or not HammerEvent then
