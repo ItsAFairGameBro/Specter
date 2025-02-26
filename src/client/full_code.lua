@@ -3535,8 +3535,8 @@ return function(C,Settings)
                                     end
                                 end
                                 local Result = (self.myKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #self.SurvivorList==1
-                                print("CanCapture Called2:", Result, "---",
-                                    keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
+                                -- print("CanCapture Called2:", Result, "---",
+                                    -- keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
                             end
                             self:FreezeMyself(canCapture)
@@ -3660,7 +3660,7 @@ return function(C,Settings)
                     end,
                     Events = {
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
-                            task.wait(1)
+                            -- task.wait(1)
                             self:StartUp()
                         end,
                         MySurvivorRemoved = function(self)
