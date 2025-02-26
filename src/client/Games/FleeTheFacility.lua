@@ -402,6 +402,13 @@ local function GetSharedHacks(C, Settings)
                     end
                     C.firesignal(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
                 end
+                local TradingPostButton = C.StringWait(C.PlayerGui,"MenusTabFrame.TradingPostButton",10)
+                if TradingPostButton then
+                    C.SetPartProperty(TradingPostButton,"Visible",self.Shortcut,true)
+                else
+                    C.ResetPartProperty(TradingPostButton,"Visible",self.Shortcut)
+                    warn("TRADINGPOSTBUTTON NOT FOUND")
+                end
             end
         end,
         Events = {
@@ -1025,10 +1032,8 @@ return function(C,Settings)
                             if TradeLocalScript and TradeLocalScript.Parent then
                                 TradeLocalScript.Enabled = true
                             end
-                            C.SetActionLabel(ActionClone, `Parsed {users} Users From {servers} Servers!`)
-                            task.wait(1)
                             for s = 5, 1, -1 do
-                                C.SetActionLabel(ActionClone, `Parsed {users} Users From {servers} Servers ({s})`)
+                                C.SetActionLabel(ActionClone, `{users} Users In {servers} Servers ({s})`)
                                 task.wait(1)
                             end
                         end
