@@ -979,7 +979,65 @@ return function(C,Settings)
                 end,
             },
             ["stalktrader"] = IN_START_PLACE and {
+                Parameters={{Type="User"}},
+                Alias = {"stalk"},
+                AfterTxt = " with %d targets in progress",
+                Priority = -7,
+                RunOnDestroy = function(self, args)
+                    C.RemoveAction("stalktrader")
+                end,
+                Run = function(self,args)
+                    
+                    local TimeStart = os.clock()
+                    local targets = C.GetFriendsFunct(args[1][2])
+                    table.insert(targets, {["SortName"]=args[1][1]:lower()})
+                    C.AddAction({Name="stalktrader",Title="Stalking "..args[1][1],Tags={"RemoveOnDestroy"},Time=function(ActionClone,info)
+                        while true do
+                            C.SetActionLabel(ActionClone, "Getting from server...")
+                            local TradeLocalScript = C.PlayerGui:FindFirstChild("TradePostMenuLocalScript", true)
+                            if TradeLocalScript then
+                                TradeLocalScript.Enabled = false
+                            end
 
+                            local result, signal, dict = SendWaitRemoteEvent("ReceiveTradingPostPlayersList", "RequestTradingPostPlayersList")
+                            if not result then
+                                return false, `Failed Getting From Server: {signal}`
+                            end
+                            C.SetActionLabel(ActionClone, "Parsing data...")
+
+                            local found, count = false, 0
+                            for gameID, data in pairs(dict) do
+                                count+=1
+                                for key, val in ipairs(data.namesList) do
+                                    if table.find(targets, val:lower()) then
+                                        found = val
+                                        break
+                                    end
+                                end
+                                if found then
+                                    task.spawn(function()
+                                        if C.Prompt(`Join {found} In Trading? ({#data.namesList} Players)`, table.concat(data.namesList,"\t"), "Y/N") == true then
+                                            C.ServerTeleport(1738581510,gameID)
+                                        end
+                                    end)
+                                    found = gameID
+                                    self:RunOnDestroy()
+                                end
+                            end
+                            if TradeLocalScript and TradeLocalScript.Parent then
+                                TradeLocalScript.Enabled = true
+                            end
+                            C.SetActionLabel(ActionClone, `Parsed {count} Users!`)
+                            task.wait(1)
+                            for s = 5, 1, -1 do
+                                C.SetActionLabel(ActionClone, `Parsed {count} Users ({s})`)
+                                task.wait(1)
+                            end
+                        end
+                    end})
+                    
+                    return true, #targets
+                end,
             },
             ["stats"] = {
                 Parameters={{Type="Players"}},
