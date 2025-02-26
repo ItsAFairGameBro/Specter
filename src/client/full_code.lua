@@ -2923,11 +2923,8 @@ return function(C,Settings)
                 Alias = {"stalk"},
                 AfterTxt = " with %d targets in progress",
                 Priority = -7,
-                RunOnDestroy = function(self, args)
-                    C.RemoveAction("stalktrader")
-                end,
                 Run = function(self,args)
-                    
+                    C.RemoveAction("stalktrader")
                     local TimeStart = os.clock()
                     local targets = C.GetFriendsFunct(args[1][2])
                     table.insert(targets, {["SortName"]=args[1][1]:lower()})
@@ -2945,10 +2942,11 @@ return function(C,Settings)
                             end
                             C.SetActionLabel(ActionClone, "Parsing data...")
 
-                            local found, count = false, 0
+                            local found, servers, users = false, 0, 0
                             for gameID, data in pairs(dict) do
-                                count+=1
+                                servers+=1
                                 for key, val in ipairs(data.namesList) do
+                                    users+=1
                                     if table.find(targets, val:lower()) then
                                         found = val
                                         break
@@ -2967,10 +2965,10 @@ return function(C,Settings)
                             if TradeLocalScript and TradeLocalScript.Parent then
                                 TradeLocalScript.Enabled = true
                             end
-                            C.SetActionLabel(ActionClone, `Parsed {count} Users!`)
+                            C.SetActionLabel(ActionClone, `Parsed {users} Users From {servers} Servers!`)
                             task.wait(1)
                             for s = 5, 1, -1 do
-                                C.SetActionLabel(ActionClone, `Parsed {count} Users ({s})`)
+                                C.SetActionLabel(ActionClone, `Parsed {users} Users From {servers} Servers ({s})`)
                                 task.wait(1)
                             end
                         end
@@ -3482,6 +3480,7 @@ return function(C,Settings)
                     HasVerification = function()
                         for num, theirPlr in ipairs(C.GetPlayerListOfType({Survivor = true,Beast=true,Lobby=false})) do
                             if not table.find(C.BotUsers, theirPlr.Name:lower()) then
+                                print("Not running because",theirPlr,"not verified botter!")
                                 return false
                             end
                         end
@@ -3537,7 +3536,7 @@ return function(C,Settings)
                                 end
                                 local Result = (self.myKey==keyNeeded and not C.plr:GetAttribute("HasCaptured")) or C.plr:GetAttribute("HasRescued") or #self.SurvivorList==1
                                 print("CanCapture Called2:", Result, "---",
-                                    myRunerPlrKey,keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
+                                    keyNeeded,C.plr:GetAttribute("HasCaptured"),C.plr:GetAttribute("HasRescued"))
                                 return Result
                             end
                             self:FreezeMyself(canCapture)
@@ -3587,7 +3586,7 @@ return function(C,Settings)
                         C.getgenv().Rescued = nil
                         self.SurvivorList = nil
                         if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled or not self:HasVerification() then
-                            --print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
+                            print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
                         local inGame, role = C.isInGame(C.char)
