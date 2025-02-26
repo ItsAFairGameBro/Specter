@@ -240,9 +240,14 @@ return function(C,Settings)
                                     end
                                 end))
                                 --print("Chat Connected Because Of User",theirPlr)
-                            else
-                                C.CreateSysMessage(`[Utility.Bot]: New Chat Service is not supportted!`)
-                                warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
+                            elseif self:HasAdminAccess(theirPlr) then
+								table.insert(self.Functs, theirPlr.Chatted:Connect(function(msg)
+									if msg:sub(1,1) == "/" then
+										C.RunCommand(msg, true)
+									end
+								end))
+                                C.CreateSysMessage(`[Utility.Bot]: New Chat Service is experimental!`)
+                                -- warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
                             end
                         end
                     end,

@@ -1646,7 +1646,7 @@ return function(C,Settings)
                         C.getgenv().Rescued = nil
                         self.SurvivorList = nil
                         if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled or not self:HasVerification() then
-                            print("Disabled: ",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
+                            print("Disabled:",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
                         end
                         local inGame, role = C.isInGame(C.char)
@@ -1720,6 +1720,7 @@ return function(C,Settings)
                     end,
                     Events = {
                         BeastHammerAdded = function(self,theirPlr,theirChar,theirHuman)
+                            task.wait(1)
                             self:StartUp()
                         end,
                         MySurvivorRemoved = function(self)
