@@ -246,7 +246,7 @@ return function(C,Settings)
 										C.RunCommand(msg, true)
 									end
 								end))
-                                C.CreateSysMessage(`[Utility.Bot]: New Chat Service is experimental!`)
+                                -- C.CreateSysMessage(`[Utility.Bot]: New Chat Service is experimental!`)
                                 -- warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
                             end
                         end
