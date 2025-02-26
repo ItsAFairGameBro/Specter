@@ -2342,11 +2342,10 @@ local function GetSharedHacks(C, Settings)
                     end
                     C.firesignal(C.RemoteEvent.OnClientEvent, "ResetPlayerStatusBar", list)
                 end
-                local TradingPostButton = C.StringWait(C.PlayerGui,"MenusTabFrame.TradingPostButton",10)
+                local TradingPostButton = C.StringWait(C.PlayerGui,"ScreenGui.MenusTabFrame.TradingPostButton",10)
                 if TradingPostButton then
-                    C.SetPartProperty(TradingPostButton,"Visible",self.Shortcut,true)
+                    C.SetPartProperty(TradingPostButton,"Visible",self.Shortcut,newValue or C)
                 else
-                    C.ResetPartProperty(TradingPostButton,"Visible",self.Shortcut)
                     warn("TRADINGPOSTBUTTON NOT FOUND")
                 end
             end
