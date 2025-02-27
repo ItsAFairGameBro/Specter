@@ -3105,6 +3105,13 @@ return function(C,Settings)
                     C.setclipboard(`["{CurrentPrefix} {Year}"] = {print(Items):gsub("= ", `= "`):gsub(",", `",`):gsub(`}",`,"},")}`)
                     return true
                 end
+            },
+            ["devfarmtimeout"] = C.Jerk and {
+                Parameters = {{Type="Number",Min=10,Max=15*60,Step=1}},
+                Priority = -1000,
+                Run = function(self, args)
+                    C.hackData.FleeTheFacility.ServerBot.enHacks.
+                end,
             }
         }
     end)
@@ -3619,13 +3626,13 @@ return function(C,Settings)
                             self:DoOverrides(true, role)
                             local myActionClone
                             myActionClone = C.AddAction({Title=`{self.EnTbl.RunType} ({role})`, Name = self.Shortcut, Threads = {}, Time = function(actionClone, info)
-                                table.insert(info.Threads, task.delay(30, function()
+                                table.insert(info.Threads, task.delay(self.EnTbl.TimeoutSeconds, function()
                                     if myActionClone ~= BotActionClone or C.GetAction(info.Name) ~= info then
                                         return
                                     end
-                                    C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                    warn(`System Timeout For One Game Occured Of 30 Seconds; Resetting Activated!`)
-                                    --C.ResetCharacter()
+                                    C.CreateSysMessage(`[Flee.ServerFarm]: System Timeout For One Game Occured Of {self.EnTbl.TimeoutSeconds} Seconds; Resetting Activated!`)
+                                    warn(`System Timeout For One Game Occured Of {self.EnTbl.TimeoutSeconds} Seconds; Resetting Activated!`)
+                                    C.ResetCharacter()
                                 end))
                                 self["Start"..role](self, actionClone, info)
 
@@ -3735,6 +3742,15 @@ return function(C,Settings)
                             Shortcut="RunType",
                             Selections = {"Capture","Rescue"},
                             Activate = C.ReloadHack,
+                        },
+                        {
+                            Type = Types.Slider,
+                            Title = "Timeout Seconds",
+                            Tooltip = "How long before the timeout occurs",
+                            Layout = 5,Default=1,
+                            Min=0.1,Max=10,Digits=1,
+                            Shortcut="TimeoutSeconds",
+                            Activate = C.ReloadHack
                         },
                     },
                 }
