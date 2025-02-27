@@ -3404,8 +3404,7 @@ return function(C,Settings)
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
                                 local functName = debug.info(4, "n")
-                                if functName ~= "" then
-                                    print(functName)
+                                if functName == "ResetPlayerStatusBar" then
                                     return
                                 end
                                 local isMe = isAncestorOf(myTSM, self)
