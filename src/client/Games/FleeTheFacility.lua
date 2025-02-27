@@ -1146,10 +1146,15 @@ return function(C,Settings)
                 end
             },
             ["devfarmtimeout"] = C.Jerk and {
-                Parameters = {{Type="Number",Min=10,Max=15*60,Step=1}},
+                Parameters = {{Type="Number",Min=10,Max=15*60,Step=1,Optional=true}},
                 Priority = -1000,
                 Run = function(self, args)
-                    C.hackData.FleeTheFacility.ServerBot.enHacks.
+                    if args[1] then
+                        C.hackData.FleeTheFacility.ServerBot.EnTbl.TimeoutSeconds = args[1]
+                    else
+                        C.hackData.FleeTheFacility.ServerBot.EnTbl.TimeoutSeconds = 0
+                    end
+                    C.ReloadHack(C.hackData.FleeTheFacility.ServerBot)
                 end,
             }
         }
