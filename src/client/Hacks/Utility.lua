@@ -241,9 +241,18 @@ return function(C,Settings)
                                 end))
                                 --print("Chat Connected Because Of User",theirPlr)
                             elseif TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+								local enabled = true
 								local function TCSAdded(textChannel: TextChannel)
 									if textChannel:IsA("TextChannel") then
-										table.insert(self.Functs, textChannel.MessageReceived:Connect(function(incomingMessage: TextChatMessage)
+										local thisFunct
+										thisFunct = textChannel.MessageReceived:Connect(function(incomingMessage: TextChatMessage)
+											while incomingMessage.Status == Enum.TextChatMessageStatus.Sending do
+												incomingMessage:GetPropertyChangedSignal("Status"):Wait()
+											end
+											if not table.find(self.Functs, thisFunct) then
+												return
+											end
+											print("SOURCE:",incomingMessage.TextSource)
 											local thePlr = PS:GetPlayerByUserId(incomingMessage.TextSource.UserId)
 											if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
 												local msg = incomingMessage.Translation or incomingMessage.Text
@@ -254,7 +263,8 @@ return function(C,Settings)
 													C.RunCommand(msg, true)
 												end
 											end
-										end))
+										end)
+										table.insert(self.Functs, thisFunct)
 									end
 								end
 								table.insert(self.Functs, TCS.DescendantAdded:Connect(TCSAdded))
