@@ -247,6 +247,7 @@ return function(C,Settings)
 										local thisFunct
 										thisFunct = textChannel.MessageReceived:Connect(function(incomingMessage: TextChatMessage)
 											while incomingMessage.Status == Enum.TextChatMessageStatus.Sending do
+												print("Waiting for filtering!")
 												incomingMessage:GetPropertyChangedSignal("Status"):Wait()
 											end
 											if not table.find(self.Functs, thisFunct) or not incomingMessage.TextSource then
@@ -255,7 +256,7 @@ return function(C,Settings)
 											-- print("SOURCE:",incomingMessage.TextSource, incomingMessage.Translation, incomingMessage.Text)
 											local thePlr = PS:GetPlayerByUserId(incomingMessage.TextSource.UserId)
 											if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
-												local msg = incomingMessage.Translation or incomingMessage.Text
+												local msg = incomingMessage.Translation:len() > 0 and incomingMessage.Translation or incomingMessage.Text
 												if not msg then
 													print("Message Not Found!")
 													return
