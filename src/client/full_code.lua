@@ -3406,8 +3406,8 @@ return function(C,Settings)
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
                                 -- local functName = debug.info(4, "n")
-                                local functName2 = getinfo(5, "n")
-                                if functName2 == "ResetPlayerStatusBar" then
+                                local success, functName2 = pcall(getinfo,5, "n")
+                                if success and functName2 == "ResetPlayerStatusBar" then
                                     return
                                 end
                                 -- print(functName2)
