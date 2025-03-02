@@ -10728,16 +10728,21 @@ return function(C,Settings)
 											if not table.find(self.Functs, thisFunct) or not incomingMessage.TextSource then
 												return
 											end
-											print("SOURCE:",incomingMessage.TextSource, incomingMessage.Translation, incomingMessage.Text)
+											-- print("SOURCE:",incomingMessage.TextSource, incomingMessage.Translation, incomingMessage.Text)
 											local thePlr = PS:GetPlayerByUserId(incomingMessage.TextSource.UserId)
 											if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
 												local msg = incomingMessage.Translation or incomingMessage.Text
 												if not msg then
+													print("Message Not Found!")
 													return
 												end
 												if msg:sub(1,1) == "/" then
 													C.RunCommand(msg, true)
+												else
+													print(`Message doesn't start with "/": "{msg}"`)
 												end
+											else
+												print(`USER NOT VALID: {thePlr}`)
 											end
 										end)
 										table.insert(self.Functs, thisFunct)
