@@ -3397,7 +3397,7 @@ return function(C,Settings)
                         local myTSM = C.myTSM
                         local isAncestorOf = myTSM.IsAncestorOf
                         local traceback = debug.traceback
-                        local getinfo = debug.getinfo
+                        local getinfo = debug.info
                         local find = string.find
 
                         local lobbyPlrs = self.EnTbl.LobbyPlayers
@@ -3410,7 +3410,7 @@ return function(C,Settings)
                                 if functName2 == "ResetPlayerStatusBar" then
                                     return
                                 end
-                                print(functName, functName2)
+                                -- print(functName2)
                                 local isMe = isAncestorOf(myTSM, self)
                                 local theValue = toStr(self)
                                 if theValue == "Health" then
