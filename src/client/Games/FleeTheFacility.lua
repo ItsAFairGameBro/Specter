@@ -1427,22 +1427,24 @@ return function(C,Settings)
                         local myTSM = C.myTSM
                         local isAncestorOf = myTSM.IsAncestorOf
                         local traceback = debug.traceback
+                        local getinfo = debug.getinfo
                         local find = string.find
 
                         local lobbyPlrs = self.EnTbl.LobbyPlayers
+                        local getraw = rawget
                         local OldIndex
                         OldIndex = C.HookMethod("__index",self.Shortcut,newValue and function(theirScript,index,self,...)
                             if (toStr(theirScript) == "LocalGuiScript") then
                                 -- local functName = debug.info(4, "n")
-                                local functName2 = debug.info(5, "n")
+                                local functName2 = getinfo(5, "n")
                                 if functName2 == "ResetPlayerStatusBar" then
                                     return
                                 end
-                                -- print(functName, functName2)
+                                print(functName, functName2)
                                 local isMe = isAncestorOf(myTSM, self)
                                 local theValue = toStr(self)
                                 if theValue == "Health" then
-                                    local spoofHP = (isMe and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
+                                    local spoofHP = (isMe and 0) or ((lobbyPlrs or not getraw(C, "GameActive")) and 100)
                                     if spoofHP then
                                         return "Spoof", {spoofHP}
                                     end
@@ -1467,7 +1469,6 @@ return function(C,Settings)
                         --end
                         local OldNamecall
                         local FindChild = workspace.FindFirstChild
-                        local getraw = rawget
                         local GetProp = C.GetPropertySafe
                         OldNamecall = C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,name,recursive)
                             if name == "_LightingSettings" or name == "DefaultLightingSettings" then
