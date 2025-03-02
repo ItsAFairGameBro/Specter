@@ -10700,8 +10700,8 @@ return function(C,Settings)
                             return -- do not double do it!
                         end
                         if self:HasAdminAccess(theirPlr) then
+							self.ChatConnected = true
                             if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
-								self.ChatConnected = true
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
@@ -10716,14 +10716,30 @@ return function(C,Settings)
                                     end
                                 end))
                                 --print("Chat Connected Because Of User",theirPlr)
-                            elseif self:HasAdminAccess(theirPlr) then
-								table.insert(self.Functs, theirPlr.Chatted:Connect(function(msg)
-									if msg:sub(1,1) == "/" then
-										C.RunCommand(msg, true)
+                            elseif TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+								local function TCSAdded(textChannel: TextChannel)
+									if textChannel:IsA("TextChannel") then
+										table.insert(self.Functs, textChannel.MessageReceived:Connect(function(incomingMessage: TextChatMessage)
+											local thePlr = PS:GetPlayerByUserId(incomingMessage.TextSource.UserId)
+											if thePlr and thePlr ~= C.plr and self:HasAdminAccess(thePlr) then
+												local msg = incomingMessage.Translation or incomingMessage.Text
+												if not msg then
+													return
+												end
+												if msg:sub(1,1) == "/" then
+													C.RunCommand(msg, true)
+												end
+											end
+										end))
 									end
-								end))
-                                -- C.CreateSysMessage(`[Utility.Bot]: New Chat Service is experimental!`)
-                                -- warn("[Utility.Bot]: New Chat Service Not Supported!",theirPlr)
+								end
+								table.insert(self.Functs, TCS.DescendantAdded:Connect(TCSAdded))
+								for _, textChannel in ipairs(TCS:GetDescendants()) do
+									TCSAdded(textChannel)
+								end
+							else
+                                C.CreateSysMessage(`[Utility.Bot]: Unknown Chat Service is Not Supported: {TCS.ChatVersion.Name}!`)
+                                warn("[Utility.Bot]: New Chat Service Not Supported!",TCS.ChatVersion.Name)
                             end
                         end
                     end,
