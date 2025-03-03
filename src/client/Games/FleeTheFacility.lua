@@ -1512,17 +1512,33 @@ return function(C,Settings)
                     Layout = 12,
                     Shortcut = "ChatLocation",
                     Threads = {},
-                    Start = function(self)
-                        while true do
-                            task.wait(1)
-                            C.CreateSysMessage(`~RUNNING~`)
+                    SendMessage = function(self, msg)
+                        if C.BeastPlr == C.plr then
+                            C.CreateSysMessage(msg)
+                        else
+                            C.CreatePrivateMessage(msg, C.BeastPlr)
                         end
                     end,
-                    Activate = function(self, newValue, firstRun)
-    
+                    Start = function(self)
+                        while true do
+                            local nearest, dist = C.getClosest({allowList = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})}, C.BeastChar:GetPivot().Position)
+                            if nearest then
+                                
+                            end
+                        end
                     end,
+                    -- Activate = function(self, newValue, firstRun)
+                        
+                    -- end,
                     Options = AppendToFirstArr({
-
+                        {
+                            Type = Types.Toggle,
+                            Title = "Report Self",
+                            Tooltip = "Whether or not to include yourself when applicable",
+                            Layout = 1,Default=true,
+                            Shortcut="ReportSelf",
+                            Activate = C.ReloadHack
+                        },
                     },
                     C.SelectPlayerType(true, true)
                     ),

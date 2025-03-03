@@ -3482,17 +3482,33 @@ return function(C,Settings)
                     Layout = 12,
                     Shortcut = "ChatLocation",
                     Threads = {},
-                    Start = function(self)
-                        while true do
-                            task.wait(1)
-                            C.CreateSysMessage(`~RUNNING~`)
+                    SendMessage = function(self, msg)
+                        if C.BeastPlr == C.plr then
+                            C.CreateSysMessage(msg)
+                        else
+                            C.CreatePrivateMessage(msg, C.BeastPlr)
                         end
                     end,
-                    Activate = function(self, newValue, firstRun)
-    
+                    Start = function(self)
+                        while true do
+                            local nearest, dist = C.getClosest({allowList = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})}, C.BeastChar:GetPivot().Position)
+                            if nearest then
+                                
+                            end
+                        end
                     end,
+                    -- Activate = function(self, newValue, firstRun)
+                        
+                    -- end,
                     Options = AppendToFirstArr({
-
+                        {
+                            Type = Types.Toggle,
+                            Title = "Report Self",
+                            Tooltip = "Whether or not to include yourself when applicable",
+                            Layout = 1,Default=true,
+                            Shortcut="ReportSelf",
+                            Activate = C.ReloadHack
+                        },
                     },
                     C.SelectPlayerType(true, true)
                     ),
@@ -13420,6 +13436,15 @@ return function(C,Settings)
 				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
 		end
 	end
+	--Private Chat
+	function C.CreatePrivateMessage(message,player:Player)
+		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+			local channel = TCS:FindFirstChild("RBXGeneral", true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
+			channel:SendAsync(message)
+		else
+			error(`[C.CreatePrivateMessage]: Unrecognized ChatVersion {TCS.ChatVersion}`)
+		end
+	end
 	--Yieldable Handler
 	function C.RunFunctionWithYield(func, args, timeout)
 		--RunFunc((Function)func, (Table)args, (Number)timeout)
@@ -14800,6 +14825,10 @@ return function(C,Settings)
 			if not QueryResult then
 				return false, UserID
 			end
+			QueryResult, Username = pcall(PS.GetNameFromUserIdAsync,PS,UserID)
+			if not QueryResult then
+				return false, Username
+			end
 		end
 		SaveCache = {Username,UserID}
 		UserCache[UserID] = SaveCache
@@ -14943,7 +14972,7 @@ return function(C,Settings)
 		return angleInDegrees
 	end
 	-- Closest Plr
-	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean,noGame:boolean},location:Vector3)
+	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean,noGame:boolean,excludeList:{},allowList:{}},location:Vector3)
 		data = data or {}
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char.GetPivot(C.char).Position)
 		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
@@ -14952,8 +14981,12 @@ return function(C,Settings)
 		local closest = nil;
 		local distance = math.huge;
 
+		local searchPlayers = rawget(data,"allowList") or PS.GetPlayers(PS)
+		for _, theirPlr in ipairs(rawget(data,"excludeList") or {}) do
+			C.TblRemove(searchPlayers, theirPlr)
+		end
 
-		for i, v in pairs(PS.GetPlayers(PS)) do
+		for i, v in pairs(searchPlayers) do
 			if not C.CanTargetPlayer(v) then continue end
 			local theirChar = v.Character
 			if not theirChar then continue end

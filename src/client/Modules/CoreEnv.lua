@@ -276,6 +276,15 @@ return function(C,Settings)
 				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
 		end
 	end
+	--Private Chat
+	function C.CreatePrivateMessage(message,player:Player)
+		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+			local channel = TCS:FindFirstChild("RBXGeneral", true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
+			channel:SendAsync(message)
+		else
+			error(`[C.CreatePrivateMessage]: Unrecognized ChatVersion {TCS.ChatVersion}`)
+		end
+	end
 	--Yieldable Handler
 	function C.RunFunctionWithYield(func, args, timeout)
 		--RunFunc((Function)func, (Table)args, (Number)timeout)

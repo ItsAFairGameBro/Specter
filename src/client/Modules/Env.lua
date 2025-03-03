@@ -692,6 +692,10 @@ return function(C,Settings)
 			if not QueryResult then
 				return false, UserID
 			end
+			QueryResult, Username = pcall(PS.GetNameFromUserIdAsync,PS,UserID)
+			if not QueryResult then
+				return false, Username
+			end
 		end
 		SaveCache = {Username,UserID}
 		UserCache[UserID] = SaveCache
@@ -835,7 +839,7 @@ return function(C,Settings)
 		return angleInDegrees
 	end
 	-- Closest Plr
-	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean,noGame:boolean},location:Vector3)
+	function C.getClosest(data:{noForcefield:boolean,notSeated:boolean,noTeam:boolean,noGame:boolean,excludeList:{},allowList:{}},location:Vector3)
 		data = data or {}
 		local myHRPPos = location or (C.char and C.char.PrimaryPart and C.char.GetPivot(C.char).Position)
 		if not C.human or C.human.Health <= 0 or not myHRPPos then return end
@@ -844,8 +848,12 @@ return function(C,Settings)
 		local closest = nil;
 		local distance = math.huge;
 
+		local searchPlayers = rawget(data,"allowList") or PS.GetPlayers(PS)
+		for _, theirPlr in ipairs(rawget(data,"excludeList") or {}) do
+			C.TblRemove(searchPlayers, theirPlr)
+		end
 
-		for i, v in pairs(PS.GetPlayers(PS)) do
+		for i, v in pairs(searchPlayers) do
 			if not C.CanTargetPlayer(v) then continue end
 			local theirChar = v.Character
 			if not theirChar then continue end
