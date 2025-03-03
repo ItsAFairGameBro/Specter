@@ -1506,38 +1506,39 @@ return function(C,Settings)
                         end,
                     }
                 },
-            },
-            {
-                Title = "Chat Location",
-                Tooltip = "Private chats the nearest survivor to the beast",
-                Layout = 12,
-                Shortcut = "ChatLocation",
-                Threads = {},
-                Start = function(self)
-                    while true do
-                        task.wait(1)
-                        C.CreateSysMessage(`~RUNNING~`)
-                    end
-                end,
-                Activate = function(self, newValue, firstRun)
-
-                end,
-                Options = {
-                    AppendToFirstArr({
-
+                {
+                    Title = "Chat Location",
+                    Tooltip = "Private chats the nearest survivor to the beast",
+                    Layout = 12,
+                    Shortcut = "ChatLocation",
+                    Threads = {},
+                    Start = function(self)
+                        while true do
+                            task.wait(1)
+                            C.CreateSysMessage(`~RUNNING~`)
+                        end
+                    end,
+                    Activate = function(self, newValue, firstRun)
+    
+                    end,
+                    Options = {
+                        AppendToFirstArr({
+    
+                        },
+                        C.SelectPlayerType(true, true)
+                        )
                     },
-                    C.SelectPlayerType(true, true)
-                    )
-                },
-                Events = {
-                    MyBeastHammerAdded = function(self)
-                        self:Start()
-                    end,
-                    OthersBeastHammerAdded = function(self)
-                        self:Start()
-                    end,
+                    Events = {
+                        MyBeastHammerAdded = function(self)
+                            self:Start()
+                        end,
+                        OthersBeastHammerAdded = function(self)
+                            self:Start()
+                        end,
+                    },
                 },
             },
+            
             table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",
