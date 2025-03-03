@@ -9,6 +9,7 @@ return function(C,Settings)
 	end--]]
     C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={},
                     MyBeast={}, Beast={}, OthersBeast={},
+					MyBeastHammer={},BeastHammer={},OthersHammer={},
                     Game={}, BeastRope={},
                     TowerAdded={}}
 	local function FireEvent(name,doExternalConn,...)

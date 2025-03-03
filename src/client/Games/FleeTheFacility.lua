@@ -337,7 +337,7 @@ local function GetSharedHacks(C, Settings)
     {
         Title = "Game Improvements",
         Tooltip = "Fixes stuff necessary to live💀",
-        Layout = 100,
+        Layout = 99,
         Shortcut = "GameImprovements",
         Default = true,
         TeleportOnFailPos = Vector3.new(103, 8, -435),
@@ -1506,7 +1506,39 @@ return function(C,Settings)
                         end,
                     }
                 },
-            }, table.find(C.BotUsers, C.plr.Name:lower()) and {
+            },
+            {
+                Title = "Chat Location",
+                Tooltip = "Private chats the nearest survivor to the beast",
+                Layout = 12,
+                Shortcut = "ChatLocation",
+                Threads = {},
+                Start = function(self)
+                    while true do
+                        task.wait(1)
+                        C.CreateSysMessage(`~RUNNING~`)
+                    end
+                end,
+                Activate = function(self, newValue, firstRun)
+
+                end,
+                Options = {
+                    AppendToFirstArr({
+
+                    },
+                    C.SelectPlayerType(true, true)
+                    )
+                },
+                Events = {
+                    MyBeastHammerAdded = function(self)
+                        self:Start()
+                    end,
+                    OthersBeastHammerAdded = function(self)
+                        self:Start()
+                    end,
+                },
+            },
+            table.find(C.BotUsers, C.plr.Name:lower()) and {
                 {
                     Title = "Server Farm",
                     Tooltip = "Verifies that the whole server is a bot, and if so, proceeds by grinding credits and xp for the whole server",
