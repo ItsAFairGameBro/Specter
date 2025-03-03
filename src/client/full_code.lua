@@ -3491,13 +3491,11 @@ return function(C,Settings)
                     Activate = function(self, newValue, firstRun)
     
                     end,
-                    Options = {
-                        AppendToFirstArr({
-    
-                        },
-                        C.SelectPlayerType(true, true)
-                        )
+                    Options = AppendToFirstArr({
+
                     },
+                    C.SelectPlayerType(true, true)
+                    ),
                     Events = {
                         MyBeastHammerAdded = function(self)
                             self:Start()
