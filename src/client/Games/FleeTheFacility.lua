@@ -1515,18 +1515,26 @@ return function(C,Settings)
                     SendMessage = function(self, msg)
                         if C.BeastPlr == C.plr then
                             C.CreateSysMessage(msg)
+                        elseif self.EnTbl.Method == "Private" then
+                            C.SendPrivateMessage(C.BeastPlr, msg)
+                        elseif self.EnTbl.Method == "Public" then
+                            C.SendGeneralMessage(msg)
                         else
-                            C.CreatePrivateMessage(msg, C.BeastPlr)
+                            error(`[Flee.ChatLocation]: Unknown Communication Method: {self.EnTbl.Method}`)
                         end
                     end,
                     GetAngle = function(self, myCFrame, targetVector)
                         return math.acos(myCFrame.LookVector:Dot(targetVector) / (myCFrame.LookVector.Magnitude * targetVector.Magnitude))
                     end,
                     Start = function(self)
-                        while true do
+                        while C.BeastChar do
                             local beastCF = C.BeastChar:GetPivot()
                             local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
                                 Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
+                            if #searchPlayers == 0 then
+                                searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
+                                    Captured = false, Ragdoll = true, ExcludeMe = not self.EnTbl.ReportSelf})
+                            end
                             local nearest, dist = C.getClosest({allowList = searchPlayers}, beastCF.Position)
                             if nearest then
                                 local theirChar = nearest.Parent
@@ -1551,6 +1559,13 @@ return function(C,Settings)
                             Shortcut="ReportSelf",
                             Activate = C.ReloadHack
                         },
+                        {
+                            Type = Types.Dropdown,
+                            Title = "Method",
+                            Tooltip = "This is the communication method for delivering the result to the beast",
+                            Default = "Private",
+                            Selections={"Public","Private"},
+                        }
                     },
                     C.SelectPlayerType(true, true)
                     ),

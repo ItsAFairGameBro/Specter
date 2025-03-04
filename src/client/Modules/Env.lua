@@ -1026,6 +1026,28 @@ return function(C,Settings)
 			error("Unknown TCS ChatVersion For SendGeneralMessage: "..TCS.ChatVersion.Name)
 		end
 	end
+	do
+		local function GetPrivateMessageChannel(theirPlr)
+			local TextChannels = TCS:WaitForChild("TextChannels")
+			return TextChannels:FindFirstChild(`RBXWhisper:{theirPlr.UserId}_{C.plr.UserId}`) or TextChannels:FindFirstChild(`RBXWhisper:{C.plr.UserId}_{theirPlr.UserId}`)
+		end
+		function C.SendPrivateMessage(theirPlr, message)
+			assert(TCS.ChatVersion ~= Enum.ChatVersion.TextChatService, "SendPrivateMessage only supports latest chat version!")
+			
+			local whisperChannel = GetPrivateMessageChannel(theirPlr)
+			if not whisperChannel then
+				local command = string.format("/w %s", theirPlr.Name)
+				task.spawn(C.SendGeneralMessage, command)
+				repeat
+					TCS.DescendantAdded:Wait()
+					task.wait()
+					whisperChannel = GetPrivateMessageChannel(theirPlr)
+				until whisperChannel
+			end
+			
+			whisperChannel:SendAsync(message)
+		end
+	end
 
 	function C.InternallySetConnections(signal,enabled)
 		for _, connection in ipairs(C.getconnections(signal)) do

@@ -57,7 +57,7 @@ return function(C,Settings)
         --if C.events[name]==nil then
             --warn("Not Loading",name,"Event!")
         --end
-		return Settings.ConnectAllEvents or C.events[name]~=nil
+		return Settings.ConnectAllEvents or C.events[name]~=nil or C.SaveEvents[name:gsub("Removed",""):gsub("Added","")] ~= nil
 	end
 	C.FireEvent = FireEvent
     local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress

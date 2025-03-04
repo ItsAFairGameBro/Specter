@@ -3485,18 +3485,26 @@ return function(C,Settings)
                     SendMessage = function(self, msg)
                         if C.BeastPlr == C.plr then
                             C.CreateSysMessage(msg)
+                        elseif self.EnTbl.Method == "Private" then
+                            C.SendPrivateMessage(C.BeastPlr, msg)
+                        elseif self.EnTbl.Method == "Public" then
+                            C.SendGeneralMessage(msg)
                         else
-                            C.CreatePrivateMessage(msg, C.BeastPlr)
+                            error(`[Flee.ChatLocation]: Unknown Communication Method: {self.EnTbl.Method}`)
                         end
                     end,
                     GetAngle = function(self, myCFrame, targetVector)
                         return math.acos(myCFrame.LookVector:Dot(targetVector) / (myCFrame.LookVector.Magnitude * targetVector.Magnitude))
                     end,
                     Start = function(self)
-                        while true do
+                        while C.BeastChar do
                             local beastCF = C.BeastChar:GetPivot()
                             local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
                                 Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
+                            if #searchPlayers == 0 then
+                                searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
+                                    Captured = false, Ragdoll = true, ExcludeMe = not self.EnTbl.ReportSelf})
+                            end
                             local nearest, dist = C.getClosest({allowList = searchPlayers}, beastCF.Position)
                             if nearest then
                                 local theirChar = nearest.Parent
@@ -3521,6 +3529,13 @@ return function(C,Settings)
                             Shortcut="ReportSelf",
                             Activate = C.ReloadHack
                         },
+                        {
+                            Type = Types.Dropdown,
+                            Title = "Method",
+                            Tooltip = "This is the communication method for delivering the result to the beast",
+                            Default = "Private",
+                            Selections={"Public","Private"},
+                        }
                     },
                     C.SelectPlayerType(true, true)
                     ),
@@ -10798,11 +10813,11 @@ return function(C,Settings)
 												end
 												if msg:sub(1,1) == "/" then
 													C.RunCommand(msg, true)
-												else
-													print(`Message doesn't start with "/": "{msg}"`)
+												-- else
+													-- print(`Message doesn't start with "/": "{msg}"`)
 												end
-											else
-												print(`USER NOT VALID: {thePlr}`)
+											-- else
+												-- print(`USER NOT VALID: {thePlr}`)
 											end
 										end)
 										table.insert(self.Functs, thisFunct)
@@ -13448,15 +13463,6 @@ return function(C,Settings)
 				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
 		end
 	end
-	--Private Chat
-	function C.CreatePrivateMessage(message,player:Player)
-		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
-			local channel = TCS:FindFirstChild("RBXGeneral", true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
-			channel:SendAsync(message)
-		else
-			error(`[C.CreatePrivateMessage]: Unrecognized ChatVersion {TCS.ChatVersion}`)
-		end
-	end
 	--Yieldable Handler
 	function C.RunFunctionWithYield(func, args, timeout)
 		--RunFunc((Function)func, (Table)args, (Number)timeout)
@@ -15171,6 +15177,28 @@ return function(C,Settings)
 			error("Unknown TCS ChatVersion For SendGeneralMessage: "..TCS.ChatVersion.Name)
 		end
 	end
+	do
+		local function GetPrivateMessageChannel(theirPlr)
+			local TextChannels = TCS:WaitForChild("TextChannels")
+			return TextChannels:FindFirstChild(`RBXWhisper:{theirPlr.UserId}_{C.plr.UserId}`) or TextChannels:FindFirstChild(`RBXWhisper:{C.plr.UserId}_{theirPlr.UserId}`)
+		end
+		function C.SendPrivateMessage(theirPlr, message)
+			assert(TCS.ChatVersion ~= Enum.ChatVersion.TextChatService, "SendPrivateMessage only supports latest chat version!")
+			
+			local whisperChannel = GetPrivateMessageChannel(theirPlr)
+			if not whisperChannel then
+				local command = string.format("/w %s", theirPlr.Name)
+				task.spawn(C.SendGeneralMessage, command)
+				repeat
+					TCS.DescendantAdded:Wait()
+					task.wait()
+					whisperChannel = GetPrivateMessageChannel(theirPlr)
+				until whisperChannel
+			end
+			
+			whisperChannel:SendAsync(message)
+		end
+	end
 
 	function C.InternallySetConnections(signal,enabled)
 		for _, connection in ipairs(C.getconnections(signal)) do
@@ -15566,7 +15594,7 @@ return function(C,Settings)
         --if C.events[name]==nil then
             --warn("Not Loading",name,"Event!")
         --end
-		return Settings.ConnectAllEvents or C.events[name]~=nil
+		return Settings.ConnectAllEvents or C.events[name]~=nil or C.SaveEvents[name:gsub("Removed",""):gsub("Added","")] ~= nil
 	end
 	C.FireEvent = FireEvent
     local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress

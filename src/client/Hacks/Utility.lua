@@ -263,11 +263,11 @@ return function(C,Settings)
 												end
 												if msg:sub(1,1) == "/" then
 													C.RunCommand(msg, true)
-												else
-													print(`Message doesn't start with "/": "{msg}"`)
+												-- else
+													-- print(`Message doesn't start with "/": "{msg}"`)
 												end
-											else
-												print(`USER NOT VALID: {thePlr}`)
+											-- else
+												-- print(`USER NOT VALID: {thePlr}`)
 											end
 										end)
 										table.insert(self.Functs, thisFunct)
