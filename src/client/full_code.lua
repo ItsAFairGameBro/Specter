@@ -3490,20 +3490,20 @@ return function(C,Settings)
                         end
                     end,
                     GetAngle = function(self, vectorA, vectorB)
-                        return math.acos(vectorA:Dot(vectorB) / (vectorA.Magnitude * vectorB.Magnitude))
+                        return math.acos(vectorA.Unit:Dot(vectorB.Unit))
                     end,
                     Start = function(self)
                         while true do
                             local beastPoso = C.BeastChar:GetPivot().Position
                             local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
                                 Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
-                            print(SearchPlayers)
+                            print(searchPlayers)
                             local nearest, dist = C.getClosest({allowList = searchPlayers}, beastPoso)
                             if nearest then
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
                                 local theirAngle = self:GetAngle(beastPoso, theirPoso)
-                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle>0 and "Right" or "Left", math.abs(theirAngle)))
+                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle>0 and "Right" or "Left", math.abs(math.deg(theirAngle))))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
