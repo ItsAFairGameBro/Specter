@@ -1565,6 +1565,7 @@ return function(C,Settings)
                             Tooltip = "This is the communication method for delivering the result to the beast",
                             Default = "Private",
                             Selections={"Public","Private"},
+                            Shortcut = "Method"
                         }
                     },
                     C.SelectPlayerType(true, true)
