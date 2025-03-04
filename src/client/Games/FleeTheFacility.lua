@@ -768,7 +768,7 @@ return function(C,Settings)
             {
                 Type = Types.Toggle,
                 Title = "Others",
-                Tooltip = "Whether or not this hack will target you",
+                Tooltip = "Whether or not this hack will target other users",
                 Layout = -9,Default=otherDefault,
                 Shortcut="Others",
                 Activate = C.ReloadHack,
@@ -1533,7 +1533,7 @@ return function(C,Settings)
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
                                 local theirAngle = 180 - math.deg(self:GetAngle(beastCF, theirPoso))
-                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
+                                self:SendMessage((`Distance: %d | Turn %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
@@ -1547,7 +1547,7 @@ return function(C,Settings)
                         {
                             Type = Types.Toggle,
                             Title = "Report Self",
-                            Tooltip = "Whether or not to include yourself when applicable",
+                            Tooltip = "Report yourself to the beast",
                             Layout = 1,Default=true,
                             Shortcut="ReportSelf",
                             Activate = C.ReloadHack
