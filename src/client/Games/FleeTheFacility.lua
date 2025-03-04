@@ -1532,8 +1532,8 @@ return function(C,Settings)
                             if nearest then
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
-                                local theirAngle = self:GetAngle(beastCF, theirPoso)
-                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle<=math.pi/2 and "Right" or "Left", math.abs(math.deg(theirAngle))))
+                                local theirAngle = 180 - math.deg(self:GetAngle(beastCF, theirPoso))
+                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
