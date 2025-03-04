@@ -3495,8 +3495,10 @@ return function(C,Settings)
                     Start = function(self)
                         while true do
                             local beastPoso = C.BeastChar:GetPivot().Position
-                            local nearest, dist = C.getClosest({allowList = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
-                            Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})}, beastPoso)
+                            local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
+                                Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
+                            print(SearchPlayers)
+                            local nearest, dist = C.getClosest({allowList = searchPlayers}, beastPoso)
                             if nearest then
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
