@@ -3502,11 +3502,11 @@ return function(C,Settings)
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
                                 local theirAngle = 180 - math.deg(self:GetAngle(beastCF, theirPoso))
-                                self:SendMessage((`Distance: %d | Turn %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)):gsub("1","I"))
+                                self:SendMessage((`Distance: %d | Turn %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
-                            task.wait(5)
+                            task.wait(7.5)
                         end
                     end,
                     -- Activate = function(self, newValue, firstRun)
