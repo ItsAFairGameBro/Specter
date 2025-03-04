@@ -3497,13 +3497,12 @@ return function(C,Settings)
                             local beastCF = C.BeastChar:GetPivot()
                             local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
                                 Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
-                            print(searchPlayers)
                             local nearest, dist = C.getClosest({allowList = searchPlayers}, beastCF.Position)
                             if nearest then
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
                                 local theirAngle = 180 - math.deg(self:GetAngle(beastCF, theirPoso))
-                                self:SendMessage((`Distance: %d | Turn %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
+                                self:SendMessage((`Distance: %d | Turn %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)):gsub("1","I"))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
