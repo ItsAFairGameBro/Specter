@@ -3489,21 +3489,21 @@ return function(C,Settings)
                             C.CreatePrivateMessage(msg, C.BeastPlr)
                         end
                     end,
-                    GetAngle = function(self, vectorA, vectorB)
-                        return math.acos(vectorA.Unit:Dot(vectorB.Unit))
+                    GetAngle = function(self, myCFrame, targetVector)
+                        return math.acos(myCFrame.LookVector:Dot(targetVector) / (myCFrame.LookVector.Magnitude * targetVector.Magnitude))
                     end,
                     Start = function(self)
                         while true do
-                            local beastPoso = C.BeastChar:GetPivot().Position
+                            local beastCF = C.BeastChar:GetPivot()
                             local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
                                 Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
                             print(searchPlayers)
-                            local nearest, dist = C.getClosest({allowList = searchPlayers}, beastPoso)
+                            local nearest, dist = C.getClosest({allowList = searchPlayers}, beastCF.Position)
                             if nearest then
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
-                                local theirAngle = self:GetAngle(beastPoso, theirPoso)
-                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle>0 and "Right" or "Left", math.abs(math.deg(theirAngle))))
+                                local theirAngle = self:GetAngle(beastCF, theirPoso)
+                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle<=math.pi/2 and "Right" or "Left", math.abs(math.deg(theirAngle))))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
