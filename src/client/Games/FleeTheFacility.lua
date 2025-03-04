@@ -1446,7 +1446,7 @@ return function(C,Settings)
                                 local isMe = isAncestorOf(myTSM, self)
                                 local theValue = toStr(self)
                                 if theValue == "Health" then
-                                    local spoofHP = (isMe and 0) or ((lobbyPlrs or not getraw(C, "GameActive")) and 100)
+                                    local spoofHP = (isMe and 0) or ((lobbyPlrs or not rawget(C, "GameActive")) and 100)
                                     if spoofHP then
                                         return "Spoof", {spoofHP}
                                     end
@@ -1519,12 +1519,23 @@ return function(C,Settings)
                             C.CreatePrivateMessage(msg, C.BeastPlr)
                         end
                     end,
+                    GetAngle = function(self, vectorA, vectorB)
+                        return math.acos(vectorA:Dot(vectorB) / (vectorA.Magnitude * vectorB.Magnitude))
+                    end,
                     Start = function(self)
                         while true do
-                            local nearest, dist = C.getClosest({allowList = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false})}, C.BeastChar:GetPivot().Position)
+                            local beastPoso = C.BeastChar:GetPivot().Position
+                            local nearest, dist = C.getClosest({allowList = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
+                            Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})}, beastPoso)
                             if nearest then
-                                
+                                local theirChar = nearest.Parent
+                                local theirPoso = theirChar:GetPivot().Position
+                                local theirAngle = self:GetAngle(beastPoso, theirPoso)
+                                self:SendMessage((`Closest Player: %d, %s %d degrees`):format(dist, theirAngle>0 and "Right" or "Left", math.abs(theirAngle)))
+                            else
+                                self:SendMessage(`No Survivor Found`)
                             end
+                            task.wait(5)
                         end
                     end,
                     -- Activate = function(self, newValue, firstRun)
