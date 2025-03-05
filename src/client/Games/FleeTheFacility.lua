@@ -552,11 +552,11 @@ local function SetUpGame(C, Settings)
                     return
                 end
                 C.Hammer, C.Handle, C.HammerEvent, C.BeastPlr, C.BeastChar = inst, Handle, HammerEvent, theirPlr, theirPlr.Character
-                C.FireEvent("BeastHammerAdded",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
+                C.FireEvent("BeastHammerAdded",theirPlr == C.plr, inst)
                 C.AddObjectConnection(Handle, "BeastHammerRemoved", Handle.AncestryChanged:Connect(function()
                     if not workspace:IsAncestorOf(Handle.Parent) then
                         C.Hammer, C.Handle, C.BeastPlr, C.BeastChar, C.CarriedTorso = nil, nil, nil, nil, nil
-                        C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,theirPlr,theirChar,theirHuman)
+                        C.FireEvent("BeastHammerRemoved",theirPlr == C.plr,inst)
                     end
                 end))
                 local CarriedTorso = theirChar:WaitForChild("CarriedTorso",20)
@@ -578,7 +578,7 @@ local function SetUpGame(C, Settings)
             end
         end
 
-        C.AddObjectConnection(theirChar, "BeastHammerAdded", theirChar.ChildAdded:Connect(childAdded))
+        C.AddObjectConnection(theirChar, "BeastHammerAddedEvent", theirChar.ChildAdded:Connect(childAdded))
         local hammerMaybe = theirChar:FindFirstChild("HammerEvent",true)
         if hammerMaybe then
             childAdded(hammerMaybe.Parent)
@@ -1613,7 +1613,7 @@ return function(C,Settings)
                                 elseif i>1 then
                                     RunS.RenderStepped:Wait()
                                 end
-                                if not canCapture or canCapture() then
+                                if (not canCapture or canCapture()) and C.BeastChar then
                                     local inRange = (C.BeastChar:GetPivot().Position-C.char:GetPivot().Position).Magnitude<6
                                     if not inRange then
                                         if not C.myTSM.Captured.Value and (not C.myTSM.Ragdoll.Value or (C.CarriedTorso
@@ -1741,7 +1741,7 @@ return function(C,Settings)
                     StartUp = function(self, gameOver)
                         C.RemoveAction(self.Shortcut)
                         C.getgenv().Rescued = nil
-                        self.SurvivorList = nil
+                        self.SurvivorList = {}
                         if gameOver or not C.BeastChar or not C.char or not C.isInGame(C.char) or not self.RealEnabled or not self:HasVerification() then
                             print("Disabled:",C.char,C.BeastChar,C.isInGame(C.char),self.RealEnabled)
                             return self:DoOverrides(false)-- No beast no hoes
