@@ -607,11 +607,13 @@ return function(C,Settings)
 
             if not hasNewChat or C.Cleared or true then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
-                    if connectionFunct.Function then
-                        connectionFunct.Function(enterPressed)
-                    else
-                        warn("NO Function Found For "..num)
-                    end
+                    -- if connectionFunct.Function then
+                    --     connectionFunct.Function(enterPressed)
+                    -- else
+                    --     connectionFunct:Fire()
+                    --     warn("NO Function Found For "..num)
+                    -- end
+                    connectionFunct:Fire(enterPressed)
                 end
             elseif enterPressed then
                 sendTheMessage(inputMsg)
