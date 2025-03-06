@@ -1032,7 +1032,7 @@ return function(C,Settings)
 			return TextChannels:FindFirstChild(`RBXWhisper:{theirPlr.UserId}_{C.plr.UserId}`) or TextChannels:FindFirstChild(`RBXWhisper:{C.plr.UserId}_{theirPlr.UserId}`)
 		end
 		function C.SendPrivateMessage(theirPlr, message)
-			assert(TCS.ChatVersion ~= Enum.ChatVersion.TextChatService, "SendPrivateMessage only supports latest chat version!")
+			assert(TCS.ChatVersion == Enum.ChatVersion.TextChatService, "[C.SendPrivateMessage] only supports latest chat version!")
 			
 			local whisperChannel = GetPrivateMessageChannel(theirPlr)
 			if not whisperChannel then
