@@ -3514,8 +3514,15 @@ return function(C,Settings)
                         
                         return angleDegrees                    
                     end,
+                    LastSend = 0,
                     Start = function(self)
                         while C.BeastChar do
+                            do
+                                local time2Wait = self.LastSend - os.clock() + 8.5
+                                if time2Wait > 0 then
+                                    task.wait(time2Wait)
+                                end
+                            end
                             local beastCF = C.BeastChar:GetPivot()
                             local searchPlayers = C.GetPlayerListOfType({Survivor = true,Beast=false,Lobby=false,
                                 Captured = false, Ragdoll = false, ExcludeMe = not self.EnTbl.ReportSelf})
@@ -3528,11 +3535,11 @@ return function(C,Settings)
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
                                 local theirAngle = self:GetAngle(beastCF, theirPoso)
-                                self:SendMessage((`Distance: %d | Angle: %d° %s`):format(dist, math.abs(theirAngle), theirAngle>0 and "Right" or "Left"))
+                                self:SendMessage((`Distance: %d | %s %d degrees`):format(dist, theirAngle>0 and "Right" or "Left", math.abs(theirAngle)))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
-                            task.wait(7.5)
+                            self.LastSend = os.clock()
                         end
                     end,
                     -- Activate = function(self, newValue, firstRun)
