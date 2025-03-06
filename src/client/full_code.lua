@@ -3493,9 +3493,26 @@ return function(C,Settings)
                             error(`[Flee.ChatLocation]: Unknown Communication Method: {self.EnTbl.Method}`)
                         end
                     end,
-                    GetAngle = function(self, myCFrame, targetVector)
-                        targetVector = Vector3.new(targetVector.X, myCFrame.Y, targetVector.Z)
-                        return math.acos(myCFrame.LookVector:Dot(targetVector) / (myCFrame.LookVector.Magnitude * targetVector.Magnitude))
+                    GetAngle = function(self, cframe, position)
+                        local lookVector = cframe.LookVector -- Forward direction
+                        local toPosition = (position - cframe.Position).Unit -- Direction to the target position
+                        
+                        -- Compute the angle using the dot product
+                        local angle = math.acos(lookVector:Dot(toPosition)) -- Returns angle in radians
+                        
+                        -- Determine if the position is to the left or right using the cross product
+                        local rightVector = cframe.RightVector
+                        local direction = rightVector:Dot(toPosition) -- Positive means right, negative means left
+                        
+                        -- Convert angle to degrees
+                        local angleDegrees = math.deg(angle)
+                        
+                        -- Make the angle negative if it's to the left
+                        if direction < 0 then
+                            angleDegrees = -angleDegrees
+                        end
+                        
+                        return angleDegrees                    
                     end,
                     Start = function(self)
                         while C.BeastChar do
@@ -3510,8 +3527,8 @@ return function(C,Settings)
                             if nearest then
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
-                                local theirAngle = 180 - math.deg(self:GetAngle(beastCF, theirPoso))
-                                self:SendMessage((`Distance: %d | %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
+                                local theirAngle = self:GetAngle(beastCF, theirPoso)
+                                self:SendMessage((`Distance: %d | %s %d degrees`):format(dist, theirAngle>0 and "Right" or "Left", math.abs(theirAngle)))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
