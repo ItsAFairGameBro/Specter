@@ -13137,7 +13137,7 @@ return function(C,Settings)
                 end
             end
 
-            if not hasNewChat or C.Cleared then
+            if not hasNewChat or C.Cleared or true then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     if connectionFunct.Function then
                         connectionFunct.Function(enterPressed)
