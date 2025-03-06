@@ -3494,6 +3494,7 @@ return function(C,Settings)
                         end
                     end,
                     GetAngle = function(self, myCFrame, targetVector)
+                        targetVector = Vector3.new(targetVector.X, myCFrame.Y, targetVector.Z)
                         return math.acos(myCFrame.LookVector:Dot(targetVector) / (myCFrame.LookVector.Magnitude * targetVector.Magnitude))
                     end,
                     Start = function(self)
@@ -3510,7 +3511,7 @@ return function(C,Settings)
                                 local theirChar = nearest.Parent
                                 local theirPoso = theirChar:GetPivot().Position
                                 local theirAngle = 180 - math.deg(self:GetAngle(beastCF, theirPoso))
-                                self:SendMessage((`Distance: %d | Turn %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
+                                self:SendMessage((`Distance: %d | %s %d degrees`):format(dist, theirAngle<=90 and "Right" or "Left", math.abs(theirAngle)))
                             else
                                 self:SendMessage(`No Survivor Found`)
                             end
