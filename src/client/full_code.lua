@@ -12751,6 +12751,9 @@ return function(C,Settings)
             C.CreateSysMessage(`Command Not Found: {inputCommand}`)
         end
     end
+    if C.Jerk then
+        return
+    end
     -- Chatbar Connection
     --MY PLAYER CHAT
     local chatBar
@@ -12787,9 +12790,7 @@ return function(C,Settings)
                     end
                     if theirPlr then
                         myChannel = channels:FindFirstChild("RBXWhisper:"..C.plr.UserId.."_"..theirPlr.UserId) or channels:FindFirstChild("RBXWhisper:"..theirPlr.UserId.."_"..C.plr.UserId)
-                        if not myChannel then
-                            return warn(`(SendMessage) Could Not Find MyChannel {"RBXWhisper:"..C.plr.UserId.."_"..theirPlr.UserId} or {"RBXWhisper:"..theirPlr.UserId.."_"..C.plr.UserId}`)
-                        end
+                        C.SendPrivateMessage(theirPlr, message)
                     else
                         return warn(`(SendMessage) Could Not Find Private Message User {theirUser} from "{targetChannelTB.Text}"`)
                     end
@@ -13137,7 +13138,7 @@ return function(C,Settings)
                 end
             end
 
-            if not hasNewChat or C.Cleared or true then
+            if not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     -- if connectionFunct.Function then
                     --     connectionFunct.Function(enterPressed)
@@ -13212,7 +13213,9 @@ return function(C,Settings)
         commandTbl.Alias = nil
         C.BindEvents(commandTbl)
     end
-end]=],
+end
+
+]=],
     ["Modules/CoreEnv"] = [=[local CS = game:GetService("CollectionService")
 local GuiService = game:GetService("GuiService")
 local HS = game:GetService("HttpService")
