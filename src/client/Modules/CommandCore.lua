@@ -219,9 +219,6 @@ return function(C,Settings)
             C.CreateSysMessage(`Command Not Found: {inputCommand}`)
         end
     end
-    if C.Jerk then
-        return
-    end
     -- Chatbar Connection
     --MY PLAYER CHAT
     local chatBar
