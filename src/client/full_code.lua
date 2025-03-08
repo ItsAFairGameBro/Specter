@@ -11817,12 +11817,12 @@ return function(C_new,Settings)
 							continue
 						end
 						curMessage = inBetween .. curMessage
-						--if rawget(C,"ChatVersion") == "TextChatService" and false then
-						--	newMessage ..= '\n' .. curMessage
-						--if rawget(C,"ChatVersion") == "LegacyChatService" then
-						--  newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
-						--end
-						newMessage ..= strSub(strRep("_",73),#rawget(splitArray,num-1)).. strRep(" ", 44) .. curMessage
+						if rawget(C,"ChatVersion") == "TextChatService" and true then
+							newMessage ..= '\r' .. curMessage
+						if rawget(C,"ChatVersion") == "LegacyChatService" then
+						 newMessage ..= rawget(string,"sub")(rawget(string,"rep")(" ",155),#rawget(splitArray,num-1))..curMessage
+						end
+						-- newMessage ..= strSub(strRep("_",73),#rawget(splitArray,num-1)).. strRep(" ", 44) .. curMessage
                         if num > 1 then
                             break
                         end
