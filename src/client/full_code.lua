@@ -9786,13 +9786,13 @@ return function(C,Settings)
                     C.setclipboard(game.GameId)
 				end,
 			},
-            C.Executor == "Cryptic" and {
+            C.Executor == "Cryptic" and false and {
 				Title = "Improve GUI",
 				Tooltip = "Improves the UI, which supports:\nCryptic",
 				Layout = 30, Default = true,
 				Shortcut = "ImproveGUI", Instances = {},
 				Activate = function(self,newValue,firstRun)
-                    if C.Executor == "Cryptic" then
+                    if C.Executor == "Cryptic"  then
                         local MainFrame = CG:FindFirstChild("MainShell",true).MainFrame
 
                         local ConsoleTab = C.StringWait(MainFrame,"Console Tab")
@@ -15625,14 +15625,15 @@ return function(C,Settings)
 		return Settings.ConnectAllEvents or C.events[name]~=nil or C.SaveEvents[name:gsub("Removed",""):gsub("Added","")] ~= nil
 	end
 	C.FireEvent = FireEvent
-    local HasAttachment = game.GameId ~= 5203828273 -- Dress To Impress
+    local HasAttachment = game.GameId ~= 5203828273 and game.GameId ~= 324740177 -- Dress To Impress
+	local HasAnimator = game.GameId ~= 324740177 -- Entry Point
 	local function CharAdded(theirChar,wasAlreadyIn)
 		local theirPlr = PS:GetPlayerFromCharacter(theirChar)
 		local theirHuman = theirChar:WaitForChild("Humanoid",1e5)
 		if not theirHuman then
 			return
 		end
-		local theirAnimator = theirHuman:WaitForChild("Animator")
+		local theirAnimator = HasAnimator and theirHuman:WaitForChild("Animator")
 		local centerPart = theirChar:WaitForChild("HumanoidRootPart",15)
 		if not centerPart then
 			return

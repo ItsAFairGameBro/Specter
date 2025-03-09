@@ -96,4 +96,4 @@ data = data.replace("C.preloadedModule = {}", "C.preloadedModule = " + dict_to_l
 with open(output_file_path, "w", encoding="utf-8") as write_file:
     write_file.write(data)
 
-print(f"Successfully compiled in {time.time() - startTime:.2f} seconds")
+print(f"Successfully compiled in {time.time() - startTime:.2f} seconds!")
