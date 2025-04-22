@@ -122,7 +122,8 @@ return function(C,Settings)
 			--local Old = rawget(tbl,name)
 			--rawset(tbl,name,new)
 			--return Old
-			return hookfunction(rawget(tbl,name),new)
+			local func2Hook = rawget(tbl, name)
+			return hookfunction(func2Hook,new)
 		end
 
 		local DoPrefix = false
