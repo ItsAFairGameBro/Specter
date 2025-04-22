@@ -367,13 +367,13 @@ return function(C,Settings)
                     C.setclipboard(game.GameId)
 				end,
 			},
-            C.Executor == "Cryptic" and {
+            C.Executor == "Cryptic" and false and  {
 				Title = "Improve GUI",
 				Tooltip = "Improves the UI, which supports:\nCryptic",
 				Layout = 30, Default = true,
 				Shortcut = "ImproveGUI", Instances = {},
 				Activate = function(self,newValue,firstRun)
-                    if C.Executor == "Cryptic" then
+                    if C.Executor == "Cryptic"  then
                         local MainFrame = CG:FindFirstChild("MainShell",true).MainFrame
 
                         local ConsoleTab = C.StringWait(MainFrame,"Console Tab")
