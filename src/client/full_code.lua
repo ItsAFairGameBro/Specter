@@ -2108,6 +2108,14 @@ local SETS_DISPLAY = {
         [7] = "Gval0003",
         [8] = "Hval0003",
     },
+    ["Patrick 2025"] = {
+        [1] = "Gpat0006",
+        [2] = "Hpat0006",
+        [3] = "Gpat0004",
+        [4] = "Hpat0004",
+        [5] = "Gpat0005",
+        [6] = "Hpat0005",
+    },
 }
 local BotActionClone
 
@@ -14301,7 +14309,7 @@ return function(C,Settings)
 			--local Old = rawget(tbl,name)
 			--rawset(tbl,name,new)
 			--return Old
-			return C.hookfunction(rawget(tbl,name),new)
+			return hookfunction(rawget(tbl,name),new)
 		end
 
 		local DoPrefix = false

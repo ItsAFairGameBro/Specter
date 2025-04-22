@@ -122,7 +122,7 @@ return function(C,Settings)
 			--local Old = rawget(tbl,name)
 			--rawset(tbl,name,new)
 			--return Old
-			return C.hookfunction(rawget(tbl,name),new)
+			return hookfunction(rawget(tbl,name),new)
 		end
 
 		local DoPrefix = false
