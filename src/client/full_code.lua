@@ -2116,6 +2116,24 @@ local SETS_DISPLAY = {
         [5] = "Gpat0005",
         [6] = "Hpat0005",
     },
+    ["Easter 2025"] = {
+        [1] = "Geas0006",
+        [2] = "Heas0006",
+        [3] = "Geas0007",
+        [4] = "Heas0007",
+        [5] = "Geas0008",
+        [6] = "Heas0008",
+        [7] = "Geas0009",
+        [8] = "Heas0009",
+        [9] = "Geas0002",
+        [10] = "Heas0002",
+        [11] = "Geas0003",
+        [12] = "Heas0003",
+        [13] = "Geas0004",
+        [14] = "Heas0004",
+        [15] = "Geas0005",
+        [16] = "Heas0005",
+    },
 }
 local BotActionClone
 
