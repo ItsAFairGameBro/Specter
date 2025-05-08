@@ -14319,27 +14319,28 @@ return function(C,Settings)
 		end
 
 		local DoPrefix = false
+		local oldPrint, oldWarn = C.getgenv().print, C.getgenv().warn
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.print1(msgToDisplay)
+			oldPrint(msgToDisplay)
 			return msgToDisplay
 		end)
 		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.warn1(msgToDisplay)
+			oldWarn(msgToDisplay)
             if (msgToDisplay == "") then
-                print(debug.traceback())
+                oldPrint(debug.traceback())
             end
 			return msgToDisplay
 		end)
 		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			rawget(C.getgenv(), "print")(msgToDisplay)
+			oldPrint(msgToDisplay)
 			return msgToDisplay
 		end)
 		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			rawget(C.getgenv(), "warn")(msgToDisplay)
+			oldWarn(msgToDisplay)
 			return msgToDisplay
 		end)
 
