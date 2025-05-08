@@ -123,11 +123,11 @@ return function(C,Settings)
 			--rawset(tbl,name,new)
 			--return Old
 			local func2Hook = rawget(tbl, name)
-			if C.hookfunction then
+			if hookfunction then
 				rawset(tbl, name, new)
 				return func2Hook
 			else
-				return C.hookfunction(func2Hook,new)
+				return hookfunction(func2Hook,new)
 			end
 		end
 
