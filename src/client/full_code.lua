@@ -14332,14 +14332,14 @@ return function(C,Settings)
             end
 			return msgToDisplay
 		end)
-		OldEnv.print2 = BasicHookFunction(C.getrenv(), "print", function(...)
+		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.print1(msgToDisplay)
+			OldEnv.print2(msgToDisplay)
 			return msgToDisplay
 		end)
-		OldEnv.warn2 = BasicHookFunction(C.getrenv(), "warn", function(...)
+		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.warn1(msgToDisplay)
+			OldEnv.warn2(msgToDisplay)
 			return msgToDisplay
 		end)
 
