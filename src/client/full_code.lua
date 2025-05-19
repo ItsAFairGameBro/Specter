@@ -20489,7 +20489,7 @@ return {
     AllowMultiRun = true,
     ScriptRun = function(self, args, C, Settings)
         local Params = {
-            RepoURL = "https://raw.githubusercontent.com/luau/SynSaveInstance/main/saveinstance.luau",
+            RepoURL = "https://raw.githubusercontent.com/luau/SynSaveInstance/main/",
             SSI = "saveinstance",
         }
         if not self.synsaveinstance then
