@@ -263,7 +263,7 @@ return function(C,Settings)
             },
             Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906,1805138071},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army","freya"},
             BannedHeadlessItems = {16687323428,12064732367},
-            MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
+            MorphPlayer=function(self, targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
                 local targetHuman = targetChar:FindFirstChild("Humanoid")
@@ -303,7 +303,7 @@ return function(C,Settings)
                         C.getgenv().currentDesc[targetChar.Name] = nil
                         C.getgenv().serializedDesc[targetChar.Name] = nil
                     end
-                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0
+                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0 or C.getgenv().JoinPlayerMorphDesc ~= nil
                 end
                 local isR6 = targetHuman.RigType == Enum.HumanoidRigType.R6
 
@@ -589,6 +589,10 @@ return function(C,Settings)
                             C.getgenv().currentDesc[theirPlr.Name] = nil
                         end
                         --(selectedName=="no" and theirPlr.UserId or PS:GetUserIdFromNameAsync(selectedName)))
+                    end
+                else
+                    for id, desc in pairs(players) do
+                        C.getgenv().currentDesc[id] = nil
                     end
                 end
                 return true
