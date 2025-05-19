@@ -8830,7 +8830,8 @@ return function(C,Settings)
                         end
                         if theirPlr.Character then
                             task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,savedDescription == nil)
-                        elseif savedDescription then
+                        end
+                        if savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
                                 C.getgenv().currentDesc[theirPlr.Name]:Destroy()
