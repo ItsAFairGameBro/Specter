@@ -588,7 +588,6 @@ return function(C,Settings)
                             end
                             C.getgenv().currentDesc[theirPlr.Name] = nil
                         end
-                        print("SetPlayersDesc",savedDescription)
                     end
                 end
                 return true
