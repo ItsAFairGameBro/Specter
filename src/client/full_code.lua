@@ -8830,7 +8830,7 @@ return function(C,Settings)
                         end
                         if theirPlr.Character then
                             task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,savedDescription == nil)
-                        elseif not savedDescription then
+                        elseif savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
                                 C.getgenv().currentDesc[theirPlr.Name]:Destroy()
@@ -8842,11 +8842,6 @@ return function(C,Settings)
                             end
                             C.getgenv().currentDesc[theirPlr.Name] = nil
                         end
-                        --(selectedName=="no" and theirPlr.UserId or PS:GetUserIdFromNameAsync(selectedName)))
-                    end
-                else
-                    for id, desc in pairs(players) do
-                        C.getgenv().currentDesc[id] = nil
                     end
                 end
                 return true
