@@ -569,7 +569,6 @@ return function(C,Settings)
                 end
                 if players~="new" then
                     for num, theirPlr in ipairs(players) do
-
                         local desc2Apply = savedDescription or PS:GetHumanoidDescriptionFromUserId(theirPlr.UserId)
                         if not desc2Apply then
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
@@ -589,6 +588,7 @@ return function(C,Settings)
                             end
                             C.getgenv().currentDesc[theirPlr.Name] = nil
                         end
+                        print("SetPlayersDesc",savedDescription)
                     end
                 end
                 return true
