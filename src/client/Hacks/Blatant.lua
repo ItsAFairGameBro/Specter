@@ -59,7 +59,8 @@ return function(C,Settings)
 						table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
 						--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
 					end
-					for num, part in ipairs(C.char:GetChildren()) do
+					table.insert(self.Functs, C.char.DescendantAdded:Connect(AddToCFrameDetection))
+					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then--and part.Name == "Head" then
 							AddToCFrameDetection(part)
 						end

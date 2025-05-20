@@ -7544,7 +7544,8 @@ return function(C,Settings)
 						table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
 						--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
 					end
-					for num, part in ipairs(C.char:GetChildren()) do
+					table.insert(self.Functs, C.char.DescendantAdded:Connect(AddToCFrameDetection))
+					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then--and part.Name == "Head" then
 							AddToCFrameDetection(part)
 						end
@@ -8395,7 +8396,7 @@ return function(C,Settings)
             Run = function(self, args)
                 local SetDesc
                 if args[1] == "new" then
-                    SetDesc = C.getgenv().JoinPlayerMorphDesc
+                    SetDesc =   
                 else
                     SetDesc = C.getgenv().currentDesc[args[1][1].Name]
                 end
