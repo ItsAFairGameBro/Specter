@@ -23,8 +23,8 @@ return function(C,Settings)
 				Shortcut = "AutoKicker",Functs={}, Threads={},Default=true,
 				Activate = function(self,newValue,firstRun)
                     local tblPack = table.pack
-                    local setVal1 = (100 - self.EnTbl.Accuracy) / 100
-                    local setVal2 = self.EnTbl.Power / 100
+                    local setVal1 = 0.8--(100 - self.EnTbl.Accuracy) / 100
+                    local setVal2 = 0.0--self.EnTbl.Power / 100
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "KickValues" then
                             print("KickValues Detected",self,setVal1,setVal2)
