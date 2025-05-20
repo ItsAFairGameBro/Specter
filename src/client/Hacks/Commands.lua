@@ -141,7 +141,7 @@ return function(C,Settings)
             Run = function(self, args)
                 local SetDesc
                 if args[1] == "new" then
-                    SetDesc =   
+                    SetDesc = C.getgenv().JoinPlayerMorphDesc
                 else
                     SetDesc = C.getgenv().currentDesc[args[1][1].Name]
                 end
