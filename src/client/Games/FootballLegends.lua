@@ -27,6 +27,7 @@ return function(C,Settings)
                     local setVal2 = self.EnTbl.Power / 100
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "KickValues" then
+                            print("KickValues Detected",self)
                             return "Override", tblPack(self,setVal1,setVal2,...)
                         end
                     end,{"fireserver"})
