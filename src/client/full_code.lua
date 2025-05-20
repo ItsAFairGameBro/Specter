@@ -4119,6 +4119,64 @@ return function(C,Settings)
 	}
 end
 ]=],
+    ["Games/FootballLegends"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+
+local DS = game:GetService("Debris")
+local RunS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local VU = game:GetService("VirtualUser")
+local TCS = game:GetService("TextChatService")
+local GS = game:GetService("GuiService")
+local SG = game:GetService("StarterGui")
+return function(C,Settings)
+	return {
+		Category = {
+			Name = "FootballLegends",
+			Title = "Football Legends",
+			Image = nil, -- Set to nil for game image
+			Layout = 20,
+		},
+		Tab = {
+			{
+				Title = "Auto Kicker",
+				Tooltip = "Kicks the ball automatically!",
+				Layout = 1,
+				Shortcut = "AutoKicker",Functs={},Default=true,
+				Activate = function(self,newValue,firstRun)
+                    local tblPack = table.pack
+                    local setVal1 = (100 - self.EnTbl.Accuracy) / 100
+                    local setVal2 = self.EnTbl.Power / 100
+					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
+                        if tostring(self) == "KickValues" then
+                            return "Override", tblPack(self,setVal1,setVal2,...)
+                        end
+                    end,{"fireserver"})
+				end,
+                Events = {},
+				Options = {
+                     {
+                        Type = Types.Slider,
+                        Title = "Power",
+                        Tooltip = "How fast the ball should go (percent)",
+                        Layout = 1,Default = 90,
+                        Min = 0, Max=100, Digits=0,
+                        Shortcut="Power",
+                    },
+                    {
+                        Type = Types.Slider,
+                        Title = "Accuracy",
+                        Tooltip = "How accurate the aim is (percent)",
+                        Layout = 1,Default = 90,
+                        Min = 0, Max=100, Digits=0,
+                        Shortcut="Accuracy",
+                    },
+				},
+			},
+		}
+		
+	}
+end
+]],
     ["Games/MurderMystery"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local HttpService = game:GetService("HttpService")
@@ -9635,7 +9693,10 @@ return function(C,Settings)
 				Tooltip = "Prints all messages from remote events to the console.",
 				Layout = 2,Functs={},
 				Shortcut = "PrintRemoteSpy",
-                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime","CheckOwnsAsset","GetIKTargets","FirstPlayerExperience_IsFirstTime"}},
+                IgnoreList = {
+                    [88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime","CheckOwnsAsset","GetIKTargets","FirstPlayerExperience_IsFirstTime"},
+                    [6505338302] --[[FOOTBALLLEGENDS]] = {"Ping"},
+                },
                 Activate = function(self,newValue)
                     if newValue and self.EnTbl.Inbound then
                         for num, event in ipairs(C.getinstances()) do
@@ -13776,6 +13837,7 @@ local GamesWithModules = {
     [703124385] = {ModuleName =  "TowerOfHell", GameName = "Tower Of Hell"},
     [4967899845] = {ModuleName = "CarryMe", GameName = "Carry Me"},
     [2719766208] = {ModuleName = "NaturalDisasterModded", GameName = "Natural Disaster Survival: Modded"},
+	[6505338302] = {ModuleName = "FootballLegends", GameName = "Football Legends"},
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
