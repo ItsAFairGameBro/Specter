@@ -4175,17 +4175,19 @@ return function(C,Settings)
                         Type = Types.Slider,
                         Title = "Power",
                         Tooltip = "How fast the ball should go (percent)",
-                        Layout = 1,Default = 90,
+                        Layout = 1,Default = 87,
                         Min = 0, Max=100, Digits=0,
                         Shortcut="Power",
+                        Activate = C.ReloadHack
                     },
                     {
                         Type = Types.Slider,
                         Title = "Accuracy",
                         Tooltip = "How accurate the aim is (percent)",
-                        Layout = 1,Default = 90,
+                        Layout = 1,Default = 100,
                         Min = 0, Max=100, Digits=0,
                         Shortcut="Accuracy",
+                        Activate = C.ReloadHack
                     },
 				},
 			},
