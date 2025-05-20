@@ -4141,17 +4141,33 @@ return function(C,Settings)
 				Title = "Auto Kicker",
 				Tooltip = "Kicks the ball automatically!",
 				Layout = 1,
-				Shortcut = "AutoKicker",Functs={},Default=true,
+				Shortcut = "AutoKicker",Functs={}, Threads={},Default=true,
 				Activate = function(self,newValue,firstRun)
                     local tblPack = table.pack
                     local setVal1 = (100 - self.EnTbl.Accuracy) / 100
                     local setVal2 = self.EnTbl.Power / 100
 					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
                         if tostring(self) == "KickValues" then
-                            print("KickValues Detected",self)
+                            print("KickValues Detected",self,setVal1,setVal2)
                             return "Override", tblPack(self,setVal1,setVal2,...)
                         end
                     end,{"fireserver"})
+                    if not newValue then
+                        return
+                    end
+                    local KickVisual = C.StringWait(C.PlayerGui, "Visual.Kick")
+                    local ButtonEvent = C.StringWait(KickVisual, "Button.Event")
+                    table.insert(self.Functs, ButtonEvent.Event:Connect(function(...)
+                        print("EVENT", ...)
+                    end))
+                    local function VisualKickToggle()
+                        while KickVisual and KickVisual.Visible do
+                            ButtonEvent:Fire()
+                            task.wait(.5)
+                        end
+                    end
+                    table.insert(self.Functs, KickVisual:GetPropertyChangedSignal("Visible"):Connect(VisualKickToggle))
+                    VisualKickToggle()
 				end,
                 Events = {},
 				Options = {
