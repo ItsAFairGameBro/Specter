@@ -7527,7 +7527,7 @@ return function(C,Settings)
 							return
 						end
 						newInput = C.char:GetPivot()
-						if self.BlockTeleports and CenterPart.AssemblyMass == math.huge then
+						if self.BlockTeleports and CenterPart.AssemblyMass ~= math.huge then
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 1 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
@@ -7541,8 +7541,10 @@ return function(C,Settings)
 						end
 					end
 					local function AddToCFrameDetection(part)
-						table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
-						--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
+						if part:IsA("BasePart") then
+							table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
+							--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
+						end
 					end
 					table.insert(self.Functs, C.char.DescendantAdded:Connect(AddToCFrameDetection))
 					for num, part in ipairs(C.char:GetDescendants()) do
