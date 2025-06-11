@@ -263,7 +263,7 @@ return function(C,Settings)
             },
             Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906,1805138071},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army","freya"},
             BannedHeadlessItems = {16687323428,12064732367},
-            MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
+            MorphPlayer=function(self, targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
                 local targetHuman = targetChar:FindFirstChild("Humanoid")
@@ -303,7 +303,7 @@ return function(C,Settings)
                         C.getgenv().currentDesc[targetChar.Name] = nil
                         C.getgenv().serializedDesc[targetChar.Name] = nil
                     end
-                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0
+                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0 or C.getgenv().JoinPlayerMorphDesc ~= nil
                 end
                 local isR6 = targetHuman.RigType == Enum.HumanoidRigType.R6
 
@@ -569,14 +569,14 @@ return function(C,Settings)
                 end
                 if players~="new" then
                     for num, theirPlr in ipairs(players) do
-
                         local desc2Apply = savedDescription or PS:GetHumanoidDescriptionFromUserId(theirPlr.UserId)
                         if not desc2Apply then
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
                         end
                         if theirPlr.Character then
                             task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,savedDescription == nil)
-                        elseif not savedDescription then
+                        end
+                        if savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
                                 C.getgenv().currentDesc[theirPlr.Name]:Destroy()
@@ -588,7 +588,6 @@ return function(C,Settings)
                             end
                             C.getgenv().currentDesc[theirPlr.Name] = nil
                         end
-                        --(selectedName=="no" and theirPlr.UserId or PS:GetUserIdFromNameAsync(selectedName)))
                     end
                 end
                 return true

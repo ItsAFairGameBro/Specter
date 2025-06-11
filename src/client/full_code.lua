@@ -2108,6 +2108,32 @@ local SETS_DISPLAY = {
         [7] = "Gval0003",
         [8] = "Hval0003",
     },
+    ["Patrick 2025"] = {
+        [1] = "Gpat0006",
+        [2] = "Hpat0006",
+        [3] = "Gpat0004",
+        [4] = "Hpat0004",
+        [5] = "Gpat0005",
+        [6] = "Hpat0005",
+    },
+    ["Easter 2025"] = {
+        [1] = "Geas0006",
+        [2] = "Heas0006",
+        [3] = "Geas0007",
+        [4] = "Heas0007",
+        [5] = "Geas0008",
+        [6] = "Heas0008",
+        [7] = "Geas0009",
+        [8] = "Heas0009",
+        [9] = "Geas0002",
+        [10] = "Heas0002",
+        [11] = "Geas0003",
+        [12] = "Heas0003",
+        [13] = "Geas0004",
+        [14] = "Heas0004",
+        [15] = "Geas0005",
+        [16] = "Heas0005",
+    },
 }
 local BotActionClone
 
@@ -4094,6 +4120,83 @@ return function(C,Settings)
 	}
 end
 ]=],
+    ["Games/FootballLegends"] = [[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
+
+local DS = game:GetService("Debris")
+local RunS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local VU = game:GetService("VirtualUser")
+local TCS = game:GetService("TextChatService")
+local GS = game:GetService("GuiService")
+local SG = game:GetService("StarterGui")
+return function(C,Settings)
+	return {
+		Category = {
+			Name = "FootballLegends",
+			Title = "Football Legends",
+			Image = nil, -- Set to nil for game image
+			Layout = 20,
+		},
+		Tab = {
+			{
+				Title = "Auto Kicker",
+				Tooltip = "Kicks the ball automatically!",
+				Layout = 1,
+				Shortcut = "AutoKicker",Functs={}, Threads={},Default=true,
+				Activate = function(self,newValue,firstRun)
+                    local tblPack = table.pack
+                    local setVal1 = 0.8--(100 - self.EnTbl.Accuracy) / 100
+                    local setVal2 = 0.0--self.EnTbl.Power / 100
+					C.HookMethod("__namecall",self.Shortcut,newValue and function(newSc,method,self,arg1,arg2,...)
+                        if tostring(self) == "KickValues" then
+                            print("KickValues Detected",self,setVal1,setVal2)
+                            return "Override", tblPack(self,setVal1,setVal2,...)
+                        end
+                    end,{"fireserver"})
+                    if not newValue then
+                        return
+                    end
+                    local KickVisual = C.StringWait(C.PlayerGui, "Visual.Kick")
+                    local ButtonEvent = C.StringWait(KickVisual, "Button.Event")
+                    table.insert(self.Functs, ButtonEvent.Event:Connect(function(...)
+                        print("EVENT", ...)
+                    end))
+                    local function VisualKickToggle()
+                        while KickVisual and KickVisual.Visible do
+                            ButtonEvent:Fire()
+                            task.wait(.5)
+                        end
+                    end
+                    table.insert(self.Functs, KickVisual:GetPropertyChangedSignal("Visible"):Connect(VisualKickToggle))
+                    VisualKickToggle()
+				end,
+                Events = {},
+				Options = {
+                     {
+                        Type = Types.Slider,
+                        Title = "Power",
+                        Tooltip = "How fast the ball should go (percent)",
+                        Layout = 1,Default = 87,
+                        Min = 0, Max=100, Digits=0,
+                        Shortcut="Power",
+                        Activate = C.ReloadHack
+                    },
+                    {
+                        Type = Types.Slider,
+                        Title = "Accuracy",
+                        Tooltip = "How accurate the aim is (percent)",
+                        Layout = 1,Default = 100,
+                        Min = 0, Max=100, Digits=0,
+                        Shortcut="Accuracy",
+                        Activate = C.ReloadHack
+                    },
+				},
+			},
+		}
+		
+	}
+end
+]],
     ["Games/MurderMystery"] = [=[local Types = {Toggle="Toggle",Slider="Slider",Dropdown="Dropdown",Textbox="Textbox",UserList="UserList"}
 
 local HttpService = game:GetService("HttpService")
@@ -7502,7 +7605,7 @@ return function(C,Settings)
 							return
 						end
 						newInput = C.char:GetPivot()
-						if self.BlockTeleports and CenterPart.AssemblyMass == math.huge then
+						if self.BlockTeleports and CenterPart.AssemblyMass ~= math.huge then
 							if (newInput.Position - C.LastLoc.Position).Magnitude > 1 then
 								C.LastTeleportLoc = C.LastLoc
 								C.char:PivotTo(C.LastLoc)
@@ -7516,10 +7619,13 @@ return function(C,Settings)
 						end
 					end
 					local function AddToCFrameDetection(part)
-						table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
-						--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
+						if part:IsA("BasePart") then
+							table.insert(self.Functs,part:GetPropertyChangedSignal("Position"):Connect(TeleportDetected))
+							--table.insert(self.Functs,part:GetPropertyChangedSignal("CFrame"):Connect(TeleportDetected))
+						end
 					end
-					for num, part in ipairs(C.char:GetChildren()) do
+					table.insert(self.Functs, C.char.DescendantAdded:Connect(AddToCFrameDetection))
+					for num, part in ipairs(C.char:GetDescendants()) do
 						if part:IsA("BasePart") then--and part.Name == "Head" then
 							AddToCFrameDetection(part)
 						end
@@ -8492,7 +8598,7 @@ return function(C,Settings)
             },
             Headless={146574359,826042567,1287648573,1091344783,1001407414,1568359906,1805138071},--"courteney_820","z_baeby","kitcat4681","bxnny_senpxii","queen","army","freya"},
             BannedHeadlessItems = {16687323428,12064732367},
-            MorphPlayer=function(self,targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
+            MorphPlayer=function(self, targetChar, humanDesc, dontUpdate, dontAddCap, isDefault)
                 local AnimationEffectData = not dontAddCap and C.CommandFunctions.morph.AnimationEffectFunctions[C.CommandFunctions.morph.DoAnimationEffect]
 
                 local targetHuman = targetChar:FindFirstChild("Humanoid")
@@ -8532,7 +8638,7 @@ return function(C,Settings)
                         C.getgenv().currentDesc[targetChar.Name] = nil
                         C.getgenv().serializedDesc[targetChar.Name] = nil
                     end
-                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0
+                    self.Enabled = C.GetDictLength(C.getgenv().currentDesc) > 0 or C.getgenv().JoinPlayerMorphDesc ~= nil
                 end
                 local isR6 = targetHuman.RigType == Enum.HumanoidRigType.R6
 
@@ -8798,14 +8904,14 @@ return function(C,Settings)
                 end
                 if players~="new" then
                     for num, theirPlr in ipairs(players) do
-
                         local desc2Apply = savedDescription or PS:GetHumanoidDescriptionFromUserId(theirPlr.UserId)
                         if not desc2Apply then
                             return false, `HumanoidDesc returned NULL for {theirPlr.Name}`
                         end
                         if theirPlr.Character then
                             task.spawn(C.CommandFunctions.morph.MorphPlayer,C.CommandFunctions.morph,theirPlr.Character,desc2Apply,false,false,savedDescription == nil)
-                        elseif not savedDescription then
+                        end
+                        if savedDescription then
                             if C.getgenv().currentDesc[theirPlr.Name]
                                 and C.getgenv().currentDesc[theirPlr.Name] ~= desc2Apply then
                                 C.getgenv().currentDesc[theirPlr.Name]:Destroy()
@@ -8817,7 +8923,6 @@ return function(C,Settings)
                             end
                             C.getgenv().currentDesc[theirPlr.Name] = nil
                         end
-                        --(selectedName=="no" and theirPlr.UserId or PS:GetUserIdFromNameAsync(selectedName)))
                     end
                 end
                 return true
@@ -9609,7 +9714,10 @@ return function(C,Settings)
 				Tooltip = "Prints all messages from remote events to the console.",
 				Layout = 2,Functs={},
 				Shortcut = "PrintRemoteSpy",
-                IgnoreList = {[88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime","CheckOwnsAsset","GetIKTargets","FirstPlayerExperience_IsFirstTime"}},
+                IgnoreList = {
+                    [88070565] --[[BLOXBURG]] = {"FloorPos","LookDir","GetServerTime","CheckOwnsAsset","GetIKTargets","FirstPlayerExperience_IsFirstTime"},
+                    [6505338302] --[[FOOTBALLLEGENDS]] = {"Ping"},
+                },
                 Activate = function(self,newValue)
                     if newValue and self.EnTbl.Inbound then
                         for num, event in ipairs(C.getinstances()) do
@@ -13750,6 +13858,7 @@ local GamesWithModules = {
     [703124385] = {ModuleName =  "TowerOfHell", GameName = "Tower Of Hell"},
     [4967899845] = {ModuleName = "CarryMe", GameName = "Carry Me"},
     [2719766208] = {ModuleName = "NaturalDisasterModded", GameName = "Natural Disaster Survival: Modded"},
+	[6505338302] = {ModuleName = "FootballLegends", GameName = "Football Legends"},
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
@@ -14303,31 +14412,38 @@ return function(C,Settings)
 			--local Old = rawget(tbl,name)
 			--rawset(tbl,name,new)
 			--return Old
-			return C.hookfunction(rawget(tbl,name),new)
+			local func2Hook = rawget(tbl, name)
+			if hookfunction then
+				rawset(tbl, name, new)
+				return func2Hook
+			else
+				return hookfunction(func2Hook,new)
+			end
 		end
 
 		local DoPrefix = false
+		local oldPrint, oldWarn = C.getgenv().print, C.getgenv().warn
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.print1(msgToDisplay)
+			oldPrint(msgToDisplay)
 			return msgToDisplay
 		end)
 		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.warn1(msgToDisplay)
+			oldWarn(msgToDisplay)
             if (msgToDisplay == "") then
-                print(debug.traceback())
+                oldPrint(debug.traceback())
             end
 			return msgToDisplay
 		end)
-		OldEnv.print2 = BasicHookFunction(C.getrenv(), "print", function(...)
+		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.print1(msgToDisplay)
+			oldPrint(msgToDisplay)
 			return msgToDisplay
 		end)
-		OldEnv.warn2 = BasicHookFunction(C.getrenv(), "warn", function(...)
+		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.warn1(msgToDisplay)
+			oldWarn(msgToDisplay)
 			return msgToDisplay
 		end)
 

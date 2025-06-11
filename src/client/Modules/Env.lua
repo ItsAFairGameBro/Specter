@@ -122,31 +122,38 @@ return function(C,Settings)
 			--local Old = rawget(tbl,name)
 			--rawset(tbl,name,new)
 			--return Old
-			return C.hookfunction(rawget(tbl,name),new)
+			local func2Hook = rawget(tbl, name)
+			if hookfunction then
+				rawset(tbl, name, new)
+				return func2Hook
+			else
+				return hookfunction(func2Hook,new)
+			end
 		end
 
 		local DoPrefix = false
+		local oldPrint, oldWarn = C.getgenv().print, C.getgenv().warn
 		OldEnv.print1 = BasicHookFunction(C.getrenv() ,"print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.print1(msgToDisplay)
+			oldPrint(msgToDisplay)
 			return msgToDisplay
 		end)
 		OldEnv.warn1 = BasicHookFunction(C.getrenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[GAME]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.warn1(msgToDisplay)
+			oldWarn(msgToDisplay)
             if (msgToDisplay == "") then
-                print(debug.traceback())
+                oldPrint(debug.traceback())
             end
 			return msgToDisplay
 		end)
-		OldEnv.print2 = BasicHookFunction(C.getrenv(), "print", function(...)
+		OldEnv.print2 = BasicHookFunction(C.getgenv(), "print", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.print1(msgToDisplay)
+			oldPrint(msgToDisplay)
 			return msgToDisplay
 		end)
-		OldEnv.warn2 = BasicHookFunction(C.getrenv(), "warn", function(...)
+		OldEnv.warn2 = BasicHookFunction(C.getgenv(), "warn", function(...)
 			local msgToDisplay = (`{DoPrefix and "[HACK]: " or ""}` .. recurseLoopPrint({...}))
-			OldEnv.warn1(msgToDisplay)
+			oldWarn(msgToDisplay)
 			return msgToDisplay
 		end)
 
