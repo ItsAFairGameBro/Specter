@@ -1133,7 +1133,7 @@ return function(C,Settings)
                     local function getEventName(name)
                         local overrideVal = overrides[string.sub(name, 2)]
                         if overrideVal then
-                            return overrideVal
+                            return holiday_map[overrideVal]
                         end
                         local code = string.sub(name, 2, 4)
                         for key, value in pairs(holiday_map) do
