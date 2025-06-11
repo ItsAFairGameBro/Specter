@@ -2178,7 +2178,7 @@ return function(C,Settings)
                             Tooltip = "Specifies the type of items to send.",
                             Layout = 2,Default = false,
                             Shortcut="SendType",
-                            Selections = AppendToFirstArr({"Any", "Unlisted"}, GetKeys(SETS_DISPLAY))
+                            Selections = AppendToFirstArr({"Any", "Unlisted"}, GetKeys(SETS_DISPLAY)),
                             Activate = C.ReloadHack,
                         },
                     },
