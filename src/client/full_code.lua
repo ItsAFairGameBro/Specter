@@ -2163,6 +2163,14 @@ local BotActionClone
 
 -- STANDARD FUNCTIONS--
 
+local function GetKeys(tbl1)
+    local keys = {}
+    for key, val in pairs(tbl1) do
+        table.insert(keys, key)
+    end
+    return keys
+end
+
 local function AppendToFirstArr(tbl1, tbl2, clone)
     for _, val2 in ipairs(tbl2) do
         table.insert(tbl1, clone and table.clone(val2) or val2)
@@ -4140,7 +4148,7 @@ return function(C,Settings)
                             Tooltip = "Specifies the type of items to send.",
                             Layout = 2,Default = false,
                             Shortcut="SendType",
-                            Selections = {"Any", "Unlisted", "Halloween 2024", "Autumn 2024", "Christmas 2024"},
+                            Selections = AppendToFirstArr({"Any", "Unlisted"}, GetKeys(SETS_DISPLAY))
                             Activate = C.ReloadHack,
                         },
                     },
