@@ -1124,10 +1124,17 @@ return function(C,Settings)
                         ["aut"] = "Autumn",
                         ["lny"] = "Lunar"
                     }
+                    local overrides = {
+                        ["ani0063"] = "spr",
+                    }
                     local CurrentPrefix = nil
                     local ShopBundles = C.require(RS.ShopBundles)
                     local Items = {}
                     local function getEventName(name)
+                        local overrideVal = overrides[string.sub(name, 2)]
+                        if overrideVal then
+                            return overrideVal
+                        end
                         local code = string.sub(name, 2, 4)
                         for key, value in pairs(holiday_map) do
                             if code == key then
