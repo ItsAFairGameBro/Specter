@@ -9,6 +9,7 @@ local LS = game:GetService("LogService")
 local UIS = game:GetService("UserInputService")
 local AS = game:GetService("AssetService")
 
+
 return function(C,Settings)
     return {
 		Category = {
@@ -367,7 +368,7 @@ return function(C,Settings)
                     C.setclipboard(game.GameId)
 				end,
 			},
-            C.Executor == "Cryptic" and false and  {
+            C.Executor == "Cryptic" and false and {
 				Title = "Improve GUI",
 				Tooltip = "Improves the UI, which supports:\nCryptic",
 				Layout = 30, Default = true,

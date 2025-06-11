@@ -1110,6 +1110,7 @@ return function(C,Settings)
                         end
                         return nil
                     end
+                    print(ShopBundles, ShopCrates)
                     local function isValid(name,isBundle)
                         local DidFind = getEventName(name)
                         if DidFind then
