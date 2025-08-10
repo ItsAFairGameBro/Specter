@@ -2134,6 +2134,30 @@ local SETS_DISPLAY = {
         [15] = "Geas0005",
         [16] = "Heas0005",
     },
+    ["Spring 2025"] = {
+        [1] = "Gani0063",
+        [2] = "Hani0063",
+        [3] = "Gspr0013",
+        [4] = "Hspr0013",
+        [5] = "Gspr0014",
+        [6] = "Hspr0014",
+        [7] = "Gspr0015",
+        [8] = "Hspr0015",
+        [9] = "Gspr0016",
+        [10] = "Hspr0016",
+        [11] = "Gspr0021",
+        [12] = "Hspr0021",
+        [13] = "Gspr0022",
+        [14] = "Hspr0022",
+        [15] = "Gspr0019",
+        [16] = "Hspr0019",
+        [17] = "Gspr0020",
+        [18] = "Hspr0020",
+        [19] = "Gspr0017",
+        [20] = "Hspr0017",
+        [21] = "Gspr0018",
+        [22] = "Hspr0018",
+    },
     ["Anniversary 2025"] = {
         [1] = "Hani0067",
         [2] = "Hani0068",
@@ -2168,6 +2192,14 @@ local SETS_DISPLAY = {
 local BotActionClone
 
 -- STANDARD FUNCTIONS--
+
+local function GetKeys(tbl1)
+    local keys = {}
+    for key, val in pairs(tbl1) do
+        table.insert(keys, key)
+    end
+    return keys
+end
 
 local function AppendToFirstArr(tbl1, tbl2, clone)
     for _, val2 in ipairs(tbl2) do
@@ -3124,10 +3156,17 @@ return function(C,Settings)
                         ["aut"] = "Autumn",
                         ["lny"] = "Lunar"
                     }
+                    local overrides = {
+                        ["ani0063"] = "spr",
+                    }
                     local CurrentPrefix = nil
                     local ShopBundles = C.require(RS.ShopBundles)
                     local Items = {}
                     local function getEventName(name)
+                        local overrideVal = overrides[string.sub(name, 2)]
+                        if overrideVal then
+                            return holiday_map[overrideVal]
+                        end
                         local code = string.sub(name, 2, 4)
                         for key, value in pairs(holiday_map) do
                             if code == key then
@@ -3136,6 +3175,7 @@ return function(C,Settings)
                         end
                         return nil
                     end
+                    print(ShopBundles, ShopCrates)
                     local function isValid(name,isBundle)
                         local DidFind = getEventName(name)
                         if DidFind then
@@ -4138,7 +4178,7 @@ return function(C,Settings)
                             Tooltip = "Specifies the type of items to send.",
                             Layout = 2,Default = false,
                             Shortcut="SendType",
-                            Selections = {"Any", "Unlisted", "Halloween 2024", "Autumn 2024", "Christmas 2024"},
+                            Selections = AppendToFirstArr({"Any", "Unlisted"}, GetKeys(SETS_DISPLAY)),
                             Activate = C.ReloadHack,
                         },
                     },
@@ -9563,6 +9603,7 @@ local LS = game:GetService("LogService")
 local UIS = game:GetService("UserInputService")
 local AS = game:GetService("AssetService")
 
+
 return function(C,Settings)
     return {
 		Category = {
@@ -9924,7 +9965,7 @@ return function(C,Settings)
                     C.setclipboard(game.GameId)
 				end,
 			},
-            C.Executor == "Cryptic" and false and  {
+            C.Executor == "Cryptic" and false and {
 				Title = "Improve GUI",
 				Tooltip = "Improves the UI, which supports:\nCryptic",
 				Layout = 30, Default = true,
