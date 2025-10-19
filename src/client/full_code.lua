@@ -13037,7 +13037,7 @@ return function(C,Settings)
             RunS.RenderStepped:Wait()
             DidSet += 0
             chatBar.CursorPosition = setCursor
-			-- chatBar.Text = setTo
+			chatBar.Text = setTo
             ClearSuggestions()
 			chatBar.CursorPosition = setTo:len() + 1
         end
@@ -13095,7 +13095,7 @@ return function(C,Settings)
                             --RunS.RenderStepped:Wait()
                             Words[math.max(1,CurrentWordIndex)] = orgName
                             Words[1] = chatBar.Text:sub(1,1) .. Words[1]
-                            -- chatBar.Text = table.concat(Words, " ")
+                            chatBar.Text = table.concat(Words, " ")
                             chatBar.CursorPosition = chatBar.Text:len() + 1
                         else
                             doContinue = true
@@ -13175,8 +13175,8 @@ return function(C,Settings)
             if DidSet <= 0 then
                 if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
                     if doubleSpaces > 0 and chatBar.Text ~= newInput then
-                        -- print("Upd",doubleSpaces,moreSpaces)
-                        -- chatBar.Text = newInput
+                        --print("Upd",doubleSpaces,moreSpaces)
+                        chatBar.Text = newInput
                     end
                     Words = newInput:sub(2):split(" ")
                     local firstCommand = Words[1] -- Command, Really Important
@@ -13306,8 +13306,8 @@ return function(C,Settings)
             end
             goToSaved(deltaIndex)
         end
-        -- C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))--:GetPropertyChangedSignal("Text"):Connect(textUpd))
-        -- C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
+        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))--:GetPropertyChangedSignal("Text"):Connect(textUpd))
+        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
         textUpd()
 
         C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
@@ -13329,7 +13329,7 @@ return function(C,Settings)
             end
 
             if C.LoadCommandBar then
-                -- C.UI.Commandbar.Visible = false
+                C.UI.Commandbar.Visible = false
             elseif not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     -- if connectionFunct.Function then
