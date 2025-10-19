@@ -65,6 +65,7 @@ return function(C, _SETTINGS)
 	else
 		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game❌`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
+		C.LoadCommandBar = true
 	end
 	--if success then
 	C.SetImage(SupportedFrame:WaitForChild("Image"),GameImage)
