@@ -607,7 +607,7 @@ return function(C,Settings)
             end
 
             if C.LoadCommandBar then
-                C.UI.Commandbar.Visible = false
+                -- C.UI.Commandbar.Visible = false
             elseif not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     -- if connectionFunct.Function then
