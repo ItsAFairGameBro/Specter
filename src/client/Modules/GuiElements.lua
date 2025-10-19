@@ -242,6 +242,8 @@ local GuiTbl = {
 	AmtFinished = Instance.new("Frame"),
 	Modal = Instance.new("TextButton"),
 	Commandbar = Instance.new("TextBox"),
+	UICorner_34 = Instance.new("UICorner"),
+	UIStroke_33 = Instance.new("UIStroke"),
 }
 
 --Properties:
@@ -2465,20 +2467,29 @@ GuiTbl.Modal.TextTransparency = 1.000
 GuiTbl.Commandbar.Name = "Commandbar"
 GuiTbl.Commandbar.Parent = GuiTbl.SpecterGUI
 C.UI.Commandbar = GuiTbl.Commandbar
-GuiTbl.Commandbar.AnchorPoint = Vector2.new(1, 0)
-GuiTbl.Commandbar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Commandbar.AnchorPoint = Vector2.new(0.5, 0)
+GuiTbl.Commandbar.BackgroundColor3 = Color3.fromRGB(188, 188, 188)
 GuiTbl.Commandbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.Commandbar.BorderSizePixel = 0
-GuiTbl.Commandbar.Position = UDim2.new(1, 0, 0, 50)
-GuiTbl.Commandbar.Size = UDim2.new(0, 0, 0, 30)
+GuiTbl.Commandbar.Position = UDim2.new(0.5, 0, 0, 40)
+GuiTbl.Commandbar.Selectable = false
+GuiTbl.Commandbar.Size = UDim2.new(0.730000019, 0, 0, 30)
 GuiTbl.Commandbar.Visible = false
+GuiTbl.Commandbar.ZIndex = 2
 GuiTbl.Commandbar.ClearTextOnFocus = false
-GuiTbl.Commandbar.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+GuiTbl.Commandbar.FontFace = Font.new("rbxasset://fonts/families/IndieFlower.json",Enum.FontWeight.Bold,Enum.FontStyle.Normal)
+GuiTbl.Commandbar.PlaceholderText = "Enter username/userid"
 GuiTbl.Commandbar.Text = ""
 GuiTbl.Commandbar.TextColor3 = Color3.fromRGB(255, 255, 255)
-GuiTbl.Commandbar.TextSize = 30.000
+GuiTbl.Commandbar.TextScaled = true
+GuiTbl.Commandbar.TextSize = 21
 GuiTbl.Commandbar.TextStrokeTransparency = 0.000
-GuiTbl.Commandbar.TextXAlignment = Enum.TextXAlignment.Right
+GuiTbl.Commandbar.TextWrapped = true
+
+GuiTbl.UICorner_34.Parent = GuiTbl.Commandbar
+
+GuiTbl.UIStroke_33.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GuiTbl.UIStroke_33.Parent = GuiTbl.Commandbar
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
