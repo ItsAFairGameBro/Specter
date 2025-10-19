@@ -73,9 +73,8 @@ return function(C,Settings)
 		if not centerPart then
 			return
 		end
-        local rootAttachment = HasAttachment and C.WaitForChildWithClass(theirChar, "Attachment") or centerPart:FindFirstChildWhichIsA("Attachment")
+        local rootAttachment = HasAttachment and C.WaitForChildWithClass(centerPart, "Attachment") or centerPart:FindFirstChildWhichIsA("Attachment")
 		local isMe = C.plr.Character == theirChar
-		print("Char added", rootAttachment, isMe)
 		if isMe then
 			C.char = theirChar
 			C.human = theirHuman

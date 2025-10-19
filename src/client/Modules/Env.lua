@@ -122,6 +122,9 @@ return function(C,Settings)
 			--local Old = rawget(tbl,name)
 			--rawset(tbl,name,new)
 			--return Old
+			if C.isStudio then
+				return
+			end
 			local func2Hook = rawget(tbl, name)
 			if hookfunction then
 				rawset(tbl, name, new)
