@@ -13948,6 +13948,7 @@ local GamesWithModules = {
     [4967899845] = {ModuleName = "CarryMe", GameName = "Carry Me"},
     [2719766208] = {ModuleName = "NaturalDisasterModded", GameName = "Natural Disaster Survival: Modded"},
 	[6505338302] = {ModuleName = "FootballLegends", GameName = "Football Legends"},
+	[8535088052] = {ModuleName = "", GameName = "R2D: Afterlife", CustomChat = true},
 }
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
