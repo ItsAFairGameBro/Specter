@@ -6,6 +6,7 @@ local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local MS = game:GetService("MarketplaceService")
 local HS = game:GetService("HttpService")
+local GS = game:GetService("GuiService")
 
 local function LoadCore(C,Settings)
 -- Gui to Lua
@@ -240,6 +241,7 @@ local GuiTbl = {
 	ExpandingBar = Instance.new("Frame"),
 	AmtFinished = Instance.new("Frame"),
 	Modal = Instance.new("TextButton"),
+	Commandbar = Instance.new("TextBox"),
 }
 
 --Properties:
@@ -2459,6 +2461,24 @@ GuiTbl.Modal.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",
 GuiTbl.Modal.TextColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.Modal.TextSize = 21
 GuiTbl.Modal.TextTransparency = 1.000
+
+GuiTbl.Commandbar.Name = "Commandbar"
+GuiTbl.Commandbar.Parent = GuiTbl.SpecterGUI
+C.UI.Commandbar = GuiTbl.Commandbar
+GuiTbl.Commandbar.AnchorPoint = Vector2.new(1, 0)
+GuiTbl.Commandbar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Commandbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.Commandbar.BorderSizePixel = 0
+GuiTbl.Commandbar.Position = UDim2.new(1, 0, 0, 50)
+GuiTbl.Commandbar.Size = UDim2.new(0, 0, 0, 30)
+GuiTbl.Commandbar.Visible = false
+GuiTbl.Commandbar.ClearTextOnFocus = false
+GuiTbl.Commandbar.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+GuiTbl.Commandbar.Text = ""
+GuiTbl.Commandbar.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Commandbar.TextSize = 30.000
+GuiTbl.Commandbar.TextStrokeTransparency = 0.000
+GuiTbl.Commandbar.TextXAlignment = Enum.TextXAlignment.Right
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
@@ -3328,6 +3348,8 @@ return function(C, Settings)
 		end
 	end
 
+	local Inset = GS:GetGuiInset().Y
+	C.UI.Commandbar.Position = UDim2.new(0.5, 0, 0, Inset)
 
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("Modules/HackOptions")

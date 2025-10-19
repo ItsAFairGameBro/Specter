@@ -10807,9 +10807,9 @@ return function(C,Settings)
 					},
 				},
 			},
-			game:GetService("Chat").LoadDefaultChat and {
+			not C.LoadCommandBar and {
 				Title = "Chat",Type="NoToggle",
-				Tooltip = "Simulates the chat key press",
+				Tooltip = "Button to activate chat",
 				Layout = 99,
 				Shortcut = "Chat",Keybind="Slash",
 				Functs={},
@@ -10839,6 +10839,17 @@ return function(C,Settings)
 				end,
                 Events = {},
 				Options = {},
+			},
+			C.LoadCommandBar and {
+				Title = "Commandbar",Type="NoToggle",
+				Tooltip = "Activate to open commandbar",
+				Layout = 99,
+				Shortcut = "Commandbar",Keybind="Semicolon",
+				Activate = function(self,newValue)
+					C.UI.Commandbar.Text = ";"
+					C.UI.Commandbar.Visible = true
+					C.UI.Commandbar:CaptureFocus()
+				end,
 			},
 			{
 				Title = "NoKick UI",
@@ -12136,7 +12147,7 @@ return function(C_new,Settings)
 					},
 				},
 			},
-            {
+            not C.isStudio and {
 				Title = "Invisi Cam",
 				Tooltip = "Allows you to zoom through solid objects\nWorks in any zoomable game",
 				Layout = 5,
@@ -12939,11 +12950,11 @@ return function(C,Settings)
 
     local function registerNewChatBar(_,firstRun)
         local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
-        chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
+        chatBar = C.LoadCommandBar and C.UI.Commandbar or C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
             "Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar" or "ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox")
         if not chatBar then return end
         local sendTheMessage
-        if hasNewChat then
+        if not C.LoadCommandBar and hasNewChat then
             sendTheMessage = function(message,dontSetTB)
                 message = typeof(message)=="string" and message or chatBar.Text
                 if message == "" then
@@ -12992,7 +13003,7 @@ return function(C,Settings)
             end
         end
         local connectionsFuncts = {}
-        if chatBar then
+        if not C.LoadCommandBar and chatBar then
             for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
                 connection:Disable()
                 table.insert(connectionsFuncts,connection)
@@ -13056,6 +13067,7 @@ return function(C,Settings)
                 end
             end
         end
+        local autoCompleteReference = C.LoadCommandBar and chatBar or chatBar.Parent
         local Words,CurrentWordIndex
         local function ChatBarUpdated()
             if C.Cleared then
@@ -13064,8 +13076,10 @@ return function(C,Settings)
             local Inset = GS:GetGuiInset().Y
             isFocused = chatBar:IsFocused()
             ChatAutoCompleteFrame.Visible = isFocused
-            ChatAutoCompleteFrame.Position = UDim2.fromOffset(chatBar.Parent.AbsolutePosition.X,chatBar.Parent.AbsolutePosition.Y+chatBar.Parent.AbsoluteSize.Y+Inset)
-            ChatAutoCompleteFrame.Size = UDim2.fromOffset(chatBar.AbsoluteSize.X,C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
+            ChatAutoCompleteFrame.Position = UDim2.fromOffset(autoCompleteReference.AbsolutePosition.X,
+                autoCompleteReference.AbsolutePosition.Y+autoCompleteReference.AbsoluteSize.Y+Inset)
+            ChatAutoCompleteFrame.Size = UDim2.fromOffset(math.max(300,chatBar.AbsoluteSize.X),C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
+            ChatAutoCompleteFrame.AnchorPoint = Vector2.new(autoCompleteReference.AnchorPoint.X, 0)
             if isFocused then
                 local Deb = 0
                 local ConnectedFunct
@@ -13314,7 +13328,9 @@ return function(C,Settings)
                 end
             end
 
-            if not hasNewChat or C.Cleared then
+            if C.LoadCommandBar then
+                C.UI.Commandbar.Visible = false
+            elseif not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     -- if connectionFunct.Function then
                     --     connectionFunct.Function(enterPressed)
@@ -13329,7 +13345,9 @@ return function(C,Settings)
             end
         end))
     end
-    if CS.LoadDefaultChat or table.find(OverrideChatGames,game.GameId) then
+    if C.LoadCommandBar then
+        task.spawn(registerNewChatBar, nil, true)
+    elseif CS.LoadDefaultChat or table.find(OverrideChatGames,game.GameId) then
         if not hasNewChat then
             C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
                 registerNewChatBar()
@@ -13912,10 +13930,12 @@ end
 ]=],
     ["Modules/CoreLoader"] = [[local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
+local CS = game:GetService("Chat")
 
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
+	[0] = {ModuleName = "", GameName="Debug", CustomChat = true},
 	[770538576] = {ModuleName="NavalWarefare",GameName="Naval Warefare"},
 	[1069466626] = {ModuleName="PassBomb",GameName="Pass The Bomb"},
 	[66654135] = {ModuleName="MurderMystery",GameName="Murder Mystery 2"},
@@ -13957,7 +13977,7 @@ return function(C, _SETTINGS)
 	--C.UI.Tabs = {}
 	local HeaderTab,ButtonsTab,SettingsTab = C.UI.CategoriesFrame:WaitForChild("HeaderTab"),
 		C.UI.CategoriesFrame:WaitForChild("Buttons"),C.UI.CategoriesFrame:WaitForChild("Settings")
-	local ThisGameTbl = GamesWithModules[game.GameId]
+	local ThisGameTbl = GamesWithModules[C.isStudio and 0 or game.GameId]
 	local GameModule
 	local SupportedFrame = SettingsTab:WaitForChild("SupportedFrame")
 	local GameImage = "https://www.roblox.com/Thumbs/Asset.ashx?Width=768&Height=432&AssetID="..game.PlaceId
@@ -13965,7 +13985,12 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game✅`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
 		GameModule = ThisGameTbl.ModuleName
-		table.insert(ModulesToRun,GameModule)
+		if GameModule ~= "" then
+			table.insert(ModulesToRun,GameModule)
+		else
+			GameModule = nil
+		end
+		C.LoadCommandBar = ThisGameTbl.CustomChat
 	else
 		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game❌`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
@@ -15986,6 +16011,7 @@ local PS = game:GetService("Players")
 local RunS = game:GetService("RunService")
 local MS = game:GetService("MarketplaceService")
 local HS = game:GetService("HttpService")
+local GS = game:GetService("GuiService")
 
 local function LoadCore(C,Settings)
 -- Gui to Lua
@@ -16220,6 +16246,7 @@ local GuiTbl = {
 	ExpandingBar = Instance.new("Frame"),
 	AmtFinished = Instance.new("Frame"),
 	Modal = Instance.new("TextButton"),
+	Commandbar = Instance.new("TextBox"),
 }
 
 --Properties:
@@ -18439,6 +18466,24 @@ GuiTbl.Modal.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",
 GuiTbl.Modal.TextColor3 = Color3.fromRGB(0, 0, 0)
 GuiTbl.Modal.TextSize = 21
 GuiTbl.Modal.TextTransparency = 1.000
+
+GuiTbl.Commandbar.Name = "Commandbar"
+GuiTbl.Commandbar.Parent = GuiTbl.SpecterGUI
+C.UI.Commandbar = GuiTbl.Commandbar
+GuiTbl.Commandbar.AnchorPoint = Vector2.new(1, 0)
+GuiTbl.Commandbar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Commandbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GuiTbl.Commandbar.BorderSizePixel = 0
+GuiTbl.Commandbar.Position = UDim2.new(1, 0, 0, 50)
+GuiTbl.Commandbar.Size = UDim2.new(0, 0, 0, 30)
+GuiTbl.Commandbar.Visible = false
+GuiTbl.Commandbar.ClearTextOnFocus = false
+GuiTbl.Commandbar.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json",Enum.FontWeight.Regular,Enum.FontStyle.Normal)
+GuiTbl.Commandbar.Text = ""
+GuiTbl.Commandbar.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiTbl.Commandbar.TextSize = 30.000
+GuiTbl.Commandbar.TextStrokeTransparency = 0.000
+GuiTbl.Commandbar.TextXAlignment = Enum.TextXAlignment.Right
 	return GuiTbl.SpecterGUI,GuiTbl.CategoriesFrame,GuiTbl.TabsFrame,GuiTbl.ToolTipHeaderFrame,GuiTbl.ToolTipText
 end
 
@@ -19308,6 +19353,8 @@ return function(C, Settings)
 		end
 	end
 
+	local Inset = GS:GetGuiInset().Y
+	C.UI.Commandbar.Position = UDim2.new(0.5, 0, 0, Inset)
 
 	--Load Settings Loader
 	C.ExtraOptions = C.LoadModule("Modules/HackOptions")

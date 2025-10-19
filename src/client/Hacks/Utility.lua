@@ -52,9 +52,9 @@ return function(C,Settings)
 					},
 				},
 			},
-			game:GetService("Chat").LoadDefaultChat and {
+			not C.LoadCommandBar and {
 				Title = "Chat",Type="NoToggle",
-				Tooltip = "Simulates the chat key press",
+				Tooltip = "Button to activate chat",
 				Layout = 99,
 				Shortcut = "Chat",Keybind="Slash",
 				Functs={},
@@ -84,6 +84,17 @@ return function(C,Settings)
 				end,
                 Events = {},
 				Options = {},
+			},
+			C.LoadCommandBar and {
+				Title = "Commandbar",Type="NoToggle",
+				Tooltip = "Activate to open commandbar",
+				Layout = 99,
+				Shortcut = "Commandbar",Keybind="Semicolon",
+				Activate = function(self,newValue)
+					C.UI.Commandbar.Text = ";"
+					C.UI.Commandbar.Visible = true
+					C.UI.Commandbar:CaptureFocus()
+				end,
 			},
 			{
 				Title = "NoKick UI",

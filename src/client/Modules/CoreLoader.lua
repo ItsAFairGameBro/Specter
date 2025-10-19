@@ -1,9 +1,11 @@
 local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
+local CS = game:GetService("Chat")
 
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
+	[0] = {ModuleName = "", GameName="Debug", CustomChat = true},
 	[770538576] = {ModuleName="NavalWarefare",GameName="Naval Warefare"},
 	[1069466626] = {ModuleName="PassBomb",GameName="Pass The Bomb"},
 	[66654135] = {ModuleName="MurderMystery",GameName="Murder Mystery 2"},
@@ -45,7 +47,7 @@ return function(C, _SETTINGS)
 	--C.UI.Tabs = {}
 	local HeaderTab,ButtonsTab,SettingsTab = C.UI.CategoriesFrame:WaitForChild("HeaderTab"),
 		C.UI.CategoriesFrame:WaitForChild("Buttons"),C.UI.CategoriesFrame:WaitForChild("Settings")
-	local ThisGameTbl = GamesWithModules[game.GameId]
+	local ThisGameTbl = GamesWithModules[C.isStudio and 0 or game.GameId]
 	local GameModule
 	local SupportedFrame = SettingsTab:WaitForChild("SupportedFrame")
 	local GameImage = "https://www.roblox.com/Thumbs/Asset.ashx?Width=768&Height=432&AssetID="..game.PlaceId
@@ -53,7 +55,12 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Description").Text = `Specter supports this game✅`
 		SupportedFrame:WaitForChild("Supported").Text = `Supported Game`
 		GameModule = ThisGameTbl.ModuleName
-		table.insert(ModulesToRun,GameModule)
+		if GameModule ~= "" then
+			table.insert(ModulesToRun,GameModule)
+		else
+			GameModule = nil
+		end
+		C.LoadCommandBar = ThisGameTbl.CustomChat
 	else
 		SupportedFrame:WaitForChild("Description").Text = `Specter DOES NOT support this game❌`
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`

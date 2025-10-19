@@ -794,7 +794,7 @@ return function(C_new,Settings)
 					},
 				},
 			},
-            {
+            not C.isStudio and {
 				Title = "Invisi Cam",
 				Tooltip = "Allows you to zoom through solid objects\nWorks in any zoomable game",
 				Layout = 5,

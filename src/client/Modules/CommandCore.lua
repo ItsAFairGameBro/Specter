@@ -228,11 +228,11 @@ return function(C,Settings)
 
     local function registerNewChatBar(_,firstRun)
         local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
-        chatBar = C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
+        chatBar = C.LoadCommandBar and C.UI.Commandbar or C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
             "Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar" or "ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox")
         if not chatBar then return end
         local sendTheMessage
-        if hasNewChat then
+        if not C.LoadCommandBar and hasNewChat then
             sendTheMessage = function(message,dontSetTB)
                 message = typeof(message)=="string" and message or chatBar.Text
                 if message == "" then
@@ -281,7 +281,7 @@ return function(C,Settings)
             end
         end
         local connectionsFuncts = {}
-        if chatBar then
+        if not C.LoadCommandBar and chatBar then
             for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
                 connection:Disable()
                 table.insert(connectionsFuncts,connection)
@@ -345,6 +345,7 @@ return function(C,Settings)
                 end
             end
         end
+        local autoCompleteReference = C.LoadCommandBar and chatBar or chatBar.Parent
         local Words,CurrentWordIndex
         local function ChatBarUpdated()
             if C.Cleared then
@@ -353,8 +354,10 @@ return function(C,Settings)
             local Inset = GS:GetGuiInset().Y
             isFocused = chatBar:IsFocused()
             ChatAutoCompleteFrame.Visible = isFocused
-            ChatAutoCompleteFrame.Position = UDim2.fromOffset(chatBar.Parent.AbsolutePosition.X,chatBar.Parent.AbsolutePosition.Y+chatBar.Parent.AbsoluteSize.Y+Inset)
-            ChatAutoCompleteFrame.Size = UDim2.fromOffset(chatBar.AbsoluteSize.X,C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
+            ChatAutoCompleteFrame.Position = UDim2.fromOffset(autoCompleteReference.AbsolutePosition.X,
+                autoCompleteReference.AbsolutePosition.Y+autoCompleteReference.AbsoluteSize.Y+Inset)
+            ChatAutoCompleteFrame.Size = UDim2.fromOffset(math.max(300,chatBar.AbsoluteSize.X),C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
+            ChatAutoCompleteFrame.AnchorPoint = Vector2.new(autoCompleteReference.AnchorPoint.X, 0)
             if isFocused then
                 local Deb = 0
                 local ConnectedFunct
@@ -603,7 +606,9 @@ return function(C,Settings)
                 end
             end
 
-            if not hasNewChat or C.Cleared then
+            if C.LoadCommandBar then
+                C.UI.Commandbar.Visible = false
+            elseif not hasNewChat or C.Cleared then
                 for num, connectionFunct in ipairs(connectionsFuncts) do
                     -- if connectionFunct.Function then
                     --     connectionFunct.Function(enterPressed)
@@ -618,7 +623,9 @@ return function(C,Settings)
             end
         end))
     end
-    if CS.LoadDefaultChat or table.find(OverrideChatGames,game.GameId) then
+    if C.LoadCommandBar then
+        task.spawn(registerNewChatBar, nil, true)
+    elseif CS.LoadDefaultChat or table.find(OverrideChatGames,game.GameId) then
         if not hasNewChat then
             C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
                 registerNewChatBar()
