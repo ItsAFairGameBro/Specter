@@ -73,7 +73,7 @@ return function(C,Settings)
 		if not centerPart then
 			return
 		end
-        local rootAttachment = HasAttachment and centerPart:WaitForChild("RootAttachment") or centerPart:FindFirstChildWhichIsA("Attachment")
+        local rootAttachment = HasAttachment and C.WaitForChildWithClass(theirChar, "Attachment") or centerPart:FindFirstChildWhichIsA("Attachment")
 		local isMe = C.plr.Character == theirChar
 		if isMe then
 			C.char = theirChar

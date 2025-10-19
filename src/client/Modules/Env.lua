@@ -211,6 +211,15 @@ return function(C,Settings)
         end
         return list
     end
+	function C.WaitForChildWithClass(obj: Object, class: string)
+		while true do
+			local find = obj:FindFirstChildOfClass(class)
+			if find then
+				return find
+			end
+			obj.ChildAdded:Wait()
+		end
+	end
 	function C.GetDictLength(tbl)
 		local num = 0 for _, _ in pairs(tbl) do num+=1 end return num
 	end

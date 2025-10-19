@@ -10807,7 +10807,7 @@ return function(C,Settings)
 					},
 				},
 			},
-			{
+			game:GetService("Chat").LoadDefaultChat and {
 				Title = "Chat",Type="NoToggle",
 				Tooltip = "Simulates the chat key press",
 				Layout = 99,
@@ -14570,6 +14570,15 @@ return function(C,Settings)
         end
         return list
     end
+	function C.WaitForChildWithClass(obj: Object, class: string)
+		while true do
+			local find = obj:FindFirstChildOfClass(class)
+			if find then
+				return find
+			end
+			obj.ChildAdded:Wait()
+		end
+	end
 	function C.GetDictLength(tbl)
 		local num = 0 for _, _ in pairs(tbl) do num+=1 end return num
 	end
@@ -15825,7 +15834,7 @@ return function(C,Settings)
 		if not centerPart then
 			return
 		end
-        local rootAttachment = HasAttachment and centerPart:WaitForChild("RootAttachment") or centerPart:FindFirstChildWhichIsA("Attachment")
+        local rootAttachment = HasAttachment and C.WaitForChildWithClass(theirChar, "Attachment") or centerPart:FindFirstChildWhichIsA("Attachment")
 		local isMe = C.plr.Character == theirChar
 		if isMe then
 			C.char = theirChar

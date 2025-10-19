@@ -52,7 +52,7 @@ return function(C,Settings)
 					},
 				},
 			},
-			{
+			game:GetService("Chat").LoadDefaultChat and {
 				Title = "Chat",Type="NoToggle",
 				Tooltip = "Simulates the chat key press",
 				Layout = 99,
