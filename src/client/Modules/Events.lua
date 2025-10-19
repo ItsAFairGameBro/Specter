@@ -75,6 +75,7 @@ return function(C,Settings)
 		end
         local rootAttachment = HasAttachment and C.WaitForChildWithClass(theirChar, "Attachment") or centerPart:FindFirstChildWhichIsA("Attachment")
 		local isMe = C.plr.Character == theirChar
+		print("Char added", rootAttachment, isMe)
 		if isMe then
 			C.char = theirChar
 			C.human = theirHuman
