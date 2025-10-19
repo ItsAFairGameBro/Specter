@@ -13076,10 +13076,9 @@ return function(C,Settings)
             local Inset = GS:GetGuiInset().Y
             isFocused = chatBar:IsFocused()
             ChatAutoCompleteFrame.Visible = isFocused
-            ChatAutoCompleteFrame.Position = UDim2.fromOffset(autoCompleteReference.AbsolutePosition.X,
+            ChatAutoCompleteFrame.Position = UDim2.fromOffset(autoCompleteReference.AbsolutePosition.X + autoCompleteReference.AnchorPoint.X * autoCompleteReference.AbsoluteSize.X,
                 autoCompleteReference.AbsolutePosition.Y+autoCompleteReference.AbsoluteSize.Y+Inset)
             ChatAutoCompleteFrame.Size = UDim2.fromOffset(math.clamp(chatBar.AbsoluteSize.X, 300, 500),C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
-            ChatAutoCompleteFrame.AnchorPoint = Vector2.new(autoCompleteReference.AnchorPoint.X, 0)
             if isFocused then
                 local Deb = 0
                 local ConnectedFunct
