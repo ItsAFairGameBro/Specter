@@ -13078,7 +13078,7 @@ return function(C,Settings)
             ChatAutoCompleteFrame.Visible = isFocused
             ChatAutoCompleteFrame.Position = UDim2.fromOffset(autoCompleteReference.AbsolutePosition.X,
                 autoCompleteReference.AbsolutePosition.Y+autoCompleteReference.AbsoluteSize.Y+Inset)
-            ChatAutoCompleteFrame.Size = UDim2.fromOffset(math.max(300,chatBar.AbsoluteSize.X),C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
+            ChatAutoCompleteFrame.Size = UDim2.fromOffset(math.clamp(chatBar.AbsoluteSize.X, 300, 500),C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
             ChatAutoCompleteFrame.AnchorPoint = Vector2.new(autoCompleteReference.AnchorPoint.X, 0)
             if isFocused then
                 local Deb = 0
