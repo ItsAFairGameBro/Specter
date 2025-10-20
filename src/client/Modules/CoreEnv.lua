@@ -270,7 +270,11 @@ return function(C,Settings)
 			color = color or Color3.fromRGB(255,255,255);
 			local channel = TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
 			message = (`%s <font color="rgb(%.0f,%.0f,%.0f)">%s</font>`):format(typeText, color.R*255, color.G*255, color.B*255, message)
-			channel:DisplaySystemMessage(message, 'systemMessage');
+			if channel then
+				channel:DisplaySystemMessage(message, 'systemMessage');
+			else
+				print( message )
+			end
 		else
 			SG:SetCore("ChatMakeSystemMessage",  { Text = `{typeText} {message}`, Color = color or Color3.fromRGB(255),
 				Font = Enum.Font.SourceSansBold, FontSize = Enum.FontSize.Size24 } )
