@@ -10830,7 +10830,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					if SG:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
-						if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+						if C.ChatVersion == Enum.ChatVersion.LegacyChatService then
 							self:SlashPressedOld()
 						else
 							C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
@@ -10991,7 +10991,7 @@ return function(C,Settings)
                         end
                         if self:HasAdminAccess(theirPlr) then
 							self.ChatConnected = true
-                            if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                            if C.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
@@ -11006,7 +11006,7 @@ return function(C,Settings)
                                     end
                                 end))
                                 --print("Chat Connected Because Of User",theirPlr)
-                            elseif TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+                            elseif C.ChatVersion == Enum.ChatVersion.TextChatService then
 								local enabled = true
 								local function TCSAdded(textChannel: TextChannel)
 									if textChannel:IsA("TextChannel") then
@@ -11044,8 +11044,8 @@ return function(C,Settings)
 									TCSAdded(textChannel)
 								end
 							else
-                                C.CreateSysMessage(`[Utility.Bot]: Unknown Chat Service is Not Supported: {TCS.ChatVersion.Name}!`)
-                                warn("[Utility.Bot]: New Chat Service Not Supported!",TCS.ChatVersion.Name)
+                                C.CreateSysMessage(`[Utility.Bot]: Unknown Chat Service is Not Supported: {C.ChatVersion.Name}!`)
+                                warn("[Utility.Bot]: New Chat Service Not Supported!",C.ChatVersion.Name)
                             end
                         end
                     end,
@@ -11760,13 +11760,13 @@ return function(C_new,Settings)
 				Activate = function(self,newValue)
 					local real = self.EnTbl.Real
                     local fake = self.EnTbl.Fake
-                    if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+                    if C.ChatVersion == Enum.ChatVersion.TextChatService then
                         fake = string.gsub(fake, "\n", "\r")
                         C.SendGeneralMessage(real..'\r'..fake)
-                    elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                    elseif C.ChatVersion == Enum.ChatVersion.LegacyChatService then
                         C.SendGeneralMessage(real..string.sub((" "):rep(155),#real)..fake)
                     else
-                        error("Unknown TCS ChatVersion For `Fake Chat`: "..tostring(TCS.ChatVersion))
+                        error("Unknown TCS ChatVersion For `Fake Chat`: "..tostring(C.ChatVersion))
                     end
 				end,
                 Events = {},
@@ -11829,7 +11829,7 @@ return function(C_new,Settings)
                         else-- Found, so delete it!
                             table.remove(self.Messages, foundIndex)
 						end
-						print(theirPlr.Name, msg)
+						-- print(theirPlr.Name, msg)
                     end))
                 end,
                 Messages = {},
@@ -11846,7 +11846,7 @@ return function(C_new,Settings)
                             self:AddToChat(theirPlr)
                         end
                     end
-                    if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+                    if C.ChatVersion == Enum.ChatVersion.TextChatService then
                         -- C.CreateSysMessage(`[Chat Spy]: Chat Spy doesn't support the new roblox chat version: {Enum.ChatVersion.TextChatService.Name}`)
                         local function newTCS(obj)
 							if obj:IsA("TextChannel") then
@@ -12946,7 +12946,7 @@ return function(C,Settings)
     local chatBar
     local isFocused
     local index = 0
-    local hasNewChat = TCS.ChatVersion == Enum.ChatVersion.TextChatService
+    local hasNewChat = C.ChatVersion == Enum.ChatVersion.TextChatService
 
     local function registerNewChatBar(_,firstRun)
         local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
@@ -13678,7 +13678,7 @@ return function(C,Settings)
 	--Chat
 	function C.CreateSysMessage(message,color,typeText)
 		typeText = typeText and ("[" .. typeText .. "]:") or "{Sys}"
-		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+		if C.ChatVersion == Enum.ChatVersion.TextChatService then
 			color = color or Color3.fromRGB(255,255,255);
 			local channel = TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
 			message = (`%s <font color="rgb(%.0f,%.0f,%.0f)">%s</font>`):format(typeText, color.R*255, color.G*255, color.B*255, message)
@@ -13939,7 +13939,7 @@ local CS = game:GetService("Chat")
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
-	[0] = {ModuleName = "", GameName="Debug", CustomChat = true},
+	[0] = {ModuleName = "", GameName="Debug", CustomChat = false},
 	[770538576] = {ModuleName="NavalWarefare",GameName="Naval Warefare"},
 	[1069466626] = {ModuleName="PassBomb",GameName="Pass The Bomb"},
 	[66654135] = {ModuleName="MurderMystery",GameName="Murder Mystery 2"},
@@ -15427,12 +15427,12 @@ return function(C,Settings)
 	end
 
 	function C.SendGeneralMessage(message:string)
-		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+		if C.ChatVersion == Enum.ChatVersion.TextChatService then
 			C.StringWait(TCS,"TextChannels.RBXGeneral"):SendAsync(message)
-		elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+		elseif C.ChatVersion == Enum.ChatVersion.LegacyChatService then
 			C.StringWait(RS,"DefaultChatSystemChatEvents.SayMessageRequest"):FireServer(message,"All")
 		else
-			error("Unknown TCS ChatVersion For SendGeneralMessage: "..TCS.ChatVersion.Name)
+			error("Unknown TCS ChatVersion For SendGeneralMessage: "..C.ChatVersion.Name)
 		end
 	end
 	do
@@ -15441,7 +15441,7 @@ return function(C,Settings)
 			return TextChannels:FindFirstChild(`RBXWhisper:{theirPlr.UserId}_{C.plr.UserId}`) or TextChannels:FindFirstChild(`RBXWhisper:{C.plr.UserId}_{theirPlr.UserId}`)
 		end
 		function C.SendPrivateMessage(theirPlr, message)
-			assert(TCS.ChatVersion == Enum.ChatVersion.TextChatService, "[C.SendPrivateMessage] only supports latest chat version!")
+			assert(C.ChatVersion == Enum.ChatVersion.TextChatService, "[C.SendPrivateMessage] only supports latest chat version!")
 			
 			local whisperChannel = GetPrivateMessageChannel(theirPlr)
 			if not whisperChannel then
@@ -20746,7 +20746,7 @@ C.EventFunctions, C.InsertCommandFunctions = {}, {}
 C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
 C.PartConnections = {}
-C.ChatVersion = TextChatService.ChatVersion.Name
+C.ChatVersion = Enum.ChatVersion.TextChatService -- Forcefully
 C.BotUsers = {`lexxy4life`,`theweirdspook`,`lifeisoofs`,`itsagoodgamebro`,`itsagoodgamebros`,`bottingforthewin`}
 C.AdminUsers = {`suitedforbans`,`suitedforbans2`,`suitedforbans3`,`suitedforbans4`,`suitedforbans5`,
 `suitedforbans6`,`suitedforbans7`,`suitedforbans8`,`suitedforbans9`,`suitedforbans10`,`suitedforbans11`,`suitedforbans12`,

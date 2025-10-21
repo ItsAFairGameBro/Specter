@@ -224,7 +224,7 @@ return function(C,Settings)
     local chatBar
     local isFocused
     local index = 0
-    local hasNewChat = TCS.ChatVersion == Enum.ChatVersion.TextChatService
+    local hasNewChat = C.ChatVersion == Enum.ChatVersion.TextChatService
 
     local function registerNewChatBar(_,firstRun)
         local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")

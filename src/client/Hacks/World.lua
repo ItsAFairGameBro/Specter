@@ -407,13 +407,13 @@ return function(C_new,Settings)
 				Activate = function(self,newValue)
 					local real = self.EnTbl.Real
                     local fake = self.EnTbl.Fake
-                    if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+                    if C.ChatVersion == Enum.ChatVersion.TextChatService then
                         fake = string.gsub(fake, "\n", "\r")
                         C.SendGeneralMessage(real..'\r'..fake)
-                    elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                    elseif C.ChatVersion == Enum.ChatVersion.LegacyChatService then
                         C.SendGeneralMessage(real..string.sub((" "):rep(155),#real)..fake)
                     else
-                        error("Unknown TCS ChatVersion For `Fake Chat`: "..tostring(TCS.ChatVersion))
+                        error("Unknown TCS ChatVersion For `Fake Chat`: "..tostring(C.ChatVersion))
                     end
 				end,
                 Events = {},
@@ -476,7 +476,7 @@ return function(C_new,Settings)
                         else-- Found, so delete it!
                             table.remove(self.Messages, foundIndex)
 						end
-						print(theirPlr.Name, msg)
+						-- print(theirPlr.Name, msg)
                     end))
                 end,
                 Messages = {},
@@ -493,7 +493,7 @@ return function(C_new,Settings)
                             self:AddToChat(theirPlr)
                         end
                     end
-                    if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+                    if C.ChatVersion == Enum.ChatVersion.TextChatService then
                         -- C.CreateSysMessage(`[Chat Spy]: Chat Spy doesn't support the new roblox chat version: {Enum.ChatVersion.TextChatService.Name}`)
                         local function newTCS(obj)
 							if obj:IsA("TextChannel") then

@@ -1037,12 +1037,12 @@ return function(C,Settings)
 	end
 
 	function C.SendGeneralMessage(message:string)
-		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+		if C.ChatVersion == Enum.ChatVersion.TextChatService then
 			C.StringWait(TCS,"TextChannels.RBXGeneral"):SendAsync(message)
-		elseif TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+		elseif C.ChatVersion == Enum.ChatVersion.LegacyChatService then
 			C.StringWait(RS,"DefaultChatSystemChatEvents.SayMessageRequest"):FireServer(message,"All")
 		else
-			error("Unknown TCS ChatVersion For SendGeneralMessage: "..TCS.ChatVersion.Name)
+			error("Unknown TCS ChatVersion For SendGeneralMessage: "..C.ChatVersion.Name)
 		end
 	end
 	do
@@ -1051,7 +1051,7 @@ return function(C,Settings)
 			return TextChannels:FindFirstChild(`RBXWhisper:{theirPlr.UserId}_{C.plr.UserId}`) or TextChannels:FindFirstChild(`RBXWhisper:{C.plr.UserId}_{theirPlr.UserId}`)
 		end
 		function C.SendPrivateMessage(theirPlr, message)
-			assert(TCS.ChatVersion == Enum.ChatVersion.TextChatService, "[C.SendPrivateMessage] only supports latest chat version!")
+			assert(C.ChatVersion == Enum.ChatVersion.TextChatService, "[C.SendPrivateMessage] only supports latest chat version!")
 			
 			local whisperChannel = GetPrivateMessageChannel(theirPlr)
 			if not whisperChannel then

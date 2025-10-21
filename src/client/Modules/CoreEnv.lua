@@ -266,7 +266,7 @@ return function(C,Settings)
 	--Chat
 	function C.CreateSysMessage(message,color,typeText)
 		typeText = typeText and ("[" .. typeText .. "]:") or "{Sys}"
-		if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+		if C.ChatVersion == Enum.ChatVersion.TextChatService then
 			color = color or Color3.fromRGB(255,255,255);
 			local channel = TCS:FindFirstChild("RBXGeneral",true) or TCS:FindFirstChildWhichIsA("TextChannel",true)
 			message = (`%s <font color="rgb(%.0f,%.0f,%.0f)">%s</font>`):format(typeText, color.R*255, color.G*255, color.B*255, message)

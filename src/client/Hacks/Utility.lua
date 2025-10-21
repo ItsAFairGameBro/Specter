@@ -75,7 +75,7 @@ return function(C,Settings)
 				end,
 				Activate = function(self,newValue)
 					if SG:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
-						if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+						if C.ChatVersion == Enum.ChatVersion.LegacyChatService then
 							self:SlashPressedOld()
 						else
 							C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
@@ -236,7 +236,7 @@ return function(C,Settings)
                         end
                         if self:HasAdminAccess(theirPlr) then
 							self.ChatConnected = true
-                            if TCS.ChatVersion == Enum.ChatVersion.LegacyChatService then
+                            if C.ChatVersion == Enum.ChatVersion.LegacyChatService then
                                 local DoneFiltering = C.StringWait(RS, "DefaultChatSystemChatEvents.OnMessageDoneFiltering")
                                 table.insert(self.Functs, DoneFiltering.OnClientEvent:Connect(function(data, channel)
                                     local thePlr = PS:GetPlayerByUserId(data.SpeakerUserId)
@@ -251,7 +251,7 @@ return function(C,Settings)
                                     end
                                 end))
                                 --print("Chat Connected Because Of User",theirPlr)
-                            elseif TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+                            elseif C.ChatVersion == Enum.ChatVersion.TextChatService then
 								local enabled = true
 								local function TCSAdded(textChannel: TextChannel)
 									if textChannel:IsA("TextChannel") then
@@ -289,8 +289,8 @@ return function(C,Settings)
 									TCSAdded(textChannel)
 								end
 							else
-                                C.CreateSysMessage(`[Utility.Bot]: Unknown Chat Service is Not Supported: {TCS.ChatVersion.Name}!`)
-                                warn("[Utility.Bot]: New Chat Service Not Supported!",TCS.ChatVersion.Name)
+                                C.CreateSysMessage(`[Utility.Bot]: Unknown Chat Service is Not Supported: {C.ChatVersion.Name}!`)
+                                warn("[Utility.Bot]: New Chat Service Not Supported!",C.ChatVersion.Name)
                             end
                         end
                     end,

@@ -297,7 +297,7 @@ C.EventFunctions, C.InsertCommandFunctions = {}, {}
 C.Camera = workspace.CurrentCamera -- updated later in Events
 C.Randomizer = Random.new()
 C.PartConnections = {}
-C.ChatVersion = TextChatService.ChatVersion.Name
+C.ChatVersion = Enum.ChatVersion.TextChatService -- Forcefully
 C.BotUsers = {`lexxy4life`,`theweirdspook`,`lifeisoofs`,`itsagoodgamebro`,`itsagoodgamebros`,`bottingforthewin`}
 C.AdminUsers = {`suitedforbans`,`suitedforbans2`,`suitedforbans3`,`suitedforbans4`,`suitedforbans5`,
 `suitedforbans6`,`suitedforbans7`,`suitedforbans8`,`suitedforbans9`,`suitedforbans10`,`suitedforbans11`,`suitedforbans12`,
