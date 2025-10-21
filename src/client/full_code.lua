@@ -13939,7 +13939,7 @@ local CS = game:GetService("Chat")
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
-	[0] = {ModuleName = "", GameName="Debug", CustomChat = false},
+	[0] = {ModuleName = "", GameName="Debug", CustomChat = true},
 	[770538576] = {ModuleName="NavalWarefare",GameName="Naval Warefare"},
 	[1069466626] = {ModuleName="PassBomb",GameName="Pass The Bomb"},
 	[66654135] = {ModuleName="MurderMystery",GameName="Murder Mystery 2"},
@@ -14973,9 +14973,10 @@ return function(C,Settings)
 			end
 			friendsTable = iterPageItems(friendsPages)
 			if userID == 26682673 then
-				table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
+				-- table.insert(friendsTable,{SortName = "LivyC4l1f3",UserId = 432182186})
                 table.insert(friendsTable,{SortName = "freyaaqx",UserId = 1805138071})
                 table.insert(friendsTable,{SortName = "police_girl", UserId = 2045407147})
+				table.insert(friendsTable,{SortName = "rv7vx", UserId = 1568359906})
 			end
 			-- Add yourself. Weird, I know!
 			table.insert(friendsTable,{SortName = userName, UserId = userID})

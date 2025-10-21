@@ -5,7 +5,7 @@ local CS = game:GetService("Chat")
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
 	--[6203382228] = {ModuleName="TestPlace"},
-	[0] = {ModuleName = "", GameName="Debug", CustomChat = false},
+	[0] = {ModuleName = "", GameName="Debug", CustomChat = true},
 	[770538576] = {ModuleName="NavalWarefare",GameName="Naval Warefare"},
 	[1069466626] = {ModuleName="PassBomb",GameName="Pass The Bomb"},
 	[66654135] = {ModuleName="MurderMystery",GameName="Murder Mystery 2"},
