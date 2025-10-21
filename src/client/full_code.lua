@@ -8454,9 +8454,14 @@ return function(C,Settings)
     function C.PostApplyHumanoidDescription(humanoid, description)
         local targetChar = humanoid.Parent
         local theirShirt = targetChar:FindFirstChildWhichIsA("Shirt") or Instance.new("Shirt", targetChar)
+        local theirPants = targetChar:FindFirstChildWhichIsA("Pants") or Instance.new("Pants", targetChar)
         if description.Shirt == 9254017270 then -- Banned Shirt
             theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
         end
+        if description.Pants == 6741669325 then -- Banned Pants
+            theirPants.PantsTemplate = "http://www.roblox.com/asset/?id=6741669318"
+        end
+
     end
     C.CommandFunctions = {
         ["refresh"]={
