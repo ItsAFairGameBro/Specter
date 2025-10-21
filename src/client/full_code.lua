@@ -8458,7 +8458,8 @@ return function(C,Settings)
         if description.Shirt == 9254017270 then -- Banned Shirt
             theirShirt.ShirtTemplate = "http://www.roblox.com/asset/?id=9254017260"
         end
-        if description.Pants == 6741669325 then -- Banned Pants
+        if description.Pants == 6741669325 or true then -- Banned Pants
+            print(description.Pants)
             theirPants.PantsTemplate = "http://www.roblox.com/asset/?id=6741669318"
         end
 
