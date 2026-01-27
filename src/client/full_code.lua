@@ -14011,7 +14011,8 @@ return function(C, _SETTINGS)
         local CanSendAny = false
         for _, textSource in ipairs(TCS:GetDescendants()) do
             if textSource:IsA("TextSource") then
-                if textSource.CanSend then
+                if textSource.CanSend and textSource.Name == C.plr.Name then
+                    print("CanSend:", textSource.Name)
                     CanSendAny = true
                     break
                 end
