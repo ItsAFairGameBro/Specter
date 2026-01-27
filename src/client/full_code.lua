@@ -14006,22 +14006,9 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 		C.LoadCommandBar = true
 	end
-    if not C.LoadCommandBar then
-        print("LoadCommandBar")
-        local CanSendAny = false
-        for _, textSource in ipairs(TCS:GetDescendants()) do
-            if textSource:IsA("TextSource") then
-                if textSource.CanSend and textSource.Name == C.plr.Name then
-                    print("CanSend:", textSource.Name)
-                    CanSendAny = true
-                    break
-                end
-            end
-        end
-        if not CanSendAny then
-            C.LoadCommandBar = true
-            print("Forced load command bar")
-        end
+    if not C.LoadCommandBar and not TCS:CanUserChatAsync(C.plr.UserId) then
+        C.LoadCommandBar = true
+        print("Forced load command bar")
     end
 	--if success then
 	C.SetImage(SupportedFrame:WaitForChild("Image"),GameImage)
