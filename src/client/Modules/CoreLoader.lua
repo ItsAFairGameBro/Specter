@@ -1,6 +1,7 @@
 local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 local CS = game:GetService("Chat")
+local TCS = game:GetService("TextChatService")
 
 local ModulesToRun = {"Render","Blatant","World","Utility","Friends","Settings"}
 local GamesWithModules = {
@@ -67,6 +68,21 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 		C.LoadCommandBar = true
 	end
+    if not C.LoadCommandBar then
+        local CanSendAny = false
+        for _, textSource in ipairs(TCS:GetDescendants()) do
+            if textSource:IsA("TextSource") then
+                if textSource.CanSend then
+                    CanSendAny = true
+                    break
+                end
+            end
+        end
+        if not CanSendAny then
+            C.LoadCommandBar = true
+            -- print("Forced load command bar")
+        end
+    end
 	--if success then
 	C.SetImage(SupportedFrame:WaitForChild("Image"),GameImage)
 	--end
