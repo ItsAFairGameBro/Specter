@@ -57,7 +57,6 @@ return function(C,Settings)
         if description.Pants == 18992943164 then -- Banned Pants
             theirPants.PantsTemplate = "http://www.roblox.com/asset/?id=6741669318"
         end
-
     end
     C.CommandFunctions = {
         ["refresh"]={

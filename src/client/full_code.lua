@@ -8461,7 +8461,6 @@ return function(C,Settings)
         if description.Pants == 18992943164 then -- Banned Pants
             theirPants.PantsTemplate = "http://www.roblox.com/asset/?id=6741669318"
         end
-
     end
     C.CommandFunctions = {
         ["refresh"]={
@@ -12735,7 +12734,7 @@ local GS = game:GetService("GuiService")
 local CS = game:GetService("Chat")
 local OverrideChatGames = {
     66654135, -- MM2
-    372226183, -- Flee
+    -- 372226183, -- Flee
 }
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands

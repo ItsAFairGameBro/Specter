@@ -8,7 +8,7 @@ local GS = game:GetService("GuiService")
 local CS = game:GetService("Chat")
 local OverrideChatGames = {
     66654135, -- MM2
-    372226183, -- Flee
+    -- 372226183, -- Flee
 }
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands
