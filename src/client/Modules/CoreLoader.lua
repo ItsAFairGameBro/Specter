@@ -69,6 +69,7 @@ return function(C, _SETTINGS)
 		C.LoadCommandBar = true
 	end
     if not C.LoadCommandBar then
+        print("LoadCommandBar")
         local CanSendAny = false
         for _, textSource in ipairs(TCS:GetDescendants()) do
             if textSource:IsA("TextSource") then
@@ -80,7 +81,7 @@ return function(C, _SETTINGS)
         end
         if not CanSendAny then
             C.LoadCommandBar = true
-            -- print("Forced load command bar")
+            print("Forced load command bar")
         end
     end
 	--if success then
