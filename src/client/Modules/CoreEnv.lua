@@ -12,7 +12,8 @@ return function(C,Settings)
 		assert(typeof(tries)=="number" or tries==nil,"[C.API]: Tries parameter must be a number")
 		tries = tries or 3
 		local success, result
-		while (tries > 0 or tries == -1) and not success do
+		local retryForever = tries == -1
+		while (tries > 0 or retryForever) and not success and (not retryForever or not C.Cleared) do
 			if method then
 				success, result = pcall(service[method],service,...)
 			else
@@ -22,16 +23,37 @@ return function(C,Settings)
 				C.AddNotification("API Failed",`{tostring(method)} from service {tostring(service)} has failed: {tostring(result)}!\nTries: {tries<0 and "inf" or tries}`)
 				warn(debug.traceback(`{tostring(method)} from service {tostring(service or "")} has failed: {tostring(result)}! Tries: {tries<0 and "inf" or tries}`))
 			end
-			tries -= 1
+			if not retryForever then tries -= 1 end
+			if not success and (tries > 0 or retryForever) then task.wait(1) end
 		end
 		return success, result
 	end
 	local SettingsPath = "SpecterV2/Settings"
 	local ProfileStoragePath = "SpecterV2/Profiles"
 	local SaveFileExtention = ".json"
+	-- UI callbacks keep references to the saved option tables. Preserve those
+	-- tables when changing profiles so subsequent edits reach the active save.
+	local function UpdateSavedTable(target, source, preserveChildren)
+		for key in pairs(target) do
+			if source[key] == nil then
+				if preserveChildren and typeof(target[key]) == "table" then
+					UpdateSavedTable(target[key], {})
+				else
+					target[key] = nil
+				end
+			end
+		end
+		for key, value in pairs(source) do
+			if typeof(value) == "table" and typeof(target[key]) == "table" then
+				UpdateSavedTable(target[key], value)
+			else
+				target[key] = value
+			end
+		end
+	end
 	local function CreateStoragePath(path)
 		local previous = ""
-		for num, addon in ipairs(ProfileStoragePath:split("/")) do
+		for num, addon in ipairs(path:split("/")) do
 			local path = previous
 			if path ~= "" then
 				path ..= "/" .. addon
@@ -99,11 +121,18 @@ return function(C,Settings)
 	function C:ReloadStates()
 		for name, groupedTabData in pairs(C.hackData) do
 			for shortcut, hackTbl in pairs(groupedTabData) do
-				local EnDict = C.enHacks[name][shortcut]
-				hackTbl:SetValue(EnDict.En)
-				hackTbl:SetKeybind(EnDict.Keybind and Enum.KeyCode[EnDict.Keybind] or nil)
-				for num, optionData in ipairs(hackTbl.Options) do
-					optionData:SetValue(EnDict[optionData.Shortcut])
+				local category = C.enHacks[name] or {}
+				local EnDict = category[shortcut] or {}
+				local enabled = EnDict.En
+				if enabled == nil then enabled = hackTbl.Default == true end
+				hackTbl:SetValue(enabled)
+				if hackTbl.SetKeybind then
+					hackTbl:SetKeybind(EnDict.Keybind and Enum.KeyCode[EnDict.Keybind] or nil)
+				end
+				for num, optionData in ipairs(hackTbl.Options or {}) do
+					local value = EnDict[optionData.Shortcut]
+					if value == nil then value = optionData.Default end
+					optionData:SetValue(value)
 				end
 			end
 		end
@@ -113,7 +142,7 @@ return function(C,Settings)
 			error("Invalid SaveProfile Call: must use `:` but only used `.`")
 		end
 		local profileName = C.getgenv().ProfileId
-		if not C.readfile or not C.writefile or profileName == "" then
+		if not C.readfile or not C.writefile or typeof(profileName) ~= "string" or profileName == "" then
 			C.DebugMessage("SaveSystem","Save Stopped, profileName: "..(profileName or "nil"))
 			return
 		end
@@ -194,10 +223,20 @@ return function(C,Settings)
 			C.enHacks = C.enHacks or {}
 			local path = ProfileStoragePath .. "/" .. profileName .. SaveFileExtention
 			local path2 = SettingsPath .. SaveFileExtention
+			local decoded
+			if C.isfile(path) then
+				decoded = HS:JSONDecode(C.readfile(path))
+				assert(typeof(decoded) == "table" and typeof(decoded.Hacks) == "table", "Invalid profile data")
+			elseif not (C.StartUp and profileName == "Default") then
+				return false
+			end
 			if C.isfile(path2) then
 				local rawFile2 = C.readfile(path2)
 				local decoded2 = HS:JSONDecode(rawFile2)
-				C.enHacks.Settings = decoded2.Settings
+				if decoded2.Settings then
+					C.enHacks.Settings = C.enHacks.Settings or {}
+					UpdateSavedTable(C.enHacks.Settings, decoded2.Settings, true)
+				end
 				C.getgenv().PreviousServers = decoded2.Servers
                 for userName, encodedData in pairs(decoded2.MorphData or {}) do
                     if userName ~= "new" then
@@ -209,22 +248,24 @@ return function(C,Settings)
                 C.getgenv().serializedDesc = decoded2.MorphData or {}
                 C.getgenv().MorphEnabled = C.getgenv().MorphEnabled or (decoded2.MorphData and C.GetDictLength(decoded2.MorphData) > 0)
 			end
-			if not C.isfile(path) then
+			if not decoded then
 				C.DebugMessage("SaveSystem",`{path} Profile Not Found`,`The profile named "{path}" was not found in your workspace folder.`)
-				if not C.isStudio then
-					C.getgenv().ProfileId = "Default"
-				end
-				return
+				return false
 			end
-			local rawFile = C.readfile(path)
-			local decoded = HS:JSONDecode(rawFile)
 			for key, val in pairs(decoded.Hacks) do
-				C.enHacks[key] = val
+				if typeof(val) == "table" and typeof(C.enHacks[key]) == "table" then
+					UpdateSavedTable(C.enHacks[key], val, true)
+				else
+					C.enHacks[key] = val
+				end
 			end
 
 
 		end
 		local success, result = C.API(internallyLoadProfile,nil,1)
+		if success and result == false and not (C.StartUp and profileName == "Default") then
+			success, result = false, "Profile not found"
+		end
 		C.DebugMessage("SaveSystem",`Result: {tostring(success)}; {tostring(result)}`)
 		if success then
 			C.getgenv().ProfileId = profileName
@@ -251,7 +292,7 @@ return function(C,Settings)
 		while not C.Cleared do
 			local IsWaiting = true
 			task.delay(60, function()
-				if IsWaiting and AutoSaveEvent then
+				if IsWaiting and not C.Cleared then
 					AutoSaveEvent:Fire("Timeout")
 				end
 			end)
@@ -351,7 +392,8 @@ return function(C,Settings)
 						C.DebugMessage("Destroy", `RunOnDestroy: {name} is still running after 3 seconds!`)
 					end
 				end)
-				hackTbl:RunOnDestroy()
+				local success, result = xpcall(hackTbl.RunOnDestroy, debug.traceback, hackTbl)
+				if not success then warn(result) end
 				ThingsToRemove[Identification] = nil
 				RemoveOnDestroyIndex -= 1
 				Done = true

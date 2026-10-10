@@ -330,7 +330,9 @@ return function(C,Settings)
 						if LastCameraSubjectChangeSignal and Camera ~= LastCamera then
 							LastCameraSubjectChangeSignal:Disconnect()
 							C.TblRemove(self.Functs,LastCameraSubjectChangeSignal)
+							LastCameraSubjectChangeSignal = nil
 						end
+						LastCamera = Camera
 						if Camera then
 							local newCameraType = Camera.CameraType
 							if newCameraType == Enum.CameraType.Custom and EnTbl.LockCamera then
@@ -338,8 +340,10 @@ return function(C,Settings)
 							elseif newCameraType == Enum.CameraType.Track and not EnTbl.LockCamera then
 								Camera.CameraType = Enum.CameraType.Custom
 							end
-							LastCameraSubjectChangeSignal = Camera:GetPropertyChangedSignal("CameraType"):Connect(UpdateCamera)
-							table.insert(self.Functs, LastCameraSubjectChangeSignal)
+							if not LastCameraSubjectChangeSignal then
+								LastCameraSubjectChangeSignal = Camera:GetPropertyChangedSignal("CameraType"):Connect(UpdateCamera)
+								table.insert(self.Functs, LastCameraSubjectChangeSignal)
+							end
 						end
 					end
 					table.insert(self.Functs,workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(UpdateCamera))

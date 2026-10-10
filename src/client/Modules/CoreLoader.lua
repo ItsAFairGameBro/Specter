@@ -24,9 +24,10 @@ local GamesWithModules = {
 -- USE THIS API TO GET UNIVERSE IDs:
 -- https://apis.roblox.com/universes/v1/places/PlaceId/universe
 
-local KeybindRunFunct,BindButton
-
 return function(C, _SETTINGS)
+	-- ModuleScript results are shared between reloads in Studio.
+	local ModulesToRun = table.clone(ModulesToRun)
+	local KeybindRunFunct, BindButton
 	--Load Locale Environment
 	C.LoadModule('Modules/Env')
 	if C.Cleared then return end
@@ -77,7 +78,7 @@ return function(C, _SETTINGS)
 	--end
 
 	--Add developer settings
-	if (C.enHacks.Settings and C.enHacks.Settings.DeveloperMode.En) or C.isStudio then
+	if (C.enHacks.Settings and C.enHacks.Settings.DeveloperMode and C.enHacks.Settings.DeveloperMode.En) or C.isStudio then
 		table.insert(ModulesToRun,"Developer")
         C.Jerk = true
 	end
@@ -129,7 +130,7 @@ return function(C, _SETTINGS)
 		AlreadyRefreshing = false
 	end
 	C.ButtonClick(RefreshButton,C.Refresh)
-	task.spawn(C.StartAutoSave,C)
+	C.AddGlobalThread(task.spawn(C.StartAutoSave,C))
 
 	local ListOfElements = {}
 	local function UpdateTextSize(ButtonEx,setUp: boolean)

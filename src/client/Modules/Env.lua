@@ -259,6 +259,7 @@ return function(C,Settings)
 	end
 	--Connections
 	function C.ClearFunctTbl(functTbl,isDict)
+		if not functTbl then return end
 		for num, funct in (isDict and pairs or ipairs)(functTbl) do
 			funct:Disconnect()
 			functTbl[num] = nil
@@ -266,6 +267,7 @@ return function(C,Settings)
 	end
 
 	function C.ClearThreadTbl(threadTbl,isDict)
+		if not threadTbl then return end
 		for num, thread in (isDict and pairs or ipairs)(threadTbl) do
 			C.StopThread(thread)
 			threadTbl[num] = nil
@@ -294,7 +296,7 @@ return function(C,Settings)
 		return thread, C.TblAdd(C.threads,thread)
 	end
 	function C.RemoveGlobalThread(thread)
-		local res = C.TblRemove(C.functs,thread)
+		local res = C.TblRemove(C.threads,thread)
 		C.StopThread(thread)
 		return res
 	end
@@ -302,7 +304,6 @@ return function(C,Settings)
 	function C.AddObjectConnection(instance,key,connection)
 		if not C.objectfuncts[instance] then
 			C.objectfuncts[instance] = {InstanceCleanUp=instance.Destroying:Connect(function()
-                task.wait(1)
 				C.ClearFunctTbl(C.objectfuncts[instance],true)
 				C.objectfuncts[instance] = nil
 			end)}
@@ -314,8 +315,11 @@ return function(C,Settings)
 		return connection
 	end
 	function C.RemoveObjectConnection(instance,key)
-		C.objectfuncts[instance][key]:Disconnect()
-		C.objectfuncts[instance][key] = nil
+		local connections = C.objectfuncts[instance]
+		if connections and connections[key] then
+			connections[key]:Disconnect()
+			connections[key] = nil
+		end
 	end
 	--Clear Children
 	function C.ClearChildren(parent:Instance,maxAmnt:number)
@@ -542,6 +546,9 @@ return function(C,Settings)
 			else
 				return false
 			end
+		end
+		for key in pairs(t2) do
+			if t1[key] == nil then return false end
 		end
 		return true
 	end

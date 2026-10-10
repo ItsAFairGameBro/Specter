@@ -9,9 +9,9 @@ return function(C,Settings)
 	end--]]
     C.SaveEvents = {MyRagdoll={}, Ragdoll={}, OthersRagdoll={},
                     MyBeast={}, Beast={}, OthersBeast={},
-					MyBeastHammer={},BeastHammer={},OthersHammer={},
+					MyBeastHammer={},BeastHammer={},OthersBeastHammer={},
                     Game={}, BeastRope={},
-                    TowerAdded={}}
+                    Tower={}}
 	local function FireEvent(name,doExternalConn,...)
         local SavedTable = C.SaveEvents[name:gsub("Added",""):gsub("Removed","")]
         if SavedTable then
@@ -103,6 +103,7 @@ return function(C,Settings)
 				end
                 --print("Firing","Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart,C.events.MySeatAdded)
 				FireEvent("Seat"..(active and "Added" or "Removed"),isMe,lastSeatPart)
+				if not active then lastSeatPart = nil end
 			end--instance,key,connection
 			C.AddObjectConnection(theirHuman,"EventsSeatChanged",theirHuman.Seated:Connect(SeatAdded))
 			SeatAdded(theirHuman.SeatPart~=nil, theirHuman.SeatPart)

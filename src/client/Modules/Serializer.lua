@@ -44,7 +44,6 @@ local function invert_table(t)
 	return s
 end
 
-local table_pack = table.pack
 local table_unpack = table.unpack
 
 local Instance_new = Instance.new
@@ -604,7 +603,7 @@ local function serialize_property(p)
 		value = p.Value
 
 	elseif _type == "Instance" then
-		if not p:IsDescendantOf(scope) then
+		if p ~= scope and not p:IsDescendantOf(scope) then
 			warn("Object-type property references '" .. p.Name ..
 				"' which is not in the serialization scope."
 			)
@@ -615,7 +614,7 @@ local function serialize_property(p)
 		end
 
 	elseif _type == "CFrame" then
-		value = table_pack(p:GetComponents())
+		value = {p:GetComponents()}
 
 	elseif _type == "Vector2" then
 		value = {p.X, p.Y}
@@ -735,7 +734,7 @@ local function deserialize_property(property, prop_name, instance)
 		result = CFrame_new(table_unpack(value))
 
 	elseif prop_type == "Vector2" then
-		result = Vector2_new(value.X, value.Y)
+		result = Vector2_new(value[1], value[2])
 
 	elseif prop_type == "ColorSequence" then
 		local kps = {}
@@ -769,15 +768,23 @@ local function deserialize_property(property, prop_name, instance)
 	return result
 end
 
-local function deserialize_instance(obj, parent)
-	local instance = Instance_new(IV_CLASSNAMES[obj[2]])
+local function deserialize_instance(obj, parent, class_names)
+	local class_name = class_names[obj[2]]
+	assert(MUTABLE_PROPERTIES[class_name], "Unsupported serialized instance class")
+	local instance = Instance_new(class_name)
 
 	for i in obj[4] do
-		deserialize_instance(obj[4][i], instance)
+		deserialize_instance(obj[4][i], instance, class_names)
 	end
 
 	for name in obj[3] do
-		instance[name] = deserialize_property(obj[3][name], name, instance)
+		local property = obj[3][name]
+		-- Instance links are assigned after the complete tree exists.
+		if IV_PROPERTY_TYPES[property[1]] == "Instance" then
+			deserialize_property(property, name, instance)
+		else
+			instance[name] = deserialize_property(property, name, instance)
+		end
 	end
 
 	uid_reference[obj[1]] = instance
@@ -800,6 +807,7 @@ function rose.serialize(instance)
 
 	reset_internal_variables()
 
+	scope = instance
 	build_uid_reference(instance)
 
 	local result = serialize_instance(instance)
@@ -813,6 +821,9 @@ function rose.serialize(instance)
 
 	return {
 		["version"] = ROSE_VERSION,
+		-- Class ids depend on table iteration order. Carry their mapping so a
+		-- saved packet survives a different runtime or a changed class registry.
+		["classes"] = table.clone(IV_CLASSNAMES),
 		["tree"] = result
 	}
 end
@@ -825,7 +836,7 @@ function rose.deserialize(packet)
 
 	reset_internal_variables()
 
-	local result = deserialize_instance(packet.tree)
+	local result = deserialize_instance(packet.tree, nil, packet.classes or IV_CLASSNAMES)
 
 	post_deserialize_link_pass()
 

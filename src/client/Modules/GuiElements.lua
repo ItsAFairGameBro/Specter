@@ -3244,7 +3244,7 @@ return function(C, Settings)
 		MainScroll.CanvasPosition = Vector2.zero
 		local index = 0
 		for num, data in ipairs(result) do
-			if tabName~="Recent" or (data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= data.PlaceId)) then
+			if tabName~="Recent" or (data.GameId == game.GameId and (data.JobId ~= game.JobId or data.PlaceId ~= game.PlaceId)) then
 				index+=1
 				local serverClone = C.Examples.ServerEx:Clone()
 				local RealIndex = (PageNum-1)*100 + index

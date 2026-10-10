@@ -90,7 +90,7 @@ return function(C,Settings)
 		self.Min = options.Min
 		self.Max = options.Max
 		self.Digits = options.Digits or 0
-		self.Step = 1 * 10^-options.Digits
+		self.Step = 10^-self.Digits
 		if self.Step==0 then
 			self.Step = 1
 		end
@@ -178,18 +178,21 @@ return function(C,Settings)
 
 	function DropdownTbl.new(parent, options)
 		assert(options.Selections,"Selections is missing")
-		-- Pick first one!
-		if options.Default ~= nil and not table.find(options.Selections,options.Default) then
+		assert(#options.Selections > 0, "Selections must not be empty")
+		if typeof(options.Default) == "number" then
+			options.Default = options.Selections[options.Default]
+		end
+		if not table.find(options.Selections,options.Default) then
 			options.Default = options.Selections[#options.Selections]
 			--warn(`Invalid Setting For DropdownTbl.new for {parent.Name}/{options.Shortcut}, prev {tostring(options.Default)}, Default Selection Applied`)
 			--options.Default = nil
 		end
-		if typeof(options.Default) == "number" then
-			options.Default = options.Selections[options.Default]
-		end
 		--assert(table.find(options.Selections,options.Default),"Default Selection is Missing")
 
 		local self, newFrame, default = DoCombined(DropdownTbl, "Dropdown", parent, options)
+		if not table.find(self.Selections, default) then
+			default = self.Default or self.Selections[1]
+		end
 
         --assert(default, `[Dropdowntbl.new]: Missing/Invalid Default for {parent}`)
 		

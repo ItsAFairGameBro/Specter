@@ -380,60 +380,31 @@ function C.RemoveGlobalInstance(instance)
 	return C.TblRemove(C.instances,instance)
 end
 
-local ModulesLoaded = 0
 function C.RunLink(githubLink,gitType,name)
-    local RequestFinished = false
-	local URL = githubLink:format(gitType:lower(),name);
-    task.delay(3,function()
-        if (not RequestFinished) then
-            RequestFinished = true
-            print("[C.RunLink]: Module Yielding For > 3 seconds: "..name.." [PRESUMING DEAD]")
-            C.RunLink(githubLink, gitType, name)
-        end
+    local URL = githubLink:format(gitType:lower(), name)
+        :gsub("^https://github.com/", "https://raw.githubusercontent.com/")
+        :gsub("/blob/", "/"):gsub("/raw/", "/")
+    local finished, success, response = false, false, nil
+    local requestThread = task.spawn(function()
+        success, response = pcall(game.HttpGet, game, URL, false)
+        finished = true
     end)
-	local success, response = pcall(game.HttpGet,game,URL,false)
-    if RequestFinished then
-        print("[C.RunLink]: Module Yielding Callback-ed after alloted time: "..name)
-        return
+    local deadline = os.clock() + 15
+    while not finished and not C.Cleared and os.clock() < deadline do
+        task.wait(0.1)
     end
-    RequestFinished = true
-	if not success then
-		return warn(PrintName.." Error Requesting Script " .. name .. ":" ..response)
-	end
-	local scriptName = URL:sub(20)
-	scriptName = scriptName:sub(scriptName:find("/")+1)
-	scriptName = scriptName:sub(1,scriptName:find("/")-1):gsub("-"," ")
-	local success3, codeString
-	if URL:find("blob")~=nil then
-		local startText = '"blob":{"rawLines":'
-		local endText = ',"stylingDirectives":'
-		local startAddress = response:find(startText) + startText:len()
-		local endAddress = response:find(endText) -- endText:len()
-		response = response:sub(startAddress,endAddress-1)
-		local success2, decodedJSON = pcall(HS.JSONDecode,HS,response)
-
-		if not success2 then
-			return warn(PrintName.." Error Parsing JSON: "..decodedJSON)
-		end
-
-		success3, codeString = pcall(table.concat, decodedJSON, "\n")
-
-		if not success3 then
-			return warn(PrintName.." Error Parsing Code: "..codeString)
-		end
-	elseif URL:find("raw") then
-		codeString = response
-	end
-
-	local success4, compiledFunction = pcall(loadstring,codeString)
-
-	if not success4 then
-		return warn(PrintName.." Error Compiling Code: "..compiledFunction)
-	elseif not compiledFunction then
-		return warn(PrintName.." Loadstring Failed: Syntax Error!\n\n\t\tCheck Github or DM author!")
-	end
-    ModulesLoaded+=1
-	return compiledFunction()
+    if not finished then
+        pcall(task.cancel, requestThread)
+        return warn(PrintName .. " Request timed out or was cancelled: " .. name)
+    end
+    if not success then
+        return warn(PrintName .. " Error requesting script " .. name .. ": " .. tostring(response))
+    end
+    local compiledFunction, compileError = loadstring(response)
+    if not compiledFunction then
+        return warn(PrintName .. " Error compiling script " .. name .. ": " .. tostring(compileError))
+    end
+    return compiledFunction()
 end
 --print("3")
 
@@ -443,27 +414,39 @@ function GetModule(path: string)
     -- All paths start from src and to the lua file
 	-- local path = moduleName:find("/") and moduleName or ("Modules/"..moduleName)
 	if isStudio then
-		local moduleRet = require(C.StringWait(script,path,nil,"/"))
+		local moduleRet = require(C.StringWait(script,HttpUrlDecode(path),nil,"/"))
 		if typeof(moduleRet) == "function" then
 			return moduleRet(C, Settings)
 		else
 			return moduleRet
 		end
 	else
-		local gitType = "blob"
-		local githubLink = C.BaseUrl .. "/%s.lua"
-        assert(C.preloadedModule[path], `{path} does not have a preloaded module!`)
 		local result = C.preloadedModule[path]
-        if PreCached and not LoadedModules[path] then
-            LoadedModules[path] = true
-            result = loadstring(result)
-            assert(result, `Compiler Error: {path}`)
-            result = result()
-            C.preloadedModule[path] = result
-        elseif not PreCached and not result then
-            result = C.RunLink(githubLink,gitType,path)
+        if PreCached then
+            if not result then
+                assert(result, `{path} does not have a preloaded module!`)
+            end
+            if not LoadedModules[path] then
+                local compiled, compileError = result, nil
+                if typeof(compiled) ~= "function" then
+                    compiled, compileError = loadstring(result)
+                    if not compiled then
+                        assert(compiled, `Compiler Error: {path}: {compileError}`)
+                    end
+                end
+                result = compiled()
+                if not result then
+                    assert(result, `Module Path Load Failed: {path}`)
+                end
+                C.preloadedModule[path] = result
+                LoadedModules[path] = true
+            end
+        else
+            result = C.RunLink(C.BaseUrl .. "/%s.lua","blob",path)
         end
-        assert(result, `Module Path Load Failed: {path}`)
+        if not result then
+            assert(result, `Module Path Load Failed: {path}`)
+        end
 		if typeof(result) == "function" then
 			return result(C,Settings)
 		else
@@ -478,40 +461,28 @@ function HttpUrlDecode(str)
 	return output
 end
 function C.LoadModule(moduleName: string)
-	local informalSplit = moduleName:split("/")
-	local informalName = informalSplit[#informalSplit]
-	local Ret = C.SaveModules[informalName]
+	local Ret = C.SaveModules[moduleName]
 	if Ret then
 		return Ret
 	end
-	local DisplayName = HttpUrlDecode(moduleName)
+	local DisplayName
+	-- Missing flags still go through DebugMessage's configuration validation.
+	if not C.Debugs or C.Debugs.Module ~= false or C.Debugs.All then
+		DisplayName = HttpUrlDecode(moduleName)
+	end
 	local Start = os.clock()
-	C.DebugMessage("Module",`Loading {DisplayName}`)
+	if DisplayName then
+		C.DebugMessage("Module",`Loading {DisplayName}`)
+	end
 	local Mod = GetModule(moduleName)
-	C.SaveModules[informalName] = Mod
-	C.DebugMessage("Module",(`Loaded {DisplayName} in %.2f seconds`):format(os.clock()-Start))
+	C.SaveModules[moduleName] = Mod
+	if not C.Debugs or C.Debugs.Module ~= false or C.Debugs.All then
+		DisplayName = DisplayName or HttpUrlDecode(moduleName)
+		C.DebugMessage("Module",(`Loaded {DisplayName} in %.2f seconds`):format(os.clock()-Start))
+	end
 	return Mod
 end
 --print("modules p reload")
-
-local ModulesToPreload = {"Hacks/Blatant","Hacks/Friends","Hacks/Render","Hacks/Utility","Hacks/World","Hacks/Settings","Binds","CoreEnv","CoreLoader","Env","Events","GuiElements","HackOptions"}
-if not C.isStudio and not PreCached then
-	for num, module in ipairs(ModulesToPreload) do
-
-		local gitType = "blob"
-		local githubLink = C.BaseUrl .. "/%s.lua"
-		local path = module:find("/") and module or ("Modules/"..module)
-		local moduleParams = module:split("/")
-		local informalSplit = module:split("/")
-		local informalName = informalSplit[#informalSplit]
-		task.delay(0.1 * (num), C.RunLink, githubLink,gitType,path)
-	end
-    --local startWait = os.clock()
-	while ModulesLoaded < #ModulesToPreload do
-		RunS.RenderStepped:Wait()
-	end
-    --print(("Module Loading Wait: %.1fs"):format(os.clock() - startWait))
-end
 
 --Load hooks immediately
 local originalNamecall = nil

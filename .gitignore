@@ -4,3 +4,8 @@
 # Roblox Studio lock files
 /*.rbxlx.lock
 /*.rbxl.lock
+
+# Local verification tools and Python caches
+/.tools/
+__pycache__/
+*.pyc

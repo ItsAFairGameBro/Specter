@@ -35,7 +35,7 @@ return function(C,Settings)
 				tblHack:SetValue(not tblHack.Enabled)
 			end
 		end
-		local name = "hack"..key.Name
+		local name = "hack/"..tblHack.Parent.Category.Name.."/"..tblHack.Shortcut
 		C.BindAction(name,keyPressBind,key)
 		C.keybinds[tblHack] = {KeyCode = key, Name = name}
 		C.enHacks[tblHack.Parent.Category.Name][tblHack.Shortcut].Keybind = key.Name
@@ -54,6 +54,7 @@ return function(C,Settings)
 		"MyCharAdded","CharAdded","OthersCharAdded",
 		"MyPlayerAdded","PlayerAdded","OthersPlayerAdded",
 		"MyCharRemoved","CharRemoved","OthersCharRemoved",
+		"MyCharDied",
 		"MySeatAdded","SeatAdded","OthersSeatAdded",
 		"MySeatRemoved","SeatRemoved","OthersSeatRemoved",
 		"RbxErrorPrompt",
