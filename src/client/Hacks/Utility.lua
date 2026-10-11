@@ -52,50 +52,14 @@ return function(C,Settings)
 					},
 				},
 			},
-			not C.LoadCommandBar and {
-				Title = "Chat",Type="NoToggle",
-				Tooltip = "Button to activate chat",
-				Layout = 99,
-				Shortcut = "Chat",Keybind="Slash",
-				Functs={},
-				SlashPressedOld = function(self)
-					local chatBar = C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar")
-
-					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-					SG:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
-
-					table.insert(self.Functs,chatBar:GetPropertyChangedSignal("TextTransparency"):Connect(function()
-						chatBar.TextTransparency = 0
-					end))
-					chatBar.TextTransparency = 0
-					RunS.RenderStepped:Wait()
-					chatBar:CaptureFocus()
-					task.wait(2.5)
-					C.ClearFunctTbl(self.Functs)
-				end,
-				Activate = function(self,newValue)
-					if SG:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
-						if C.ChatVersion == Enum.ChatVersion.LegacyChatService then
-							self:SlashPressedOld()
-						else
-							C.AddNotification("Unsupported Chat","This game uses a newer TCS version, so it is currently unusable.")
-						end
-					end
-				end,
-                Events = {},
-				Options = {},
-			},
-			C.LoadCommandBar and {
-				Title = "Commandbar",Type="NoToggle",
-				Tooltip = "Activate to open commandbar",
-				Layout = 99,
-				Shortcut = "Commandbar",Keybind="Semicolon",
-				Activate = function(self,newValue)
-					C.UI.Commandbar.Text = ";"
-					C.UI.Commandbar.Visible = true
-					C.UI.Commandbar:CaptureFocus()
-				end,
-			},
+            {
+                Title = "Commands", Type = "NoToggle",
+                Tooltip = "Browse commands, tap suggestions, or type with your keyboard",
+                Layout = 99, Shortcut = "Commandbar",
+                Activate = function()
+                    if C.OpenCommandBar then C.OpenCommandBar() end
+                end,
+            },
 			{
 				Title = "NoKick UI",
 				Tooltip = "Hides the kick display a few seconds after you are kicked",

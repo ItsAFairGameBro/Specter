@@ -69,10 +69,6 @@ return function(C, _SETTINGS)
 		SupportedFrame:WaitForChild("Supported").Text = `Unsupported Game`
 		C.LoadCommandBar = true
 	end
-    if not C.LoadCommandBar and not TCS:CanUserChatAsync(C.plr.UserId) then
-        C.LoadCommandBar = true
-        print("Forced load command bar")
-    end
 	--if success then
 	C.SetImage(SupportedFrame:WaitForChild("Image"),GameImage)
 	--end

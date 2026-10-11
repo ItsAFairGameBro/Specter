@@ -1,6 +1,20 @@
 # Specter
 Roblox Specter Hacks.
 
+Open **Commands** from the on-screen button or Utility tab, or press `;` with a
+keyboard. The command panel works independently of the game's chat. Type a
+command with or without `;` or `/`, tap a suggestion to complete it, then tap
+**Run** or press Enter. Suggestions come from the current command registry and
+include aliases and supported argument values. Quote arguments containing spaces,
+for example `"Dark brown"`.
+
+With a keyboard, use Up/Down to select suggestions and Tab to complete them.
+Page Up/Page Down (or Previous/Next) browse command history; Escape closes the
+panel. Touch devices retain the on-screen keyboard, while devices reporting
+`KeyboardEnabled`, including emulators, edit the command TextBox directly.
+The panel adjusts above the on-screen keyboard. Commands are entered in this
+panel; the game's normal chat is left to Roblox.
+
 Edit the individual files under `src/client`; `full_code.lua` is generated.
 Build the bundle from any working directory with Python 3:
 

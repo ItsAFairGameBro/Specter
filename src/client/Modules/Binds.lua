@@ -26,6 +26,9 @@ return function(C,Settings)
 	function C.AddKeybind(key:string,tblHack:table)
 		C.RemoveKeybind(tblHack)
 		local function keyPressBind(actionName, inputState, inputObject)
+			if UIS:GetFocusedTextBox() then
+				return Enum.ContextActionResult.Pass
+			end
 			if inputState == Enum.UserInputState.Begin and not C.IsBinding then
 				for num, keyCode in ipairs(blacklistedCodes) do
 					if UIS:IsKeyDown(keyCode) then

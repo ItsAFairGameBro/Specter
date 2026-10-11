@@ -1,22 +1,12 @@
 local HttpService = game:GetService("HttpService")
 local PS = game:GetService("Players")
-local TCS = game:GetService("TextChatService")
-local RunS = game:GetService("RunService")
-local CG = game:GetService("CoreGui")
-local UIS = game:GetService("UserInputService")
-local GS = game:GetService("GuiService")
-local CS = game:GetService("Chat")
-local OverrideChatGames = {
-    66654135, -- MM2
-    -- 372226183, -- Flee
-}
 return function(C,Settings)
     C.savedCommands = C.getgenv().lastCommands
     if not C.savedCommands then
         C.savedCommands = {}
         C.getgenv().lastCommands = C.savedCommands
     end
-    local options
+    local CommandInput = C.LoadModule("Modules/CommandInput")
     local function PerformRootSearch(Root)
         local tbl = {}
         for _, instance in ipairs(Root:GetDescendants()) do
@@ -34,21 +24,24 @@ return function(C,Settings)
             end
         end
 
-        local args = inputMsg:sub(2):split(" ")
-        local inputCommand = args[1]
-        table.remove(args,1)
-        for index = 1, 3, 1 do
-            args[index] = args[index] or "" -- leave them be empty so it doesn't confuse the game!
-        end
+        local args, _, parseError = CommandInput.Parse(inputMsg)
+        if parseError then C.CreateSysMessage(parseError) return end
+        local inputCommand = table.remove(args, 1) or ""
+        if inputCommand == "" then return end
+        for index = 1, 3 do args[index] = args[index] or "" end
         args.OrgArgs = table.clone(args)
-        
-        local command, CommandData = table.unpack(C.StringStartsWith(C.CommandFunctions,inputCommand)[1] or {})
+        local command, CommandData, resolveError = CommandInput.Resolve(C.CommandFunctions, inputCommand)
+        if resolveError then
+            C.CreateSysMessage(`Ambiguous command: {inputCommand}. Choose a suggestion or type the full name.`)
+            return
+        end
         if CommandData then
             if CommandData.RequiresRefresh and noRefresh then
                 return
             end
             local canRunFunction = true
             for num, argumentData in ipairs(CommandData.Parameters) do
+                args[num] = args[num] or ""
                 if argumentData.Type=="Players" or argumentData.Type=="Player" then
                     local plrList = argumentData.AllowFriends and PS:GetPlayers() or C.GetNonFriends(true)
                     if args[num]=="all" then
@@ -63,7 +56,12 @@ return function(C,Settings)
                     elseif args[num] == "me" or args[num] == "" then
                         args[num] = {C.plr}
                     elseif args[num] == "random" then
-                        args[num] = {plrList[Random.new():NextInteger(1,#plrList)]}
+                        if #plrList == 0 then
+                            canRunFunction = false
+                            C.CreateSysMessage("No eligible players found")
+                        else
+                            args[num] = {plrList[Random.new():NextInteger(1,#plrList)]}
+                        end
                     elseif args[num] == "new" then
                         if not argumentData.SupportsNew then
                             canRunFunction = false
@@ -79,10 +77,10 @@ return function(C,Settings)
                             C.CreateSysMessage(`Player(s) Not Found: {command}; allowed: all, others, me, <plrName>`)
                         end
                     end
-                    if canRunFunction and argumentData.Type=="Player" and #args[num]>1 then
+                    if canRunFunction and argumentData.Type=="Player" and typeof(args[num]) == "table" and #args[num]>1 then
                         canRunFunction = false
                         C.CreateSysMessage(`{command} only supports a single player`)
-                    elseif canRunFunction and args[num][1] == C.plr and argumentData.ExcludeMe then
+                    elseif canRunFunction and typeof(args[num]) == "table" and args[num][1] == C.plr and argumentData.ExcludeMe then
                         canRunFunction = false
                         C.CreateSysMessage(`{command} doesn't support applying this command to yourself. Please choose another player`)
                     end
@@ -130,7 +128,7 @@ return function(C,Settings)
                     end
                 elseif argumentData.Type == "Options" then
                     local Options = argumentData.Options
-                    local ChosenOption = C.StringStartsWith(Options,args[num])[1]
+                    local ChosenOption = args[num] ~= "" and C.StringStartsWith(Options,args[num])[1]
                     if not ChosenOption and canRunFunction then
                         if args[num] == "" and (argumentData.Default or argumentData.Optional) then
                             args[num] = argumentData.Default or nil
@@ -138,7 +136,7 @@ return function(C,Settings)
                             canRunFunction = false
                             C.CreateSysMessage(`Invalid Parameter Options: {args[num]} is not optional`)
                         end
-                    else
+                    elseif ChosenOption then
                         args[num] = ChosenOption[2]
                     end
                 elseif argumentData.Type == "Friend" then
@@ -219,425 +217,6 @@ return function(C,Settings)
             C.CreateSysMessage(`Command Not Found: {inputCommand}`)
         end
     end
-    -- Chatbar Connection
-    --MY PLAYER CHAT
-    local chatBar
-    local isFocused
-    local index = 0
-    local hasNewChat = C.ChatVersion == Enum.ChatVersion.TextChatService
-
-    local function registerNewChatBar(_,firstRun)
-        local sendButton = hasNewChat and not C.isStudio and C.StringWait(CG,"ExperienceChat.appLayout.chatInputBar.Background.Container.SendButton")
-        chatBar = C.LoadCommandBar and C.UI.Commandbar or C.StringWait(not hasNewChat and C.PlayerGui or CG,not hasNewChat and
-            "Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar" or "ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox")
-        if not chatBar then return end
-        local sendTheMessage
-        if not C.LoadCommandBar and hasNewChat then
-            sendTheMessage = function(message,dontSetTB)
-                message = typeof(message)=="string" and message or chatBar.Text
-                if message == "" then
-                    return
-                end
-                local channels = TCS:WaitForChild("TextChannels")
-                local myChannel = channels:FindFirstChild("RBXGeneral") or channels:FindFirstChild("General")
-                assert(myChannel, "General chat channel not found!")
-                local targetChannelTB = chatBar.Parent.Parent.TargetChannelChip
-                if targetChannelTB.Visible then
-                    local theirUser = targetChannelTB.Text:sub(5,targetChannelTB.Text:len()-1)
-                    local theirPlr
-                    for num, thisPlr in ipairs(PS:GetPlayers()) do
-                        if thisPlr.Name == theirUser or thisPlr.DisplayName == theirUser then
-                            if theirPlr then
-                                warn(`(SendMessage) DUPLICATE Players Found For Display Name "{theirUser}"`)
-                            end
-                            theirPlr = thisPlr
-                        end
-                    end
-                    if theirPlr then
-                        myChannel = channels:FindFirstChild("RBXWhisper:"..C.plr.UserId.."_"..theirPlr.UserId) or channels:FindFirstChild("RBXWhisper:"..theirPlr.UserId.."_"..C.plr.UserId)
-                        C.SendPrivateMessage(theirPlr, message)
-                    else
-                        return warn(`(SendMessage) Could Not Find Private Message User {theirUser} from "{targetChannelTB.Text}"`)
-                    end
-                end
-                myChannel:SendAsync(message)
-                if dontSetTB~=false then
-                    chatBar.Text = ""
-                end
-            end
-            if sendButton then
-                sendButton.Visible = false
-                local mySendButton = sendButton:Clone()
-                mySendButton.Parent = sendButton.Parent
-                mySendButton.Visible = true
-                mySendButton.Name = "MySendButton"
-                C.AddGlobalInstance(mySendButton)
-                mySendButton.MouseButton1Up:Connect(sendTheMessage)
-                mySendButton.Destroying:Connect(function()
-                    if sendButton then
-                        sendButton.Visible = true
-                    end
-                end)
-            end
-        end
-        local connectionsFuncts = {}
-        if not C.LoadCommandBar and chatBar then
-            for num, connection in ipairs(C.getconnections(chatBar.FocusLost)) do
-                connection:Disable()
-                table.insert(connectionsFuncts,connection)
-            end
-        end
-        local lastText
-        local lastUpd = -5
-        if C.Cleared then
-            return
-        end
-        local ChatAutoCompleteFrame = C.UI.ChatAutoComplete
-        local DidSet = 0
-        local Connections = {}
-        local frameList, currentIndex = {}, 1
-        local LastPreferred
-        local function ClearSuggestions()
-            if frameList[currentIndex] then
-                LastPreferred = frameList[currentIndex].Name
-            end
-            C.ClearChildren(ChatAutoCompleteFrame)
-            frameList, currentIndex = {}, 1
-        end
-		local function goToSaved(deltaIndex)
-			index += deltaIndex
-            lastUpd = os.clock()
-            index = math.clamp(index,0,#C.savedCommands+1)
-
-            local setTo = C.savedCommands[index] or ""
-            local setCursor = chatBar.CursorPosition
-            lastText = setTo
-            RunS.RenderStepped:Wait()
-            DidSet += 0
-            chatBar.CursorPosition = setCursor
-			chatBar.Text = setTo
-            ClearSuggestions()
-			chatBar.CursorPosition = setTo:len() + 1
-        end
-        local function HighlightLayout(num)
-            currentIndex = math.clamp(num, math.min(#frameList,1), #frameList)
-
-            for num2, frameButton in ipairs(frameList) do
-                local selected = frameButton.LayoutOrder == currentIndex
-                frameButton.BackgroundColor3 = selected and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
-
-                if selected then
-                    -- Get the position of the frameButton relative to the ChatAutoCompleteFrame
-                    local objectTop = frameButton.AbsolutePosition.Y
-                    local objectBottom = objectTop + frameButton.AbsoluteSize.Y
-                    local canvasPosition = ChatAutoCompleteFrame.CanvasPosition.Y
-                    local windowBottom = ChatAutoCompleteFrame.AbsolutePosition.Y + ChatAutoCompleteFrame.AbsoluteSize.Y
-
-                    -- Check if the object is above the current view
-                    if objectTop < ChatAutoCompleteFrame.AbsolutePosition.Y then
-                        ChatAutoCompleteFrame.CanvasPosition =
-                            Vector2.new(ChatAutoCompleteFrame.CanvasPosition.X, ChatAutoCompleteFrame.CanvasPosition.Y - (ChatAutoCompleteFrame.AbsolutePosition.Y - objectTop))
-                    -- Check if the object is below the current view
-                    elseif objectBottom > windowBottom then
-                        ChatAutoCompleteFrame.CanvasPosition =
-                            Vector2.new(ChatAutoCompleteFrame.CanvasPosition.X, ChatAutoCompleteFrame.CanvasPosition.Y + (objectBottom - windowBottom))
-                    end
-                end
-            end
-        end
-        local autoCompleteReference = C.LoadCommandBar and chatBar or chatBar.Parent
-        local Words,CurrentWordIndex
-        local function ChatBarUpdated()
-            if C.Cleared then
-                return
-            end
-            local Inset = GS:GetGuiInset().Y
-            isFocused = chatBar:IsFocused()
-            ChatAutoCompleteFrame.Visible = isFocused
-            ChatAutoCompleteFrame.Position = UDim2.fromOffset(autoCompleteReference.AbsolutePosition.X + autoCompleteReference.AnchorPoint.X * autoCompleteReference.AbsoluteSize.X,
-                autoCompleteReference.AbsolutePosition.Y+autoCompleteReference.AbsoluteSize.Y+Inset)
-            ChatAutoCompleteFrame.Size = UDim2.fromOffset(math.clamp(chatBar.AbsoluteSize.X, 300, 500),C.GUI.AbsoluteSize.Y - ChatAutoCompleteFrame.AbsolutePosition.Y - Inset)
-            ChatAutoCompleteFrame.AnchorPoint = Vector2.new(autoCompleteReference.AnchorPoint.X, 0)
-            if isFocused then
-                local Deb = 0
-                local ConnectedFunct
-                function ConnectedFunct(inputObject, gameProcessed, noLoop)
-                    local doContinue = false
-                    if #frameList > 0 then
-                        if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.Insert then
-                            HighlightLayout(currentIndex - 1)
-                        elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.Delete then
-                            HighlightLayout(currentIndex + 1)
-                        elseif inputObject.KeyCode == Enum.KeyCode.Tab then
-                            local orgName = frameList[currentIndex].Name
-                            --RunS.RenderStepped:Wait()
-                            Words[math.max(1,CurrentWordIndex)] = orgName
-                            Words[1] = chatBar.Text:sub(1,1) .. Words[1]
-                            chatBar.Text = table.concat(Words, " ")
-                            chatBar.CursorPosition = chatBar.Text:len() + 1
-                        else
-                            doContinue = true
-                            noLoop = true
-                        end
-                    else
-                        doContinue = true
-                    end
-                    if doContinue then
-                        if inputObject.KeyCode == Enum.KeyCode.Up or inputObject.KeyCode == Enum.KeyCode.PageUp then
-                            goToSaved(1)
-                        elseif inputObject.KeyCode == Enum.KeyCode.Down or inputObject.KeyCode == Enum.KeyCode.PageDown then
-                            goToSaved(-1)
-                        else
-                            return
-                        end
-                        noLoop = true -- don't loop
-                    end
-                    if noLoop then
-                        return
-                    end
-                    Deb+= 1 local saveDeb = Deb
-                    local accelerationFactor = 0.075 -- The rate at which the function speed increases
-                    local minWaitTime = 0.015 -- Minimum wait time between function calls
-
-                    task.wait(.4)
-                    local startTime = os.clock() - 1 -- Capture the start time
-
-                    while UIS:IsKeyDown(inputObject.KeyCode) and Deb == saveDeb do
-                        local elapsedTime = os.clock() - startTime -- Calculate how long the key has been held
-                        local waitTime = math.max(minWaitTime, accelerationFactor / elapsedTime) -- Compute the wait time with acceleration
-
-                        ConnectedFunct(inputObject, gameProcessed, true)
-                        task.wait(waitTime)
-                    end
-                end
-                local function InputEnded(inputObject,gameProcessed)
-                    if not gameProcessed then
-                        return
-                    end
-                    if inputObject.KeyCode == Enum.KeyCode.PageDown or inputObject.KeyCode == Enum.KeyCode.PageUp then
-                        chatBar.CursorPosition = chatBar.Text:len() + 1
-                    end
-                end
-                local Conn1 = C.AddGlobalConnection(UIS.InputBegan:Connect(ConnectedFunct))
-                local Conn2 = C.AddGlobalConnection(UIS.InputEnded:Connect(InputEnded))
-                table.insert(Connections,Conn1)
-                table.insert(Connections,Conn2)
-                HighlightLayout(currentIndex) -- Make sure it's visible!
-            elseif Connections then
-                for num, conn in ipairs(Connections) do
-                    C.RemoveGlobalConnection(conn)
-                end
-                Connections = {}
-            end
-        end
-        -- Function to determine the current word and its index
-        local function getCurrentWordAndIndex(words, cursorPosition)
-            local totalLength = 0
-            for index, word in ipairs(words) do
-                totalLength = totalLength + #word + 1 -- +1 for the space
-                if cursorPosition <= totalLength then
-                    return word, index
-                end
-            end
-            return "", 0 -- Default return if something goes wrong
-        end
-        local function textUpd()
-            if DidSet <= 0 then
-                index = 0
-            end
-            local newInputFirst, doubleSpaces = chatBar.Text:gsub("\t","")
-            local newInput, moreSpaces = newInputFirst:gsub("%s+"," ")
-            doubleSpaces += moreSpaces
-            local newLength = newInput:len()
-            --Load suggestions
-            if DidSet <= 0 then
-                if (newInput:sub(1, 1) == ";" or newInput:sub(1, 1) == "/") then
-                    if doubleSpaces > 0 and chatBar.Text ~= newInput then
-                        --print("Upd",doubleSpaces,moreSpaces)
-                        chatBar.Text = newInput
-                    end
-                    Words = newInput:sub(2):split(" ")
-                    local firstCommand = Words[1] -- Command, Really Important
-                    local currentWord,currentWordIndex = getCurrentWordAndIndex(Words,chatBar.CursorPosition-1)--minus one for the command ;
-                    local commands = C.StringStartsWith(C.CommandFunctions,firstCommand,true)
-                    CurrentWordIndex = currentWordIndex
-                    local LastWord = Words[currentWordIndex - 1]
-                    options = {}
-                    if currentWordIndex == 1 then
-                        for num, list in ipairs(commands) do
-                            local command, CommandData = table.unpack(list)
-                            local afterTxt = ""
-                            for num, suggestionData in ipairs(CommandData.Parameters) do
-                                local curText = suggestionData.Type
-                                afterTxt ..=" <" .. curText:lower() .. ">"
-                            end
-                            table.insert(options,{command,command..afterTxt})
-                        end
-                    elseif commands[1] then
-                        local command,CommandData = table.unpack(commands[1]) -- Selected command
-                        local mySuggestion = CommandData.Parameters[currentWordIndex - 1]
-                        if mySuggestion then
-                            if mySuggestion.Type == "Player" or mySuggestion.Type == "Players" then
-                                for num, theirPlr in ipairs(PS:GetPlayers()) do
-                                    if theirPlr ~= C.plr then
-                                        local showLabel = theirPlr.DisplayName
-                                        if theirPlr.DisplayName ~= theirPlr.Name then
-                                            showLabel ..= " (@" .. theirPlr.Name..")"
-                                        end
-                                        table.insert(options,{theirPlr.Name,showLabel})
-                                    end
-                                end
-                                if not mySuggestion.ExcludeMe then
-                                    table.insert(options,1,{"me","me"})
-                                end
-                                if mySuggestion.Type == "Players" then
-                                    table.insert(options,1,{"others","others"})
-                                    table.insert(options,1,{"all","all"})
-                                end
-                                table.insert(options,{"random","random"})
-                            elseif mySuggestion.Type == "Number" then
-                                for s = mySuggestion.Min, mySuggestion.Max, (mySuggestion.Max - mySuggestion.Min) / 8 do
-                                    local current = s
-                                    if mySuggestion.Step then
-                                        current = math.round(current/mySuggestion.Step)*mySuggestion.Step
-                                    end
-                                    local putInStep = tostring(math.clamp(current,mySuggestion.Min,mySuggestion.Max))
-                                    local isIn = false
-                                    for num, vals in ipairs(options) do
-                                        if vals[1] == putInStep or vals[2] == putInStep then
-                                            isIn = true
-                                            break
-                                        end
-                                    end
-                                    if not isIn then
-                                        table.insert(options,{putInStep, putInStep})
-                                    end
-                                end
-                            elseif mySuggestion.Type == "Instance" then
-                                local Root = C[mySuggestion.Root]
-                                assert(Root,`Root {mySuggestion.Root} not found!`)
-                                options = PerformRootSearch(Root)
-                            elseif mySuggestion.Type == "Options" then
-                                for num, val in ipairs(mySuggestion.Options) do
-                                    table.insert(options,{val,val})
-                                end
-                            elseif mySuggestion.Type == "Friend" then
-                                for num, val in ipairs(C.friends) do
-                                    table.insert(options,{val.UserId,val.SortName})
-                                end
-                            elseif mySuggestion.Type == "User" then
-                                -- No suggestions available
-                            elseif mySuggestion.Type == "Outfit" then
-                                local bigRet = C.StringStartsWith(C.friendnames, LastWord, true)
-                                if bigRet[#bigRet] then
-                                    local plrId = C.friendnamestoids[bigRet[#bigRet][2]]
-                                    if plrId then
-                                        if C.getgenv().Outfits[plrId] then
-                                            for num, val in ipairs(C.getgenv().Outfits[plrId]) do
-                                                table.insert(options,{val.id,val.SortName})
-                                            end
-                                        end
-                                    end
-                                end
-                            else
-                                assert(not mySuggestion.Type, `(CommandCore.RegisterNewChatBar.textUpd): Suggestion Type Not Yet Implented for {mySuggestion.Type}`)
-                            end
-                            options = C.StringStartsWith(options,currentWord,true,true)
-                        end
-                    end
-                    ClearSuggestions()
-                    for num, item in ipairs(options) do
-                        if item[1] == LastPreferred then
-                            currentIndex = num
-                        end
-                    end
-                    for num, list in ipairs(options) do
-                        local name, display = table.unpack(list)
-                        local newClone = C.Examples.AutoCompleteEx:Clone()
-                        newClone.BackgroundColor3 = num==currentIndex and Color3.fromRGB(0,255) or Color3.fromRGB(255)
-                        newClone.AutoCompleteTitleLabel.Text = display
-                        newClone.Name = name
-                        newClone.Parent = ChatAutoCompleteFrame
-                        newClone.LayoutOrder = num
-                        table.insert(frameList,newClone)
-                    end
-                else
-                    ClearSuggestions()
-                end
-            end
-            DidSet = math.max(DidSet-1,0)
-            if not chatBar or not isFocused then
-                return
-            end
-
-            --Up Down Commands
-            if #C.savedCommands==0 or lastText == newInput then
-                return
-            end
-            local deltaIndex
-            if newInput:match("/up") then
-                deltaIndex = 1
-            elseif newInput:match("/down") then
-                deltaIndex = -1
-            else
-                return
-            end
-            goToSaved(deltaIndex)
-        end
-        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("Text"):Connect(textUpd))--:GetPropertyChangedSignal("Text"):Connect(textUpd))
-        C.AddObjectConnection(chatBar,"TextChatbar",chatBar:GetPropertyChangedSignal("CursorPosition"):Connect(textUpd))
-        textUpd()
-
-        C.AddGlobalConnection(chatBar.Focused:Connect(ChatBarUpdated))
-        ChatBarUpdated()
-        C.AddObjectConnection(chatBar,"FocusLostChatbar",chatBar.FocusLost:Connect(function(enterPressed)
-            local inputMsg = chatBar.Text
-            if not C.Cleared then
-                ChatBarUpdated()
-                if enterPressed then
-                    if inputMsg:sub(1,1)==";" or inputMsg:sub(1,1)=="/" then
-                        enterPressed = inputMsg:sub(1,1)=="/" -- only send the message if it's a /
-                        if not enterPressed then
-                            chatBar.Text = ""
-                            ClearSuggestions()
-                        end
-                        task.spawn(C.RunCommand,inputMsg,true)
-                    end
-                end
-            end
-
-            if C.LoadCommandBar then
-                C.UI.Commandbar.Visible = false
-            elseif not hasNewChat or C.Cleared then
-                for num, connectionFunct in ipairs(connectionsFuncts) do
-                    -- if connectionFunct.Function then
-                    --     connectionFunct.Function(enterPressed)
-                    -- else
-                    --     connectionFunct:Fire()
-                    --     warn("NO Function Found For "..num)
-                    -- end
-                    connectionFunct:Fire(enterPressed)
-                end
-            elseif enterPressed then
-                sendTheMessage(inputMsg)
-            end
-        end))
-    end
-    if C.LoadCommandBar then
-        task.spawn(registerNewChatBar, nil, true)
-    elseif CS.LoadDefaultChat or table.find(OverrideChatGames,game.GameId) then
-        if not hasNewChat then
-            C.AddGlobalConnection(C.StringWait(C.PlayerGui,"Chat.Frame.ChatBarParentFrame").ChildAdded:Connect(function(child)
-                registerNewChatBar()
-            end))
-        end
-        task.spawn(registerNewChatBar,nil,true) -- do it on another thread
-    else
-        warn("[Specter Chat]: Chat cannot be loaded in custom games; commands may not work.")
-    end
-    if C.Cleared then
-        return
-    end
     -- TEMP: Add Scripts in there
     local Scripts2Add = {"Dark Dex", "Chat Bypass", "Save Instance"}
     for num, scriptName in ipairs(Scripts2Add) do
@@ -672,7 +251,7 @@ return function(C,Settings)
         end
     end
     C.InsertCommandFunctions = nil
-    for shortcut, commandTbl in pairs(C.CommandFunctions or {}) do
+    for shortcut, commandTbl in pairs(table.clone(C.CommandFunctions or {})) do
         assert(commandTbl, `CommandTbl must exist or be nil: {commandTbl}`)
         commandTbl.Shortcut = shortcut
         commandTbl.Parent = C.CommandFunctions
@@ -682,8 +261,7 @@ return function(C,Settings)
             end
             C.CommandFunctions[aliasName] = commandTbl
         end
-        commandTbl.Alias = nil
         C.BindEvents(commandTbl)
     end
+    C.LoadModule("Modules/CommandPalette")
 end
-
