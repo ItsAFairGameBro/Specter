@@ -90,6 +90,79 @@ class RuntimeTests(unittest.TestCase):
             result = subprocess.run([str(LUAU), str(script)], capture_output=True, text=True, timeout=20)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_gui_window_and_popup_layers(self):
+        code = section('src/client/Modules/GuiElements.lua', 'local Layers =', 'local function CreateOtherElements')
+        self.run_luau(r'''
+local objects = {}
+local Instance = {new=function(class)
+    local object = {ClassName=class, ZIndex=1}
+    table.insert(objects, object)
+    return object
+end}
+local function value(...) return {...} end
+local Color3 = {fromRGB=value}
+local ColorSequence, ColorSequenceKeypoint = {new=value}, {new=value}
+local Font, UDim, Vector2, Vector3 = {new=value}, {new=value}, {new=value}, {new=value}
+local UDim2 = {new=value, fromOffset=value}
+local Enum = setmetatable({}, {__index=function(_, group)
+    return setmetatable({}, {__index=function(_, name) return group .. "." .. name end})
+end})
+local C = {UI={}, Examples={}, AddGlobalInstance=function() end,
+    SetImage=function(object, image) object.Image=image end}
+''' + code + r'''
+local gui, categories, tabs, tooltip = LoadCore(C)
+local function child(parent, name)
+    for _, object in objects do
+        if object.Parent == parent and object.Name == name then return object end
+    end
+    error("Missing child " .. name)
+end
+local function above(front, back)
+    -- Compare the first differing siblings, as Roblox Sibling ordering does.
+    local function path(object)
+        local result = {}
+        while object ~= gui do
+            assert(object.Parent, "Object must be attached to the GUI")
+            table.insert(result, 1, object)
+            object = object.Parent
+        end
+        return result
+    end
+    local a, b = path(front), path(back)
+    for i = 1, math.min(#a, #b) do
+        if a[i] ~= b[i] then return a[i].ZIndex > b[i].ZIndex end
+    end
+    return #a > #b
+end
+assert(gui.ZIndexBehavior == Enum.ZIndexBehavior.Sibling)
+assert(above(C.UI.MainHUD, C.UI.HUDBackgroundFade))
+assert(above(categories, tabs))
+local tab = C.Examples.TabEx
+-- Cloned controls retain their local layers when a window moves in the stack.
+tab.Parent = tabs
+tab.ZIndex = 50000
+local expand = child(C.Examples.HackButtonEx, "HackExpand")
+C.Examples.HackButtonEx.Parent = child(tab, "ScrollTab")
+assert(above(child(tab, "HeaderTab"), expand))
+assert(above(C.UI.DropdownFrame, expand))
+assert(above(C.UI.DropdownFrame, tooltip))
+assert(above(C.UI.SecondaryHUD, expand))
+local promptButtons = child(C.UI.PromptFrame, "PromptButtons")
+assert(above(child(promptButtons, "Yes"), C.UI.SecondaryHUD))
+assert(above(child(promptButtons, "No"), C.UI.ChatAutoComplete))
+assert(above(child(promptButtons, "Ok"), C.UI.VisibilityButton))
+assert(above(C.UI.ChatAutoComplete, C.UI.Commandbar))
+local row = C.Examples.HackButtonEx
+local label, backing = child(row, "KeybindLabel"), child(row, "KeybindBacking")
+assert(not label.Visible and not backing.Visible)
+assert(above(label, backing))
+assert(above(child(row, "KeybindButton"), backing))
+local action = C.Examples.ActionsEx
+action.Parent = child(C.UI.Actions, "ScrollTab")
+assert(above(child(action, "StopButton"), C.UI.MainHUD))
+assert(above(C.UI.PromptFrame, child(action, "StopButton")))
+''')
+
     def test_string_round_trips(self):
         values = ['quote" and \\ slash', '\x00\x017', '\nleading newline\n', 'ends\n]', 'ends\n]=', '\n]]\n]=]\n]==]\n', '\r\nCRLF\r\n', 'Unicode: \u2705']
         checks = [f"assert({bundle.to_luau(value)} == {bundle.quote_string(value)})" for value in values]

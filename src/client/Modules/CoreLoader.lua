@@ -197,7 +197,8 @@ return function(C, _SETTINGS)
 			end
 			TabEx.Name = category.Name
 			TabEx.Parent = C.UI.TabsFrame
-			TabEx.ZIndex = CategoryEx.LayoutOrder + 100
+			-- Category layout affects list placement, not window layering.
+			TabEx.ZIndex = category.Layout + (category.AfterMisc and 50 or 0)
 
 			if C.Cleared then return end
 
@@ -364,6 +365,7 @@ return function(C, _SETTINGS)
 						C.RemoveGlobalConnection(KeybindRunFunct)
 						KeybindRunFunct = nil
 						BindButton.KeybindLabel.Visible = false
+						BindButton.KeybindBacking.Visible = false
 						BindButton.HighlightBackground.Visible = true
 						if BindButton == ButtonEx and override ~= true then
 							hackData:SetKeybind(nil)
@@ -380,6 +382,7 @@ return function(C, _SETTINGS)
 							end
 						end))
 						ButtonEx.KeybindLabel.Visible = true
+						ButtonEx.KeybindBacking.Visible = true
 						BindButton.HighlightBackground.Visible = false
 						C.IsBinding = true
 					else
@@ -417,16 +420,6 @@ return function(C, _SETTINGS)
 			--if (data.RealEnabled or data.AlwaysActivate) and data.Activate and not data.DontActivate then
 				task.delay(1/4,data.SetValue,data,data.EnTbl.En, true)
 			--end
-		end
-	end
-	for num, instance in ipairs(C.UI.TabsFrame:GetChildren()) do
-		if instance:IsA("GuiBase") then
-			for num, guiElement in ipairs(instance:GetDescendants()) do
-				if guiElement:IsA("GuiBase") then
-					guiElement.ZIndex -= instance.ZIndex
-				end
-			end
-			instance.ZIndex -= instance.ZIndex * 2
 		end
 	end
 	C.AddGlobalConnection(UIS:GetPropertyChangedSignal("KeyboardEnabled"):Connect(function()
